@@ -1721,6 +1721,29 @@ error.connectedToLandlord.missing = Dewiswch ‘ydw’ os oes gennych gysylltiad
 error.connectedToLandlordDetails.required = Nodwch ddisgrifiad o’ch perthynas â’r landlord
 error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’ch perthynas â’r landlord fod yn 1,000 o gymeriadau neu lai
 
+# CAR PARKING
+error.doesRentIncludeParking.required = Select yes if the rent include an amount for parking spaces or garaging
+error.isParkingRentPaidSeparately.required = Select yes if the rent for garaging or car parking paid separately
+error.included.openSpaces.required = Enter 0 if you do not rent any open parking spaces
+error.included.openSpaces.nonNumeric = The amount of open parking spaces must be a number
+error.included.openSpaces.negative = The number of open parking spaces cannot be a negative number
+error.included.coveredSpaces.required = Enter 0 if you do not rent any covered parking spaces
+error.included.coveredSpaces.nonNumeric = The amount of covered parking spaces must be a number
+error.included.coveredSpaces.negative = The number of covered parking spaces cannot be a negative number
+error.included.garages.required = Enter 0 if you do not rent any garages
+error.included.garages.nonNumeric = The amount of garages must be a number
+error.included.garages.negative = The number of garages cannot be a negative number
+error.rentedSeparately.openSpaces.required = Enter 0 if you do not rent separately any open parking spaces
+error.rentedSeparately.openSpaces.nonNumeric = The amount of open parking spaces rented separately must be a number
+error.rentedSeparately.openSpaces.negative = The number of open parking spaces rented separately cannot be a negative number
+error.rentedSeparately.coveredSpaces.required = Enter 0 if you do not rent separately any covered parking spaces
+error.rentedSeparately.coveredSpaces.nonNumeric = The amount of covered parking spaces rented separately must be a number
+error.rentedSeparately.coveredSpaces.negative = The number of covered parking spaces rented separately cannot be a negative number
+error.rentedSeparately.garages.required = Enter 0 if you do not rent separately any garages
+error.rentedSeparately.garages.nonNumeric = The amount of garages rented separately must be a number
+error.rentedSeparately.garages.negative = The number of garages rented separately cannot be a negative number
+fieldName.carParkingFixedRentDate = the date when the annual payment was fixed
+
 # CHECK YOUR ANSWERS
 ####################
 
