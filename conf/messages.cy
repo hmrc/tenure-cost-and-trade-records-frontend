@@ -1722,6 +1722,8 @@ error.connectedToLandlordDetails.required = Nodwch ddisgrifiad o’ch perthynas 
 error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’ch perthynas â’r landlord fod yn 1,000 o gymeriadau neu lai
 
 # CAR PARKING
+doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
+isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?
 error.doesRentIncludeParking.required = Select yes if the rent include an amount for parking spaces or garaging
 error.isParkingRentPaidSeparately.required = Select yes if the rent for garaging or car parking paid separately
 error.included.openSpaces.required = Enter 0 if you do not rent any open parking spaces

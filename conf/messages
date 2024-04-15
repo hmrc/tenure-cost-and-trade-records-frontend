@@ -1751,6 +1751,8 @@ error.connectedToLandlordDetails.required = Enter a description of your relation
 error.connectedToLandlordDetails.maxLength = Your description of your relationship to the landlord must be 1,000 characters or fewer
 
 # CAR PARKING
+doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
+isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?
 error.doesRentIncludeParking.required = Select yes if the rent include an amount for parking spaces or garaging
 error.isParkingRentPaidSeparately.required = Select yes if the rent for garaging or car parking paid separately
 error.included.openSpaces.required = Enter 0 if you do not rent any open parking spaces
