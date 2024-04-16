@@ -95,7 +95,7 @@ class CustomerCreditAccountsController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#customer-credit-account"
+      case "TL"  => controllers.routes.TaskListController.show().url + "#customer-credit-accounts"
       case _     =>
         answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
           case Some(AnswerYes) =>
