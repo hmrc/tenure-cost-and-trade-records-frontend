@@ -84,13 +84,23 @@
     ).withFormField(theForm("typeOfTenure"))
    )
 
-   @includes.textInputCharCount(
-    govukCharacterCount,
-    theForm,
-    "typeOfTenureDetails",
-    "label.typeOfTenureDetails",
-    "govuk-!-font-weight-bold",
-    charCount = 2000
+   @govukCharacterCount(
+   CharacterCount(
+   id ="typeOfTenureDetails",
+   name = "typeOfTenureDetails",
+   rows = 5,
+   maxLength = 2000,
+    errorMessage = {
+     if (theForm.errors.exists(_.message == "error.typeOfTenureDetails.required")) {
+      ErrorMessage(content = Text(messages("error.typeOfTenureDetails.required")))
+     } else {
+      theForm.errors.asTextErrorMessageForField("typeOfTenureDetails")
+     }
+    },
+   label = Label(
+   content = Text(messages("label.typeOfTenureDetails")),
+   classes = "govuk-!-font-weight-bold")
+   ).withFormField(theForm("typeOfTenureDetails"))
    )
 
   @includes.continueSaveAsDraftButtons(govukButton)
