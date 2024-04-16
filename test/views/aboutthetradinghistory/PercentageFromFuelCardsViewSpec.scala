@@ -30,12 +30,14 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
 
   val messageKeyPrefix = "percentageFromFuelCards"
 
+  val backLink = controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+
   override val form =
     PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
-  def createView    = () => percentageFromFuelCardsView(form, Summary("99996010001"))(sessionRequest, messages)
+  def createView    = () => percentageFromFuelCardsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[PercentageFromFuelCards]]) =>
-    percentageFromFuelCardsView(form, Summary("99996020001"))(sessionRequest, messages)
+    percentageFromFuelCardsView(form, backLink, Summary("99996020001"))(sessionRequest, messages)
 
   "Percentage from fuel cards view" should {
 

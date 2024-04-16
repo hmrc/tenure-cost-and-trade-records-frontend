@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.BunkeredFuelQuestionForm.bunkeredFuelQuestionForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -51,6 +51,7 @@ class BunkeredFuelQuestionController @Inject() (
             case Some(answers) => bunkeredFuelQuestionForm.fill(answers)
             case _             => bunkeredFuelQuestionForm
           },
+          calculateBackLink(request),
           request.sessionData.toSummary
         )
       )
@@ -60,7 +61,14 @@ class BunkeredFuelQuestionController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[BunkeredFuelQuestion](
       bunkeredFuelQuestionForm,
-      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(
+          view(
+            formWithErrors,
+            calculateBackLink(request),
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelQuestion = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -68,4 +76,12 @@ class BunkeredFuelQuestionController @Inject() (
       }
     )
   }
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "TL"  => controllers.routes.TaskListController.show().url + "#bunkered-fuel-question"
+      case _     => controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+    }
 }

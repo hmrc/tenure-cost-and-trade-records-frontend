@@ -29,10 +29,12 @@ class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[BunkeredFuelQu
 
   override val form = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm
 
-  def createView = () => bunkeredFuelQuestionView(form, Summary("99996020001"))(fakeRequest, messages)
+  val backLink = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+
+  def createView = () => bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[BunkeredFuelQuestion]) =>
-    bunkeredFuelQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
+    bunkeredFuelQuestionView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Bunkered fuel question view" should {
 

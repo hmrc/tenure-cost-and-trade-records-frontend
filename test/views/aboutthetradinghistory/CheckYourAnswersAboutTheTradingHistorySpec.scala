@@ -36,16 +36,34 @@ class CheckYourAnswersAboutTheTradingHistorySpec
 
   val backLink: String = controllers.aboutthetradinghistory.routes.TurnoverController.show().url
 
+  val backLink6020: String =
+    controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show().url
+
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
+  val sessionRequestFor6016: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(aboutYouAndTheProperty6016YesSession, fakeRequest)
+
   val sessionRequestFor6020: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
-  def createView: () => Html                                        = () =>
+
+  val sessionRequestFor6030: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
+
+  def createView: () => Html = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
 
+  def createView6016: () => Html = () =>
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996016001"))(sessionRequestFor6016, messages)
+
   def createView6020: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996020001"))(sessionRequestFor6020, messages)
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink6020, Summary("99996020001"))(
+      sessionRequestFor6020,
+      messages
+    )
+  def createView6030: () => Html = () =>
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996030001"))(sessionRequestFor6030, messages)
 
   def createViewUsingForm: Form[CheckYourAnswersAboutTheTradingHistory] => Html =
     (form: Form[CheckYourAnswersAboutTheTradingHistory]) =>
@@ -75,7 +93,13 @@ class CheckYourAnswersAboutTheTradingHistorySpec
       assert(loginButton == messages("button.label.continue"))
     }
   }
+  "Check Your Answers About The Property view for 6016" must {
+    behave like normalPage(createView6016, messageKeyPrefix)
+  }
   "Check Your Answers About The Property view for 6020" must {
     behave like normalPage(createView6020, messageKeyPrefix)
+  }
+  "Check Your Answers About The Property view for 6030" must {
+    behave like normalPage(createView6030, messageKeyPrefix)
   }
 }

@@ -89,6 +89,7 @@ label.phone = Rhif ffôn
 label.email = Cyfeiriad e-bost
 label.submitAnotherForm = Submit another form
 label.change = Change
+label.liter = liter
 label.litres = litres
 label.percent = %
 
@@ -1888,6 +1889,25 @@ checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Total visitor numbe
 checkYourAnswersAboutTheTradingHistory.payPointOrZone = Paypoint or payzone
 checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = EV Charging Points
 checkYourAnswersAboutTheTradingHistory.operateEV = Do you operate any EV charging points?
+checkYourAnswersAboutTheTradingHistory.fuelSales = Fuel sales
+checkYourAnswersAboutTheTradingHistory.totalFuelSales = Total fuel sales
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Bunkered fuel
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question = Do you sell bunkered fuel?
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading = Total volume of bunkered fuel sold
+checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard = Bunker fuel card {0}
+checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails = Bunker fuel card details
+checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded = You have added {0} bunker fuel {1}
+checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove = Add or remove bunker fuel cards
+checkYourAnswersAboutTheTradingHistory.customerCreditAcc = Customer credit accounts
+checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading = Percentage of fuel sales on account
+checkYourAnswersAboutTheTradingHistory.lowMarginCards = Low-margin fuel cards
+checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading = Percentage of fuel sales on low-margin cards
+checkYourAnswersAboutTheTradingHistory.lowMarginCard = Low-margin fuel card {0}
+checkYourAnswersAboutTheTradingHistory.lowMarginCard.details = Low margin fuel card details
+checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded = You have added {0} low margin fuel {1}
+checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove = Add or remove low-margin fuel card
+checkYourAnswersAboutTheTradingHistory.card = card
+checkYourAnswersAboutTheTradingHistory.cards = cards
 
 #Address Lookup
 ###############

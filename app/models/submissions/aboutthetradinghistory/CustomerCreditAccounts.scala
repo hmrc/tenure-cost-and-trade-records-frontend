@@ -22,7 +22,7 @@ import java.time.LocalDate
 
 case class CustomerCreditAccounts(
   financialYearEnd: LocalDate,
-  fuelPerLiter: Option[BigDecimal]
+  percentage: Option[BigDecimal]
 )
 object CustomerCreditAccounts {
   implicit val format: OFormat[CustomerCreditAccounts] = Json.format[CustomerCreditAccounts]
