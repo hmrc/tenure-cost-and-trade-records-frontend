@@ -19,7 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm.isParkingRentPaidSeparatelyForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateCarParking
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, CarParking}
 import models.submissions.common.{AnswerYes, AnswersYesNo}
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -65,11 +65,7 @@ class IsParkingRentPaidSeparatelyController @Inject() (
       isParkingRentPaidSeparatelyForm,
       formWithErrors => BadRequest(isParkingRentPaidSeparatelyView(formWithErrors, getBackLink)),
       data => {
-        val carParking  = leaseOrAgreementPartThree
-          .flatMap(_.carParking)
-          .getOrElse(CarParking())
-          .copy(isRentPaidSeparately = Some(data))
-        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(carParking = Some(carParking)))
+        val updatedData = updateCarParking(_.copy(isRentPaidSeparately = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IsParkingRentPaidSeparatelyId, updatedData).apply(updatedData))

@@ -336,14 +336,20 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def doesRentIncludeParkingRouting: Session => Call =
     _.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage) match {
-      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show() // TODO: IncludedInRentParkingSpacesController
-      case _  => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()
+      case Some(AnswerYes) =>
+        controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController
+          .show() // TODO: IncludedInRentParkingSpacesController
+      case _               => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()
     }
 
   private def isParkingRentPaidSeparatelyRouting: Session => Call =
     _.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.isRentPaidSeparately) match {
-      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show() // TODO: RentedSeparatelyParkingSpacesController
-      case _  => controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show() // TODO: any equipment?
+      case Some(AnswerYes) =>
+        controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController
+          .show() // TODO: RentedSeparatelyParkingSpacesController
+      case _               =>
+        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController
+          .show() // TODO: any equipment?
     }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
@@ -432,9 +438,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     PaymentForTradeServicesId                     -> paymentForTradeServicesRouting,
     TypeOfTenureId                                -> (_ => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
     DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
-
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,
-
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

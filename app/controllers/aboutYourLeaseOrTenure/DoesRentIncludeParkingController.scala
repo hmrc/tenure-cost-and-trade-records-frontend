@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.DoesRentIncludeParkingForm.doesRentIncludeParkingForm
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, CarParking}
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.{updateAboutLeaseOrAgreementPartThree, updateCarParking}
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.DoesRentIncludeParkingId
@@ -65,11 +65,8 @@ class DoesRentIncludeParkingController @Inject() (
       doesRentIncludeParkingForm,
       formWithErrors => BadRequest(doesRentIncludeParkingView(formWithErrors, getBackLink)),
       data => {
-        val carParking  = leaseOrAgreementPartThree
-          .flatMap(_.carParking)
-          .getOrElse(CarParking())
-          .copy(doesRentIncludeParkingOrGarage = Some(data))
-        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(carParking = Some(carParking)))
+        val updatedData = updateCarParking(_.copy(doesRentIncludeParkingOrGarage = Some(data)))
+
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(DoesRentIncludeParkingId, updatedData).apply(updatedData))
         }

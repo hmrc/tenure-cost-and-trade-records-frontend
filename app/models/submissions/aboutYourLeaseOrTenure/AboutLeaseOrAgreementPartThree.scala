@@ -44,6 +44,14 @@ object AboutLeaseOrAgreementPartThree {
     }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartThree = updatedAboutLeaseOrAgreementPartThree)
-
   }
+
+  def updateCarParking(
+    update: CarParking => CarParking
+  )(implicit sessionRequest: SessionRequest[_]): Session =
+    updateAboutLeaseOrAgreementPartThree { aboutLeaseOrAgreementPartThree =>
+      val carParking = update(aboutLeaseOrAgreementPartThree.carParking.getOrElse(CarParking()))
+      aboutLeaseOrAgreementPartThree.copy(carParking = Some(carParking))
+    }
+
 }
