@@ -82,7 +82,7 @@ class ElectricVehicleChargingPointsController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#electric-vehicles-charging-points"
+      case "TL"  => controllers.routes.TaskListController.show().url + "#ev-charging-point"
       case _     => controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
     }
 

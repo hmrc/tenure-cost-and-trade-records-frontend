@@ -92,7 +92,7 @@ class TotalFuelSoldController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#total-fuel-sold"
+      case "TL"  => controllers.routes.TaskListController.show().url + "#fuel-sales"
       case _     =>
         request.sessionData.aboutTheTradingHistory.flatMap(
           _.occupationAndAccountingInformation.flatMap(_.yearEndChanged)

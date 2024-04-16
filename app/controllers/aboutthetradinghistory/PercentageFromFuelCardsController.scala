@@ -92,7 +92,7 @@ class PercentageFromFuelCardsController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#percentage-from-fuel-card"
+      case "TL"  => controllers.routes.TaskListController.show().url + "#low-margin-fuel-cards"
       case _     => controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
     }
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =

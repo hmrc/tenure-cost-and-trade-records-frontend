@@ -109,6 +109,7 @@ label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
+label.section.aboutTheLettings = Lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
 
@@ -1302,6 +1303,11 @@ taskList.profitSummary = Profit summary
 declaration.heading = Nawr anfonwch eich datganiad
 declaration.information = Drwy gyflwyno’r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi’n eu darparu yn gywir.
 hint.declaration = Gellid mynd â chi i’r llys os ydych yn cyflwyno gwybodaeth anwir
+taskList.fuelSales = Fuel sales
+taskList.bunkerdFuel = Bunkered fuel
+taskList.customerCreditAccounts = Customer credit accounts
+taskList.lowMarginCards = Low-margin fuel cards
+taskList.EVChargingPoints = EV charging points
 
 # COST OF SALES OR GROSS PROFIT
 #########
@@ -1897,7 +1903,7 @@ checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading = Total volume of
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard = Bunker fuel card {0}
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails = Bunker fuel card details
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded = You have added {0} bunker fuel {1}
-checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove = Add or remove bunker fuel cards
+checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove = Add or remove bunker fuel card
 checkYourAnswersAboutTheTradingHistory.customerCreditAcc = Customer credit accounts
 checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading = Percentage of fuel sales on account
 checkYourAnswersAboutTheTradingHistory.lowMarginCards = Low-margin fuel cards
