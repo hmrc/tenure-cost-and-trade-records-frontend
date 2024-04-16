@@ -1724,6 +1724,11 @@ error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’
 # CAR PARKING
 doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
 isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?
+includedInRentParkingSpaces.heading = How many spaces are included in your rent?
+rentedSeparatelyParkingSpaces.heading = How many spaces are separately rented?
+carParking.openSpaces = Open spaces
+carParking.coveredSpaces = Covered spaces
+carParking.garages = Garages
 error.doesRentIncludeParking.required = Select yes if the rent include an amount for parking spaces or garaging
 error.isParkingRentPaidSeparately.required = Select yes if the rent for garaging or car parking paid separately
 error.included.openSpaces.required = Enter 0 if you do not rent any open parking spaces

@@ -336,17 +336,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def doesRentIncludeParkingRouting: Session => Call =
     _.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage) match {
-      case Some(AnswerYes) =>
-        controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController
-          .show() // TODO: IncludedInRentParkingSpacesController
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show()
       case _               => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()
     }
 
   private def isParkingRentPaidSeparatelyRouting: Session => Call =
     _.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.isRentPaidSeparately) match {
-      case Some(AnswerYes) =>
-        controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController
-          .show() // TODO: RentedSeparatelyParkingSpacesController
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show()
       case _               =>
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController
           .show() // TODO: any equipment?
@@ -438,7 +434,18 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     PaymentForTradeServicesId                     -> paymentForTradeServicesRouting,
     TypeOfTenureId                                -> (_ => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
     DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
+    IncludedInRentParkingSpacesId                 -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()
+    ),
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,
+    RentedSeparatelyParkingSpacesId               -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController
+        .show() //TODO: CarParkingAnnualRentController
+    ),
+    CarParkingAnnualRentId                        -> (_ =>
+      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController
+        .show() //TODO: any equipment?
+    ),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

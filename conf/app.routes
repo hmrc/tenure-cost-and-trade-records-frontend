@@ -361,11 +361,14 @@ POST        /type-of-tenure                                         controllers.
 GET         /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.show()
 POST        /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.submit()
 
-
+GET         /included-in-rent-parking-spaces                        controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.show()
+POST        /included-in-rent-parking-spaces                        controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.submit()
 
 GET         /is-parking-rent-paid-separately                        controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.show()
 POST        /is-parking-rent-paid-separately                        controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.submit()
 
+GET         /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.show()
+POST        /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.submit()
 
 
 #Form 6030 routing

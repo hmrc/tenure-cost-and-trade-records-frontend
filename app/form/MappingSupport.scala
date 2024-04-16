@@ -105,6 +105,8 @@ object MappingSupport {
   val intRegex: Regex      = """^\d{1,3}$""".r
   val invalidCharRegex     = """^[0-9A-Za-z\s\-\,]+$"""
 
+  private val numberRegex: Regex   = """^[-+]?\d+$""".r
+
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
   )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
@@ -280,7 +282,7 @@ object MappingSupport {
   def nonNegativeNumber(field: String, defaultValue: String = ""): Mapping[Int] =
     default(text, defaultValue)
       .verifying(s"error.$field.required", _.nonEmpty)
-      .verifying(s"error.$field.nonNumeric", _.forall(_.isDigit))
+      .verifying(s"error.$field.nonNumeric", numberRegex.matches(_))
       .transform[Int](_.toInt, _.toString)
       .verifying(s"error.$field.negative", _ >= 0)
 

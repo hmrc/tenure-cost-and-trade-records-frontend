@@ -177,3 +177,15 @@ case object DoesRentIncludeParkingId extends Identifier {
 case object IsParkingRentPaidSeparatelyId extends Identifier {
   override def toString: String = "IsParkingRentPaidSeparatelyPage"
 }
+
+case object IncludedInRentParkingSpacesId extends Identifier {
+  override def toString: String = "includedInRentParkingSpacesPage"
+}
+
+case object RentedSeparatelyParkingSpacesId extends Identifier {
+  override def toString: String = "rentedSeparatelyParkingSpacesPage"
+}
+
+case object CarParkingAnnualRentId extends Identifier {
+  override def toString: String = "carParkingAnnualRentPage"
+}

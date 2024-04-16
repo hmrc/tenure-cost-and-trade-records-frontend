@@ -18,17 +18,16 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.DoesRentIncludeParkingForm.doesRentIncludeParkingForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import form.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesForm.rentedSeparatelyParkingSpacesForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateCarParking
-import models.submissions.common.AnswersYesNo
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, CarParkingSpaces}
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.DoesRentIncludeParkingId
+import navigation.identifiers.RentedSeparatelyParkingSpacesId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.doesRentIncludeParking
+import views.html.aboutYourLeaseOrTenure.rentedSeparatelyParkingSpaces
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -37,8 +36,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class DoesRentIncludeParkingController @Inject() (
-  doesRentIncludeParkingView: doesRentIncludeParking,
+class RentedSeparatelyParkingSpacesController @Inject() (
+  rentedSeparatelyParkingSpacesView: rentedSeparatelyParkingSpaces,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -50,25 +49,25 @@ class DoesRentIncludeParkingController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      doesRentIncludeParkingView(
+      rentedSeparatelyParkingSpacesView(
         leaseOrAgreementPartThree
           .flatMap(_.carParking)
-          .flatMap(_.doesRentIncludeParkingOrGarage)
-          .fold(doesRentIncludeParkingForm)(doesRentIncludeParkingForm.fill),
+          .flatMap(_.rentedSeparatelySpaces)
+          .fold(rentedSeparatelyParkingSpacesForm)(rentedSeparatelyParkingSpacesForm.fill),
         getBackLink
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
-      doesRentIncludeParkingForm,
-      formWithErrors => BadRequest(doesRentIncludeParkingView(formWithErrors, getBackLink)),
+    continueOrSaveAsDraft[CarParkingSpaces](
+      rentedSeparatelyParkingSpacesForm,
+      formWithErrors => BadRequest(rentedSeparatelyParkingSpacesView(formWithErrors, getBackLink)),
       data => {
-        val updatedData = updateCarParking(_.copy(doesRentIncludeParkingOrGarage = Some(data)))
+        val updatedData = updateCarParking(_.copy(rentedSeparatelySpaces = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(DoesRentIncludeParkingId, updatedData).apply(updatedData))
+          Redirect(navigator.nextPage(RentedSeparatelyParkingSpacesId, updatedData).apply(updatedData))
         }
       }
     )
@@ -82,14 +81,7 @@ class DoesRentIncludeParkingController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
-      case "TL"  =>
-        controllers.routes.TaskListController.show().url + "#does-rent-include-parking"
-      case _     =>
-        if (leaseOrAgreementPartThree.exists(_.servicesPaid.nonEmpty)) {
-          controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url
-        } else {
-          controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
-        }
+      case _     => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
     }
 
 }

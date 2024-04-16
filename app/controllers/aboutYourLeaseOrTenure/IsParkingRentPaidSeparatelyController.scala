@@ -19,8 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm.isParkingRentPaidSeparatelyForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateCarParking
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, CarParking}
 import models.submissions.common.{AnswerYes, AnswersYesNo}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.IsParkingRentPaidSeparatelyId
@@ -86,9 +86,7 @@ class IsParkingRentPaidSeparatelyController @Inject() (
         if (
           leaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage).contains(AnswerYes)
         ) {
-          controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController
-            .show()
-            .url //TODO: IncludedInRentParkingSpacesController
+          controllers.aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show().url
         } else {
           controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url
         }
