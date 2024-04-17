@@ -1914,6 +1914,7 @@ checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded = You have added 
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove = Add or remove low-margin fuel card
 checkYourAnswersAboutTheTradingHistory.card = card
 checkYourAnswersAboutTheTradingHistory.cards = cards
+checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates = Financial year-end updates
 
 #Address Lookup
 ###############
