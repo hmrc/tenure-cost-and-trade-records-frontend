@@ -17,21 +17,19 @@
 package utils
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import views.html.connectiontoproperty._
-import views.html.notconnected._
-import views.html.aboutyouandtheproperty._
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
-import views.html.aboutthetradinghistory.{electricVehicleChargingPoints, variableOperatingExpenses, _}
-import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
+import views.html.aboutthetradinghistory._
+import views.html.aboutyouandtheproperty._
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
-import views.html.aboutyouandtheproperty.{alternativeContactDetails, contactDetailsQuestion}
+import views.html.connectiontoproperty._
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
 import views.html.error.{JsonParseError, error}
 import views.html.feedback.{feedback, feedbackThx}
+import views.html.notconnected._
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected, genericRemoveConfirmation, login, maxOfLettingsReached, testSign}
+import views.html._
 
 trait FakeViews { this: GuiceOneAppPerSuite =>
 
@@ -283,6 +281,13 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[servicePaidSeparatelyCharge]
   lazy val servicePaidSeparatelyListView                   =
     app.injector.instanceOf[servicePaidSeparatelyList]
+
+  // Car parking lease
+  lazy val doesRentIncludeParkingView        = app.injector.instanceOf[doesRentIncludeParking]
+  lazy val includedInRentParkingSpacesView   = app.injector.instanceOf[includedInRentParkingSpaces]
+  lazy val isParkingRentPaidSeparatelyView   = app.injector.instanceOf[isParkingRentPaidSeparately]
+  lazy val rentedSeparatelyParkingSpacesView = app.injector.instanceOf[rentedSeparatelyParkingSpaces]
+  lazy val carParkingAnnualRentView          = app.injector.instanceOf[carParkingAnnualRent]
 
   // Max letting reached
   lazy val maxOfLettingsReachedView =
