@@ -202,15 +202,44 @@
 
        @if(forType == ForTypes.for6020) {
 
+        @includes.taskListItem("fuel-sales", "taskList.fuelSales",
+         controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.totalFuelSold),
+         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+        )
+        @includes.taskListItem("bunkered-fuel", "taskList.bunkerdFuel",
+         controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion),
+         session.aboutTheTradingHistory.flatMap(_.totalFuelSold).isEmpty
+        )
+        @includes.taskListItem("customer-credit-accounts", "taskList.customerCreditAccounts",
+         controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts),
+         session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).isEmpty
+        )
+        @includes.taskListItem("low-margin-fuel-cards", "taskList.lowMarginCards",
+         controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.percentageFromFuelCards),
+         session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts).isEmpty
+        )
         @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
          controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
          section3Completed,
          session.aboutTheTradingHistory.flatMap(_.turnoverSections6020),
-         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+         session.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).isEmpty
+        )
+        @includes.taskListItem("ev-charging-point", "taskList.EVChargingPoints",
+         controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(),
+         section3Completed,
+         session.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints),
+         session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).isEmpty
         )
 
        }
-
        @if(forType == ForTypes.for6015) {
         @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
          controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
@@ -251,18 +280,18 @@
      </li>
 
      <li>
-      @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
         <h2 class="app-task-list__section">
-        <span class="app-task-list__section-number">4.</span>
-        @messages("label.section.aboutTheFranchiseLettings")
+         <span class="app-task-list__section-number">4.</span>
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
+         @messages("label.section.aboutTheFranchiseLettings")
+        }
+         @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+          @messages("label.section.aboutTheFranchiseConcessions")
+         }
+         @if(forType == ForTypes.for6020) {
+           @messages("label.section.aboutTheLettings")
+         }
         </h2>
-      }
-      @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-      <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">4.</span>
-       @messages("label.section.aboutTheFranchiseConcessions")
-     </h2>
-       }
       <ul class="app-task-list__items">
        @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),

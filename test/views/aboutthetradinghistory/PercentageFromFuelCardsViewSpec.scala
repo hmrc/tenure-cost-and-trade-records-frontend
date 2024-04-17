@@ -30,12 +30,14 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
 
   val messageKeyPrefix = "percentageFromFuelCards"
 
+  val backLink = controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+
   override val form =
     PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
-  def createView    = () => percentageFromFuelCardsView(form, Summary("99996010001"))(sessionRequest, messages)
+  def createView    = () => percentageFromFuelCardsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[PercentageFromFuelCards]]) =>
-    percentageFromFuelCardsView(form, Summary("99996020001"))(sessionRequest, messages)
+    percentageFromFuelCardsView(form, backLink, Summary("99996020001"))(sessionRequest, messages)
 
   "Percentage from fuel cards view" should {
 
@@ -67,12 +69,12 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
       assert(loginButton == messages("button.label.continue"))
     }
 
-    "TotalFuelSoldForm" should {
+    "Percentage from fuel form" should {
       "reject empty values" in {
         val form         = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022", "2021"))(messages)
         val formData     = Map(
           "percentageFromFuelCards-0" -> "",
-          "percentageFromFuelCards-1" -> "100.50"
+          "percentageFromFuelCards-1" -> "100"
         )
         val formWithData = form.bind(formData)
 
@@ -95,6 +97,21 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
         formWithData.errors.head shouldBe FormError(
           "percentageFromFuelCards-0",
           messages("error.percentageFromFuelCards.range", 2022.toString)
+        )
+      }
+
+      "reject  values greater than 100 " in {
+        val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(messages)
+        val formData = Map(
+          "percentageFromFuelCards-0" -> "111"
+        )
+
+        val formWithData = form.bind(formData)
+
+        formWithData.errors.size shouldBe 1
+        formWithData.errors.head shouldBe FormError(
+          "percentageFromFuelCards-0",
+          messages("error.percentage", 2022.toString)
         )
       }
     }

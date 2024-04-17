@@ -199,5 +199,8 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     "Identifier for trade services list" in {
       assert(TradeServicesListId.toString.equals("tradeServicesListPage"))
     }
+    "Identifier for type of tenure" in {
+      assert(TypeOfTenureId.toString.equals("typeOfTenurePage"))
+    }
   }
 }

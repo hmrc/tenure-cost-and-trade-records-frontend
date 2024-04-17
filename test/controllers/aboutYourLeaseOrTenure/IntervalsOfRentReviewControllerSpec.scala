@@ -49,7 +49,15 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
+  def intervalsOfRentReviewControllerNone = new IntervalsOfRentReviewController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    intervalsOfRentReviewView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+    mockSessionRepo
+  )
+
+  "IntervalsOfRentReviewController GET /" should {
     "return 200" in {
       val result = intervalsOfRentReviewController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -61,8 +69,15 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return 200 vacant property start date is not present in session" in {
+    "return 200and HTML vacant property start date is not present in session" in {
       val result = intervalsOfRentReviewNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML with none in session" in {
+      val result = intervalsOfRentReviewControllerNone.show()(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -79,7 +94,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "IntervalsOfRentReviewControllerSUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
 
       val res = intervalsOfRentReviewController().submit(

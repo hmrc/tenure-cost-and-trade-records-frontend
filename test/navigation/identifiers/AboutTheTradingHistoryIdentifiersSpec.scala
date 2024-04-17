@@ -86,8 +86,20 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for customer credit accounts page" in {
       assert(CustomerCreditAccountsId.toString.equals("customerCreditAccountsPage"))
     }
-    "Identifier for percentage for percentage from fuel cards page" in {
+    "Identifier for percentage from fuel cards page" in {
       assert(PercentageFromFuelCardsId.toString.equals("percentageFromFuelCardsPage"))
+    }
+    "Identifier for add bunker fuel cards page" in {
+      assert(AddAnotherBunkerFuelCardsDetailsId.toString.equals("addAnotherBunkerFuelCardsDetailsPage"))
+    }
+    "Identifier for add lm fuel cards page" in {
+      assert(AddAnotherLowMarginFuelCardsDetailsId.toString.equals("addAnotherLowMarginFuelCardsDetailsPage"))
+    }
+    "Identifier for lm fuel cards page" in {
+      assert(LowMarginFuelCardsDetailsId.toString.equals("lowMarginFuelCardsDetailsPage"))
+    }
+    "Identifier for bunker fuel card details page" in {
+      assert(BunkerFuelCardsDetailsId.toString.equals("bunkerFuelCardsDetailsPage"))
     }
   }
 }

@@ -22,7 +22,7 @@ import java.time.LocalDate
 
 case class PercentageFromFuelCards(
   financialYearEnd: LocalDate,
-  fuelPerLiter: Option[BigDecimal]
+  percentage: Option[BigDecimal]
 )
 object PercentageFromFuelCards {
   implicit val format: OFormat[PercentageFromFuelCards] = Json.format[PercentageFromFuelCards]

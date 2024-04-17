@@ -24,6 +24,7 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAb
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, LowMarginFuelCardsDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
+import navigation.identifiers.AddAnotherLowMarginFuelCardsDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
@@ -67,7 +68,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
         addAnotherLowMarginFuelCardsDetailsView(
           addAnother.fold(addAnotherLowMarginFuelCardsDetailsForm)(addAnotherLowMarginFuelCardsDetailsForm.fill),
           index,
-          controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show(Some(index)).url,
+          calculateBackLink(request, index),
           request.sessionData.toSummary
         )
       )
@@ -83,7 +84,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             addAnotherLowMarginFuelCardsDetailsView(
               formWithErrors,
               index,
-              routes.LowMarginFuelCardDetailsController.show(Some(index)).url,
+              calculateBackLink(request, index),
               request.sessionData.toSummary
             )
           )
@@ -102,7 +103,9 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             if (updatedCards.lastOption.flatMap(_.addAnotherLowMarginFuelCardDetails).contains(AnswerYes)) {
               Redirect(routes.LowMarginFuelCardDetailsController.show())
             } else {
-              Redirect(routes.NonFuelTurnoverController.show())
+              Redirect(
+                navigator.nextPage(AddAnotherLowMarginFuelCardsDetailsId, updatedSessionData).apply(updatedSessionData)
+              )
             }
           }
         }
@@ -188,5 +191,13 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       }
     )
   }
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent], index: Int) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "TL"  => controllers.routes.TaskListController.show().url + "#"
+      case _     => controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show(Some(index)).url
+    }
 
 }

@@ -61,6 +61,10 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       removeConnection
     )
 
+  val sessionAboutYou6015 = sessionAboutYou.copy(referenceNumber = "99996015004", forType = "FOR6015")
+  val sessionAboutYou6020 = sessionAboutYou.copy(referenceNumber = "99996020004", forType = "FOR6020")
+  val sessionAboutYou6030 = sessionAboutYou.copy(referenceNumber = "99996030004", forType = "FOR6030")
+
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
   "About the trading history navigator" when {
@@ -123,6 +127,113 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(CheckYourAnswersAboutTheTradingHistoryId, sessionAboutYou)
         .apply(sessionAboutYou) mustBe controllers.routes.TaskListController.show()
+    }
+
+    // 6020 specific
+
+    "return a function that goes the bunkered fuel question page when total fuel sold has been completed" in {
+      navigator
+        .nextPage(TotalFuelSoldId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController
+        .show()
+    }
+    "return a function that goes income expenditure page when other costs has been completed" in {
+      navigator
+        .nextPage(OtherCostsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController
+        .show()
+    }
+    "return a function that goes bunker fuel card details  page when bunkered fuel sold has been completed" in {
+      navigator
+        .nextPage(BunkeredFuelSoldId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController
+        .show(None)
+    }
+    "return a function that goes the percentage from fuel cards page when customer credit account has been completed" in {
+      navigator
+        .nextPage(CustomerCreditAccountsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController
+        .show()
+    }
+    "return a function that goes the low margin fuel card details page when percentage from fuel has been completed" in {
+      navigator
+        .nextPage(PercentageFromFuelCardsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController
+        .show()
+    }
+    "return a function that goes the add another bunker card page when bunker card detail has been completed" in {
+      navigator
+        .nextPage(BunkerFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(
+          sessionAboutYou6020
+        ) mustBe controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)
+    }
+    "return a function that goes the customer credit account page when add another bunker fuel card has been completed" in {
+      navigator
+        .nextPage(AddAnotherBunkerFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController
+        .show()
+    }
+    "return a function that goes the non fuel turnover page when add another low margin fuel card has been completed" in {
+      navigator
+        .nextPage(AddAnotherLowMarginFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show()
+    }
+    "return a function that goes the add another low-margin fuel card page when lm fuel card details has been completed" in {
+      navigator
+        .nextPage(LowMarginFuelCardsDetailsId, sessionAboutYou6020)
+        .apply(
+          sessionAboutYou6020
+        ) mustBe controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0)
+    }
+    "return a function that goes the unusual circumstances page when income expenditure has been completed" in {
+      navigator
+        .nextPage(IncomeExpenditureSummaryId, sessionAboutYou)
+        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show()
+    }
+
+    "return a function that goes the correct turnover page when financial end year has been completed" in {
+      navigator
+        .nextPage(FinancialYearEndDatesPageId, sessionAboutYou)
+        .apply(sessionAboutYou) mustBe controllers.aboutthetradinghistory.routes.TurnoverController.show()
+    }
+
+    "return a function that goes the total fuel sold page if the form is 6020 when financial end year has been completed" in {
+      navigator
+        .nextPage(FinancialYearEndDatesPageId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show()
+    }
+
+    "return a function that goes the correct turnover page if the form is 6030 when financial end year has been completed" in {
+      navigator
+        .nextPage(FinancialYearEndDatesPageId, sessionAboutYou6030)
+        .apply(sessionAboutYou6030) mustBe controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+    }
+
+    "return a function that goes the CYA page when turnover page has been completed form 6010" in {
+      navigator
+        .nextPage(TurnoverPageId, sessionAboutYou)
+        .apply(
+          sessionAboutYou
+        ) mustBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    }
+    "return a function that goes the cost of sales  page when turnover page has been completed form 6015" in {
+      navigator
+        .nextPage(TurnoverPageId, sessionAboutYou6015)
+        .apply(sessionAboutYou6015) mustBe controllers.aboutthetradinghistory.routes.CostOfSalesController.show()
+    }
+    "return a function that goes the EV  page when turnover page has been completed form 6020" in {
+      navigator
+        .nextPage(TurnoverPageId, sessionAboutYou6020)
+        .apply(
+          sessionAboutYou6020
+        ) mustBe controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show()
+    }
+    "return a function that goes the unusual circumstances  page when turnover page has been completed form 6030" in {
+      navigator
+        .nextPage(TurnoverPageId, sessionAboutYou6030)
+        .apply(sessionAboutYou6030) mustBe controllers.aboutthetradinghistory.routes.UnusualCircumstancesController
+        .show()
     }
 
   }

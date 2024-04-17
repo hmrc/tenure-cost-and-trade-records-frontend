@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CustomerCreditAccountsForm.customerCreditAccountsForm
 import models.Session
@@ -91,16 +91,21 @@ class CustomerCreditAccountsController @Inject() (
       }
   }
 
-  private def backLink(answers: Session): String =
-    answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
-      case Some(AnswerYes) =>
-        routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
-      case Some(AnswerNo)  => routes.BunkeredFuelQuestionController.show().url
-      case _               =>
-        logger.warn(s"Back link for customer credit account page reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
+  private def backLink(answers: Session)(implicit request: SessionRequest[AnyContent]): String      =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "TL"  => controllers.routes.TaskListController.show().url + "#customer-credit-accounts"
+      case _     =>
+        answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
+          case Some(AnswerYes) =>
+            routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
+          case Some(AnswerNo)  => routes.BunkeredFuelQuestionController.show().url
+          case _               =>
+            logger.warn(s"Back link for customer credit account page reached with unknown enforcement taken value")
+            controllers.routes.TaskListController.show().url
+        }
     }
-
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
 

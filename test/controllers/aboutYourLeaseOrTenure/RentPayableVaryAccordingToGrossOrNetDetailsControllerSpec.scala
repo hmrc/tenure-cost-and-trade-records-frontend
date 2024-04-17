@@ -16,39 +16,59 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBaseSpec {
 
+  import TestData.{baseFormData, errorKey}
+
   def rentPayableVaryAccordingToGrossOrNetDetailsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new RentPayableVaryAccordingToGrossOrNetDetailsController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       rentPayableVaryAccordingToGrossOrNetDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  def rentPayableVaryAccordingToGrossOrNetDetailsControllerNone =
+    new RentPayableVaryAccordingToGrossOrNetDetailsController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      rentPayableVaryAccordingToGrossOrNetDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+      mockSessionRepo
+    )
+
+  "RentPayableVaryAccordingToGrossOrNetDetailsController GET /" should {
+    "return 200 with data in the session" in {
       val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML with data in the session" in {
       val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML with None in the session" in {
+      val result = rentPayableVaryAccordingToGrossOrNetDetailsControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
 
-  "SUBMIT /" should {
+  "RentPayableVaryAccordingToGrossOrNetDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
@@ -57,4 +77,28 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
     }
   }
 
+  "Rent payable vary according to gross or net details form" should {
+    "error if choice is missing" in {
+      val formData = baseFormData - errorKey.rentPayableVaryAccordingToGrossOrNetDetails
+      val form     = rentPayableVaryAccordingToGrossOrNetInformationForm.bind(formData)
+
+      mustContainError(
+        errorKey.rentPayableVaryAccordingToGrossOrNetDetails,
+        "error.rentPayableVaryAccordingToGrossOrNetDetails.required",
+        form
+      )
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val rentPayableVaryAccordingToGrossOrNetDetails: String
+    } = new {
+      val rentPayableVaryAccordingToGrossOrNetDetails: String = "rentPayableVaryAccordingToGrossOrNetDetails"
+    }
+
+    val baseFormData: Map[String, String] = Map(
+      "rentPayableVaryAccordingToGrossOrNetDetails" -> "Test content"
+    )
+  }
 }

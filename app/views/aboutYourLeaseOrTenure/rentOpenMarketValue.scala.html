@@ -46,7 +46,7 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.submit()) {
 
-    @includes.radioButtonsYesNo(govukRadios, theForm, "rentOpenMarketValue", "rentOpenMarketValue.heading", "govuk-fieldset__legend--l", isHeading = true)
+    @includes.radioButtonsYesNo(govukRadios, theForm, "rentOpenMarketValue", "rentOpenMarketValue.heading", classes = "govuk-fieldset__legend--l", isHeading = true)
 
    @govukDetails(Details(
     summary = Text(messages("help.rentOpenMarketValue.title")),

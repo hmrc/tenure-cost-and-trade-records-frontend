@@ -33,14 +33,14 @@
 )
 
 
-@(form: Form[Seq[PercentageFromFuelCards]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[PercentageFromFuelCards]], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @layout(
     pageHeading = messages("percentageFromFuelCards.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url),
+    backLinkUrl = backLink,
     theForm = form,
     fullWidth = true,
     showH1  = false
@@ -84,12 +84,12 @@
                                             id = s"percentageFromFuelCards-$idx",
                                             name = s"percentageFromFuelCards-$idx",
                                             value = form(s"percentageFromFuelCards-$idx").value,
-                                            classes = "govuk-input--width-5",
+                                            classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "aria-label" -> messages("percentageFromFuelCards.label")
                                             ),
                                             suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.litres"))
+                                                content = Text(messages("label.percent"))
                                             ))
                                         ).withFormField(form(s"percentageFromFuelCards-$idx")))
                                     )
