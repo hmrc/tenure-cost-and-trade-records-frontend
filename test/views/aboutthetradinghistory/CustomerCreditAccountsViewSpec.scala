@@ -102,6 +102,20 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
           messages("error.customerCreditAcc.range", 2022.toString)
         )
       }
+      "reject  values bigger than 100" in {
+        val form     = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022"))(messages)
+        val formData = Map(
+          "customerCreditAccounts-0" -> "101"
+        )
+
+        val formWithData = form.bind(formData)
+
+        formWithData.errors.size shouldBe 1
+        formWithData.errors.head shouldBe FormError(
+          "customerCreditAccounts-0",
+          messages("error.percentage", 2022.toString)
+        )
+      }
     }
   }
 }

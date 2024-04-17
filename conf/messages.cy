@@ -2101,6 +2101,7 @@ error.weeksMapping.invalid = Mae’n rhaid i’r cyfnod masnachu yn ystod y flwy
 error.fullName.maxLength = Full name must be 50 characters or fewer
 error.fullNameContactDetails.maxLength = The name must be 50 characters or fewer
 error.confirmableAction.required = Select yes if you want to remove this item
+error.percentage = The percentage figure in year ending {0} cannot be higher than 100
 
 # Currency optional validation
 error.optCurrency.negative = {0} cannot be a negative number
