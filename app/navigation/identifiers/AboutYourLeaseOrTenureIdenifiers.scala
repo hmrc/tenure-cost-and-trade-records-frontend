@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -168,4 +168,24 @@ case object ServicePaidSeparatelyListId extends Identifier {
 
 case object TypeOfTenureId extends Identifier {
   override def toString: String = "typeOfTenurePage"
+}
+
+case object DoesRentIncludeParkingId extends Identifier {
+  override def toString: String = "doesRentIncludeParkingPage"
+}
+
+case object IsParkingRentPaidSeparatelyId extends Identifier {
+  override def toString: String = "IsParkingRentPaidSeparatelyPage"
+}
+
+case object IncludedInRentParkingSpacesId extends Identifier {
+  override def toString: String = "includedInRentParkingSpacesPage"
+}
+
+case object RentedSeparatelyParkingSpacesId extends Identifier {
+  override def toString: String = "rentedSeparatelyParkingSpacesPage"
+}
+
+case object CarParkingAnnualRentId extends Identifier {
+  override def toString: String = "carParkingAnnualRentPage"
 }

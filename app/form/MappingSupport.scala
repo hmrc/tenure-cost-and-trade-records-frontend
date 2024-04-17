@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,6 +104,8 @@ object MappingSupport {
   val cdbMaxCurrencyAmount = 9999999.99
   val intRegex: Regex      = """^\d{1,3}$""".r
   val invalidCharRegex     = """^[0-9A-Za-z\s\-\,]+$"""
+
+  private val numberRegex: Regex = """^[-+]?\d+$""".r
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
@@ -277,9 +279,17 @@ object MappingSupport {
       .verifying(messages(s"error.$field.range", year), _ <= salesMax)
   ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
+  def nonNegativeNumber(field: String, defaultValue: String = ""): Mapping[Int] =
+    default(text, defaultValue)
+      .verifying(s"error.$field.required", _.nonEmpty)
+      .verifying(s"error.$field.nonNumeric", numberRegex.matches(_))
+      .transform[Int](_.toInt, _.toString)
+      .verifying(s"error.$field.negative", _ >= 0)
+
   def otherCostValueMapping(field: String): Mapping[Option[BigDecimal]] = optional(
     text
       .transform[BigDecimal](s => Try(BigDecimal(s)).getOrElse(-1), _.toString)
       .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
   ).verifying(s"error.$field.required", _.nonEmpty)
+
 }

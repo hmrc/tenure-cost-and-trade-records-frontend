@@ -358,6 +358,21 @@ POST        /remove-low-margin-fuel-cards-details                   controllers.
 GET         /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.show()
 POST        /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.submit()
 
+GET         /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.show()
+POST        /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.submit()
+
+GET         /included-in-rent-parking-spaces                        controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.show()
+POST        /included-in-rent-parking-spaces                        controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.submit()
+
+GET         /is-parking-rent-paid-separately                        controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.show()
+POST        /is-parking-rent-paid-separately                        controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.submit()
+
+GET         /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.show()
+POST        /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.submit()
+
+GET         /car-parking-annual-rent                                controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.show()
+POST        /car-parking-annual-rent                                controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.submit()
+
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
 POST        /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.submit()

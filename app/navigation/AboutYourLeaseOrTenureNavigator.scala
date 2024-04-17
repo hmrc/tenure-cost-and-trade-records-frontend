@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -289,17 +289,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController
           .show(Some(getIndexOfPaidServices(answers) + 1))
-      case Some(AnswerNo)  =>
-        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
       case _               =>
-        logger.warn(
-          s"Navigation for add another service paid separately reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for add another service conditions routing")
+        answers.forType match {
+          case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
+          case _                => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+        }
     }
-
   }
-  private def tradeServicesListRouting: Session => Call         = answers => {
+
+  private def tradeServicesListRouting: Session => Call = answers => {
     val existingSection =
       answers.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(getIndexOfTradeServices(answers)))
     existingSection.flatMap(_.addAnotherService) match {
@@ -314,19 +312,17 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for add another service conditions routing")
     }
+  }
 
-  }
-  private def paymentForTradeServicesRouting: Session => Call   = answers => {
+  private def paymentForTradeServicesRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices.map(_.paymentForTradeService)) match {
-      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
-      case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+      case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
       case _               =>
-        logger.warn(
-          s"Navigation for payment for trade services reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for payment for trade services")
+        answers.forType match {
+          case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
+          case _                => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+        }
     }
-  }
 
   private def getIndexOfTradeServices(session: Session): Int =
     session.aboutLeaseOrAgreementPartThree.map(_.tradeServicesIndex).getOrElse(0)
@@ -334,83 +330,73 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   private def getIndexOfPaidServices(session: Session): Int =
     session.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
 
+  private def doesRentIncludeParkingRouting: Session => Call =
+    _.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage) match {
+      case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show()
+      case _               => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()
+    }
+
+  private def isParkingRentPaidSeparatelyRouting: Session => Call =
+    _.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.isRentPaidSeparately) match {
+      case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show()
+      case _               => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
     ConnectedToLandlordDetailsPageId              -> connectedToLandlordDetailsRouting,
     LeaseOrAgreementDetailsPageId                 -> leaseOrAgreementDetailsRouting,
     CurrentRentPayableWithin12monthsPageId        -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     ),
-    PropertyUseLeasebackAgreementId               -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-    ),
+    PropertyUseLeasebackAgreementId               -> (_ => aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()),
     CurrentAnnualRentPageId                       -> currentAnnualRentRouting,
     CurrentRentFirstPaidPageId                    -> currentRentFirstPaidRouting,
     TenancyLeaseAgreementExpirePageId             -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     ),
-    CurrentLeaseBeginPageId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
-    IncludedInYourRentPageId                      -> (_ => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
-    DoesRentPayablePageId                         -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
-    ),
+    CurrentLeaseBeginPageId                       -> (_ => aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
+    IncludedInYourRentPageId                      -> (_ => aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
+    DoesRentPayablePageId                         -> (_ => aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()),
     UltimatelyResponsibleInsideRepairsPageId      -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     ),
     UltimatelyResponsibleOutsideRepairsPageId     -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
+      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
     ),
     UltimatelyResponsibleBusinessInsurancePageId  -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
+      aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
     ),
     RentIncludeTradeServicesPageId                -> rentIncludeTradeServicesRouting,
     RentIncludeTradeServicesDetailsPageId         -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+      aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
     ),
-    RentIncludesVatPageId                         -> (_ => controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
+    RentIncludesVatPageId                         -> (_ => aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     RentFixtureAndFittingsPageId                  -> rentFixtureAndFittingsRouting,
-    RentFixtureAndFittingsDetailsPageId           -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
-    ),
+    RentFixtureAndFittingsDetailsPageId           -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     RentOpenMarketPageId                          -> rentRentOpenMarketRouting,
     WhatRentBasedOnPageId                         -> RPIRouting,
     RentIncreaseByRPIPageId                       -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
+      aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
     ),
     RentPayableVaryAccordingToGrossOrNetId        -> payableGrossOrNetRouting,
     RentPayableVaryAccordingToGrossOrNetDetailsId -> payableGrossOrNetDetailsRouting,
     rentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
-    rentVaryQuantityOfBeersDetailsId              -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-    ),
-    HowIsCurrentRentFixedId                       -> (_ => controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
-    MethodToFixCurrentRentsId                     -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
-    ),
-    IntervalsOfRentReviewId                       -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
-    ),
-    CanRentBeReducedOnReviewId                    -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()
-    ),
-    IncentivesPaymentsConditionsId                -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
-    ),
+    rentVaryQuantityOfBeersDetailsId              -> (_ => aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()),
+    HowIsCurrentRentFixedId                       -> (_ => aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
+    MethodToFixCurrentRentsId                     -> (_ => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()),
+    IntervalsOfRentReviewId                       -> (_ => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()),
+    CanRentBeReducedOnReviewId                    -> (_ => aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()),
+    IncentivesPaymentsConditionsId                -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
     TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
-    TenantsAdditionsDisregardedDetailsId          -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
-    ),
+    TenantsAdditionsDisregardedDetailsId          -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
     PayCapitalSumId                               -> payCapitalSumRouting,
-    PayCapitalSumDetailsId                        -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
-    ),
-    PayWhenLeaseGrantedId                         -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
-    ),
+    PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
+    PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     LegalOrPlanningRestrictionId                  -> legalOrPlanningRestrictionRouting,
     LegalOrPlanningRestrictionDetailsId           -> (_ =>
-      controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     ),
     TradeServicesDescriptionId                    -> tradeServicesDescriptionRouting,
     TradeServicesListId                           -> tradeServicesListRouting,
@@ -418,7 +404,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ServicePaidSeparatelyChargeId                 -> servicePaidSeparatelyChargeRouting,
     ServicePaidSeparatelyListId                   -> servicePaidSeparatelyListRouting,
     PaymentForTradeServicesId                     -> paymentForTradeServicesRouting,
-    TypeOfTenureId                                -> (_ => controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
+    TypeOfTenureId                                -> (_ => aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
+    DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
+    IncludedInRentParkingSpacesId                 -> (_ => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()),
+    IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,
+    RentedSeparatelyParkingSpacesId               -> (_ => aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show()),
+    CarParkingAnnualRentId                        -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }
