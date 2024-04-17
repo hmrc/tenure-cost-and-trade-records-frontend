@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
@@ -86,6 +86,11 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     val index = answers.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
 
     answers.forType match {
+      case ForTypes.for6020 =>
+        answers.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.isRentPaidSeparately) match {
+          case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show().url
+          case _               => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
+        }
       case ForTypes.for6030 =>
         answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices).map(_.paymentForTradeService) match {
           case Some(AnswerYes) =>

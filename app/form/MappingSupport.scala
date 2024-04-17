@@ -105,7 +105,7 @@ object MappingSupport {
   val intRegex: Regex      = """^\d{1,3}$""".r
   val invalidCharRegex     = """^[0-9A-Za-z\s\-\,]+$"""
 
-  private val numberRegex: Regex   = """^[-+]?\d+$""".r
+  private val numberRegex: Regex = """^[-+]?\d+$""".r
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")

@@ -370,6 +370,8 @@ POST        /is-parking-rent-paid-separately                        controllers.
 GET         /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.show()
 POST        /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.submit()
 
+GET         /car-parking-annual-rent                                controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.show()
+POST        /car-parking-annual-rent                                controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.submit()
 
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
