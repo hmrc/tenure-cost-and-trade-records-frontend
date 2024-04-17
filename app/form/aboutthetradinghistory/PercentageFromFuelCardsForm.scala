@@ -55,6 +55,7 @@ object PercentageFromFuelCardsForm {
             _.toString
           )
           .verifying(messages("error.percentageFromFuelCards.range", year), _ >= 0)
+          .verifying(messages("error.percentage", year), _ <= 100)
       ).verifying(messages("error.percentageFromFuelCards.required", year), _.isDefined)
     )(PercentageFromFuelCards.apply)(PercentageFromFuelCards.unapply)
 }
