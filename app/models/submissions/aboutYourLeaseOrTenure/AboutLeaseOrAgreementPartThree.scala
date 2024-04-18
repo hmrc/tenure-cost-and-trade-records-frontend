@@ -27,7 +27,8 @@ case class AboutLeaseOrAgreementPartThree(
   servicesPaid: IndexedSeq[ServicesPaid] = IndexedSeq.empty,
   carParking: Option[CarParking] = None,
   paymentForTradeServices: Option[PaymentForTradeServices] = None,
-  typeOfTenure: Option[TypeOfTenure] = None // Add March 2024 for 6020
+  typeOfTenure: Option[TypeOfTenure] = None, // Add March 2024 for 6020
+  propertyUpdates: Option[PropertyUpdates] = None
 )
 
 object AboutLeaseOrAgreementPartThree {

@@ -214,6 +214,27 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def canRentBeReducedRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
+      case _                => aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()
+    }
+  }
+
+  private def propertyUpdatesRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartThree.flatMap(
+      _.propertyUpdates.map(_.updates)
+    ) match {
+      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO Screen not implemented yet 18/04/24
+      case Some(AnswerNo)  => controllers.routes.TaskListController.show() // TODO Screen not implemented yet 18/04/24
+      case _               =>
+        logger.warn(
+          s"Navigation for property updates reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for property updates routing")
+    }
+  }
+
   private def tenantsAdditionsDisregardedRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
@@ -387,7 +408,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     HowIsCurrentRentFixedId                       -> (_ => aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
     MethodToFixCurrentRentsId                     -> (_ => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()),
     IntervalsOfRentReviewId                       -> (_ => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()),
-    CanRentBeReducedOnReviewId                    -> (_ => aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()),
+    CanRentBeReducedOnReviewId                    -> canRentBeReducedRouting,
+    PropertyUpdatesId                             -> propertyUpdatesRouting,
     IncentivesPaymentsConditionsId                -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
     TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
     TenantsAdditionsDisregardedDetailsId          -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
