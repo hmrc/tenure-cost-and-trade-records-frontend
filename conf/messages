@@ -950,6 +950,8 @@ hint.rentIncludeFixturesAndFittings = For example, any trade fixtures and fittin
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes any equipment belonging to the landlord
+error.rentedEquipmentDetails.required = Enter rented equipment details
+error.rentedEquipmentDetails.maxLength = Rented equipment details must be {0} characters or fewer
 
 #RENT INCLUDES VAT
 #################
