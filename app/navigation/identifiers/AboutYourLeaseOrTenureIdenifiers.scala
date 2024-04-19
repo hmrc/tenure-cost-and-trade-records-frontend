@@ -107,6 +107,8 @@ case object IntervalsOfRentReviewId extends Identifier { override def toString: 
 
 case object CanRentBeReducedOnReviewId extends Identifier { override def toString: String = "canRentBeReducedPage" }
 
+case object PropertyUpdatesId extends Identifier { override def toString: String = "propertyUpdatesPage" }
+
 case object IncentivesPaymentsConditionsId extends Identifier {
   override def toString: String = "incentivesPaymentsConditionsPage"
 }

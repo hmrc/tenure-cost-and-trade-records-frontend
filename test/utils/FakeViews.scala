@@ -281,6 +281,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[servicePaidSeparatelyCharge]
   lazy val servicePaidSeparatelyListView                   =
     app.injector.instanceOf[servicePaidSeparatelyList]
+  lazy val propertyUpdatesView                             =
+    app.injector.instanceOf[propertyUpdates]
 
   // Car parking lease
   lazy val doesRentIncludeParkingView        = app.injector.instanceOf[doesRentIncludeParking]

@@ -416,6 +416,9 @@ POST        /receive-payment-when-lease-granted                     controllers.
 GET         /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.show()
 POST        /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.submit()
 
+GET         /property-updates                                       controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.show()
+POST        /property-updates                                       controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.submit()
+
 GET         /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.show()
 POST        /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.submit()
 

@@ -984,6 +984,15 @@ error.formerLeaseSurrendered.missing = Dewiswch ‘do’ os ildiwyd prydles neu 
 canRentBeReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
 error.canRentBeReducedOnReview.missing = Dewiswch ‘oes’ os gall adolygiad arwain at ostyngiad yn eich rhent
 
+#PROPERTY UPDATES DURING THE CURRENT LEASE
+##########################################
+
+propertyUpdates.heading = Property updates during the current lease
+propertyUpdates.declare = You must declare any work you have done to the property during the current lease. Only include any alterations, improvements, refurbishment, initial fitting out or initial repairs that may have affected the property’s value.
+propertyUpdates.assign  = If the lease was assigned to you by another party, you must declare any works carried out by them under current lease.
+propertyUpdates.label   = Has the property been altered, improved or updated in any way during the current lease?
+error.propertyUpdates.missing   = Select yes if the property been altered, improved or updated in any way during the current lease
+
 # PAY A CAPITAL SUM
 ##################
 payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
