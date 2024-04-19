@@ -1105,7 +1105,8 @@ trait FakeObjects {
     servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
     carParking = Some(CarParking(Some(AnswerYes), Some(CarParkingSpaces(1, 2, 3)), Some(AnswerNo))),
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
-    typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details")))
+    typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
+    propertyUpdates = Some(PropertyUpdates(AnswerYes))
   )
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(

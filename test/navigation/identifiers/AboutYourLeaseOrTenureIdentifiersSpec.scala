@@ -142,6 +142,10 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(CanRentBeReducedOnReviewId.toString.equals("canRentBeReducedPage"))
     }
 
+    "Identifier for property updates page" in {
+      assert(PropertyUpdatesId.toString.equals("propertyUpdatesPage"))
+    }
+
     "Identifier for conditions payments and conditions page" in {
       assert(IncentivesPaymentsConditionsId.toString.equals("incentivesPaymentsConditionsPage"))
     }
