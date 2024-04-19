@@ -80,11 +80,9 @@ class DoesRentIncludeParkingController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
-      case "CYA" =>
-        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
-      case "TL"  =>
+      case "TL" =>
         controllers.routes.TaskListController.show().url + "#does-rent-include-parking"
-      case _     =>
+      case _    =>
         if (leaseOrAgreementPartThree.exists(_.servicesPaid.nonEmpty)) {
           controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url
         } else {
