@@ -80,9 +80,8 @@ class IsParkingRentPaidSeparatelyController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
-      case "CYA" =>
-        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
-      case _     =>
+      case "TL" => controllers.routes.TaskListController.show().url
+      case _    =>
         if (
           leaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage).contains(AnswerYes)
         ) {

@@ -44,6 +44,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show(),
+    aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show(),
+    aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show(),
+    aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(),
     aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(),
@@ -143,20 +147,25 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
-  private def rentFixtureAndFittingsRouting: Session => Call = answers => {
-    answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name)
-    ) match {
-      case Some("yes") =>
-        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show()
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for fixture and fittings reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for fixture and fittings routing")
+  private def rentFixtureAndFittingsRouting: Session => Call = answers =>
+    if (
+      answers.aboutLeaseOrAgreementPartOne
+        .flatMap(_.rentIncludeFixturesAndFittingsDetails)
+        .map(_.rentIncludeFixturesAndFittingsDetails)
+        .contains(AnswerYes)
+    ) {
+      answers.forType match {
+        case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show()
+        case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show()
+      }
+    } else {
+      answers.forType match {
+        case ForTypes.for6020 =>
+          controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController
+            .show() // TODO: Does rent include the following
+        case _                => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
+      }
     }
-  }
 
   private def rentRentOpenMarketRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
@@ -432,6 +441,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,
     RentedSeparatelyParkingSpacesId               -> (_ => aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show()),
     CarParkingAnnualRentId                        -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()),
+    RentedEquipmentDetailsId                      -> (_ =>
+      aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
+    ), // TODO: Does rent include the following
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

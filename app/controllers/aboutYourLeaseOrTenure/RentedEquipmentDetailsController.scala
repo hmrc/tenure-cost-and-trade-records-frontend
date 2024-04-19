@@ -18,18 +18,17 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.CarParkingAnnualRentForm.carParkingAnnualRentForm
+import form.aboutYourLeaseOrTenure.RentedEquipmentDetailsForm.rentedEquipmentDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateCarParking
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.CarParkingAnnualRentId
+import navigation.identifiers.RentedEquipmentDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.carParkingAnnualRent
+import views.html.aboutYourLeaseOrTenure.rentedEquipmentDetails
 
-import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
@@ -37,8 +36,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class CarParkingAnnualRentController @Inject() (
-  carParkingAnnualRentView: carParkingAnnualRent,
+class RentedEquipmentDetailsController @Inject() (
+  rentedEquipmentDetailsView: rentedEquipmentDetails,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -50,32 +49,24 @@ class CarParkingAnnualRentController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      carParkingAnnualRentView(
+      rentedEquipmentDetailsView(
         leaseOrAgreementPartThree
-          .flatMap(_.carParking)
-          .flatMap(carParking =>
-            for {
-              annualRent    <- carParking.annualRent
-              fixedRentFrom <- carParking.fixedRentFrom
-            } yield (annualRent, fixedRentFrom)
-          )
-          .fold(carParkingAnnualRentForm)(carParkingAnnualRentForm.fill),
+          .flatMap(_.rentedEquipmentDetails)
+          .fold(rentedEquipmentDetailsForm)(rentedEquipmentDetailsForm.fill),
         getBackLink
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[(BigDecimal, LocalDate)](
-      carParkingAnnualRentForm,
-      formWithErrors => BadRequest(carParkingAnnualRentView(formWithErrors, getBackLink)),
+    continueOrSaveAsDraft[String](
+      rentedEquipmentDetailsForm,
+      formWithErrors => BadRequest(rentedEquipmentDetailsView(formWithErrors, getBackLink)),
       data => {
-        val updatedData = updateCarParking(
-          _.copy(annualRent = Some(data._1), fixedRentFrom = Some(data._2))
-        )
+        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentedEquipmentDetails = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(CarParkingAnnualRentId, updatedData).apply(updatedData))
+          Redirect(navigator.nextPage(RentedEquipmentDetailsId, updatedData).apply(updatedData))
         }
       }
     )
@@ -88,7 +79,7 @@ class CarParkingAnnualRentController @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url
-      case _    => controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show().url
+      case _    => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
     }
 
 }

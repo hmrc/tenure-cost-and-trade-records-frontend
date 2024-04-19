@@ -946,10 +946,14 @@ error.rentIncludeTradeServicesDetails.title = Sum included to cover trade servic
 # RENT INCLUDE FIXTURES AND FITTINGS
 ###################################
 rentIncludeFixturesAndFittings.heading = Does the rent include any equipment belonging to the landlord?
-hint.rentIncludeFixturesAndFittings = For example, any trade fixtures and fittings, plant and machinery, or furniture.
+hint.rentIncludeFixturesAndFittings = For example, trade fixtures and fittings, plant and machinery, or furniture.
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
 error.rentIncludeFixturesAndFittings.missing = Select yes if the rent includes any equipment belonging to the landlord
+rentedEquipmentDetails.heading = Give details of the equipment you can use as part of your rent
+rentedEquipmentDetails.hint = Where known, also include the amount payable
+error.rentedEquipmentDetails.required = Enter rented equipment details
+error.rentedEquipmentDetails.maxLength = Rented equipment details must be {0} characters or fewer
 
 #RENT INCLUDES VAT
 #################

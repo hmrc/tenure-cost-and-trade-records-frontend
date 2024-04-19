@@ -407,8 +407,6 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
     }
 
-    session6030Full
-
     "return a function that goes to task list page when CYA has been completed" in {
       navigator
         .nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, session6010)

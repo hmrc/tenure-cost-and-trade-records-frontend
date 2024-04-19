@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,10 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm.rentOpenMarketValuesForm
-import models.Session
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
+import models.submissions.common.AnswerYes
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentOpenMarketPageId
 import play.api.Logging
@@ -80,15 +81,20 @@ class RentOpenMarketValueController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#rent-open-market-value"
       case _    =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(
-          _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name)
+          _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails)
         ) match {
-          case Some("yes") =>
-            controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
-          case Some("no")  =>
+          case Some(AnswerYes) =>
+            answers.forType match {
+              case ForTypes.for6020 =>
+                controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController
+                  .show()
+                  .url // TODO: Does rent include the following
+              case _                =>
+                controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
+            }
+          case _               =>
             controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
-          case _           =>
-            logger.warn(s"Back link for fixture and fittings page reached with unknown trade services value")
-            controllers.routes.TaskListController.show().url
         }
     }
+
 }

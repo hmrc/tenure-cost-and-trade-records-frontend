@@ -282,7 +282,7 @@ object MappingSupport {
   def nonNegativeNumber(field: String, defaultValue: String = ""): Mapping[Int] =
     default(text, defaultValue)
       .verifying(s"error.$field.required", _.nonEmpty)
-      .verifying(s"error.$field.nonNumeric", numberRegex.matches(_))
+      .verifying(s"error.$field.nonNumeric", s => s.isEmpty || numberRegex.matches(s))
       .transform[Int](_.toInt, _.toString)
       .verifying(s"error.$field.negative", _ >= 0)
 
