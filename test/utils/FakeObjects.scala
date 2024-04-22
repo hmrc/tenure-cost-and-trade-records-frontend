@@ -17,20 +17,18 @@
 package utils
 
 import models.submissions.Form6010._
+import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings._
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, _}
-import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
-import models.submissions.aboutfranchisesorlettings.LettingSection
-import models.submissions.aboutyouandtheproperty._
 import models.submissions.aboutthetradinghistory._
+import models.submissions.aboutyouandtheproperty._
 import models.submissions.additionalinformation._
-import models.{AnnualRent, ForTypes, Session, SubmissionDraft}
-import models.submissions.common.{Address, AnswerNo, AnswerYes, ContactDetails, ContactDetailsAddress}
+import models.submissions.common._
 import models.submissions.connectiontoproperty._
-import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, DownloadPDFReferenceNumber}
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
 import models.submissions.requestReferenceNumber._
+import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
+import models.{AnnualRent, ForTypes, Session, SubmissionDraft}
 
 import java.time.{Instant, LocalDate}
 
@@ -97,7 +95,10 @@ trait FakeObjects {
     )
 
   val prefilledDateInput: LocalDate               = LocalDate.of(2022, 6, 1)
+  val today: LocalDate                            = LocalDate.now
   val prefilledMonthYearInput: MonthsYearDuration = MonthsYearDuration(6, 2000)
+
+  val hundred: BigDecimal = BigDecimal(100)
 
   val prefilledTradingNameOperatingFromProperty: TradingNameOperatingFromProperty = TradingNameOperatingFromProperty(
     "TRADING NAME"
@@ -1103,8 +1104,9 @@ trait FakeObjects {
     servicesPaidIndex = 1,
     tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"))),
     servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
-    carParking = Some(CarParking(Some(AnswerYes), Some(CarParkingSpaces(1, 2, 3)), Some(AnswerNo))),
-    rentedEquipmentDetails = Some("Rented equipment details"),
+    throughputAffectsRent = ThroughputAffectsRent(AnswerYes, "Throughput affects rent details"),
+    carParking = CarParking(AnswerYes, CarParkingSpaces(1, 2, 3), AnswerYes, CarParkingSpaces(10), hundred, today),
+    rentedEquipmentDetails = "Rented equipment details",
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
     propertyUpdates = Some(PropertyUpdates(AnswerYes)),
