@@ -1107,7 +1107,8 @@ trait FakeObjects {
     rentedEquipmentDetails = Some("Rented equipment details"),
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
-    propertyUpdates = Some(PropertyUpdates(AnswerYes))
+    propertyUpdates = Some(PropertyUpdates(AnswerYes)),
+    leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes))
   )
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(

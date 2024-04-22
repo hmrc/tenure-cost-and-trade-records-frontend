@@ -1170,6 +1170,11 @@ hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work c
 error.tenantsAdditionsDisregardedDetails.required = Nodwch ddisgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru
 error.tenantsAdditionsDisregardedDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 500 o gymeriadau neu lai
 
+#LEASE SURRENDERED EARLY
+
+leaseSurrenderedEarly.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
+error.leaseSurrenderedEarly.required = Select yes if former lease or agreement was surrendered early as a condition of the present one being granted
+
 # LEGAL PLANNING RESTRICTIONS
 #############################
 legalOrPlanningRestrictions.heading = Other factors affecting the rent
@@ -1954,7 +1959,7 @@ checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading = Percentage
 checkYourAnswersAboutTheTradingHistory.lowMarginCards = Low-margin fuel cards
 checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading = Percentage of fuel sales on low-margin cards
 checkYourAnswersAboutTheTradingHistory.lowMarginCard = Low-margin fuel card {0}
-checkYourAnswersAboutTheTradingHistory.lowMarginCard.details = Low margin fuel card details
+checkYourAnswersAboutTheTradingHistory.lowMarginCard.details = Low-margin fuel card details
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded = You have added {0} low margin fuel {1}
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove = Add or remove low-margin fuel card
 checkYourAnswersAboutTheTradingHistory.card = card
