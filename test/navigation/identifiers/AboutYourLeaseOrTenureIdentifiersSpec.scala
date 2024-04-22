@@ -154,6 +154,10 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(TenantsAdditionsDisregardedId.toString.equals("tenantsAdditionsDisregardedPage"))
     }
 
+    "Identifier for lease surrendered early page" in {
+      assert(LeaseSurrenderedEarlyId.toString.equals("leaseSurrenderedEarlyPage"))
+    }
+
     "Identifier for tenants additions disregarded details page" in {
       assert(TenantsAdditionsDisregardedDetailsId.toString.equals("tenantsAdditionsDisregardedDetailsPage"))
     }

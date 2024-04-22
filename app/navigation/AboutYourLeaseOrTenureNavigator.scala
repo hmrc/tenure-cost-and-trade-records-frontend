@@ -249,12 +249,22 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
     ) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show()
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
+      case Some("no")  =>
+        if (answers.forType == ForTypes.for6020)
+          controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
+        else controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
       case _           =>
         logger.warn(
           s"Navigation for tenants additions disregarded reached without correct selection of conditions by controller"
         )
         throw new RuntimeException("Invalid option exception for tenants additions disregarded routing")
+    }
+  }
+
+  private def tenantsAdditionsDisregardedDetailsRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
+      case _                => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     }
   }
 
@@ -421,7 +431,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     PropertyUpdatesId                             -> propertyUpdatesRouting,
     IncentivesPaymentsConditionsId                -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
     TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
-    TenantsAdditionsDisregardedDetailsId          -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
+    TenantsAdditionsDisregardedDetailsId          -> tenantsAdditionsDisregardedDetailsRouting,
+    LeaseSurrenderedEarlyId                       -> (_ =>
+      controllers.routes.TaskListController.show()
+    ), // TODO the next screen- Where you given a rent-free period (...) is not ready yet.
     PayCapitalSumId                               -> payCapitalSumRouting,
     PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),

@@ -117,6 +117,10 @@ case object TenantsAdditionsDisregardedId extends Identifier {
   override def toString: String = "tenantsAdditionsDisregardedPage"
 }
 
+case object LeaseSurrenderedEarlyId extends Identifier {
+  override def toString: String = "leaseSurrenderedEarlyPage"
+}
+
 case object TenantsAdditionsDisregardedDetailsId extends Identifier {
   override def toString: String = "tenantsAdditionsDisregardedDetailsPage"
 }

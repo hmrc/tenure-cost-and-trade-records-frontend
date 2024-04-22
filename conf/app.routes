@@ -434,6 +434,10 @@ POST        /tenants-additions-disregarded                          controllers.
 GET         /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.show()
 POST        /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.submit()
 
+GET         /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
+POST        /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
+
+
 GET         /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.show()
 POST        /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.submit()
 
