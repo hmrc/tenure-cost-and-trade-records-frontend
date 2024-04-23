@@ -95,14 +95,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
-  private def currentAnnualRentRouting: Session => Call = answers => {
-    answers.forType match {
+  private def currentAnnualRentRouting: Session => Call =
+    _.forType match {
       case ForTypes.for6011 =>
         controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show()
+      case ForTypes.for6020 =>
+        controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show()
       case _                =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
-  }
 
   private def leaseOrAgreementDetailsRouting: Session => Call = answers => {
     (
@@ -370,6 +371,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   private def getIndexOfPaidServices(session: Session): Int =
     session.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
 
+  private def doesRentVaryToThroughputRouting: Session => Call =
+    _.aboutLeaseOrAgreementPartThree.flatMap(_.throughputAffectsRent).map(_.doesRentVaryToThroughput) match {
+      case Some(AnswerYes) =>
+        aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController
+          .show() // TODO: ThroughputAffectsRentDetailsController
+      case _               => aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
+    }
+
   private def doesRentIncludeParkingRouting: Session => Call =
     _.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage) match {
       case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show()
@@ -449,6 +458,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ServicePaidSeparatelyListId                   -> servicePaidSeparatelyListRouting,
     PaymentForTradeServicesId                     -> paymentForTradeServicesRouting,
     TypeOfTenureId                                -> (_ => aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
+    ThroughputAffectsRentId                       -> doesRentVaryToThroughputRouting,
+    ThroughputAffectsRentDetailsId                -> (_ => aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
     IncludedInRentParkingSpacesId                 -> (_ => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()),
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,

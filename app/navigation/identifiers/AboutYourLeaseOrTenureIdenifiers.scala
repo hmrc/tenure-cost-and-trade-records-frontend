@@ -176,6 +176,14 @@ case object TypeOfTenureId extends Identifier {
   override def toString: String = "typeOfTenurePage"
 }
 
+case object ThroughputAffectsRentId extends Identifier {
+  override def toString: String = "throughputAffectsRentPage"
+}
+
+case object ThroughputAffectsRentDetailsId extends Identifier {
+  override def toString: String = "throughputAffectsRentDetailsPage"
+}
+
 case object DoesRentIncludeParkingId extends Identifier {
   override def toString: String = "doesRentIncludeParkingPage"
 }
