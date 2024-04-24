@@ -82,7 +82,7 @@ class Turnover6030Controller @Inject() (
               .saveOrUpdate(updatedData)
               .map { _ =>
                 navigator.cyaPage
-                  .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.costOfSales.head.drinks.isDefined)
+                  .filter(_ => navigator.from == "CYA" && aboutTheTradingHistory.unusualCircumstances.isDefined)
                   .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
               }
               .map(Redirect)
