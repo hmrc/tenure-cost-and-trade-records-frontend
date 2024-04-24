@@ -1774,6 +1774,13 @@ error.connectedToLandlord.missing = Select yes if you‘re connected to the land
 error.connectedToLandlordDetails.required = Enter a description of your relationship to the landlord
 error.connectedToLandlordDetails.maxLength = Your description of your relationship to the landlord must be 1,000 characters or fewer
 
+# THROUGHPUT AFFECTS RENT
+doesRentVaryToThroughput.heading = Does the rent vary according to the throughput?
+error.doesRentVaryToThroughput.required = Select yes if the rent vary according to the throughput
+throughputAffectsRentDetails.heading = Explain how your throughput affects your rent
+error.throughputAffectsRentDetails.required = Describe how throughput affects your rent
+error.throughputAffectsRentDetails.maxLength = The description of how throughput affects your rent must be {0} characters or fewer
+
 # CAR PARKING
 doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
 isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?

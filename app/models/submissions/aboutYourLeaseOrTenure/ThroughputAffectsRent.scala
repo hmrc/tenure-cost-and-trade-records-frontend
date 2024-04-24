@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,19 @@
  * limitations under the License.
  */
 
-import scala.concurrent.Future
+package models.submissions.aboutYourLeaseOrTenure
 
-package object utils {
-  implicit def toFut[A](a: A): Future[A] = Future.successful(a)
-  implicit def toOpt[A](a: A): Option[A] = Some(a)
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.{Json, OFormat}
+
+/**
+  * @author Yuriy Tumakha
+  */
+case class ThroughputAffectsRent(
+  doesRentVaryToThroughput: AnswersYesNo,
+  throughputAffectsRentDetails: Option[String] = None
+)
+
+object ThroughputAffectsRent {
+  implicit val format: OFormat[ThroughputAffectsRent] = Json.format
 }

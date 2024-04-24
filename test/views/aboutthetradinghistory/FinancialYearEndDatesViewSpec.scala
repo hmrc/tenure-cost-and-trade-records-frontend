@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  private val today    = LocalDate.now
   private val finYears = Seq(today, today.minusYears(1), today.minusYears(2)).map(_.getYear)
 
   override val form: Form[Seq[LocalDate]] = financialYearEndDatesForm()(messages)
@@ -82,4 +81,5 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
       assert(loginButton == messages("button.label.continue"))
     }
   }
+
 }

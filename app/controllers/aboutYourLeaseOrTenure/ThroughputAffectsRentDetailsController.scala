@@ -18,16 +18,16 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.RentedEquipmentDetailsForm.rentedEquipmentDetailsForm
+import form.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsForm.throughputAffectsRentDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateThroughputAffectsRent
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.RentedEquipmentDetailsId
+import navigation.identifiers.ThroughputAffectsRentDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.rentedEquipmentDetails
+import views.html.aboutYourLeaseOrTenure.throughputAffectsRentDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -36,8 +36,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class RentedEquipmentDetailsController @Inject() (
-  rentedEquipmentDetailsView: rentedEquipmentDetails,
+class ThroughputAffectsRentDetailsController @Inject() (
+  throughputAffectsRentDetailsView: throughputAffectsRentDetails,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,10 +49,11 @@ class RentedEquipmentDetailsController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      rentedEquipmentDetailsView(
+      throughputAffectsRentDetailsView(
         leaseOrAgreementPartThree
-          .flatMap(_.rentedEquipmentDetails)
-          .fold(rentedEquipmentDetailsForm)(rentedEquipmentDetailsForm.fill),
+          .flatMap(_.throughputAffectsRent)
+          .flatMap(_.throughputAffectsRentDetails)
+          .fold(throughputAffectsRentDetailsForm)(throughputAffectsRentDetailsForm.fill),
         getBackLink
       )
     )
@@ -60,13 +61,13 @@ class RentedEquipmentDetailsController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
-      rentedEquipmentDetailsForm,
-      formWithErrors => BadRequest(rentedEquipmentDetailsView(formWithErrors, getBackLink)),
+      throughputAffectsRentDetailsForm,
+      formWithErrors => BadRequest(throughputAffectsRentDetailsView(formWithErrors, getBackLink)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentedEquipmentDetails = Some(data)))
+        val updatedData = updateThroughputAffectsRent(_.copy(throughputAffectsRentDetails = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(RentedEquipmentDetailsId, updatedData).apply(updatedData))
+          Redirect(navigator.nextPage(ThroughputAffectsRentDetailsId, updatedData).apply(updatedData))
         }
       }
     )
@@ -77,6 +78,6 @@ class RentedEquipmentDetailsController @Inject() (
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+    controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
 
 }

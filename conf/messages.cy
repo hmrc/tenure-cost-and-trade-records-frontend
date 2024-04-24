@@ -1745,6 +1745,13 @@ error.connectedToLandlord.missing = Dewiswch ‘ydw’ os oes gennych gysylltiad
 error.connectedToLandlordDetails.required = Nodwch ddisgrifiad o’ch perthynas â’r landlord
 error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’ch perthynas â’r landlord fod yn 1,000 o gymeriadau neu lai
 
+# THROUGHPUT AFFECTS RENT
+doesRentVaryToThroughput.heading = Does the rent vary according to the throughput?
+error.doesRentVaryToThroughput.required = Select yes if the rent vary according to the throughput
+throughputAffectsRentDetails.heading = Explain how your throughput affects your rent
+error.throughputAffectsRentDetails.required = Describe how throughput affects your rent
+error.throughputAffectsRentDetails.maxLength = The description of how throughput affects your rent must be {0} characters or fewer
+
 # CAR PARKING
 doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
 isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?

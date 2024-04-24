@@ -18,6 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.AnswerNo
 import play.api.libs.json.{Json, OFormat}
 
 case class AboutLeaseOrAgreementPartThree(
@@ -25,6 +26,7 @@ case class AboutLeaseOrAgreementPartThree(
   servicesPaidIndex: Int = 0,
   tradeServices: IndexedSeq[TradeServices] = IndexedSeq.empty,
   servicesPaid: IndexedSeq[ServicesPaid] = IndexedSeq.empty,
+  throughputAffectsRent: Option[ThroughputAffectsRent] = None,
   carParking: Option[CarParking] = None,
   rentedEquipmentDetails: Option[String] = None,
   paymentForTradeServices: Option[PaymentForTradeServices] = None,
@@ -55,6 +57,16 @@ object AboutLeaseOrAgreementPartThree {
     updateAboutLeaseOrAgreementPartThree { aboutLeaseOrAgreementPartThree =>
       val carParking = update(aboutLeaseOrAgreementPartThree.carParking.getOrElse(CarParking()))
       aboutLeaseOrAgreementPartThree.copy(carParking = Some(carParking))
+    }
+
+  def updateThroughputAffectsRent(
+    update: ThroughputAffectsRent => ThroughputAffectsRent
+  )(implicit sessionRequest: SessionRequest[_]): Session =
+    updateAboutLeaseOrAgreementPartThree { aboutLeaseOrAgreementPartThree =>
+      val throughputAffectsRent = update(
+        aboutLeaseOrAgreementPartThree.throughputAffectsRent.getOrElse(ThroughputAffectsRent(AnswerNo))
+      )
+      aboutLeaseOrAgreementPartThree.copy(throughputAffectsRent = Some(throughputAffectsRent))
     }
 
 }
