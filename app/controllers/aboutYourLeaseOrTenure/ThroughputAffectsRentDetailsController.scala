@@ -18,17 +18,16 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.ThroughputAffectsRentForm.doesRentVaryToThroughputForm
+import form.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsForm.throughputAffectsRentDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateThroughputAffectsRent
-import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.ThroughputAffectsRentId
+import navigation.identifiers.ThroughputAffectsRentDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.throughputAffectsRent
+import views.html.aboutYourLeaseOrTenure.throughputAffectsRentDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -37,8 +36,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class ThroughputAffectsRentController @Inject() (
-  throughputAffectsRentView: throughputAffectsRent,
+class ThroughputAffectsRentDetailsController @Inject() (
+  throughputAffectsRentDetailsView: throughputAffectsRentDetails,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -50,25 +49,25 @@ class ThroughputAffectsRentController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      throughputAffectsRentView(
+      throughputAffectsRentDetailsView(
         leaseOrAgreementPartThree
           .flatMap(_.throughputAffectsRent)
-          .map(_.doesRentVaryToThroughput)
-          .fold(doesRentVaryToThroughputForm)(doesRentVaryToThroughputForm.fill),
+          .flatMap(_.throughputAffectsRentDetails)
+          .fold(throughputAffectsRentDetailsForm)(throughputAffectsRentDetailsForm.fill),
         getBackLink
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
-      doesRentVaryToThroughputForm,
-      formWithErrors => BadRequest(throughputAffectsRentView(formWithErrors, getBackLink)),
+    continueOrSaveAsDraft[String](
+      throughputAffectsRentDetailsForm,
+      formWithErrors => BadRequest(throughputAffectsRentDetailsView(formWithErrors, getBackLink)),
       data => {
-        val updatedData = updateThroughputAffectsRent(_.copy(doesRentVaryToThroughput = data))
+        val updatedData = updateThroughputAffectsRent(_.copy(throughputAffectsRentDetails = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(ThroughputAffectsRentId, updatedData).apply(updatedData))
+          Redirect(navigator.nextPage(ThroughputAffectsRentDetailsId, updatedData).apply(updatedData))
         }
       }
     )
@@ -79,6 +78,6 @@ class ThroughputAffectsRentController @Inject() (
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
+    controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
 
 }

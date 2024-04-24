@@ -373,9 +373,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def doesRentVaryToThroughputRouting: Session => Call =
     _.aboutLeaseOrAgreementPartThree.flatMap(_.throughputAffectsRent).map(_.doesRentVaryToThroughput) match {
-      case Some(AnswerYes) =>
-        aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController
-          .show() // TODO: ThroughputAffectsRentDetailsController
+      case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show()
       case _               => aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 

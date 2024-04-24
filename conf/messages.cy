@@ -1748,6 +1748,7 @@ error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’
 # THROUGHPUT AFFECTS RENT
 doesRentVaryToThroughput.heading = Does the rent vary according to the throughput?
 error.doesRentVaryToThroughput.required = Select yes if the rent vary according to the throughput
+throughputAffectsRentDetails.heading = Explain how your throughput affects your rent
 error.throughputAffectsRentDetails.required = Describe how throughput affects your rent
 error.throughputAffectsRentDetails.maxLength = The description of how throughput affects your rent must be {0} characters or fewer
 

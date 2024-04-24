@@ -16,14 +16,12 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OFormat}
 
 case class AlternativeContactDetails(
   alternativeContactAddress: AlternativeAddress
 )
 
 object AlternativeContactDetails {
-  implicit val format1 = Json.format[AlternativeContactDetails]
-  implicit val format2 = Json.format[AlternativeAddress]
-
+  implicit val format: OFormat[AlternativeContactDetails] = Json.format
 }

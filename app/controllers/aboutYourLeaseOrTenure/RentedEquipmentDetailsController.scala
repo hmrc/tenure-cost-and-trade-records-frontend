@@ -77,9 +77,6 @@ class RentedEquipmentDetailsController @Inject() (
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url
-      case _    => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
-    }
+    controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
 }

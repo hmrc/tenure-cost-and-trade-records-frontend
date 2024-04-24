@@ -361,6 +361,9 @@ POST        /type-of-tenure                                         controllers.
 GET         /throughput-affects-rent                                controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentController.show()
 POST        /throughput-affects-rent                                controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentController.submit()
 
+GET         /throughput-affects-rent-details                        controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsController.show()
+POST        /throughput-affects-rent-details                        controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsController.submit()
+
 GET         /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.show()
 POST        /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.submit()
 
