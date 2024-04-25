@@ -269,6 +269,21 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def benefitsGivenRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartThree.flatMap(
+      _.benefitsGiven.map(_.benefitsGiven)
+    ) match {
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show()
+      case Some(AnswerNo)  =>
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for benefits given page reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for legal or benefits given routing")
+    }
+  }
+
   private def legalOrPlanningRestrictionRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
@@ -290,20 +305,24 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
+          case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
           case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
       case Some("no")  =>
-        controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for pay capital sum without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for pay capital sum routing")
+        answers.forType match {
+          case ForTypes.for6020 =>
+            controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+          case _                =>
+            logger.warn(
+              s"Navigation for pay capital sum without correct selection of conditions by controller"
+            )
+            throw new RuntimeException("Invalid option exception for pay capital sum routing")
+        }
     }
   }
-
-  private def RPIRouting: Session => Call = answers => {
+  private def RPIRouting: Session => Call           = answers => {
     answers.forType match {
       case ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
@@ -439,9 +458,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IncentivesPaymentsConditionsId                -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
     TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
     TenantsAdditionsDisregardedDetailsId          -> tenantsAdditionsDisregardedDetailsRouting,
-    LeaseSurrenderedEarlyId                       -> (_ =>
-      controllers.routes.TaskListController.show()
-    ), // TODO the next screen- Where you given a rent-free period (...) is not ready yet.
+    LeaseSurrenderedEarlyId                       -> (_ => aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()),
+    BenefitsGivenId                               -> benefitsGivenRouting,
+    BenefitsGivenDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
+    CapitalSumDescriptionId                       -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     PayCapitalSumId                               -> payCapitalSumRouting,
     PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),

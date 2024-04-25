@@ -32,10 +32,10 @@ class PayACapitalSumViewSpec extends QuestionViewBehaviours[PayACapitalSumDetail
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
-  def createView = () => payACapitalSumView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => payACapitalSumView(form, "FOR6010", backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PayACapitalSumDetails]) =>
-    payACapitalSumView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    payACapitalSumView(form, "FOR6010", backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "capital sum or premium view" must {
 

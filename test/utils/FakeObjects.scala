@@ -1093,12 +1093,13 @@ trait FakeObjects {
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes))
   )
 
-  val prefilledAboutLeaseOrAgreementPartTwoNo: AboutLeaseOrAgreementPartTwo   = AboutLeaseOrAgreementPartTwo(
+  val prefilledAboutLeaseOrAgreementPartTwoNo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerNo)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerNo)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerNo)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerNo))
   )
+
   val prefilledAboutLeaseOrAgreementPartThree: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
@@ -1110,7 +1111,10 @@ trait FakeObjects {
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
     propertyUpdates = Some(PropertyUpdates(AnswerYes)),
-    leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes))
+    leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes)),
+    benefitsGiven = Some(BenefitsGiven(AnswerYes)),
+    benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
+    capitalSumDescription = Some(CapitalSumDescription("capital Sum Description"))
   )
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(

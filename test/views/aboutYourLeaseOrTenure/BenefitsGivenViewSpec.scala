@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,37 +16,35 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm
+import form.aboutYourLeaseOrTenure.BenefitsGivenForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictions
+import models.submissions.aboutYourLeaseOrTenure.BenefitsGiven
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
+import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOrPlanningRestrictions] {
+class BenefitsGivenViewSpec extends QuestionViewBehaviours[BenefitsGiven] {
 
-  val messageKeyPrefix = "legalOrPlanningRestrictions"
+  val messageKeyPrefix = "benefitsGiven"
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
+  override val form = BenefitsGivenForm.benefitsGivenForm
 
-  override val form = LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
+  def createView = () => benefitsGivenView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createView = () => legalOrPlanningRestrictionsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[BenefitsGiven]) =>
+    benefitsGivenView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LegalOrPlanningRestrictions]) =>
-    legalOrPlanningRestrictionsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
-
-  "Legal or planning restrictions view" must {
+  "Benefits given view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to payment when lease granted Page" in {
+    "has a link marked with back.link.label leading to lease surrendered early page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe backLink
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show().url
     }
 
     "Section heading is visible" in {
@@ -55,24 +53,24 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOr
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain radio buttons for legal or planning restrictions with the value yes" in {
+    "contain radio buttons for benefits given with the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "legalOrPlanningRestrictions",
-        "legalOrPlanningRestrictions",
+        "benefitsGiven",
+        "benefitsGiven",
         AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
     }
 
-    "contain radio buttons for legal or planning restrictions with the value no" in {
+    "contain radio buttons for benefits given with the value no" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "legalOrPlanningRestrictions-2",
-        "legalOrPlanningRestrictions",
+        "benefitsGiven-2",
+        "benefitsGiven",
         AnswerNo.name,
         false
       )
