@@ -1110,7 +1110,10 @@ trait FakeObjects {
     paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
     propertyUpdates = Some(PropertyUpdates(AnswerYes)),
-    leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes))
+    leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes)),
+    benefitsGiven = Some(BenefitsGiven(AnswerYes)),
+    benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
+    capitalSumDescription = Some(CapitalSumDescription("capital Sum Description"))
   )
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(

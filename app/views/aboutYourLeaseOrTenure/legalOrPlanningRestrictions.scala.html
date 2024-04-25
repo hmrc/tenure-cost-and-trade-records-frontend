@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LegalOrPlanningRestrictions], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LegalOrPlanningRestrictions], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
   pageHeading = messages("legalOrPlanningRestrictions.heading"),
@@ -34,7 +34,7 @@
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url,
+  backLinkUrl = backLink,
   theForm = theForm
 ) {
 

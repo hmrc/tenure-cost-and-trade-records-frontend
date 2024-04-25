@@ -158,6 +158,46 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(LeaseSurrenderedEarlyId.toString.equals("leaseSurrenderedEarlyPage"))
     }
 
+    "Identifier for benefits given page" in {
+      assert(BenefitsGivenId.toString.equals("benefitsGivenPage"))
+    }
+
+    "Identifier for benefits given details page" in {
+      assert(BenefitsGivenDetailsId.toString.equals("benefitsGivenDetailsPage"))
+    }
+
+    "Identifier for capital sum description page" in {
+      assert(CapitalSumDescriptionId.toString.equals("capitalSumDescriptionPage"))
+    }
+
+    "Identifier for car parking annual rent page" in {
+      assert(CarParkingAnnualRentId.toString.equals("carParkingAnnualRentPage"))
+    }
+
+    "Identifier for does the rent include parking page" in {
+      assert(DoesRentIncludeParkingId.toString.equals("doesRentIncludeParkingPage"))
+    }
+
+    "Identifier for included in rent parking spaces page" in {
+      assert(IncludedInRentParkingSpacesId.toString.equals("includedInRentParkingSpacesPage"))
+    }
+
+    "Identifier for is parking rent pay separately page" in {
+      assert(IsParkingRentPaidSeparatelyId.toString.equals("IsParkingRentPaidSeparatelyPage"))
+    }
+
+    "Identifier for rent equipment details page" in {
+      assert(RentedEquipmentDetailsId.toString.equals("rentedEquipmentDetailsPage"))
+    }
+
+    "Identifier for service paid separately charge page" in {
+      assert(ServicePaidSeparatelyChargeId.toString.equals("servicePaidSeparatelyChargePage"))
+    }
+
+    "Identifier for rented separately parking spaces page" in {
+      assert(RentedSeparatelyParkingSpacesId.toString.equals("rentedSeparatelyParkingSpacesPage"))
+    }
+
     "Identifier for tenants additions disregarded details page" in {
       assert(TenantsAdditionsDisregardedDetailsId.toString.equals("tenantsAdditionsDisregardedDetailsPage"))
     }

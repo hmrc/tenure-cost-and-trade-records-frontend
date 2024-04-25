@@ -1171,9 +1171,32 @@ error.tenantsAdditionsDisregardedDetails.required = Nodwch ddisgrifiad o’r ych
 error.tenantsAdditionsDisregardedDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 500 o gymeriadau neu lai
 
 #LEASE SURRENDERED EARLY
-
+#########################
 leaseSurrenderedEarly.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
 error.leaseSurrenderedEarly.required = Select yes if former lease or agreement was surrendered early as a condition of the present one being granted
+
+#BENEFITS GIVEN
+###############
+benefitsGiven.heading  = Where you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+error.benefitsGiven.required = Select yes if you were given a rent-free period, any payment or any other benefits when the lease or agreement was granted
+
+#BENEFITS GIVEN DETAILS
+#######################
+benefitsGivenDetails.heading = Give details on any rent-free period, payment or benefit
+benefitsGivenDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
+error.benefitsGivenDetails.maxLength = The description of the rent, payment or benefit should be 2000 characters or fewer.
+
+
+#CAPITAL PAID SUM 6020
+capitalPaidSum6020.heading = Was a capital sum or premium paid by or to the occupier in respect of the lease or agreement?
+error.capitalPaidSum6020.required = Select yes if capital sum or premium was paid by or to the occupier in respect of the lease or agreement
+
+
+#CAPITAL SUM DESCRIPTION 6020
+#########################
+capitalSumDescription.heading = Give details of any amount paid
+capitalSumDescription.hint   = Leave blank if the rent has been reviewed since the amount was paid.
+error.capitalSumDescription.maxLength = The description of the capital sum or premium should be 2000 characters or fewer.
 
 # LEGAL PLANNING RESTRICTIONS
 #############################

@@ -19,9 +19,10 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
-import models.Session
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
+import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumId
 import play.api.Logging
@@ -52,6 +53,7 @@ class PayACapitalSumController @Inject() (
             case Some(data) => payACapitalSumForm.fill(data)
             case _          => payACapitalSumForm
           },
+          request.sessionData.forType,
           getBackLink(request.sessionData),
           request.sessionData.toSummary
         )
@@ -63,7 +65,14 @@ class PayACapitalSumController @Inject() (
     continueOrSaveAsDraft[PayACapitalSumDetails](
       payACapitalSumForm,
       formWithErrors =>
-        BadRequest(payACapitalSumView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+        BadRequest(
+          payACapitalSumView(
+            formWithErrors,
+            request.sessionData.forType,
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumDetails = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -76,15 +85,30 @@ class PayACapitalSumController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum"
       case _    =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
-        ) match {
-          case Some("yes") =>
-            controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
-          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-          case _           =>
-            logger.warn(s"Back link for pay capital sum page reached with unknown tenants additions disregarded value")
-            controllers.routes.TaskListController.show().url
+        answers.forType match {
+          case ForTypes.for6020 =>
+            answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven).map(_.benefitsGiven) match {
+              case Some(AnswerYes) =>
+                controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
+              case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url
+              case _               =>
+                logger.warn(s"Back link for pay capital sum page reached with unknown benefits given value")
+                controllers.routes.TaskListController.show().url
+            }
+          case _                =>
+            answers.aboutLeaseOrAgreementPartTwo.flatMap(
+              _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
+            ) match {
+              case Some("yes") =>
+                controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+              case Some("no")  =>
+                controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+              case _           =>
+                logger.warn(
+                  s"Back link for pay capital sum page reached with unknown tenants additions disregarded value"
+                )
+                controllers.routes.TaskListController.show().url
+            }
         }
     }
 }

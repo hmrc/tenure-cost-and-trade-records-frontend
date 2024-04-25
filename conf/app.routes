@@ -443,6 +443,15 @@ POST        /tenants-additions-disregarded-details                  controllers.
 GET         /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
 POST        /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
 
+GET         /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.show()
+POST        /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.submit()
+
+GET         /benefits-given-details                                 controllers.aboutYourLeaseOrTenure.BenefitsGivenDetailsController.show()
+POST        /benefits-given-datails                                 controllers.aboutYourLeaseOrTenure.BenefitsGivenDetailsController.submit()
+
+GET         /capital-sum-description                                controllers.aboutYourLeaseOrTenure.CapitalSumDescriptionController.show()
+POST        /capital-sum-description                                controllers.aboutYourLeaseOrTenure.CapitalSumDescriptionController.submit()
+
 
 GET         /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.show()
 POST        /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.submit()
