@@ -1093,12 +1093,13 @@ trait FakeObjects {
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes))
   )
 
-  val prefilledAboutLeaseOrAgreementPartTwoNo: AboutLeaseOrAgreementPartTwo   = AboutLeaseOrAgreementPartTwo(
+  val prefilledAboutLeaseOrAgreementPartTwoNo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerNo)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerNo)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerNo)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerNo))
   )
+
   val prefilledAboutLeaseOrAgreementPartThree: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
