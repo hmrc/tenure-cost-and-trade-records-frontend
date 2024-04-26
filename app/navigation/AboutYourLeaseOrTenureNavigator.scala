@@ -132,13 +132,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
-          case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
+          case ForTypes.for6020 | ForTypes.for6030 =>
+            controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
+          case _                                   => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
         }
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
-          case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+          case ForTypes.for6020 | ForTypes.for6030 =>
+            controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
+          case _                                   => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
         }
       case _           =>
         logger.warn(
