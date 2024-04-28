@@ -917,20 +917,24 @@ error.paymentForTradeServices.missing = Select yes if a separate payment is made
 
 # SERVICE PAID SEPARATELY
 ############################
-servicePaidSeparately.heading = Describe the service you pay for separately
+servicePaidSeparately.heading = Describe the service which is paid for separately
+servicePaidSeparately.VAT = What is the annual charge for separately paid services, excluding VAT?
+servicePaidSeparately.describe = Describe the type of service
 servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
-servicePaidSeparately.describe.error = Please describe the type of service you pay for separately
+servicePaidSeparately.describe.error = Please describe the type of service
+error.servicePaidSeparately.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
+error.servicePaidSeparately.required = You must tell us the annual charge for the service which is paid for separately
 
 # SERVICE PAID SEPARATELY ANNUAL CHARGE
 ########################################
 servicePaidSeparatelyCharge.heading = What is the annual charge for this separately paid service, excluding VAT?
 error.servicePaidSeparatelyCharge.invalidCurrency = The annual charge must be a number like 100 or 100.00 and cannot be less than 0
-error.servicePaidSeparatelyCharge.required = You must tell us the annual charge for the service which you pay for separately
+error.servicePaidSeparatelyCharge.required = You must tell us the annual charge for the service which is paid for separately
 
 # SERVICES PAID SEPARATELY LIST
 #####################################
-servicePaidSeparatelyList.heading = You have added {0} {1} which you pay for separately
-servicePaidSeparatelyListZero.heading = You have removed all the services which you pay for separately
+servicePaidSeparatelyList.heading = You have added {0} {1} which is paid for separately
+servicePaidSeparatelyListZero.heading = You have removed all the services which is paid for separately
 servicePaidSeparatelyList.service = service
 servicePaidSeparatelyList.services = services
 servicePaidSeparatelyList.label = Would you like to add another service?
