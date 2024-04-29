@@ -55,7 +55,7 @@
 
     sectionAnswers.conditionRow(
          _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
-         "label.altDetails",
+         "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
          _.altContactInformation.map { x =>
             val contactDetails = x.alternativeContactAddress.escapedHtml
                 contactDetails
