@@ -30,7 +30,7 @@ object ServicePaidSeparatelyChargeForm {
             .verifying("error.servicePaidSeparatelyCharge.required", s => s.nonEmpty)
             .verifying(
               "error.servicePaidSeparatelyCharge.invalidCurrency",
-              s => s.isEmpty || s.matches("-?\\d+(\\.\\d+)?")
+              s => s.isEmpty || (s.matches("^\\d*\\.?\\d+$") && BigDecimal(s) >= BigDecimal(0))
             )
             .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString)
       )(ServicePaidSeparatelyCharge.apply)(ServicePaidSeparatelyCharge.unapply)
