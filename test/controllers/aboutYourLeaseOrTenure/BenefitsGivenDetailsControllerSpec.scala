@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
+import play.api.http.Status.SEE_OTHER
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
@@ -38,19 +38,31 @@ class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
-    "return 200" in {
+  def benefitsGivenDetailsControllerNone =
+    new BenefitsGivenDetailsController(
+      stubMessagesControllerComponents(),
+      benefitsGivenDetailsView,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+      mockSessionRepo
+    )
+
+  "BenefitsGivenDetailsController GET /" should {
+    "return 200 and HTML with Benefits Given Details in the session" in {
       val result = benefitsGivenDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = benefitsGivenDetailsController().show(fakeRequest)
+    "return HTML and HTML when no Benefits Given Details in the session" in {
+      val result = benefitsGivenDetailsControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
-  "SUBMIT /" should {
+  "SUBMIT /"                             should {
     "accept an empty form when submitted" in {
       val res = benefitsGivenDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

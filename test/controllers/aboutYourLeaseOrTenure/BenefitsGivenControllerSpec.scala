@@ -38,18 +38,31 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
-    "return 200" in {
+  def benefitsGivenControllerNone =
+    new BenefitsGivenController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      benefitsGivenView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+      mockSessionRepo
+    )
+
+  " BenefitsGivenController GET /" should {
+    "return 200 and HTML with Benefits Given in the session" in {
       val result = benefitsGivenController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = benefitsGivenController().show(fakeRequest)
+    "return 200 and HTML when no Benefits Given in the session" in {
+      val result = benefitsGivenControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = benefitsGivenController().submit(

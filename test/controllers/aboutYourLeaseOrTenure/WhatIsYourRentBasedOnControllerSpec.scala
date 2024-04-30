@@ -38,14 +38,26 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  def whatIsYourRentBasedOnControllerNone =
+    new WhatIsYourRentBasedOnController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      whatIsYourRentBasedOnView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+      mockSessionRepo
+    )
+
+  "WhatIsYourRentBasedOnController GET /" should {
+    "return 200 and HTML with What Is Your Rent Based On in the session" in {
       val result = whatIsYourRentBasedOnController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = whatIsYourRentBasedOnController().show(fakeRequest)
+    "return 200 and HTML when no What Is Your Rent Based On in the session" in {
+      val result = whatIsYourRentBasedOnControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

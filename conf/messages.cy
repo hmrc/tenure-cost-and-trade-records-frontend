@@ -63,9 +63,9 @@ label.no.na = Na
 
 #CYA RADIO BUTTONS
 ##############
-checkYourAnswersRadio.heading = Have you completed this section?
-checkYourAnswersRadio.yes = Yes, I’ve completed this section
-checkYourAnswersRadio.no = No, I’ll come back to it later
+checkYourAnswersRadio.heading = A ydych wedi llenwi’r adran hon?
+checkYourAnswersRadio.yes = Ydw, rwyf wedi llenwi’r adran hon
+checkYourAnswersRadio.no = Nac ydw, byddaf yn dod yn ôl ati yn nes ymlaen
 error.checkYourAnswersRadio.required = Dewiswch ’ydw’ os ydych wedi llenwi’r adran hon
 
 # COMMON LABELS
@@ -88,7 +88,7 @@ label.contact.details = Contact details
 label.phone = Rhif ffôn
 label.email = Cyfeiriad e-bost
 label.submitAnotherForm = Submit another form
-label.change = Change
+label.change = Newid
 label.liter = liter
 label.litres = litres
 label.percent = %
@@ -111,7 +111,7 @@ label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
 label.section.aboutTheLettings = Lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
-label.section.additionalInformation = Additional information
+label.section.additionalInformation = Gwybodaeth ychwanegol
 
 # DUMMY START PAGE FULL INFORMATION
 ##############################
@@ -1718,21 +1718,14 @@ lettingsIncome.missing = Select yes if any rent is received from letting out par
 
 # ADDITIONAL INFORMATION
 ########################
-checkYourAnswersAdditionalInformation.heading = Check your answers – additional information
-label.furtherInformation = Further information or remarks
-key.altContact.details = Alternative contact details
-key.additionalInformation = Additional information
-label.altDetails.question= Use alternative contact details?
-label.altDetails = Alternative correspondence address
-key.altContact.details = Alternative contact details
-label.telephoneNumber = Telephone number
-label.emailAddress = Email address
-label.correspondenceAddress = Correspondence address
+checkYourAnswersAdditionalInformation.heading = Gwiriwch eich atebion – gwybodaeth ychwanegol
+label.furtherInformation = Rhagor o wybodaeth neu sylwadau
+key.additionalInformation = Gwybodaeth ychwanegol
 
 # FURTHER INFORMATION OR REMARKS
 ################################
-furtherInformationOrRemarks.heading = Further information or remarks
-hint.furtherInformationOrRemarks = Provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions require further explanation or clarification.
+furtherInformationOrRemarks.heading = Rhagor o wybodaeth neu sylwadau
+hint.furtherInformationOrRemarks = Rhowch fanylion pellach os nad oedd digon o le i chi gwblhau’ch atebion i unrhyw un o’r cwestiynau blaenorol, neu os oes angen esboniad neu eglurhad pellach ar unrhyw gwestiynau.
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
 error.furtherInformationOrRemarks.maxLength = Mae’n rhaid i’r wybodaeth bellach fod yn 2,000 o gymeriadau neu lai
 
@@ -1934,6 +1927,7 @@ checkYourAnswersAboutTheProperty.aboutYou.heading = Your contact details
 checkYourAnswersAboutTheProperty.contact.details = Contact details
 checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is used
 checkYourAnswersAboutTheProperty.alternative.address = Use alternative address?
+checkYourAnswersAboutTheProperty.alternative.correspondence.address = Alternative correspondence address
 checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = Property use
 checkYourAnswersAboutTheProperty.hasWebsite = Website?

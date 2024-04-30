@@ -35,14 +35,26 @@ class RentedEquipmentDetailsControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents()
     )
 
-  "GET /" should {
-    "return 200" in {
+  def rentedEquipmentDetailsControllerNone =
+    new RentedEquipmentDetailsController(
+      rentedEquipmentDetailsView,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
+
+  "RentedEquipmentDetailsController GET /" should {
+    "return 200 and HTML with Rented Equipment Details in the session" in {
       val result = rentedEquipmentDetailsController.show(fakeRequest)
-      status(result) shouldBe OK
+      status(result)      shouldBe OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = rentedEquipmentDetailsController.show(fakeRequest)
+    "return 200 and HTML when no Rented Equipment Details in the session" in {
+      val result = rentedEquipmentDetailsControllerNone.show(fakeRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

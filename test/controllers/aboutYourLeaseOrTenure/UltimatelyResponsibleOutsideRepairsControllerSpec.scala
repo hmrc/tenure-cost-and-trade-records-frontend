@@ -38,14 +38,26 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  def ultimatelyResponsibleOutsideRepairsControllerNone =
+    new UltimatelyResponsibleOutsideRepairsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      ultimatelyResponsibleOutsideRepairsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+      mockSessionRepo
+    )
+
+  "UltimatelyResponsibleOutsideRepairsController GET /" should {
+    "return 200 and HTML with Ultimately Responsible Outside Repairs in the session" in {
       val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
+    "return 200 and HTML when no Ultimately Responsible Outside Repairs in the session" in {
+      val result = ultimatelyResponsibleOutsideRepairsControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

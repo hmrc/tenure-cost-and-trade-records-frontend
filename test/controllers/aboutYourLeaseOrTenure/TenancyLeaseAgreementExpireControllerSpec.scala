@@ -49,20 +49,32 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
-      val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
+  def tenancyLeaseAgreementExpireControllerNone =
+    new TenancyLeaseAgreementExpireController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      tenantsLeaseAgreementExpireView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+      mockSessionRepo
+    )
 
-    "return HTML" in {
+  "TenancyLeaseAgreementExpireController GET /" should {
+    "return 200 and HTML with Tenancy Lease Agreement Expire in the session" in {
       val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return 200 vacant property start date is not present in session" in {
+    "return 200 and HTML vacant property start date is not present in session" in {
       val result = tenancyLeaseAgreementExpireNoStartDate().show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML when no Tenancy Lease Agreement Expire in the session" in {
+      val result = tenancyLeaseAgreementExpireControllerNone.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
