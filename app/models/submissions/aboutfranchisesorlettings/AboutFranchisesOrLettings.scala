@@ -36,7 +36,8 @@ case class AboutFranchisesOrLettings(
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
   checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
   fromCYA: Option[Boolean] = None,
-  cateringOrFranchiseFee: Option[AnswersYesNo] = None //added for 6030 journey - Feb 2024
+  cateringOrFranchiseFee: Option[AnswersYesNo] = None, //added for 6030 journey - Feb 2024
+  lettings: Option[IndexedSeq[LettingPartOfProperty]] = None // 6020 lettings
 )
 
 object AboutFranchisesOrLettings {
@@ -54,7 +55,8 @@ object AboutFranchisesOrLettings {
       (__ \ "lettingSections").read[IndexedSeq[LettingSection]] and
       (__ \ "checkYourAnswersAboutFranchiseOrLettings").readNullable[CheckYourAnswersAboutFranchiseOrLettings] and
       (__ \ "fromCYA").readNullable[Boolean] and
-      (__ \ "cateringOrFranchiseFee").readNullable[AnswersYesNo]
+      (__ \ "cateringOrFranchiseFee").readNullable[AnswersYesNo] and
+      (__ \ "lettings").readNullable[IndexedSeq[LettingPartOfProperty]]
   )(AboutFranchisesOrLettings.apply _)
 
   implicit val format: Format[AboutFranchisesOrLettings] =

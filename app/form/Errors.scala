@@ -82,6 +82,9 @@ object Errors {
   val currentOccupierName   = "error.currentOccupierName.required"
   val propertyCurrentlyUsed = "error.currentPropertyUse.required"
 
+  //About Franchises or Lettings
+  val typeOfLetting = "error.typeOfLetting.required"
+
   //Incentives, Payments and Conditions
   val formerLeaseAgreementSurrendered = "error.formerLeaseAgreementSurrendered.required"
   val rentReducedOnReview             = "error.rentReducedOnReview.required"

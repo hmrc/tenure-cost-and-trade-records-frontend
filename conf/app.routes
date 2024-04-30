@@ -245,6 +245,29 @@ POST        /add-another-letting-other-part-of-property             controllers.
 GET         /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.remove(idx: Int)
 POST        /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx: Int)
 
+#6020 Lettings
+GET         /type-of-letting                                        controllers.aboutfranchisesorlettings.TypeOfLettingController.show(idx: Option[Int] ?= None)
+POST        /type-of-letting                                        controllers.aboutfranchisesorlettings.TypeOfLettingController.submit(idx: Option[Int])
+
+GET         /atm-letting                                            controllers.aboutfranchisesorlettings.AtmLettingController.show(idx: Option[Int] ?= None)
+POST        /atm-letting                                            controllers.aboutfranchisesorlettings.AtmLettingController.submit(idx: Option[Int])
+
+GET         /telecom-mast-letting                                   controllers.aboutfranchisesorlettings.TelecomMastLettingController.show(idx: Option[Int] ?= None)
+POST        /telecom-mast-letting                                   controllers.aboutfranchisesorlettings.TelecomMastLettingController.submit(idx: Option[Int])
+
+GET         /advertising-right-letting                              controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.show(idx: Option[Int] ?= None)
+POST        /advertising-right-letting                              controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.submit(idx: Option[Int])
+
+GET         /other-letting                                          controllers.aboutfranchisesorlettings.OtherLettingController.show(idx: Option[Int] ?= None)
+POST        /other-letting                                          controllers.aboutfranchisesorlettings.OtherLettingController.submit(idx: Option[Int])
+
+GET         /rent-details                                           controllers.aboutfranchisesorlettings.RentDetailsController.show(idx: Int)
+POST        /rent-details                                           controllers.aboutfranchisesorlettings.RentDetailsController.submit(idx: Int)
+
+GET         /add-another-letting                                    controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.show(idx: Int)
+POST        /add-another-letting                                    controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.submitLetting(idx: Int)
+GET         /remove-letting                                         controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.remove(idx: Int)
+POST        /remove-letting                                         controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.performRemove(idx: Int)
 # About your lease or tenure
 GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
 POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()

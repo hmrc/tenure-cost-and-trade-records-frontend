@@ -1,0 +1,163 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.aboutfranchisesorlettings
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.common.AnswerYes
+@import navigation.AboutFranchisesOrLettingsNavigator
+@import navigation.identifiers._
+@import util.DateUtil
+@import util.NumberUtil._
+@import util.SectionAnswersRowBuilder
+@import models.submissions.aboutfranchisesorlettings.CateringOperationSection
+@import models.submissions.aboutfranchisesorlettings.{ATMLetting,TelecomMastLetting,AdvertisingRightLetting,OtherLetting,LettingPartOfProperty}
+@this(
+        govukSummaryList: GovukSummaryList,
+        navigator: AboutFranchisesOrLettingsNavigator,
+        dateUtil: DateUtil
+)
+
+@()(implicit request: SessionRequest[_], messages: Messages)
+
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutFranchisesOrLettings)
+}
+
+@numberOfLettings = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty).length}
+
+@addedLettingMsgKey = @{
+    if (request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty).length <= 1) {
+        "checkYourAnswersAboutFranchiseOrLettings.addedLettings"
+    } else {
+        "checkYourAnswersAboutFranchiseOrLettings.addedLettingsPlural"
+    }
+}
+
+    @getLettingType(letting: LettingPartOfProperty) = @{
+        letting match {
+            case atm: ATMLetting =>
+                messages("lettings.typeOfLetting.automatedTellerMachine")
+            case telecom: TelecomMastLetting =>
+                messages("lettings.typeOfLetting.telecomMast")
+            case advert: AdvertisingRightLetting =>
+                messages("lettings.typeOfLetting.advertisingRight")
+            case other: OtherLetting =>
+                messages("lettings.typeOfLetting.other.label")
+        }
+    }
+
+@tableRow(values: Seq[String]) = {
+    @values.map { value =>
+        <div class="hmrc-turnover-table-column">
+            @value
+        </div>
+    }
+}
+
+@createRentDetails(letting:LettingPartOfProperty,index: Int) = {
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.rentDetails",_ => letting.rentalDetails.map(_.annualRent.asMoney).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+            letting.rentalDetails.flatMap(r => dateUtil.formatDayMonthAbbrYear(r.sumFixedDate)).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
+        controllers.aboutfranchisesorlettings.routes.RentDetailsController.show(index) ,"rentDetails",("valueAsHtml", _ => None))
+))
+}
+@createATMRow(atm:ATMLetting, index: Int) = {
+    @govukSummaryList(SummaryList(rows =
+  sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails",_ => Option(atm.bankOrCompany.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+      (atm.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+      controllers.aboutfranchisesorlettings.routes.AtmLettingController.show(Some(index)) ,"bankOrCompany",("valueAsHtml", _ => None))
+    ))
+  @createRentDetails(atm,index)
+}
+
+@createTelecomMastRow(telecom:TelecomMastLetting, index: Int) = {
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails",_ => Option(telecom.siteOfMast.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+            Option(telecom.operatingCompanyName.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+            (telecom.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+        controllers.aboutfranchisesorlettings.routes.TelecomMastLettingController.show(Some(index)) ,"operationCompanyDetails",("valueAsHtml", _ => None))
+))
+@createRentDetails(telecom,index)
+}
+
+@createAdvertRightRow(advert:AdvertisingRightLetting, index: Int) = {
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails",_ => Option(advert.descriptionOfSpace.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+            Option(advert.advertisingCompanyName.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+            (advert.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+        controllers.aboutfranchisesorlettings.routes.AdvertisingRightLettingController.show(Some(index)) ,"advertisingCompanyDetails",("valueAsHtml", _ => None))
+))
+@createRentDetails(advert,index)
+}
+
+@createOtherRow(other:OtherLetting, index: Int) = {
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.otherDetails",_ => Option(other.lettingType.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+            Option(other.tenantName.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
+            (other.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+        controllers.aboutfranchisesorlettings.routes.OtherLettingController.show(Some(index)) ,"otherDetails",("valueAsHtml", _ => None))
+))
+@createRentDetails(other,index)
+}
+
+@rowForEachLettingType(letting: LettingPartOfProperty, index: Int) = @{
+  letting match{
+      case atm:ATMLetting => createATMRow(atm, index)
+      case telco: TelecomMastLetting => createTelecomMastRow(telco,index)
+      case adv: AdvertisingRightLetting =>    createAdvertRightRow(adv, index)
+      case other: OtherLetting => createOtherRow(other,index)
+  }
+}
+
+
+
+@if(sectionAnswers.answers.flatMap(_.franchisesOrLettingsTiedToProperty).contains(AnswerYes)) {
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading")</h2>
+    @if(sectionAnswers.answers.flatMap(_.lettings).isDefined) {
+
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentReceived",
+                _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")),
+                aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
+        ))
+        @for((letting, idx) <- sectionAnswers.answers.flatMap(_.lettings).getOrElse(IndexedSeq.empty).zipWithIndex) {
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber", idx + 1)</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.typeOfLetting",
+                    _ => getLettingType(letting),
+                    controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(idx)), "typeOfLetting")
+            ))
+            @rowForEachLettingType(letting,idx)
+
+        }
+        @govukSummaryList(SummaryList(rows =
+            List(
+                SummaryListRow(
+                    Key(Text(messages(addedLettingMsgKey, request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
+                    actions = Some(Actions(items = List(ActionItem(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(if (numberOfLettings>0) numberOfLettings-1 else numberOfLettings).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
+                )
+            )
+        ))
+    }
+}else{
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentReceived",
+            _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")),
+            aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
+    ))
+}
