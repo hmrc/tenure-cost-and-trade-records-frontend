@@ -44,14 +44,27 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  def tradeServicesListControllerNone =
+    new TradeServicesListController(
+      stubMessagesControllerComponents(),
+      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+      tradeServicesListView,
+      genericRemoveConfirmationView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+      mockSessionRepo
+    )
+
+  "TradeServicesListController GET /" should {
+    "return 200 and HTML with Trade Services List in the session" in {
       val result = tradeServicesListController().show(1)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = tradeServicesListController().show(1)(fakeRequest)
+    "return 200 and HTML when no Trade Services List in the session" in {
+      val result = tradeServicesListControllerNone.show(1)(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

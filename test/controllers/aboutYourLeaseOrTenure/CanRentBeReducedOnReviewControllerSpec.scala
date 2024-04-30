@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,28 +28,40 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
   def canRentBeReducedOnReviewController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new CanRentBeReducedOnReviewController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       canRentBeReducedOnReviewView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
-  "GET /"    should {
-    "return 200" in {
+  def canRentBeReducedOnReviewControllerNone = new CanRentBeReducedOnReviewController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    canRentBeReducedOnReviewView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+    mockSessionRepo
+  )
+
+  "CanRentBeReducedOnReviewController GET /" should {
+    "return 200 and HTML with Can Rent Be Reduced On Review in the session" in {
       val result = canRentBeReducedOnReviewController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = canRentBeReducedOnReviewController().show(fakeRequest)
+    "return 200 and HTML when no Can Rent Be Reduced On Review in the session" in {
+      val result = canRentBeReducedOnReviewControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = canRentBeReducedOnReviewController().submit(

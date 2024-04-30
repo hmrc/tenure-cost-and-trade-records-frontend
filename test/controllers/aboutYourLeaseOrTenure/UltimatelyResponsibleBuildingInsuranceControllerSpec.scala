@@ -42,14 +42,26 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec 
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  def ultimatelyResponsibleBuildingInsuranceControllerNone =
+    new UltimatelyResponsibleBuildingInsuranceController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      ultimatelyResponsibleBuildingInsuranceView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+      mockSessionRepo
+    )
+
+  "UltimatelyResponsibleBuildingInsuranceController GET /" should {
+    "return 200 and HTML with Ultimately Responsible Building Insurance in the session" in {
       val result = ultimatelyResponsibleBuildingInsuranceController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = ultimatelyResponsibleBuildingInsuranceController().show(fakeRequest)
+    "return 200 and HTML when no Ultimately Responsible Building Insurance in the session" in {
+      val result = ultimatelyResponsibleBuildingInsuranceControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

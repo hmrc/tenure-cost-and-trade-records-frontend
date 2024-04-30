@@ -17,7 +17,6 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import org.apache.pekko.http.scaladsl.model.ContentRange.Other
 import play.api.http.Status
 import play.api.http.Status.SEE_OTHER
 import play.api.test.FakeRequest
@@ -39,18 +38,31 @@ class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
-    "return 200" in {
+  def capitalSumDescriptionControllerNone =
+    new CapitalSumDescriptionController(
+      stubMessagesControllerComponents(),
+      capitalSumDescriptionView,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+      mockSessionRepo
+    )
+
+  "CapitalSumDescriptionController GET /" should {
+    "return 200 and HTML with Capital Sum Description in the session" in {
       val result = capitalSumDescriptionController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = capitalSumDescriptionController().show(fakeRequest)
+    "return 200 and HTML when no Capital Sum Description in the session" in {
+      val result = capitalSumDescriptionControllerNone.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
   "SUBMIT /" should {
     "accept an empty form when submitted" in {
       val res = capitalSumDescriptionController().submit(
