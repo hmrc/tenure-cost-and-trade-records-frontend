@@ -760,6 +760,78 @@ hint.lettingOtherPartOfProperty = For example, advertising billboards, phones ma
 error.lettingOtherPartOfProperty.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 
+#LETTINGS 6020
+##############################
+lettings.typeOfLetting.heading = Select the type of letting
+lettings.typeOfLetting.automatedTellerMachine = Automated teller machine (ATM)
+lettings.typeOfLetting.telecomMast = Telecom mast
+lettings.typeOfLetting.advertisingRight = Advertising right
+lettings.typeOfLetting.other = Other (charging point, for example)
+error.typeOfLetting.required = Please select the type of letting
+
+#LETTINGS ATM 6020
+##############################
+label.atmLetting.heading = Provide the ATM operator''s details
+label.bankOrCompany = Name of bank or company operating the machine
+error.bankOrCompany.required = Enter name of bank or company operating the machine
+error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer
+error.correspondenceAddress.required = Enter correspondence address
+
+#TELECOM MAST LETTING 6020
+##############################
+label.telecomMastLetting.heading = Provide the telecom mast''s details
+label.operatingCompanyName = Operating company''s name
+label.siteOfMast = Where on the site is the mast situated?
+error.operatingCompanyName.required = Enter operating company''s name
+error.siteOfMast.required = Enter where on the site is the mast situated
+error.operatingCompanyName.maxLength = Operating company''s name must be 500 characters or fewer
+error.siteOfMast.maxLength = The site where the mast situated must be 500 characters or fewer
+
+#LETTINGS ADVERTISING RIGHT 6020
+##############################
+label.advertisingRightLetting.heading = Provide the advertising right''s details
+label.descriptionOfSpace = Describe the advertising space
+hint.descriptionOfSpace = For example, billboard or hoarding
+label.advertisingCompanyName = Advertising company''s name
+error.descriptionOfSpace.required = Enter description of the advertising space
+error.advertisingCompanyName.required = Enter advertising company''s name
+error.descriptionOfSpace.maxLength = Description of the advertising space must be 500 characters or fewer
+error.advertisingCompanyName.maxLength = Advertising company''s name must be 500 characters or fewer
+
+#LETTINGS OTHER LETTING 6020
+##############################
+label.otherLetting.heading = Provide details of the other letting type
+label.lettingType = Letting type
+hint.lettingType = For example, garage workshop or charging point.
+error.lettingType.required = Enter letting type
+error.lettingType.maxLength = Letting type must be 50 characters or fewer
+
+#ADD OR REMOVE LETTING 6020
+##############################
+aboutTheLettings.heading = You have added {0} letting
+label.aboutTheLettings = Do you need to add another letting?
+lettings.typeOfLetting.other.label = Other
+aboutTheLettings.zeroLetting.heading = You have removed all your lettings
+#CHECK YOUR ANSWERS LETTING 6020 CYA
+##############################
+checkYourAnswersLettings.heading = Check your answers - lettings
+checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} letting
+checkYourAnswersAboutFranchiseOrLettings.addedLettingPruel = You have added {0} lettings
+checkYourAnswersAboutFranchiseOrLettings.rentReceived = Rent received from lettings?
+checkYourAnswersAboutFranchiseOrLettings.typeOfLetting = Type of letting
+checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails = ATM operator''s details
+checkYourAnswersAboutFranchiseOrLettings.rentDetails = Annual rent
+checkYourAnswersAboutFranchiseOrLettings.addedLettings = You have added {0} letting
+checkYourAnswersAboutFranchiseOrLettings.addedLettingsPlural = You have added {0} lettings
+checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails = Operation company''s details
+checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails = Advertising company''s details
+checkYourAnswersAboutFranchiseOrLettings.otherDetails = Other letting operator''s details
+
+#ADD OR REMOVE LETTING 6020
+aboutTheLettings.heading = You have added {0} letting
+label.aboutTheLettings = Do you need to add another letting?
+lettings.typeOfLetting.other.label = Other
+
 # PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
 propertyUseLeasebackArrangement.heading = Does {0} occupy the property using a leaseback agreement?
@@ -1830,6 +1902,9 @@ maxOf5Lettings.contact = If you have 6 or more {0} at your property, the VOA wil
 maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings.
 maxOf5Lettings.link = Check or update the 5 added businesses
 maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
+maxOf10Lettings.aboutTheLettings.heading = You have added the maximum of 10 lettings
+maxOf10Lettings.contact = If you have 10 or more {0} at your property, the VOA will contact you to collect information on the remaining lettings.
+maxOf10Lettings.link = Check or update the 10 added lettings
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page

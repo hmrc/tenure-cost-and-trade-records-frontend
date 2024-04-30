@@ -33,6 +33,7 @@
 @sectionName = @{
  source match {
   case "connection"  => messages("label.section.connectionToTheProperty")
+  case "lettings"    => messages("label.section.aboutTheLettings")
   case _             => messages("label.section.aboutTheFranchiseConcessions")
  }
 }
@@ -53,6 +54,8 @@
     case _ => messages("maxOf5Lettings.heading")
    }
   case "franchiseLetting" => messages("maxOf5Lettings.heading")
+
+  case "lettings" =>  messages(s"maxOf10Lettings.aboutTheLettings.heading")
 
   case _ => messages("maxOf5Lettings.heading")
  }
@@ -75,6 +78,9 @@
     case _ => messages("maxOf5Lettings.contact",  messages("maxOf5Lettings.content"))
    }
   case "franchiseLetting" => messages("maxOf5Lettings.contact",  messages("maxOf5Lettings.content"))
+
+  case "lettings" => messages("maxOf10Lettings.contact",  messages("maxOf5Lettings.content"))
+
   case _ => messages("maxOf5Lettings.contact",  messages("maxOf5Lettings.content"))
  }
 }
@@ -108,7 +114,7 @@
   )
 
   <p class="govuk-body">
-   <a href="@backLink" class="govuk-link">@messages("maxOf5Lettings.link")</a>
+   <a href="@backLink" class="govuk-link">@messages(if (source.equals("lettings")) "maxOf10Lettings.link" else "maxOf5Lettings.link")</a>
   </p>
 
   <br>

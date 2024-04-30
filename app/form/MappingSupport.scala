@@ -61,7 +61,7 @@ object MappingSupport {
   }
 
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
-  val aboutYourPropertyType: Mapping[CurrentPropertyUsed]                       = Forms.of[CurrentPropertyUsed]
+  val typeOfLettingMapping: Mapping[TypeOfLetting]                              = Forms.of[TypeOfLetting]
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] =
     Forms.of[BuildingOperationHaveAWebsite]
@@ -193,6 +193,14 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
+  )(LettingAddress.apply)(LettingAddress.unapply)
+
+  def lettingPartOfPropertyAddressMapping: Mapping[LettingAddress] = mapping(
+    "buildingNameNumber" -> validateBuildingNameNumber,
+    "street1"            -> optional(validateAddressLineTwo),
+    "town"               -> validateTown,
+    "county"             -> optional(validateCounty),
+    "postcode"           -> nonEmptyTextOr("correspondenceAddress.postcode", postcode, "error.postcode.required")
   )(LettingAddress.apply)(LettingAddress.unapply)
 
   def editAddressMapping: Mapping[EditAddress] = mapping(

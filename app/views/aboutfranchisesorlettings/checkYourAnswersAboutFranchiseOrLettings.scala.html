@@ -20,23 +20,29 @@
 @import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 @import models.pages.Summary
 @import views.html.answers.answersAboutTheFranchiseLettings
+@import views.html.answers.answersLettings
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         answersSectionAboutTheFranchiseLettings: answersAboutTheFranchiseLettings,
+        answersLetting: answersLettings,
         formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[CheckYourAnswersAboutFranchiseOrLettings], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
+@is6020 = @{
+    request.sessionData.forType == ForTypes.for6020
+}
+
 @isConcession  = @{
     request.sessionData.forType == ForTypes.for6015 || request.sessionData.forType == ForTypes.for6016}
 
-@label = @{if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
+@label = @{if (is6020) messages("label.section.aboutTheLettings") else if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
 
 @pageHeading = @{
-    if (isConcession) messages("checkYourAnswersAboutConcessionsOrLettings.heading") else  messages("checkYourAnswersAboutFranchiseOrLettings.heading")
+    if (is6020) messages("checkYourAnswersLettings.heading") else if (isConcession) messages("checkYourAnswersAboutConcessionsOrLettings.heading") else  messages("checkYourAnswersAboutFranchiseOrLettings.heading")
 }
 
     @layout(
@@ -48,9 +54,14 @@
         sectionName = label,
         theForm = theForm
     ) {
+        @{
+            if(is6020) {
+                answersLetting()
+            } else {
 
-        @answersSectionAboutTheFranchiseLettings()
-
+                answersSectionAboutTheFranchiseLettings()
+            }
+        }
         @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
 
             @includes.checkYourAnswersRadioButtons(

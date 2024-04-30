@@ -1,0 +1,146 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
+@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.submissions.aboutfranchisesorlettings.{ATMLetting,TelecomMastLetting,AdvertisingRightLetting,OtherLetting}
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(theForm: Form[_], index: Int, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+
+@session = @{ request.sessionData }
+
+@forType = @{ session.forType }
+
+@label = @{messages("label.section.aboutTheLettings")}
+
+@formLabel =@{messages("label.aboutTheLettings")}
+
+@pageHeading = @{messages(
+ if(lettingDetails.size == 0) messages("aboutTheLettings.zeroLetting.heading")
+ else "aboutTheLettings.heading" , lettingDetails.size) + pluralSuffix}
+
+
+@formAction = @{controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.submitLetting(index)}
+
+ @lettingDetails = @{
+  val lettings = session.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty)
+  lettings.zipWithIndex.map { case (letting, index) =>
+   val (operatorName, url) = letting match {
+    case atm: ATMLetting =>
+     (atm.bankOrCompany.getOrElse("No bank/company specified") + ", " + messages("lettings.typeOfLetting.automatedTellerMachine"), controllers.aboutfranchisesorlettings.routes.AtmLettingController.show(index).url)
+    case telecom: TelecomMastLetting =>
+     (telecom.operatingCompanyName.getOrElse("No company name specified")+ ", " + messages("lettings.typeOfLetting.telecomMast"), controllers.aboutfranchisesorlettings.routes.TelecomMastLettingController.show(index).url)
+    case advert: AdvertisingRightLetting =>
+     (advert.advertisingCompanyName.getOrElse("No advertising company specified")+ ", " + messages("lettings.typeOfLetting.advertisingRight"), controllers.aboutfranchisesorlettings.routes.AdvertisingRightLettingController.show(index).url)
+    case other: OtherLetting =>
+     (other.tenantName.getOrElse("No tenant name specified")+ ", " + messages("lettings.typeOfLetting.other.label"), controllers.aboutfranchisesorlettings.routes.OtherLettingController.show(index).url)
+    case _ =>
+     ("Unknown type", "#")
+   }
+   (operatorName, url)
+  }
+ }
+
+
+@pluralSuffix = @{ if (lettingDetails.size > 1) "s" else "" }
+
+@layout(
+ pageHeading = pageHeading,
+ showSection = true,
+ summary = Some(summary),
+ sectionName = label,
+ backLinkUrl = backLink,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = formAction) {
+
+  @govukSummaryList(
+   SummaryList(
+    rows = lettingDetails.zipWithIndex.map { case ((operatorName,changeUrl), idx) =>
+     SummaryListRow(
+      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+      actions = Actions(
+       items = Seq(
+        ActionItem(
+            changeUrl,
+         content = Text("Change")),
+        ActionItem(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.remove(idx).url,
+         content = Text("Remove"))
+       ),
+       classes = "hmrc-summary-list__actions"
+      )
+     )
+    },
+    classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+   )
+  )
+
+  @govukRadios(
+   Radios(
+    name = "addAnotherLetting",
+    idPrefix = Option("addAnotherLetting"),
+    classes = "govuk-radios--inline",
+    items = Seq(
+     "yes" -> messages("label.yes"),
+     "no" -> messages("label.no")
+    ).map(radioItem => RadioItem(
+     content = Text(radioItem._2),
+     checked = radioItem._1.equals(theForm("addAnotherLetting").value.getOrElse("")),
+     value = Option(radioItem._1)
+    )
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("addAnotherLetting"),
+    fieldset = Option(
+     Fieldset(
+      legend = Option(
+       Legend(
+        content = Text(formLabel),
+        classes = "govuk-!-font-weight-bold"
+       )
+      )
+     )
+    )
+   )
+  )
+
+  @includes.continueSaveAsDraftButtons(govukButton)
+ }
+
+}
