@@ -884,7 +884,7 @@ error.rentIncludeTradeServices.missing = Select yes if the rent includes any tra
 tradeServiceDescription.heading = Trade services included in your rent
 tradeServiceDescription.p1 = Provide a short description on any trade services you receive from your landlord as part of your lease or agreement. Where specifically itemised, include how much of your rent goes towards those services.
 tradeServiceDescription.p2 = If more than one service is provided by your landlord as part of your lease or agreement, describe each one individually. You will have the opportunity to add additional services on the next page.
-tradeServiceDescription.describe = Describe the type of service provided by the landlord which is included in your rent
+tradeServiceDescription.describe = Describe the trade service provided by the landlord which is included in your rent
 tradeServiceDescription.describe.error = Enter a description of the trade services provided by the landlord
 error.tradeServiceDescription.maxLength = The description of the trade services must be 500 characters or fewer
 
@@ -900,7 +900,7 @@ error.addTradeService.required = Select yes if you would like to add another ser
 #PAYMENT FOR TRADE SERVICES
 ####################################
 paymentForTradeServices.heading = Is a separate payment made for any trade services provided by the landlord?
-paymentForTradeServices.hint = For example, lighting, heating, cleaning of shared parts
+paymentForTradeServices.hint = For example, lighting, heating, cleaning of shared parts.
 error.paymentForTradeServices.missing = Select yes if a separate payment is made for any trade services provided by the landlord
 
 # SERVICE PAID SEPARATELY
@@ -911,18 +911,18 @@ servicePaidSeparately.describe = Describe the type of service
 servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
 servicePaidSeparately.describe.error = Please describe the type of service
 error.servicePaidSeparately.invalidCurrency = The sum must be a number like 100 or 100.00 and cannot be less than 0
-error.servicePaidSeparately.required = You must tell us the annual charge for the service which you pay for separately
+error.servicePaidSeparately.required = You must tell us the annual charge for the service which is paid for separately
 
 # SERVICE PAID SEPARATELY ANNUAL CHARGE
 ########################################
 servicePaidSeparatelyCharge.heading = What is the annual charge for this separately paid service, excluding VAT?
 error.servicePaidSeparatelyCharge.invalidCurrency = The annual charge must be a number like 100 or 100.00 and cannot be less than 0
-error.servicePaidSeparatelyCharge.required = You must tell us the annual charge for the service which you pay for separately
+error.servicePaidSeparatelyCharge.required = You must tell us the annual charge for the service which is paid for separately
 
 # SERVICES PAID SEPARATELY LIST
 #####################################
-servicePaidSeparatelyList.heading = You have added {0} {1} which you pay for separately
-servicePaidSeparatelyListZero.heading = You have removed all the services which you pay for separately
+servicePaidSeparatelyList.heading = You have added {0} {1} which is paid for separately
+servicePaidSeparatelyListZero.heading = You have removed all the services which is paid for separately
 servicePaidSeparatelyList.service = service
 servicePaidSeparatelyList.services = services
 servicePaidSeparatelyList.label = Would you like to add another service?
