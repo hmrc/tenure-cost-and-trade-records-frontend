@@ -16,8 +16,6 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,36 +23,49 @@ import utils.TestBaseSpec
 
 class DoesTheRentPayableControllerSpec extends TestBaseSpec {
 
-  val mockAboutLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+  def doesTheRentPayableController = new DoesTheRentPayableController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    doesTheRentPayableView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
-  def doesTheRentPayableController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new DoesTheRentPayableController(
-      stubMessagesControllerComponents(),
-      mockAboutLeaseOrTenureNavigator,
-      doesTheRentPayableView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  def doesTheRentPayableControllerNone = new DoesTheRentPayableController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    doesTheRentPayableView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    mockSessionRepo
+  )
 
-  "GET /" should {
-    "return 200" in {
-      val result = doesTheRentPayableController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+  "DoesTheRentPayableController GET /" should {
+    "return 200 and HTML with Does The Rent Payable in the session" in {
+      val result = doesTheRentPayableController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = doesTheRentPayableController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML when no Does The Rent Payable in the session" in {
+      val result = doesTheRentPayableControllerNone.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+      )
     }
+
   }
 
-  "SUBMIT /" should {
+  "DoesTheRentPayableController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = doesTheRentPayableController().submit(
+      val res = doesTheRentPayableController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

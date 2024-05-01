@@ -19,11 +19,10 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CapitalSumDescriptionForm.capitalSumDescriptionForm
-import form.aboutYourLeaseOrTenure.RentedEquipmentDetailsForm.rentedEquipmentDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.{BenefitsGivenDetailsId, CapitalSumDescriptionId}
+import navigation.identifiers.CapitalSumDescriptionId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

@@ -1077,11 +1077,14 @@ trait FakeObjects {
     Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
     currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
+    currentLeaseOrAgreementBegin = Some(CurrentLeaseOrAgreementBegin(MonthsYearDuration(4, 2024), "Granted for")),
+    doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),
     whatIsYourCurrentRentBasedOnDetails =
-      Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("Open market")))
+      Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("Open market"))),
+    checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes"))
   )
 
   val prefilledAboutLeaseOrAgreementPartOneNoStartDate: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(

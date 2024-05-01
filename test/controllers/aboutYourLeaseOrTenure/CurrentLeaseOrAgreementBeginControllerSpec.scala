@@ -17,8 +17,6 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -29,56 +27,48 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
-  val mockAboutLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+  def currentLeaseOrAgreementBeginController = new CurrentLeaseOrAgreementBeginController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentLeaseOrAgreementBeginView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
-  def currentLeaseOrAgreementBeginController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new CurrentLeaseOrAgreementBeginController(
-      stubMessagesControllerComponents(),
-      mockAboutLeaseOrTenureNavigator,
-      currentLeaseOrAgreementBeginView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  def currentLeaseOrAgreementBeginNoDate = new CurrentLeaseOrAgreementBeginController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentLeaseOrAgreementBeginView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)),
+    mockSessionRepo
+  )
 
-  def currentLeaseOrAgreementBeginNoDate(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
-      prefilledAboutLeaseOrAgreementPartOneNoStartDate
-    )
-  ) =
-    new CurrentLeaseOrAgreementBeginController(
-      stubMessagesControllerComponents(),
-      mockAboutLeaseOrTenureNavigator,
-      currentLeaseOrAgreementBeginView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
-      val result = currentLeaseOrAgreementBeginController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+  "CurrentLeaseOrAgreementBeginController GET /" should {
+    "return 200 and HTML with Current Lease Or Agreement Begin in the session" in {
+      val result = currentLeaseOrAgreementBeginController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = currentLeaseOrAgreementBeginController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 vacant property start date is not present in session" in {
-      val result = currentLeaseOrAgreementBeginNoDate().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML vacant property start date is not present in session" in {
+      val result = currentLeaseOrAgreementBeginNoDate.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
+      )
     }
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = currentLeaseOrAgreementBeginController().submit(
+      val res = currentLeaseOrAgreementBeginController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

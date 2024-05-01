@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -30,21 +30,38 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
     new CarParkingAnnualRentController(
       carParkingAnnualRentView,
       aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
+      preEnrichedActionRefiner(),
       mockSessionRepo,
       stubMessagesControllerComponents()
     )
 
-  "GET /" should {
-    "return 200" in {
+  def carParkingAnnualRentControllerNone = new CarParkingAnnualRentController(
+    carParkingAnnualRentView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+    mockSessionRepo,
+    stubMessagesControllerComponents()
+  )
+
+  "CarParkingAnnualRentController GET /" should {
+    "return 200 and HTML with Car Parking Annual Rent in the session" in {
       val result = carParkingAnnualRentController.show(fakeRequest)
-      status(result) shouldBe OK
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = carParkingAnnualRentController.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML when no Car Parking Annual Rent in the session" in {
+      val result = carParkingAnnualRentControllerNone.show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show().url
+      )
     }
   }
 
