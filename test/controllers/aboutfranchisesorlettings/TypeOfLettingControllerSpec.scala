@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.stubMessagesControllerComponents
 import utils.TestBaseSpec
 import play.api.test.Helpers._
-import org.mockito.ArgumentMatchers.any
+
 class TypeOfLettingControllerSpec extends TestBaseSpec {
 
   def typeOfLettingController(

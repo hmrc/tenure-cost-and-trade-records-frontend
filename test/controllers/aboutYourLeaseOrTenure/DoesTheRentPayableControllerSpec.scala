@@ -16,8 +16,6 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -44,9 +42,9 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
   "DoesTheRentPayableController GET /" should {
     "return 200 and HTML with Does The Rent Payable in the session" in {
       val result = doesTheRentPayableController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
       )
@@ -54,9 +52,9 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML when no Does The Rent Payable in the session" in {
       val result = doesTheRentPayableControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
       )
