@@ -1022,6 +1022,7 @@ trait FakeObjects {
     Some(prefilledAnnualRent),
     currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
     currentLeaseOrAgreementBegin = Some(CurrentLeaseOrAgreementBegin(MonthsYearDuration(4, 2024), "Granted for")),
+    doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),

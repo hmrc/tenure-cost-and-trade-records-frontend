@@ -28,12 +28,12 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def connectedToLandlordDetailsController = new ConnectedToLandlordDetailsController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      connectedToLandlordDetailsView,
-      preEnrichedActionRefiner(),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    connectedToLandlordDetailsView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
   def connectedToLandlordDetailsControllerNone = new ConnectedToLandlordDetailsController(
     stubMessagesControllerComponents(),
@@ -46,9 +46,9 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
   "ConnectedToLandlordDetailsController GET /" should {
     "return 200 and HTML with data in the session" in {
       val result = connectedToLandlordDetailsController.show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
       )
@@ -56,9 +56,9 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
 
     "return 200 and html with none in the session" in {
       val result = connectedToLandlordDetailsControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
       )

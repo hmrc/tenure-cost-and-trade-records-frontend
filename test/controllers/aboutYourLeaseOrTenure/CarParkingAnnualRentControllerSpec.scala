@@ -46,9 +46,9 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
   "CarParkingAnnualRentController GET /" should {
     "return 200 and HTML with Car Parking Annual Rent in the session" in {
       val result = carParkingAnnualRentController.show(fakeRequest)
-      status(result)      shouldBe OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show().url
       )
@@ -56,9 +56,9 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML when no Car Parking Annual Rent in the session" in {
       val result = carParkingAnnualRentControllerNone.show(fakeRequest)
-      status(result)      shouldBe OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show().url
       )

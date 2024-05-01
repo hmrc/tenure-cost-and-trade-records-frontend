@@ -28,27 +28,27 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def connectedToLandlordController = new ConnectedToLandlordController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      connectedToLandlordView,
-      preEnrichedActionRefiner(),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    connectedToLandlordView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
   def connectedToLandlordControllerNone = new ConnectedToLandlordController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      connectedToLandlordView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    connectedToLandlordView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    mockSessionRepo
+  )
 
   "ConnectedToLandlordController GET /" should {
     "return 200 and HTML with landlord connection data in session" in {
       val result = connectedToLandlordController.show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
       )
@@ -56,9 +56,9 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
 
     "return 200 for empty session" in {
       val result = connectedToLandlordControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
       )

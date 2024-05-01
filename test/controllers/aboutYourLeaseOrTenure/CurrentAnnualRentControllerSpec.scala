@@ -25,28 +25,31 @@ import utils.TestBaseSpec
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
   def connectionToThePropertyController = new CurrentAnnualRentController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      currentAnnualRentView,
-      preEnrichedActionRefiner(),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentAnnualRentView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
   def connectionToThePropertyController6011Yes = new CurrentAnnualRentController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      currentAnnualRentView,
-      preEnrichedActionRefiner(forType = ForTypes.for6011),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentAnnualRentView,
+    preEnrichedActionRefiner(forType = ForTypes.for6011),
+    mockSessionRepo
+  )
 
   def connectionToThePropertyController6011No = new CurrentAnnualRentController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      currentAnnualRentView,
-      preEnrichedActionRefiner(forType = ForTypes.for6011, aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentAnnualRentView,
+    preEnrichedActionRefiner(
+      forType = ForTypes.for6011,
+      aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+    ),
+    mockSessionRepo
+  )
 
   def connectionToThePropertyControllerNone = new CurrentAnnualRentController(
     stubMessagesControllerComponents(),
@@ -59,9 +62,9 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
   "CurrentAnnualRentController GET /" should {
     "return 200 and HTML with data in the session" in {
       val result = connectionToThePropertyController.show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
       )
@@ -69,9 +72,9 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML for 6011 with yes in the session" in {
       val result = connectionToThePropertyController6011Yes.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
       )
@@ -79,9 +82,9 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML for 6011 with no in the session" in {
       val result = connectionToThePropertyController6011No.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
       )
@@ -89,9 +92,9 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML with none in the session" in {
       val result = connectionToThePropertyControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.routes.TaskListController.show().url
       )

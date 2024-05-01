@@ -28,27 +28,27 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def currentLeaseOrAgreementBeginController = new CurrentLeaseOrAgreementBeginController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      currentLeaseOrAgreementBeginView,
-      preEnrichedActionRefiner(),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentLeaseOrAgreementBeginView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
   def currentLeaseOrAgreementBeginNoDate = new CurrentLeaseOrAgreementBeginController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      currentLeaseOrAgreementBeginView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentLeaseOrAgreementBeginView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)),
+    mockSessionRepo
+  )
 
   "CurrentLeaseOrAgreementBeginController GET /" should {
     "return 200 and HTML with Current Lease Or Agreement Begin in the session" in {
       val result = currentLeaseOrAgreementBeginController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
       )
@@ -56,9 +56,9 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML vacant property start date is not present in session" in {
       val result = currentLeaseOrAgreementBeginNoDate.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
       )

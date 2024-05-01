@@ -67,9 +67,9 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
   "CurrentRentFirstPaidController GET /" should {
     "return 200 and HTML with Current Rent First Paid in the session" in {
       val result = currentRentFirstPaidController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
       )
@@ -77,9 +77,9 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML with no Current Rent First Paid in the session" in {
       val result = currentRentFirstPaidNoStartDate.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
       )
@@ -87,9 +87,9 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML when None in session for 6011" in {
       val result = currentRentFirstPaidController6011None.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show().url
       )
@@ -97,9 +97,9 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML with throughput affect rent, does rent vary in the session for 6020" in {
       val result = currentRentFirstPaidController6020.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show().url
       )
@@ -107,9 +107,9 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML when no throughput affect rent, does rent vary in the session for 6020" in {
       val result = currentRentFirstPaidController6020None.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
       )
