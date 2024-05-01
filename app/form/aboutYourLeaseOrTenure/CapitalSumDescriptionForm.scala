@@ -18,7 +18,7 @@ package form.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, single, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.maxLength
 
 object CapitalSumDescriptionForm {

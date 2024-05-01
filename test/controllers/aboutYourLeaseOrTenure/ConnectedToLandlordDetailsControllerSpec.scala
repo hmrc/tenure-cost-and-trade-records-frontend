@@ -17,7 +17,6 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,14 +27,11 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
-  def connectedToLandlordDetailsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new ConnectedToLandlordDetailsController(
+  def connectedToLandlordDetailsController = new ConnectedToLandlordDetailsController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       connectedToLandlordDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(),
       mockSessionRepo
     )
 
@@ -48,15 +44,14 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
   )
 
   "ConnectedToLandlordDetailsController GET /" should {
-    "return 200 with data in the session" in {
-      val result = connectedToLandlordDetailsController().show(fakeRequest)
+    "return 200 and HTML with data in the session" in {
+      val result = connectedToLandlordDetailsController.show(fakeRequest)
       status(result) shouldBe Status.OK
-    }
-
-    "return HTML with data in the session" in {
-      val result = connectedToLandlordDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+      )
     }
 
     "return 200 and html with none in the session" in {
@@ -64,13 +59,16 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+      )
     }
   }
 
   "ConnectedToLandlordDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = connectedToLandlordDetailsController().submit(
+      val res = connectedToLandlordDetailsController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

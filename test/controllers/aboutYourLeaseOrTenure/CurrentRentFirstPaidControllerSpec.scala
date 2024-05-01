@@ -16,8 +16,6 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,69 +24,100 @@ import org.jsoup.Jsoup
 
 class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
-  val mockAboutLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+  def currentRentFirstPaidController = new CurrentRentFirstPaidController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentRentFirstPaidView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
-  def currentRentFirstPaidController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new CurrentRentFirstPaidController(
-      stubMessagesControllerComponents(),
-      mockAboutLeaseOrTenureNavigator,
-      currentRentFirstPaidView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def currentRentFirstPaidNoStartDate(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
-      prefilledAboutLeaseOrAgreementPartOneNoStartDate
-    )
-  ) =
-    new CurrentRentFirstPaidController(
-      stubMessagesControllerComponents(),
-      mockAboutLeaseOrTenureNavigator,
-      currentRentFirstPaidView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  def currentRentFirstPaidNoStartDate = new CurrentRentFirstPaidController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentRentFirstPaidView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)),
+    mockSessionRepo
+  )
 
   def currentRentFirstPaidController6011None = new CurrentRentFirstPaidController(
     stubMessagesControllerComponents(),
-    mockAboutLeaseOrTenureNavigator,
+    aboutYourLeaseOrTenureNavigator,
     currentRentFirstPaidView,
     preEnrichedActionRefiner(forType = "FOR6011", aboutLeaseOrAgreementPartOne = None),
     mockSessionRepo
   )
 
+  def currentRentFirstPaidController6020 = new CurrentRentFirstPaidController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentRentFirstPaidView,
+    preEnrichedActionRefiner(forType = "FOR6020"),
+    mockSessionRepo
+  )
+
+  def currentRentFirstPaidController6020None = new CurrentRentFirstPaidController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentRentFirstPaidView,
+    preEnrichedActionRefiner(forType = "FOR6020", aboutLeaseOrAgreementPartThree = None),
+    mockSessionRepo
+  )
+
   "CurrentRentFirstPaidController GET /" should {
-    "return 200" in {
-      val result = currentRentFirstPaidController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = currentRentFirstPaidController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 and HTML vacant property start date is not present in session" in {
-      val result = currentRentFirstPaidNoStartDate().show()(fakeRequest)
+    "return 200 and HTML with Current Rent First Paid in the session" in {
+      val result = currentRentFirstPaidController.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
+      )
     }
 
-    "return 200 and HTML with None in session for 6011" in {
+    "return 200 and HTML with no Current Rent First Paid in the session" in {
+      val result = currentRentFirstPaidNoStartDate.show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
+      )
+    }
+
+    "return 200 and HTML when None in session for 6011" in {
       val result = currentRentFirstPaidController6011None.show()(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show().url
+      )
+    }
+
+    "return 200 and HTML with throughput affect rent, does rent vary in the session for 6020" in {
+      val result = currentRentFirstPaidController6020.show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show().url
+      )
+    }
+
+    "return 200 and HTML when no throughput affect rent, does rent vary in the session for 6020" in {
+      val result = currentRentFirstPaidController6020None.show()(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
+      )
     }
 
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
-        val result = currentRentFirstPaidController().show()(fakeRequest)
+        val result = currentRentFirstPaidController.show()(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
         Option(html.getElementById("currentRentFirstPaid.day").`val`()).value   shouldBe "1"
         Option(html.getElementById("currentRentFirstPaid.month").`val`()).value shouldBe "6"
@@ -100,7 +129,7 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
   "CurrentRentFirstPaidController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = currentRentFirstPaidController().submit(
+      val res = currentRentFirstPaidController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

@@ -17,8 +17,6 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -29,38 +27,31 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
-  def connectedToLandlordController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new ConnectedToLandlordController(
+  def connectedToLandlordController = new ConnectedToLandlordController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       connectedToLandlordView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(),
       mockSessionRepo
     )
 
-  def connectedToLandlordControllerNone =
-    new ConnectedToLandlordController(
+  def connectedToLandlordControllerNone = new ConnectedToLandlordController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       connectedToLandlordView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
       mockSessionRepo
     )
 
   "ConnectedToLandlordController GET /" should {
-    "return 200 with landlord connection data in session" in {
-      val result = connectedToLandlordController().show(fakeRequest)
+    "return 200 and HTML with landlord connection data in session" in {
+      val result = connectedToLandlordController.show(fakeRequest)
       status(result) shouldBe Status.OK
-    }
-
-    "return HTML with landlord connection data in session" in {
-      val result = connectedToLandlordController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+      )
     }
 
     "return 200 for empty session" in {
@@ -68,13 +59,16 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+      )
     }
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = connectedToLandlordController().submit(
+      val res = connectedToLandlordController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
