@@ -16,8 +16,6 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,52 +24,46 @@ import utils.TestBaseSpec
 
 class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
 
-  def currentRentPayableWithin12MonthsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new CurrentRentPayableWithin12MonthsController(
-      stubMessagesControllerComponents(),
-      mock[AboutYourLeaseOrTenureNavigator],
-      currentRentPayableWithin12MonthsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  def currentRentPayableWithin12MonthsController = new CurrentRentPayableWithin12MonthsController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentRentPayableWithin12MonthsView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
-  def currentRentPayableWithin12MonthsNoStartDate(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
-      prefilledAboutLeaseOrAgreementPartOneNoStartDate
-    )
-  ) =
-    new CurrentRentPayableWithin12MonthsController(
-      stubMessagesControllerComponents(),
-      mock[AboutYourLeaseOrTenureNavigator],
-      currentRentPayableWithin12MonthsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  def currentRentPayableWithin12MonthsNoStartDate = new CurrentRentPayableWithin12MonthsController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    currentRentPayableWithin12MonthsView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)),
+    mockSessionRepo
+  )
 
-  "GET /" should {
-    "return 200" in {
-      val result = currentRentPayableWithin12MonthsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+  "CurrentRentPayableWithin12MonthsController GET /" should {
+    "return 200 and HTML with Current Rent Payable Within 12 Months in the session" in {
+      val result = currentRentPayableWithin12MonthsController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = currentRentPayableWithin12MonthsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 vacant property start date is not present in session" in {
-      val result = currentRentPayableWithin12MonthsNoStartDate().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML when no Vacant Property Start Date in the session" in {
+      val result = currentRentPayableWithin12MonthsNoStartDate.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+      )
     }
 
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
-        val result = currentRentPayableWithin12MonthsController().show()(fakeRequest)
+        val result = currentRentPayableWithin12MonthsController.show()(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
         Option(html.getElementById("dateReview.day").`val`()).value   shouldBe "1"
         Option(html.getElementById("dateReview.month").`val`()).value shouldBe "6"
@@ -80,9 +72,9 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "CurrentRentPayableWithin12MonthsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = currentRentPayableWithin12MonthsController().submit(
+      val res = currentRentPayableWithin12MonthsController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
