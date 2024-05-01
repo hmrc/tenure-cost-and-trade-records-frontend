@@ -1,0 +1,99 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutfranchisesorlettings.TypeOfLetting
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        govukFieldset: GovukFieldset,
+        govukCheckboxes: GovukCheckboxes,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[TypeOfLetting], index: Option[Int], summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
+
+@content = {
+  @govukRadios(Radios(
+    fieldset =  Some(Fieldset(
+      legend = Some(Legend(
+        content = Text(Messages("lettings.typeOfLetting.heading")),
+        classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--m",
+        isPageHeading = true
+      ))
+    )),
+    name = "typeOfLetting",
+    items = Seq(
+      RadioItem(
+        content = Text(messages("lettings.typeOfLetting.automatedTellerMachine")),
+        value = Some("automatedTellerMachine")
+      ),
+      RadioItem(
+        content = Text(messages("lettings.typeOfLetting.telecomMast")),
+        value = Some("telecomMast")
+      ),
+      RadioItem(
+        content = Text(messages("lettings.typeOfLetting.advertisingRight")),
+        value = Some("advertisingRight")
+      ),
+      RadioItem(
+        content = Text(messages("lettings.typeOfLetting.other")),
+        value = Some("other")
+      )
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("typeOfLetting"),
+    formGroupClasses = "govuk-!-margin-bottom-3",
+  ).withFormField(theForm("typeOfLetting"))
+  )
+}
+
+@layout(
+  pageHeading = messages("lettings.typeOfLetting.heading"),
+  showH1 = false,
+  showSection = true,
+  summary = Some(summary),
+  sectionName = messages("label.section.aboutTheLettings"),
+  backLinkUrl = backLink,
+  theForm = theForm
+) {
+
+  @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.submit(index)) {
+
+    @govukFieldset(Fieldset(html = content))
+
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
+}

@@ -293,6 +293,7 @@
          }
         </h2>
       <ul class="app-task-list__items">
+      @if(forType == ForTypes.for6030) {
        @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
         section4Completed,
@@ -300,7 +301,7 @@
         section3Completed.isEmpty
        )
 
-       @if(forType == ForTypes.for6030) {
+
         @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
          controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show(),
          section4Completed,
@@ -315,19 +316,28 @@
          session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee).isEmpty
         )
        } else {
-        @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-         controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
-         section4Completed,
-         session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
-         session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-        )
+         @if(forType != ForTypes.for6020) {
+          @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
+           controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
+           section4Completed,
+           session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
+           session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
+          )
 
-        @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-         controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
-         section4Completed,
-         session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-         session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
-        )
+          @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
+           section4Completed,
+           session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
+           session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
+          )
+         }else{
+          @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+           controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+           section4Completed,
+           session.aboutFranchisesOrLettings.flatMap(_.lettings),
+           section3Completed.isEmpty
+          )
+         }
        }
       </ul>
      </li>

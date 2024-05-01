@@ -81,6 +81,7 @@ class MaxOfLettingsReachedController @Inject() (
             updateAboutFranchisesOrLettings(_.copy(cateringMaxOfLettings = Some(data)))
           case Some("franchiseLetting")  =>
             updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
+          case Some("lettings")          => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
         }
         session
           .saveOrUpdate(updatedData)
@@ -98,6 +99,8 @@ class MaxOfLettingsReachedController @Inject() (
               case Some("franchiseCatering") =>
                 franchiseNavigator.nextPage(MaxOfLettingsReachedCateringId, updatedData).apply(updatedData)
               case Some("franchiseLetting")  =>
+                franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
+              case Some("lettings")          =>
                 franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
             }
           }
@@ -128,6 +131,12 @@ class MaxOfLettingsReachedController @Inject() (
           controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
           "franchiseLetting"
+        )
+      case Some("lettings")          =>
+        (
+          controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(9).url,
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
+          "lettings"
         )
       case _                         =>
         (

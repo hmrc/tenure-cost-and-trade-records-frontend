@@ -110,6 +110,18 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
+      case ForTypes.for6020                    =>
+        val answersYesNo: Option[AnswersYesNo] =
+          answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty)
+        answersYesNo match {
+          case Some(AnswerYes) =>
+            val idx = answers.aboutFranchisesOrLettings.map(_.lettings.map(_.length).getOrElse(0)).getOrElse(0)
+            controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController
+              .show(if (idx > 0) idx - 1 else idx)
+              .url
+          case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+
+        }
       case _                                   =>
         logger.warn(s"Back link reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
@@ -124,20 +136,20 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
       }
 
     aboutFranchiseOrLettings match {
-      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
           if aboutFranchiseOrLettings.lettingSections.nonEmpty =>
         controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
           .show(getLettingsIndex(session))
           .url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _) =>
+      case AboutFranchisesOrLettings(Some(AnswerYes), Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _) =>
         controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _, _)
           if isNoOrNone(aboutFranchiseOrLettings.lettingOtherPartOfProperty) =>
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _, _)
           if aboutFranchiseOrLettings.cateringConcessionOrFranchise.contains(
             AnswerYes
           ) && aboutFranchiseOrLettings.cateringOperationSections.nonEmpty =>
@@ -145,11 +157,11 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
           .show(getCateringsIndex(session))
           .url
 
-      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _)
+      case AboutFranchisesOrLettings(Some(AnswerYes), _, _, _, _, _, _, _, _, _, _, _, _, _)
           if aboutFranchiseOrLettings.cateringConcessionOrFranchise.contains(AnswerYes) =>
         controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
 
-      case AboutFranchisesOrLettings(Some(AnswerNo), _, _, _, _, _, _, _, _, _, _, _, _) =>
+      case AboutFranchisesOrLettings(Some(AnswerNo), _, _, _, _, _, _, _, _, _, _, _, _, _) =>
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
       case _ =>

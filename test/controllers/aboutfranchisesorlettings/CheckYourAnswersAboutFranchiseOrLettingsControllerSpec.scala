@@ -39,6 +39,18 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       mockSessionRepo
     )
 
+  def checkYourAnswersAboutFranchiseOrLettingsController6020(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
+      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
+    )
+  ) =
+    new CheckYourAnswersAboutFranchiseOrLettingsController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      checkYourAnswersAboutFranchiseOrLettings,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+      mockSessionRepo
+    )
   "GET /" should {
     "return 200" in {
       val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
@@ -61,6 +73,14 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     }
   }
 
+  "SUBMIT /"                               should {
+    "throw a BAD_REQUEST if an empty form is submitted for 6020" in {
+      val res = checkYourAnswersAboutFranchiseOrLettingsController6020().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
   "Add another letting accommodation form" should {
     "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersAboutFranchiseOrLettings
