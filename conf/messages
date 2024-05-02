@@ -1869,6 +1869,10 @@ throughputAffectsRentDetails.heading = Explain how your throughput affects your 
 error.throughputAffectsRentDetails.required = Describe how throughput affects your rent
 error.throughputAffectsRentDetails.maxLength = The description of how throughput affects your rent must be {0} characters or fewer
 
+# IS VAT PAYABLE FOR WHOLE PROPERTY
+isVATPayableForWholeProperty.heading = Is VAT payable in respect of the whole property?
+error.isVATPayableForWholeProperty.required = Select yes if VAT is payable in respect of the whole property
+
 # CAR PARKING
 doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
 isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?

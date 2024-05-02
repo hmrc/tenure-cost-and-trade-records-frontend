@@ -18,7 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.AnswerNo
+import models.submissions.common.{AnswerNo, AnswersYesNo}
 import play.api.libs.json.{Json, OFormat}
 
 case class AboutLeaseOrAgreementPartThree(
@@ -27,6 +27,7 @@ case class AboutLeaseOrAgreementPartThree(
   tradeServices: IndexedSeq[TradeServices] = IndexedSeq.empty,
   servicesPaid: IndexedSeq[ServicesPaid] = IndexedSeq.empty,
   throughputAffectsRent: Option[ThroughputAffectsRent] = None,
+  isVATPayableForWholeProperty: Option[AnswersYesNo] = None,
   carParking: Option[CarParking] = None,
   rentedEquipmentDetails: Option[String] = None,
   paymentForTradeServices: Option[PaymentForTradeServices] = None,
