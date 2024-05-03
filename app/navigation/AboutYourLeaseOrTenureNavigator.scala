@@ -129,15 +129,18 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def includedInYourRentRouting: Session => Call = answers =>
-    if (
-      answers.forType == ForTypes.for6020 &&
-      answers.aboutLeaseOrAgreementPartOne
-        .flatMap(_.includedInYourRentDetails)
-        .exists(_.includedInYourRent contains "vat")
-    ) {
-      aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show()
-    } else {
-      aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
+    answers.forType match {
+      case ForTypes.for6020 =>
+        if (
+          answers.aboutLeaseOrAgreementPartOne
+            .flatMap(_.includedInYourRentDetails)
+            .exists(_.includedInYourRent contains "vat")
+        ) {
+          aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show()
+        } else {
+          aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+        }
+      case _                => aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
     }
 
   private def rentIncludeTradeServicesRouting: Session => Call = answers => {
@@ -325,20 +328,16 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
-      case Some("no")  =>
+      case _           =>
         answers.forType match {
           case ForTypes.for6020 =>
             controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
-          case _                =>
-            logger.warn(
-              s"Navigation for pay capital sum without correct selection of conditions by controller"
-            )
-            throw new RuntimeException("Invalid option exception for pay capital sum routing")
         }
     }
   }
-  private def RPIRouting: Session => Call           = answers => {
+
+  private def RPIRouting: Session => Call = answers => {
     answers.forType match {
       case ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
@@ -346,10 +345,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   }
+
   private def tradeServicesDescriptionRouting: Session => Call = answers => {
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
   }
-  private def servicePaidSeparatelyRouting: Session => Call    = answers => {
+
+  private def servicePaidSeparatelyRouting: Session => Call = answers => {
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController
       .show(getIndexOfPaidServices(answers))
   }
