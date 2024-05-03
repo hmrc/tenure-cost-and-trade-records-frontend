@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm
-import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import models.submissions.common._
 import org.scalatest.matchers.must.Matchers._
@@ -30,10 +30,14 @@ class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours
 
   override val form = UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 
-  def createView = () => ultimatelyResponsibleOutsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
+  private val backLink       =
+    controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
+  def createView = () => ultimatelyResponsibleOutsideRepairsView(form, backLink)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[UltimatelyResponsibleOutsideRepairs]) =>
-    ultimatelyResponsibleOutsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
+    ultimatelyResponsibleOutsideRepairsView(form, backLink)(sessionRequest, messages)
 
   "Ultimately responsible view" must {
 
