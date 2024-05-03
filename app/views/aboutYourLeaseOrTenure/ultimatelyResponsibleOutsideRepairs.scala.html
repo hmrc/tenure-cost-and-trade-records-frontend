@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -25,7 +26,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -35,7 +35,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[UltimatelyResponsibleOutsideRepairs], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[UltimatelyResponsibleOutsideRepairs], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
 
 @conditionalHTML = {
 @govukTextarea(
@@ -55,13 +55,13 @@
 }
 
 @layout(
- pageHeading = messages("ultimatelyResponsibleOR.heading"),
- showSection = true,
+    pageHeading = messages("ultimatelyResponsibleOR.heading"),
+    showSection = true,
     showH1 = false,
-    summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url,
- theForm = theForm
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLinkUrl,
+    theForm = theForm
 ) {
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.submit()) {
