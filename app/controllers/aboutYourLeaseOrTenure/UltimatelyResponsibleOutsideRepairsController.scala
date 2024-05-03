@@ -16,9 +16,10 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -49,7 +50,7 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
             case Some(ultimatelyResponsible) => ultimatelyResponsibleOutsideRepairsForm.fill(ultimatelyResponsible)
             case _                           => ultimatelyResponsibleOutsideRepairsForm
           },
-          request.sessionData.toSummary
+          getBackLink
         )
       )
     )
@@ -58,7 +59,7 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UltimatelyResponsibleOutsideRepairs](
       ultimatelyResponsibleOutsideRepairsForm,
-      formWithErrors => BadRequest(ultimatelyResponsibleORView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(ultimatelyResponsibleORView(formWithErrors, getBackLink)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleOutsideRepairs = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -66,5 +67,17 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
       }
     )
   }
+
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    if (
+      request.sessionData.forType == ForTypes.for6020 &&
+      request.sessionData.aboutLeaseOrAgreementPartOne
+        .flatMap(_.includedInYourRentDetails)
+        .exists(_.includedInYourRent contains "vat")
+    ) {
+      controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show().url
+    } else {
+      controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
+    }
 
 }
