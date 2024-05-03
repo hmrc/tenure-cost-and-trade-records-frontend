@@ -69,15 +69,18 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
   }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    if (
-      request.sessionData.forType == ForTypes.for6020 &&
-      request.sessionData.aboutLeaseOrAgreementPartOne
-        .flatMap(_.includedInYourRentDetails)
-        .exists(_.includedInYourRent contains "vat")
-    ) {
-      controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show().url
-    } else {
-      controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
+    request.sessionData.forType match {
+      case ForTypes.for6020 =>
+        if (
+          request.sessionData.aboutLeaseOrAgreementPartOne
+            .flatMap(_.includedInYourRentDetails)
+            .exists(_.includedInYourRent contains "vat")
+        ) {
+          controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show().url
+        } else {
+          controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+        }
+      case _                => controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
     }
 
 }
