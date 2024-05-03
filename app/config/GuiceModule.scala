@@ -16,48 +16,19 @@
 
 package config
 
-import java.time.Clock
 import com.google.inject.AbstractModule
 import com.google.inject.name.Names
-import com.google.inject.name.Names.named
-import com.typesafe.config.ConfigException
-import play.api._
 import repositories._
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import scala.util.Try
 
-class GuiceModule(
-  environment: Environment,
-  configuration: Configuration
-) extends AbstractModule {
+import java.time.Clock
 
-  lazy val servicesConfig: ServicesConfig = new ServicesConfig(configuration)
+class GuiceModule extends AbstractModule {
 
-  override def configure() = {
-
+  override def configure(): Unit = {
     bind(classOf[SessionRepo])
       .annotatedWith(Names.named("session"))
       .to(classOf[SessionRepository])
     bind(classOf[Clock]).toInstance(Clock.systemUTC())
-
   }
 
-  protected def bindBoolean(path: String, name: String = ""): Unit =
-    bindConstant()
-      .annotatedWith(named(resolveAnnotationName(path, name)))
-      .to(
-        Try(configuration.get[String](path).toBoolean).toOption.getOrElse(configException(path))
-      ) //We need to parse as string, due to the process of adding in from app-config-<env> it is seen as a string
-
-  protected def bindStringWithPrefix(path: String, prefix: String, name: String = ""): Unit =
-    bindConstant()
-      .annotatedWith(named(resolveAnnotationName(path, name)))
-      .to(s"$prefix${configuration.get[String](path)}")
-
-  private def resolveAnnotationName(path: String, name: String): String = name match {
-    case "" => path
-    case _  => name
-  }
-
-  private def configException(path: String) = throw new ConfigException.Missing(path)
 }
