@@ -36,7 +36,7 @@ class AddressLookupConfig @Inject() (messagesApi: MessagesApi) {
                       |    "includeHMRCBranding": true,
                       |    "ukMode": true,
                       |    "selectPageConfig": {
-                      |      "proposalListLimit": 100,
+                      |      "proposalListLimit": 10,
                       |      "showSearchLinkAgain": true
                       |    },
                       |    "confirmPageConfig": {
@@ -53,76 +53,60 @@ class AddressLookupConfig @Inject() (messagesApi: MessagesApi) {
                       |    "labels": {
                       |      "en": {
                       |        "appLevelLabels": {
-                      |          "navTitle": "${messagesApi("site.service_name")}"
+                      |          "navTitle":  "${messagesApi("site.service_name")}"
                       |        },
                       |        "lookupPageLabels": {
-                      |          "title": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title"
-    )}",
-                      |          "heading": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading"
-    )}"
+                      |          "title": "What is your landlord''s address?",
+                      |          "heading": "What is your landlord''s address?",
+                      |          "noResultsFoundMessage" : "There are no results for that postcode",
+                      |          "resultLimitExceededMessage": "Too many results - add a building name or number, or ender the address manually"
                       |        },
+                      |        "selectPageLabels": {
+                      |          "title": "Choose your landlord''s address",
+                      |          "heading": "Choose your landlord''s address",
+                      |          "proposalListLabel": "Choose your landlord''s address or enter it manually",
+                      |          "editAddressLinkText": "Enter the address manually"
+                      |         },
                       |        "editPageLabels": {
-                      |          "title": "${messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.editPage.title")}",
-                      |          "heading": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading"
-    )}"
+                      |          "title": "Enter the address manually",
+                      |          "heading": "Enter the address manually"
                       |        },
                       |        "confirmPageLabels": {
-                      |         "title": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title"
-    )}",
-                      |         "heading": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading"
-    )}",
-                      |         "submitLabel": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel"
-    )}",
-                      |         "searchAgainLinkText": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText"
-    )}",
-                      |         "changeLinkText": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText"
-    )}"
+                      |         "title": "Check your landlord''s address",
+                      |         "heading": "Check your landlord''s address",
+                      |         "submitLabel": "Use this address",
+                      |         "searchAgainLinkText": "Use a different address",
+                      |         "changeLinkText": "Edit this address",
+                      |         "infoMessage": ""
                       |        }
                       |      },
                       |      "cy": {
                       |        "appLevelLabels": {
-                      |          "navTitle": "${messagesApi("site.service_name")(cy)}"
+                      |          "navTitle":  "${messagesApi("site.service_name")(cy)}"
                       |        },
                       |        "lookupPageLabels": {
-                      |          "title": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title"
-    )(cy)}",
-                      |          "heading": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading"
-    )(cy)}"
+                      |          "title": "What is your landlord''s address?",
+                      |          "heading": "What is your landlord''s address?",
+                      |          "noResultsFoundMessage" : "There are no results for that postcode",
+                      |          "resultLimitExceededMessage": "Too many results - add a building name or number, or ender the address manually"
                       |        },
+                      |        "selectPageLabels": {
+                      |          "title": "Choose your landlord''s address",
+                      |          "heading": "Choose your landlord''s address",
+                      |          "proposalListLabel": "Choose your landlord''s address or enter it manually",
+                      |          "editAddressLinkText": "Enter the address manually"
+                      |         },
                       |        "editPageLabels": {
-                      |          "title": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.editPage.title"
-    )(cy)}",
-                      |          "heading": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading"
-    )(cy)}"
+                      |          "title": "Enter the address manually",
+                      |          "heading": "Enter the address manually"
                       |        },
                       |        "confirmPageLabels": {
-                      |         "title": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title"
-    )(cy)}",
-                      |         "heading": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading"
-    )(cy)}",
-                      |         "submitLabel": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel"
-    )(cy)}",
-                      |         "searchAgainLinkText": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText"
-    )(cy)}",
-                      |         "changeLinkText": "${messagesApi(
-      "aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText"
-    )(cy)}"
+                      |         "title": "Check your landlord''s address",
+                      |         "heading": "Check your landlord''s address",
+                      |         "submitLabel": "Use this address",
+                      |         "searchAgainLinkText": "Use a different address",
+                      |         "changeLinkText": "Edit this address",
+                      |         "infoMessage": ""
                       |        }
                       |      }
                       |    }
