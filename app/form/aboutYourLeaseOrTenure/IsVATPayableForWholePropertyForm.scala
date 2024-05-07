@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package config
+package form.aboutYourLeaseOrTenure
 
-import com.google.inject.AbstractModule
-import com.google.inject.name.Names
-import repositories._
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
 
-import java.time.Clock
+/**
+  * @author Yuriy Tumakha
+  */
+object IsVATPayableForWholePropertyForm {
 
-class GuiceModule extends AbstractModule {
-
-  override def configure(): Unit = {
-    bind(classOf[SessionRepo])
-      .annotatedWith(Names.named("session"))
-      .to(classOf[SessionRepository])
-    bind(classOf[Clock]).toInstance(Clock.systemUTC())
-  }
+  val isVATPayableForWholePropertyForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "isVATPayableForWholeProperty" -> createYesNoType("error.isVATPayableForWholeProperty.required")
+      )
+    )
 
 }

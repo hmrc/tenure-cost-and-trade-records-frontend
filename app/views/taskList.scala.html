@@ -293,6 +293,13 @@
          }
         </h2>
       <ul class="app-task-list__items">
+      @if(forType != ForTypes.for6020) {
+        @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
+         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+         section4Completed,
+         session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+         section3Completed.isEmpty)
+       }
       @if(forType == ForTypes.for6030) {
        @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),

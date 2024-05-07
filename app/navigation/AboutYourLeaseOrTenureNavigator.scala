@@ -44,6 +44,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show(),
     aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show(),
     aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show(),
     aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show(),
@@ -125,6 +127,21 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     else
       controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
   }
+
+  private def includedInYourRentRouting: Session => Call = answers =>
+    answers.forType match {
+      case ForTypes.for6020 =>
+        if (
+          answers.aboutLeaseOrAgreementPartOne
+            .flatMap(_.includedInYourRentDetails)
+            .exists(_.includedInYourRent contains "vat")
+        ) {
+          aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show()
+        } else {
+          aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+        }
+      case _                => aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
+    }
 
   private def rentIncludeTradeServicesRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartOne.flatMap(
@@ -311,20 +328,16 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case ForTypes.for6030 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
-      case Some("no")  =>
+      case _           =>
         answers.forType match {
           case ForTypes.for6020 =>
             controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
           case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
-          case _                =>
-            logger.warn(
-              s"Navigation for pay capital sum without correct selection of conditions by controller"
-            )
-            throw new RuntimeException("Invalid option exception for pay capital sum routing")
         }
     }
   }
-  private def RPIRouting: Session => Call           = answers => {
+
+  private def RPIRouting: Session => Call = answers => {
     answers.forType match {
       case ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
@@ -332,10 +345,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   }
+
   private def tradeServicesDescriptionRouting: Session => Call = answers => {
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
   }
-  private def servicePaidSeparatelyRouting: Session => Call    = answers => {
+
+  private def servicePaidSeparatelyRouting: Session => Call = answers => {
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController
       .show(getIndexOfPaidServices(answers))
   }
@@ -425,7 +440,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     ),
     CurrentLeaseBeginPageId                       -> (_ => aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
-    IncludedInYourRentPageId                      -> (_ => aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()),
+    IncludedInYourRentPageId                      -> includedInYourRentRouting,
     DoesRentPayablePageId                         -> (_ => aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()),
     UltimatelyResponsibleInsideRepairsPageId      -> (_ =>
       aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
@@ -480,6 +495,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     TypeOfTenureId                                -> (_ => aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
     ThroughputAffectsRentId                       -> doesRentVaryToThroughputRouting,
     ThroughputAffectsRentDetailsId                -> (_ => aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
+    IsVATPayableForWholePropertyId                -> (_ =>
+      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+    ),
     DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
     IncludedInRentParkingSpacesId                 -> (_ => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()),
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,

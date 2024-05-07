@@ -38,7 +38,7 @@ class AddressLookupConfigSpec extends TestBaseSpec {
 
       val title = (configJson \ "labels" \ "en" \ "lookupPageLabels" \ "title").as[String]
 
-      title shouldBe messagesApi("aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title")(lang)
+      title shouldBe "What is your landlord''s address?"
     }
   }
 }

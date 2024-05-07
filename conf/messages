@@ -692,6 +692,7 @@ label.typeOfTenure.long.leasehold = Long leasehold at ground rent
 error.typeOfTenure.required = Select any type of tenure applicable
 label.typeOfTenureDetails = Give details if there is a combination of tenure types
 error.typeOfTenureDetails.maxLength = Give details if there is a combination of tenure types must be 2000 characters or fewer
+error.typeOfTenureDetails.required = You must give details if there is a combination of tenure types
 
 # LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ###################################################
@@ -1246,7 +1247,7 @@ error.benefitsGiven.required = Select yes if you were given a rent-free period, 
 
 #BENEFITS GIVEN DETAILS
 #######################
-benefitsGivenDetails.heading = Give details on any rent-free period, payment or benefit
+benefitsGivenDetails.heading = Give details of any rent-free period, payment or benefit
 benefitsGivenDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
 error.benefitsGivenDetails.maxLength = The description of the rent, payment or benefit should be 2000 characters or fewer.
 
@@ -1869,6 +1870,10 @@ throughputAffectsRentDetails.heading = Explain how your throughput affects your 
 error.throughputAffectsRentDetails.required = Describe how throughput affects your rent
 error.throughputAffectsRentDetails.maxLength = The description of how throughput affects your rent must be {0} characters or fewer
 
+# IS VAT PAYABLE FOR WHOLE PROPERTY
+isVATPayableForWholeProperty.heading = Is VAT payable in respect of the whole property?
+error.isVATPayableForWholeProperty.required = Select yes if VAT is payable in respect of the whole property
+
 # CAR PARKING
 doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
 isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?
@@ -2093,18 +2098,6 @@ checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove = Add or remo
 checkYourAnswersAboutTheTradingHistory.card = card
 checkYourAnswersAboutTheTradingHistory.cards = cards
 checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates = Financial year-end updates
-
-#Address Lookup
-###############
-aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title = Landlord Address
-aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading = What is your landlord''s address?
-aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading = Enter the address manually
-aboutYourLeaseOrTenure.landlord.addressLookup.editPage.title = Enter the address manually
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title = Check your landlord''s address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading = Check your landlord''s address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel = Use this address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText = Use a different address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText = Edit this address
 
 # Confirmation Page
 ###################

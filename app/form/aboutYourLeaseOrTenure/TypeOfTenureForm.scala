@@ -18,17 +18,29 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.nonEmptyList
 import models.submissions.aboutYourLeaseOrTenure.TypeOfTenure
-import play.api.data.Form
-import play.api.data.Forms.{list, mapping, optional, text}
+import play.api.data._
+import play.api.data.Forms._
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 object TypeOfTenureForm {
+
+  val typeOfTenureDetailsRequired: Constraint[TypeOfTenure] = Constraint("constraint.typeOfTenureDetailsRequired") {
+    tot =>
+      if (!tot.typeOfTenureDetails.isDefined && tot.typeOfTenure.length >= 1) {
+        Invalid(Seq(ValidationError("error.typeOfTenureDetails.required")))
+      } else {
+        Valid
+      }
+  }
+  val typeOfTenureMapping: Mapping[TypeOfTenure]            = mapping(
+    "typeOfTenure"        -> list(text).verifying(
+      nonEmptyList("error.typeOfTenure.required")
+    ),
+    "typeOfTenureDetails" -> optional(text)
+      .verifying("error.typeOfTenureDetails.maxLength", it => it.forall(_.length <= 2000))
+  )(TypeOfTenure.apply)(TypeOfTenure.unapply)
+
   val typeOfTenureForm: Form[TypeOfTenure] = Form(
-    mapping(
-      "typeOfTenure"        -> list(text).verifying(
-        nonEmptyList("error.typeOfTenure.required")
-      ),
-      "typeOfTenureDetails" -> optional(text)
-        .verifying("error.typeOfTenureDetails.maxLength", it => it.forall(_.length <= 2000))
-    )(TypeOfTenure.apply)(TypeOfTenure.unapply)
+    typeOfTenureMapping.verifying(typeOfTenureDetailsRequired)
   )
 }
