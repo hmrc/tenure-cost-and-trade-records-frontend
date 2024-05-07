@@ -1258,7 +1258,7 @@ error.benefitsGiven.required = Select yes if you were given a rent-free period, 
 
 #BENEFITS GIVEN DETAILS
 #######################
-benefitsGivenDetails.heading = Give details on any rent-free period, payment or benefit
+benefitsGivenDetails.heading = Give details of any rent-free period, payment or benefit
 benefitsGivenDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
 error.benefitsGivenDetails.maxLength = The description of the rent, payment or benefit should be 2000 characters or fewer.
 
