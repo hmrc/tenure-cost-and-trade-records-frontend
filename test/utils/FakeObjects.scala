@@ -1122,6 +1122,7 @@ trait FakeObjects {
     howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, prefilledDateInput)),
     intervalsOfRentReview = Some(IntervalsOfRentReview(Some("test"), Some(prefilledDateInput))),
     canRentBeReducedOnReviewDetails = Some(CanRentBeReducedOnReviewDetails(AnswerYes)),
+    incentivesPaymentsConditionsDetails = Some(IncentivesPaymentsConditionsDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
     payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput))),

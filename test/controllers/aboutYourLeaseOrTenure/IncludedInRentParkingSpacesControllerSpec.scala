@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -26,29 +26,45 @@ import utils.TestBaseSpec
   */
 class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
 
-  def includedInRentParkingSpacesController =
-    new IncludedInRentParkingSpacesController(
-      includedInRentParkingSpacesView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
-      mockSessionRepo,
-      stubMessagesControllerComponents()
-    )
+  def includedInRentParkingSpacesController = new IncludedInRentParkingSpacesController(
+    includedInRentParkingSpacesView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(),
+    mockSessionRepo,
+    stubMessagesControllerComponents()
+  )
 
-  "GET /" should {
-    "return 200" in {
+  def includedInRentParkingSpacesControllerNone = new IncludedInRentParkingSpacesController(
+    includedInRentParkingSpacesView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+    mockSessionRepo,
+    stubMessagesControllerComponents()
+  )
+
+  "IncludedInRentParkingSpacesController GET /" should {
+    "return 200 and HTML with Included In Rent Parking Spaces in the session" in {
       val result = includedInRentParkingSpacesController.show(fakeRequest)
-      status(result) shouldBe OK
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = includedInRentParkingSpacesController.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with no Included In Rent Parking Spaces in the session" in {
+      val result = includedInRentParkingSpacesControllerNone.show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "IncludedInRentParkingSpacesController SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = includedInRentParkingSpacesController.submit(
         FakeRequest().withFormUrlEncodedBody()

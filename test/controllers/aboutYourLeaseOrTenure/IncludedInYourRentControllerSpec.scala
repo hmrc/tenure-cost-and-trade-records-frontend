@@ -21,50 +21,49 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
+class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
-  def incentivesPaymentsConditionsController = new IncentivesPaymentsConditionsController(
+  def IncludedInYourRentController = new IncludedInYourRentController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
-    incentivesPaymentsConditionsView,
+    includedInYourRentView,
     preEnrichedActionRefiner(),
     mockSessionRepo
   )
 
-  def incentivesPaymentsConditionsControllerNone = new IncentivesPaymentsConditionsController(
+  def IncludedInYourRentControllerNone = new IncludedInYourRentController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
-    incentivesPaymentsConditionsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+    includedInYourRentView,
+    preEnrichedActionRefiner(),
     mockSessionRepo
   )
 
-  "IncentivesPaymentsConditionsController GET /" should {
-    "return 200 and HTML with Incentives Payments Conditions in the session" in {
-      val result = incentivesPaymentsConditionsController.show(fakeRequest)
+  "IncludedInYourRentController GET /" should {
+    "return 200 and HTML with Included In Your Rent Details in the session" in {
+      val result = IncludedInYourRentController.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show().url
       )
     }
 
-    "return 200 and HTML with no Incentives Payments Conditions in the session" in {
-      val result = incentivesPaymentsConditionsControllerNone.show(fakeRequest)
+    "return 200 and HTML with no Included In Your Rent Details in the session" in {
+      val result = IncludedInYourRentControllerNone.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show().url
       )
     }
-
   }
 
-  "IncentivesPaymentsConditionsController SUBMIT /" should {
+  "IncludedInYourRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = incentivesPaymentsConditionsController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = IncludedInYourRentController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST
     }
   }

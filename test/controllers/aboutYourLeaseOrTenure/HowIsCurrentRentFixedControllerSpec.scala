@@ -16,7 +16,6 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -25,118 +24,121 @@ import utils.TestBaseSpec
 
 class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
 
-  def howIsCurrentRentFixedController(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new HowIsCurrentRentFixedController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      howIsCurrentRentFixedView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
+  def howIsCurrentRentFixedController = new HowIsCurrentRentFixedController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    howIsCurrentRentFixedView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
-  def howIsCurrentRentFixedControllerNo(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
-  ) =
-    new HowIsCurrentRentFixedController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      howIsCurrentRentFixedView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
+  def howIsCurrentRentFixedControllerNo = new HowIsCurrentRentFixedController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    howIsCurrentRentFixedView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)),
+    mockSessionRepo
+  )
 
-  def howIsCurrentRentFixedControllerNone =
-    new HowIsCurrentRentFixedController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      howIsCurrentRentFixedView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-      mockSessionRepo
-    )
+  def howIsCurrentRentFixedControllerNone = new HowIsCurrentRentFixedController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    howIsCurrentRentFixedView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+    mockSessionRepo
+  )
 
-  def howIsCurrentRentFixedController6015(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new HowIsCurrentRentFixedController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      howIsCurrentRentFixedView,
-      preEnrichedActionRefiner(forType = "FOR6015", aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
+  def howIsCurrentRentFixedController6015 = new HowIsCurrentRentFixedController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    howIsCurrentRentFixedView,
+    preEnrichedActionRefiner(forType = "FOR6015"),
+    mockSessionRepo
+  )
 
-  def howIsCurrentRentFixedController6015No(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
-  ) =
-    new HowIsCurrentRentFixedController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      howIsCurrentRentFixedView,
-      preEnrichedActionRefiner(forType = "FOR6015", aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
+  def howIsCurrentRentFixedController6015No = new HowIsCurrentRentFixedController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    howIsCurrentRentFixedView,
+    preEnrichedActionRefiner(
+      forType = "FOR6015",
+      aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+    ),
+    mockSessionRepo
+  )
 
-  def howIsCurrentRentFixedController6015None =
-    new HowIsCurrentRentFixedController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      howIsCurrentRentFixedView,
-      preEnrichedActionRefiner(forType = "FOR6015", aboutLeaseOrAgreementPartTwo = None),
-      mockSessionRepo
-    )
+  def howIsCurrentRentFixedController6015None = new HowIsCurrentRentFixedController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    howIsCurrentRentFixedView,
+    preEnrichedActionRefiner(forType = "FOR6015", aboutLeaseOrAgreementPartTwo = None),
+    mockSessionRepo
+  )
 
   "HowIsCurrentRentFixedController GET /" should {
-    "return 200 vacant property yes in session" in {
-      val result = howIsCurrentRentFixedController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 and HTML with Rent Payable Vary On Quantity Of Beers Details Yes in the session" in {
+      val result = howIsCurrentRentFixedController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show().url
+      )
     }
 
-    "return HTML vacant property yes in session" in {
-      val result = howIsCurrentRentFixedController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Payable Vary On Quantity Of Beers Details No in the session" in {
+      val result = howIsCurrentRentFixedControllerNo.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
+      )
     }
 
-    "return 200 and HTML vacant property no in session" in {
-      val result = howIsCurrentRentFixedControllerNo().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 and HTML vacant property none in session" in {
+    "return 200 and HTML with no Rent Payable Vary On Quantity Of Beers Details in the session" in {
       val result = howIsCurrentRentFixedControllerNone.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
-    "return 200 and HTML vacant property yes in session for 6015" in {
-      val result = howIsCurrentRentFixedController6015().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Payable Vary Gross Or Nets Yes in the session for other forms" in {
+      val result = howIsCurrentRentFixedController6015.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
+      )
     }
 
-    "return 200 and HTML vacant property no in session for 6015" in {
-      val result = howIsCurrentRentFixedController6015No().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Payable Vary Gross Or Nets No in the session for other forms" in {
+      val result = howIsCurrentRentFixedController6015No.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+      )
     }
 
-    "return 200 and HTML vacant property none in session for 6015" in {
+    "return 200 and HTML with no Rent Payable Vary Gross Or Nets in the session for other forms" in {
       val result = howIsCurrentRentFixedController6015None.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
-        val result = howIsCurrentRentFixedController().show()(fakeRequest)
+        val result = howIsCurrentRentFixedController.show()(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
         Option(html.getElementById("rentActuallyAgreed.day").`val`()).value   shouldBe "1"
         Option(html.getElementById("rentActuallyAgreed.month").`val`()).value shouldBe "6"
@@ -147,7 +149,7 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
 
   "HowIsCurrentRentFixedController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = howIsCurrentRentFixedController().submit(
+      val res = howIsCurrentRentFixedController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
