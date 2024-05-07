@@ -151,6 +151,15 @@ POST        /tied-for-goods                                         controllers.
 GET         /tied-for-goods-details                                 controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.show()
 POST        /tied-for-goods-details                                 controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.submit()
 
+# About you and the property 6076
+
+GET         /renewables-plants                                      controllers.aboutyouandtheproperty.RenewablesPlantController.show()
+POST        /renewables-plants                                      controllers.aboutyouandtheproperty.RenewablesPlantController.submit()
+
+GET         /three-years-constructed                                controllers.aboutyouandtheproperty.ThreeYearsConstructedController.show()
+POST        /three-years-constructed                                controllers.aboutyouandtheproperty.ThreeYearsConstructedController.submit()
+
+
 # About the trading history
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
 POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()

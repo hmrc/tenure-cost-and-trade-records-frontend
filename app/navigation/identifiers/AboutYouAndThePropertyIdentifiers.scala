@@ -77,6 +77,14 @@ case object TiedForGoodsPageId extends Identifier { override def toString: Strin
 
 case object TiedForGoodsDetailsPageId extends Identifier { override def toString: String = "tiedForGoodsDetailsPage" }
 
+case object RenewablesPlantPageId extends Identifier {
+  override def toString: String = "renewablesPlantPage"
+}
+
+case object ThreeYearsConstructedPageId extends Identifier {
+  override def toString: String = "threeYearsConstructedPage"
+}
+
 case object CheckYourAnswersAboutThePropertyPageId extends Identifier {
   override def toString: String = "checkYourAnswersAboutThePropertyPage"
 }

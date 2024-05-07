@@ -39,14 +39,13 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
   ).map(_.url)
 
-  private def aboutThePropertyRouting: Session => Call = answers => {
-    val answersForType = answers.forType
-    if (answersForType.equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)) {
-      controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-    } else if (answersForType.equals(ForTypes.for6020) || answersForType.equals(ForTypes.for6030)) {
-      controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-    } else
-      controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+  private def alternativeContactDetailsRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6020 | ForTypes.for6030 =>
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
+      case ForTypes.for6076                    => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+      case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+    }
   }
 
   private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
@@ -150,30 +149,40 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def contactDetailsQuestionRouting: Session => Call = answers => {
-    answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion.name)) match {
-      case Some("yes") => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
-      case Some("no")  =>
-        if (
-          answers.forType
-            .equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)
-        ) {
-          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-        } else if (answers.forType.equals(ForTypes.for6020) || answers.forType.equals(ForTypes.for6030)) {
-          controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-        } else
-          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-      case _           =>
+    answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion)) match {
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
+      case Some(AnswerNo)  =>
+        answers.forType match {
+          case ForTypes.for6020 | ForTypes.for6030 =>
+            controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
+          case ForTypes.for6076                    => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+          case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+        }
+      case _               =>
         logger.warn(
           s"Navigation for alternative details question reached without correct selection of conditions by controller"
         )
+
         throw new RuntimeException("Invalid option exception for alternative details question routing")
+    }
+  }
+
+  private def threeYearsConstructedRouting: Session => Call = answers => {
+    answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
+      case Some(AnswerYes) => controllers.routes.TaskListController.show() // screen not ready yet
+      case Some(AnswerNo)  => controllers.routes.TaskListController.show() // screen not ready yet
+      case _               =>
+        logger.warn(
+          s"Navigation for about the property reached without correct selection of was the site constructed within last 3 years by controller"
+        )
+        throw new RuntimeException("Invalid option exception for tied goods routing")
     }
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
-    AlternativeContactDetailsId             -> aboutThePropertyRouting,
+    AlternativeContactDetailsId             -> alternativeContactDetailsRouting,
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     CharityQuestionPageId                   -> charityQuestionRouting,
@@ -198,6 +207,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     TiedForGoodsDetailsPageId               -> (_ =>
       controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     ),
+    RenewablesPlantPageId                   -> (_ => controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show()),
+    ThreeYearsConstructedPageId             -> threeYearsConstructedRouting,
     CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show())
   )
 }

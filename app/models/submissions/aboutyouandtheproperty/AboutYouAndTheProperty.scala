@@ -40,7 +40,9 @@ case class AboutYouAndTheProperty(
   checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None,
   propertyDetailsString: Option[PropertyDetailsString] = None, //added for 6030 - February 2024
   charityQuestion: Option[AnswersYesNo] = None, // 6030
-  tradingActivity: Option[TradingActivity] = None //6030
+  tradingActivity: Option[TradingActivity] = None, //6030
+  renewablesPlant: Option[RenewablesPlant] = None, // 6076
+  threeYearsConstructed: Option[AnswersYesNo] = None // 6076
 )
 
 object AboutYouAndTheProperty {

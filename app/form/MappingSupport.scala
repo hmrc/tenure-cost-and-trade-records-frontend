@@ -70,9 +70,7 @@ object MappingSupport {
   val addressConnectionType: Mapping[AddressConnectionType]                     = Forms.of[AddressConnectionType]
   val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
   val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]             = Forms.of[MethodToFixCurrentRents]
-
-//  val responsiblePartyType: Mapping[AnswerResponsibleParty] = Forms.of[AnswerResponsibleParty]
-
+  val renewablesPlantMapping: Mapping[RenewablesPlantDetails]                   = Forms.of[RenewablesPlantDetails]
   val outsideRepairsType: Mapping[OutsideRepairs]       = Forms.of[OutsideRepairs]
   val insideRepairsType: Mapping[InsideRepairs]         = Forms.of[InsideRepairs]
   val buildingInsuranceType: Mapping[BuildingInsurance] = Forms.of[BuildingInsurance]
