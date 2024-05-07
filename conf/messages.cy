@@ -2073,18 +2073,6 @@ checkYourAnswersAboutTheTradingHistory.card = card
 checkYourAnswersAboutTheTradingHistory.cards = cards
 checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates = Financial year-end updates
 
-#Address Lookup
-###############
-aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.title = Landlord Address
-aboutYourLeaseOrTenure.landlord.addressLookup.lookupPage.heading = What is your landlord''s address?
-aboutYourLeaseOrTenure.landlord.addressLookup.editPage.heading = Enter the address manually
-aboutYourLeaseOrTenure.landlord.addressLookup.editPage.title = Enter the address manually
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.title = Check your landlord''s address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.heading = Check your landlord''s address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.submitLabel = Use this address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.searchAgainLinkText = Use a different address
-aboutYourLeaseOrTenure.landlord.addressLookup.confirmPageLabels.changeLinkText = Edit this address
-
 # Confirmation Page
 ###################
 confirmation.heading = Declaration sent successfully
