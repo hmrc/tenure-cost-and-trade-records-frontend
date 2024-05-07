@@ -1406,6 +1406,7 @@ taskList.variableOperatingExpense = Variable operating expense
 taskList.fixedOperatingExpenses = Fixed operating expenses
 taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
+taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid = Lease start date and rent paid
 declaration.heading = Now send your declaration
 declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
 hint.declaration = You could be taken to court if you submit false information.

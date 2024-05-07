@@ -388,15 +388,25 @@
           session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty
          )
         } else {
+          @if(forType != ForTypes.for6020) {
          @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading",
           controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
           section5Completed,
           session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
           session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
          )
+         }
+        }
+        @if(forType == ForTypes.for6020){
+         @includes.taskListItem("lease-start-date-and-rent-paid", "taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid",
+          controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(),
+          section5Completed,
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid),
+          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+         )
         }
 
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
+        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6020 || forType == ForTypes.for6030) {
          @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
           controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
           section5Completed,
