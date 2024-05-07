@@ -35,7 +35,7 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     includedInYourRentView,
-    preEnrichedActionRefiner(),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
     mockSessionRepo
   )
 
