@@ -49,17 +49,5 @@ object TypeOfTenureForm {
 
 
 
-  //  val typeOfTenureForm: Form[TypeOfTenure] = Form(
-  //    mapping(
-  //      "typeOfTenure" -> list(text).verifying(
-  //        nonEmptyList("error.typeOfTenure.required")
-  //      ),
-  //      "typeOfTenureDetails" -> optional(text)
-  //        .verifying("error.typeOfTenureDetails.maxLength", it => it.forall(_.length <= 2000))
-  //    )(TypeOfTenure.apply)(TypeOfTenure.unapply)
-  //      .verifying("error.typeOfTenureDetails.required", tOT => !tOT.typeOfTenureDetails.isDefined && tOT.typeOfTenure.length >= 1 )
-  //  )
-
-
 
 
