@@ -868,7 +868,7 @@ hint.detailsToQuestions = Give details if you want to tell us more about any opt
 error.doesTheRentPayable.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 error.doesTheRentPayable.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 error.detailsToQuestions.required = Please provide further information
-error.detailsToQuestions.maxLength = Mae’n rhaid i’r wybodaeth ychwanegol fod yn 500 o gymeriadau neu lai
+error.detailsToQuestions.maxLength = Mae’n rhaid i’r wybodaeth ychwanegol fod yn {0} o gymeriadau neu lai
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
@@ -1879,6 +1879,16 @@ error.rentedSeparately.garages.required = Enter 0 if you do not rent separately 
 error.rentedSeparately.garages.nonNumeric = The amount of garages rented separately must be a number
 error.rentedSeparately.garages.negative = The number of garages rented separately cannot be a negative number
 fieldName.carParkingFixedRentDate = the date when the annual payment was fixed
+
+# INCLUDED IN RENT 6020
+includedInRent6020.heading = Does the rent payable include or relate to any of the following?
+rentPayable.hint = Select any that apply.
+checkbox.rentPayable.fullyEquippedStation = Fully equipped operational filling station
+checkbox.rentPayable.landOnly = Land only (not including buildings)
+rentPayableDetails.label = Give details if you selected any of the options
+rentPayableDetails.hint = For example, includes the premises next door.
+error.rentPayableDetails.required = Please give details of selected items included in rent payable
+error.rentPayableDetails.maxLength = Description of selected items included in rent payable must be {0} characters or fewer
 
 # CHECK YOUR ANSWERS
 ####################
