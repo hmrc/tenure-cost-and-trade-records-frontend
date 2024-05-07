@@ -700,7 +700,7 @@ label.typeOfTenure.long.leasehold = Long leasehold at ground rent
 error.typeOfTenure.required = Select any type of tenure applicable
 label.typeOfTenureDetails = Give details if there is a combination of tenure types
 error.typeOfTenureDetails.maxLength = Give details if there is a combination of tenure types must be 2000 characters or fewer
-
+error.typeOfTenureDetails.required = You must give details if there is a combination of tenure types
 # LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ###################################################
 leaseOrAgreement.heading = Lease or agreement details
@@ -1258,7 +1258,7 @@ error.benefitsGiven.required = Select yes if you were given a rent-free period, 
 
 #BENEFITS GIVEN DETAILS
 #######################
-benefitsGivenDetails.heading = Give details on any rent-free period, payment or benefit
+benefitsGivenDetails.heading = Give details of any rent-free period, payment or benefit
 benefitsGivenDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
 error.benefitsGivenDetails.maxLength = The description of the rent, payment or benefit should be 2000 characters or fewer.
 
