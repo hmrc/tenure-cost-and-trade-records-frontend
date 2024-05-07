@@ -32,22 +32,15 @@ object TypeOfTenureForm {
         Valid
       }
   }
-  val typeOfTenureMapping: Mapping[TypeOfTenure] = mapping(
-    "typeOfTenure" -> list(text).verifying(
+  val typeOfTenureMapping: Mapping[TypeOfTenure]            = mapping(
+    "typeOfTenure"        -> list(text).verifying(
       nonEmptyList("error.typeOfTenure.required")
     ),
     "typeOfTenureDetails" -> optional(text)
       .verifying("error.typeOfTenureDetails.maxLength", it => it.forall(_.length <= 2000))
-
   )(TypeOfTenure.apply)(TypeOfTenure.unapply)
-
 
   val typeOfTenureForm: Form[TypeOfTenure] = Form(
     typeOfTenureMapping.verifying(typeOfTenureDetailsRequired)
   )
 }
-
-
-
-
-

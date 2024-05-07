@@ -16,56 +16,55 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.SEE_OTHER
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
 
-  def capitalSumDescriptionController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
-  ) =
-    new CapitalSumDescriptionController(
-      stubMessagesControllerComponents(),
-      capitalSumDescriptionView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
+  def capitalSumDescriptionController = new CapitalSumDescriptionController(
+    stubMessagesControllerComponents(),
+    capitalSumDescriptionView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
-  def capitalSumDescriptionControllerNone =
-    new CapitalSumDescriptionController(
-      stubMessagesControllerComponents(),
-      capitalSumDescriptionView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
-      mockSessionRepo
-    )
+  def capitalSumDescriptionControllerNone = new CapitalSumDescriptionController(
+    stubMessagesControllerComponents(),
+    capitalSumDescriptionView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+    mockSessionRepo
+  )
 
   "CapitalSumDescriptionController GET /" should {
     "return 200 and HTML with Capital Sum Description in the session" in {
-      val result = capitalSumDescriptionController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val result = capitalSumDescriptionController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      )
     }
 
     "return 200 and HTML when no Capital Sum Description in the session" in {
       val result = capitalSumDescriptionControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "CapitalSumDescriptionController SUBMIT /" should {
     "accept an empty form when submitted" in {
-      val res = capitalSumDescriptionController().submit(
+      val res = capitalSumDescriptionController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe SEE_OTHER

@@ -44,7 +44,7 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
   )
 
   "ConnectedToLandlordController GET /" should {
-    "return 200 and HTML with landlord connection data in session" in {
+    "return 200 and HTML with Connected To Landlord in the session" in {
       val result = connectedToLandlordController.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -54,7 +54,7 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 for empty session" in {
+    "return 200 and HTML when no Connected To Landlord in the session" in {
       val result = connectedToLandlordControllerNone.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -65,7 +65,7 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "ConnectedToLandlordController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = connectedToLandlordController.submit(

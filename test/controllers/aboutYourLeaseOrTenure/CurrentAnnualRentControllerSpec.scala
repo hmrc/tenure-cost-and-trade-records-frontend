@@ -51,7 +51,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def connectionToThePropertyControllerNone = new CurrentAnnualRentController(
+  def connectionToThePropertyController6011None = new CurrentAnnualRentController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     currentAnnualRentView,
@@ -60,7 +60,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
   )
 
   "CurrentAnnualRentController GET /" should {
-    "return 200 and HTML with data in the session" in {
+    "return 200 and HTML with Current Annual Rent in the session" in {
       val result = connectionToThePropertyController.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -70,7 +70,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 and HTML for 6011 with yes in the session" in {
+    "return 200 and HTML with Connected To Landlord Yes in the session for 6011" in {
       val result = connectionToThePropertyController6011Yes.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -80,7 +80,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 and HTML for 6011 with no in the session" in {
+    "return 200 and HTML with Connected To Landlord No in the session for 6011" in {
       val result = connectionToThePropertyController6011No.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -90,8 +90,8 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 and HTML with none in the session" in {
-      val result = connectionToThePropertyControllerNone.show(fakeRequest)
+    "return 200 and HTML when no Connected To Landlord in the session for 6011" in {
+      val result = connectionToThePropertyController6011None.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

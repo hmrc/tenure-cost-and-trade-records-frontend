@@ -65,7 +65,7 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "CurrentLeaseOrAgreementBeginController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = currentLeaseOrAgreementBeginController.submit(

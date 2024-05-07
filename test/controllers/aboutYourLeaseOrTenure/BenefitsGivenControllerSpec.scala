@@ -16,27 +16,21 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class BenefitsGivenControllerSpec extends TestBaseSpec {
 
-  def benefitsGivenController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
-  ) =
-    new BenefitsGivenController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      benefitsGivenView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
+  def benefitsGivenController = new BenefitsGivenController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    benefitsGivenView,
+    preEnrichedActionRefiner(),
+    mockSessionRepo
+  )
 
   def benefitsGivenControllerNone =
     new BenefitsGivenController(
@@ -47,25 +41,31 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  " BenefitsGivenController GET /" should {
+  "BenefitsGivenController GET /" should {
     "return 200 and HTML with Benefits Given in the session" in {
-      val result = benefitsGivenController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val result = benefitsGivenController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show().url
+      )
     }
 
     "return 200 and HTML when no Benefits Given in the session" in {
       val result = benefitsGivenControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "BenefitsGivenController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = benefitsGivenController().submit(
+      val res = benefitsGivenController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

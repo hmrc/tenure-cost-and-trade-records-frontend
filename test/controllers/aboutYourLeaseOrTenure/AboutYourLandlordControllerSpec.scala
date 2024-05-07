@@ -20,10 +20,7 @@ import config.ErrorHandler
 import connectors.AddressLookupConnector
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.{Address, AddressLookup}
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
-import play.api.mvc.{AnyContent, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
@@ -36,37 +33,32 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val mockNavigator: AboutYourLeaseOrTenureNavigator     = mock[AboutYourLeaseOrTenureNavigator]
   val mockAddressLookupConnector: AddressLookupConnector = mock[AddressLookupConnector]
   val errorHandler: ErrorHandler                         = inject[ErrorHandler]
 
-  def aboutYourLandlordController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = new AboutYourLandlordController(
+  def aboutYourLandlordController = new AboutYourLandlordController(
     stubMessagesControllerComponents(),
-    mockNavigator,
+    aboutYourLeaseOrTenureNavigator,
     aboutYourLandlordView,
     mockAddressLookupConnector,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    preEnrichedActionRefiner(),
     errorHandler,
     mockSessionRepo
   )
 
-  def aboutYourLandlordController6020(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = new AboutYourLandlordController(
+  def aboutYourLandlordController6020 = new AboutYourLandlordController(
     stubMessagesControllerComponents(),
-    mockNavigator,
+    aboutYourLeaseOrTenureNavigator,
     aboutYourLandlordView,
     mockAddressLookupConnector,
-    preEnrichedActionRefiner(forType = forType6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    preEnrichedActionRefiner(forType = forType6020),
     errorHandler,
     mockSessionRepo
   )
 
   def aboutYourLandlordControllerNone = new AboutYourLandlordController(
     stubMessagesControllerComponents(),
-    mockNavigator,
+    aboutYourLeaseOrTenureNavigator,
     aboutYourLandlordView,
     mockAddressLookupConnector,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
@@ -75,40 +67,40 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   )
 
   "AboutYourLandlordController GET /" should {
-    "return 200 with data in session" in {
-      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
-      val result = aboutYourLandlordController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 and HTML with About Your Landlord in the session" in {
+      val result = aboutYourLandlordController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
-    "return HTML with data in session" in {
-      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
-      val result = aboutYourLandlordController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with About Your Landlord in the session for 6020" in {
+      val result = aboutYourLandlordController6020.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show().url
+      )
     }
 
-    "return 200 and HTML for 6020" in {
-      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
-      val result = aboutYourLandlordController6020().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 and HTML for empty session" in {
-      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
+    "return 200 and HTML when no About Your Landlord in the session" in {
       val result = aboutYourLandlordControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "AboutYourLandlordController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      when(mockNavigator.from(any[Request[AnyContent]])).thenReturn("")
-      val res = aboutYourLandlordController().submit(
+      val res = aboutYourLandlordController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
@@ -123,7 +115,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
         Some("id")
       )
       when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
-      val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
+      val res    = aboutYourLandlordController.addressLookupCallback("123")(fakeRequest)
       status(res) shouldBe SEE_OTHER
     }
   }
@@ -138,7 +130,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey: Object { val landlordFullName: String } = new {
       val landlordFullName = "landlordFullName"
     }
 
