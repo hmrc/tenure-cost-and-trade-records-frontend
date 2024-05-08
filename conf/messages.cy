@@ -1794,6 +1794,21 @@ checkYourAnswersAdditionalInformation.heading = Gwiriwch eich atebion – gwybod
 label.furtherInformation = Rhagor o wybodaeth neu sylwadau
 key.additionalInformation = Gwybodaeth ychwanegol
 
+
+#TYPE OF RENEWABLES PLANT
+#################################
+renewablesPlant.heading = What type of renewables plant do you operate?
+renewablesPlant.intermittent.label = Intermittent
+renewablesPlant.intermittent.hint = Hydro, solar, wind
+renewablesPlant.baseload.label = Baseload
+renewablesPlant.baseload.hint = Fuelbased, for example biomass combustion, anaerobic digestion
+error.renewablesPlant.required = Select what type of renewables plant you operate
+
+# WAS THE SITE CONSTRUCTED WITHIN LAST 3 YEARS
+##############################################
+threeYearsConstructed.heading = Was the site constructed within the last 3 years?
+error.threeYearsConstructed.required = Select yes if the site was constructed in the last 3 years
+
 # FURTHER INFORMATION OR REMARKS
 ################################
 furtherInformationOrRemarks.heading = Rhagor o wybodaeth neu sylwadau

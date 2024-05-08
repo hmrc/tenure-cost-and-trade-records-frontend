@@ -119,6 +119,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[checkYourAnswersAboutTheProperty]
   lazy val charityQuestionView                                                       = app.injector.instanceOf[charityQuestion]
   lazy val tradingActivityView                                                       = app.injector.instanceOf[tradingActivity]
+  lazy val renewablesPlantView                                                       = app.injector.instanceOf[renewablesPlant]
+  lazy val threeYearsConstructedView                                                 = app.injector.instanceOf[threeYearsConstructed]
 
   // About your trading history
   lazy val aboutYourTradingHistoryView: aboutYourTradingHistory                               = app.injector.instanceOf[aboutYourTradingHistory]

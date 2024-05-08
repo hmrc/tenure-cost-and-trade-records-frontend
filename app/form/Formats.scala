@@ -91,8 +91,8 @@ object Formats {
   implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation] =
     namedEnumFormatter(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
 
-//  implicit val answerResponsiblePartyFormatter: Formatter[AnswerResponsibleParty] =
-//    namedEnumFormatter(AnswerResponsibleParty, Errors.booleanMissing)
+  implicit val renewablesPlantFormat: Formatter[RenewablesPlantDetails] =
+    namedEnumFormatter(RenewablesPlantDetails, Errors.renewablesPlant)
 
   implicit val outsideRepairsFormatter: Formatter[OutsideRepairs]       =
     namedEnumFormatter(OutsideRepairs, Errors.outsideRepairs)

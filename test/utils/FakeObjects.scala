@@ -274,7 +274,9 @@ trait FakeObjects {
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
     checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
     charityQuestion = Some(AnswerYes),
-    tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details")))
+    tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
+    renewablesPlant = Some(RenewablesPlant(Intermittent)),
+    threeYearsConstructed = Some(AnswerYes)
   )
 
   val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty = AboutYouAndTheProperty(

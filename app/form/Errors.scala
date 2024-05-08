@@ -95,6 +95,9 @@ object Errors {
   val tiedTypeRequired    = "error.tiedType.required"
   val tiedForGoodsDetails = "error.tiedForGoodsDetails.required"
 
+  // Renewables plant
+  val renewablesPlant = "error.renewablesPlant.required"
+
   //Current Rent Payable Within 12 Months
   val currentRentPayableWithin12Months = "error.currentRentPayableWithin12Months.required"
 
