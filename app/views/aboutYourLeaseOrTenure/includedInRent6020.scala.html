@@ -1,0 +1,106 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        govukCheckboxes: GovukCheckboxes,
+        hmrcCharacterCount: HmrcCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(form: Form[DoesTheRentPayable], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+
+@layout(
+    pageHeading = messages("includedInRent6020.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLinkUrl,
+    theForm = form
+) {
+
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.submit()) {
+
+        @govukCheckboxes(
+            Checkboxes(
+                name = "rentPayable[]",
+                fieldset = Fieldset(
+                    legend = Legend(
+                        content = Text(Messages("includedInRent6020.heading")),
+                        classes = "govuk-fieldset__legend--l",
+                        isPageHeading = true
+                    )
+                ),
+                hint = Hint(content = Text(messages("rentPayable.hint"))),
+                items = Seq(
+                    CheckboxItem(
+                        id = "fullyEquippedStation",
+                        content = Text(messages("checkbox.rentPayable.fullyEquippedStation")),
+                        value = "fullyEquippedStation"
+                    ),
+                    CheckboxItem(
+                        id = "landOnly",
+                        content = Text(messages("checkbox.rentPayable.landOnly")),
+                        value = "landOnly"
+                    ),
+                    CheckboxItem(
+                        id = "otherProperty",
+                        content = Text(messages("checkbox.rentPayable.otherProperty")),
+                        value = "otherProperty"
+                    ),
+                    CheckboxItem(
+                        id = "onlyPart",
+                        content = Text(messages("checkbox.rentPayable.onlyPart")),
+                        value = "onlyPart"
+                    ),
+                    CheckboxItem(
+                        id = "shellUnit",
+                        content = Text(messages("checkbox.rentPayable.shellUnit")),
+                        value = "shellUnit"
+                    )
+                )
+            ).withFormField(form("rentPayable"))
+        )
+
+        @hmrcCharacterCount(
+            CharacterCount(
+                rows = 3,
+                maxLength = 2000,
+                label = Label(
+                    content = Text(messages("rentPayableDetails.label")),
+                    classes = "govuk-label--m"
+                ),
+                hint = Hint(
+                    content = Text(messages("rentPayableDetails.hint"))
+                )
+            ).withFormField(form("rentPayableDetails"))
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+}

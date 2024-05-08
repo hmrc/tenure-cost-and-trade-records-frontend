@@ -18,11 +18,18 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import play.api.libs.json.{Json, OFormat}
 
+/**
+  * Used to store data from pages:
+  * <pre>
+  * /does-the-rent-payable
+  * /included-in-rent
+  * </pre>
+  */
 case class DoesTheRentPayable(
   rentPayable: List[String] = List.empty,
   detailsToQuestions: String
 )
 
 object DoesTheRentPayable {
-  implicit val format: OFormat[DoesTheRentPayable] = Json.format[DoesTheRentPayable]
+  implicit val format: OFormat[DoesTheRentPayable] = Json.format
 }

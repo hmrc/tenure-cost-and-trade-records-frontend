@@ -295,8 +295,8 @@ POST        /current-lease-or-agreement-begin                       controllers.
 GET         /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.show()
 POST        /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.submit()
 
-GET         /rent-includes-vat                                        controllers.aboutYourLeaseOrTenure.RentIncludesVatController.show()
-POST        /rent-includes-vat                                        controllers.aboutYourLeaseOrTenure.RentIncludesVatController.submit()
+GET         /rent-includes-vat                                      controllers.aboutYourLeaseOrTenure.RentIncludesVatController.show()
+POST        /rent-includes-vat                                      controllers.aboutYourLeaseOrTenure.RentIncludesVatController.submit()
 
 GET         /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.show()
 POST        /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.submit()
@@ -407,6 +407,9 @@ POST        /car-parking-annual-rent                                controllers.
 
 GET         /rented-equipment-details                               controllers.aboutYourLeaseOrTenure.RentedEquipmentDetailsController.show()
 POST        /rented-equipment-details                               controllers.aboutYourLeaseOrTenure.RentedEquipmentDetailsController.submit()
+
+GET         /included-in-rent                                       controllers.aboutYourLeaseOrTenure.IncludedInRent6020Controller.show()
+POST        /included-in-rent                                       controllers.aboutYourLeaseOrTenure.IncludedInRent6020Controller.submit()
 
 #Form 6030 routing
 GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
