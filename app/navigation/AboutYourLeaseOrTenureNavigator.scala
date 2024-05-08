@@ -180,9 +180,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       }
     } else {
       answers.forType match {
-        case ForTypes.for6020 =>
-          controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController
-            .show() // TODO: Does rent include the following
+        case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show()
         case _                => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
       }
     }
@@ -503,9 +501,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,
     RentedSeparatelyParkingSpacesId               -> (_ => aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show()),
     CarParkingAnnualRentId                        -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()),
-    RentedEquipmentDetailsId                      -> (_ =>
-      aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
-    ), // TODO: Does rent include the following
+    RentedEquipmentDetailsId                      -> (_ => aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show()),
+    IncludedInRent6020Id                          -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

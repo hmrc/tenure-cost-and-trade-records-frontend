@@ -16,26 +16,23 @@
 
 package form.aboutYourLeaseOrTenure
 
+import form.ConditionalConstraintMappings.mandatoryStringIfExists
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import play.api.data.Form
-import play.api.data.Forms.{default, list, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfExists
+import play.api.data.Forms.{list, mapping, text}
+import play.api.data.validation.Constraints.maxLength
 
 object IncludedInRent6020Form {
 
   val includedInRent6020Form: Form[DoesTheRentPayable] = Form(
     mapping(
       "rentPayable"        -> list(text),
-      "rentPayableDetails" -> mandatoryIfExists(
+      "rentPayableDetails" -> mandatoryStringIfExists(
         "rentPayable[0]",
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.rentPayableDetails.required")
-        )
-      ).transform[String](_.getOrElse(""), Some(_))
-        .verifying(
-          maxLength(2000, "error.rentPayableDetails.maxLength")
-        )
+        "error.rentPayableDetails.required"
+      ).verifying(
+        maxLength(2000, "error.rentPayableDetails.maxLength")
+      )
     )(DoesTheRentPayable.apply)(DoesTheRentPayable.unapply)
   )
 

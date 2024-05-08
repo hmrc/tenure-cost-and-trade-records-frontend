@@ -220,3 +220,7 @@ case object CarParkingAnnualRentId extends Identifier {
 case object RentedEquipmentDetailsId extends Identifier {
   override def toString: String = "rentedEquipmentDetailsPage"
 }
+
+case object IncludedInRent6020Id extends Identifier {
+  override def toString: String = "includedInRent6020Page"
+}

@@ -86,14 +86,17 @@ class RentOpenMarketValueController @Inject() (
           case Some(AnswerYes) =>
             answers.forType match {
               case ForTypes.for6020 =>
-                controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController
-                  .show()
-                  .url // TODO: Does rent include the following
+                controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
               case _                =>
                 controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
             }
           case _               =>
-            controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+            answers.forType match {
+              case ForTypes.for6020 =>
+                controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+              case _                =>
+                controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+            }
         }
     }
 
