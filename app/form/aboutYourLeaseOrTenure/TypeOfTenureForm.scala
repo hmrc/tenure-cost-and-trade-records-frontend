@@ -26,7 +26,7 @@ object TypeOfTenureForm {
 
   val typeOfTenureDetailsRequired: Constraint[TypeOfTenure] = Constraint("constraint.typeOfTenureDetailsRequired") {
     tot =>
-      if (!tot.typeOfTenureDetails.isDefined && tot.typeOfTenure.length >= 1) {
+      if (!tot.typeOfTenureDetails.isDefined && tot.typeOfTenure.length > 1) {
         Invalid(Seq(ValidationError("error.typeOfTenureDetails.required")))
       } else {
         Valid
