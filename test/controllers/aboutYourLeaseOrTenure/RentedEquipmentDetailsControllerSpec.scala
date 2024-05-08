@@ -16,9 +16,9 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -67,6 +67,17 @@ class RentedEquipmentDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "redirect to the next page if field `rentedEquipmentDetails` is filled" in {
+      val res = rentedEquipmentDetailsController.submit(
+        FakeRequest("POST", "/").withFormUrlEncodedBody("rentedEquipmentDetails" -> "Equipment details")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+      )
+    }
+
   }
 
 }
