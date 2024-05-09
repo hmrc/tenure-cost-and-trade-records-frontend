@@ -500,6 +500,9 @@ POST        /legal-or-planning-restrictions-details                 controllers.
 GET         /intervals-of-rent-review                               controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.show()
 POST        /intervals-of-rent-review                               controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.submit()
 
+GET         /is-rent-under-review                                   controllers.aboutYourLeaseOrTenure.IsRentUnderReviewController.show()
+POST        /is-rent-under-review                                   controllers.aboutYourLeaseOrTenure.IsRentUnderReviewController.submit()
+
 GET         /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.show()
 POST        /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.submit()
 

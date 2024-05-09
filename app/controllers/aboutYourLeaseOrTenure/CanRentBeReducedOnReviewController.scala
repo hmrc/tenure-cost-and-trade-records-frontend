@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -49,7 +50,7 @@ class CanRentBeReducedOnReviewController @Inject() (
             case Some(data) => canRentBeReducedOnReviewForm.fill(data)
             case _          => canRentBeReducedOnReviewForm
           },
-          request.sessionData.toSummary
+          getBackLink
         )
       )
     )
@@ -58,7 +59,7 @@ class CanRentBeReducedOnReviewController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CanRentBeReducedOnReviewDetails](
       canRentBeReducedOnReviewForm,
-      formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors, getBackLink)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -66,5 +67,20 @@ class CanRentBeReducedOnReviewController @Inject() (
       }
     )
   }
+
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.forType match {
+      case ForTypes.for6020 =>
+        if (
+          request.sessionData.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.intervalsOfRentReview)
+            .exists(_.intervalsOfRentReview.isDefined)
+        ) {
+          controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+        } else {
+          controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
+        }
+      case _                => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+    }
 
 }

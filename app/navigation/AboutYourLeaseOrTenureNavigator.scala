@@ -46,6 +46,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
     aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show(),
     aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show(),
+    aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show(),
     aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show(),
     aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show(),
     aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show(),
@@ -240,6 +241,21 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for rent payable vary quantity of beer routing")
     }
   }
+
+  private def intervalsOfRentReviewRouting: Session => Call = answers =>
+    answers.forType match {
+      case ForTypes.for6020 =>
+        if (
+          answers.aboutLeaseOrAgreementPartTwo
+            .flatMap(_.intervalsOfRentReview)
+            .exists(_.intervalsOfRentReview.isDefined)
+        ) {
+          controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+        } else {
+          controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
+        }
+      case _                => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+    }
 
   private def canRentBeReducedRouting: Session => Call = answers => {
     answers.forType match {
@@ -467,7 +483,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     rentVaryQuantityOfBeersDetailsId              -> (_ => aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()),
     HowIsCurrentRentFixedId                       -> (_ => aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
     MethodToFixCurrentRentsId                     -> (_ => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()),
-    IntervalsOfRentReviewId                       -> (_ => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()),
+    IntervalsOfRentReviewId                       -> intervalsOfRentReviewRouting,
     CanRentBeReducedOnReviewId                    -> canRentBeReducedRouting,
     PropertyUpdatesId                             -> propertyUpdatesRouting,
     IncentivesPaymentsConditionsId                -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
@@ -496,6 +512,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IsVATPayableForWholePropertyId                -> (_ =>
       aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     ),
+    IsRentUnderReviewId                           -> (_ => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()),
     DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
     IncludedInRentParkingSpacesId                 -> (_ => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()),
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,

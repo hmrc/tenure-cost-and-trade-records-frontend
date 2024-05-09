@@ -1888,6 +1888,10 @@ error.throughputAffectsRentDetails.maxLength = The description of how throughput
 isVATPayableForWholeProperty.heading = Is VAT payable in respect of the whole property?
 error.isVATPayableForWholeProperty.required = Select yes if VAT is payable in respect of the whole property
 
+# IS RENT UNDER REVIEW
+isRentUnderReview.heading = Is the rent currently under review, or is a new lease or rent being negotiated?
+error.isRentUnderReview.required = Select yes if the rent is currently under review, or a new lease or rent is being negotiated
+
 # CAR PARKING
 doesRentIncludeParking.heading = Does the rent include an amount for parking spaces or garaging?
 isParkingRentPaidSeparately.heading = Is a rent for garaging or car parking paid separately?
