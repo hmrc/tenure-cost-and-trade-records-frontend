@@ -21,6 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{ForTypes, Session}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.HowIsCurrentRentFixedId
@@ -86,6 +87,13 @@ class HowIsCurrentRentFixedController @Inject() (
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
           case _           =>
             logger.warn(s"Back link for 6010 rent payable vary beer page reached with unknown value")
+            controllers.routes.TaskListController.show().url
+        }
+      case ForTypes.for6020 =>
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
+          case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
+          case _               => logger.warn(s"Back link for 6020 rent open market value page reached with unknown value")
             controllers.routes.TaskListController.show().url
         }
       case _                =>
