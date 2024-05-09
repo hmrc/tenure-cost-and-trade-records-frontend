@@ -160,12 +160,30 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to ultimately responsible page when does rent payable has been completed" in {
+    "return a function that goes to outside repairs page when does rent payable has been completed" in {
       navigator
-        .nextPage(DoesRentPayablePageId, session6010)
+        .nextPage(DoesRentPayablePageId, session6030)
         .apply(
-          session6010
+          session6030
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+        .show()
+    }
+
+    "return a function that goes to inside repairs page when outside has been completed" in {
+      navigator
+        .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session6030)
+        .apply(
+          session6030
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
+        .show()
+    }
+
+    "return a function that goes to insurance page when inside repairs has been completed" in {
+      navigator
+        .nextPage(UltimatelyResponsibleInsideRepairsPageId, session6030)
+        .apply(
+          session6030
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
         .show()
     }
 

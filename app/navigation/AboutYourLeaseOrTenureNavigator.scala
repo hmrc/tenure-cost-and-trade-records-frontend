@@ -455,7 +455,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ),
     CurrentLeaseBeginPageId                       -> (_ => aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId                      -> includedInYourRentRouting,
-    DoesRentPayablePageId                         -> (_ => aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()),
+    DoesRentPayablePageId                         -> (_ => aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()),
     UltimatelyResponsibleInsideRepairsPageId      -> (_ =>
       aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
     ),
