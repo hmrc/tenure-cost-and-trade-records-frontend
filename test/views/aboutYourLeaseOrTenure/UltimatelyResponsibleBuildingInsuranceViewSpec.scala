@@ -47,7 +47,7 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
         .show()
         .url
     }
