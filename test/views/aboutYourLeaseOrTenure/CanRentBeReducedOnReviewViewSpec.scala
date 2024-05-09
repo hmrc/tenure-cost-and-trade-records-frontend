@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm
-import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
@@ -26,14 +26,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeReducedOnReviewDetails] {
 
-  val messageKeyPrefix = "canRentBeReducedOnReview"
+  val messageKeyPrefix       = "canRentBeReducedOnReview"
+  private val backLink       = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   override val form = CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
-  def createView = () => canRentBeReducedOnReviewView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => canRentBeReducedOnReviewView(form, backLink)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CanRentBeReducedOnReviewDetails]) =>
-    canRentBeReducedOnReviewView(form, Summary("99996010001"))(fakeRequest, messages)
+    canRentBeReducedOnReviewView(form, backLink)(sessionRequest, messages)
 
   "Can rent be reduced on review view" must {
 

@@ -28,6 +28,7 @@ case class AboutLeaseOrAgreementPartThree(
   servicesPaid: IndexedSeq[ServicesPaid] = IndexedSeq.empty,
   throughputAffectsRent: Option[ThroughputAffectsRent] = None,
   isVATPayableForWholeProperty: Option[AnswersYesNo] = None,
+  isRentUnderReview: Option[AnswersYesNo] = None,
   carParking: Option[CarParking] = None,
   rentedEquipmentDetails: Option[String] = None,
   paymentForTradeServices: Option[PaymentForTradeServices] = None,

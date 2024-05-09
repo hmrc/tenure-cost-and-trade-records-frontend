@@ -197,6 +197,10 @@ case object IsVATPayableForWholePropertyId extends Identifier {
   override def toString: String = "isVATPayableForWholePropertyPage"
 }
 
+case object IsRentUnderReviewId extends Identifier {
+  override def toString: String = "isRentUnderReviewPage"
+}
+
 case object DoesRentIncludeParkingId extends Identifier {
   override def toString: String = "doesRentIncludeParkingPage"
 }
