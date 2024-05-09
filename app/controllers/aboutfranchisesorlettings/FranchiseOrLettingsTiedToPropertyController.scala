@@ -19,6 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
+import models.ForTypes
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -76,10 +77,16 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
           .map { _ =>
             navigator.cyaPage
               .filter(_ =>
-                navigator.from == "CYA" && (data == AnswerNo ||
-                  request.sessionData.aboutFranchisesOrLettings
-                    .flatMap(_.franchisesOrLettingsTiedToProperty)
-                    .contains(AnswerYes))
+                navigator.from == "CYA" && (
+                  (data == AnswerNo ||
+                    request.sessionData.aboutFranchisesOrLettings
+                      .flatMap(_.franchisesOrLettingsTiedToProperty)
+                      .contains(AnswerYes)) ||
+                    (data == AnswerYes && request.sessionData.forType == ForTypes.for6020 &&
+                      request.sessionData.aboutFranchisesOrLettings
+                        .flatMap(_.lettings.map(_.size > 0))
+                        .getOrElse(false))
+                )
               )
               .getOrElse(
                 navigator.nextWithoutRedirectToCYA(FranchiseOrLettingsTiedToPropertyId, updatedData).apply(updatedData)

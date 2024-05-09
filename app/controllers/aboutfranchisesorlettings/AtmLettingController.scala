@@ -86,7 +86,13 @@ class AtmLettingController @Inject() (
         }(request)
 
         session.saveOrUpdate(updatedSession).map { _ =>
-          Redirect(controllers.aboutfranchisesorlettings.routes.RentDetailsController.show(index.getOrElse(0)))
+          if (navigator.from == "CYA") {
+            Redirect(
+              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+            )
+          } else {
+            Redirect(controllers.aboutfranchisesorlettings.routes.RentDetailsController.show(index.getOrElse(0)))
+          }
         }
       }
     )
