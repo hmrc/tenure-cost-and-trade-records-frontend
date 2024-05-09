@@ -49,7 +49,11 @@
     }
 }
 
-@headingZeroTrade = @{if (numberOfServices.size == 0) messages("addTradeServiceZero.heading") else messages("addTradeService.heading", numberOfServices.size, service)}
+@rentOrLandlordSfx = @{if(request.sessionData.forType == ForTypes.for6020) messages("addTradeService.heading.rent") else messages("addTradeService.heading.landlord")}
+
+@hint                      = @{if(request.sessionData.forType == ForTypes.for6020) messages("addTradeService.label6020") else messages("addTradeService.label")}
+
+@headingZeroTrade = @{if (numberOfServices.size == 0) messages("addTradeServiceZero.heading") else messages("addTradeService.heading", numberOfServices.size, service, rentOrLandlordSfx)}
 
 @service = @{ if (numberOfServices.size > 1) messages("addTradeService.services") else messages("addTradeService.service") }
 
@@ -105,7 +109,7 @@
                     Fieldset(
                         legend = Option(
                             Legend(
-                                content = Text(messages("addTradeService.label")),
+                                content = Text(hint),
                                 classes = "govuk-!-font-weight-bold"
                             )
                         )
