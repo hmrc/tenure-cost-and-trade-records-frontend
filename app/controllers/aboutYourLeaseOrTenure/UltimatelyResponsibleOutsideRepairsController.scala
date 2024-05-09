@@ -80,7 +80,7 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
         } else {
           controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
         }
-      case _                => controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
+      case _                => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
     }
 
 }
