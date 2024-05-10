@@ -19,7 +19,7 @@ package navigation
 import utils.TestBaseSpec
 import connectors.Audit
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, PayACapitalSumDetails, TenantAdditionsDisregardedDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, PayACapitalSumDetails, RentIncludeFixturesAndFittingsDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
@@ -136,6 +136,52 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .apply(session6020) mustBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
         .show()
     }
+
+    "return a function that goes to when the current rent was agreed  when does the rent payable include has been completed " in {
+      navigator
+        .nextPage(IncludedInRent6020Id, session6020)
+        .apply(session6020) mustBe controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController
+        .show()
+    }
+
+    "return a function that goes to what is the rent based on when the current rent was agreed has been completed with No " in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6020.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo)))
+          )
+        )
+      )
+      navigator
+        .nextPage(RentOpenMarketPageId, session)
+        .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
+    }
+
+    "return a function that goes to setting the current rent when the current rent was agreed has been completed with Yes " in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6020.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)))
+          )
+        )
+      )
+
+      navigator
+        .nextPage(RentOpenMarketPageId, session)
+        .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
+    "return a function that goes to how was the current rent agreed  when setting the current rent has been completed " in {
+      navigator
+        .nextPage(HowIsCurrentRentFixedId , session6020)
+        .apply(session6020) mustBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+        .show()
+    }
+
+
   }
 
 }

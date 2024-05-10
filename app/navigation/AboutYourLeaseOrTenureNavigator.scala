@@ -188,7 +188,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def rentRentOpenMarketRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
-      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+      case Some("yes") => answers.forType match {
+        case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+        case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+      }
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
       case _           =>
         logger.warn(
@@ -355,6 +358,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     answers.forType match {
       case ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
+      case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
       case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
     }
 
