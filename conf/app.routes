@@ -463,6 +463,12 @@ POST        /can-rent-be-reduced-on-review                          controllers.
 GET         /property-updates                                       controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.show()
 POST        /property-updates                                       controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.submit()
 
+GET         /work-carried-out-details                               controllers.aboutYourLeaseOrTenure.WorkCarriedOutDetailsController.show()
+POST        /work-carried-out-details                               controllers.aboutYourLeaseOrTenure.WorkCarriedOutDetailsController.submit()
+
+GET         /work-carried-out-condition                             controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.show()
+POST        /work-carried-out-condition                             controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.submit()
+
 GET         /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.show()
 POST        /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.submit()
 

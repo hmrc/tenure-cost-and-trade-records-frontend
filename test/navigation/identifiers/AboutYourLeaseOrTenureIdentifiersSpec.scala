@@ -170,6 +170,14 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(CapitalSumDescriptionId.toString.equals("capitalSumDescriptionPage"))
     }
 
+    "Identifier for work carried out details page" in {
+      assert(WorkCarriedOutDetailsId.toString.equals("workCarriedOutDetailsPage"))
+    }
+
+    "Identifier for work carried out condition page" in {
+      assert(WorkCarriedOutConditionId.toString.equals("workCarriedOutConditionPage"))
+    }
+
     "Identifier for car parking annual rent page" in {
       assert(CarParkingAnnualRentId.toString.equals("carParkingAnnualRentPage"))
     }

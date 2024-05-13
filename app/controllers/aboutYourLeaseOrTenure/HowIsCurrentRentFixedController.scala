@@ -93,7 +93,8 @@ class HowIsCurrentRentFixedController @Inject() (
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
           case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
-          case _               => logger.warn(s"Back link for 6020 rent open market value page reached with unknown value")
+          case _               =>
+            logger.warn(s"Back link for 6020 rent open market value page reached with unknown value")
             controllers.routes.TaskListController.show().url
         }
       case _                =>

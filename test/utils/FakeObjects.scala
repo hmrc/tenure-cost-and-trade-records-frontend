@@ -1186,7 +1186,9 @@ trait FakeObjects {
     leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes)),
     benefitsGiven = Some(BenefitsGiven(AnswerYes)),
     benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
-    capitalSumDescription = Some(CapitalSumDescription("capital Sum Description"))
+    capitalSumDescription = Some(CapitalSumDescription("capital Sum Description")),
+    workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
+    workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes))
   )
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(

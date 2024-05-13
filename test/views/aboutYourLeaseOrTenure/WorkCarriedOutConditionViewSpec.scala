@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,38 +15,35 @@
  */
 
 package views.aboutYourLeaseOrTenure
-
-import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm
+import form.aboutYourLeaseOrTenure.WorkCarriedOutConditionForm.workCarriedOutConditionForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
+import models.submissions.aboutYourLeaseOrTenure.WorkCarriedOutCondition
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantAdditionsDisregardedDetails] {
+class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[WorkCarriedOutCondition] {
 
-  val messageKeyPrefix = "tenantsAdditionsDisregarded"
+  val messageKeyPrefix = "workCarriedOutCondition"
 
-  override val form = TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
+  override val form = workCarriedOutConditionForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+  val backLink = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
 
-  def createView = () => tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => workCarriedOutConditionView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TenantAdditionsDisregardedDetails]) =>
-    tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[WorkCarriedOutCondition]) =>
+    workCarriedOutConditionView(form, backLink, Summary("99996020001"))(fakeRequest, messages)
 
-  "Tenants additions disregarded view" must {
+  "work carried out condition view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to incentive payments page Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
     }
 
     "Section heading is visible" in {
@@ -55,24 +52,24 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain radio buttons for tenants additions disregarded with the value yes" in {
+    "contain radio buttons for lease surrendered early with the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "tenantsAdditionsDisregarded",
-        "tenantsAdditionsDisregarded",
+        "workCarriedOutCondition",
+        "workCarriedOutCondition",
         AnswerYes.name,
         false
       )
       assertContainsText(doc, messages("label.yes"))
     }
 
-    "contain radio buttons for tenants additions disregarded with the value no" in {
+    "contain radio buttons for workCarriedOutCondition with the value no" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
-        "tenantsAdditionsDisregarded-2",
-        "tenantsAdditionsDisregarded",
+        "workCarriedOutCondition-2",
+        "workCarriedOutCondition",
         AnswerNo.name,
         false
       )
