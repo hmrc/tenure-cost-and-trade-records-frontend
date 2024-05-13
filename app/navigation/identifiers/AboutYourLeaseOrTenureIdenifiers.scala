@@ -129,6 +129,12 @@ case object BenefitsGivenDetailsId extends Identifier {
 case object CapitalSumDescriptionId extends Identifier {
   override def toString: String = "capitalSumDescriptionPage"
 }
+case object WorkCarriedOutDetailsId extends Identifier {
+  override def toString: String = "workCarriedOutDetailsPage"
+}
+case object WorkCarriedOutConditionId extends Identifier {
+  override def toString: String = "workCarriedOutConditionPage"
+}
 
 case object TenantsAdditionsDisregardedDetailsId extends Identifier {
   override def toString: String = "tenantsAdditionsDisregardedDetailsPage"

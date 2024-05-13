@@ -16,15 +16,16 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
+import models.{ForTypes, Session}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TenantsAdditionsDisregardedId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.tenantsAdditionsDisregarded
 
@@ -47,6 +48,7 @@ class TenantsAdditionsDisregardedController @Inject() (
           case Some(data) => tenantsAdditionsDisregardedForm.fill(data)
           case _          => tenantsAdditionsDisregardedForm
         },
+        getBackLink,
         request.sessionData.toSummary
       )
     )
@@ -55,7 +57,8 @@ class TenantsAdditionsDisregardedController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenantAdditionsDisregardedDetails](
       tenantsAdditionsDisregardedForm,
-      formWithErrors => BadRequest(tenantsAdditionsDisregardedView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(tenantsAdditionsDisregardedView(formWithErrors, getBackLink, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -63,5 +66,12 @@ class TenantsAdditionsDisregardedController @Inject() (
       }
     )
   }
+
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.forType match {
+      case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
+      case _                =>
+        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+    }
 
 }

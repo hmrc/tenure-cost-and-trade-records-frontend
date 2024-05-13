@@ -188,10 +188,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def rentRentOpenMarketRouting: Session => Call = answers => {
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
-      case Some("yes") => answers.forType match {
-        case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-        case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
-      }
+      case Some("yes") =>
+        answers.forType match {
+          case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+        }
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
       case _           =>
         logger.warn(
@@ -271,8 +272,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutLeaseOrAgreementPartThree.flatMap(
       _.propertyUpdates.map(_.updates)
     ) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO Screen not implemented yet 18/04/24
-      case Some(AnswerNo)  => controllers.routes.TaskListController.show() // TODO Screen not implemented yet 18/04/24
+      case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show()
+      case Some(AnswerNo)  => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()
       case _               =>
         logger.warn(
           s"Navigation for property updates reached without correct selection of conditions by controller"
@@ -497,6 +498,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     BenefitsGivenId                               -> benefitsGivenRouting,
     BenefitsGivenDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
     CapitalSumDescriptionId                       -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
+    WorkCarriedOutDetailsId                       -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
+    WorkCarriedOutConditionId                     -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
     PayCapitalSumId                               -> payCapitalSumRouting,
     PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),

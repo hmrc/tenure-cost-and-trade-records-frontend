@@ -1072,6 +1072,19 @@ propertyUpdates.assign  = If the lease was assigned to you by another party, you
 propertyUpdates.label   = Has the property been altered, improved or updated in any way during the current lease?
 error.propertyUpdates.missing   = Select yes if the property been altered, improved or updated in any way during the current lease
 
+#WORK CARRIED OUT DETAILS
+#########################
+
+workCarriedOutDetails.heading = Give the details of the work carried out
+workCarriedOutDetails.hint = Give a bries description of the work, how much it cost, and the date completed
+error.workCarriedOutDetails.required = Enter a description of the work carried out
+error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
+
+#WORK CARRIED OUT CONDITION
+#########################
+workCarriedOutCondition.heading = Where you required to carry out any works as a condition of the present tenancy or agreement?
+error.workCarriedOutCondition.required = Select yes if you were required to carry out any works as a condition of the present tenancy or agreement
+
 # PAY A CAPITAL SUM
 ##################
 payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?

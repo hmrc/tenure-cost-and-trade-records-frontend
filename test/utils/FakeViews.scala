@@ -258,6 +258,10 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
     app.injector.instanceOf[tenancyLeaseAgreementExpire]
   lazy val tenantsAdditionsDisregardedDetailsView          =
     app.injector.instanceOf[tenantsAdditionsDisregardedDetails]
+  lazy val workCarriedOutDetailsView                       =
+    app.injector.instanceOf[workCarriedOutDetails]
+  lazy val workCarriedOutConditionView                     =
+    app.injector.instanceOf[workCarriedOutCondition]
   lazy val tenantsAdditionsDisregardedView                 =
     app.injector.instanceOf[tenantsAdditionsDisregarded]
   lazy val leaseSurrenderedEarlyView                       =

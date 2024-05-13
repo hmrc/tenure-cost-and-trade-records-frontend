@@ -176,11 +176,10 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to how was the current rent agreed  when setting the current rent has been completed " in {
       navigator
-        .nextPage(HowIsCurrentRentFixedId , session6020)
+        .nextPage(HowIsCurrentRentFixedId, session6020)
         .apply(session6020) mustBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
         .show()
     }
-
 
   }
 
