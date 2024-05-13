@@ -17,10 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.TurnoverForm6020.turnoverForm6020
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, TurnoverSection6020}
+import models.submissions.common.AnswerYes
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
@@ -109,10 +110,10 @@ class NonFuelTurnoverController @Inject() (
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#non-fuel-turnover"
       case _     =>
-        if (tradingHistory.lowMarginFuelCardsDetails.exists(_.nonEmpty)) {
-          controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0).url
-        } else {
-          controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show().url
+        tradingHistory.doYouAcceptLowMarginFuelCard match {
+          case Some(AnswerYes) =>
+            aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0).url
+          case _               => aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show().url
         }
     }
 

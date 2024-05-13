@@ -544,7 +544,8 @@ trait FakeObjects {
         TurnoverSection6020(LocalDate.now().minusYears(2), Some(BigDecimal(300)), Some(300))
       )
     ),
-    electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some(123)))
+    electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some(123))),
+    doYouAcceptLowMarginFuelCard = AnswerNo
   )
 
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(

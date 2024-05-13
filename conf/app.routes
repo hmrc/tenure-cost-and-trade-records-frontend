@@ -376,6 +376,9 @@ POST        /remove-bunker-fuel-cards-details                       controllers.
 GET         /customer-credit-accounts                               controllers.aboutthetradinghistory.CustomerCreditAccountsController.show()
 POST        /customer-credit-accounts                               controllers.aboutthetradinghistory.CustomerCreditAccountsController.submit()
 
+GET         /accept-low-margin-fuel-card                            controllers.aboutthetradinghistory.AcceptLowMarginFuelCardController.show()
+POST        /accept-low-margin-fuel-card                            controllers.aboutthetradinghistory.AcceptLowMarginFuelCardController.submit()
+
 GET         /percentage-from-fuel-cards                             controllers.aboutthetradinghistory.PercentageFromFuelCardsController.show()
 POST        /percentage-from-fuel-cards                             controllers.aboutthetradinghistory.PercentageFromFuelCardsController.submit()
 
