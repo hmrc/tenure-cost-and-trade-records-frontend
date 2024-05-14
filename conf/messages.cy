@@ -399,6 +399,7 @@ error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
 addAnotherLettingPartOfProperty.heading = You have added {0} letting
+addAnotherLettingPartOfProperty.heading.removed = You have removed all your lettings
 label.addAnotherLettingPartOfProperty = Do you need to add another letting?
 error.addAnotherLetting.required = Select yes if you would like to add another letting
 

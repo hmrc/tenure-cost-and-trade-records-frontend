@@ -55,8 +55,13 @@
 
 @pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
 
+@headingMessage = @{ operatorNames.size match {
+ case 0         => "addAnotherLettingPartOfProperty.heading.removed"
+ case _         => "addAnotherLettingPartOfProperty.heading"
+}}
+
 @layout(
- pageHeading = messages("addAnotherLettingPartOfProperty.heading", operatorNames.size) + pluralSuffix,
+ pageHeading = messages(headingMessage, operatorNames.size) + pluralSuffix,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
