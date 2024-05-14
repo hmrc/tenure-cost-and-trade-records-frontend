@@ -152,7 +152,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the percentage from fuel cards page when customer credit account has been completed" in {
       navigator
         .nextPage(CustomerCreditAccountsId, sessionAboutYou6020)
-        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController
+        .apply(sessionAboutYou6020) mustBe controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController
         .show()
     }
     "return a function that goes the low margin fuel card details page when percentage from fuel has been completed" in {

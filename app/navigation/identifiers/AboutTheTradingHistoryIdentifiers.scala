@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,6 +58,10 @@ case object BunkerFuelCardsDetailsId extends Identifier {
 
 case object AddAnotherBunkerFuelCardsDetailsId extends Identifier {
   override def toString: String = "addAnotherBunkerFuelCardsDetailsPage"
+}
+
+case object AcceptLowMarginFuelCardsId extends Identifier {
+  override def toString: String = "acceptLowMarginFuelCardsPage"
 }
 
 case object LowMarginFuelCardsDetailsId extends Identifier {

@@ -1780,6 +1780,26 @@ customerCreditAcc.label = Percentage of fuel sales on customer credit accounts
 error.customerCreditAcc.required = Enter 0 if none of your total sales comes from customer credit account in the year ending {0}
 error.customerCreditAcc.range = The percentage of your total sales comes from customer credit account in the year ending {0} must be a number
 
+#LOW-MARGIN FUEL CARDS (FORM 6020)
+acceptLowMarginFuelCard.heading = Do you accept low-margin fuel cards?
+acceptLowMarginFuelCard.hint = This does not include bunker fuel cards, or credit and debit cards.
+error.acceptLowMarginFuelCard.required = Select yes if you accept low-margin fuel cards
+
+#LOW MARGIN FUEL CARDS DETAILS (FORM 6020)
+lowMarginFuelCardDetails.heading = Provide details of the low-margin fuel cards you accept
+hint.lowMarginFuelCardDetails = You will have the opportunity to add more low-margin fuel cards if required.
+label.lowMarginFuelCardName = Low margin fuel card name
+lowMarginFuelCardDetails.handlingFee = Handling fee
+lowMarginFuelCardDetails.handlingFee.unit = pence/litre
+error.lowMarginFuelCardDetails.name.required = Please provide name of low-margin fuel card
+error.lowMarginFuelCardDetails.name.maxLength = Low margin fuel card name cannot be more than 100 characters
+error.lowMarginFuelCardDetails.handlingFee.invalidFormat = Handling fee must be a number, for example 100
+
+#ADD ANOTHER LOW MARGIN FUEL CARDS DETAILS (FROM 6020)
+label.lowMarginFuelCardDetails = Do you need to add another low-margin fuel card?
+addAnotherLowMarginFuelCardDetails.zeroDetails.heading = You have removed all your low-margin fuel cards details
+addAnotherLowMarginFuelCardDetails.heading = You have added {0} low-margin fuel card detail
+error.addAnotherLowMarginFuelCardsDetails.required = Select yes if you would like to add another low-margin fuel card detail
 
 # PERCENTAGE FROM LOW MARGIN FUEL CARDS (FROM 6020)
 ###################################################
@@ -2113,7 +2133,7 @@ checkYourAnswersAboutTheTradingHistory.lowMarginCards = Low-margin fuel cards
 checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading = Percentage of fuel sales on low-margin cards
 checkYourAnswersAboutTheTradingHistory.lowMarginCard = Low-margin fuel card {0}
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.details = Low-margin fuel card details
-checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded = You have added {0} low margin fuel {1}
+checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded = You have added {0} low-margin fuel {1}
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove = Add or remove low-margin fuel card
 checkYourAnswersAboutTheTradingHistory.card = card
 checkYourAnswersAboutTheTradingHistory.cards = cards

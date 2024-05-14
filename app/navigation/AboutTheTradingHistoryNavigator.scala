@@ -53,6 +53,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     aboutthetradinghistory.routes.FinancialYearEndController.show(),
     aboutthetradinghistory.routes.FinancialYearEndDatesController.show(),
     aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
+    aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
     aboutthetradinghistory.routes.TurnoverController.show(),
     aboutthetradinghistory.routes.CostOfSalesController.show()
   ).map(_.url)
@@ -113,6 +114,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def acceptLowMarginFuelCardsRouting: Session => Call =
+    _.aboutTheTradingHistory.flatMap(_.doYouAcceptLowMarginFuelCard) match {
+      case Some(AnswerYes) => aboutthetradinghistory.routes.PercentageFromFuelCardsController.show()
+      case _               => aboutthetradinghistory.routes.NonFuelTurnoverController.show()
+    }
+
   private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call = {
     val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails) match {
       case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
@@ -141,10 +148,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
     BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
     BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(None)),
-    CustomerCreditAccountsId                 -> (_ => aboutthetradinghistory.routes.PercentageFromFuelCardsController.show()),
+    CustomerCreditAccountsId                 -> (_ => aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show()),
     PercentageFromFuelCardsId                -> (_ => aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show()),
     BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
     AddAnotherBunkerFuelCardsDetailsId       -> (_ => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()),
+    AcceptLowMarginFuelCardsId               -> acceptLowMarginFuelCardsRouting,
     AddAnotherLowMarginFuelCardsDetailsId    -> (_ => aboutthetradinghistory.routes.NonFuelTurnoverController.show()),
     LowMarginFuelCardsDetailsId              -> getAddAnotherLowMarginFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
@@ -154,7 +162,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ElectricVehicleChargingPointsId          -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
-//    NetProfitId                              -> (_ => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()),
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
 

@@ -51,7 +51,7 @@ class PercentageFromFuelCardsController @Inject() (
           view(
             percentageFromFuelCardsForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.percentageFromFuelCards.getOrElse(Seq.empty)),
-            calculateBackLink(request),
+            getBackLink,
             request.sessionData.toSummary
           )
         )
@@ -69,7 +69,7 @@ class PercentageFromFuelCardsController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
-                calculateBackLink(request),
+                getBackLink,
                 request.sessionData.toSummary
               )
             ),
@@ -88,13 +88,14 @@ class PercentageFromFuelCardsController @Inject() (
       }
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent])                       =
+  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#low-margin-fuel-cards"
-      case _     => controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+      case _     => controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show().url
     }
+
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
 

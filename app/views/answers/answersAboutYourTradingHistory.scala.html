@@ -49,11 +49,11 @@
 }
 
 @tableRow(values: Seq[String]) = {
-    @values.map { value =>
-        <div class="hmrc-turnover-table-column">
-            @value
-        </div>
-    }
+@values.map { value =>
+    <div class="hmrc-turnover-table-column">
+        @value
+    </div>
+}
 }
 
 @table(valuesGrid: Seq[Seq[String]]) = {
@@ -67,9 +67,9 @@
 }
 
 @optionalParagraph(textOpt: Option[String]) = {
-    @textOpt.filter(_.trim.nonEmpty).map { text =>
-        <p class="govuk-body">@text</p>
-    }
+@textOpt.filter(_.trim.nonEmpty).map { text =>
+    <p class="govuk-body">@text</p>
+}
 }
 
 @financialYearEndDatesTable(financialYearEndDates: Seq[LocalDate]) = @{
@@ -103,30 +103,30 @@
 }
 
 @turnoverValuesTable6016(turnoverSections: Seq[TurnoverSection]) = @{
-        table(
-            turnoverSections.map(t => Seq(
-                dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-                s"${t.tradingPeriod} ${messages("turnover.weeks")}",
-                t.accommodation.getOrElse(zeroBigDecimal).asMoney,
-                t.averageOccupancyRate.getOrElse(zeroBigDecimal).withScale(2) + "%",
-                t.food.getOrElse(zeroBigDecimal).asMoney,
-                t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
-                t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
-                t.total.asMoney
-            ))
-        ).body
-    }
+    table(
+        turnoverSections.map(t => Seq(
+            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+            t.accommodation.getOrElse(zeroBigDecimal).asMoney,
+            t.averageOccupancyRate.getOrElse(zeroBigDecimal).withScale(2) + "%",
+            t.food.getOrElse(zeroBigDecimal).asMoney,
+            t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
+            t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
+            t.total.asMoney
+        ))
+    ).body
+}
 
-    @turnoverValuesTable6030(turnoverSections: Seq[TurnoverSection6030]) = @{
-        table(
-            turnoverSections.map(t => Seq(
-                dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-                s"${t.tradingPeriod} ${messages("turnover.weeks")}",
-                t.grossIncome.getOrElse(zeroBigDecimal).asMoney,
-                s"${t.totalVisitorNumbers.getOrElse(0)}"
-            ))
-        ).body
-    }
+@turnoverValuesTable6030(turnoverSections: Seq[TurnoverSection6030]) = @{
+    table(
+        turnoverSections.map(t => Seq(
+            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+            t.grossIncome.getOrElse(zeroBigDecimal).asMoney,
+            s"${t.totalVisitorNumbers.getOrElse(0)}"
+        ))
+    ).body
+}
 
 @turnoverKeys = @{
     Seq(
@@ -141,26 +141,26 @@
 }
 
 @turnoverKeys0616 = @{
-        Seq(
-            messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-            messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
-            messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
-            messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate"),
-            messages("checkYourAnswersAboutTheTradingHistory.food"),
-            messages("checkYourAnswersAboutTheTradingHistory.drinks"),
-            messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
-            messages("checkYourAnswersAboutTheTradingHistory.totalSalesRevenue")
-        ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
-    }
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
+        messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
+        messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate"),
+        messages("checkYourAnswersAboutTheTradingHistory.food"),
+        messages("checkYourAnswersAboutTheTradingHistory.drinks"),
+        messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalSalesRevenue")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
 
-    @turnoverKeys6030 = @{
-        Seq(
-            messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-            messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
-            messages("checkYourAnswersAboutTheTradingHistory.grossIncome"),
-            messages("checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers"),
-        ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
-    }
+@turnoverKeys6030 = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
+        messages("checkYourAnswersAboutTheTradingHistory.grossIncome"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers"),
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
 
 @actions = @{
     Some(
@@ -178,22 +178,22 @@
         )
     )
 }
-    @actions6030 = @{
-        Some(
-            Actions(items =
-                Seq(
-                    ActionItem(
-                        href = s"${aboutthetradinghistory.routes.Turnover6030Controller.show().url}?from=CYA",
-                        content = Text(messages("label.change")),
-                        visuallyHiddenText = Some(messages("turnover.heading")),
-                        attributes = Map(
-                            "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
-                        )
+@actions6030 = @{
+    Some(
+        Actions(items =
+            Seq(
+                ActionItem(
+                    href = s"${aboutthetradinghistory.routes.Turnover6030Controller.show().url}?from=CYA",
+                    content = Text(messages("label.change")),
+                    visuallyHiddenText = Some(messages("turnover.heading")),
+                    attributes = Map(
+                        "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
                     )
                 )
             )
         )
-    }
+    )
+}
 @costOfSalesValuesTable(costOfSales: Seq[CostOfSales]) = @{
     table(
         costOfSales.map(s => Seq(
@@ -363,33 +363,37 @@
 }
 
 @financialYearRow6020(url: Call, heading: String, financialYears: Seq[String]) = @{
-        SummaryListRow(
-            key = Key(Text(messages("turnover.financialYearEnd"))),
-            value = Value(HtmlContent(
-                tableRow(financialYears).body
-            )),
-            actions = Some(
-                Actions(items =
-                    Seq(
-                        ActionItem(
-                            href = s"$url?from=CYA",
-                            content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(heading),
-                            attributes = Map(
-                                "aria-label" -> s"${messages("label.change")} $heading"
-                            )
+    SummaryListRow(
+        key = Key(Text(messages("turnover.financialYearEnd"))),
+        value = Value(HtmlContent(
+            tableRow(financialYears).body
+        )),
+        actions = Some(
+            Actions(items =
+                Seq(
+                    ActionItem(
+                        href = s"$url?from=CYA",
+                        content = Text(messages("label.change")),
+                        visuallyHiddenText = Some(heading),
+                        attributes = Map(
+                            "aria-label" -> s"${messages("label.change")} $heading"
                         )
                     )
                 )
-            ),
-            classes = "no-border-bottom"
-        )
-    }
-@bunkeredCardSize=   @{request.sessionData.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails).map(_.size).getOrElse(0)}
-@lowMarginCardSize = @{request.sessionData.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).map(_.size).getOrElse(0)}
+            )
+        ),
+        classes = "no-border-bottom"
+    )
+}
+@bunkeredCardSize = @{
+    request.sessionData.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails).map(_.size).getOrElse(0)
+}
+@lowMarginCardSize = @{
+    request.sessionData.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).map(_.size).getOrElse(0)
+}
 
 @cardLoopAddMessage(message: String, size: Int) = @{
-        messages(message, size, if(size == 1) messages("checkYourAnswersAboutTheTradingHistory.card") else messages("checkYourAnswersAboutTheTradingHistory.cards") )
+    messages(message, size, if(size == 1) messages("checkYourAnswersAboutTheTradingHistory.card") else messages("checkYourAnswersAboutTheTradingHistory.cards"))
 }
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
@@ -460,14 +464,14 @@
                 aboutthetradinghistory.routes.TotalFuelSoldController.show(),
                 messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
                 sectionAnswers.answers.flatMap(_.totalFuelSold)
-                        .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
+                .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
             ),
             SummaryListRow(
                 key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.totalFuelSales"))),
                 value = Value(HtmlContent(
                     tableRow(sectionAnswers.answers.flatMap(_.totalFuelSold)
-                            .fold(Seq.empty[String])(_.map(_.fuelPerLiter.getOrElse(zeroBigDecimal).toString() + " " + messages("label.litres"))))
-                            .body
+                    .fold(Seq.empty[String])(_.map(_.fuelPerLiter.getOrElse(zeroBigDecimal).toString() + " " + messages("label.litres"))))
+                    .body
                 ))
 
             )
@@ -487,31 +491,31 @@
     )
     @if(request.sessionData.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).flatMap(_.bunkeredFuelQuestion).contains(AnswerYes)) {
 
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            financialYearRow6020(
-                aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
-                messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
-                sectionAnswers.answers.flatMap(_.bunkeredFuelSold)
-                        .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.bunkeredFuelSold)
-                            .fold(Seq.empty[String])(_.map(_.fuelPerLiter.getOrElse(zeroBigDecimal).toString() + " " + messages("label.litres"))))
-                            .body
-                ))
+        @govukSummaryList(SummaryList(rows =
+            Seq(
+                financialYearRow6020(
+                    aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
+                    messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
+                    sectionAnswers.answers.flatMap(_.bunkeredFuelSold)
+                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
+                ),
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading"))),
+                    value = Value(HtmlContent(
+                        tableRow(sectionAnswers.answers.flatMap(_.bunkeredFuelSold)
+                        .fold(Seq.empty[String])(_.map(_.fuelPerLiter.getOrElse(zeroBigDecimal).toString() + " " + messages("label.litres"))))
+                        .body
+                    ))
 
+                )
             )
-        )
-    ))
+        ))
 
-    @for((card, idx) <- sectionAnswers.answers.flatMap(_.bunkerFuelCardsDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
+        @for((card, idx) <- sectionAnswers.answers.flatMap(_.bunkerFuelCardsDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
 
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard", idx + 1)</h2>
 
-        @govukSummaryList(SummaryList(rows =
+            @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails",
                     _ => card.bunkerFuelCardDetails.name + s"<p class=\"govuk-body\">${card.bunkerFuelCardDetails.handlingFee + " " + messages("bunkerFuelCardDetails.handlingFee.unit")}</p>",
                     aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1),
@@ -523,19 +527,19 @@
         @govukSummaryList(SummaryList(rows =
             List(
                 SummaryListRow(
-                        key = Key(Text
-                                (cardLoopAddMessage("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded", bunkeredCardSize)), classes = "govuk-heading-m govuk-!-width-one-half"),
-                        actions = Some(Actions(
-                            items =
-                                List(
-                                    ActionItem(
-                                        s"${aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1).url}&from=CYA",
-                                        Text(messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove")))),
-                            classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
+                    key = Key(Text
+                            (cardLoopAddMessage("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded", bunkeredCardSize)), classes = "govuk-heading-m govuk-!-width-one-half"),
+                    actions = Some(Actions(
+                        items =
+                            List(
+                                ActionItem(
+                                    s"${aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1).url}&from=CYA",
+                                    Text(messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove")))),
+                        classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
                 )
             )
         ))
-}
+    }
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.customerCreditAcc")</h2>
 
     @govukSummaryList(SummaryList(rows =
@@ -544,14 +548,14 @@
                 aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
                 messages("checkYourAnswersAboutTheTradingHistory.customerCreditAcc"),
                 sectionAnswers.answers.flatMap(_.customerCreditAccounts)
-                        .fold(Seq.empty[String])(_.map(cca => dateUtil.formatDayMonthAbbrYear(cca.financialYearEnd)))
+                .fold(Seq.empty[String])(_.map(cca => dateUtil.formatDayMonthAbbrYear(cca.financialYearEnd)))
             ),
             SummaryListRow(
                 key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading"))),
                 value = Value(HtmlContent(
                     tableRow(sectionAnswers.answers.flatMap(_.customerCreditAccounts)
-                            .fold(Seq.empty[String])(_.map(_.percentage.getOrElse(zeroBigDecimal).toString() + messages("label.percent"))))
-                            .body
+                    .fold(Seq.empty[String])(_.map(_.percentage.getOrElse(zeroBigDecimal).toString() + messages("label.percent"))))
+                    .body
                 ))
 
             )
@@ -561,54 +565,65 @@
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards")</h2>
 
     @govukSummaryList(SummaryList(rows =
-        Seq(
-            financialYearRow6020(
-                aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
-                messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards"),
-                sectionAnswers.answers.flatMap(_.percentageFromFuelCards)
-                        .fold(Seq.empty[String])(_.map(card => dateUtil.formatDayMonthAbbrYear(card.financialYearEnd)))
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.percentageFromFuelCards)
-                            .fold(Seq.empty[String])(_.map(_.percentage.getOrElse(zeroBigDecimal).toString() + messages("label.percent"))))
-                            .body
-                ))
-
-            )
+        sectionAnswers.row(
+            "acceptLowMarginFuelCard.heading",
+            _.doYouAcceptLowMarginFuelCard.map(_.name.capitalize),
+            aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show(),
+            "acceptLowMarginFuelCard"
         )
     ))
 
-    @for((card, idx) <- sectionAnswers.answers.flatMap(_.lowMarginFuelCardsDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
+    @if(sectionAnswers.answers.flatMap(_.doYouAcceptLowMarginFuelCard).contains(AnswerYes)) {
+        @govukSummaryList(SummaryList(rows =
+            Seq(
+                financialYearRow6020(
+                    aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
+                    messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards"),
+                    sectionAnswers.answers.flatMap(_.percentageFromFuelCards)
+                    .fold(Seq.empty[String])(_.map(card => dateUtil.formatDayMonthAbbrYear(card.financialYearEnd)))
+                ),
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading"))),
+                    value = Value(HtmlContent(
+                        tableRow(sectionAnswers.answers.flatMap(_.percentageFromFuelCards)
+                        .fold(Seq.empty[String])(_.map(_.percentage.getOrElse(zeroBigDecimal).toString() + messages("label.percent"))))
+                        .body
+                    ))
 
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.lowMarginCard", idx + 1)</h2>
+                )
+            )
+        ))
+
+        @for((card, idx) <- sectionAnswers.answers.flatMap(_.lowMarginFuelCardsDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
+
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.lowMarginCard", idx + 1)</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.lowMarginCard.details",
+                    _ => card.lowMarginFuelCardDetail.name + s"<p class=\"govuk-body\">${card.lowMarginFuelCardDetail.handlingFee + " " + messages("bunkerFuelCardDetails.handlingFee.unit")}</p>",
+                    aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1),
+                    "",
+                    ("valueAsHtml", _ => None))
+            ))
+        }
 
         @govukSummaryList(SummaryList(rows =
-            sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.lowMarginCard.details",
-                _ => card.lowMarginFuelCardDetail.name + s"<p class=\"govuk-body\">${card.lowMarginFuelCardDetail.handlingFee + " " + messages("bunkerFuelCardDetails.handlingFee.unit")}</p>",
-                aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1),
-                "",
-                ("valueAsHtml", _ => None))
+            List(
+                SummaryListRow(
+                    key = Key(Text
+                            (cardLoopAddMessage("checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded", lowMarginCardSize)), classes = "govuk-heading-m govuk-!-width-one-half"),
+                    actions = Some(Actions(
+                        items =
+                            List(
+                                ActionItem(
+                                    s"${aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1).url}&from=CYA",
+                                    Text(messages("checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove")))),
+                        classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
+                )
+            )
         ))
     }
 
-    @govukSummaryList(SummaryList(rows =
-        List(
-            SummaryListRow(
-                key = Key(Text
-                        (cardLoopAddMessage("checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded", lowMarginCardSize)), classes = "govuk-heading-m govuk-!-width-one-half"),
-                actions = Some(Actions(
-                    items =
-                        List(
-                            ActionItem(
-                                s"${aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1).url}&from=CYA",
-                                Text(messages("checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove")))),
-                    classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
-            )
-        )
-    ))
-  
     <h2 class="govuk-heading-m">@messages("turnover.6020.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
