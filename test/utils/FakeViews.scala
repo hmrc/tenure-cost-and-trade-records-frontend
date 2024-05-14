@@ -136,6 +136,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                                  = app.injector.instanceOf[bunkerFuelCardsDetails]
   lazy val addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails              =
     app.injector.instanceOf[addAnotherBunkerFuelCardDetails]
+  lazy val acceptLowMarginFuelCardView                                                        = app.injector.instanceOf[acceptLowMarginFuelCard]
   lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                           = app.injector.instanceOf[lowMarginFuelCardsDetails]
   lazy val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails        =
     app.injector.instanceOf[addAnotherLowMarginFuelCardDetails]

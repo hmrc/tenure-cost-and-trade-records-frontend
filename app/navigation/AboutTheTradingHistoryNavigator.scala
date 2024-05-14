@@ -53,6 +53,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     aboutthetradinghistory.routes.FinancialYearEndController.show(),
     aboutthetradinghistory.routes.FinancialYearEndDatesController.show(),
     aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
+    aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
     aboutthetradinghistory.routes.TurnoverController.show(),
     aboutthetradinghistory.routes.CostOfSalesController.show()
   ).map(_.url)

@@ -545,7 +545,7 @@ trait FakeObjects {
       )
     ),
     electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some(123))),
-    doYouAcceptLowMarginFuelCard = AnswerNo
+    doYouAcceptLowMarginFuelCard = AnswerYes
   )
 
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(

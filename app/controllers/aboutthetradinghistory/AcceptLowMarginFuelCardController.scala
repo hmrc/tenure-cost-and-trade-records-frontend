@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AcceptLowMarginFuelCardForm.acceptLowMarginFuelCardForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AcceptLowMarginFuelCardsId
 import play.api.Logging
@@ -66,9 +66,18 @@ class AcceptLowMarginFuelCardController @Inject() (
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(doYouAcceptLowMarginFuelCard = Some(data)))
 
-        session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(AcceptLowMarginFuelCardsId, updatedData).apply(updatedData))
-        }
+        session
+          .saveOrUpdate(updatedData)
+          .map { _ =>
+            navigator.cyaPage
+              .filter(_ =>
+                navigator.from == "CYA" && (data == AnswerNo || tradingHistory
+                  .flatMap(_.doYouAcceptLowMarginFuelCard)
+                  .contains(AnswerYes))
+              )
+              .getOrElse(navigator.nextPage(AcceptLowMarginFuelCardsId, updatedData).apply(updatedData))
+          }
+          .map(Redirect)
       }
     )
   }
