@@ -30,6 +30,10 @@
     SectionAnswersRowBuilder(request.sessionData.aboutYouAndTheProperty)
 }
 
+@sectionAnswersPartTwo = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutYouAndThePropertyPartTwo)
+}
+
 @forType = @{
     request.sessionData.forType
 }
@@ -125,6 +129,32 @@
 )
 
 )
+
+    } else if (forType == ForTypes.for6076) {
+    @govukSummaryList(SummaryList(rows =
+            sectionAnswersPartTwo.row(
+                "checkYourAnswersAboutTheProperty.plantDescription",
+                _.plantAndTechnology.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
+                aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
+                "plantAndTechnology",
+                ("valueAsHtml", _ => None)
+            ) ++
+
+            sectionAnswersPartTwo.row(
+                "checkYourAnswersAboutTheProperty.generator",
+                _.generatorCapacity.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
+                aboutyouandtheproperty.routes.GeneratorCapacityController.show(),
+                "generatorCapacity",
+                ("valueAsHtml", _ => None)
+            ) ++
+
+            sectionAnswersPartTwo.row(
+                 "checkYourAnswersAboutTheProperty.battery",
+                 _.batteriesCapacity.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
+                 aboutyouandtheproperty.routes.BatteriesCapacityController.show(),
+                 "batteriesCapacity",
+                 ("valueAsHtml", _ => None)
+            )))
 
     } else {
         @govukSummaryList(SummaryList(rows =

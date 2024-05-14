@@ -1849,6 +1849,26 @@ error.renewablesPlant.required = Select what type of renewables plant you operat
 threeYearsConstructed.heading = Was the site constructed within the last 3 years?
 error.threeYearsConstructed.required = Select yes if the site was constructed in the last 3 years
 
+#PLANT AND TECHNOLOGY
+#####################
+
+plantAndTechnology.heading = Describe the plant and the type of technology
+plantAndTechnology.hint = For example, wind farm - if your property includes more than one technology type, please give details
+error.plantAndTechnology.maxLength = Description must be 2,000 characters or fewer
+error.plantAndTechnology.required = Give details of the plant and the type of technology
+
+#GENERATOR CAPACITY
+###################
+generatorCapacity.heading = What is the peak capacity of the generator installed?
+generatorCapacity.hint = For example 10kW, 50 MW.
+error.generatorCapacity.required = Explain what is the peak capacity of the generator installed
+
+
+#BATERIES CAPACITY
+batteriesCapacity.heading = What is the capacity of any installed batteries?
+batteriesCapacity.hint = For example 10kW, 50 MW - enter 0 if you have no batteries.
+error.batteriesCapacity.required = Explain what is the capacity of any installed batteries.
+
 # FURTHER INFORMATION OR REMARKS
 ################################
 furtherInformationOrRemarks.heading = Rhagor o wybodaeth neu sylwadau
@@ -2084,6 +2104,9 @@ checkYourAnswersAboutTheProperty.trading = Trading activities by a separate comp
 checkYourAnswersAboutTheProperty.websiteAddress = Website address
 checkYourAnswersAboutTheProperty.license.heading = Your licence
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence?
+checkYourAnswersAboutTheProperty.plantDescription = Plant description and technology type
+checkYourAnswersAboutTheProperty.generator = Peak capacity of generator
+checkYourAnswersAboutTheProperty.battery = Battery capacity
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Details of premises licence
 checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10:00 or after 23:30?
 checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Description of licensable activities

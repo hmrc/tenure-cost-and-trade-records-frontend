@@ -340,6 +340,12 @@ trait FakeObjects {
     charityQuestion = Some(AnswerNo)
   )
 
+  val prefilledAboutYouAndThePropertyPartTwo: AboutYouAndThePropertyPartTwo = AboutYouAndThePropertyPartTwo(
+    plantAndTechnology = Some("plant and technology"),
+    generatorCapacity = Some("generator capacity"),
+    batteriesCapacity = Some("batteries capacity")
+  )
+
   val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
     YourContactDetails(
       fullName = "Tobermory",

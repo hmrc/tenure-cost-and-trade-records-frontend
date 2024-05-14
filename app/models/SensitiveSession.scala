@@ -20,7 +20,7 @@ import crypto.MongoCrypto
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, SensitiveAboutLeaseOrAgreementPartOne}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import models.submissions.aboutyouandtheproperty.SensitiveAboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, SensitiveAboutYouAndTheProperty}
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
@@ -38,6 +38,7 @@ case class SensitiveSession(
   stillConnectedDetails: Option[SensitiveStillConnectedDetails] = None,
   removeConnectionDetails: Option[SensitiveRemoveConnectionDetails] = None,
   aboutYouAndTheProperty: Option[SensitiveAboutYouAndTheProperty] = None,
+  aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = None,
   additionalInformation: Option[AdditionalInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
@@ -58,6 +59,7 @@ case class SensitiveSession(
     stillConnectedDetails.map(_.decryptedValue),
     removeConnectionDetails.map(_.decryptedValue),
     aboutYouAndTheProperty.map(_.decryptedValue),
+    aboutYouAndThePropertyPartTwo,
     additionalInformation,
     aboutTheTradingHistory,
     aboutFranchisesOrLettings,
@@ -83,6 +85,7 @@ object SensitiveSession {
     session.stillConnectedDetails.map(SensitiveStillConnectedDetails(_)),
     session.removeConnectionDetails.map(SensitiveRemoveConnectionDetails(_)),
     session.aboutYouAndTheProperty.map(SensitiveAboutYouAndTheProperty(_)),
+    session.aboutYouAndThePropertyPartTwo,
     session.additionalInformation,
     session.aboutTheTradingHistory,
     session.aboutFranchisesOrLettings,
