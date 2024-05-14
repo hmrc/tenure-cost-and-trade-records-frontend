@@ -159,6 +159,15 @@ POST        /renewables-plants                                      controllers.
 GET         /three-years-constructed                                controllers.aboutyouandtheproperty.ThreeYearsConstructedController.show()
 POST        /three-years-constructed                                controllers.aboutyouandtheproperty.ThreeYearsConstructedController.submit()
 
+GET         /plant-and-technology                                   controllers.aboutyouandtheproperty.PlantAndTechnologyController.show()
+POST        /plant-and-technology                                   controllers.aboutyouandtheproperty.PlantAndTechnologyController.submit()
+
+GET         /generator-capacity                                     controllers.aboutyouandtheproperty.GeneratorCapacityController.show()
+POST        /generator-capacity                                     controllers.aboutyouandtheproperty.GeneratorCapacityController.submit()
+
+GET         /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.show()
+POST        /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.submit()
+
 
 # About the trading history
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
@@ -325,8 +334,8 @@ POST        /rent-include-trade-services                            controllers.
 GET         /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.show(idx: Option[Int] ?= None)
 POST        /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.submit(idx: Option[Int])
 
-GET         /trade-services-payments                                controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.show()
-POST        /trade-services-payments                                controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.submit()
+GET         /payment-for-trade-services                             controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.show()
+POST        /payment-for-trade-services                               controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.submit()
 
 
 GET         /trade-services-list                                    controllers.aboutYourLeaseOrTenure.TradeServicesListController.show(idx: Int)

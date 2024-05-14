@@ -1863,6 +1863,26 @@ error.renewablesPlant.required = Select what type of renewables plant you operat
 threeYearsConstructed.heading = Was the site constructed within the last 3 years?
 error.threeYearsConstructed.required = Select yes if the site was constructed in the last 3 years
 
+#PLANT AND TECHNOLOGY
+#####################
+
+plantAndTechnology.heading = Describe the plant and the type of technology
+plantAndTechnology.hint = For example, wind farm - if your property includes more than one technology type, please give details
+error.plantAndTechnology.maxLength = Description must be 2,000 characters or fewer
+error.plantAndTechnology.required = Give details of the plant and the type of technology
+
+#GENERATOR CAPACITY
+###################
+generatorCapacity.heading = What is the peak capacity of the generator installed?
+generatorCapacity.hint = For example 10kW, 50 MW.
+error.generatorCapacity.required = Explain what is the peak capacity of the generator installed
+
+
+#BATERIES CAPACITY
+batteriesCapacity.heading = What is the capacity of any installed batteries?
+batteriesCapacity.hint = For example 10kW, 50 MW - enter 0 if you have no batteries.
+error.batteriesCapacity.required = Explain what is the capacity of any installed batteries.
+
 # FURTHER INFORMATION OR REMARKS
 ################################
 furtherInformationOrRemarks.heading = Further information or remarks
@@ -2088,6 +2108,9 @@ checkYourAnswersAboutTheProperty.heading = Check your answers – about you and 
 checkYourAnswersAboutTheProperty.aboutYou.heading = Contact information
 checkYourAnswersAboutTheProperty.contact.details = Contact details
 checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is used
+checkYourAnswersAboutTheProperty.plantDescription = Plant description and technology type
+checkYourAnswersAboutTheProperty.generator = Peak capacity of generator
+checkYourAnswersAboutTheProperty.battery = Battery capacity
 checkYourAnswersAboutTheProperty.alternative.address = Use alternative address?
 checkYourAnswersAboutTheProperty.alternative.correspondence.address = Alternative correspondence address
 checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier

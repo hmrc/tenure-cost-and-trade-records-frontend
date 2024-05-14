@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
@@ -38,7 +38,9 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
 
   val navigator = new RemoveConnectionNavigator(audit)
 
-  val aboutTheProperty: Option[AboutYouAndTheProperty]        = Some(AboutYouAndTheProperty(None))
+  val aboutTheProperty: Option[AboutYouAndTheProperty]               = Some(AboutYouAndTheProperty(None))
+  val aboutThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(AboutYouAndThePropertyPartTwo(None))
+
   val removeConnection: Option[RemoveConnectionDetails]       = Some(
     RemoveConnectionDetails(
       Some(
@@ -65,6 +67,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
       stillConnectedDetailsYes,
       removeConnection,
       aboutTheProperty,
+      aboutThePropertyPartTwo,
       additionalInformation
     )
 

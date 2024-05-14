@@ -237,6 +237,7 @@ class LoginControllerSpec extends TestBaseSpec {
             stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
             removeConnectionDetails = Some(prefilledRemoveConnection),
             aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+            aboutYouAndThePropertyPartTwo = Some(prefilledAboutYouAndThePropertyPartTwo),
             additionalInformation = Some(prefilledAdditionalInformation),
             aboutTheTradingHistory = Some(prefilledAboutTheTradingHistory),
             aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOne),

@@ -169,8 +169,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
 
   private def threeYearsConstructedRouting: Session => Call = answers => {
     answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // screen not ready yet
-      case Some(AnswerNo)  => controllers.routes.TaskListController.show() // screen not ready yet
+      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO screen not ready yet
+      case Some(AnswerNo)  => controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
       case _               =>
         logger.warn(
           s"Navigation for about the property reached without correct selection of was the site constructed within last 3 years by controller"
@@ -209,6 +209,11 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     ),
     RenewablesPlantPageId                   -> (_ => controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show()),
     ThreeYearsConstructedPageId             -> threeYearsConstructedRouting,
+    PlantAndTechnologyId                    -> (_ => controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show()),
+    GeneratorCapacityId                     -> (_ => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show()),
+    BatteriesCapacityId                     -> (_ =>
+      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    ),
     CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show())
   )
 }
