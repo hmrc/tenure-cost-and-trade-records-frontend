@@ -55,9 +55,9 @@
 
 @pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
 
-@headingMessage = @{ operatorNames.size match {
- case 0         => "addAnotherLettingPartOfProperty.heading.removed"
- case _         => "addAnotherLettingPartOfProperty.heading"
+@headingMessage = @{ operatorNames match {
+ case Nil         => "addAnotherLettingPartOfProperty.heading.removed"
+ case _           => "addAnotherLettingPartOfProperty.heading"
 }}
 
 @layout(
