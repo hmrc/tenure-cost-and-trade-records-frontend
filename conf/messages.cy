@@ -673,6 +673,9 @@ franchiseLettings.p2 = You must include:
 franchiseLettings.list1 = any payments received instead of trading receipts from third-party businesses operating from the property under a concession or franchise agreement
 franchiseLettings.list2 = rental income from letting other parts of the property including advertising billboards, car parking or phone masts
 franchiseLettings.subheading = Do you receive income from letting out parts of your property?
+franchiseLettings.6020.heading = Is any rent received from letting any parts of the property?
+franchiseLettings.6020.p1 = For example, advertising rights, telecom mats, charging points, and ATMs. You will have the opportunity to add multiple lettings if required.
+franchiseLettings.6030.heading = Do you receive rental income from any franchises or lettings?
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY (6030)

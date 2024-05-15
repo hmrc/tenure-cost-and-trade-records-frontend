@@ -45,9 +45,10 @@
 }
 
 @heading = @{
-    (for6015, for6020) match {
-        case (true, _) => messages("franchiseLettingsIncome.heading")
-        case (false, true) => messages("franchiseLettings.6020.heading")
+    userType match {
+        case ForTypes.for6015 | ForTypes.for6016 => messages("franchiseLettingsIncome.heading")
+        case ForTypes.for6020 => messages("franchiseLettings.6020.heading")
+        case ForTypes.for6030 => messages("franchiseLettings.6030.heading")
         case _ => messages("franchiseLettings.heading")
     }
 }
