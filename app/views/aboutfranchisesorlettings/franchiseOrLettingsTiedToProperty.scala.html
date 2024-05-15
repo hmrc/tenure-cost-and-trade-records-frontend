@@ -34,7 +34,6 @@
 @(theForm: Form[_], userType: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @for6015 = @{userType == ForTypes.for6015 || userType == ForTypes.for6016}
-@for6030 = @{userType == ForTypes.for6030 || userType == ForTypes.for6016}
 @for6020 = @{userType == ForTypes.for6020}
 @label = @{
   (for6015, for6020) match {
