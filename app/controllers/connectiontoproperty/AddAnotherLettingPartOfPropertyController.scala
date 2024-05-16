@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,10 +50,9 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
     Future.successful(
       Ok(
         addAnotherLettingPartOfPropertyView(
-          existingSection.flatMap(_.addAnotherLettingToProperty) match {
-            case Some(addAnotherLettings) => addAnotherLettingForm.fill(addAnotherLettings)
-            case _                        => addAnotherLettingForm
-          },
+          existingSection
+            .flatMap(_.addAnotherLettingToProperty)
+            .fold(addAnotherLettingForm)(addAnotherLettingForm.fill),
           index,
           controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(index).url,
           request.sessionData.toSummary
@@ -167,10 +166,16 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       {
         case AnswerYes =>
           request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails).map { lettingSections =>
-            val updatedSections = lettingSections.patch(idx, Nil, 1)
+            val updatedSections     = lettingSections.patch(idx, Nil, 1)
+            val isRentReceivedYesNo = AnswersYesNo(updatedSections.nonEmpty)
+
             session.saveOrUpdate(
               updateStillConnectedDetails(
-                _.copy(lettingPartOfPropertyDetailsIndex = 0, lettingPartOfPropertyDetails = updatedSections)
+                _.copy(
+                  lettingPartOfPropertyDetailsIndex = 0,
+                  isAnyRentReceived = Some(isRentReceivedYesNo),
+                  lettingPartOfPropertyDetails = updatedSections
+                )
               )
             )
           }
@@ -180,4 +185,5 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       }
     )
   }
+
 }

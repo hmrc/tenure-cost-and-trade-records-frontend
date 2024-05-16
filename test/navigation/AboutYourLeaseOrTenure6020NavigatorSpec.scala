@@ -19,7 +19,7 @@ package navigation
 import utils.TestBaseSpec
 import connectors.Audit
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, PayACapitalSumDetails, RentIncludeFixturesAndFittingsDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, PayACapitalSumDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
