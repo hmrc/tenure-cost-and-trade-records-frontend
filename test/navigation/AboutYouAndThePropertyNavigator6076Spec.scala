@@ -17,7 +17,9 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers.{BatteriesCapacityId, ContactDetailsQuestionId, GeneratorCapacityId, Identifier, PlantAndTechnologyId, RenewablesPlantPageId}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
+import models.submissions.common.{AnswerNo, AnswerYes}
+import navigation.identifiers.{BatteriesCapacityId, ContactDetailsQuestionId, GeneratorCapacityId, Identifier, PlantAndTechnologyId, RenewablesPlantPageId, ThreeYearsConstructedPageId}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -33,6 +35,19 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
 
   "About you and the property navigator for generic path" when {
 
+    "return a function that goes to renewable plant page when contact details question have been completed with no" in {
+
+      val answers = baseFilled6076Session.copy(
+        aboutYouAndTheProperty =
+          Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
+      )
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, answers)
+        .apply(
+          answers
+        ) shouldBe controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+    }
+
     "return a function that goes to 3 years constructed page when renewables plants have been completed" in {
       aboutYouAndThePropertyNavigator
         .nextPage(RenewablesPlantPageId, baseFilled6076Session)
@@ -40,6 +55,29 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
           baseFilled6076Session
         ) shouldBe controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController
         .show()
+    }
+
+    "return a function that goes to task list page when 3 years constructed page completed with Yes" in {
+
+      val answers = baseFilled6076Session.copy(
+        aboutYouAndTheProperty = Some(AboutYouAndTheProperty(threeYearsConstructed = Some(AnswerYes)))
+      )
+      aboutYouAndThePropertyNavigator
+        .nextPage(ThreeYearsConstructedPageId, answers)
+        .apply(
+          answers
+        ) shouldBe controllers.routes.TaskListController.show()
+    }
+    "return a function that goes to plant and technology page when 3 years constructed page completed with No" in {
+
+      val answers = baseFilled6076Session.copy(
+        aboutYouAndTheProperty = Some(AboutYouAndTheProperty(threeYearsConstructed = Some(AnswerNo)))
+      )
+      aboutYouAndThePropertyNavigator
+        .nextPage(ThreeYearsConstructedPageId, answers)
+        .apply(
+          answers
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
     }
 
     "return a function that goes to about the generator capacity page when plant and technology have been completed" in {
