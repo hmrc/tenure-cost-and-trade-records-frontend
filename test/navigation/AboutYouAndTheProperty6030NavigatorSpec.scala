@@ -16,6 +16,8 @@
 
 package navigation
 
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import utils.TestBaseSpec
@@ -70,5 +72,27 @@ class AboutYouAndTheProperty6030NavigatorSpec extends TestBaseSpec {
         aboutYouAndTheProperty6030YesSession
       ) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
       .show()
+  }
+  "return a function that goes to trading activity page when charity question is  completed with Yes" in {
+
+    val answers = aboutYouAndTheProperty6030YesSession.copy(
+      aboutYouAndTheProperty = Some(AboutYouAndTheProperty(charityQuestion = Some(AnswerYes)))
+    )
+    aboutYouAndThePropertyNavigator
+      .nextPage(CharityQuestionPageId, answers)
+      .apply(
+        answers
+      ) mustBe controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
+  }
+  "return a function that goes to CYA page when charity question is  completed with No" in {
+
+    val answers = aboutYouAndTheProperty6030YesSession.copy(
+      aboutYouAndTheProperty = Some(AboutYouAndTheProperty(charityQuestion = Some(AnswerNo)))
+    )
+    aboutYouAndThePropertyNavigator
+      .nextPage(CharityQuestionPageId, answers)
+      .apply(
+        answers
+      ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
   }
 }
