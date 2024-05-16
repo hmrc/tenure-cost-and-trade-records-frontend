@@ -87,10 +87,17 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             .fold(
               Future.successful(
                 Redirect(
-                  if (data.name == "yes") {
+                  if (data == AnswerYes) {
                     routes.LettingPartOfPropertyDetailsController.show()
                   } else {
-                    routes.CheckYourAnswersConnectionToVacantPropertyController.show()
+                    navigator
+                      .cyaPageDependsOnSession(request.sessionData)
+                      .filter(_ => navigator.from == "CYA" && data == AnswerNo)
+                      .getOrElse(
+                        navigator
+                          .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, request.sessionData)
+                          .apply(request.sessionData)
+                      )
                   }
                 )
               )
