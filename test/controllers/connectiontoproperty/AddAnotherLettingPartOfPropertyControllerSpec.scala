@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,19 +42,19 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = addAnotherLettingPartOfPropertyController().show(1)(fakeRequest)
+      val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = addAnotherLettingPartOfPropertyController().show(1)(fakeRequest)
+      val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = addAnotherLettingPartOfPropertyController().submit(1)(fakeRequest)
+        val result = addAnotherLettingPartOfPropertyController().submit(0)(fakeRequest)
         status(result) shouldBe BAD_REQUEST
       }
     }
