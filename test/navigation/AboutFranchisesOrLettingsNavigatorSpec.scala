@@ -265,6 +265,20 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           sessionAboutFranchiseOrLetting6010NoSession
         ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
+    "return a function that goes to lettings other part when max lettings catering page reached" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(MaxOfLettingsReachedCateringId, sessionAboutFranchiseOrLetting6010NoSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010NoSession
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    }
+    "return a function that goes to CYA when max lettings current page reached" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(MaxOfLettingsReachedCurrentId, sessionAboutFranchiseOrLetting6010NoSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010NoSession
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+    }
 
     "return a function that goes to task list page from cya" in {
       aboutFranchisesOrLettingsNavigator
