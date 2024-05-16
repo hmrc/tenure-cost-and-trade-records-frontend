@@ -40,6 +40,7 @@ trait FakeObjects {
   val forType6016: String       = "FOR6016"
   val forType6030: String       = "FOR6030"
   val forType6020: String       = "FOR6020"
+  val forType6076: String       = "FOR6076"
   val prefilledAddress: Address =
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
@@ -110,6 +111,7 @@ trait FakeObjects {
   val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
   val baseFilled6030Session: Session = Session(referenceNumber, forType6030, prefilledAddress, token)
   val baseFilled6020Session: Session = Session(referenceNumber, forType6020, prefilledAddress, token)
+  val baseFilled6076Session: Session = Session(referenceNumber, forType6076, prefilledAddress, token)
 
   // Request reference number
   val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
@@ -235,6 +237,8 @@ trait FakeObjects {
     baseFilled6016Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetailsConnectedDetailsNoSession: Session =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
+  val stillConnectedDetails6076YesSession: Session            =
+    baseFilled6076Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
 
   // Not connected sessions
   val prefilledNotConnectedYes: RemoveConnectionDetails = RemoveConnectionDetails(
@@ -378,6 +382,10 @@ trait FakeObjects {
     stillConnectedDetails6030YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYesString))
   val aboutYouAndTheProperty6030NoSession: Session  =
     stillConnectedDetails6030NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNoString))
+  val aboutYouAndTheProperty6076Session: Session    =
+    stillConnectedDetails6076YesSession.copy(aboutYouAndThePropertyPartTwo =
+      Some(prefilledAboutYouAndThePropertyPartTwo)
+    )
 
   // Trading history
   val prefilledAboutYourTradingHistory: AboutTheTradingHistory = AboutTheTradingHistory(
