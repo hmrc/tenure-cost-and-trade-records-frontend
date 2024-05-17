@@ -1857,12 +1857,19 @@ error.renewablesPlant.required = Select what type of renewables plant you operat
 threeYearsConstructed.heading = Was the site constructed within the last 3 years?
 error.threeYearsConstructed.required = Select yes if the site was constructed in the last 3 years
 
+#BREAKDOWN OF THE CAPITAL COSTS
+##############################
+costsBreakdown.heading = Provide a breakdown of the capital cost of the site construction
+costsBreakdown.hint = If you're unable to provide a breakdown, please provide a total
+error.costsBreakdown.maxLength = Description of a breakdown must be 2,000 characters or fewer
+error.costsBreakdown.required = Give details of a breakdown of the capital cost of the site construction
+
 #PLANT AND TECHNOLOGY
 #####################
 
 plantAndTechnology.heading = Describe the plant and the type of technology
 plantAndTechnology.hint = For example, wind farm - if your property includes more than one technology type, please give details
-error.plantAndTechnology.maxLength = Description must be 2,000 characters or fewer
+error.plantAndTechnology.maxLength = Description must be 1,000 characters or fewer
 error.plantAndTechnology.required = Give details of the plant and the type of technology
 
 #GENERATOR CAPACITY

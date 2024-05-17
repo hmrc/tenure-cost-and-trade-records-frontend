@@ -21,6 +21,8 @@ import models.Session
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
+//There are now 22 attributes in this case class, so no more can be added
+
 case class AboutYouAndTheProperty(
   customerDetails: Option[CustomerDetails] = None,
   altDetailsQuestion: Option[ContactDetailsQuestion] = None,
@@ -42,7 +44,8 @@ case class AboutYouAndTheProperty(
   charityQuestion: Option[AnswersYesNo] = None, // 6030
   tradingActivity: Option[TradingActivity] = None, //6030
   renewablesPlant: Option[RenewablesPlant] = None, // 6076
-  threeYearsConstructed: Option[AnswersYesNo] = None // 6076
+  threeYearsConstructed: Option[AnswersYesNo] = None, // 6076
+  costsBreakdown: Option[String] = None // 6076
 )
 
 object AboutYouAndTheProperty {

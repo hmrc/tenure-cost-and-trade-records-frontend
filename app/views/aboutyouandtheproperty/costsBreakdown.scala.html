@@ -30,30 +30,31 @@
         govukCharacterCount: GovukCharacterCount,
 )
 
-@(theForm: Form[String], backLink: String,   summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[String], summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
-    pageHeading = messages("plantAndTechnology.heading"),
+    pageHeading = messages("costsBreakdown.heading"),
     showSection = true,
     showH1 = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutTheProperty"),
-    backLinkUrl = backLink,
+    backLinkUrl = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url,
     theForm = theForm
 ) {
-    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.submit()) {
-
-
+  <div class="govuk-!-font-weight-regular"></div>
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CostsBreakdownController.submit()) {
         @govukCharacterCount(
             CharacterCount(
-                id = "plantAndTechnology",
-                name = "plantAndTechnology",
-                rows = 1,
-                maxLength = 1000,
-                hint = Hint(content = Text(messages("plantAndTechnology.hint"))),
-                errorMessage = theForm.errors.asTextErrorMessageForField("plantAndTechnology"),
+                id = "costsBreakdown",
+                name = "costsBreakdown",
+                rows = 4,
+                maxLength = 2000,
+                label = Label(content = Text(messages("costsBreakdown.hint")),
+                classes = "govuk-!-font-weight-regular"
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("costsBreakdown"),
                 classes = "govuk-!-width-two-thirds"
-            ).withFormField(theForm("plantAndTechnology"))
+            ).withFormField(theForm("costsBreakdown"))
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)
