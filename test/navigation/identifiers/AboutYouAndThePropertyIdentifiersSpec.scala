@@ -105,6 +105,18 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
       assert(ThreeYearsConstructedPageId.toString.equals("threeYearsConstructedPage"))
     }
 
+    "Identifier for plants and technologies page" in {
+      assert(BatteriesCapacityId.toString.equals("batteriesCapacityPage"))
+    }
+
+    "Identifier generator capacity page" in {
+      assert(GeneratorCapacityId.toString.equals("generatorCapacityPage"))
+    }
+
+    "Identifier for batteries capacity page" in {
+      assert(PlantAndTechnologyId.toString.equals("plantAndTechnologyPage"))
+    }
+
     "Identifier for check your answers page" in {
       assert(CheckYourAnswersAboutThePropertyPageId.toString.equals("checkYourAnswersAboutThePropertyPage"))
     }

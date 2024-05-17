@@ -85,6 +85,18 @@ case object ThreeYearsConstructedPageId extends Identifier {
   override def toString: String = "threeYearsConstructedPage"
 }
 
+case object BatteriesCapacityId extends Identifier {
+  override def toString: String = "batteriesCapacityPage"
+}
+
+case object GeneratorCapacityId extends Identifier {
+  override def toString: String = "generatorCapacityPage"
+}
+
+case object PlantAndTechnologyId extends Identifier {
+  override def toString: String = "plantAndTechnologyPage"
+}
+
 case object CheckYourAnswersAboutThePropertyPageId extends Identifier {
   override def toString: String = "checkYourAnswersAboutThePropertyPage"
 }

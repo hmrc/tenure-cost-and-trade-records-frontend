@@ -198,6 +198,10 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(RentedEquipmentDetailsId.toString.equals("rentedEquipmentDetailsPage"))
     }
 
+    "Identifier for included in rent for 6020 page" in {
+      assert(IncludedInRent6020Id.toString.equals("includedInRent6020Page"))
+    }
+
     "Identifier for service paid separately charge page" in {
       assert(ServicePaidSeparatelyChargeId.toString.equals("servicePaidSeparatelyChargePage"))
     }
@@ -257,6 +261,18 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     }
     "Identifier for type of tenure" in {
       assert(TypeOfTenureId.toString.equals("typeOfTenurePage"))
+    }
+    "Identifier for rent under review" in {
+      assert(IsRentUnderReviewId.toString.equals("isRentUnderReviewPage"))
+    }
+    "Identifier for is vat payable" in {
+      assert(IsVATPayableForWholePropertyId.toString.equals("isVATPayableForWholePropertyPage"))
+    }
+    "Identifier for throughput affects rent " in {
+      assert(ThroughputAffectsRentId.toString.equals("throughputAffectsRentPage"))
+    }
+    "Identifier for throughput affects rent details" in {
+      assert(ThroughputAffectsRentDetailsId.toString.equals("throughputAffectsRentDetailsPage"))
     }
   }
 }

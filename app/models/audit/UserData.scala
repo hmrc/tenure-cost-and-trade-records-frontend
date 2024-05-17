@@ -18,7 +18,7 @@ package models.audit
 
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
@@ -38,6 +38,7 @@ case class UserData(
   stillConnectedDetails: Option[StillConnectedDetails],
   removeConnectionDetails: Option[RemoveConnectionDetails],
   aboutYouAndTheProperty: Option[AboutYouAndTheProperty],
+  aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo],
   additionalInformation: Option[AdditionalInformation],
   aboutTheTradingHistory: Option[AboutTheTradingHistory],
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings],
