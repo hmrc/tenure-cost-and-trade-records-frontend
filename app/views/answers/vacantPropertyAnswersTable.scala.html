@@ -97,7 +97,12 @@
         List(
             SummaryListRow(
                 Key(Text(lettingsAddedMessage), classes = "govuk-heading-m"),
-                actions = Some(Actions(items = List(ActionItem(connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(lettingsLastIndex).url, Text(messages("checkYourAnswersConnectionToVacantProperty.addLetting"))))))
+                actions = Some(Actions(items = List(
+                    ActionItem(
+                        connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(lettingsLastIndex).url + "&from=CYA",
+                        Text(messages("checkYourAnswersConnectionToVacantProperty.addLetting"))
+                    )
+                )))
             )
         )
     ))

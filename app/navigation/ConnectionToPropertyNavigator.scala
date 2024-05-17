@@ -21,6 +21,7 @@ import controllers.connectiontoproperty.routes
 import identifiers._
 import play.api.mvc.Call
 import models.Session
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
 import play.api.Logging
 
@@ -139,27 +140,21 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   }
 
   private def addAnotherLettingsConditionsRouting: Session => Call = answers => {
-    val existingSection = answers.stillConnectedDetails.flatMap(
+    val existingSectionOpt = answers.stillConnectedDetails.flatMap(
       _.lettingPartOfPropertyDetails.lift(getLettingPartOfPropertyDetailsIndex(answers))
     )
-    existingSection match {
+    existingSectionOpt match {
       case Some(existingSection) if isIncomplete(existingSection) =>
         getIncompleteSectionCall(existingSection, getLettingPartOfPropertyDetailsIndex(answers))
-      case _                                                      =>
-        existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
-          case "yes" =>
+      case Some(existingSection)                                  =>
+        existingSection.addAnotherLettingToProperty match {
+          case Some(AnswerYes) =>
             controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController
               .show(Some(getLettingPartOfPropertyDetailsIndex(answers) + 1))
-          case "no"  =>
+          case _               =>
             controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
-          case _     =>
-            logger.warn(
-              s"Navigation for add another letting part of property reached without correct selection of conditions by controller"
-            )
-            throw new RuntimeException(
-              "Invalid option exception for add another letting part of property conditions routing"
-            )
         }
+      case _                                                      => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
     }
   }
 
