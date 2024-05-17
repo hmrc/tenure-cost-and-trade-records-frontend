@@ -20,14 +20,14 @@ import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object PlantAndTechnologyForm {
+object CostsBreakdownForm {
 
-  val plantAndTechnologyForm: Form[String] =
+  val costsBreakdownForm: Form[String] =
     Form(
       single(
-        "plantAndTechnology" -> default(text, "").verifying(
-          nonEmpty(errorMessage = "error.plantAndTechnology.required"),
-          maxLength(1000, "error.plantAndTechnology.maxLength")
+        "costsBreakdown" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.costsBreakdown.required"),
+          maxLength(1000, "error.costsBreakdown.maxLength")
         )
       )
     )

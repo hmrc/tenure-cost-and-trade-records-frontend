@@ -169,7 +169,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
 
   private def threeYearsConstructedRouting: Session => Call = answers => {
     answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO screen not ready yet
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
       case Some(AnswerNo)  => controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
       case _               =>
         logger.warn(
@@ -209,6 +209,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     ),
     RenewablesPlantPageId                   -> (_ => controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show()),
     ThreeYearsConstructedPageId             -> threeYearsConstructedRouting,
+    CostsBreakdownId                        -> (_ => controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()),
     PlantAndTechnologyId                    -> (_ => controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show()),
     GeneratorCapacityId                     -> (_ => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show()),
     BatteriesCapacityId                     -> (_ =>
