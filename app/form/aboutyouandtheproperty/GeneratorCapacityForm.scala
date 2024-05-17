@@ -25,8 +25,7 @@ object GeneratorCapacityForm {
   val generatorCapacityForm = Form(
     single(
       "generatorCapacity" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.generatorCapacity.required"),
-        maxLength(200, "error.generatorCapacity.maxLength")
+        nonEmpty(errorMessage = "error.generatorCapacity.required")
       )
     )
   )

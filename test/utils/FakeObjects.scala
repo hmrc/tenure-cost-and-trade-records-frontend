@@ -280,7 +280,8 @@ trait FakeObjects {
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
     renewablesPlant = Some(RenewablesPlant(Intermittent)),
-    threeYearsConstructed = Some(AnswerYes)
+    threeYearsConstructed = Some(AnswerYes),
+    costsBreakdown = Some("breakdown")
   )
 
   val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty = AboutYouAndTheProperty(

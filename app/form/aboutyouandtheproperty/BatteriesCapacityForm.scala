@@ -24,8 +24,7 @@ object BatteriesCapacityForm {
   val batteriesCapacityForm = Form(
     single(
       "batteriesCapacity" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.batteriesCapacity.required"),
-        maxLength(200, "error.batteriesCapacity.maxLength")
+        nonEmpty(errorMessage = "error.batteriesCapacity.required")
       )
     )
   )

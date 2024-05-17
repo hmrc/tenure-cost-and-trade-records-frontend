@@ -168,6 +168,8 @@ POST        /generator-capacity                                     controllers.
 GET         /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.show()
 POST        /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.submit()
 
+GET         /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.show()
+POST        /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.submit()
 
 # About the trading history
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
