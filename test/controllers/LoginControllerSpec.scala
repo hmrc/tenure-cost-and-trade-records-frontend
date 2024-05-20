@@ -240,6 +240,7 @@ class LoginControllerSpec extends TestBaseSpec {
             aboutYouAndThePropertyPartTwo = Some(prefilledAboutYouAndThePropertyPartTwo),
             additionalInformation = Some(prefilledAdditionalInformation),
             aboutTheTradingHistory = Some(prefilledAboutTheTradingHistory),
+            aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOne),
             aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings),
             aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOne),
             aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo),
