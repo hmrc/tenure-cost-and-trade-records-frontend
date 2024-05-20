@@ -19,7 +19,7 @@ package models
 import crypto.MongoCrypto
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, SensitiveAboutLeaseOrAgreementPartOne}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.aboutyouandtheproperty.SensitiveAboutYouAndTheProperty
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.SensitiveAddress
@@ -40,6 +40,7 @@ case class SensitiveSession(
   aboutYouAndTheProperty: Option[SensitiveAboutYouAndTheProperty] = None,
   additionalInformation: Option[AdditionalInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
+  aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[SensitiveAboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
@@ -60,6 +61,7 @@ case class SensitiveSession(
     aboutYouAndTheProperty.map(_.decryptedValue),
     additionalInformation,
     aboutTheTradingHistory,
+    aboutTheTradingHistoryPartOne,
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne.map(_.decryptedValue),
     aboutLeaseOrAgreementPartTwo,
@@ -85,6 +87,7 @@ object SensitiveSession {
     session.aboutYouAndTheProperty.map(SensitiveAboutYouAndTheProperty(_)),
     session.additionalInformation,
     session.aboutTheTradingHistory,
+    session.aboutTheTradingHistoryPartOne,
     session.aboutFranchisesOrLettings,
     session.aboutLeaseOrAgreementPartOne.map(SensitiveAboutLeaseOrAgreementPartOne(_)),
     session.aboutLeaseOrAgreementPartTwo,

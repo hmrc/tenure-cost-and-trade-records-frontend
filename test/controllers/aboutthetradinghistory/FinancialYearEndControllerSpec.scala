@@ -148,6 +148,27 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates")
     }
+
+    "redirect to the next page when valid 6020 data is submitted" in {
+      // Arrange
+      val validFormData  = Map(
+        "financialYear.day"   -> "1",
+        "financialYear.month" -> "4",
+        "yearEndChanged"      -> "true"
+      )
+      val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, request)
+      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+        .thenReturn(Future.successful(Right(())))
+
+      // Act
+      val result =
+        financialYearEndController("FOR6020", Some(prefilledAboutYourTradingHistory6020)).submit(sessionRequest)
+
+      // Assert
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates-summary")
+    }
   }
 
   object TestData {

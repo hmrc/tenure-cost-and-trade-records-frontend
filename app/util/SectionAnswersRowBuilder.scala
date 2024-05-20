@@ -125,6 +125,49 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     else
       Seq.empty[SummaryListRow]
 
+  def nonCYArow(
+    messageKey: String,
+    getAnswerValue: T => Option[String],
+    editPage: Call,
+    editField: String,
+    conditionalTextMapping: (String, T => Option[String])*
+  ): Seq[SummaryListRow] =
+    Seq(
+      SummaryListRow(
+        key = Key(Text(messages(messageKey))),
+        value = Value(
+          if (conditionalTextMapping.isEmpty) {
+            Text(answers.flatMap(getAnswerValue).getOrElse(""))
+          } else if (conditionalTextMapping.head._1 == "valueAsHtml") {
+            HtmlContent(answers.flatMap(getAnswerValue).getOrElse(""))
+          } else {
+            val answerMsgKey       = answers.flatMap(getAnswerValue).getOrElse("")
+            val conditionalTextMap = conditionalTextMapping.toMap
+            HtmlContent(
+              conditionalTextMap
+                .get(answerMsgKey)
+                .flatMap(answers.flatMap)
+                .fold(messages(answerMsgKey))(text => s"${messages(answerMsgKey)}<br/>${Text(text).asHtml}")
+            )
+          }
+        ),
+        actions = Some(
+          Actions(items =
+            Seq(
+              ActionItem(
+                href = s"${urlPlusParamPrefix(editPage.url)}${editFieldTag(editField)}",
+                content = Text(messages("label.change")),
+                visuallyHiddenText = Some(messages(messageKey)),
+                attributes = Map(
+                  "aria-label" -> s"${messages("label.change")} ${messages(messageKey)}"
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
   def displayLabelsForYesAnswers(labelAnswerMap: Map[String, String]): String =
     labelAnswerMap.toSeq
       .flatMap(t => Option.when(t._2 == "yes")(messages(t._1)))

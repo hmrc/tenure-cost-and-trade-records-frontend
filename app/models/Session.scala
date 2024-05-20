@@ -21,7 +21,7 @@ import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -43,6 +43,7 @@ case class Session(
   aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = None,
   additionalInformation: Option[AdditionalInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
+  aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
@@ -81,6 +82,7 @@ case class Session(
     aboutYouAndTheProperty,
     additionalInformation,
     aboutTheTradingHistory,
+    aboutTheTradingHistoryPartOne,
     aboutFranchisesOrLettings,
     aboutLeaseOrAgreementPartOne,
     aboutLeaseOrAgreementPartTwo,

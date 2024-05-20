@@ -1024,6 +1024,8 @@ trait FakeObjects {
     )
   )
 
+  val prefilledAboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne()
+
   val prefilledVacantProperties = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
