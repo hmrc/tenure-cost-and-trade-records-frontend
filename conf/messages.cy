@@ -1080,13 +1080,13 @@ error.propertyUpdates.missing   = Select yes if the property been altered, impro
 #########################
 
 workCarriedOutDetails.heading = Give the details of the work carried out
-workCarriedOutDetails.hint = Give a bries description of the work, how much it cost, and the date completed
+workCarriedOutDetails.hint = Give a brief description of the work, how much it cost, and the date completed
 error.workCarriedOutDetails.required = Enter a description of the work carried out
 error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
 
 #WORK CARRIED OUT CONDITION
 #########################
-workCarriedOutCondition.heading = Where you required to carry out any works as a condition of the present tenancy or agreement?
+workCarriedOutCondition.heading = Were you required to carry out any works as a condition of the present tenancy or agreement?
 error.workCarriedOutCondition.required = Select yes if you were required to carry out any works as a condition of the present tenancy or agreement
 
 # PAY A CAPITAL SUM
@@ -1273,7 +1273,7 @@ error.leaseSurrenderedEarly.required = Select yes if former lease or agreement w
 
 #BENEFITS GIVEN
 ###############
-benefitsGiven.heading  = Where you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+benefitsGiven.heading  = Were you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
 error.benefitsGiven.required = Select yes if you were given a rent-free period, any payment or any other benefits when the lease or agreement was granted
 
 #BENEFITS GIVEN DETAILS
