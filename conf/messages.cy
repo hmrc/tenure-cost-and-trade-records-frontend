@@ -1373,7 +1373,7 @@ hint.intervalsOfRentReview = Leave blank if the lease does not include any rent 
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
 fieldName.nextReview = the date when the next rent review is due
-error.intervalsOfRent.maxLength = Mae’n rhaid i’r amlder o ran eich adolygiad rhent fod yn 100 o gymeriadau neu lai
+error.intervalsOfRent.maxLength = Mae’n rhaid i’r amlder o ran eich adolygiad rhent fod yn 2000 o gymeriadau neu lai
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
