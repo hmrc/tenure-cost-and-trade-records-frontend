@@ -28,7 +28,7 @@ object IntervalsOfRentReviewForm {
     Form(
       mapping(
         "intervalsOfRentReview" -> optional(text)
-          .verifying("error.intervalsOfRent.maxLength", mL => mL.forall(_.length <= 100)),
+          .verifying("error.intervalsOfRent.maxLength", mL => mL.forall(_.length <= 2000)),
         "nextReview"            -> optional(requiredDateMapping("nextReview", allowFutureDates = true))
       )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
     )
