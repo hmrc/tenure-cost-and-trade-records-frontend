@@ -22,9 +22,6 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
