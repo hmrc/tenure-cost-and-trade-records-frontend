@@ -62,9 +62,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     s.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
       case Some(true) =>
         s.forType match {
-          case (ForTypes.for6020 | ForTypes.for6076) =>
+          case ForTypes.for6020 | ForTypes.for6076 =>
             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-          case _                                     => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+          case _                                   => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
         }
 
       case _ =>
@@ -93,6 +93,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     _.forType match {
       case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
+      case ForTypes.for6076 => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
       case _                => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
@@ -166,6 +167,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     ElectricVehicleChargingPointsId          -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    ),
+    ElectricityGeneratedId                   -> (_ =>
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show() // TODO: Gross receipts
     ),
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )

@@ -24,6 +24,9 @@ import play.api.i18n.Messages
 
 import java.time.LocalDate
 
+/**
+  * @author Yuriy Tumakha
+  */
 object TurnoverForm6020 {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[TurnoverSection6020] = mapping(

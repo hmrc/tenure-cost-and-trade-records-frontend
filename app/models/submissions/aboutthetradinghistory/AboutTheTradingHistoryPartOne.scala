@@ -21,7 +21,8 @@ import models.Session
 import play.api.libs.json._
 
 case class AboutTheTradingHistoryPartOne(
-  isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false)
+  isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false),
+  turnoverSections6076: Option[Seq[TurnoverSection6076]] = None
 )
 object AboutTheTradingHistoryPartOne {
   implicit val format: OFormat[AboutTheTradingHistoryPartOne] = Json.format[AboutTheTradingHistoryPartOne]

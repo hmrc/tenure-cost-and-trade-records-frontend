@@ -33,6 +33,9 @@ import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+  * @author Yuriy Tumakha
+  */
 @Singleton
 class NonFuelTurnoverController @Inject() (
   mcc: MessagesControllerComponents,

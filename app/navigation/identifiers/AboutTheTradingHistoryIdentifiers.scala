@@ -104,6 +104,10 @@ case object ElectricVehicleChargingPointsId extends Identifier {
   override def toString: String = "electricVehicleChargingPoints"
 }
 
+case object ElectricityGeneratedId extends Identifier {
+  override def toString: String = "electricityGeneratedPage"
+}
+
 case object CheckYourAnswersAboutTheTradingHistoryId extends Identifier {
   override def toString: String = "checkYourAnswersAboutTheTradingHistory"
 }

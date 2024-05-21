@@ -74,6 +74,11 @@ case class Session(
       _.turnoverSections6030.map(_.financialYearEnd).zipWithIndex
     )
 
+  def financialYearEndDates6076: Seq[(LocalDate, Int)] =
+    aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(
+      _.turnoverSections6020.getOrElse(Seq()).map(_.financialYearEnd).zipWithIndex
+    )
+
   def toUserData: UserData = UserData(
     referenceNumber,
     forType,

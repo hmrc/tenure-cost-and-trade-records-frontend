@@ -1568,6 +1568,7 @@ error.turnover.6020.otherIncome.range = Other income in the year ending {0} must
 error.turnover.6020.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
 
 # TURNOVER 6076
+turnover.6076.heading = How much electricity did you generate?
 error.turnover.6076.electricityGenerated.required = Enter 0 if you did not have any electricity generated in the year ending {0}
 error.turnover.6076.otherIncome.required = Enter 0 if you did not have any other income in the year ending {0}
 error.turnover.6076.otherIncome.range = Other income in the year ending {0} must be a number, for example 100 or 100.00
