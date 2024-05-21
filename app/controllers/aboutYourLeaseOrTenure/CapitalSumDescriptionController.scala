@@ -19,7 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CapitalSumDescriptionForm.capitalSumDescriptionForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CapitalSumDescriptionId
@@ -46,7 +46,7 @@ class CapitalSumDescriptionController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.capitalSumDescription) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.capitalSumDescription) match {
           case Some(data) => capitalSumDescriptionForm.fill(data)
           case _          => capitalSumDescriptionForm
         },
@@ -60,7 +60,7 @@ class CapitalSumDescriptionController @Inject() (
       capitalSumDescriptionForm,
       formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(capitalSumDescription = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(capitalSumDescription = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CapitalSumDescriptionId, updatedData).apply(updatedData))
