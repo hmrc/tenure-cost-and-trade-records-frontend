@@ -37,7 +37,6 @@ case class AboutLeaseOrAgreementPartThree(
   leaseSurrenderedEarly: Option[LeaseSurrenderedEarly] = None,
   benefitsGiven: Option[BenefitsGiven] = None,
   benefitsGivenDetails: Option[BenefitsGivenDetails] = None,
-  capitalSumDescription: Option[CapitalSumDescription] = None,
   workCarriedOutDetails: Option[WorkCarriedOutDetails] = None,
   workCarriedOutCondition: Option[WorkCarriedOutCondition] = None
 )
