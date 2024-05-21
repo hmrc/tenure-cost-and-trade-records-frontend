@@ -70,8 +70,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _ =>
         s.forType match {
           case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
-          case ForTypes.for6030 =>
-            aboutthetradinghistory.routes.Turnover6030Controller.show()
+          case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
+          case ForTypes.for6076 => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
           case _                => aboutthetradinghistory.routes.TurnoverController.show()
         }
     }

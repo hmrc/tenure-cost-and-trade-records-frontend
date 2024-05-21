@@ -75,9 +75,9 @@ case class Session(
     )
 
   def financialYearEndDates6076: Seq[(LocalDate, Int)] =
-    aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(
-      _.turnoverSections6020.getOrElse(Seq()).map(_.financialYearEnd).zipWithIndex
-    )
+    aboutTheTradingHistoryPartOne
+      .flatMap(_.turnoverSections6076)
+      .fold(Seq.empty[(LocalDate, Int)])(_.map(_.financialYearEnd).zipWithIndex)
 
   def toUserData: UserData = UserData(
     referenceNumber,

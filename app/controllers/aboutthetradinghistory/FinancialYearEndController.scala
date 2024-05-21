@@ -100,6 +100,12 @@ class FinancialYearEndController @Inject() (
                   isFinancialYearEndDayUnchanged,
                   isFinancialYearsListUnchanged
                 )
+              case ForTypes.for6076 =>
+                buildUpdatedData6076(
+                  aboutTheTradingHistory,
+                  newOccupationAndAccounting,
+                  isFinancialYearEndDayUnchanged
+                )
               case _                =>
                 buildUpdateData(
                   firstOccupy,
