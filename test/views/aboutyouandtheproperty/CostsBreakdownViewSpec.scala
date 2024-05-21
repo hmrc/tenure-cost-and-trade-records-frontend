@@ -16,34 +16,36 @@
 
 package views.aboutyouandtheproperty
 
-import form.aboutyouandtheproperty.PlantAndTechnologyForm
+import form.aboutyouandtheproperty.CostsBreakdownForm
 import models.pages.Summary
+import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PlantAndTechnologyViewSpec extends QuestionViewBehaviours[String] {
+class CostsBreakdownViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "plantAndTechnology"
+  val messageKeyPrefix = "costsBreakdown"
 
-  override val form: Form[String] = PlantAndTechnologyForm.plantAndTechnologyForm
+  override val form: Form[String] = CostsBreakdownForm.costsBreakdownForm
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
 
-  def createView: () => Html = () =>
-    plantAndTechnologyView(form, backLink, Summary("99996076001"))(fakeRequest, messages)
+  def createView: () => Html = () => costsBreakdownView(form, Summary("99996076001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    plantAndTechnologyView(form, backLink, Summary("99996076001"))(fakeRequest, messages)
+    costsBreakdownView(form, Summary("99996076001"))(fakeRequest, messages)
 
-  "Plant and technology view" should {
+  "costs breakdown view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label" in {
+    "has a link marked with back.link.label leading to 3 years constructed page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
     }
 
     "Section heading is visible" in {
@@ -53,7 +55,7 @@ class PlantAndTechnologyViewSpec extends QuestionViewBehaviours[String] {
     }
     "contain an input for plant and technology " in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "plantAndTechnology")
+      assertRenderedById(doc, "costsBreakdown")
     }
 
     "contain continue button with the value Continue" in {

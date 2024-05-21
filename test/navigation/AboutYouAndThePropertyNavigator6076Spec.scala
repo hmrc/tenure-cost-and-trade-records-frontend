@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
 import models.submissions.common.{AnswerNo, AnswerYes}
-import navigation.identifiers.{BatteriesCapacityId, ContactDetailsQuestionId, GeneratorCapacityId, Identifier, PlantAndTechnologyId, RenewablesPlantPageId, ThreeYearsConstructedPageId}
+import navigation.identifiers.{BatteriesCapacityId, ContactDetailsQuestionId, CostsBreakdownId, GeneratorCapacityId, Identifier, PlantAndTechnologyId, RenewablesPlantPageId, ThreeYearsConstructedPageId}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -57,7 +57,7 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to task list page when 3 years constructed page completed with Yes" in {
+    "return a function that goes to costs breakdown page when 3 years constructed page completed with Yes" in {
 
       val answers = baseFilled6076Session.copy(
         aboutYouAndTheProperty = Some(AboutYouAndTheProperty(threeYearsConstructed = Some(AnswerYes)))
@@ -66,7 +66,7 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
         .nextPage(ThreeYearsConstructedPageId, answers)
         .apply(
           answers
-        ) shouldBe controllers.routes.TaskListController.show()
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
     }
     "return a function that goes to plant and technology page when 3 years constructed page completed with No" in {
 
@@ -78,6 +78,15 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
         .apply(
           answers
         ) shouldBe controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
+    }
+
+    "return a function that goes to plant and technology page when costs breakdown have been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(CostsBreakdownId, aboutYouAndTheProperty6076Session)
+        .apply(
+          aboutYouAndTheProperty6076Session
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController
+        .show()
     }
 
     "return a function that goes to about the generator capacity page when plant and technology have been completed" in {

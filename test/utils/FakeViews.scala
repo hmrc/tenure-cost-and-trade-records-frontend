@@ -121,15 +121,18 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val tradingActivityView                                                       = app.injector.instanceOf[tradingActivity]
   lazy val renewablesPlantView                                                       = app.injector.instanceOf[renewablesPlant]
   lazy val threeYearsConstructedView                                                 = app.injector.instanceOf[threeYearsConstructed]
-
-  lazy val plantAndTechnologyView = app.injector.instanceOf[plantAndTechnology]
-  lazy val generatorCapacityView  = app.injector.instanceOf[generatorCapacity]
-  lazy val batteriesCapacityView  = app.injector.instanceOf[batteriesCapacity]
+  lazy val costsBreakdownView                                                        = app.injector.instanceOf[costsBreakdown]
+  lazy val plantAndTechnologyView                                                    = app.injector.instanceOf[plantAndTechnology]
+  lazy val generatorCapacityView                                                     = app.injector.instanceOf[generatorCapacity]
+  lazy val batteriesCapacityView                                                     = app.injector.instanceOf[batteriesCapacity]
 
   // About your trading history
   lazy val aboutYourTradingHistoryView: aboutYourTradingHistory                               = app.injector.instanceOf[aboutYourTradingHistory]
   lazy val financialYearEndView: financialYearEnd                                             = app.injector.instanceOf[financialYearEnd]
   lazy val financialYearEndDatesView: financialYearEndDates                                   = app.injector.instanceOf[financialYearEndDates]
+  lazy val editFinancialYearEndDateView: editFinancialYearEndDate                             = app.injector.instanceOf[editFinancialYearEndDate]
+  lazy val financialYearEndDatesSummaryView: financialYearEndDatesSummary                     =
+    app.injector.instanceOf[financialYearEndDatesSummary]
   lazy val turnoverView: turnover                                                             = app.injector.instanceOf[turnover]
   lazy val turnover6020View: turnover6020                                                     = app.injector.instanceOf[turnover6020]
   lazy val turnover6030View: turnover6030                                                     = app.injector.instanceOf[turnover6030]

@@ -1080,13 +1080,13 @@ error.propertyUpdates.missing   = Select yes if the property been altered, impro
 #########################
 
 workCarriedOutDetails.heading = Give the details of the work carried out
-workCarriedOutDetails.hint = Give a bries description of the work, how much it cost, and the date completed
+workCarriedOutDetails.hint = Give a brief description of the work, how much it cost, and the date it was completed
 error.workCarriedOutDetails.required = Enter a description of the work carried out
 error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
 
 #WORK CARRIED OUT CONDITION
 #########################
-workCarriedOutCondition.heading = Where you required to carry out any works as a condition of the present tenancy or agreement?
+workCarriedOutCondition.heading = Were you required to carry out any works as a condition of the present tenancy or agreement?
 error.workCarriedOutCondition.required = Select yes if you were required to carry out any works as a condition of the present tenancy or agreement
 
 # PAY A CAPITAL SUM
@@ -1273,7 +1273,7 @@ error.leaseSurrenderedEarly.required = Select yes if former lease or agreement w
 
 #BENEFITS GIVEN
 ###############
-benefitsGiven.heading  = Where you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+benefitsGiven.heading  = Were you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
 error.benefitsGiven.required = Select yes if you were given a rent-free period, any payment or any other benefits when the lease or agreement was granted
 
 #BENEFITS GIVEN DETAILS
@@ -1373,7 +1373,7 @@ hint.intervalsOfRentReview = Leave blank if the lease does not include any rent 
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
 fieldName.nextReview = the date when the next rent review is due
-error.intervalsOfRent.maxLength = Mae’n rhaid i’r amlder o ran eich adolygiad rhent fod yn 100 o gymeriadau neu lai
+error.intervalsOfRent.maxLength = Mae’n rhaid i’r amlder o ran eich adolygiad rhent fod yn 2000 o gymeriadau neu lai
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
@@ -1855,12 +1855,19 @@ error.renewablesPlant.required = Select what type of renewables plant you operat
 threeYearsConstructed.heading = Was the site constructed within the last 3 years?
 error.threeYearsConstructed.required = Select yes if the site was constructed in the last 3 years
 
+#BREAKDOWN OF THE CAPITAL COSTS
+##############################
+costsBreakdown.heading = Provide a breakdown of the capital cost of the site construction
+costsBreakdown.hint = If you're unable to provide a breakdown, please provide a total
+error.costsBreakdown.maxLength = Description of a breakdown must be 2,000 characters or fewer
+error.costsBreakdown.required = Give details of a breakdown of the capital cost of the site construction
+
 #PLANT AND TECHNOLOGY
 #####################
 
 plantAndTechnology.heading = Describe the plant and the type of technology
 plantAndTechnology.hint = For example, wind farm - if your property includes more than one technology type, please give details
-error.plantAndTechnology.maxLength = Description must be 2,000 characters or fewer
+error.plantAndTechnology.maxLength = Description must be 1,000 characters or fewer
 error.plantAndTechnology.required = Give details of the plant and the type of technology
 
 #GENERATOR CAPACITY

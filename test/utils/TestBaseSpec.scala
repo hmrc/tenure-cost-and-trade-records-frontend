@@ -21,7 +21,7 @@ import config.AppConfig
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
@@ -118,6 +118,7 @@ trait TestBaseSpec
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo),
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation),
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory),
+    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne),
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings),
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
@@ -144,6 +145,7 @@ trait TestBaseSpec
                 aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo,
                 additionalInformation = additionalInformation,
                 aboutTheTradingHistory = aboutTheTradingHistory,
+                aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
                 aboutFranchisesOrLettings = aboutFranchisesOrLettings,
                 aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
                 aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,

@@ -14,23 +14,34 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package form.aboutthetradinghistory
 
 import form.DateMappings.requiredDateMapping
-import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
-import play.api.data.Form
-import play.api.data.Forms.{mapping, optional, text}
+import play.api.data.Forms._
+import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object IntervalsOfRentReviewForm {
+import java.time.LocalDate
 
-  def intervalsOfRentReviewForm(implicit messages: Messages): Form[IntervalsOfRentReview] =
-    Form(
-      mapping(
-        "intervalsOfRentReview" -> optional(text)
-          .verifying("error.intervalsOfRent.maxLength", mL => mL.forall(_.length <= 2000)),
-        "nextReview"            -> optional(requiredDateMapping("nextReview", allowFutureDates = true))
-      )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
+object FinancialYearEndDateForm {
+
+  private def dateMapping(implicit messages: Messages): Mapping[LocalDate] =
+    single(
+      "financial-year-end" -> requiredDateMapping(
+        "financialYearEnd",
+        allowPastDates = true,
+        allowFutureDates = true
+      )
     )
 
+  def financialYearEndDateForm(implicit messages: Messages): Form[LocalDate] =
+    Form(
+      single(
+        "financial-year-end" -> requiredDateMapping(
+          "financial-year-end",
+          allowPastDates = true,
+          allowFutureDates = true
+        )
+      )
+    )
 }

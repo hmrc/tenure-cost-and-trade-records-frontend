@@ -97,6 +97,10 @@ case object PlantAndTechnologyId extends Identifier {
   override def toString: String = "plantAndTechnologyPage"
 }
 
+case object CostsBreakdownId extends Identifier {
+  override def toString: String = "costsBreakdownPage"
+}
+
 case object CheckYourAnswersAboutThePropertyPageId extends Identifier {
   override def toString: String = "checkYourAnswersAboutThePropertyPage"
 }

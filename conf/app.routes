@@ -168,6 +168,8 @@ POST        /generator-capacity                                     controllers.
 GET         /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.show()
 POST        /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.submit()
 
+GET         /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.show()
+POST        /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.submit()
 
 # About the trading history
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
@@ -178,6 +180,12 @@ POST        /financial-year-end                                     controllers.
 
 GET         /financial-year-end-dates                               controllers.aboutthetradinghistory.FinancialYearEndDatesController.show()
 POST        /financial-year-end-dates                               controllers.aboutthetradinghistory.FinancialYearEndDatesController.submit()
+# About the trading history part one
+GET         /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.show()
+POST        /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.submit()
+
+GET         /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.show(index: Int)
+POST        /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.submit(index: Int)
 
 GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
@@ -214,6 +222,7 @@ GET         /unusual-circumstances                                  controllers.
 POST        /unusual-circumstances                                  controllers.aboutthetradinghistory.UnusualCircumstancesController.submit()
 
 # Form 6015 routing end
+
 
 # About the francise or letting
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()

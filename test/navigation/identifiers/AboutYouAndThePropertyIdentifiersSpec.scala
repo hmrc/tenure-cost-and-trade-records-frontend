@@ -117,6 +117,10 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
       assert(PlantAndTechnologyId.toString.equals("plantAndTechnologyPage"))
     }
 
+    "Identifier for costs breakdown page" in {
+      assert(CostsBreakdownId.toString.equals("costsBreakdownPage"))
+    }
+
     "Identifier for check your answers page" in {
       assert(CheckYourAnswersAboutThePropertyPageId.toString.equals("checkYourAnswersAboutThePropertyPage"))
     }

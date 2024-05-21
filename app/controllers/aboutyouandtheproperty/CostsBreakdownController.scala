@@ -16,26 +16,24 @@
 
 package controllers.aboutyouandtheproperty
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.PlantAndTechnologyForm.plantAndTechnologyForm
-import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
-import models.submissions.common.{AnswerNo, AnswerYes}
+import form.aboutyouandtheproperty.CostsBreakdownForm.costsBreakdownForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutYouAndThePropertyNavigator
-import navigation.identifiers.PlantAndTechnologyId
+import navigation.identifiers.CostsBreakdownId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.plantAndTechnology
+import views.html.aboutyouandtheproperty.costsBreakdown
 
-import javax.inject.{Inject, Named, Singleton}
+import javax.inject.{Inject, Named}
 import scala.concurrent.Future
 
-@Singleton
-class PlantAndTechnologyController @Inject() (
+class CostsBreakdownController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYouAndThePropertyNavigator,
-  view: plantAndTechnology,
+  view: costsBreakdown,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
@@ -45,11 +43,10 @@ class PlantAndTechnologyController @Inject() (
     Future.successful(
       Ok(
         view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology) match {
-            case Some(data) => plantAndTechnologyForm.fill(data)
-            case _          => plantAndTechnologyForm
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.costsBreakdown) match {
+            case Some(data) => costsBreakdownForm.fill(data)
+            case _          => costsBreakdownForm
           },
-          calculateBackLink,
           request.sessionData.toSummary
         )
       )
@@ -58,31 +55,19 @@ class PlantAndTechnologyController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
-      plantAndTechnologyForm,
+      costsBreakdownForm,
       formWithErrors =>
         BadRequest(
           view(
             formWithErrors,
-            calculateBackLink,
             request.sessionData.toSummary
           )
         ),
       data => {
-        val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(plantAndTechnology = Some(data)))
+        val updatedData = updateAboutYouAndTheProperty(_.copy(costsBreakdown = Some(data)))
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PlantAndTechnologyId, updatedData).apply(updatedData))
+        Redirect(navigator.nextPage(CostsBreakdownId, updatedData).apply(updatedData))
       }
     )
   }
-
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
-    request.sessionData.aboutYouAndTheProperty
-      .flatMap(_.threeYearsConstructed) match {
-      case Some(AnswerYes) =>
-        controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url
-      case Some(AnswerNo)  =>
-        controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
-      case _               => controllers.routes.TaskListController.show().url
-    }
-
 }
