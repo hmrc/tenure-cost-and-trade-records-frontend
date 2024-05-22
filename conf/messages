@@ -1439,6 +1439,9 @@ taskList.bunkerdFuel = Bunkered fuel
 taskList.customerCreditAccounts = Customer credit accounts
 taskList.lowMarginCards = Low-margin fuel cards
 taskList.EVChargingPoints = EV charging points
+taskList.technologyType = Technology type
+taskList.siteConstructionDetails = Site construction details
+taskList.howIsUsed = How the property is used
 
 # COST OF SALES OR GROSS PROFIT
 #########

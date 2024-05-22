@@ -1161,6 +1161,7 @@ trait FakeObjects {
     incentivesPaymentsConditionsDetails = Some(IncentivesPaymentsConditionsDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
+    capitalSumDescription = Some(CapitalSumDescription("capital Sum Description")),
     payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput))),
     tenancyLeaseAgreementExpire = Some(TenancyLeaseAgreementExpire(prefilledDateInput)),
     ultimatelyResponsibleInsideRepairs = Some(UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, None)),
@@ -1219,7 +1220,6 @@ trait FakeObjects {
     leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes)),
     benefitsGiven = Some(BenefitsGiven(AnswerYes)),
     benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
-    capitalSumDescription = Some(CapitalSumDescription("capital Sum Description")),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes))
   )
