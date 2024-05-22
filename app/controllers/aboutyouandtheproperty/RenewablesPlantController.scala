@@ -73,14 +73,17 @@ class RenewablesPlantController @Inject() (
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
-    request.sessionData.aboutYouAndTheProperty
-      .flatMap(_.altDetailsQuestion)
-      .map(_.contactDetailsQuestion) match {
-      case Some(AnswerYes) =>
-        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-      case Some(AnswerNo)  =>
-        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-      case _               => controllers.routes.TaskListController.show().url
-    }
+    navigator.from match {
+      case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      case "TL"  => controllers.routes.TaskListController.show().url + "#technology-type"
+      case _     =>
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion).map(_.contactDetailsQuestion) match {
+          case Some(AnswerYes) =>
+            controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+          case Some(AnswerNo)  =>
+            controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+          case _               => controllers.routes.TaskListController.show().url
+        }
 
+    }
 }

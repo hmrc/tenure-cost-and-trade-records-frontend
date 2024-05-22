@@ -50,6 +50,7 @@ class ThreeYearsConstructedController @Inject() (
             case Some(tiedForGoods) => threeYearsConstructedForm.fill(tiedForGoods)
             case _                  => threeYearsConstructedForm
           },
+          navigator.from,
           request.sessionData.toSummary
         )
       )
@@ -63,6 +64,7 @@ class ThreeYearsConstructedController @Inject() (
         BadRequest(
           view(
             formWithErrors,
+            navigator.from,
             request.sessionData.toSummary
           )
         ),
