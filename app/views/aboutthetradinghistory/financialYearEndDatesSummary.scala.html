@@ -22,6 +22,8 @@
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import util.DateUtil
 
+@import java.time.LocalDate
+
 @this(layout: Layout,
     govukButton: GovukButton,
     formWithCSRF: FormWithCSRF,
@@ -42,6 +44,7 @@
     val financialYearEndDates = request.sessionData.forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case ForTypes.for6076 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
   financialYearEndDates.map(date => dateUtil.formatDate(date)).zipWithIndex

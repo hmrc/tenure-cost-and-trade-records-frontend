@@ -582,6 +582,21 @@ trait FakeObjects {
     Some(UnusualCircumstances("unusual circumstances"))
   )
 
+  val prefilledAboutYourTradingHistory6076: AboutTheTradingHistory = AboutTheTradingHistory(
+    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9))))
+  )
+
+  val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
+    isFinancialYearEndDatesCorrect = true,
+    turnoverSections6076 = Some(
+      Seq(
+        TurnoverSection6076(LocalDate.now(), 52, "5000 kWh"),
+        TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh"),
+        TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh")
+      )
+    )
+  )
+
   val aboutYourTradingHistory6010YesSession: Session =
     aboutYouAndTheProperty6010YesSession.copy(
       aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory),

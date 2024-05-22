@@ -18,7 +18,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
-@import util.NumberUtil._
 
 
 @this(layout: Layout,
@@ -38,14 +37,14 @@
 
 @rowLabel(labelKey: String, hintKey: String) = {
     <p class="govuk-body">
-        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span> @messages("turnover.6020.excludingVAT")
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
     @if(hintKey.nonEmpty) {
         <span class="govuk-caption-m">@messages(hintKey)</span>
     }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, hintKey))
@@ -54,9 +53,7 @@
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
-                        )),
+                        classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> messages(labelKey)
@@ -78,12 +75,9 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6020.p1")</p>
-    @govukInsetText(InsetText(
-        content = Text(messages("turnover.6020.inset"))
-    ))
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.p1")</p>
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.submit()) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
@@ -96,12 +90,26 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].shop", "turnover.6020.shop", "turnover.6020.shop.hint"),
-                            turnoverRow(s"turnover[$idx].carWash", "turnover.6020.carWash"),
-                            turnoverRow(s"turnover[$idx].jetWash", "turnover.6020.jetWash"),
-                            turnoverRow(s"turnover[$idx].lottery", "turnover.6020.lottery", "turnover.6020.lottery.hint"),
-                            turnoverRow(s"turnover[$idx].payPointOrZone", "turnover.6020.payPointOrZone"),
-                            turnoverRow(s"turnover[$idx].otherIncome", "turnover.6020.otherIncome")
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("turnover.6076.weeks"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "2",
+                                                "aria-label" -> messages("turnover.6076.weeks")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("turnover.weeks"))
+                                            ))
+                                        ).withFormField(form(s"turnover[$idx].weeks")))
+                                    )
+                                )
+                            ),
+                            turnoverRow(s"turnover[$idx].electricityGenerated", "turnover.6076.electricityGenerated", "turnover.6076.electricityGenerated.hint")
                         )
                     ))
                 </td>

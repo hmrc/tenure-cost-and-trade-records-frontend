@@ -413,7 +413,7 @@
                 ("valueAsHtml", _ => None))
 ))
 
-@if(!(Seq(ForTypes.for6020) contains forType)) {
+@if(!(Seq(ForTypes.for6020, ForTypes.for6076) contains forType)) {
     <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
