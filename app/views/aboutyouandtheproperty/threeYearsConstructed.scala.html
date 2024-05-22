@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnswersYesNo],from: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
  pageHeading = messages("threeYearsConstructed.heading"),
@@ -34,7 +34,11 @@
  showH1 = false,
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show().url,
+ backLinkUrl =  from match {
+  case "TL"  => controllers.routes.TaskListController.show().url+"#site-construction-details"
+  case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+  case _     => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show().url
+ },
  theForm = theForm
 ) {
 

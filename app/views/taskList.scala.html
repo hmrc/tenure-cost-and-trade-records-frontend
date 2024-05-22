@@ -124,6 +124,27 @@
         section1Completed.isEmpty
        )
 
+       @if(forType == ForTypes.for6076){
+        @includes.taskListItem("technology-type", "taskList.technologyType",
+         controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
+         section2Completed,
+         session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
+         section1Completed.isEmpty
+        )
+        @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
+         controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
+         section2Completed,
+         session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
+         section1Completed.isEmpty
+        )
+        @includes.taskListItem("how-is-used", "taskList.howIsUsed",
+         controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
+         section2Completed,
+         session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
+         section1Completed.isEmpty
+        )
+       }else{
+
        @if(forType != ForTypes.for6030) {
         @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
@@ -166,6 +187,7 @@
          session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
         )
        }
+      }
       </ul>
      </li>
 

@@ -17,11 +17,12 @@
 package controllers.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PlantAndTechnologyForm.plantAndTechnologyForm
-import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
+import models.submissions.common.{AnswerNo, AnswerYes}
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class PlantAndTechnologyControllerSpec extends TestBaseSpec {
@@ -30,12 +31,16 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.mustContainError
 
   def plantAndTechnologyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
   ) = new PlantAndTechnologyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     plantAndTechnologyView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+    preEnrichedActionRefiner(
+      aboutYouAndTheProperty = aboutYouAndTheProperty,
+      aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
+    ),
     mockSessionRepo
   )
 
@@ -64,6 +69,50 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val request = FakeRequest(GET, "/path?from=TL")
+      val result  = plantAndTechnologyController().show(request)
+      val html    = contentAsString(result)
+
+      html should include(controllers.routes.TaskListController.show().url + "#how-is-used")
+    }
+
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val request = FakeRequest(GET, "/path?from=CYA")
+      val result  = plantAndTechnologyController().show(request)
+      val html    = contentAsString(result)
+
+      html should include(
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      )
+    }
+    "return correct backLink when threeYearsConstructed is AnswerYes" in {
+      val aboutYouAndThePropertyWith3YData =
+        prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = Some(AnswerYes))
+      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(fakeRequest)
+      val html                             = contentAsString(result)
+
+      html should include(controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url)
+    }
+
+    "return correct backLink when threeYearsConstructed is AnswerNo" in {
+      val aboutYouAndThePropertyWith3YData =
+        prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = Some(AnswerNo))
+      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(fakeRequest)
+      val html                             = contentAsString(result)
+
+      html should include(controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url)
+    }
+
+    "return correct backLink when threeYearsConstructed is None" in {
+      val aboutYouAndThePropertyWith3YData =
+        prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = None)
+      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(fakeRequest)
+      val html                             = contentAsString(result)
+
+      html should include(controllers.routes.TaskListController.show().url)
     }
   }
 

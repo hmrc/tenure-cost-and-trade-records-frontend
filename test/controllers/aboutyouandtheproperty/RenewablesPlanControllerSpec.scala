@@ -16,13 +16,14 @@
 
 package controllers.aboutyouandtheproperty
 import form.Errors
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
+import models.submissions.common.{AnswerNo, AnswerYes}
 import utils.TestBaseSpec
 
 class RenewablesPlanControllerSpec extends TestBaseSpec {
@@ -64,6 +65,49 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+    "return correct backLink when 'from=TL' query param is present" in {
+      val request = FakeRequest(GET, "/path?from=TL")
+      val result  = renewablesPlantController().show(request)
+      val html    = contentAsString(result)
+
+      html should include(controllers.routes.TaskListController.show().url + "#technology-type")
+    }
+
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val request = FakeRequest(GET, "/path?from=CYA")
+      val result  = renewablesPlantController().show(request)
+      val html    = contentAsString(result)
+
+      html should include(
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      )
+    }
+    "return correct backLink when altDetailsQuestion is AnswerYes" in {
+      val aboutYouAndThePropertyWithAltDetails =
+        prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerYes)))
+      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
+      val html                                 = contentAsString(result)
+
+      html should include(controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url)
+    }
+
+    "return correct backLink when altDetailsQuestion is AnswerNo" in {
+      val aboutYouAndThePropertyWithAltDetails =
+        prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo)))
+      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
+      val html                                 = contentAsString(result)
+
+      html should include(controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url)
+    }
+
+    "return correct backLink when altDetailsQuestion is None" in {
+      val aboutYouAndThePropertyWithAltDetails =
+        prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = None)
+      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
+      val html                                 = contentAsString(result)
+
+      html should include(controllers.routes.TaskListController.show().url)
     }
 
     "SUBMIT /" should {
