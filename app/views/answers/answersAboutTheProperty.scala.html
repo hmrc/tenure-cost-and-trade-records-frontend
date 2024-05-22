@@ -70,6 +70,42 @@
          )
 ))
 
+@if(forType == ForTypes.for6076) {
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType")</h2>
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers.row(
+            "checkYourAnswersAboutTheProperty.aboutProperty.renewable",
+            _.renewablesPlant.map(x => x.renewablesPlant.name.capitalize),
+            aboutyouandtheproperty.routes.RenewablesPlantController.show()  ,
+            "renewablesPlant",
+            ("valueAsHtml", _ => None))
+    )
+    )
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers.row(
+            "checkYourAnswersAboutTheProperty.aboutProperty.3yrs",
+            _.threeYearsConstructed.map(x => x.name.capitalize),
+            aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
+            "threeYearsConstructed",
+            ("valueAsHtml", _ => None)) ++
+
+        sectionAnswers.conditionRow(
+            _.threeYearsConstructed.contains(AnswerYes),
+            "checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails",
+            _.costsBreakdown,
+            aboutyouandtheproperty.routes.CostsBreakdownController.show(),
+            "costsBreakdown",
+            ("valueAsHtml", _ => None)
+            )
+    )
+    )
+
+}
+
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 
 @if(forType == ForTypes.for6020) {
