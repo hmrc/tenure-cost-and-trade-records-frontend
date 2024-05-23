@@ -63,5 +63,43 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+
+    "Answers About The Property component for 6076 type" must {
+
+      def createView6076 = () =>
+        checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996076001"))(
+          SessionRequest(baseFilled6076Session, fakeRequest),
+          messages
+        )
+
+      "render the h2 headers in component correctly" in {
+        val doc = asDocument(createView6076())
+        assert(
+          doc
+            .select("h2:nth-child(3)")
+            .text()
+            .contains(messages("checkYourAnswersAboutTheProperty.aboutYou.heading"))
+        )
+        assert(
+          doc
+            .select("h2:nth-child(5)")
+            .text()
+            .contains(messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType"))
+        )
+        assert(
+          doc
+            .select("h2:nth-child(7)")
+            .text()
+            .contains(messages("checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls"))
+        )
+        assert(
+          doc
+            .select("h2:nth-child(9)")
+            .text()
+            .contains(messages("checkYourAnswersAboutTheProperty.aboutProperty.heading"))
+        )
+
+      }
+    }
   }
 }
