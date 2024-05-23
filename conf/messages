@@ -1323,7 +1323,7 @@ financialYearEndDates.financialYear.label = Financial year ending {0}
 
 # FINANCIAL YEAR-END DATES SUMMARY
 ##############################
-financialYearEndDatesSummary.heading = Yout most recent financial year end dates
+financialYearEndDatesSummary.heading = Your most recent financial year end dates
 financialYearEndDatesSummary.p1 = These dates are based on the information you have provided.
 financialYearEndDatesSummary.isFinancialYearEndDatesCorrect = These financial year end dates are correct
 error.financialYearEndDates.incorrect = Select if these financial year end dates are correct

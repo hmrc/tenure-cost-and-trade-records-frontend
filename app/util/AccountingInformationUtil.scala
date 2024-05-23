@@ -60,6 +60,10 @@ object AccountingInformationUtil {
     request.sessionData.aboutTheTradingHistory
       .fold(Seq.empty[Int])(_.turnoverSections.map(_.financialYearEnd.getYear))
 
+  def previousFinancialYears6076(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+    request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076)
+      .fold(Seq.empty[Int])(_.map(_.financialYearEnd.getYear))
+
   def newFinancialYears(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
     occupationAndAccounting.financialYear
       .fold(Seq.empty[Int])(financialYearsRequired(occupationAndAccounting.firstOccupy, _).map(_.getYear))
@@ -74,7 +78,7 @@ object AccountingInformationUtil {
     val financialYear                 = newOccupationAndAccounting.financialYear.get
     val originalTurnoverSections6076  =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-    val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears
+    val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6076
 
     val turnoverSections6076 =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {

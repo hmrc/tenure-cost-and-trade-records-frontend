@@ -52,6 +52,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutthetradinghistory.routes.FinancialYearEndController.show(),
     aboutthetradinghistory.routes.FinancialYearEndDatesController.show(),
+    aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show(),
+    aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
     aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
     aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
     aboutthetradinghistory.routes.TurnoverController.show(),

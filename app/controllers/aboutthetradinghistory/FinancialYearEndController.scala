@@ -120,7 +120,15 @@ class FinancialYearEndController @Inject() (
               .saveOrUpdate(updatedData)
               .map(_ =>
                 navigator.cyaPage
-                  .filter(_ => navigator.from == "CYA" && isFinancialYearsListUnchanged && !data._2)
+                  .filter(_ =>
+                    navigator.from == "CYA" && !data._2 &&
+                      (isFinancialYearsListUnchanged || (
+                        request.sessionData.forType == ForTypes.for6076 && request.sessionData.aboutTheTradingHistoryPartOne
+                          .flatMap(_.turnoverSections6076)
+                          .flatMap(_.headOption)
+                          .exists(_.electricityGenerated.isDefined)
+                      ))
+                  )
                   .getOrElse(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData))
               )
               .map(Redirect)
