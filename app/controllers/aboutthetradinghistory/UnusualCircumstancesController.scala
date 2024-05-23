@@ -16,9 +16,10 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.UnusualCircumstancesForm.unusualCircumstancesForm
+import models.ForTypes
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import navigation.AboutTheTradingHistoryNavigator
@@ -50,6 +51,7 @@ class UnusualCircumstancesController @Inject() (
           case _                          => unusualCircumstancesForm
         },
         request.sessionData.forType,
+        getBackLink,
         request.sessionData.toSummary
       )
     )
@@ -60,7 +62,12 @@ class UnusualCircumstancesController @Inject() (
       unusualCircumstancesForm,
       formWithErrors =>
         BadRequest(
-          unusualCircumstancesView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)
+          unusualCircumstancesView(
+            formWithErrors,
+            request.sessionData.forType,
+            getBackLink,
+            request.sessionData.toSummary
+          )
         ),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(unusualCircumstances = Some(data)))
@@ -71,4 +78,10 @@ class UnusualCircumstancesController @Inject() (
     )
   }
 
+  private def getBackLink(implicit answers: SessionRequest[AnyContent]): String =
+    answers.sessionData.forType match {
+      case ForTypes.for6015 => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      case ForTypes.for6030 => controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
+      case _                => controllers.routes.TaskListController.show().url
+    }
 }

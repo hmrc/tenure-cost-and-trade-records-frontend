@@ -1021,7 +1021,8 @@ trait FakeObjects {
       )
     ),
     turnoverSections6020 = Some(Seq(TurnoverSection6020(LocalDate.now))),
-    turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None))
+    turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None)),
+    unusualCircumstances = Some(UnusualCircumstances("Unusual circumstances comment"))
   )
 
   val prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails    = Some(
