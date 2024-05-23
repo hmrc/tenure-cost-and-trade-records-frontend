@@ -16,7 +16,6 @@
 
 package controllers.aboutthetradinghistory
 
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,32 +23,65 @@ import utils.TestBaseSpec
 
 class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
-  def unusualCircumstancesController(
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new UnusualCircumstancesController(
+  def unusualCircumstancesController6015 = new UnusualCircumstancesController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     unusualCircumstancesView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+    preEnrichedActionRefiner(forType = "FOR6015"),
     mockSessionRepo
   )
 
-  "GET /" should {
-    "return 200" in {
-      val result = unusualCircumstancesController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+  def unusualCircumstancesController6030 = new UnusualCircumstancesController(
+    stubMessagesControllerComponents(),
+    aboutYourTradingHistoryNavigator,
+    unusualCircumstancesView,
+    preEnrichedActionRefiner(forType = "FOR6030"),
+    mockSessionRepo
+  )
+
+  def unusualCircumstancesControllerNone = new UnusualCircumstancesController(
+    stubMessagesControllerComponents(),
+    aboutYourTradingHistoryNavigator,
+    unusualCircumstancesView,
+    preEnrichedActionRefiner(aboutTheTradingHistory = None),
+    mockSessionRepo
+  )
+
+  "UnusualCircumstancesController GET /" should {
+    "return 200 and HTML for 6015 with unusual circumstances in the session" in {
+      val result = unusualCircumstancesController6015.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = unusualCircumstancesController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML for 6030 with unusual circumstances in the session" in {
+      val result = unusualCircumstancesController6030.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
+      )
+    }
+
+    "return 200 and HTML when no unusual circumstances in the session" in {
+      val result = unusualCircumstancesControllerNone.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "UnusualCircumstancesController SUBMIT /" should {
     "Redirect to CYA if an empty form is submitted" in {
-      val result = unusualCircumstancesController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val result = unusualCircumstancesController6015.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(
         "/send-trade-and-cost-information/check-your-answers-about-the-trading-history"
@@ -58,7 +90,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
     "Redirect to CYA if not empty form submitted and save data in the session" in {
       val testData = Map("unusualCircumstances" -> "test text")
-      val result   = unusualCircumstancesController().submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq: _*))
+      val result   = unusualCircumstancesController6015.submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq: _*))
 
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(

@@ -24,7 +24,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCharacterCount
 
-
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
@@ -32,7 +31,7 @@
 )
 
 
-@(theForm: Form[UnusualCircumstances], forType: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[UnusualCircumstances], forType: String, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @heading = @{if(forType.equals(ForTypes.for6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") }}
 
@@ -41,7 +40,7 @@
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url,
+  backLinkUrl = backLink
 ) {
 
     <p class="govuk-body">@messages("unusualCircumstances.explain")</p>
