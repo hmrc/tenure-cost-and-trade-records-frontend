@@ -48,7 +48,7 @@ class FinancialYearEndDatesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
-      .filter(isTurnOverEmpty(_))
+      .filter(isTurnOverNonEmpty(_))
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
         val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         val financialYearEnd: Seq[LocalDate] = {
@@ -68,7 +68,7 @@ class FinancialYearEndDatesController @Inject() (
       }
   }
 
-  private def isTurnOverEmpty(
+  private def isTurnOverNonEmpty(
     aboutTheTradingHistory: AboutTheTradingHistory
   )(implicit request: SessionRequest[AnyContent]): Boolean =
     request.sessionData.forType match {
@@ -80,7 +80,7 @@ class FinancialYearEndDatesController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
-      .filter(isTurnOverEmpty(_))
+      .filter(isTurnOverNonEmpty(_))
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
         val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         continueOrSaveAsDraft[Seq[LocalDate]](

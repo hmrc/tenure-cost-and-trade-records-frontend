@@ -18,7 +18,6 @@ package models.submissions.aboutyouandtheproperty
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class AboutYouAndThePropertyPartTwo(

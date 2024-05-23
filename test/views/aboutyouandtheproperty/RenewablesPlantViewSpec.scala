@@ -18,7 +18,7 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.RenewablesPlantForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.{BaseLoad, Intermittent, RenewablesPlant, TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsBeerOnly, TiedForGoodsInformationDetailsFullTie, TiedForGoodsInformationDetailsPartialTie}
+import models.submissions.aboutyouandtheproperty.{BaseLoad, Intermittent, RenewablesPlant}
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours

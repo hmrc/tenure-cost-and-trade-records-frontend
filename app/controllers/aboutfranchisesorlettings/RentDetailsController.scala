@@ -28,7 +28,7 @@ import form.aboutfranchisesorlettings.RentDetailsForm.rentDetailsForm
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, RentDetails, TelecomMastLetting}
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext}
 
 class RentDetailsController @Inject() (
   mcc: MessagesControllerComponents,
@@ -70,6 +70,7 @@ class RentDetailsController @Inject() (
       case Some(telecomMast: TelecomMastLetting)      => telecomMast.operatingCompanyName.getOrElse("")
       case Some(advertRight: AdvertisingRightLetting) => advertRight.advertisingCompanyName.getOrElse("")
       case Some(otherLetting: OtherLetting)           => otherLetting.tenantName.getOrElse("")
+      case _                                          => "Unknown operator"
     }
     operatorName
   }

@@ -17,29 +17,32 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport._
-import models.submissions.aboutthetradinghistory.TurnoverSection6020
-import play.api.data.Forms.{ignored, mapping}
+import play.api.data.Forms.{default, mapping, text, tuple}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-import java.time.LocalDate
+import scala.util.Try
 
 /**
+  * 6076 Electricity generated form.
+  *
   * @author Yuriy Tumakha
   */
-object TurnoverForm6020 {
+object ElectricityGeneratedForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[TurnoverSection6020] = mapping(
-    "financial-year-end" -> ignored(LocalDate.EPOCH),
-    "shop"               -> turnoverSalesMappingWithYear("turnover.6020.shop", year),
-    "carWash"            -> turnoverSalesMappingWithYear("turnover.6020.carWash", year),
-    "jetWash"            -> turnoverSalesMappingWithYear("turnover.6020.jetWash", year),
-    "lottery"            -> turnoverSalesMappingWithYear("turnover.6020.lottery", year),
-    "payPointOrZone"     -> turnoverSalesMappingWithYear("turnover.6020.payPointOrZone", year),
-    "otherIncome"        -> turnoverSalesMappingWithYear("turnover.6020.otherIncome", year)
-  )(TurnoverSection6020.apply)(TurnoverSection6020.unapply)
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[(Int, String)] = tuple(
+    "weeks"                -> default(text, "")
+      .verifying(messages("error.weeksMapping.blank", year), _.trim.nonEmpty)
+      .transform[Int](
+        str => Try(str.toInt).getOrElse(-1),
+        _.toString
+      )
+      .verifying(messages("error.weeksMapping.invalid", year), (0 to 52).contains(_)),
+    "electricityGenerated" -> default(text, "")
+      .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
+  )
 
-  def turnoverForm6020(years: Seq[String])(implicit messages: Messages): Form[Seq[TurnoverSection6020]] = {
+  def electricityGeneratedForm(years: Seq[String])(implicit messages: Messages): Form[Seq[(Int, String)]] = {
     val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
       s"turnover[$idx]" -> columnMapping(year)
     }

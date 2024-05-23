@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,24 @@
  * limitations under the License.
  */
 
-package form.aboutthetradinghistory
+package models.submissions.aboutthetradinghistory
 
-import play.api.data.Form
-import play.api.data.Forms.{optional, text}
+import play.api.libs.json.{Json, OFormat}
 
-object FinancialYearEndDatesSummaryForm {
-  val financialYearEndDatesSummaryForm: Form[Boolean] = Form(
-    "isFinancialYearEndDatesCorrect" -> optional(text)
-      .transform[Boolean](_.contains("true"), b => Some(b.toString))
-  )
+import java.time.LocalDate
+
+/**
+  * 6076 Trading history.
+  *
+  * @author Yuriy Tumakha
+  */
+case class TurnoverSection6076(
+  financialYearEnd: LocalDate,
+  tradingPeriod: Int,
+  electricityGenerated: Option[String] = None,
+  otherIncome: Option[BigDecimal] = None
+)
+
+object TurnoverSection6076 {
+  implicit val format: OFormat[TurnoverSection6076] = Json.format
 }

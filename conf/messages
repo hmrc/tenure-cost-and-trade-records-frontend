@@ -1323,7 +1323,7 @@ financialYearEndDates.financialYear.label = Financial year ending {0}
 
 # FINANCIAL YEAR-END DATES SUMMARY
 ##############################
-financialYearEndDatesSummary.heading = Yout most recent financial year end dates
+financialYearEndDatesSummary.heading = Your most recent financial year end dates
 financialYearEndDatesSummary.p1 = These dates are based on the information you have provided.
 financialYearEndDatesSummary.isFinancialYearEndDatesCorrect = These financial year end dates are correct
 error.financialYearEndDates.incorrect = Select if these financial year end dates are correct
@@ -1569,6 +1569,17 @@ error.turnover.6020.payPointOrZone.negative = Paypoint or payzone turnover in th
 error.turnover.6020.otherIncome.required = Enter 0 if you did not have any other income in the year ending {0}
 error.turnover.6020.otherIncome.range = Other income in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6020.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
+
+# TURNOVER 6076
+turnover.6076.heading = How much electricity did you generate?
+turnover.6076.p1 = If your financial year end has changed during the period shown, you can edit the dates accordingly. If any of the financial years cover a period that is not 52 weeks, state the number of weeks covered.
+turnover.6076.weeks = Number of weeks
+turnover.6076.electricityGenerated = Electricity generated
+turnover.6076.electricityGenerated.hint = (in kWh or MWh)
+error.turnover.6076.electricityGenerated.required = Enter 0 if you did not have any electricity generated in the year ending {0}
+error.turnover.6076.otherIncome.required = Enter 0 if you did not have any other income in the year ending {0}
+error.turnover.6076.otherIncome.range = Other income in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6076.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
 
 # COST OF SALES
 costOfSales.heading = Cost of sales
