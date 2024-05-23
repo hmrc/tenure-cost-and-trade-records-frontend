@@ -17,7 +17,8 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import controllers.aboutthetradinghistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -27,12 +28,17 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
 
   def financialYearEndDatesSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
-    forType: String = "FOR6010"
+    forType: String = "FOR6010",
+    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
   ) = new FinancialYearEndDatesSummaryController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     financialYearEndDatesSummaryView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory, forType = forType),
+    preEnrichedActionRefiner(
+      aboutTheTradingHistory = aboutTheTradingHistory,
+      aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
+      forType = forType
+    ),
     mockSessionRepo
   )
 
@@ -65,7 +71,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
           SessionRequest(aboutYourTradingHistory6010YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(controllers.aboutthetradinghistory.routes.TurnoverController.show().url)
+        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.TurnoverController.show().url)
       }
 
       "return to CYA " in {
@@ -79,7 +85,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
         )
       }
 
@@ -93,7 +99,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         val result          = financialYearEndDatesSummaryController(forType = "FOR6020").submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+          aboutthetradinghistory.routes.TotalFuelSoldController.show().url
         )
       }
 
@@ -108,7 +114,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         val result          = financialYearEndDatesSummaryController(forType = "FOR6020").submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
         )
       }
 
@@ -122,7 +128,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         val result          = financialYearEndDatesSummaryController(forType = "FOR6030").submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
+          aboutthetradinghistory.routes.Turnover6030Controller.show().url
         )
       }
 
@@ -140,10 +146,48 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         ).submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        )
+      }
+
+      "redirect to the next page for 6076 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearEndDatesCorrect" -> "true"
+          )
+        val session6076     = aboutYourTradingHistory6076YesSession
+        val sessionRequest  = SessionRequest(session6076, requestWithForm)
+
+        val result =
+          financialYearEndDatesSummaryController(session6076.aboutTheTradingHistory, session6076.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.ElectricityGeneratedController.show().url)
+      }
+
+      "redirect to CYA for 6076 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearEndDatesCorrect" -> "true",
+            "from"                           -> "CYA"
+          )
+        val session6076     = aboutYourTradingHistory6076YesSession
+        val sessionRequest  = SessionRequest(session6076, requestWithForm)
+
+        val result =
+          financialYearEndDatesSummaryController(session6076.aboutTheTradingHistory, session6076.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
         )
       }
     }
 
   }
+
 }

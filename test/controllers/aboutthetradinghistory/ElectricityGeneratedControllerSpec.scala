@@ -35,7 +35,7 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "NonFuelTurnoverController" should {
+  "GET /" should {
     "return 200" in {
       val result = electricityGeneratedController.show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -46,12 +46,12 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "return 400 for empty turnoverSections" in {
-        val res = electricityGeneratedController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "return 400 for empty turnoverSections" in {
+      val res = electricityGeneratedController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 

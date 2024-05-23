@@ -597,6 +597,12 @@ trait FakeObjects {
     )
   )
 
+  val aboutYourTradingHistory6076YesSession: Session =
+    aboutYouAndTheProperty6076Session.copy(
+      aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
+      aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
+    )
+
   val aboutYourTradingHistory6010YesSession: Session =
     aboutYouAndTheProperty6010YesSession.copy(
       aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory),

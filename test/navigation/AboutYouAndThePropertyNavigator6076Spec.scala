@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
 import models.submissions.common.{AnswerNo, AnswerYes}
-import navigation.identifiers.{BatteriesCapacityId, ContactDetailsQuestionId, CostsBreakdownId, GeneratorCapacityId, Identifier, PlantAndTechnologyId, RenewablesPlantPageId, ThreeYearsConstructedPageId}
+import navigation.identifiers.{BatteriesCapacityId, ContactDetailsQuestionId, CostsBreakdownId, GeneratorCapacityId, PlantAndTechnologyId, RenewablesPlantPageId, ThreeYearsConstructedPageId}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec

@@ -21,7 +21,7 @@ import controllers.connectiontoproperty.routes
 import identifiers._
 import play.api.mvc.Call
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswerYes
 import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
 import play.api.Logging
 

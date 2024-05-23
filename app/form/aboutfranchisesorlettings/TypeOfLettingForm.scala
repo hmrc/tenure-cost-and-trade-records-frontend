@@ -18,7 +18,7 @@ package form.aboutfranchisesorlettings
 
 import form.MappingSupport.typeOfLettingMapping
 import models.submissions.aboutfranchisesorlettings._
-import play.api.data.{Form, Forms, Mapping}
+import play.api.data.Form
 
 object TypeOfLettingForm {
 

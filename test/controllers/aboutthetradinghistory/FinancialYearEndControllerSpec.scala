@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -168,6 +169,28 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       // Assert
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates-summary")
+    }
+
+    "redirect to the next page when valid 6076 data is submitted" in {
+      val validFormData  = Map(
+        "financialYear.day"   -> "6",
+        "financialYear.month" -> "4",
+        "yearEndChanged"      -> "true"
+      )
+      val session6076    = aboutYourTradingHistory6076YesSession
+      val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val sessionRequest = SessionRequest(session6076, request)
+
+      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+        .thenReturn(Future.successful(Right(())))
+
+      val result =
+        financialYearEndController(session6076.forType, session6076.aboutTheTradingHistory).submit(sessionRequest)
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+      )
     }
   }
 

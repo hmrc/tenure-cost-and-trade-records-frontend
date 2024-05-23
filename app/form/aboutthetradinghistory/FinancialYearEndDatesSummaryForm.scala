@@ -17,11 +17,10 @@
 package form.aboutthetradinghistory
 
 import play.api.data.Form
-import play.api.data.Forms.{default, optional, text}
-import play.api.i18n.Messages
+import play.api.data.Forms.{optional, text}
 
 object FinancialYearEndDatesSummaryForm {
-  def financialYearEndDatesSummaryForm(implicit messages: Messages): Form[(Boolean)] = Form(
+  val financialYearEndDatesSummaryForm: Form[Boolean] = Form(
     "isFinancialYearEndDatesCorrect" -> optional(text)
       .transform[Boolean](_.contains("true"), b => Some(b.toString))
   )

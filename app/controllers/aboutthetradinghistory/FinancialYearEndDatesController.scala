@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDatesForm.financialYearEndDatesForm
 import models.{ForTypes, Session}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, CostOfSales, OccupationalAndAccountingInformation}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FinancialYearEndDatesPageId
 import play.api.i18n.I18nSupport
@@ -56,10 +56,6 @@ class FinancialYearEndDatesController @Inject() (
             case ForTypes.for6020 =>
               aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-            case ForTypes.for6076 =>
-              request.sessionData.aboutTheTradingHistoryPartOne
-                .flatMap(_.turnoverSections6076)
-                .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case _                => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
           }
         }
@@ -78,8 +74,6 @@ class FinancialYearEndDatesController @Inject() (
     request.sessionData.forType match {
       case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.exists(_.nonEmpty)
       case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
-      case ForTypes.for6076 =>
-        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).exists(_.nonEmpty)
       case _                => aboutTheTradingHistory.turnoverSections.nonEmpty
     }
 
@@ -112,7 +106,6 @@ class FinancialYearEndDatesController @Inject() (
             val updatedData: Session = request.sessionData.forType match {
               case ForTypes.for6020 => buildUpdateData6020(aboutTheTradingHistory, data, newOccupationAndAccounting)
               case ForTypes.for6030 => buildUpdateData6030(aboutTheTradingHistory, data, newOccupationAndAccounting)
-              case ForTypes.for6076 => buildUpdatedData6076(data, newOccupationAndAccounting)
               case _                => buildUpdateData(aboutTheTradingHistory, data, newOccupationAndAccounting)
             }
             session
@@ -137,11 +130,6 @@ class FinancialYearEndDatesController @Inject() (
       case ForTypes.for6020 =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
       case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
-      case ForTypes.for6076 =>
-        request.sessionData.aboutTheTradingHistoryPartOne
-          .flatMap(_.turnoverSections6076)
-          .flatMap(_.headOption)
-          .exists(_.electricityGenerated.isDefined)
       case _                => aboutTheTradingHistory.turnoverSections.head.alcoholicDrinks.isDefined
     }
 
@@ -209,30 +197,6 @@ class FinancialYearEndDatesController @Inject() (
       )
     )
     updatedData
-  }
-
-  private def buildUpdatedData6076(
-    data: Seq[LocalDate],
-    newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]): Session = {
-    val turnoverSections6076 =
-      (request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty) zip data)
-        .map { case (turnoverSection, finYearEnd) =>
-          turnoverSection.copy(financialYearEnd = finYearEnd)
-        }
-
-    val updatedData = updateAboutTheTradingHistory(
-      _.copy(
-        occupationAndAccountingInformation = Some(newOccupationAndAccounting)
-      )
-    )
-    updatedData.copy(
-      aboutTheTradingHistoryPartOne = Some(
-        updatedData.aboutTheTradingHistoryPartOne
-          .getOrElse(AboutTheTradingHistoryPartOne())
-          .copy(turnoverSections6076 = Some(turnoverSections6076))
-      )
-    )
   }
 
 }
