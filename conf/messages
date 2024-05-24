@@ -1572,7 +1572,7 @@ error.turnover.6020.otherIncome.negative = Other income in the year ending {0} c
 
 # TURNOVER 6076
 turnover.6076.heading = How much electricity did you generate?
-turnover.6076.p1 = If your financial year end has changed during the period shown, you can edit the dates accordingly. If any of the financial years cover a period that is not 52 weeks, state the number of weeks covered.
+turnover.6076.p1 = State whether your electricity generated figures are in kilowatt hours (kWh) or megawatt hours (MWh). If any of the financial years cover a period that is not 52 weeks, state the relevant number of weeks.
 turnover.6076.weeks = Number of weeks
 turnover.6076.electricityGenerated = Electricity generated
 turnover.6076.electricityGenerated.hint = (in kWh or MWh)
