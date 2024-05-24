@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAnotherLowMarginFuelCardsDetailsForm
 import form.confirmableActionForm.confirmableActionForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, LowMarginFuelCardsDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AddAnotherLowMarginFuelCardsDetailsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.addAnotherLowMarginFuelCardDetails
 import views.html.genericRemoveConfirmation
@@ -89,44 +89,23 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             )
           )
         ),
-      data => {
-        def updateAndRedirect(
-          updatedCards: IndexedSeq[LowMarginFuelCardsDetails],
-          index: Int
-        )(implicit request: SessionRequest[AnyContent]): Future[Result] = {
-          val updatedTradingHistory = request.sessionData.aboutTheTradingHistory
-            .getOrElse(AboutTheTradingHistory())
-            .copy(lowMarginFuelCardsDetails = Some(updatedCards))
-
-          val updatedSessionData = request.sessionData.copy(aboutTheTradingHistory = Some(updatedTradingHistory))
-          session.saveOrUpdate(updatedSessionData).map { _ =>
-            if (updatedCards.lastOption.flatMap(_.addAnotherLowMarginFuelCardDetails).contains(AnswerYes)) {
-              Redirect(routes.LowMarginFuelCardDetailsController.show())
-            } else {
-              Redirect(
-                navigator.nextPage(AddAnotherLowMarginFuelCardsDetailsId, updatedSessionData).apply(updatedSessionData)
-              )
-            }
-          }
-        }
-
-        val existingCards =
-          request.sessionData.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).getOrElse(IndexedSeq.empty)
-
+      data =>
         if (data == AnswerYes) {
-          if (existingCards.isDefinedAt(index)) {
-            val updatedCards =
-              existingCards.updated(index, existingCards(index).copy(addAnotherLowMarginFuelCardDetails = Some(data)))
-            updateAndRedirect(updatedCards, index)
-          } else {
-            Redirect(routes.LowMarginFuelCardDetailsController.show())
-          }
+          aboutTheTradingHistoryData
+            .flatMap(_.lowMarginFuelCardsDetails)
+            .filter(_.isDefinedAt(index))
+            .fold(Future.unit) { existingCards =>
+              val updatedCards =
+                existingCards.updated(index, existingCards(index).copy(addAnotherLowMarginFuelCardDetails = Some(data)))
+              val updatedData  = updateAboutTheTradingHistory(_.copy(lowMarginFuelCardsDetails = Some(updatedCards)))
+              session.saveOrUpdate(updatedData)
+            }
+            .map(_ => Redirect(routes.LowMarginFuelCardDetailsController.show()))
         } else {
-          val updatedCards =
-            existingCards.updated(index, existingCards(index).copy(addAnotherLowMarginFuelCardDetails = Some(data)))
-          updateAndRedirect(updatedCards, index)
+          Redirect(
+            navigator.nextPage(AddAnotherLowMarginFuelCardsDetailsId, request.sessionData).apply(request.sessionData)
+          )
         }
-      }
     )
   }
 
