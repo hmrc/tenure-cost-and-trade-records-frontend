@@ -43,7 +43,6 @@ class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[WorkCarried
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
     }
 
     "Section heading is visible" in {

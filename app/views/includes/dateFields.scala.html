@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@
 
         def getErrorClass(inputField: String, datePart: String) = {
             if (form.error(inputField).isDefined || form.errors.find(_.key.startsWith(field)).flatMap(_.args.lastOption).exists {
-                case errorParts: Seq[String] => errorParts.contains(datePart)
+                case errorParts: Seq[String @unchecked] => errorParts.contains(datePart)
                 case _ => false
             }) {
                 "govuk-input--error"

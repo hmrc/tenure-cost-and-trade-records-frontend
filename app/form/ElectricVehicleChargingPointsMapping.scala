@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,14 +32,12 @@ object ElectricVehicleChargingPointsMapping {
       )
 
   private def nonNegativeNumberConstraint(): Constraint[String] =
-    Constraint("constraints.nonNegative")({
-      case text =>
+    Constraint("constraints.nonNegative")(text =>
         Try(text.toDouble).toOption match {
           case Some(num) if num >= 0 && num <= 999 => Valid
           case Some(num) if num > 999              => Invalid(ValidationError("error.spacesOrBaysNumber.required"))
           case Some(_)                             => Invalid(ValidationError("error.spacesOrBaysNumber.negative"))
           case None                                => Invalid(ValidationError("error.spacesOrBaysNumber.nonNumeric"))
         }
-      case _    => Invalid(ValidationError("error.spacesOrBaysNumber.required"))
-    })
+    )
 }
