@@ -21,6 +21,9 @@ import play.api.data.Mapping
 import play.api.data.validation.Constraint
 import play.api.data.validation.Constraints.nonEmpty
 import uk.gov.voa.play.form.Condition
+import util.NumberUtil.zeroBigDecimal
+
+import scala.util.Try
 
 /**
   * @author Yuriy Tumakha
@@ -34,11 +37,20 @@ object ConditionalConstraintMappings {
   ): Mapping[T] =
     ConditionalConstraintMapping(condition, mapping.verifying(conditionalConstraints: _*), mapping)
 
-  def mandatoryStringIfExists(fieldName: String, errorRequired: String): Mapping[String] =
+  def mandatoryStringOnCondition(condition: Condition, errorRequired: String): Mapping[String] =
     applyConstraintsOnCondition[String](
-      _.contains(fieldName),
+      condition,
       default(text, ""),
       nonEmpty(errorMessage = errorRequired)
+    )
+
+  def mandatoryStringIfExists(fieldName: String, errorRequired: String): Mapping[String] =
+    mandatoryStringOnCondition(_.contains(fieldName), errorRequired)
+
+  def mandatoryStringIfNoneZeroSum(fieldSuffix: String, errorRequired: String): Mapping[String] =
+    mandatoryStringOnCondition(
+      _.filter(_._1.endsWith(fieldSuffix)).values.map(s => Try(BigDecimal(s)).getOrElse(zeroBigDecimal)).sum > 0,
+      errorRequired
     )
 
 }

@@ -33,11 +33,11 @@ object ElectricVehicleChargingPointsMapping {
 
   private def nonNegativeNumberConstraint(): Constraint[String] =
     Constraint("constraints.nonNegative")(text =>
-        Try(text.toDouble).toOption match {
-          case Some(num) if num >= 0 && num <= 999 => Valid
-          case Some(num) if num > 999              => Invalid(ValidationError("error.spacesOrBaysNumber.required"))
-          case Some(_)                             => Invalid(ValidationError("error.spacesOrBaysNumber.negative"))
-          case None                                => Invalid(ValidationError("error.spacesOrBaysNumber.nonNumeric"))
-        }
+      Try(text.toDouble).toOption match {
+        case Some(num) if num >= 0 && num <= 999 => Valid
+        case Some(num) if num > 999              => Invalid(ValidationError("error.spacesOrBaysNumber.required"))
+        case Some(_)                             => Invalid(ValidationError("error.spacesOrBaysNumber.negative"))
+        case None                                => Invalid(ValidationError("error.spacesOrBaysNumber.nonNumeric"))
+      }
     )
 }

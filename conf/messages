@@ -1580,6 +1580,8 @@ error.turnover.6076.electricityGenerated.required = Enter 0 if you did not have 
 error.turnover.6076.otherIncome.required = Enter 0 if you did not have any other income in the year ending {0}
 error.turnover.6076.otherIncome.range = Other income in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6076.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
+error.turnover.6076.otherIncomeDetails.required = Enter a description of the sources of your other income
+error.turnover.6076.otherIncomeDetails.maxLength = Description of the sources of your other income must be {0} characters or fewer
 
 # COST OF SALES
 costOfSales.heading = Cost of sales
