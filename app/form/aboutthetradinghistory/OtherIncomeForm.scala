@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.ConditionalConstraintMappings.mandatoryStringIfNoneZeroSum
+import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
 import form.MappingSupport._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints.maxLength
@@ -50,7 +50,7 @@ object OtherIncomeForm {
     Form {
       tuple(
         "otherIncomeSeq"     -> otherIncomeSeq(years),
-        "otherIncomeDetails" -> mandatoryStringIfNoneZeroSum(
+        "otherIncomeDetails" -> mandatoryStringIfNonZeroSum(
           ".otherIncome",
           "error.turnover.6076.otherIncomeDetails.required"
         ).verifying(

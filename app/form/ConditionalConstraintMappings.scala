@@ -47,7 +47,7 @@ object ConditionalConstraintMappings {
   def mandatoryStringIfExists(fieldName: String, errorRequired: String): Mapping[String] =
     mandatoryStringOnCondition(_.contains(fieldName), errorRequired)
 
-  def mandatoryStringIfNoneZeroSum(fieldSuffix: String, errorRequired: String): Mapping[String] =
+  def mandatoryStringIfNonZeroSum(fieldSuffix: String, errorRequired: String): Mapping[String] =
     mandatoryStringOnCondition(
       _.filter(_._1.endsWith(fieldSuffix)).values.map(s => Try(BigDecimal(s)).getOrElse(zeroBigDecimal)).sum > 0,
       errorRequired
