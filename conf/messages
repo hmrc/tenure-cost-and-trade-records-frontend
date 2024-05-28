@@ -20,6 +20,7 @@ label.account.property=Property
 label.underReview=(under review)
 label.yes = Yes
 label.no = No
+label.pound = £
 
 # OTHER FOOTER LINKS:
 ########
@@ -1605,6 +1606,39 @@ costOfSales.drinks = Drinks
 costOfSales.otherSales = Other
 costOfSales.otherSales.hint = Including hire of function rooms, conference rooms and telephones.
 costOfSales.total = Total cost of sales
+
+# COST OF SALES 6076
+
+costOfSales6076.heading = Cost of sales
+costOfSales6076.p = Provide us with details of your cost of sales. If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
+costOfSales6076.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
+costOfSales6076.financialYearEnd = Financial year end
+costOfSales6076.fuelOrFeedstock = Fuel or feedstock
+costOfSales6076.importedPower = Imported power
+costOfSales6076.TNuoS = Transmission network use of systems (TNuoS)
+costOfSales6076.BSuoS = Balancing service use of system (BSuoS)
+costOfSales6076.otherSales = Other costs (specify)
+costOfSales6076.otherSales.hint = Include any other costs of sales not listed previously
+costOfSales6076.otherSales.label = Give details of the sources of your other income
+costOfSales6076.total = Total cost
+error.costOfSales6076.details.required = Please provide details of the sources of your other income
+error.costOfSales6076.details.maxlength = Details of the sources of your other income must be 2,000 characters or fewer
+error.costOfSales6076.fuelOrFeedstock.required = Enter 0 if you did not have any fuel costs in the year ending {0}
+error.costOfSales6076.fuelOrFeedstock.range = Fuel costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.fuelOrFeedstock.negative = Fuel costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.importedPower.required = Enter 0 if you did not have any imported power costs in the year ending {0}
+error.costOfSales6076.importedPower.range = Imported power costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.importedPower.negative = Imported power costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.TNuoS.required = Enter 0 if you did not have any TNuoS costs in the year ending {0}
+error.costOfSales6076.TNuoS.range = TNuoS power costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.TNuoS.negative = TNuoS power costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.BSuoS.required = Enter 0 if you did not have any BSuoS costs in the year ending {0}
+error.costOfSales6076.BSuoS.range = BSuoS costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.BSuoS.negative = BSuoS costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.importedPower.required = Enter 0 if you did not have any other costs in the year ending {0}
+error.costOfSales6076.importedPower.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.importedPower.negative = Other costs in the year ending {0} cannot be a negative number
+
 
 # GROSS PROFIT
 grossProfit.heading = Total gross profits

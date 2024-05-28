@@ -50,10 +50,11 @@ import scala.util.matching.Regex
 object MappingSupport {
 
   implicit class EnrichedSeq[A](seq: Seq[A]) {
-    def toTuple2: Option[(A, A)]    = seq match {
+    def toTuple2: Option[(A, A)] = seq match {
       case Seq(a, b) => Some((a, b))
       case _         => None
     }
+
     def toTuple3: Option[(A, A, A)] = seq match {
       case Seq(a, b, c) => Some((a, b, c))
       case _            => None
@@ -298,4 +299,12 @@ object MappingSupport {
       .verifying(between(zeroBigDecimal, salesMax, s"error.$field.range"))
   ).verifying(s"error.$field.required", _.nonEmpty)
 
+  def costOfSalesMapping(field: String, year: String)(implicit
+    messages: Messages
+  ): Mapping[Option[BigDecimal]] = optional(
+    text
+      .transform[BigDecimal](s => Try(BigDecimal(s)).getOrElse(-1), _.toString)
+      .verifying(between(zeroBigDecimal, salesMax, messages(s"error.$field.range", year)))
+      .verifying(messages(s"error.$field.negative", year), _ >= 0)
+  ).verifying(messages(s"error.$field.required", year), _.nonEmpty)
 }

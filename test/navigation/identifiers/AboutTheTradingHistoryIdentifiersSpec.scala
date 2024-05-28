@@ -69,6 +69,12 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for electric Vehicle Charging Points page" in {
       assert(ElectricVehicleChargingPointsId.toString.equals("electricVehicleChargingPoints"))
     }
+    "Identifier for Electricity Generated  page" in {
+      assert(ElectricityGeneratedId.toString.equals("electricityGeneratedPage"))
+    }
+    "Identifier for CostOfSales6076 page" in {
+      assert(CostOfSales6076Id.toString.equals("costOfSales6076Page"))
+    }
 
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
