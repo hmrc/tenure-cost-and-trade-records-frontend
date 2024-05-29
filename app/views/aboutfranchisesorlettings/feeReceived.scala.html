@@ -109,11 +109,10 @@
             CharacterCount(
                 rows = 3,
                 maxLength = 2000,
-                errorMessage = form.errors.asTextErrorMessageForField("feeCalculationDetails"),
                 classes = "govuk-!-width-two-thirds",
                 label = Label(
                     content = Text(messages("feeReceived.feeCalculationDetails")),
-                    classes = "govuk-!-font-weight-bold",
+                    classes = "govuk-!-font-weight-bold"
                 )
             ).withFormField(form("feeCalculationDetails"))
         )
