@@ -855,8 +855,8 @@ checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of 
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Additional information
 hint.detailsToQuestions = Give details if you want to tell us more about any options that may apply.
-error.doesTheRentPayable.required = Select any options included in the rent, or select ’No, the rent does not include any of these options’
-error.doesTheRentPayable.noneSelectedWithOther = Select any options included in the rent, or select ’No, the rent does not include any of these options’
+error.doesTheRentPayable.required = Select items included in your rent, or select ’No, the rent does not include any of these options’
+error.doesTheRentPayable.noneSelectedWithOther = Select items included in your rent, or select ’No, the rent does not include any of these options’
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = Additional information must be {0} characters or fewer
 
