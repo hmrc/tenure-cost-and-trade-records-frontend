@@ -199,6 +199,9 @@ POST        /turnover-6030                                          controllers.
 GET         /electricity-generated                                  controllers.aboutthetradinghistory.ElectricityGeneratedController.show()
 POST        /electricity-generated                                  controllers.aboutthetradinghistory.ElectricityGeneratedController.submit()
 
+GET         /other-income                                           controllers.aboutthetradinghistory.OtherIncomeController.show()
+POST        /other-income                                           controllers.aboutthetradinghistory.OtherIncomeController.submit()
+
 GET         /electric-vehicles-charging-points                      controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.show()
 POST        /electric-vehicles-charging-points                      controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.submit()
 

@@ -22,19 +22,17 @@ import play.api.data.Forms._
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
-import util.NumberUtil.zeroBigDecimal
 
 /**
   * @author Yuriy Tumakha
   */
 object OtherIncomeForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[BigDecimal] = single(
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = single(
     "otherIncome" -> turnoverSalesMappingWithYear("turnover.6076.otherIncome", year)
-      .transform[BigDecimal](_.getOrElse(zeroBigDecimal), Option(_))
   )
 
-  private def otherIncomeSeq(years: Seq[String])(implicit messages: Messages): Mapping[Seq[BigDecimal]] = {
+  private def otherIncomeSeq(years: Seq[String])(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]] = {
     val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
       s"turnover[$idx]" -> columnMapping(year)
     }
@@ -46,7 +44,7 @@ object OtherIncomeForm {
     }
   }
 
-  def otherIncomeForm(years: Seq[String])(implicit messages: Messages): Form[(Seq[BigDecimal], String)] =
+  def otherIncomeForm(years: Seq[String])(implicit messages: Messages): Form[(Seq[Option[BigDecimal]], String)] =
     Form {
       tuple(
         "otherIncomeSeq"     -> otherIncomeSeq(years),

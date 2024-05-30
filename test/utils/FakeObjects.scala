@@ -390,187 +390,88 @@ trait FakeObjects {
 
   // Trading history
   val prefilledAboutYourTradingHistory: AboutTheTradingHistory = AboutTheTradingHistory(
-    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
+    OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)),
     Seq(
       TurnoverSection(
         LocalDate.now(),
         123,
-        Some(BigDecimal(234)),
-        Some(BigDecimal(345)),
-        Some(BigDecimal(456)),
-        Some(BigDecimal(567)),
-        Some(BigDecimal(678))
+        234,
+        345,
+        456,
+        567,
+        678
       ),
       TurnoverSection(
         LocalDate.now().minusYears(1),
         123,
-        Some(BigDecimal(234)),
-        Some(BigDecimal(345)),
-        Some(BigDecimal(456)),
-        Some(BigDecimal(567)),
-        Some(BigDecimal(678))
+        234,
+        345,
+        456,
+        567,
+        678
       ),
       TurnoverSection(
         LocalDate.now().minusYears(2),
         123,
-        Some(BigDecimal(234)),
-        Some(BigDecimal(345)),
-        Some(BigDecimal(456)),
-        Some(BigDecimal(567)),
-        Some(BigDecimal(678))
+        234,
+        345,
+        456,
+        567,
+        678
       )
     ),
     costOfSales = Seq(
-      CostOfSales(
-        LocalDate.now(),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1))
-      ),
-      CostOfSales(
-        LocalDate.now().minusYears(1),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1))
-      ),
-      CostOfSales(
-        LocalDate.now().minusYears(2),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1))
-      )
+      CostOfSales(LocalDate.now(), 1, 1, 1, 1),
+      CostOfSales(LocalDate.now().minusYears(1), 1, 1, 1, 1),
+      CostOfSales(LocalDate.now().minusYears(2), 1, 1, 1, 1)
     ),
     totalPayrollCostSections = Seq(
-      TotalPayrollCost(
-        LocalDate.now(),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(2))
-      ),
-      TotalPayrollCost(
-        LocalDate.now().minusYears(1),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(2))
-      ),
-      TotalPayrollCost(
-        LocalDate.now().minusYears(2),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(2))
-      )
+      TotalPayrollCost(LocalDate.now(), 1, 2),
+      TotalPayrollCost(LocalDate.now().minusYears(1), 1, 2),
+      TotalPayrollCost(LocalDate.now().minusYears(2), 1, 2)
     ),
     fixedOperatingExpensesSections = Seq(
-      FixedOperatingExpenses(
-        LocalDate.now(),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1))
-      ),
-      FixedOperatingExpenses(
-        LocalDate.now().minusYears(1),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1))
-      ),
-      FixedOperatingExpenses(
-        LocalDate.now().minusYears(2),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1)),
-        Some(BigDecimal(1))
-      )
+      FixedOperatingExpenses(LocalDate.now(), 1, 1, 1, 1, 1),
+      FixedOperatingExpenses(LocalDate.now().minusYears(1), 1, 1, 1, 1, 1),
+      FixedOperatingExpenses(LocalDate.now().minusYears(2), 1, 1, 1, 1, 1)
     ),
-    variableOperatingExpenses = Some(
-      VariableOperatingExpensesSections(
-        Seq(
-          VariableOperatingExpenses(
-            LocalDate.now(),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1))
-          ),
-          VariableOperatingExpenses(
-            LocalDate.now().minusYears(1),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1))
-          ),
-          VariableOperatingExpenses(
-            LocalDate.now().minusYears(2),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1))
-          )
-        ),
-        Some("Other expenses details for all years")
-      )
+    variableOperatingExpenses = VariableOperatingExpensesSections(
+      Seq(
+        VariableOperatingExpenses(LocalDate.now(), 1, 1, 1, 1, 1, 1, 1, 1),
+        VariableOperatingExpenses(LocalDate.now().minusYears(1), 1, 1, 1, 1, 1, 1, 1, 1),
+        VariableOperatingExpenses(LocalDate.now().minusYears(2), 1, 1, 1, 1, 1, 1, 1, 1)
+      ),
+      "Other expenses details for all years"
     ),
-    otherCosts = Some(
-      OtherCosts(
-        otherCosts = Seq(
-          OtherCost(
-            LocalDate.now(),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1))
-          ),
-          OtherCost(
-            LocalDate.now().minusYears(1),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1))
-          ),
-          OtherCost(
-            LocalDate.now().minusYears(2),
-            Some(BigDecimal(1)),
-            Some(BigDecimal(1))
-          )
-        ),
-        Some("Other Costs Details")
-      )
+    otherCosts = OtherCosts(
+      otherCosts = Seq(
+        OtherCost(LocalDate.now(), 1, 1),
+        OtherCost(LocalDate.now().minusYears(1), 1, 1),
+        OtherCost(LocalDate.now().minusYears(2), 1, 1)
+      ),
+      "Other Costs Details"
     )
   )
 
   val prefilledAboutYourTradingHistory6020: AboutTheTradingHistory = AboutTheTradingHistory(
-    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
-    turnoverSections6020 = Some(
-      Seq(
-        TurnoverSection6020(LocalDate.now(), Some(BigDecimal(100)), Some(100)),
-        TurnoverSection6020(LocalDate.now().minusYears(1), Some(BigDecimal(200)), Some(200)),
-        TurnoverSection6020(LocalDate.now().minusYears(2), Some(BigDecimal(300)), Some(300))
-      )
+    OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)),
+    turnoverSections6020 = Seq(
+      TurnoverSection6020(LocalDate.now(), 100, 100),
+      TurnoverSection6020(LocalDate.now().minusYears(1), 200, 200),
+      TurnoverSection6020(LocalDate.now().minusYears(2), 300, 300)
     ),
-    electricVehicleChargingPoints = Some(ElectricVehicleChargingPoints(AnswerYes, Some(123))),
+    electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
     doYouAcceptLowMarginFuelCard = AnswerYes
   )
 
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(
-    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9)))),
+    OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)),
     Seq.empty,
     None,
     Seq(
-      TurnoverSection6030(LocalDate.now(), 52, Some(BigDecimal(100)), Some(100)),
-      TurnoverSection6030(LocalDate.now().minusYears(1), 52, Some(BigDecimal(200)), Some(200)),
-      TurnoverSection6030(LocalDate.now().minusYears(2), 52, Some(BigDecimal(300)), Some(300))
+      TurnoverSection6030(LocalDate.now(), 52, 100, 100),
+      TurnoverSection6030(LocalDate.now().minusYears(1), 52, 200, 200),
+      TurnoverSection6030(LocalDate.now().minusYears(2), 52, 300, 300)
     ),
     Seq.empty,
     Seq.empty,
@@ -579,22 +480,21 @@ trait FakeObjects {
     None,
     None,
     Seq.empty,
-    Some(UnusualCircumstances("unusual circumstances"))
+    UnusualCircumstances("unusual circumstances")
   )
 
   val prefilledAboutYourTradingHistory6076: AboutTheTradingHistory = AboutTheTradingHistory(
-    Some(OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), Some(DayMonthsDuration(27, 9))))
+    OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))
   )
 
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
-    turnoverSections6076 = Some(
-      Seq(
-        TurnoverSection6076(LocalDate.now(), 52, "5000 kWh"),
-        TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh"),
-        TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh")
-      )
-    )
+    turnoverSections6076 = Seq(
+      TurnoverSection6076(LocalDate.now(), 52, "5000 kWh", 1000),
+      TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000),
+      TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000)
+    ),
+    otherIncomeDetails = "OtherIncome details"
   )
 
   val aboutYourTradingHistory6076YesSession: Session =

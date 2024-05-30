@@ -35,7 +35,7 @@
 )
 
 
-@(form: Form[(Seq[BigDecimal], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[(Seq[Option[BigDecimal]], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
 
 
 @rowLabel(labelKey: String, hintKey: String) = {

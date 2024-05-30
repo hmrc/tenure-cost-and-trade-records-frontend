@@ -17,6 +17,8 @@
 import scala.concurrent.Future
 
 package object utils {
-  implicit def toFut[A](a: A): Future[A] = Future.successful(a)
-  implicit def toOpt[A](a: A): Option[A] = Some(a)
+  implicit def toFut[A](a: A): Future[A]                     = Future.successful(a)
+  implicit def toOpt[A](a: A): Option[A]                     = Some(a)
+  implicit def toBigDecimal(num: Int): BigDecimal            = BigDecimal(num)
+  implicit def toBigDecimalOpt(num: Int): Option[BigDecimal] = toOpt(toBigDecimal(num))
 }
