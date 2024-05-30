@@ -1241,4 +1241,10 @@ trait FakeObjects {
     Some(DownloadPDFReferenceNumber(referenceNumber)),
     Some(DownloadPDF(forType6010))
   )
+
+  val prefilledFull6020Session = sessionAboutFranchiseOrLetting6020Session.copy(
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreementPartOne,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPayPartTwo,
+    aboutLeaseOrAgreementPartThree = prefilledAboutLeaseOrAgreementPartThree
+  )
 }
