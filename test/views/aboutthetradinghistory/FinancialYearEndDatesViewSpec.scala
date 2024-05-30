@@ -58,21 +58,21 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
       assert(sectionText == messages("label.section.aboutYourTradingHistory"))
     }
 
-    "contain date field for the value financial-year-end[0].date.day" in {
+    "contain date field for the value financialYearEnd[0].date.day" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "financial-year-end[0].date.day", "Day")
-      assertContainsText(doc, "financial-year-end[0].date.day")
+      assertContainsLabel(doc, "financialYearEnd[0].date.day", "Day")
+      assertContainsText(doc, "financialYearEnd[0].date.day")
     }
-    "contain date field for the value financial-year-end[0].date.month" in {
+    "contain date field for the value financialYearEnd[0].date.month" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "financial-year-end[0].date.month", "Month")
-      assertContainsText(doc, "financial-year-end[0].date.month")
+      assertContainsLabel(doc, "financialYearEnd[0].date.month", "Month")
+      assertContainsText(doc, "financialYearEnd[0].date.month")
     }
 
-    "contain date field for the value financial-year-end[0].date.year" in {
+    "contain date field for the value financialYearEnd[0].date.year" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsLabel(doc, "financial-year-end[0].date.year", "Year")
-      assertContainsText(doc, "financial-year-end[0].date.year")
+      assertContainsLabel(doc, "financialYearEnd[0].date.year", "Year")
+      assertContainsText(doc, "financialYearEnd[0].date.year")
     }
 
     "contain continue button with the value Continue" in {

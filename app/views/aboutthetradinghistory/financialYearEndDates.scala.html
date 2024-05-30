@@ -34,7 +34,7 @@
 @financialYearEndContent(idx: Int) = {
     @includes.dateFields(
         form = form,
-        field = s"financial-year-end[$idx].date",
+        field = s"financialYearEnd[$idx].date",
         govukDate = govukDateInput,
         label = "financialYearEndDates.financialYear.label",
         labelArg0 = finYears(idx).toString,
