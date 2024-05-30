@@ -29,7 +29,7 @@ object ThroughputAffectsRentForm {
   val doesRentVaryToThroughputForm: Form[AnswersYesNo] =
     Form(
       single(
-        "doesRentVaryToThroughput" -> createYesNoType("error.doesRentVaryToThroughput.required")
+        "throughputAffectsRent" -> createYesNoType("error.doesRentVaryToThroughput.required")
       )
     )
 

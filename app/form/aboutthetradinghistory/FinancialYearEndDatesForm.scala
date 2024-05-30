@@ -38,7 +38,7 @@ object FinancialYearEndDatesForm {
   def financialYearEndDatesForm(years: Option[Seq[Int]] = None)(implicit messages: Messages): Form[Seq[LocalDate]] =
     Form(
       single(
-        "financial-year-end" -> seq(dateMapping(years))
+        "financialYearEnd" -> seq(dateMapping(years))
       )
     )
 }
