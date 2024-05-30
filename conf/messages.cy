@@ -1171,7 +1171,9 @@ error.typeOfBusiness.maxLength = Type of business must be 50 characters or fewer
 error.lettingTypeOfBusiness.required = Nodwch ddisgrifiad o’r gosodiad
 error.lettingOperatorName.maxLength = Mae’n rhaid i enw’r tenant fod yn 50 o gymeriadau neu lai
 error.lettingTypeOfBusiness.maxLength = Mae’n rhaid i’r disgrifiad o’r gosodiad fod yn 50 o gymeriadau neu lai
+
 #BELOW IS FOR FORM 6030
+error.operatorName6030.required = Enter the name of the person or company operating the business
 label.howBusinessPropertyIsUsed = Describe how the property is used
 hint.describeBusiness = For example, a tea room or car wash.
 error.howBusinessPropertyIsUsed.required = Enter a description of the property use

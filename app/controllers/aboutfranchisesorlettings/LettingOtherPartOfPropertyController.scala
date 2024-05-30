@@ -16,8 +16,9 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
+import form.aboutfranchisesorlettings.LettingOtherPartOfProperties6030Form.lettingOtherPartOfProperties6030Form
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.{ForTypes, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -44,14 +45,24 @@ class LettingOtherPartOfPropertyController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
+  private def forType(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.forType
+
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationView(
+          if(forType == ForTypes.for6030) {
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
             case Some(lettingOtherPartOfProperty) =>
-              lettingOtherPartOfPropertiesForm.fill(lettingOtherPartOfProperty)
-            case _                                => lettingOtherPartOfPropertiesForm
+              lettingOtherPartOfProperties6030Form.fill(lettingOtherPartOfProperty)
+            case _                                => lettingOtherPartOfProperties6030Form
+          }} else {
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
+              case Some(lettingOtherPartOfProperty) =>
+                lettingOtherPartOfPropertiesForm.fill(lettingOtherPartOfProperty)
+              case _ => lettingOtherPartOfPropertiesForm
+            }
           },
           "lettingOtherPartOfProperty",
           getBackLink(request.sessionData, navigator.from) match {
@@ -71,7 +82,11 @@ class LettingOtherPartOfPropertyController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      lettingOtherPartOfPropertiesForm,
+      if(forType == ForTypes.for6030) {
+        lettingOtherPartOfProperties6030Form
+      } else {
+        lettingOtherPartOfPropertiesForm
+      },
       formWithErrors =>
         BadRequest(
           cateringOperationOrLettingAccommodationView(

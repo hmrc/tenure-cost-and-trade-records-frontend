@@ -107,24 +107,43 @@
    <p class="govuk-body">@messages("concessionOrFranchiseFee.p1")</p>
   }
 
-
-  @govukRadios(
-   Radios(
-    name = s"${cateringOrLetting}",
-    idPrefix = Option(s"${cateringOrLetting}"),
-    classes = "govuk-radios--inline",
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm(s"${cateringOrLetting}").value.getOrElse("")),
-     value = Option(radioItem._1))),
-    errorMessage = theForm.errors.asTextErrorMessageForField(s"${cateringOrLetting}"),
-    fieldset = Option(Fieldset(legend = legend)),
-    hint = hint,
-   )
-  )
+  @if(for6030) {
+      @govukRadios(
+          Radios(
+              name = "lettingOtherPartOfProperty6030",
+              idPrefix = Option("lettingOtherPartOfProperty6030"),
+              classes = "govuk-radios--inline",
+              items = Seq(
+                  "yes" -> messages("label.yes"),
+                  "no" -> messages("label.no")
+              ).map(radioItem => RadioItem(
+                  content = Text(radioItem._2),
+                  checked = radioItem._1.equals(theForm("lettingOtherPartOfProperty6030").value.getOrElse("")),
+                  value = Option(radioItem._1))),
+              errorMessage = theForm.errors.asTextErrorMessageForField("lettingOtherPartOfProperty6030"),
+              fieldset = Option(Fieldset(legend = legend)),
+              hint = hint,
+          )
+      )
+  } else {
+      @govukRadios(
+          Radios(
+              name = s"${cateringOrLetting}",
+              idPrefix = Option(s"${cateringOrLetting}"),
+              classes = "govuk-radios--inline",
+              items = Seq(
+                  "yes" -> messages("label.yes"),
+                  "no" -> messages("label.no")
+              ).map(radioItem => RadioItem(
+                  content = Text(radioItem._2),
+                  checked = radioItem._1.equals(theForm(s"${cateringOrLetting}").value.getOrElse("")),
+                  value = Option(radioItem._1))),
+              errorMessage = theForm.errors.asTextErrorMessageForField(s"${cateringOrLetting}"),
+              fieldset = Option(Fieldset(legend = legend)),
+              hint = hint,
+          )
+      )
+  }
 
      @includes.continueSaveAsDraftButtons(govukButton)
  }

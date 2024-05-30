@@ -16,8 +16,9 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
+import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.cateringOperationBusinessDetails6030Form
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetailsForm.cateringOperationBusinessDetailsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationBusinessDetails, CateringOperationBusinessSection}
@@ -44,6 +45,9 @@ class CateringOperationBusinessDetailsController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
+  private def forType(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.forType
+
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[CateringOperationBusinessDetails] = for {
       requestedIndex                <- index
@@ -57,9 +61,14 @@ class CateringOperationBusinessDetailsController @Inject() (
 
     Ok(
       cateringOperationDetailsView(
-        existingDetails.fold(cateringOperationBusinessDetailsForm)(
-          cateringOperationBusinessDetailsForm.fill
-        ),
+        if(forType == ForTypes.for6030) {
+        existingDetails.fold(cateringOperationBusinessDetails6030Form)(
+          cateringOperationBusinessDetails6030Form.fill
+        )} else {
+          existingDetails.fold(cateringOperationBusinessDetailsForm)(
+            cateringOperationBusinessDetailsForm.fill
+          )
+        },
         index,
         "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
@@ -79,7 +88,11 @@ class CateringOperationBusinessDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CateringOperationBusinessDetails](
-      cateringOperationBusinessDetailsForm,
+      if(forType == ForTypes.for6030){
+      cateringOperationBusinessDetails6030Form
+      } else {
+        cateringOperationBusinessDetailsForm
+      },
       formWithErrors =>
         BadRequest(
           cateringOperationDetailsView(
