@@ -53,6 +53,12 @@ class BenefitsGivenDetailsViewSpec extends QuestionViewBehaviours[BenefitsGivenD
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
+    "Page heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-heading-l").text()
+      assert(sectionText == messages("benefitsGivenDetails.heading"))
+    }
+
     "contain an input for Benefits given details " in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "benefitsGivenDetails")

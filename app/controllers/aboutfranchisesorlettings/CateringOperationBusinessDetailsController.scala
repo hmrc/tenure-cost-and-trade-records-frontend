@@ -61,10 +61,11 @@ class CateringOperationBusinessDetailsController @Inject() (
 
     Ok(
       cateringOperationDetailsView(
-        if(forType == ForTypes.for6030) {
-        existingDetails.fold(cateringOperationBusinessDetails6030Form)(
-          cateringOperationBusinessDetails6030Form.fill
-        )} else {
+        if (forType == ForTypes.for6030) {
+          existingDetails.fold(cateringOperationBusinessDetails6030Form)(
+            cateringOperationBusinessDetails6030Form.fill
+          )
+        } else {
           existingDetails.fold(cateringOperationBusinessDetailsForm)(
             cateringOperationBusinessDetailsForm.fill
           )
@@ -88,8 +89,8 @@ class CateringOperationBusinessDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CateringOperationBusinessDetails](
-      if(forType == ForTypes.for6030){
-      cateringOperationBusinessDetails6030Form
+      if (forType == ForTypes.for6030) {
+        cateringOperationBusinessDetails6030Form
       } else {
         cateringOperationBusinessDetailsForm
       },

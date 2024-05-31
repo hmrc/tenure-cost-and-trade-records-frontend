@@ -28,7 +28,7 @@ object LettingOtherPartOfProperties6030Form {
   )
 
   val baseLettingOtherPartOfProperties6030Mapping = mapping(
-    "lettingOtherPartOfProperty6030" -> createYesNoType("error.lettingOtherPartOfProperty6030.missing")
+    "lettingOtherPartOfProperty" -> createYesNoType("error.lettingOtherPartOfProperty6030.missing")
   )(x => x)(b => Some(b))
 
   val lettingOtherPartOfProperties6030Form = Form(baseLettingOtherPartOfProperties6030Mapping)

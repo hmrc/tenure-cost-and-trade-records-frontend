@@ -50,6 +50,13 @@ class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String] {
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
+
+    "Page heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val sectionText = doc.getElementsByClass("govuk-heading-l").text()
+      assert(sectionText == messages("batteriesCapacity.heading"))
+    }
+
     "contain an input for generator capacity " in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "batteriesCapacity")

@@ -25,7 +25,7 @@ object CateringOperationBusinessDetails6030Form {
 
   val cateringOperationBusinessDetails6030Form = Form(
     mapping(
-      "operatorName6030"              -> default(text, "").verifying(
+      "operatorName6030"          -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName6030.required"),
         maxLength(100, "error.operatorName6030.maxLength")
       ),

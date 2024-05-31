@@ -52,16 +52,17 @@ class LettingOtherPartOfPropertyController @Inject() (
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationView(
-          if(forType == ForTypes.for6030) {
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
-            case Some(lettingOtherPartOfProperty) =>
-              lettingOtherPartOfProperties6030Form.fill(lettingOtherPartOfProperty)
-            case _                                => lettingOtherPartOfProperties6030Form
-          }} else {
+          if (forType == ForTypes.for6030) {
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
+              case Some(lettingOtherPartOfProperty) =>
+                lettingOtherPartOfProperties6030Form.fill(lettingOtherPartOfProperty)
+              case _                                => lettingOtherPartOfProperties6030Form
+            }
+          } else {
             request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
               case Some(lettingOtherPartOfProperty) =>
                 lettingOtherPartOfPropertiesForm.fill(lettingOtherPartOfProperty)
-              case _ => lettingOtherPartOfPropertiesForm
+              case _                                => lettingOtherPartOfPropertiesForm
             }
           },
           "lettingOtherPartOfProperty",
@@ -82,7 +83,7 @@ class LettingOtherPartOfPropertyController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      if(forType == ForTypes.for6030) {
+      if (forType == ForTypes.for6030) {
         lettingOtherPartOfProperties6030Form
       } else {
         lettingOtherPartOfPropertiesForm

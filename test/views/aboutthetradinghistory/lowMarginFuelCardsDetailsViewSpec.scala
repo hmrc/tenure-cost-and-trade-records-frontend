@@ -19,20 +19,52 @@ package views.aboutthetradinghistory
 import form.aboutthetradinghistory.LowMarginFuelCardDetailsForm.lowMarginFuelCardDetailsForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
+import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class lowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail] {
+
   override val form: Form[LowMarginFuelCardDetail] = lowMarginFuelCardDetailsForm
-  val messageKeyPrefix                             = "lowMarginFuelCardDetails"
-  def createView                                   = () =>
+
+  val messageKeyPrefix = "lowMarginFuelCardDetails"
+
+  val backLink = controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
+
+  def createView = () =>
     lowMarginFuelCardsDetailsView(
       form,
       None,
       controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url,
       Summary("99996010001")
     )(fakeRequest, messages)
-  "Catering bunker fuel cards details view" must {
+
+  def createViewUsingForm = (form: Form[LowMarginFuelCardDetail]) =>
+    lowMarginFuelCardsDetailsView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
+
+  "Catering bunker fuel cards details view" should {
     behave like normalPage(createView, messageKeyPrefix)
+
+    "has a link marked with back.link.label leading to the benefits given Page" in {
+
+      val doc          = asDocument(createView())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText mustBe messages("back.link.label")
+      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
+    }
+
+    "Section heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+    }
+
+    "contain continue button with the value Continue" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("continue").text()
+      assert(loginButton == messages("button.label.continue"))
+    }
   }
+
 }
