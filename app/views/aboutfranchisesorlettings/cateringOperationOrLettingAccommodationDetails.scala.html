@@ -48,6 +48,8 @@
 @formHintRent =  @{if(typeConcession) "concessionTypeOfBusiness" else if(typeBusinessDetails) "describeBusiness"  else "typeOfBusiness" }
 @formHintLetting = @{if(typeConcession) "lettingTypeOfBusiness6015"  else "lettingTypeOfBusiness" }
 
+@operator6030Error = @{if(typeBusinessDetails) "operatorName6030" else "operatorName"}
+
 @layout(
     pageHeading = heading,
     showSection = true,
@@ -59,7 +61,7 @@
     @if(typeBusinessDetails && cateringOrLetting.equals("cateringOperationOrLettingAccommodationDetails")) {
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.submit(index)) {
 
-            @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, operator6030Error, "govuk-input--width-20", nameLabel, labelClasses = "govuk-!-font-weight-bold")
             @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = formHintRent)
             @includes.textInput(govukInput, theForm, "howBusinessPropertyIsUsed", "govuk-input--width-20", "howBusinessPropertyIsUsed", labelClasses = "govuk-!-font-weight-bold")
 

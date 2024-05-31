@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -24,6 +25,9 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
+
+  import TestData._
+  import utils.FormBindingTestAssertions._
 
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
@@ -71,5 +75,24 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Ultimately Responsible OR form" should {
+    "error if Ultimately Responsible OR is missing" in {
+      val formData = baseFormData - errorKey.ultimatelyResponsibleOR
+      val form     = ultimatelyResponsibleOutsideRepairsForm.bind(formData)
+
+      mustContainError(errorKey.ultimatelyResponsibleOR, "error.outsideRepairs.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val ultimatelyResponsibleOR: String
+    } = new {
+      val ultimatelyResponsibleOR: String = "outsideRepairs"
+    }
+
+    val baseFormData: Map[String, String] = Map("outsideRepairs" -> "tenant")
   }
 }

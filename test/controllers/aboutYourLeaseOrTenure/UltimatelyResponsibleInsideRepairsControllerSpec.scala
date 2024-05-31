@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -24,6 +25,9 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
+
+  import TestData._
+  import utils.FormBindingTestAssertions._
 
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
@@ -71,5 +75,24 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Ultimately Responsible IR form" should {
+    "error if Ultimately Responsible IR is missing" in {
+      val formData = baseFormData - errorKey.ultimatelyResponsibleIR
+      val form     = ultimatelyResponsibleInsideRepairsForm.bind(formData)
+
+      mustContainError(errorKey.ultimatelyResponsibleIR, "error.insideRepairs.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val ultimatelyResponsibleIR: String
+    } = new {
+      val ultimatelyResponsibleIR: String = "insideRepairs"
+    }
+
+    val baseFormData: Map[String, String] = Map("insideRepairs" -> "tenant")
   }
 }
