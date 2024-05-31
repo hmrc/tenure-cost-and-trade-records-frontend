@@ -82,9 +82,9 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022"
           )
         val sessionRequest  =
           SessionRequest(aboutYourTradingHistory6010YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
@@ -99,10 +99,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022",
-            "from"                     -> "CYA"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022",
+            "from"                   -> "CYA"
           )
         val sessionRequest  =
           SessionRequest(aboutYourTradingHistory6010YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
@@ -117,9 +117,9 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022"
           )
         val sessionRequest  =
           SessionRequest(aboutYourTradingHistory6020YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
@@ -137,10 +137,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022",
-            "from"                     -> "CYA"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022",
+            "from"                   -> "CYA"
           )
         val sessionRequest  =
           SessionRequest(aboutYourTradingHistory6020YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
@@ -158,9 +158,9 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022"
           )
         val sessionRequest  =
           SessionRequest(aboutYourTradingHistory6030YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
@@ -178,10 +178,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022",
-            "from"                     -> "CYA"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022",
+            "from"                   -> "CYA"
           )
         val sessionRequest  =
           SessionRequest(aboutYourTradingHistory6030YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
@@ -199,9 +199,9 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022"
           )
         val session6076     = aboutYourTradingHistory6076YesSession
         val sessionRequest  = SessionRequest(session6076, requestWithForm)
@@ -220,10 +220,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/")
           .withFormUrlEncodedBody(
-            "financial-year-end.day"   -> "2",
-            "financial-year-end.month" -> "2",
-            "financial-year-end.year"  -> "2022",
-            "from"                     -> "CYA"
+            "financialYearEnd.day"   -> "2",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022",
+            "from"                   -> "CYA"
           )
         val session6076     = aboutYourTradingHistory6076YesSession
         val sessionRequest  = SessionRequest(session6076, requestWithForm)
