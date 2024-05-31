@@ -27,7 +27,7 @@ object FinancialYearEndDateForm {
 
   private def dateMapping(implicit messages: Messages): Mapping[LocalDate] =
     single(
-      "financial-year-end" -> requiredDateMapping(
+      "financialYearEnd" -> requiredDateMapping(
         "financialYearEnd",
         allowPastDates = true,
         allowFutureDates = true
@@ -37,8 +37,8 @@ object FinancialYearEndDateForm {
   def financialYearEndDateForm(implicit messages: Messages): Form[LocalDate] =
     Form(
       single(
-        "financial-year-end" -> requiredDateMapping(
-          "financial-year-end",
+        "financialYearEnd" -> requiredDateMapping(
+          "financialYearEnd",
           allowPastDates = true,
           allowFutureDates = true
         )
