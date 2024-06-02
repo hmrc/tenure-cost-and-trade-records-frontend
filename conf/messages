@@ -1635,9 +1635,9 @@ error.costOfSales6076.TNuoS.negative = TNuoS power costs in the year ending {0} 
 error.costOfSales6076.BSuoS.required = Enter 0 if you did not have any BSuoS costs in the year ending {0}
 error.costOfSales6076.BSuoS.range = BSuoS costs in the year ending {0} must be a number, for example 100 or 100.00
 error.costOfSales6076.BSuoS.negative = BSuoS costs in the year ending {0} cannot be a negative number
-error.costOfSales6076.importedPower.required = Enter 0 if you did not have any other costs in the year ending {0}
-error.costOfSales6076.importedPower.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
-error.costOfSales6076.importedPower.negative = Other costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.otherSales.required = Enter 0 if you did not have any other costs in the year ending {0}
+error.costOfSales6076.otherSales.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.otherSales.negative = Other costs in the year ending {0} cannot be a negative number
 
 
 # GROSS PROFIT
