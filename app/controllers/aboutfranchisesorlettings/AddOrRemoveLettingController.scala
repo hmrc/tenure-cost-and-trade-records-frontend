@@ -81,21 +81,21 @@ class AddOrRemoveLettingController @Inject() (
     val lettingsData          = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings)
     val numberOfLettings: Int =
       request.sessionData.aboutFranchisesOrLettings.map(_.lettings.getOrElse(IndexedSeq.empty).size).getOrElse(0)
-    if (numberOfLettings >= 9 && navigator.from != "CYA") {
-      Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings"))))
-    } else {
-      continueOrSaveAsDraft[AnswersYesNo](
-        addAnotherLettingForm,
-        formWithErrors =>
-          BadRequest(
-            addOrRemoveLettingView(
-              formWithErrors,
-              index,
-              getBackLink(index),
-              request.sessionData.toSummary
-            )
-          ),
-        answer =>
+    continueOrSaveAsDraft[AnswersYesNo](
+      addAnotherLettingForm,
+      formWithErrors =>
+        BadRequest(
+          addOrRemoveLettingView(
+            formWithErrors,
+            index,
+            getBackLink(index),
+            request.sessionData.toSummary
+          )
+        ),
+      answer =>
+        if (answer == AnswerYes && numberOfLettings >= 10 && navigator.from != "CYA") {
+          Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings"))))
+        } else {
           lettingsData match {
             case Some(lettings) if lettings.isDefinedAt(index) =>
               val updatedLettings: IndexedSeq[LettingPartOfProperty] =
@@ -123,8 +123,8 @@ class AddOrRemoveLettingController @Inject() (
                 )
               )
           }
-      )
-    }
+        }
+    )
   }
 
   private def updateLettingWithNewAnswer(
