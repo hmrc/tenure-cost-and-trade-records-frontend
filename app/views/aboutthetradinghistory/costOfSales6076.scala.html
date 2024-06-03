@@ -1,0 +1,157 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
+@import models.submissions.aboutthetradinghistory.CostOfSales6076
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.NumberUtil.bigDecimalHelpers
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        hmrcCharacterCount: HmrcCharacterCount,
+        dateUtil: DateUtil
+)
+
+
+@(form: Form[CostOfSales6076], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+
+@totalContent(idx: Int) = {
+ <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="fuelOrFeedstock,importedPower,TNuoS,BSuoS,otherSales">
+ form.value.fold("")(_.costOfSales6076Sum(idx).total.asMoney)
+ </span>
+}
+
+@headingContent(key: String, hint: Boolean) = {
+
+ <p class="govuk-body govuk-!-font-weight-bold">
+  @messages(s"costOfSales6076.$key") <br>
+  @if(hint == true) { <span class="govuk-caption-m">@messages(s"costOfSales6076.$key.hint")</span> }
+ </p>
+}
+
+@costRow(key: String, idx: Int, classes: String = "", hint: Boolean = false ) = @{
+ Seq(
+  TableRow(content = HtmlContent(headingContent(key, hint)), classes = classes),
+  TableRow(
+   content = HtmlContent(
+    govukInput(Input(
+     prefix = Some(PrefixOrSuffix(
+      content = Text(messages("label.pound"))
+     )),
+     attributes = Map(
+      "maxlength" -> "13",
+      "aria-label" -> messages(s"costOfSales6076.$key")
+     ),
+    ).withFormField(form(s"costOfSales6076.[$idx].$key")))),
+   classes = classes))
+}
+@columns = @{
+ request.sessionData.financialYearEndDates6076.size
+}
+
+@otherExpensesDetailsTextarea = @{
+ hmrcCharacterCount(
+  CharacterCount(
+   rows = 3,
+   maxLength = 2000,
+   errorMessage = form.errors.asTextErrorMessageForField("otherSalesDetails"),
+   label = Label(
+    content = Text(messages("costOfSales6076.otherSales.label"))
+   )
+  ).withFormField(form("otherSalesDetails"))
+ )
+}
+
+@otherExpensesDetailsContent(idx: Int) = {
+@if(columns == 1) {
+ @otherExpensesDetailsTextarea
+} else {
+ <div class="hmrc-overlap-columns-@columns-parent">
+ @if(idx == 0) {
+  <div class="hmrc-overlap-columns-@columns">
+  @otherExpensesDetailsTextarea
+  </div>
+ }
+ </div>
+}
+}
+
+ @layout(
+  pageHeading = messages("costOfSales6076.heading"),
+  showSection = true,
+  summary = Some(request.sessionData.toSummary),
+  sectionName = messages("label.section.aboutYourTradingHistory"),
+  backLinkUrl = backLink,
+  fullWidth = true,
+  theForm = form
+ ) {
+
+  <p class="govuk-body govuk-!-width-three-quarters">@messages("costOfSales6076.p")</p>
+
+  @govukInsetText(InsetText(content = Text(messages("costOfSales6076.inset")), classes = "govuk-!-width-three-quarters" ))
+
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.submit()) {
+   <table class="hmrc-responsive-table">
+    <tbody>
+     <tr>
+     @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
+     <td>
+      @govukTable(Table(
+       head = Seq(
+        HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+        HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+       ),
+       firstCellIsHeader = true,
+       rows = Seq(
+        costRow("fuelOrFeedstock", idx),
+        costRow("importedPower", idx),
+        costRow("TNuoS", idx),
+        costRow("BSuoS", idx),
+        costRow("otherSales", idx, "no-border-bottom", true),
+        Seq(
+         TableRow(),
+         TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))),
+
+        Seq(
+         TableRow(content = Text(messages("costOfSales6076.total"))),
+         TableRow(content = HtmlContent(totalContent(idx))))
+
+       )))
+     </td>
+     }</tr>
+    </tbody>
+   </table>
+
+   @includes.continueSaveAsDraftButtons(govukButton)
+
+  }
+
+ <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+ <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+ }

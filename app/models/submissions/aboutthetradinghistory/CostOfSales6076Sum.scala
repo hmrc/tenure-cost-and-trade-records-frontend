@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package models.submissions.aboutthetradinghistory
 
-import form.MappingSupport.createYesNoType
-import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.libs.json.{Json, OFormat}
 
-/**
-  * @author Yuriy Tumakha
-  */
-object IsVATPayableForWholePropertyForm {
+case class CostOfSales6076Sum(
+  fuelOrFeedstock: Option[BigDecimal],
+  importedPower: Option[BigDecimal],
+  TNuoS: Option[BigDecimal],
+  BSuoS: Option[BigDecimal],
+  other: Option[BigDecimal]
+) {
 
-  val isVATPayableForWholePropertyForm: Form[AnswersYesNo] =
-    Form(
-      single(
-        "isVatPayableForWholeProperty" -> createYesNoType("error.isVATPayableForWholeProperty.required")
-      )
-    )
+  def total: BigDecimal = Seq(fuelOrFeedstock, importedPower, TNuoS, BSuoS, other).flatten.sum
+}
 
+object CostOfSales6076Sum {
+
+  implicit val format: OFormat[CostOfSales6076Sum] = Json.format[CostOfSales6076Sum]
 }

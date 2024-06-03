@@ -226,6 +226,10 @@ POST        /unusual-circumstances                                  controllers.
 
 # Form 6015 routing end
 
+# 6076 tradin history
+
+GET         /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.show()
+POST        /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.submit()
 
 # About the francise or letting
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
@@ -340,7 +344,7 @@ GET         /trade-services-description                             controllers.
 POST        /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.submit(idx: Option[Int])
 
 GET         /payment-for-trade-services                             controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.show()
-POST        /payment-for-trade-services                               controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.submit()
+POST        /payment-for-trade-services                              controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.submit()
 
 
 GET         /trade-services-list                                    controllers.aboutYourLeaseOrTenure.TradeServicesListController.show(idx: Int)
@@ -508,8 +512,8 @@ POST        /tenants-additions-disregarded                          controllers.
 GET         /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.show()
 POST        /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.submit()
 
-GET         /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
-POST        /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
+GET         /lease-surrendered-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
+POST        /lease-surrendered-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
 
 GET         /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.show()
 POST        /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.submit()

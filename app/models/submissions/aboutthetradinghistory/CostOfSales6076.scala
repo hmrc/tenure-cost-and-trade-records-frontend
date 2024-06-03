@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package models.submissions.aboutthetradinghistory
 
-import form.MappingSupport.createYesNoType
-import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.libs.json.{Json, OFormat}
 
-/**
-  * @author Yuriy Tumakha
-  */
-object IsVATPayableForWholePropertyForm {
+case class CostOfSales6076(
+  costOfSales6076Sum: Seq[CostOfSales6076Sum] = Seq.empty,
+  otherSalesDetails: Option[String]
+) {}
 
-  val isVATPayableForWholePropertyForm: Form[AnswersYesNo] =
-    Form(
-      single(
-        "isVatPayableForWholeProperty" -> createYesNoType("error.isVATPayableForWholeProperty.required")
-      )
-    )
-
+object CostOfSales6076 {
+  implicit val format: OFormat[CostOfSales6076] = Json.format[CostOfSales6076]
 }
