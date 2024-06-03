@@ -14,49 +14,45 @@
  * limitations under the License.
  */
 
-package controllers.aboutYourLeaseOrTenure
+package controllers.aboutthetradinghistory
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class RentIncludesVatControllerSpec extends TestBaseSpec {
+class OtherIncomeControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
-  def rentIncludesVatController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentIncludesVatController(
+  def otherIncomeController =
+    new OtherIncomeController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludesVatView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      aboutYourTradingHistoryNavigator,
+      otherIncome6076View,
+      preEnrichedActionRefiner(
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
+        aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
+      ),
       mockSessionRepo
     )
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
-      val result = rentIncludesVatController().show(fakeRequest)
+      val result = otherIncomeController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = rentIncludesVatController().show(fakeRequest)
+      val result = otherIncomeController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
   }
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = rentIncludesVatController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
-      )
+  "SUBMIT /" should {
+    "return 400 for empty turnoverSections" in {
+      val res = otherIncomeController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST
     }
   }
+
 }

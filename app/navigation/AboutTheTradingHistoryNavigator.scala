@@ -172,9 +172,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     ElectricityGeneratedId                   -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show() // TODO: Gross receipts
     ),
-    OtherIncomeId                            -> (_ =>
-      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show() // TODO: Cost of sales
-    ),
+    OtherIncomeId                            -> (_ => aboutthetradinghistory.routes.CostOfSales6076Controller.show()),
     CostOfSales6076Id                        -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show() // TODO: Staff costs
     ),

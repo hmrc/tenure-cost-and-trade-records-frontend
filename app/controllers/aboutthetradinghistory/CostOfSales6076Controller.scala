@@ -17,7 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
-import controllers.{FORDataCaptureController, toOpt}
+import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.CostOfSales6076Form.costOfSales6076Form
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{CostOfSales6076, TurnoverSection6076}
@@ -109,9 +109,9 @@ class CostOfSales6076Controller @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     =>
-        controllers.routes.TaskListController.show().url // TODO should redirect Other income, which is not present yet
+        aboutthetradinghistory.routes.OtherIncomeController.show().url
     }
 
 }

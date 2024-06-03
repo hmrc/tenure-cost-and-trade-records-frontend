@@ -42,7 +42,6 @@ class CostOfSales6076ViewSpec extends QuestionViewBehaviours[CostOfSales6076] {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
     }
 
     "Section heading is visible" in {
