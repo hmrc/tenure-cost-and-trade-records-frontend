@@ -23,9 +23,9 @@ import play.api.libs.json._
 case class AboutTheTradingHistoryPartOne(
   isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false),
   turnoverSections6076: Option[Seq[TurnoverSection6076]] = None,
+  grossReceiptsExcludingVAT: Option[Seq[GrossReceiptsExcludingVAT]] = None,
   otherIncomeDetails: Option[String] = None
 )
-
 object AboutTheTradingHistoryPartOne {
   implicit val format: OFormat[AboutTheTradingHistoryPartOne] = Json.format[AboutTheTradingHistoryPartOne]
 
@@ -41,6 +41,6 @@ object AboutTheTradingHistoryPartOne {
     }
 
     sessionRequest.sessionData.copy(aboutTheTradingHistoryPartOne = updateAboutTheTradingHistoryPartOne)
-  }
 
+  }
 }
