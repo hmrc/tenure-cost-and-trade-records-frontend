@@ -120,6 +120,17 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     )
   }
 
+  "redirect to CYA page if No value for Radio Buttons selected" in {
+    val validFormData = Map("addAnotherLetting" -> "no")
+    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val controller    = addOrRemoveLettingController()
+    val result        = controller.submitLetting(1)(request)
+    status(result)           shouldBe SEE_OTHER
+    redirectLocation(result) shouldBe Some(
+      "/send-trade-and-cost-information/check-your-answers-about-franchise-or-lettings"
+    )
+  }
+
   "ensure maximum limit for lettings is respected" in {
     val validFormData = Map("addAnotherLetting" -> "yes")
     val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
