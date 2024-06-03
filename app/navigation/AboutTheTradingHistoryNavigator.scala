@@ -172,12 +172,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     ElectricityGeneratedId                   -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show() // TODO: Gross receipts
     ),
-    GrossReceiptsExcludingVatId -> (_ =>
+    GrossReceiptsExcludingVatId              -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-      ),
+    ),
     OtherIncomeId                            -> (_ => aboutthetradinghistory.routes.CostOfSales6076Controller.show()),
     CostOfSales6076Id                        -> (_ =>
-      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()), // TODO: Staff costs
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    ), // TODO: Staff costs
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
 
