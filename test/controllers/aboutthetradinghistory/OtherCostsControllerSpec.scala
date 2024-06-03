@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,25 +17,23 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
-import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutthetradinghistory.otherCosts
 
 class OtherCostsControllerSpec extends TestBaseSpec {
 
-  val sessionRequest          = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
-  val mockOtherCostsNavigator = mock[AboutTheTradingHistoryNavigator]
-  val mockOtherCostsView      = mock[otherCosts]
-  when(mockOtherCostsView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty: _*))
 
   val otherCostsController = new OtherCostsController(
     stubMessagesControllerComponents(),
-    mockOtherCostsNavigator,
-    mockOtherCostsView,
-    preFilledSession,
+    aboutYourTradingHistoryNavigator,
+    otherCostsView,
+    preEnrichedActionRefiner(
+      aboutTheTradingHistory = aboutYourTradingHistory6015YesSession.aboutTheTradingHistory
+    ),
     mockSessionRepo
   )
 
@@ -51,4 +49,15 @@ class OtherCostsControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
+  "SUBMIT /" should {
+    "redirect to the next page if no other costs filled" in {
+      val result = otherCostsController.submit(postRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      )
+    }
+  }
+
 }
