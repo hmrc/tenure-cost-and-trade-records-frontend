@@ -512,8 +512,8 @@ POST        /tenants-additions-disregarded                          controllers.
 GET         /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.show()
 POST        /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.submit()
 
-GET         /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
-POST        /lease-surrenderd-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
+GET         /lease-surrendered-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
+POST        /lease-surrendered-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
 
 GET         /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.show()
 POST        /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.submit()

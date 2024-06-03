@@ -29,7 +29,7 @@ object IsVATPayableForWholePropertyForm {
   val isVATPayableForWholePropertyForm: Form[AnswersYesNo] =
     Form(
       single(
-        "isVATPayableForWholeProperty" -> createYesNoType("error.isVATPayableForWholeProperty.required")
+        "isVatPayableForWholeProperty" -> createYesNoType("error.isVATPayableForWholeProperty.required")
       )
     )
 
