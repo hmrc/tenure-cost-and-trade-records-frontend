@@ -53,6 +53,12 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpe
       assert(sectionText == messages("label.section.aboutYourTradingHistory"))
     }
 
+    "Page heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-heading-l").text()
+      assert(sectionText == messages("incomeExpenditureSummary.heading"))
+    }
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()

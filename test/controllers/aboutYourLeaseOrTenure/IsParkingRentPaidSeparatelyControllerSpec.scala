@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm.isParkingRentPaidSeparatelyForm
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
@@ -26,6 +27,8 @@ import utils.TestBaseSpec
   */
 class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
 
+  import TestData._
+  import utils.FormBindingTestAssertions._
   def isParkingRentPaidSeparatelyController =
     new IsParkingRentPaidSeparatelyController(
       isParkingRentPaidSeparatelyView,
@@ -55,6 +58,25 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "isParkingRentPaidSeparately" should {
+    "error if isParkingRentPaidSeparately answer is missing" in {
+      val formData = baseFormData - errorKey.isParkingRentPaidSeparately
+      val form     = isParkingRentPaidSeparatelyForm.bind(formData)
+
+      mustContainError(errorKey.isParkingRentPaidSeparately, "error.isParkingRentPaidSeparately.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val isParkingRentPaidSeparately: String
+    } = new {
+      val isParkingRentPaidSeparately: String = "isParkingRentPaidSeparately"
+    }
+
+    val baseFormData: Map[String, String] = Map("isParkingRentPaidSeparately" -> "yes")
   }
 
 }

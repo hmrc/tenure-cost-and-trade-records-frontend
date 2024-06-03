@@ -89,6 +89,6 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
       val canRentBeReducedOnReview: String = "canRentBeReducedOnReview"
     }
 
-    val baseFormData: Map[String, String] = Map("canRentBeReducedOnReviewz" -> "yes")
+    val baseFormData: Map[String, String] = Map("canRentBeReducedOnReview" -> "yes")
   }
 }

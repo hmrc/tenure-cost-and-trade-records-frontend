@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package form.aboutfranchisesorlettings
 
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.data.Forms.mapping
 
-/**
-  * @author Yuriy Tumakha
-  */
-object IsVATPayableForWholePropertyForm {
+object LettingOtherPartOfProperties6030Form {
 
-  val isVATPayableForWholePropertyForm: Form[AnswersYesNo] =
-    Form(
-      single(
-        "isVatPayableForWholeProperty" -> createYesNoType("error.isVATPayableForWholeProperty.required")
-      )
-    )
+  lazy val baseLettingOtherPartOfProperties6030Form: Form[AnswersYesNo] = Form(
+    baseLettingOtherPartOfProperties6030Mapping
+  )
+
+  val baseLettingOtherPartOfProperties6030Mapping = mapping(
+    "lettingOtherPartOfProperty" -> createYesNoType("error.lettingOtherPartOfProperty6030.missing")
+  )(x => x)(b => Some(b))
+
+  val lettingOtherPartOfProperties6030Form = Form(baseLettingOtherPartOfProperties6030Mapping)
 
 }

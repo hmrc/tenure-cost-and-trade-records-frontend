@@ -20,6 +20,7 @@ label.account.property=Property
 label.underReview=(under review)
 label.yes = Yes
 label.no = No
+label.pound = £
 
 # OTHER FOOTER LINKS:
 ########
@@ -664,7 +665,7 @@ franchiseLettings.subheading = Do you receive income from letting out parts of y
 franchiseLettings.6020.heading = Is any rent received from letting any parts of the property?
 franchiseLettings.6020.p1 = For example, advertising rights, telecom mats, charging points, and ATMs. You will have the opportunity to add multiple lettings if required.
 franchiseLettings.6030.heading = Do you receive rental income from any franchises or lettings?
-error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
+error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your propertyLett
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY (6030)
 #######################################
@@ -672,9 +673,7 @@ franchiseLettingsIncome.heading = Do you receive rental income from any franchis
 franchiseLettingsIncome.p1 = You must declare:
 franchiseLettingsIncome.list1 = any payments received instead of trading income from concessions or franchise agreements - for example, tearooms, vehicle charging points or car washes
 franchiseLettingsIncome.list2 = rent received from letting other parts of the property, including advertising billboards, telephone masts or car parking
-error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
-
-
+error.franchiseOrLettings.missing = Select yes if you receive any rental income from franchises or lettings
 
 # ABOUT YOUR LANDLORD
 #####################
@@ -751,8 +750,11 @@ error.feeReceived.feeCalculationDetails.required = You must explain how the fee 
 # LETTING OTHER PART OF PROPERTY
 ##############################
 lettingOtherPartOfProperty.heading = Do you receive any rent from letting other parts of the property?
+lettingOtherPartOfProperty6030.heading = Do you receive any rent from letting other parts of the property?
 hint.lettingOtherPartOfProperty = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
+hint.lettingOtherPartOfProperty6030 = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
 error.lettingOtherPartOfProperty.missing = Select yes if any rent received from letting other parts of the property
+error.lettingOtherPartOfProperty6030.missing = Select yes if any rent is received from letting out parts of the property
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 
 #LETTINGS 6020
@@ -1142,6 +1144,7 @@ lettingDetails.heading = Provide the tenant or operator’s details
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Operator’s name
+label.operatorName6030 = Operator’s name
 label.lettingOperatorName = Tenant’s name
 label.tradingName = Trading name
 label.typeOfBusiness = Describe the type of business
@@ -1158,7 +1161,9 @@ error.typeOfBusiness.maxLength = Type of business must be 100 characters or fewe
 error.lettingTypeOfBusiness.required = Enter a description of the letting
 error.lettingOperatorName.maxLength = Tenant‘s name must be 50 characters or fewer
 error.lettingTypeOfBusiness.maxLength = Description of letting must be 50 characters or fewer
+
 #BELOW IS FOR FORM 6030
+error.operatorName6030.required = Enter the name of the person or company operating the business
 label.howBusinessPropertyIsUsed = Describe how the property is used
 hint.describeBusiness = For example, a tea room or car wash.
 error.howBusinessPropertyIsUsed.required = Enter a description of the property use
@@ -1233,6 +1238,7 @@ label.addAnotherCateringOperation = Do you need to add another separate business
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
+error.addAnotherSeparateConcessionOrFranchise.required = Select yes if you need to add another separate concession or franchise
 error.addAnotherLetting.required = Select yes if you would like to add another letting
 
 # TENANTS ADDITIONS DISREGARDED
@@ -1608,6 +1614,39 @@ costOfSales.drinks = Drinks
 costOfSales.otherSales = Other
 costOfSales.otherSales.hint = Including hire of function rooms, conference rooms and telephones.
 costOfSales.total = Total cost of sales
+
+# COST OF SALES 6076
+
+costOfSales6076.heading = Cost of sales
+costOfSales6076.p = Provide us with details of your cost of sales. If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
+costOfSales6076.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
+costOfSales6076.financialYearEnd = Financial year end
+costOfSales6076.fuelOrFeedstock = Fuel or feedstock
+costOfSales6076.importedPower = Imported power
+costOfSales6076.TNuoS = Transmission network use of systems (TNuoS)
+costOfSales6076.BSuoS = Balancing service use of system (BSuoS)
+costOfSales6076.otherSales = Other costs (specify)
+costOfSales6076.otherSales.hint = Include any other costs of sales not listed previously
+costOfSales6076.otherSales.label = Give details of the sources of your other income
+costOfSales6076.total = Total cost
+error.costOfSales6076.details.required = Please provide details of the sources of your other income
+error.costOfSales6076.details.maxlength = Details of the sources of your other income must be 2,000 characters or fewer
+error.costOfSales6076.fuelOrFeedstock.required = Enter 0 if you did not have any fuel costs in the year ending {0}
+error.costOfSales6076.fuelOrFeedstock.range = Fuel costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.fuelOrFeedstock.negative = Fuel costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.importedPower.required = Enter 0 if you did not have any imported power costs in the year ending {0}
+error.costOfSales6076.importedPower.range = Imported power costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.importedPower.negative = Imported power costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.TNuoS.required = Enter 0 if you did not have any TNuoS costs in the year ending {0}
+error.costOfSales6076.TNuoS.range = TNuoS power costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.TNuoS.negative = TNuoS power costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.BSuoS.required = Enter 0 if you did not have any BSuoS costs in the year ending {0}
+error.costOfSales6076.BSuoS.range = BSuoS costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.BSuoS.negative = BSuoS costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.otherSales.required = Enter 0 if you did not have any other costs in the year ending {0}
+error.costOfSales6076.otherSales.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
+error.costOfSales6076.otherSales.negative = Other costs in the year ending {0} cannot be a negative number
+
 
 # GROSS PROFIT
 grossProfit.heading = Total gross profits

@@ -55,6 +55,12 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
       assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
+    "Page heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-heading-l").text()
+      assert(sectionText == messages("costOfSales.heading"))
+    }
+
     "contain get help section" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("costOfSales.details.p1")))

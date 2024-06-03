@@ -16,48 +16,39 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.LowMarginFuelCardDetailsForm.lowMarginFuelCardDetailsForm
-import models.pages.Summary
-import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
+import actions.SessionRequest
+import form.aboutthetradinghistory.CostOfSales6076Form
+import models.submissions.aboutthetradinghistory.CostOfSales6076
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class lowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail] {
+class CostOfSales6076ViewSpec extends QuestionViewBehaviours[CostOfSales6076] {
 
-  override val form: Form[LowMarginFuelCardDetail] = lowMarginFuelCardDetailsForm
+  val messageKeyPrefix = "costOfSales6076"
+  val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  val messageKeyPrefix = "lowMarginFuelCardDetails"
+  override val form = CostOfSales6076Form.costOfSales6076Form(Seq("2026", "2025", "2024"))(messages)
 
-  val backLink = controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
+  def createView = () => costOfSales6076View(form, "")(sessionRequest, messages)
 
-  def createView = () =>
-    lowMarginFuelCardsDetailsView(
-      form,
-      None,
-      controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url,
-      Summary("99996010001")
-    )(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[CostOfSales6076]) => costOfSales6076View(form, "")(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[LowMarginFuelCardDetail]) =>
-    lowMarginFuelCardsDetailsView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
+  "Cost of sales 6076 view" should {
 
-  "Catering bunker fuel cards details view" should {
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the benefits given Page" in {
-
+    "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      assert(sectionText.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
     "contain continue button with the value Continue" in {

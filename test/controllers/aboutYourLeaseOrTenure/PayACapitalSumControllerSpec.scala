@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,6 +25,8 @@ import utils.TestBaseSpec
 
 class PayACapitalSumControllerSpec extends TestBaseSpec {
 
+  import TestData._
+  import utils.FormBindingTestAssertions._
   def payACapitalSumController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
@@ -55,5 +58,24 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Pay a capital sum form" should {
+    "error if Pay a capital sum answer is missing" in {
+      val formData = baseFormData - errorKey.payACapitalSum
+      val form     = payACapitalSumForm.bind(formData)
+
+      mustContainError(errorKey.payACapitalSum, "error.payACapitalSum.missing", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val payACapitalSum: String
+    } = new {
+      val payACapitalSum: String = "payACapitalSum"
+    }
+
+    val baseFormData: Map[String, String] = Map("payACapitalSum" -> "yes")
   }
 }

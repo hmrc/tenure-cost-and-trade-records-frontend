@@ -175,6 +175,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OtherIncomeId                            -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show() // TODO: Cost of sales
     ),
+    CostOfSales6076Id                        -> (_ =>
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show() // TODO: Staff costs
+    ),
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
 
