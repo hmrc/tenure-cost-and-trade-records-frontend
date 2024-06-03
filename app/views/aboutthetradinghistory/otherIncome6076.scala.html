@@ -16,21 +16,26 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
 
-
 @this(
         layout: Layout,
-        govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
+        govukButton: GovukButton,
         govukInput: GovukInput,
         govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        hmrcCharacterCount: HmrcCharacterCount,
         dateUtil: DateUtil
 )
 
 
-@(form: Form[Seq[(Int, String)]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[(Seq[Option[BigDecimal]], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
 
 
 @rowLabel(labelKey: String, hintKey: String) = {
@@ -51,7 +56,9 @@
             content = HtmlContent(
                 govukInput(
                     Input(
-                        classes = "govuk-input--width-10",
+                        prefix = Some(PrefixOrSuffix(
+                            content = Text("£")
+                        )),
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> messages(labelKey)
@@ -64,7 +71,7 @@
 }
 
 @layout(
-    pageHeading = messages("turnover.6076.heading"),
+    pageHeading = messages("turnover.6076.otherIncome.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -73,9 +80,12 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.p1")</p>
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.otherIncome.p1")</p>
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.6076.otherIncome.inset"))
+    ))
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherIncomeController.submit()) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
@@ -88,26 +98,7 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            Seq(
-                                TableRow(
-                                    content = Text(messages("turnover.6076.weeks"))
-                                ),
-                                TableRow(
-                                    content = HtmlContent(
-                                        govukInput(Input(
-                                            classes = "govuk-input--width-2",
-                                            attributes = Map(
-                                                "maxlength" -> "2",
-                                                "aria-label" -> messages("turnover.6076.weeks")
-                                            ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("turnover.weeks"))
-                                            ))
-                                        ).withFormField(form(s"turnover[$idx].weeks")))
-                                    )
-                                )
-                            ),
-                            turnoverRow(s"turnover[$idx].electricityGenerated", "turnover.6076.electricityGenerated", "turnover.6076.electricityGenerated.hint")
+                            turnoverRow(s"otherIncomeSeq.turnover[$idx].otherIncome", "turnover.6076.otherIncome", "turnover.6076.otherIncome.hint")
                         )
                     ))
                 </td>
@@ -115,6 +106,18 @@
                 </tr>
             </tbody>
         </table>
+
+        @hmrcCharacterCount(
+            CharacterCount(
+                rows = 3,
+                maxLength = 2000,
+                classes = "govuk-!-width-two-thirds",
+                label = Label(
+                    content = Text(messages("turnover.6076.otherIncomeDetails")),
+                    classes = "govuk-!-font-weight-bold"
+                )
+            ).withFormField(form("otherIncomeDetails"))
+        )
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

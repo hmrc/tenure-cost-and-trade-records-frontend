@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{EnrichedSeq, costOfSalesMapping, turnoverSalesMappingWithYear}
+import form.MappingSupport.{EnrichedSeq, costOfSalesMapping}
 import models.submissions.aboutthetradinghistory.{CostOfSales6076, CostOfSales6076Sum}
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}

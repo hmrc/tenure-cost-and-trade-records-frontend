@@ -18,24 +18,29 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
-import form.aboutthetradinghistory.CostOfSales6076Form.costOfSales6076Form
+import form.aboutthetradinghistory.OtherIncomeForm.otherIncomeForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{CostOfSales6076, TurnoverSection6076}
+import models.submissions.aboutthetradinghistory.TurnoverSection6076
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.CostOfSales6076Id
+import navigation.identifiers.OtherIncomeId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.costOfSales6076
+import views.html.aboutthetradinghistory.otherIncome6076
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+  * Other income - 6076.
+  *
+  * @author Yuriy Tumakha
+  */
 @Singleton
-class CostOfSales6076Controller @Inject() (
+class OtherIncomeController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: costOfSales6076,
+  otherIncomeView: otherIncome6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -44,12 +49,14 @@ class CostOfSales6076Controller @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
-      val years       = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val costOfSales =
-        turnoverSections6076.flatMap(_.costOfSales6076).headOption.getOrElse(CostOfSales6076(Seq.empty, None))
+      val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
+      val details = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherIncomeDetails).getOrElse("")
+
       Ok(
-        view(
-          costOfSales6076Form(years).fill(costOfSales),
+        otherIncomeView(
+          otherIncomeForm(years).fill(
+            (turnoverSections6076.map(_.otherIncome), details)
+          ),
           getBackLink
         )
       )
@@ -60,28 +67,20 @@ class CostOfSales6076Controller @Inject() (
     runWithSessionCheck { turnoverSections6076 =>
       val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[CostOfSales6076](
-        costOfSales6076Form(years),
-        formWithErrors => {
-          val updatedErrors         = formWithErrors.errors.map { error =>
-            if (error.message == "error.costOfSales6076.details.required") {
-              error.copy(key = "otherSalesDetails")
-            } else {
-              error
-            }
-          }
-          val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
-          BadRequest(view(updatedFormWithErrors, getBackLink))
-        },
+      continueOrSaveAsDraft[(Seq[Option[BigDecimal]], String)](
+        otherIncomeForm(years),
+        formWithErrors => BadRequest(otherIncomeView(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
-            turnoverSections6076.map { previousSection =>
-              previousSection.copy(costOfSales6076 = Some(success))
+            (success._1 zip turnoverSections6076).map { case (otherIncome, previousSection) =>
+              previousSection.copy(otherIncome = otherIncome)
             }
+          val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
-              turnoverSections6076 = Some(updatedSections)
+              turnoverSections6076 = Some(updatedSections),
+              otherIncomeDetails = Option(details).filter(_.nonEmpty)
             )
           )
 
@@ -90,7 +89,7 @@ class CostOfSales6076Controller @Inject() (
             .map { _ =>
               navigator.cyaPage
                 .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(CostOfSales6076Id, updatedData).apply(updatedData))
+                .getOrElse(navigator.nextPage(OtherIncomeId, updatedData).apply(updatedData))
             }
             .map(Redirect)
         }
@@ -109,9 +108,10 @@ class CostOfSales6076Controller @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
-        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     =>
-        aboutthetradinghistory.routes.OtherIncomeController.show().url
+        // TODO: Gross receipts for baseload generation
+        aboutthetradinghistory.routes.ElectricityGeneratedController.show().url
     }
 
 }

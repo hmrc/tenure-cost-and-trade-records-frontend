@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.{AdvertisingRightLettingForm, TelecomMastLettingForm}
+import form.aboutfranchisesorlettings.TelecomMastLettingForm
 import models.pages.Summary
-import models.submissions.aboutfranchisesorlettings.{AdvertisingRightLetting, TelecomMastLetting}
+import models.submissions.aboutfranchisesorlettings.TelecomMastLetting
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

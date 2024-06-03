@@ -22,7 +22,7 @@ import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
-import play.api.mvc.{AnyContent, AnyContentAsEmpty}
+import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAboutYourLeaseOrTenureViewSpec

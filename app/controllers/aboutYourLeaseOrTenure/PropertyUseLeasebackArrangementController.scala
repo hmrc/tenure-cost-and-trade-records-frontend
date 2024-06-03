@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.{ForTypes, Session}
@@ -92,12 +92,10 @@ class PropertyUseLeasebackArrangementController @Inject() (
         answers.forType match {
           case ForTypes.for6020 =>
             answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
-              case Some("yes") =>
-                controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
-              case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+              case Some("yes") => aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+              case _           => aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
             }
-          case _                =>
-            controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+          case _                => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
         }
     }
 

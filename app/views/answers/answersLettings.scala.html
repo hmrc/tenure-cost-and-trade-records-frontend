@@ -60,14 +60,6 @@
         }
     }
 
-@tableRow(values: Seq[String]) = {
-    @values.map { value =>
-        <div class="hmrc-turnover-table-column">
-            @value
-        </div>
-    }
-}
-
 @createRentDetails(letting:LettingPartOfProperty,index: Int) = {
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.rentDetails",_ => letting.rentalDetails.map(_.annualRent.asMoney).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
