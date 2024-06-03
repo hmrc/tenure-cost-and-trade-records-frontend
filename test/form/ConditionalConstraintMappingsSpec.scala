@@ -23,6 +23,8 @@ import play.api.data.{Form, FormError}
 import play.api.data.Forms.{list, mapping, text}
 import play.api.data.validation.Constraints.maxLength
 
+import scala.collection.compat.immutable.ArraySeq
+
 /**
   * @author Yuriy Tumakha
   */
@@ -69,6 +71,16 @@ class ConditionalConstraintMappingsSpec extends AnyFlatSpec with should.Matchers
 
     res.errors shouldBe empty
     res.value  shouldBe Some(Model(List.empty, "Selected items details"))
+  }
+
+  it should "return maxLength error for too big `description`" in {
+    val data = Map[String, String](
+      "description" -> ("Too big selected items details." + "x" * 2000)
+    )
+    val res  = form.bind(data)
+
+    res.errors shouldBe List(FormError("description", List("error.itemsDescription.maxLength"), ArraySeq(2000)))
+    res.value  shouldBe None
   }
 
   case class Model(

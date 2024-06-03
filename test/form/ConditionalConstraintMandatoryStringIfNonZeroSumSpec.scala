@@ -24,6 +24,7 @@ import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, FormError, Mapping}
 import util.NumberUtil.zeroBigDecimal
 
+import scala.collection.immutable.ArraySeq
 import scala.util.Try
 
 /**
@@ -98,6 +99,16 @@ class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec w
 
     res.errors shouldBe empty
     res.value  shouldBe Some(NonZeroSumModel(List.empty, "No other income"))
+  }
+
+  it should "return maxLength error for too big `otherIncomeDetails`" in {
+    val data = Map[String, String](
+      "otherIncomeDetails" -> ("Too big other income details." + "x" * 2000)
+    )
+    val res  = form.bind(data)
+
+    res.errors shouldBe List(FormError("otherIncomeDetails", List("error.otherIncomeDetails.maxLength"), ArraySeq(2000)))
+    res.value  shouldBe None
   }
 
   case class NonZeroSumModel(

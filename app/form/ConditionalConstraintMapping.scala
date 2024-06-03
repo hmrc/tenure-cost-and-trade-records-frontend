@@ -38,11 +38,13 @@ case class ConditionalConstraintMapping[T](
     this.copy(constraints = constraints ++ addConstraints.toSeq)
 
   def bind(data: Map[String, String]): Either[Seq[FormError], T] =
-    if (condition(data)) {
-      conditionalMapping.bind(data)
-    } else {
-      defaultMapping.bind(data)
-    }
+    (
+      if (condition(data)) {
+        conditionalMapping.bind(data)
+      } else {
+        defaultMapping.bind(data)
+      }
+    ).flatMap(applyConstraints)
 
   def unbind(value: T): Map[String, String] = defaultMapping.unbind(value)
 
