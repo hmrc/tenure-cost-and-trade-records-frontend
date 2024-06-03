@@ -48,11 +48,12 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
 
   private def forType(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType
+
   private def entityType(implicit request: SessionRequest[AnyContent]): String =
     forType match {
-      case ForTypes.for6030 => "franchise"
-      case ForTypes.for6015 | ForTypes.for6016 => "concession"
-      case _ => "catering"
+      case ForTypes.for6030 => "lettingConcession"
+      case ForTypes.for6015 | ForTypes.for6016 => "letting"
+      case _ => "lettingOtherPartOfProperty"
     }
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -70,6 +71,9 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           index,
           entityType,
           forType,
+          "addAnotherLettingConcessionOrFranchise",
+          "addAnotherLetting",
+          "addAnotherLettingOtherPartOfProperty",
           getBackLink(index),
           request.sessionData.toSummary
         )
@@ -92,6 +96,9 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
               index,
               entityType,
               forType,
+              "addAnotherLettingConcessionOrFranchise",
+              "addAnotherLetting",
+              "addAnotherLettingOtherPartOfProperty",
               getBackLink(index),
               request.sessionData.toSummary
             )
