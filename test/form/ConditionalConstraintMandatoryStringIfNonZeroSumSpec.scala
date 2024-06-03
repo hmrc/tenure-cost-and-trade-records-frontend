@@ -107,7 +107,9 @@ class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec w
     )
     val res  = form.bind(data)
 
-    res.errors shouldBe List(FormError("otherIncomeDetails", List("error.otherIncomeDetails.maxLength"), ArraySeq(2000)))
+    res.errors shouldBe List(
+      FormError("otherIncomeDetails", List("error.otherIncomeDetails.maxLength"), ArraySeq(2000))
+    )
     res.value  shouldBe None
   }
 
