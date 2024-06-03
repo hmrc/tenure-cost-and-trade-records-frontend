@@ -20,6 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
+import models.ForTypes
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -45,6 +46,15 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
+  private def forType(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.forType
+  private def entityType(implicit request: SessionRequest[AnyContent]): String =
+    forType match {
+      case ForTypes.for6030 => "franchise"
+      case ForTypes.for6015 | ForTypes.for6016 => "concession"
+      case _ => "catering"
+    }
+
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val addAnother = request.sessionData.aboutFranchisesOrLettings
       .flatMap(_.lettingSections.lift(index))
@@ -58,9 +68,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             case _                        => addAnotherLettingForm
           },
           index,
-          "addAnotherLettingConcessionOrFranchise",
-          "addAnotherLetting",
-          "addAnotherLettingOtherPartOfProperty",
+          entityType,
+          forType,
           getBackLink(index),
           request.sessionData.toSummary
         )
@@ -81,9 +90,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
-              "addAnotherLettingConcessionOrFranchise",
-              "addAnotherLetting",
-              "addAnotherLettingOtherPartOfProperty",
+              entityType,
+              forType,
               getBackLink(index),
               request.sessionData.toSummary
             )

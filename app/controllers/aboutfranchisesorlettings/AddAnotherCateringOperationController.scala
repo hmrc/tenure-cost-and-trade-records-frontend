@@ -66,6 +66,19 @@ class AddAnotherCateringOperationController @Inject() (
         .map(_.cateringOperationDetails.operatorName)
     }
 
+  private def entityType(implicit request: SessionRequest[AnyContent]): String =
+    forType match {
+      case ForTypes.for6030 => "addAnotherConcessionOrFranchise"
+      case ForTypes.for6015 | ForTypes.for6016 => "addAnotherConcession"
+      case _ => "addAnotherCateringOperation"
+    }
+
+  /*
+  "addAnotherConcessionOrFranchise",
+  "addAnotherConcession",
+  "addAnotherCateringOperation",
+  */
+
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val addAnother = if (forType == ForTypes.for6030) {
       franchisesOrLettingsData
@@ -83,9 +96,8 @@ class AddAnotherCateringOperationController @Inject() (
         addAnotherCateringOperationOrLettingAccommodationView(
           addAnother.fold(addAnotherCateringOperationForm)(addAnotherCateringOperationForm.fill),
           index,
-          "addAnotherConcessionOrFranchise",
-          "addAnotherConcession",
-          "addAnotherCateringOperation",
+          entityType,
+          forType,
           getBackLink(index),
           request.sessionData.toSummary
         )
@@ -109,9 +121,8 @@ class AddAnotherCateringOperationController @Inject() (
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
-              "addAnotherConcessionOrFranchise",
-              "addAnotherConcession",
-              "addAnotherCateringOperation",
+              entityType,
+              forType,
               getBackLink(index),
               request.sessionData.toSummary
             )
