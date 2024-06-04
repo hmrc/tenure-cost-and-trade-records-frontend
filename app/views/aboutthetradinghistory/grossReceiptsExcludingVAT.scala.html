@@ -1,0 +1,302 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.GrossReceiptsExcludingVAT
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits._
+@import util.DateUtil
+@import util.NumberUtil._
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        dateUtil: DateUtil
+)
+
+
+@(form: Form[Seq[GrossReceiptsExcludingVAT]],fromLocation:String = "")(implicit request: SessionRequest[_], messages: Messages)
+
+@electricitySalesHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.electricitySales")</span></p>
+}
+
+@feedInTariffHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.feedInTariff")</span></p>
+}
+
+@rocBuyoutHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.rocBuyout")</span></p>
+}
+
+@rocRecycleHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.rocRecycle")</span></p>
+}
+
+@contractForDifferenceHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.contractForDifference")</span></p>
+}
+
+@capacityMarketHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.capacityMarket")</span></p>
+}
+
+@balancingServicesHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.balancingServices")</span></p>
+}
+
+@embeddedBenefitsHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.embeddedBenefits")</span></p>
+}
+
+@totalHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.total")</span></p>
+}
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="grossReceiptsExcludingVAT[@idx]."
+    data-total-items="electricitySales,feedInTariff,rocBuyout,rocRecycle,contractForDifference,capacityMarket,balancingServices,embeddedBenefits">
+    @form.value.fold("")(_(idx).total.asMoney)
+    </span>
+}
+
+@layout(
+    pageHeading = messages("grossReceipts.heading"),
+    showSection = true,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    summary = Some(request.sessionData.toSummary),
+    backLinkUrl = fromLocation match {
+        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+        case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        case _ => controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show().url
+    },
+    theForm = form
+) {
+    <p class="govuk-body">@messages("grossReceipts.p1")</p>
+
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.inset"))
+    ))
+
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.submit()) {
+
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(
+                                content = Text(messages("grossReceipts.financialYearEnd"))
+                            ),
+                            HeadCell(
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
+                            )
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(electricitySalesHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.electricitySales")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].electricitySales"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(feedInTariffHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.feedInTariff")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].feedInTariff"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(rocBuyoutHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.rocBuyout")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].rocBuyout"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(rocRecycleHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.rocRecycle")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].rocRecycle"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(contractForDifferenceHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.contractForDifference")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].contractForDifference"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(capacityMarketHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.capacityMarket")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].capacityMarket"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(balancingServicesHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.balancingServices")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].balancingServices"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(embeddedBenefitsHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(
+                                            Input(
+                                                prefix = Some(PrefixOrSuffix(
+                                                    content = Text("£")
+                                                )),
+                                                attributes = Map(
+                                                    "maxlength" -> "13",
+                                                    "aria-label" -> messages("grossReceipts.embeddedBenefits")
+                                                ),
+                                            ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].embeddedBenefits"))
+                                        )
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(totalHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(totalContent(idx))
+                                )
+                            )
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

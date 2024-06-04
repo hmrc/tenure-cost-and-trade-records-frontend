@@ -73,14 +73,8 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit()
-  }
-
-  private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    for {
-      _ <- submitRequestReferenceNumber()(hc, request)
-    } yield Found(confirmationUrl)
+    submitRequestReferenceNumber()(hc, request)
   }
 
   def submitRequestReferenceNumber()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Result] = {

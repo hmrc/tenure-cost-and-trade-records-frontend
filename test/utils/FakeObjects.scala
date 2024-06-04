@@ -494,6 +494,13 @@ trait FakeObjects {
       TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000),
       TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000)
     ),
+    grossReceiptsExcludingVAT = Some(
+      Seq(
+        GrossReceiptsExcludingVAT(LocalDate.now()),
+        GrossReceiptsExcludingVAT(LocalDate.now().minusYears(1)),
+        GrossReceiptsExcludingVAT(LocalDate.now().minusYears(2))
+      )
+    ),
     otherIncomeDetails = "OtherIncome details"
   )
 

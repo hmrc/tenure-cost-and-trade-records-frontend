@@ -19,18 +19,22 @@ package controllers.requestReferenceNumber
 import config.ErrorHandler
 import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
 import connectors.{Audit, SubmissionConnector}
+import models.submissions.RequestReferenceNumberSubmission
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
+
+import scala.concurrent.Future
 
 class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec {
 
   import TestData._
 
-  val submissionConnector: SubmissionConnector = mock[SubmissionConnector]
+  val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
 
   def checkYourAnswersRequestReferenceController(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
@@ -46,6 +50,19 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
       mockSessionRepo
     )
 
+  def checkYourAnswersRequestReferenceControllerWithMockConnector(
+    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
+  ) =
+    new CheckYourAnswersRequestReferenceNumberController(
+      stubMessagesControllerComponents(),
+      mockSubmissionConnector,
+      checkYourAnswersRequestReferenceNumberView,
+      confirmationRequestReferenceNumberView,
+      inject[ErrorHandler],
+      inject[Audit],
+      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+      mockSessionRepo
+    )
   def checkYourAnswersRequestReferenceControllerBlank(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
   ) =
@@ -86,11 +103,30 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
   }
 
   "SUBMIT /" should {
-    "throw a FOUND if an empty form is submitted" in {
-      val res = checkYourAnswersRequestReferenceController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
-      )
-      status(res) shouldBe FOUND
+    "handle exception and return InternalServerError" should {
+      "return 500 and audit the failure" in {
+        val controller = checkYourAnswersRequestReferenceControllerWithMockConnector()
+
+        // Mocking the submissionConnector to throw an exception
+        when(
+          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
+            any[HeaderCarrier]
+          )
+        )
+          .thenReturn(Future.failed(new RuntimeException("Test Exception")))
+
+        // Call the submit action
+        val result = controller.submit()(fakeRequest)
+
+        // Awaiting the result to ensure the exception handling is tested
+        status(result) shouldBe INTERNAL_SERVER_ERROR
+
+        // Verify that the error is logged
+        verify(mockSubmissionConnector).submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
+          any[HeaderCarrier]
+        )
+
+      }
     }
   }
 

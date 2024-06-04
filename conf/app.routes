@@ -234,6 +234,10 @@ POST        /unusual-circumstances                                  controllers.
 GET         /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.show()
 POST        /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.submit()
 
+GET         /gross-receipts-excluding-vat                           controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.show()
+POST        /gross-receipts-excluding-vat                           controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.submit()
+# Form 6076 routing end
+
 # About the francise or letting
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
