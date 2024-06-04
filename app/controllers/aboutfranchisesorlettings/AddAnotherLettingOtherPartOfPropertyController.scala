@@ -71,8 +71,6 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           index,
           entityType,
           forType,
-          "addAnotherLettingConcessionOrFranchise",
-          "addAnotherLetting",
           "addAnotherLettingOtherPartOfProperty",
           getBackLink(index),
           request.sessionData.toSummary
@@ -96,8 +94,6 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
               index,
               entityType,
               forType,
-              "addAnotherLettingConcessionOrFranchise",
-              "addAnotherLetting",
               "addAnotherLettingOtherPartOfProperty",
               getBackLink(index),
               request.sessionData.toSummary

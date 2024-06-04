@@ -92,8 +92,6 @@ class AddAnotherCateringOperationController @Inject() (
           index,
           entityType,
           forType,
-          "addAnotherConcessionOrFranchise",
-          "addAnotherConcession",
           "addAnotherCateringOperation",
           getBackLink(index),
           request.sessionData.toSummary
@@ -120,8 +118,6 @@ class AddAnotherCateringOperationController @Inject() (
               index,
               entityType,
               forType,
-              "addAnotherConcessionOrFranchise",
-              "addAnotherConcession",
               "addAnotherCateringOperation",
               getBackLink(index),
               request.sessionData.toSummary
