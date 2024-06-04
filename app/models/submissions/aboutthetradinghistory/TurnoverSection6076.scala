@@ -30,7 +30,8 @@ case class TurnoverSection6076(
   tradingPeriod: Int,
   electricityGenerated: Option[String] = None,
   otherIncome: Option[BigDecimal] = None,
-  costOfSales6076: Option[CostOfSales6076] = None
+  costOfSales6076: Option[CostOfSales6076] = None,
+  headOfficeExpenses: Option[BigDecimal] = None
 )
 
 object TurnoverSection6076 {

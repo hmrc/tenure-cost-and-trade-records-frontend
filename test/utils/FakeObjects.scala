@@ -490,11 +490,12 @@ trait FakeObjects {
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
-      TurnoverSection6076(LocalDate.now(), 52, "5000 kWh", 1000),
-      TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000),
-      TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000)
+      TurnoverSection6076(LocalDate.now(), 52, "5000 kWh", 1000, headOfficeExpenses = 100),
+      TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000, headOfficeExpenses = 100),
+      TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000, headOfficeExpenses = 100)
     ),
-    otherIncomeDetails = "OtherIncome details"
+    otherIncomeDetails = "OtherIncome details",
+    furtherInformationOrRemarks = "Further information or remarks"
   )
 
   val aboutYourTradingHistory6076YesSession: Session =

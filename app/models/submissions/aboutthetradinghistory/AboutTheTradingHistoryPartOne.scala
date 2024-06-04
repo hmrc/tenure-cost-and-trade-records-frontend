@@ -23,7 +23,8 @@ import play.api.libs.json._
 case class AboutTheTradingHistoryPartOne(
   isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false),
   turnoverSections6076: Option[Seq[TurnoverSection6076]] = None,
-  otherIncomeDetails: Option[String] = None
+  otherIncomeDetails: Option[String] = None,
+  furtherInformationOrRemarks: Option[String] = None
 )
 
 object AboutTheTradingHistoryPartOne {
