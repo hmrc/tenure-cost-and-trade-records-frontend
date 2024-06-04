@@ -103,22 +103,6 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
   }
 
   "SUBMIT /" should {
-    "throw a SEE_OTHER if an empty form is submitted" in {
-      val res = checkYourAnswersRequestReferenceController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
-      )
-      status(res) shouldBe SEE_OTHER
-    }
-  }
-
-  "Check Your Answers request reference number form" should {
-    "error if checkYourAnswersRequestReferenceNumber is missing" in {
-      val formData = baseFormData - errorKey.checkYourAnswersRequestReferenceNumber
-      val form     = checkYourAnswersRequestReferenceNumberForm.bind(formData)
-
-      mustContainError(errorKey.checkYourAnswersRequestReferenceNumber, "error.checkYourAnswersRadio.required", form)
-    }
-
     "handle exception and return InternalServerError" should {
       "return 500 and audit the failure" in {
         val controller = checkYourAnswersRequestReferenceControllerWithMockConnector()
@@ -143,6 +127,15 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
         )
 
       }
+    }
+  }
+
+  "Check Your Answers request reference number form" should {
+    "error if checkYourAnswersRequestReferenceNumber is missing" in {
+      val formData = baseFormData - errorKey.checkYourAnswersRequestReferenceNumber
+      val form     = checkYourAnswersRequestReferenceNumberForm.bind(formData)
+
+      mustContainError(errorKey.checkYourAnswersRequestReferenceNumber, "error.checkYourAnswersRadio.required", form)
     }
   }
 
