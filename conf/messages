@@ -1225,7 +1225,7 @@ concessionLetting.zeroBusinessOrFranchises.heading = You have removed all your s
 concessionLetting.heading = You have added {0} separate concession or franchise
 concessionLetting.heading.plural = You have added {0} separate concessions or franchise
 label.concessionLetting = Do you need to add another separate business or concession?
-
+lettingConcessionFranchise.heading = You have added {0} letting
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 label.addAnotherLettingConcessionOrFranchise = Do you need to add another letting?
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your lettings

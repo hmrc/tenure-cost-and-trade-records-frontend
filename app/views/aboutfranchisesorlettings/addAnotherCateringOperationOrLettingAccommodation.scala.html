@@ -63,11 +63,11 @@
  else messages(s"label.${entityType}")}
 
 @pageHeading = @{messages(
- if (isConcession) s"$concessionOrLetting.heading"
- else if (isConcession6030 && operatorNames.size == 1) s"$concessionOrFranchise.heading"
- else if (isConcession6030 && operatorNames.size > 1) s"$concessionOrFranchise.heading.plural"
- else if(operatorNames.size == 0 && !isConcession6030) messages(s"$cateringOrLetting.zeroBusinessOrFranchises.heading")
-  else if (operatorNames.size == 0 && isConcession6030) messages(s"$concessionOrFranchise.zeroBusinessOrFranchises.heading")
+ if (isConcession) s"$entityType.heading"
+ else if (isConcession6030 && operatorNames.size == 1) s"$entityType.heading"
+ else if (isConcession6030 && operatorNames.size > 1) s"$entityType.heading.plural"
+ else if(operatorNames.size == 0 && !isConcession6030) messages(s"$entityType.zeroBusinessOrFranchises.heading")
+  else if (operatorNames.size == 0 && isConcession6030) messages(s"$entityType.zeroBusinessOrFranchises.heading")
   else s"$cateringOrLetting.heading" , operatorNames.size) + pluralSuffix}
 
 @isLettingOtherPartOfProperty = @{ cateringOrLetting.equals("addAnotherLettingOtherPartOfProperty") }
