@@ -52,17 +52,15 @@
 
 @session = @{ request.sessionData }
 
-@forType = @{ session.forType }
-
 @isConcession = @{ forType == ForTypes.for6015 || forType == ForTypes.for6016 }
 @isConcession6030 = @{ forType == ForTypes.for6030 }
 
 @label = @{if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
 
 @formLabel =@{
- if (isConcession) messages(s"label.${concessionOrLetting}")
- else if (isConcession6030) messages(s"label.${concessionOrFranchise}")
- else messages(s"label.${cateringOrLetting}")}
+ if (isConcession) messages(s"label.${entityType}")
+ else if (isConcession6030) messages(s"label.${entityType}")
+ else messages(s"label.${entityType}")}
 
 @pageHeading = @{messages(
  if (isConcession) s"$concessionOrLetting.heading"
