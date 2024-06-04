@@ -214,7 +214,7 @@
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput",
                     _.throughputAffectsRent.map(_.doesRentVaryToThroughput.name).flatMap(v => messages(s"label.$v")),
                     aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show(), "throughputAffectsRent") ++
-                sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.howThroughputAffectsRent",
+                sectionAnswers3.conditionalOptionalRow(_.throughputAffectsRent.map(_.doesRentVaryToThroughput.name).contains("yes"),"checkYourAnswersAboutYourLeaseOrTenure.howThroughputAffectsRent",
             _.throughputAffectsRent.map(_.throughputAffectsRentDetails).flatMap(v => v.map(s => s)),
             aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show(), "throughputAffectsRentDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
@@ -324,7 +324,8 @@
                 ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                 aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                 ("valueAsHtml", _ => None)) ++
-                    sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.vatPayable",
+                    sectionAnswers3.conditionalOptionalRow(_ => {
+                        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails.map(_.includedInYourRent.contains("vat"))).getOrElse(false)},"checkYourAnswersAboutYourLeaseOrTenure.vatPayable",
                         _.isVATPayableForWholeProperty.map(_.name).flatMap(v => messages(s"label.$v")),
                         aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show(), "isVatPayable")
                     ++
@@ -387,7 +388,7 @@
 
                         sectionAnswers3.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.costOfPaidService",
                             _ => servicePaid.annualCharge.map(_.annualCharge.asMoney),
-                            aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(sectionAnswers3.answers.map(_.servicesPaid).getOrElse(IndexedSeq.empty).size), "costOfPaidService")
+                            aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(idx), "costOfPaidService")
             ))
         }
         @govukSummaryList(SummaryList(rows =
@@ -404,7 +405,7 @@
             _.carParking.flatMap(_.doesRentIncludeParkingOrGarage.map(_.name).map(v => messages(s"label.$v"))),
             aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show(), "rentIncludeParking") ++
 
-                sectionAnswers3.conditionalOptionalRow(_.carParking.flatMap(_.doesRentIncludeParkingOrGarage.map(_.name).map(v => v.contains("yes"))),"checkYourAnswersAboutYourLeaseOrTenure.spacesIncludedInRent",
+                sectionAnswers3.conditionalOptionalRow(_.carParking.flatMap(_.doesRentIncludeParkingOrGarage.map(_.name).map(v => v.contains("yes"))).getOrElse(false),"checkYourAnswersAboutYourLeaseOrTenure.spacesIncludedInRent",
                     _.carParking
                             .map(spaces => spaces.includedInRentSpaces.map(space => s"${openSpaceMsg(space.openSpaces)}<br/>${coveredSpaceMsg(space.coveredSpaces)}<br/>${garageMsg(space.garages)}").getOrElse("")),
                     aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show(), "spacesIncludedInRent",
@@ -414,7 +415,7 @@
                     _.carParking.flatMap(_.isRentPaidSeparately.map(_.name).map(v => messages(s"label.$v"))),
                     aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show(), "isParkingRentPaidSeparately") ++
 
-                sectionAnswers3.conditionalOptionalRow(_.carParking.flatMap(_.isRentPaidSeparately.map(_.name).map(v => v.contains("yes"))),"checkYourAnswersAboutYourLeaseOrTenure.separatelyRentedSpaces",
+                sectionAnswers3.conditionalOptionalRow(_.carParking.flatMap(_.isRentPaidSeparately.map(_.name).map(v => v.contains("yes"))).getOrElse(false),"checkYourAnswersAboutYourLeaseOrTenure.separatelyRentedSpaces",
                     _.carParking
                             .map(spaces => spaces.rentedSeparatelySpaces.map(space => s"${openSpaceMsg(space.openSpaces)}<br/>${coveredSpaceMsg(space.coveredSpaces)}<br/>${garageMsg(space.garages)}").getOrElse("")),
                     aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show(), "separatelyRentedSpaces",

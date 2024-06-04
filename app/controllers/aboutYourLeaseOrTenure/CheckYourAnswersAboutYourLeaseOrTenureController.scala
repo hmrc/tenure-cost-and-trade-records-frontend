@@ -54,7 +54,11 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
               checkYourAnswersAboutYourLeaseOrTenureForm.fill(checkYourAnswersAboutYourLeaseOrTenureView)
             case _                                                => checkYourAnswersAboutYourLeaseOrTenureForm
           },
-          getBackLink(request.sessionData),
+          navigator.from match {
+            case "CYA" =>
+              controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
+            case _     => getBackLink(request.sessionData)
+          },
           request.sessionData.toSummary
         )
       )
@@ -68,7 +72,11 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
         BadRequest(
           checkYourAnswersAboutYourLeaseOrTenureView(
             formWithErrors,
-            getBackLink(request.sessionData),
+            navigator.from match {
+              case "CYA" =>
+                controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
+              case _     => getBackLink(request.sessionData)
+            },
             request.sessionData.toSummary
           )
         ),
