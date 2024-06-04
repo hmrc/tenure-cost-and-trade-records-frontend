@@ -40,7 +40,15 @@
 )
 
 
-@(theForm: Form[_], index: Int, concessionOrFranchise: String, concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[_],
+        index: Int,
+        entityType: String,
+        forType: String, 
+        concessionOrFranchise: String,
+        concessionOrLetting: String,
+        cateringOrLetting: String,
+        backLink: String,
+        summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @session = @{ request.sessionData }
 

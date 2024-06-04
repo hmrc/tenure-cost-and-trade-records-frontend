@@ -55,6 +55,13 @@ class AddAnotherCateringOperationController @Inject() (
   private def forType(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType
 
+  private def entityType(implicit request: SessionRequest[AnyContent]): String =
+    forType match {
+      case ForTypes.for6015 | ForTypes.for6016 => "concessionLetting" //addAnotherConcessionOrFranchise
+      case ForTypes.for6030 => "concessionFranchise" //addAnotherConcession
+      case _ => "cateringLetting" //addAnotherCateringOperation
+    }
+
   private def getOperatorName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
     if (forType == ForTypes.for6030) {
       franchisesOrLettingsData
@@ -83,6 +90,8 @@ class AddAnotherCateringOperationController @Inject() (
         addAnotherCateringOperationOrLettingAccommodationView(
           addAnother.fold(addAnotherCateringOperationForm)(addAnotherCateringOperationForm.fill),
           index,
+          entityType,
+          forType,
           "addAnotherConcessionOrFranchise",
           "addAnotherConcession",
           "addAnotherCateringOperation",
@@ -109,6 +118,8 @@ class AddAnotherCateringOperationController @Inject() (
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
+              entityType,
+              forType,
               "addAnotherConcessionOrFranchise",
               "addAnotherConcession",
               "addAnotherCateringOperation",

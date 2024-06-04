@@ -1218,6 +1218,13 @@ addAnotherConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have remo
 addAnotherConcessionOrFranchise.heading = You have added {0} separate concession or franchise
 addAnotherConcessionOrFranchise.heading.plural = You have added {0} separate concessions or franchise
 label.addAnotherConcessionOrFranchise = Do you need to add another separate concession or franchise?
+
+concessionLetting.zeroBusinessOrFranchises.heading = You have removed all your separate concessions or franchises
+concessionLetting.heading = You have added {0} separate concession or franchise
+concessionLetting.heading.plural = You have added {0} separate concessions or franchise
+label.concessionLetting = Do you need to add another separate concession or franchise?
+
+
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 label.addAnotherLettingConcessionOrFranchise = Do you need to add another letting?
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your lettings
