@@ -540,7 +540,12 @@ trait FakeObjects {
       aboutTheTradingHistory = Some(
         prefilledAboutYourTradingHistory6020
           .copy(
-            totalFuelSold = Some(Seq(TotalFuelSold(LocalDate.now(), None)))
+            totalFuelSold = Some(Seq(TotalFuelSold(LocalDate.now(), None))),
+            lowMarginFuelCardsDetails = Some(
+              IndexedSeq(
+                LowMarginFuelCardsDetails(lowMarginFuelCardDetail = LowMarginFuelCardDetail("Low Margin Card", 2))
+              )
+            )
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
@@ -961,7 +966,7 @@ trait FakeObjects {
     )
   )
   val prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails = Some(
-    prefilledAboutTheTradingHistory.copy(lowMarginFuelCardsDetails =
+    prefilledAboutYourTradingHistory6020.copy(lowMarginFuelCardsDetails =
       Some(
         IndexedSeq(LowMarginFuelCardsDetails(lowMarginFuelCardDetail = LowMarginFuelCardDetail("Low Margin Card", 2)))
       )

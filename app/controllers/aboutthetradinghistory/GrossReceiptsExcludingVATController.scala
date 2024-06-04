@@ -86,9 +86,6 @@ class GrossReceiptsExcludingVATController @Inject() (
 
             val updatedData =
               updateAboutTheTradingHistoryPartOne(_.copy(grossReceiptsExcludingVAT = Some(grossReceipts)))
-            println("*" * 80)
-            println(s"$updatedData")
-            println("*" * 80)
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(GrossReceiptsExcludingVatId, updatedData).apply(updatedData)))
