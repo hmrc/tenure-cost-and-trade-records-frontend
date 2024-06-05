@@ -1618,7 +1618,7 @@ costOfSales.total = Total cost of sales
 # COST OF SALES 6076
 
 costOfSales6076.heading = Cost of sales
-costOfSales6076.p = Provide us with details of your cost of sales. If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
+costOfSales6076.p = Provide us with details of your cost of sales.
 costOfSales6076.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
 costOfSales6076.financialYearEnd = Financial year end
 costOfSales6076.fuelOrFeedstock = Fuel or feedstock
@@ -1646,6 +1646,7 @@ error.costOfSales6076.BSuoS.negative = BSuoS costs in the year ending {0} cannot
 error.costOfSales6076.otherSales.required = Enter 0 if you did not have any other costs in the year ending {0}
 error.costOfSales6076.otherSales.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
 error.costOfSales6076.otherSales.negative = Other costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.otherSalesDetails.maxLength = Description of a other costs must be 2,000 characters or fewer
 
 
 # GROSS PROFIT
