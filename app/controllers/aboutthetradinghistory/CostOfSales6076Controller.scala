@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.CostOfSales6076Form.costOfSales6076Form
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{CostOfSales6076, TurnoverSection6076}
+import models.submissions.aboutthetradinghistory.{CostOfSales6076Sum, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CostOfSales6076Id
 import play.api.i18n.I18nSupport
@@ -44,12 +44,13 @@ class CostOfSales6076Controller @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
-      val years       = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val costOfSales =
-        turnoverSections6076.flatMap(_.costOfSales6076).headOption.getOrElse(CostOfSales6076(Seq.empty, None))
+      val years                      = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
+      val costOfSales                = turnoverSections6076.flatMap(_.costOfSales6076Sum)
+      val costOfSalesDetails: String =
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherSalesDetails).getOrElse("")
       Ok(
         view(
-          costOfSales6076Form(years).fill(costOfSales),
+          costOfSales6076Form(years).fill((costOfSales, costOfSalesDetails)),
           getBackLink
         )
       )
@@ -60,31 +61,22 @@ class CostOfSales6076Controller @Inject() (
     runWithSessionCheck { turnoverSections6076 =>
       val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[CostOfSales6076](
+      continueOrSaveAsDraft[(Seq[CostOfSales6076Sum], String)](
         costOfSales6076Form(years),
-        formWithErrors => {
-          val updatedErrors         = formWithErrors.errors.map { error =>
-            if (error.message == "error.costOfSales6076.details.required") {
-              error.copy(key = "otherSalesDetails")
-            } else {
-              error
-            }
-          }
-          val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
-          BadRequest(view(updatedFormWithErrors, getBackLink))
-        },
+        formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
-            turnoverSections6076.map { previousSection =>
-              previousSection.copy(costOfSales6076 = Some(success))
+            (success._1 zip turnoverSections6076).map { case (costOfSales, turnoverSection) =>
+              turnoverSection.copy(costOfSales6076Sum = Some(costOfSales))
             }
+          val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
-              turnoverSections6076 = Some(updatedSections)
+              turnoverSections6076 = Some(updatedSections),
+              otherSalesDetails = Option(details).filter(_.nonEmpty)
             )
           )
-
           session
             .saveOrUpdate(updatedData)
             .map { _ =>

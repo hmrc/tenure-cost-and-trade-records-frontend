@@ -24,7 +24,8 @@ case class AboutTheTradingHistoryPartOne(
   isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false),
   turnoverSections6076: Option[Seq[TurnoverSection6076]] = None,
   grossReceiptsExcludingVAT: Option[Seq[GrossReceiptsExcludingVAT]] = None,
-  otherIncomeDetails: Option[String] = None
+  otherIncomeDetails: Option[String] = None,
+  otherSalesDetails: Option[String] = None
 )
 object AboutTheTradingHistoryPartOne {
   implicit val format: OFormat[AboutTheTradingHistoryPartOne] = Json.format[AboutTheTradingHistoryPartOne]
