@@ -1628,7 +1628,7 @@ costOfSales.total = Total cost of sales
 # COST OF SALES 6076
 
 costOfSales6076.heading = Cost of sales
-costOfSales6076.p = Provide us with details of your cost of sales. If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
+costOfSales6076.p = Provide us with details of your cost of sales.
 costOfSales6076.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
 costOfSales6076.financialYearEnd = Financial year end
 costOfSales6076.fuelOrFeedstock = Fuel or feedstock
@@ -1656,6 +1656,7 @@ error.costOfSales6076.BSuoS.negative = BSuoS costs in the year ending {0} cannot
 error.costOfSales6076.otherSales.required = Enter 0 if you did not have any other costs in the year ending {0}
 error.costOfSales6076.otherSales.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
 error.costOfSales6076.otherSales.negative = Other costs in the year ending {0} cannot be a negative number
+error.costOfSales6076.otherSalesDetails.maxLength = Description of a other costs must be 2,000 characters or fewer
 
 
 # GROSS PROFIT
@@ -1878,6 +1879,46 @@ percentageFromFuelCards.bunkered = This does not include bunkered fuel, or fuel 
 percentageFromFuelCards.label = Percentage of fuel sales on low-margin fuel cards
 error.percentageFromFuelCards.required = Enter 0 if none of your total fuel sales comes from low-margin credit cards in the year ending {0}
 error.percentageFromFuelCards.range = The percentage of your total fuel sales comes from low-margin credit cards in the year ending {0} must be a number
+
+# GROSS RECEIPTS EXCLUDING VAT (FROM 6076)
+###################################################
+grossReceipts.electricitySales = Electricity sales
+grossReceipts.feedInTariff = Feed-in tariff
+grossReceipts.rocBuyout = Renewable obligation certificate (ROC) buyout
+grossReceipts.rocRecycle = ROC recycle
+grossReceipts.contractForDifference = Contract for difference
+grossReceipts.capacityMarket = Capacity market
+grossReceipts.balancingServices = Balancing services
+grossReceipts.embeddedBenefits = Embedded benefits
+grossReceipts.total = Total gross receipts
+grossReceipts.heading = Gross receipts excluding VAT
+grossReceipts.financialYearEnd = Financial year end
+grossReceipts.p1 = Provide us with details of your gross receipts.
+error.grossReceipts.electricitySales.sales.required = Enter 0 if you did not have any electricity sales receipts in the year ending {0}
+error.grossReceipts.electricitySales.sales.range = Electricity sales receipts in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.electricitySales.sales.negative = Turnover from electricity sales receipts in the year ending {0} cannot be a negative number
+error.grossReceipts.feedInTariff.sales.required = Enter 0 if you did not have any feed-in tariff in the year ending {0}
+error.grossReceipts.feedInTariff.sales.range = Feed-in tariff in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.feedInTariff.sales.negative = Turnover from feed-in tariff in the year ending {0} cannot be a negative number
+error.grossReceipts.rocBuyout.sales.required = Enter 0 if you did not have any renewable obligation certificate (ROC) buyout in the year ending {0}
+error.grossReceipts.rocBuyout.sales.range = Renewable obligation certificate (ROC) buyout in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.rocBuyout.sales.negative = Turnover from renewable obligation certificate (ROC) buyout in the year ending {0} cannot be a negative number
+error.grossReceipts.rocRecycle.sales.required = Enter 0 if you did not have any ROC recycle in the year ending {0}
+error.grossReceipts.rocRecycle.sales.range = ROC recycle in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.rocRecycle.sales.negative = Turnover from ROC recycle in the year ending {0} cannot be a negative number
+error.grossReceipts.contractForDifference.sales.required = Enter 0 if you did not have any contract for difference in the year ending {0}
+error.grossReceipts.contractForDifference.sales.range = Contract for difference in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.contractForDifference.sales.negative = Turnover from contract for difference in the year ending {0} cannot be a negative number
+error.grossReceipts.capacityMarket.sales.required = Enter 0 if you did not have any capacity market in the year ending {0}
+error.grossReceipts.capacityMarket.sales.range = Capacity market in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.capacityMarket.sales.negative = Turnover from capacity market in the year ending {0} cannot be a negative number
+error.grossReceipts.balancingServices.sales.required = Enter 0 if you did not have any balancing services in the year ending {0}
+error.grossReceipts.balancingServices.sales.range = Balancing services in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.balancingServices.sales.negative = Turnover from balancing services in the year ending {0} cannot be a negative number
+error.grossReceipts.embeddedBenefits.sales.required = Enter 0 if you did not have any embedded benefits in the year ending {0}
+error.grossReceipts.embeddedBenefits.sales.range = Embedded benefits in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.embeddedBenefits.sales.negative = Turnover from embedded benefits in the year ending {0} cannot be a negative number
+
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########

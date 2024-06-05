@@ -18,21 +18,24 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.CostOfSales6076Form
-import models.submissions.aboutthetradinghistory.CostOfSales6076
+import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
-import views.behaviours.QuestionViewBehaviours
+import utils.TestBaseSpec
+import views.behaviours.ViewBehaviours
 
-class CostOfSales6076ViewSpec extends QuestionViewBehaviours[CostOfSales6076] {
+class CostOfSales6076ViewSpec extends TestBaseSpec with ViewBehaviours {
 
   val messageKeyPrefix = "costOfSales6076"
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
-  override val form = CostOfSales6076Form.costOfSales6076Form(Seq("2026", "2025", "2024"))(messages)
+  val form: Form[(Seq[CostOfSales6076Sum], String)] =
+    CostOfSales6076Form.costOfSales6076Form(Seq("2026", "2025", "2024"))(messages)
 
   def createView = () => costOfSales6076View(form, "")(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[CostOfSales6076]) => costOfSales6076View(form, "")(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[(Seq[CostOfSales6076Sum], String)]) =>
+    costOfSales6076View(form, "")(sessionRequest, messages)
 
   "Cost of sales 6076 view" should {
 
