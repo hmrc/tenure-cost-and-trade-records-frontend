@@ -409,8 +409,20 @@
           session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
           session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
          )
-         }
-        }
+         } else {
+           @if(forType == ForTypes.for6076){
+            @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease.heading",
+             controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(),
+             section5Completed,
+             session.aboutLeaseOrAgreementPartThree.flatMap(_.provideDetailsOfYourLease),
+             session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+            )
+            )
+          }
+        }}
+
+
+
         @if(forType == ForTypes.for6020){
          @includes.taskListItem("lease-start-date-and-rent-paid", "taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid",
           controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(),

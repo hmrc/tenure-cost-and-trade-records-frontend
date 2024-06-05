@@ -314,6 +314,10 @@ GET         /about-your-landlord                                    controllers.
 POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
 GET         /landlord-address-callback                              controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.addressLookupCallback(id: String ?= "")
 
+# Form 6076 only
+GET         /provide-details-of-your-lease                          controllers.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseController.show()
+POST        /provide-details-of-your-lease                          controllers.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseController.submit()
+
 GET         /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.show()
 POST        /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.submit()
 

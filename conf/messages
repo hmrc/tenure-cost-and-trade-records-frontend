@@ -832,6 +832,16 @@ help.propertyUseLeasebackArrangement.title = Help with leaseback arrangements
 help.propertyUseLeasebackArrangement.p1 = In a leaseback arrangement, a business can sell their premises to an investor then lease it back for a specific amount of time. These agreements allow businesses to raise capital while maintaining the control of their former property, and often include buy-back options.
 error.propertyUseLeasebackArrangement.missing = Select yes if you occupy the property using a leaseback arrangement
 
+# PROVIDE DETAILS OF YOUR LEASE (FORM 6076 ONLY)
+provideDetailsOfYourLease.heading = Provide details of your lease
+provideDetailsOfYourLease.p1 = Write a short description of the conditions of your lease including:
+provideDetailsOfYourLease.list1 = current rent amount
+provideDetailsOfYourLease.list2 = length of the lease
+provideDetailsOfYourLease.list3 = start date
+provideDetailsOfYourLease.list4 = review pattern, if applicable
+error.provideDetailsOfYourLease.required = Enter details of your lease
+error.provideDetailsOfYourLease.maxLength = The details of your lease must be 2,000 characters or fewer
+
 # CURRENT ANNUAL RENT
 ##############################
 currentAnnualRent.heading = What is the current annual rent?
@@ -2175,6 +2185,7 @@ checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading = Lease details
 checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading = Your rent
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat = Rent includes VAT?
 checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement = Leaseback arrangement?
+checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease = Details of lease
 checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent = Current annual rent
 checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid = Date current rent was first paid
 checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration = Lease start date and term length
