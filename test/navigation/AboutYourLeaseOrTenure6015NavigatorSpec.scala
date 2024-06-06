@@ -18,8 +18,8 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, UltimatelyResponsibleOutsideRepairs}
-import models.submissions.common.{AnswerNo, AnswerYes, OutsideRepairs, OutsideRepairsLandlord}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, CurrentRentBasedOnPercentageOpenMarket, MethodToFixCurrentRents, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.common.{AnswerNo, AnswerYes, InsideRepairsLandlord, OutsideRepairs, OutsideRepairsLandlord}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
@@ -34,6 +34,8 @@ class AboutYourLeaseOrTenure6015NavigatorSpec extends TestBaseSpec {
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+
+  val navigator2 = new AboutYourLeaseOrTenureNavigator(audit)
 
   val session6015 = Session("99996010004", "FOR6015", prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=")
 
@@ -60,6 +62,44 @@ class AboutYourLeaseOrTenure6015NavigatorSpec extends TestBaseSpec {
       val result  = navigator.connectedToLandlordRouting(answers)
       result mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
 
+    }
+
+    "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
+
+      val session = session6015.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6015.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleOutsideRepairs =
+              Some(UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, Some("test")))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
+        .show()
+    }
+
+    "return a function that goes to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
+
+      val session = session6015.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6015.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleInsideRepairs =
+              Some(UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, Some("test")))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(UltimatelyResponsibleInsideRepairsPageId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
+        .show()
     }
 
     "return a function that goes to connected to landlord details page when connected to landlord and answer is 'no'" in {
