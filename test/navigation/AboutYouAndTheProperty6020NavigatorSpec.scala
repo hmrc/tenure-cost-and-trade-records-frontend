@@ -115,15 +115,6 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .show()
   }
 
-//  "return a function that goes to about the property string page when contact detai1ls is completed" in {
-//    aboutYouAndThePropertyNavigator
-//      .nextPage(AboutThePropertyStringPageId, aboutYouAndTheProperty6020YesSession)
-//      .apply(
-//        aboutYouAndTheProperty6020YesSession
-//      ) mustBe controllers.routes.LoginController
-//      .show()
-//  }
-
   "return a function that goes to CYA page when charity question is  completed with No" in {
 
     val answers = aboutYouAndTheProperty6030YesSession.copy(
