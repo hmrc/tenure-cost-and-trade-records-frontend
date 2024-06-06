@@ -54,7 +54,7 @@ object ConditionalConstraintMappings {
     mandatoryStringOnCondition(_.contains(fieldName), errorRequired)
 
   /**
-    * Makes text field mandatory if other fields selected by name suffix {@code fieldSuffix} gives values sum more then zero.
+    * Makes text field mandatory if other fields selected by name suffix {@code fieldSuffix} give values sum more then zero.
     *
     * @param fieldSuffix other fields name suffix
     * @param errorRequired error message key
