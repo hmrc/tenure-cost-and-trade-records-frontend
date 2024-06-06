@@ -52,6 +52,24 @@ class ProvideDetailsOfYourLeaseViewSpec extends QuestionViewBehaviours[ProvideDe
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
+    "contain a heading for page" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, messages("provideDetailsOfYourLease.heading"))
+    }
+
+    "contain a subheading for page" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, messages("provideDetailsOfYourLease.p1"))
+    }
+
+    "contain a list for page" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, messages("provideDetailsOfYourLease.list1"))
+      assertContainsText(doc, messages("provideDetailsOfYourLease.list2"))
+      assertContainsText(doc, messages("provideDetailsOfYourLease.list3"))
+      assertContainsText(doc, messages("provideDetailsOfYourLease.list4"))
+    }
+
     "contain an input for provideDetailsOfYourLease" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "provideDetailsOfYourLease")

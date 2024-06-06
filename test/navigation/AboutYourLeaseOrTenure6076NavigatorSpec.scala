@@ -435,6 +435,14 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
     }
 
+    "return a function that goes to connected to landlord details when connection to landlord yes has been completed1" in {
+      navigator
+        .nextPage(AboutTheLandlordPageId, session6076Full)
+        .apply(
+          session6076Full
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
+    }
+
     "return a function that goes to connected to landlord details when connection to landlord yes has been completed" in {
       navigator
         .nextPage(ConnectedToLandlordPageId, session6076Full)
