@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.EnrichedSeq
+import form.MappingSupport.mappingPerYear
 import models.submissions.aboutthetradinghistory.TotalFuelSold
 import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.{Form, Mapping}
@@ -27,17 +27,10 @@ import scala.util.Try
 
 object TotalFuelSoldForm {
 
-  def totalFuelSoldForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalFuelSold]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) => "" -> totalFuelSoldMapping(year, idx) }
-
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
+  def totalFuelSoldForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalFuelSold]] =
+    Form {
+      mappingPerYear(years, (year, idx) => "" -> totalFuelSoldMapping(year, idx))
+    }
 
   private def totalFuelSoldMapping(year: String, idx: Int)(implicit messages: Messages): Mapping[TotalFuelSold] =
     mapping(
@@ -52,4 +45,5 @@ object TotalFuelSoldForm {
           .verifying(messages("error.totalFuelSold.range", year), _ >= 0)
       ).verifying(messages("error.totalFuelSold.required", year), _.isDefined)
     )(TotalFuelSold.apply)(TotalFuelSold.unapply)
+
 }

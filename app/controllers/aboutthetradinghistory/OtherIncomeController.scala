@@ -111,7 +111,7 @@ class OtherIncomeController @Inject() (
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     =>
         // TODO: Gross receipts for baseload generation
-        aboutthetradinghistory.routes.ElectricityGeneratedController.show().url
+        aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show().url
     }
 
 }

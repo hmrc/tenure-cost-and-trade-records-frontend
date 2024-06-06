@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ object TurnoverForm {
             "0" -> yearMappings.head,
             "1" -> yearMappings(1)
           )(Seq(_, _)) {
-            case Seq(first, second) => Some(first, second)
+            case Seq(first, second) => Some((first, second))
             case _                  => None
           }
 
@@ -84,7 +84,7 @@ object TurnoverForm {
             "1" -> yearMappings(1),
             "2" -> yearMappings(2)
           )(Seq(_, _, _)) {
-            case Seq(first, second, third) => Some(first, second, third)
+            case Seq(first, second, third) => Some((first, second, third))
             case _                         => None
           }
 

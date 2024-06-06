@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,17 +47,8 @@ object VariableOperatingExpensesForm {
 
   private def variableOperatingExpensesSeq(
     years: Seq[String]
-  )(implicit messages: Messages): Mapping[Seq[VariableOperatingExpenses]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
-      s"year[$idx]" -> columnMapping(year)
-    }
-
-    mappingPerYear match {
-      case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-      case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-      case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-    }
-  }
+  )(implicit messages: Messages): Mapping[Seq[VariableOperatingExpenses]]                 =
+    mappingPerYear(years, (year, idx) => s"year[$idx]" -> columnMapping(year))
 
   private def otherExpensesDetailsRequired: Constraint[VariableOperatingExpensesSections] =
     Constraint("constraints.otherExpensesDetailsRequired") { sections =>

@@ -33,17 +33,8 @@ object HeadOfficeExpensesForm {
 
   private def headOfficeExpensesSeq(
     years: Seq[String]
-  )(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
-      s"turnover[$idx]" -> columnMapping(year)
-    }
-
-    mappingPerYear match {
-      case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-      case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-      case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-    }
-  }
+  )(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]]                =
+    mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
   def headOfficeExpensesForm(
     years: Seq[String]

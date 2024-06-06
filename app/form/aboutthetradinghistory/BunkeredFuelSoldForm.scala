@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.EnrichedSeq
+import form.MappingSupport.mappingPerYear
 import models.submissions.aboutthetradinghistory.BunkeredFuelSold
 import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.{Form, Mapping}
@@ -27,17 +27,10 @@ import scala.util.Try
 
 object BunkeredFuelSoldForm {
 
-  def bunkeredFuelSoldForm(years: Seq[String])(implicit messages: Messages): Form[Seq[BunkeredFuelSold]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) => "" -> bunkeredFuelSoldMapping(year, idx) }
-
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
+  def bunkeredFuelSoldForm(years: Seq[String])(implicit messages: Messages): Form[Seq[BunkeredFuelSold]] =
+    Form {
+      mappingPerYear(years, (year, idx) => "" -> bunkeredFuelSoldMapping(year, idx))
+    }
 
   private def bunkeredFuelSoldMapping(year: String, idx: Int)(implicit messages: Messages): Mapping[BunkeredFuelSold] =
     mapping(
@@ -52,4 +45,5 @@ object BunkeredFuelSoldForm {
           .verifying(messages("error.bunkeredFuelSold.range", year), _ >= 0)
       ).verifying(messages("error.bunkeredFuelSold.required", year), _.isDefined)
     )(BunkeredFuelSold.apply)(BunkeredFuelSold.unapply)
+
 }
