@@ -18,8 +18,8 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, UltimatelyResponsibleOutsideRepairs}
+import models.submissions.common.{AnswerNo, AnswerYes, OutsideRepairs, OutsideRepairsLandlord}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
