@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.EnrichedSeq
+import form.MappingSupport.mappingPerYear
 import models.submissions.aboutthetradinghistory.PercentageFromFuelCards
 import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.{Form, Mapping}
@@ -29,18 +29,10 @@ object PercentageFromFuelCardsForm {
 
   def percentageFromFuelCardsForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[PercentageFromFuelCards]] = {
-    val mappingPerYear =
-      years.take(3).zipWithIndex.map { case (year, idx) => "" -> percentageFromFuelCardsMapping(year, idx) }
-
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
+  )(implicit messages: Messages): Form[Seq[PercentageFromFuelCards]] =
+    Form {
+      mappingPerYear(years, (year, idx) => "" -> percentageFromFuelCardsMapping(year, idx))
+    }
 
   private def percentageFromFuelCardsMapping(year: String, idx: Int)(implicit
     messages: Messages
@@ -58,4 +50,5 @@ object PercentageFromFuelCardsForm {
           .verifying(messages("error.percentage", year), _ <= 100)
       ).verifying(messages("error.percentageFromFuelCards.required", year), _.isDefined)
     )(PercentageFromFuelCards.apply)(PercentageFromFuelCards.unapply)
+
 }

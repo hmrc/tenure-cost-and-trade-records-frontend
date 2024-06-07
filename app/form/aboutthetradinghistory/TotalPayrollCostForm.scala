@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 
 package form.aboutthetradinghistory
 
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.TotalPayrollCost
-import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{ignored, mapping}
-import form.MappingSupport.{EnrichedSeq, turnoverSalesMappingWithYear}
+import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
 import java.time.LocalDate
@@ -31,16 +31,9 @@ object TotalPayrollCostForm {
     "directors-remuneration" -> turnoverSalesMappingWithYear("directors-remuneration", year)
   )(TotalPayrollCost.apply)(TotalPayrollCost.unapply)
 
-  def totalPayrollCostForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalPayrollCost]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
-      s"totalPayrollCosts[$idx]" -> totalPayrollCostMapping(year)
+  def totalPayrollCostForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalPayrollCost]] =
+    Form {
+      mappingPerYear(years, (year, idx) => s"totalPayrollCosts[$idx]" -> totalPayrollCostMapping(year))
     }
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
+
 }

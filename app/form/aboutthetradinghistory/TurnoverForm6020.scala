@@ -39,18 +39,9 @@ object TurnoverForm6020 {
     "otherIncome"        -> turnoverSalesMappingWithYear("turnover.6020.otherIncome", year)
   )(TurnoverSection6020.apply)(TurnoverSection6020.unapply)
 
-  def turnoverForm6020(years: Seq[String])(implicit messages: Messages): Form[Seq[TurnoverSection6020]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
-      s"turnover[$idx]" -> columnMapping(year)
+  def turnoverForm6020(years: Seq[String])(implicit messages: Messages): Form[Seq[TurnoverSection6020]] =
+    Form {
+      mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }
-
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
 
 }

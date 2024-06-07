@@ -17,7 +17,7 @@
 package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
-import form.MappingSupport.{EnrichedSeq, costOfSalesMapping}
+import form.MappingSupport.{costOfSalesMapping, mappingPerYear}
 import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
 import play.api.data.Forms.{mapping, tuple}
 import play.api.data.validation.Constraints.maxLength
@@ -26,7 +26,7 @@ import play.api.i18n.Messages
 
 object CostOfSales6076Form {
 
-  private def sumMapping(year: String)(implicit messages: Messages): Mapping[CostOfSales6076Sum]                    =
+  private def sumMapping(year: String)(implicit messages: Messages): Mapping[CostOfSales6076Sum] =
     mapping(
       "fuelOrFeedstock" -> costOfSalesMapping("costOfSales6076.fuelOrFeedstock", year),
       "importedPower"   -> costOfSalesMapping("costOfSales6076.importedPower", year),
@@ -35,16 +35,9 @@ object CostOfSales6076Form {
       "otherSales"      -> costOfSalesMapping("costOfSales6076.otherSales", year)
     )(CostOfSales6076Sum.apply)(CostOfSales6076Sum.unapply)
 
-  def costOfSales6076Mapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[CostOfSales6076Sum]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
-      s"[$idx]" -> sumMapping(year);
-    }
-    mappingPerYear match {
-      case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-      case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-      case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-    }
-  }
+  def costOfSales6076Mapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[CostOfSales6076Sum]]     =
+    mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
+
   def costOfSales6076Form(years: Seq[String])(implicit messages: Messages): Form[(Seq[CostOfSales6076Sum], String)] =
     Form {
       tuple(
@@ -57,4 +50,5 @@ object CostOfSales6076Form {
         )
       )
     }
+
 }

@@ -17,7 +17,7 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport._
-import play.api.data.Forms.{default, mapping, text, tuple}
+import play.api.data.Forms.{default, text, tuple}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
@@ -42,18 +42,9 @@ object ElectricityGeneratedForm {
       .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
   )
 
-  def electricityGeneratedForm(years: Seq[String])(implicit messages: Messages): Form[Seq[(Int, String)]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
-      s"turnover[$idx]" -> columnMapping(year)
+  def electricityGeneratedForm(years: Seq[String])(implicit messages: Messages): Form[Seq[(Int, String)]] =
+    Form {
+      mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }
-
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
 
 }

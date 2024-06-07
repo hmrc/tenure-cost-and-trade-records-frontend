@@ -490,9 +490,9 @@ trait FakeObjects {
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
-      TurnoverSection6076(LocalDate.now(), 52, "5000 kWh", 1000),
-      TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000),
-      TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000)
+      TurnoverSection6076(LocalDate.now(), 52, "5000 kWh", 1000, headOfficeExpenses = 100),
+      TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000, headOfficeExpenses = 100),
+      TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000, headOfficeExpenses = 100)
     ),
     grossReceiptsExcludingVAT = Some(
       Seq(
@@ -501,7 +501,8 @@ trait FakeObjects {
         GrossReceiptsExcludingVAT(LocalDate.now().minusYears(2))
       )
     ),
-    otherIncomeDetails = "OtherIncome details"
+    otherIncomeDetails = "OtherIncome details",
+    furtherInformationOrRemarks = "Further information or remarks"
   )
 
   val aboutYourTradingHistory6076YesSession: Session =
@@ -540,12 +541,7 @@ trait FakeObjects {
       aboutTheTradingHistory = Some(
         prefilledAboutYourTradingHistory6020
           .copy(
-            totalFuelSold = Some(Seq(TotalFuelSold(LocalDate.now(), None))),
-            lowMarginFuelCardsDetails = Some(
-              IndexedSeq(
-                LowMarginFuelCardsDetails(lowMarginFuelCardDetail = LowMarginFuelCardDetail("Low Margin Card", 2))
-              )
-            )
+            totalFuelSold = Some(Seq(TotalFuelSold(LocalDate.now(), None)))
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
@@ -966,7 +962,7 @@ trait FakeObjects {
     )
   )
   val prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails = Some(
-    prefilledAboutYourTradingHistory6020.copy(lowMarginFuelCardsDetails =
+    prefilledAboutTheTradingHistory.copy(lowMarginFuelCardsDetails =
       Some(
         IndexedSeq(LowMarginFuelCardsDetails(lowMarginFuelCardDetail = LowMarginFuelCardDetail("Low Margin Card", 2)))
       )

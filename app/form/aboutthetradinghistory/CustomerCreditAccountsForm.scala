@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.EnrichedSeq
+import form.MappingSupport.mappingPerYear
 import models.submissions.aboutthetradinghistory.CustomerCreditAccounts
 import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.{Form, Mapping}
@@ -27,18 +27,10 @@ import scala.util.Try
 
 object CustomerCreditAccountsForm {
 
-  def customerCreditAccountsForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CustomerCreditAccounts]] = {
-    val mappingPerYear =
-      years.take(3).zipWithIndex.map { case (year, idx) => "" -> customerCreditAccountsMapping(year, idx) }
-
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
+  def customerCreditAccountsForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CustomerCreditAccounts]] =
+    Form {
+      mappingPerYear(years, (year, idx) => "" -> customerCreditAccountsMapping(year, idx))
+    }
 
   private def customerCreditAccountsMapping(year: String, idx: Int)(implicit
     messages: Messages

@@ -16,7 +16,6 @@
 
 package form.aboutthetradinghistory
 
-import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
 import form.MappingSupport._
 import play.api.data.Forms._
 import play.api.data.validation.Constraints.maxLength
@@ -26,24 +25,25 @@ import play.api.i18n.Messages
 /**
   * @author Yuriy Tumakha
   */
-object OtherIncomeForm {
+object HeadOfficeExpensesForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = single(
-    "otherIncome" -> turnoverSalesMappingWithYear("turnover.6076.otherIncome", year)
+    "headOfficeExpenses" -> turnoverSalesMappingWithYear("turnover.6076.headOfficeExpenses", year)
   )
 
-  private def otherIncomeSeq(years: Seq[String])(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]] =
+  private def headOfficeExpensesSeq(
+    years: Seq[String]
+  )(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]]                =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
-  def otherIncomeForm(years: Seq[String])(implicit messages: Messages): Form[(Seq[Option[BigDecimal]], String)] =
+  def headOfficeExpensesForm(
+    years: Seq[String]
+  )(implicit messages: Messages): Form[(Seq[Option[BigDecimal]], Option[String])] =
     Form {
       tuple(
-        "otherIncomeSeq"     -> otherIncomeSeq(years),
-        "otherIncomeDetails" -> mandatoryStringIfNonZeroSum(
-          ".otherIncome",
-          "error.turnover.6076.otherIncomeDetails.required"
-        ).verifying(
-          maxLength(2000, "error.turnover.6076.otherIncomeDetails.maxLength")
+        "headOfficeExpensesSeq"       -> headOfficeExpensesSeq(years),
+        "furtherInformationOrRemarks" -> optional(
+          text.verifying(maxLength(2000, "error.turnover.6076.furtherInformationOrRemarks.maxLength"))
         )
       )
     }

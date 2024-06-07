@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,18 +34,9 @@ object CostOfSalesForm {
     "other"              -> turnoverSalesMappingWithYear("turnover.other.sales", year)
   )(CostOfSales.apply)(CostOfSales.unapply)
 
-  def costOfSalesForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CostOfSales]] = {
-    val mappingPerYear = years.take(3).zipWithIndex.map { case (year, idx) =>
-      s"costOfSales[$idx]" -> columnMapping(year)
+  def costOfSalesForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CostOfSales]] =
+    Form {
+      mappingPerYear(years, (year, idx) => s"costOfSales[$idx]" -> columnMapping(year))
     }
-
-    Form(
-      mappingPerYear match {
-        case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
-        case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
-        case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      }
-    )
-  }
 
 }

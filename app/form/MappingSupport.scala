@@ -307,4 +307,19 @@ object MappingSupport {
       .verifying(between(zeroBigDecimal, salesMax, messages(s"error.$field.range", year)))
       .verifying(messages(s"error.$field.negative", year), _ >= 0)
   ).verifying(messages(s"error.$field.required", year), _.nonEmpty)
+
+  def mappingPerYear[T](
+    financialYears: Seq[String],
+    mappingPerYearAndIdx: (String, Int) => (String, Mapping[T])
+  ): Mapping[Seq[T]] = {
+    val yearsMapping: Seq[(String, Mapping[T])] = financialYears.take(3).zipWithIndex.map(mappingPerYearAndIdx.tupled)
+
+    yearsMapping match {
+      case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
+      case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
+      case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
+      case _            => throw new IllegalArgumentException("Financial years sequence is empty")
+    }
+  }
+
 }

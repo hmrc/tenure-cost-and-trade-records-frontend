@@ -44,9 +44,21 @@ object ConditionalConstraintMappings {
       nonEmpty(errorMessage = errorRequired)
     )
 
+  /**
+    * Makes text field mandatory if another field with name {@code fieldName} contains any value.
+    *
+    * @param fieldName another field name
+    * @param errorRequired error message key
+    */
   def mandatoryStringIfExists(fieldName: String, errorRequired: String): Mapping[String] =
     mandatoryStringOnCondition(_.contains(fieldName), errorRequired)
 
+  /**
+    * Makes text field mandatory if other fields selected by name suffix {@code fieldSuffix} give values sum more then zero.
+    *
+    * @param fieldSuffix other fields name suffix
+    * @param errorRequired error message key
+    */
   def mandatoryStringIfNonZeroSum(fieldSuffix: String, errorRequired: String): Mapping[String] =
     mandatoryStringOnCondition(
       _.filter(_._1.endsWith(fieldSuffix)).values.map(s => Try(BigDecimal(s)).getOrElse(zeroBigDecimal)).sum > 0,

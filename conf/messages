@@ -1588,12 +1588,22 @@ turnover.6076.otherIncome.inset = All fields on this page are mandatory. If you 
 turnover.6076.otherIncome = Other income
 turnover.6076.otherIncome.hint = Include income from any source not listed previously
 turnover.6076.otherIncomeDetails = Give details of the sources of your other income
+turnover.6076.headOfficeExpenses.heading = Head office expenses
+turnover.6076.headOfficeExpenses.p1 = Provide us with details of any head office expenses.
+turnover.6076.headOfficeExpenses.inset = The contribution towards head office expenses fields are mandatory. If this is not applicable, enter the number 0.
+turnover.6076.headOfficeExpenses = Contribution towards head office expenses (if applicable)
+turnover.6076.furtherInformationOrRemarks = Further information or remarks (optional)
+turnover.6076.furtherInformationOrRemarks.hint = Include any information you think may be relevant but has not been covered.
 error.turnover.6076.electricityGenerated.required = Enter 0 if you did not have any electricity generated in the year ending {0}
 error.turnover.6076.otherIncome.required = Enter 0 if you did not have any other income in the year ending {0}
 error.turnover.6076.otherIncome.range = Other income in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6076.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
 error.turnover.6076.otherIncomeDetails.required = Enter a description of the sources of your other income
 error.turnover.6076.otherIncomeDetails.maxLength = Description of the sources of your other income must be {0} characters or fewer
+error.turnover.6076.headOfficeExpenses.required = Enter 0 if you did not contribute towards head office expenses in the year ending {0}
+error.turnover.6076.headOfficeExpenses.range = The contributions towards head office expenses in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6076.headOfficeExpenses.negative = The contributions towards head office expenses in the year ending {0} cannot be a negative number
+error.turnover.6076.furtherInformationOrRemarks.maxLength = Further information must be {0} characters or fewer
 
 # COST OF SALES
 costOfSales.heading = Cost of sales
