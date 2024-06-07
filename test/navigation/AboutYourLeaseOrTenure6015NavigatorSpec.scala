@@ -220,62 +220,6 @@ class AboutYourLeaseOrTenure6015NavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()
     }
 
-    "return a function that goes to does the rent payable page when included in your rent has been completed" in {
-      navigator
-        .nextPage(IncludedInYourRentPageId, session6015)
-        .apply(
-          session6015
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
-    }
-
-    "return a function that goes to ultimately responsible OR page when does the rent payable has been completed" in {
-      navigator
-        .nextPage(DoesRentPayablePageId, session6015)
-        .apply(
-          session6015
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
-    }
-
-    "return a function that goes to ultimately responsible IR page when ultimately responsible OR has been completed" in {
-      navigator
-        .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session6015)
-        .apply(
-          session6015
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
-    }
-
-    "return a function that goes to ultimately responsible BI page when ultimately responsible IR has been completed" in {
-      navigator
-        .nextPage(UltimatelyResponsibleInsideRepairsPageId, session6015)
-        .apply(
-          session6015
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
-    }
-
-    "return a function that goes to trade services page when ultimately responsible BI has been completed" in {
-      navigator
-        .nextPage(UltimatelyResponsibleBusinessInsurancePageId, session6015)
-        .apply(
-          session6015
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
-    }
-
-    "return a function that goes to rent include fixture and fittings when trade services details has been completed" in {
-      navigator
-        .nextPage(RentFixtureAndFittingsDetailsPageId, session6015)
-        .apply(
-          session6015
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
-    }
-
-    "return a function that goes to how is current rent fixed when RentPayableVaryAccordingToGrossOrNetDetails has been completed" in {
-      navigator
-        .nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId, session6015)
-        .apply(
-          session6015
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-    }
-
     "return a function that goes to can rent be reduced on view when intervals of rent review has been completed" in {
       navigator
         .nextPage(IntervalsOfRentReviewId, session6015)

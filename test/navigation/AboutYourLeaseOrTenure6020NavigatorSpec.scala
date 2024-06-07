@@ -19,13 +19,14 @@ package navigation
 import utils.TestBaseSpec
 import connectors.Audit
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, PayACapitalSumDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentBasedOnPercentageOpenMarket, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 
+import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
@@ -117,6 +118,19 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
     }
 
+    "return a function that goes to throughput affects rent details page when throughput affects rent answer " in {
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartThree = Some(
+          session6020.aboutLeaseOrAgreementPartThree.getOrElse(
+            AboutLeaseOrAgreementPartThree(throughputAffectsRent = Some(ThroughputAffectsRent(AnswerNo, Some("text"))))
+          )
+        )
+      )
+      navigator
+        .nextPage(ThroughputAffectsRentId, session)
+        .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
+    }
+
     "return a function that goes to other factors affecting the rent page when capital sum has been completed for no answer " in {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
@@ -156,6 +170,21 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(RentOpenMarketPageId, session)
         .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
+    }
+
+    "return a function that goes to what is the rent based on when the current rent was agreed has been completed with No123 " in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartThree = Some(
+          session6020.aboutLeaseOrAgreementPartThree.getOrElse(
+            AboutLeaseOrAgreementPartThree(isVATPayableForWholeProperty = Some(AnswerNo))
+          )
+        )
+      )
+      navigator
+        .nextPage(IsVATPayableForWholePropertyId, session)
+        .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+        .show()
     }
 
     "return a function that goes to setting the current rent when the current rent was agreed has been completed with Yes " in {
@@ -228,6 +257,63 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .apply(
           session
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
+        .show()
+    }
+
+    "return a function that goes to rent increase with RPI page when What is your current rent has been completed" in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6020.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(whatIsYourCurrentRentBasedOnDetails =
+              Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("test")))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(WhatRentBasedOnPageId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
+    "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
+              Some(HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1)))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(HowIsCurrentRentFixedId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+        .show()
+    }
+
+    "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
+              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentsAgreement))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(MethodToFixCurrentRentsId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
         .show()
     }
 
