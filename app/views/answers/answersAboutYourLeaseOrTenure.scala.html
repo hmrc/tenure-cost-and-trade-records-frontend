@@ -247,6 +247,19 @@
     ))
 }
 
+    @if(forType == ForTypes.for6076) {
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading")</h2>
+
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
+                _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name).map(v => messages(s"label.$v")),
+                aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
+                    sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease",
+            _.provideDetailsOfYourLease.map(_.provideDetailsOfYourLease),
+            aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(), "provideDetailsOfYourLease")
+        ))
+    }
+
 @if((forType != ForTypes.for6020) && sectionAnswers.answers.exists(a => a.includedInYourRentDetails.isDefined || a.rentIncludeTradeServicesDetails.isDefined)) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading")</h2>
 

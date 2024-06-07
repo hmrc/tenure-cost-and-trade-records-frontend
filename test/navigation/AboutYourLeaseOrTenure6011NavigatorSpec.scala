@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentBasedOnPercentageOpenMarket, CurrentRentFirstPaid, TenancyLeaseAgreementExpire, WhatIsYourCurrentRentBasedOnDetails}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
@@ -26,6 +26,7 @@ import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 
+import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
@@ -86,6 +87,42 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(CurrentRentFirstPaidPageId, session6011)
         .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+        .show()
+    }
+
+    "return a function that goes to tenancy lease expire page when current rent first paid has been completed" in {
+
+      val session = session6011.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6011.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(currentRentFirstPaid = Some(CurrentRentFirstPaid(LocalDate.of(2000, 2, 1))))
+          )
+        )
+      )
+      navigator
+        .nextPage(CurrentRentFirstPaidPageId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+        .show()
+    }
+
+    "return a function that goes to Tenancy lease agreement page when What is your current rent has been completed" in {
+
+      val session = session6011.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6011.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(tenancyLeaseAgreementExpire =
+              Some(TenancyLeaseAgreementExpire(LocalDate.of(2000, 2, 1)))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(CurrentRentFirstPaidPageId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
         .show()
     }
 

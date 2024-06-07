@@ -18,12 +18,15 @@ package navigation
 
 import connectors.Audit
 import models.Session
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentBasedOnPercentageOpenMarket, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.common.{BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 
+import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
@@ -132,29 +135,117 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to outside repairs page when does rent payable has been completed" in {
+    "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
+
+      val session = session6010.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleOutsideRepairs =
+              Some(UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, Some("test")))
+            )
+          )
+        )
+      )
       navigator
-        .nextPage(DoesRentPayablePageId, session6010)
+        .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session)
         .apply(
-          session6010
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
-        .show()
-    }
-    "return a function that goes to inside repairs page when outside has been completed" in {
-      navigator
-        .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session6010)
-        .apply(
-          session6010
+          session
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
         .show()
     }
 
-    "return a function that goes to insurance page when inside repairs has been completed" in {
+    "return a function that goes to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
+
+      val session = session6010.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleInsideRepairs =
+              Some(UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, Some("test")))
+            )
+          )
+        )
+      )
       navigator
-        .nextPage(UltimatelyResponsibleInsideRepairsPageId, session6010)
+        .nextPage(UltimatelyResponsibleInsideRepairsPageId, session)
         .apply(
-          session6010
+          session
         ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
+        .show()
+    }
+
+    "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
+
+      val session = session6010.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleBuildingInsurance =
+              Some(UltimatelyResponsibleBuildingInsurance(BuildingInsuranceLandlord, Some("test")))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(UltimatelyResponsibleBusinessInsurancePageId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
+        .show()
+    }
+
+    "return a function that goes to rent increase with RPI page when What is your current rent has been completed" in {
+
+      val session = session6010.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6010.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(whatIsYourCurrentRentBasedOnDetails =
+              Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("test")))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(WhatRentBasedOnPageId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
+        .show()
+    }
+
+    "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
+
+      val session = session6010.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
+              Some(HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1)))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(HowIsCurrentRentFixedId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+        .show()
+    }
+
+    "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
+
+      val session = session6010.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
+              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentsAgreement))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(MethodToFixCurrentRentsId, session)
+        .apply(
+          session
+        ) mustBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
         .show()
     }
 

@@ -124,6 +124,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
                 controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
               case ForTypes.for6011 =>
                 controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show().url
+              case ForTypes.for6076 =>
+                controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show().url
               case _                =>
                 logger.warn(s"Navigation for CYA about lease without correct selection of conditions by controller")
                 throw new RuntimeException("Invalid option exception for CYA about lease back link")

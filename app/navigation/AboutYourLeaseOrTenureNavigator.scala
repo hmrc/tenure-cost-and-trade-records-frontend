@@ -62,9 +62,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def aboutYourLandlordRouting: Session => Call = answers => {
     answers.forType match {
-      case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 =>
+      case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 |
+          ForTypes.for6076 =>
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-      case _                                                                                            =>
+      case _ =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
   }
@@ -74,10 +75,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-          case ForTypes.for6020 =>
+          case ForTypes.for6011                    => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+          case ForTypes.for6020 | ForTypes.for6076 =>
             controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-          case _                => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+          case _                                   => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
         }
       case _           =>
         logger.warn(
@@ -89,11 +90,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def connectedToLandlordDetailsRouting: Session => Call = answers => {
     answers.forType match {
-      case ForTypes.for6011 =>
+      case ForTypes.for6011                    =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-      case ForTypes.for6020 =>
+      case ForTypes.for6020 | ForTypes.for6076 =>
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-      case _                =>
+      case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
   }
@@ -444,6 +445,38 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _               => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
     }
 
+  //Form 6076 only
+  private def provideDetailsOfYourLeaseRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6076 =>
+        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      case _                =>
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    }
+  }
+
+  private def propertyUseLeasebackAgreementRouting: Session => Call = answers => {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(
+      _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name)
+    ) match {
+      case Some("yes") =>
+        answers.forType match {
+          case ForTypes.for6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
+          case _                => aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+        }
+      case Some("no")  =>
+        answers.forType match {
+          case ForTypes.for6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
+          case _                => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+        }
+      case _           =>
+        logger.warn(
+          s"Navigation for property use leaseback agreement without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for property use leaseback agreement routing")
+    }
+  }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
@@ -452,7 +485,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     CurrentRentPayableWithin12monthsPageId        -> (_ =>
       aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     ),
-    PropertyUseLeasebackAgreementId               -> (_ => aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()),
+    ProvideDetailsOfYourLeasePageId               -> provideDetailsOfYourLeaseRouting,
+    PropertyUseLeasebackAgreementId               -> propertyUseLeasebackAgreementRouting,
     CurrentAnnualRentPageId                       -> currentAnnualRentRouting,
     CurrentRentFirstPaidPageId                    -> currentRentFirstPaidRouting,
     TenancyLeaseAgreementExpirePageId             -> (_ =>

@@ -1,0 +1,75 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutYourLeaseOrTenure.ProvideDetailsOfYourLease
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukErrorSummary: GovukErrorSummary,
+        govukCharacterCount: GovukCharacterCount,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(theForm: Form[ProvideDetailsOfYourLease], summary: Summary)(implicit request: Request[_], messages: Messages)
+
+@layout(
+ pageHeading = messages("provideDetailsOfYourLease.heading"),
+  showH1 = false,
+ showSection = true,
+ summary = Some(summary),
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.submit()) {
+
+  <h1 class="govuk-heading-l">@messages("provideDetailsOfYourLease.heading")</h1>
+
+  <p class="govuk-body">@messages("provideDetailsOfYourLease.p1")</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list1")</span></li>
+   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list2")</span></li>
+   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list3")</span></li>
+   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list4")</span></li>
+  </ul>
+
+  @govukCharacterCount(
+   CharacterCount(
+    id = "provideDetailsOfYourLease",
+    name = "provideDetailsOfYourLease",
+    maxLength = 2000,
+    label = Label(
+     classes = "govuk-label--l",
+     isPageHeading = true
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("provideDetailsOfYourLease"),
+   ).withFormField(theForm("provideDetailsOfYourLease"))
+  )
+
+  @includes.continueSaveAsDraftButtons(govukButton)
+ }
+}
+
+
+
