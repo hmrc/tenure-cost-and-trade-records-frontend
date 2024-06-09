@@ -31,6 +31,7 @@ case class TurnoverSection6076(
   electricityGenerated: Option[String] = None,
   otherIncome: Option[BigDecimal] = None,
   costOfSales6076Sum: Option[CostOfSales6076Sum] = None,
+  operationalExpenses: Option[OperationalExpenses] = None,
   headOfficeExpenses: Option[BigDecimal] = None
 )
 

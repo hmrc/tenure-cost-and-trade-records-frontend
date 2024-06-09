@@ -490,18 +490,41 @@ trait FakeObjects {
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
-      TurnoverSection6076(LocalDate.now(), 52, "5000 kWh", 1000, headOfficeExpenses = 100),
-      TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000, headOfficeExpenses = 100),
-      TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000, headOfficeExpenses = 100)
-    ),
-    grossReceiptsExcludingVAT = Some(
-      Seq(
-        GrossReceiptsExcludingVAT(LocalDate.now()),
-        GrossReceiptsExcludingVAT(LocalDate.now().minusYears(1)),
-        GrossReceiptsExcludingVAT(LocalDate.now().minusYears(2))
+      TurnoverSection6076(
+        LocalDate.now(),
+        52,
+        "5000 kWh",
+        1000,
+        CostOfSales6076Sum(1, 2, 3, 4, 5),
+        OperationalExpenses(1, 2, 3, 4, 5, 6),
+        100
+      ),
+      TurnoverSection6076(
+        LocalDate.now().minusYears(1),
+        52,
+        "5 MWh",
+        2000,
+        CostOfSales6076Sum(1, 2, 3, 4, 5),
+        OperationalExpenses(1, 2, 3, 4, 5, 6),
+        200
+      ),
+      TurnoverSection6076(
+        LocalDate.now().minusYears(2),
+        52,
+        "5 MWh",
+        3000,
+        CostOfSales6076Sum(1, 2, 3, 4, 5),
+        OperationalExpenses(1, 2, 3, 4, 5, 6),
+        300
       )
     ),
+    grossReceiptsExcludingVAT = Seq(
+      GrossReceiptsExcludingVAT(LocalDate.now()),
+      GrossReceiptsExcludingVAT(LocalDate.now().minusYears(1)),
+      GrossReceiptsExcludingVAT(LocalDate.now().minusYears(2))
+    ),
     otherIncomeDetails = "OtherIncome details",
+    otherOperationalExpensesDetails = "Other expenses",
     furtherInformationOrRemarks = "Further information or remarks"
   )
 

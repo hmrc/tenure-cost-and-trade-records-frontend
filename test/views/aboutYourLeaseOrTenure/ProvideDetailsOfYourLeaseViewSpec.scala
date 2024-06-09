@@ -16,9 +16,9 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.{ConnectedToLandlordDetailsForm, ProvideDetailsOfYourLeaseForm}
+import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{ConnectedToLandlordInformationDetails, ProvideDetailsOfYourLease}
+import models.submissions.aboutYourLeaseOrTenure.ProvideDetailsOfYourLease
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
