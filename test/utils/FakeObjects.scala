@@ -1107,6 +1107,7 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPayPartTwo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, LocalDate.of(2000, 1, 1))),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes))
@@ -1137,6 +1138,27 @@ trait FakeObjects {
     benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
+    provideDetailsOfYourLease = Some(ProvideDetailsOfYourLease("These are details of a lease"))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartThreeNo: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
+    tradeServicesIndex = 1,
+    servicesPaidIndex = 1,
+    tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"), Some(AnswerYes))),
+    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
+    throughputAffectsRent = ThroughputAffectsRent(AnswerNo, "Throughput affects rent details"),
+    isVATPayableForWholeProperty = AnswerNo,
+    isRentUnderReview = AnswerNo,
+    carParking = CarParking(AnswerNo, CarParkingSpaces(1, 2, 3), AnswerNo, CarParkingSpaces(10), hundred, today),
+    rentedEquipmentDetails = "Rented equipment details",
+    paymentForTradeServices = Some(PaymentForTradeServices(AnswerNo)),
+    typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
+    propertyUpdates = Some(PropertyUpdates(AnswerNo)),
+    leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerNo)),
+    benefitsGiven = Some(BenefitsGiven(AnswerNo)),
+    benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
+    workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
+    workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerNo)),
     provideDetailsOfYourLease = Some(ProvideDetailsOfYourLease("These are details of a lease"))
   )
 

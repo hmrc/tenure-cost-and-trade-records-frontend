@@ -57,8 +57,19 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       status(result) shouldBe Status.OK
     }
 
+    "return 200 6020" in {
+      val result = checkYourAnswersAboutFranchiseOrLettingsController6020().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
     "return HTML" in {
       val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return HTML 6020" in {
+      val result = checkYourAnswersAboutFranchiseOrLettingsController6020().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

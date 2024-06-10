@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
+import models.ForTypes
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -34,6 +35,14 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def canRentBeReducedOnReviewController6020 = new CanRentBeReducedOnReviewController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    canRentBeReducedOnReviewView,
+    preEnrichedActionRefiner(forType = ForTypes.for6020),
+    mockSessionRepo
+  )
+
   def canRentBeReducedOnReviewControllerNone = new CanRentBeReducedOnReviewController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
@@ -45,6 +54,16 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
   "CanRentBeReducedOnReviewController GET /" should {
     "return 200 and HTML with Can Rent Be Reduced On Review in the session" in {
       val result = canRentBeReducedOnReviewController.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+      )
+    }
+
+    "return 200 and HTML with Can Rent Be Reduced On Review in the session 6020" in {
+      val result = canRentBeReducedOnReviewController6020.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
