@@ -48,6 +48,10 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec {
       val result = maxOfLettingsReachedController.show("franchiseCatering")(fakeRequest)
       status(result) shouldBe OK
     }
+    "return 200 when no scr parameter equals lettings" in {
+      val result = maxOfLettingsReachedController.show("lettings")(fakeRequest)
+      status(result) shouldBe OK
+    }
     "return 200 when no scr parameter equals franchiseLetting" in {
       val result = maxOfLettingsReachedController.show("franchiseLetting")(fakeRequest)
       status(result) shouldBe OK

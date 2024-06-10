@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -42,6 +43,17 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def ultimatelyResponsibleOutsideRepairsController6020(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) =
+    new UltimatelyResponsibleOutsideRepairsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      ultimatelyResponsibleOutsideRepairsView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
   def ultimatelyResponsibleOutsideRepairsControllerNone =
     new UltimatelyResponsibleOutsideRepairsController(
       stubMessagesControllerComponents(),
@@ -54,6 +66,13 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
   "UltimatelyResponsibleOutsideRepairsController GET /" should {
     "return 200 and HTML with Ultimately Responsible Outside Repairs in the session" in {
       val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and HTML with Ultimately Responsible Outside Repairs 6020 in the session" in {
+      val result = ultimatelyResponsibleOutsideRepairsController6020().show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")

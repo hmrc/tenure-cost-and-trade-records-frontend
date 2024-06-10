@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import models.ForTypes
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
@@ -39,14 +40,36 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def cateringOperationOrLettingAccommodationDetailsController6015(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new CateringOperationDetailsController(
+      stubMessagesControllerComponents(),
+      mockAboutFranchisesOrLettingsNavigator,
+      cateringOperationDetailsView,
+      preEnrichedActionRefiner(forType = ForTypes.for6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = cateringOperationOrLettingAccommodationDetailsController().show(None)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
+    "return 200 6015" in {
+      val result = cateringOperationOrLettingAccommodationDetailsController6015().show(None)(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
     "return HTML" in {
       val result = cateringOperationOrLettingAccommodationDetailsController().show(None)(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return HTML 6015" in {
+      val result = cateringOperationOrLettingAccommodationDetailsController6015().show(None)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -38,10 +39,46 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def rentIncludeFixtureAndFittingsController6020(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def rentIncludeFixtureAndFittingsController6030(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
+      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "RentIncludeFixtureAndFittings controller" should {
     "return 200" in {
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       status(result) shouldBe Status.OK
+    }
+
+    "return 200 and html 6020 data in the session" in {
+      val result = rentIncludeFixtureAndFittingsController6020().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html 6030 data in the session" in {
+      val result = rentIncludeFixtureAndFittingsController6030().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML" in {

@@ -17,7 +17,9 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -28,6 +30,8 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
+  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
+
   def rentPayableVaryAccordingToGrossOrNetController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
@@ -36,6 +40,17 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
       aboutYourLeaseOrTenureNavigator,
       rentPayableVaryAccordingToGrossOrNetView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def rentPayableVaryAccordingToGrossOrNetController6030(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new RentPayableVaryAccordingToGrossOrNetController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentPayableVaryAccordingToGrossOrNetView,
+      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
@@ -51,6 +66,13 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
     "return 200" in {
       val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
       status(result) shouldBe Status.OK
+    }
+
+    "return 200 and html 6030 data in the session" in {
+      val result = rentPayableVaryAccordingToGrossOrNetController6030().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML" in {

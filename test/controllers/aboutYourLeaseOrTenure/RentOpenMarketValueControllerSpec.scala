@@ -16,6 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
+import models.ForTypes.forTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -38,6 +40,17 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def rentOpenMarketValueController6020(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new RentOpenMarketValueController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentOpenMarketValueView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = rentOpenMarketValueController().show(fakeRequest)
@@ -46,6 +59,17 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = rentOpenMarketValueController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6020" in {
+      val result = rentOpenMarketValueController6020().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6020" in {
+      val result = rentOpenMarketValueController6020().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
