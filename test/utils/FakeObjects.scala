@@ -1156,4 +1156,9 @@ trait FakeObjects {
     aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPayPartTwo,
     aboutLeaseOrAgreementPartThree = prefilledAboutLeaseOrAgreementPartThree
   )
+
+  val prefilledFull6030Session = sessionAboutFranchiseOrLetting6030YesSession.copy(
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreementPartOne,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwo6030
+  )
 }
