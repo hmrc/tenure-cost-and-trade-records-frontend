@@ -1107,6 +1107,7 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPayPartTwo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
+    howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, LocalDate.of(2000, 1, 1))),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes))

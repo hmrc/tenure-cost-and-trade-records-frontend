@@ -16,22 +16,29 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.{CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, CurrentRentFixedRenewalLeaseTenancy, CurrentRentFixedRentReview, CurrentRentFixedSaleLeaseback, HowIsCurrentRentFixed}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
 class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentRentFixed] {
 
   val messageKeyPrefix = "howIsCurrentRentFixed"
 
+  val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(prefilledFull6020Session, fakeRequest)
+
   override val form = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(messages)
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
 
-  def createView = () => howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView     = () => howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView6020 = () =>
+    howIsCurrentRentFixedView(form, backLink, Summary("99996020001"))(sessionRequest6020full, messages)
 
   def createViewUsingForm = (form: Form[HowIsCurrentRentFixed]) =>
     howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
@@ -42,6 +49,16 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
 
     "has a link marked with back.link.label leading to rent payable by gross or net turnover Page" in {
       val doc          = asDocument(createView())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText mustBe messages("back.link.label")
+      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
+        .show()
+        .url
+    }
+
+    "has a link marked with back.link.label leading to rent payable by gross or net turnover Page123" in {
+      val doc          = asDocument(createView6020())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")

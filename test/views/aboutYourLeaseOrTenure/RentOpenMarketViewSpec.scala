@@ -16,12 +16,14 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
 class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueDetails] {
@@ -30,9 +32,14 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
 
   override val form = RentOpenMarketValueForm.rentOpenMarketValuesForm
 
+  val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(prefilledFull6020Session, fakeRequest)
+
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
-  def createView = () => rentOpenMarketValueView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView     = () => rentOpenMarketValueView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView6020 = () =>
+    rentOpenMarketValueView(form, backLink, Summary("99996020001"))(sessionRequest6020full, messages)
 
   def createViewUsingForm = (form: Form[RentOpenMarketValueDetails]) =>
     rentOpenMarketValueView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
@@ -43,6 +50,14 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText mustBe messages("back.link.label")
+      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+    }
+
+    "has a link marked with back.link.label leading to the franchise or letting tied to property Page123" in {
+      val doc          = asDocument(createView6020())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")

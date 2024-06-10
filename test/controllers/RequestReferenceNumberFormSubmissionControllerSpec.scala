@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import play.api.http.Status.{FOUND, OK}
-import play.api.test.Helpers.{contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import stub.StubSessionRepo
 import utils.TestBaseSpec
 import views.html.confirmation
@@ -54,6 +54,10 @@ class RequestReferenceNumberFormSubmissionControllerSpec extends TestBaseSpec {
       val result = requestReferenceNumberFormSubmissionController.confirmation(fakeRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
+
+      val content = contentAsString(result)
+      content should include("confirmation.heading")
+      content should include("print-link")
     }
   }
 }
