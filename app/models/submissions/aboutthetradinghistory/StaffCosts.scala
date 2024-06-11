@@ -18,23 +18,15 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
 
-import java.time.LocalDate
+case class StaffCosts(
+  wagesAndSalaries: Option[BigDecimal],
+  nationalInsurance: Option[BigDecimal],
+  pensionContributions: Option[BigDecimal],
+  remunerations: Option[BigDecimal]
+) {
+  def total = Seq(wagesAndSalaries, nationalInsurance, pensionContributions, remunerations).flatten.sum
+}
 
-/**
-  * 6076 Trading history.
-  *
-  * @author Yuriy Tumakha
-  */
-case class TurnoverSection6076(
-  financialYearEnd: LocalDate,
-  tradingPeriod: Int,
-  electricityGenerated: Option[String] = None,
-  otherIncome: Option[BigDecimal] = None,
-  costOfSales6076Sum: Option[CostOfSales6076Sum] = None,
-  headOfficeExpenses: Option[BigDecimal] = None,
-  staffCosts: Option[StaffCosts] = None
-)
-
-object TurnoverSection6076 {
-  implicit val format: OFormat[TurnoverSection6076] = Json.format
+object StaffCosts {
+  implicit val format: OFormat[StaffCosts] = Json.format[StaffCosts]
 }
