@@ -487,12 +487,40 @@ trait FakeObjects {
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))
   )
 
+  val staffCostsTestData = StaffCosts(
+    wagesAndSalaries = Some(BigDecimal(50000.00)),
+    nationalInsurance = Some(BigDecimal(5000.00)),
+    pensionContributions = Some(BigDecimal(3000.00)),
+    remunerations = Some(BigDecimal(7000.00))
+  )
+
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
-      TurnoverSection6076(LocalDate.now(), 52, "5000 kWh", 1000, headOfficeExpenses = 100),
-      TurnoverSection6076(LocalDate.now().minusYears(1), 52, "5 MWh", 2000, headOfficeExpenses = 100),
-      TurnoverSection6076(LocalDate.now().minusYears(2), 52, "5 MWh", 3000, headOfficeExpenses = 100)
+      TurnoverSection6076(
+        LocalDate.now(),
+        52,
+        "5000 kWh",
+        1000,
+        headOfficeExpenses = 100,
+        staffCosts = staffCostsTestData
+      ),
+      TurnoverSection6076(
+        LocalDate.now().minusYears(1),
+        52,
+        "5 MWh",
+        2000,
+        headOfficeExpenses = 100,
+        staffCosts = staffCostsTestData
+      ),
+      TurnoverSection6076(
+        LocalDate.now().minusYears(2),
+        52,
+        "5 MWh",
+        3000,
+        headOfficeExpenses = 100,
+        staffCosts = staffCostsTestData
+      )
     ),
     grossReceiptsExcludingVAT = Some(
       Seq(

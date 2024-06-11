@@ -237,6 +237,9 @@ POST        /unusual-circumstances                                  controllers.
 GET         /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.show()
 POST        /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.submit()
 
+GET         /staff-costs                                            controllers.aboutthetradinghistory.StaffCostsController.show()
+POST        /staff-costs                                            controllers.aboutthetradinghistory.StaffCostsController.submit()
+
 GET         /gross-receipts-excluding-vat                           controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.show()
 POST        /gross-receipts-excluding-vat                           controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.submit()
 # Form 6076 routing end

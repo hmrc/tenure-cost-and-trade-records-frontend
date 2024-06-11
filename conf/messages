@@ -1668,6 +1668,31 @@ error.costOfSales6076.otherSales.range = Other costs in the year ending {0} must
 error.costOfSales6076.otherSales.negative = Other costs in the year ending {0} cannot be a negative number
 error.costOfSales6076.otherSalesDetails.maxLength = Description of a other costs must be 2,000 characters or fewer
 
+#STAFF COSTS 6076
+
+staffCosts.heading = Staff costs
+staffCosts.p = Provide us with details of your staff costs.
+staffCosts.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
+staffCosts.financialYearEnd = Financial year end
+staffCosts.wages = Wages and salaries
+staffCosts.NI = National Insurance
+staffCosts.NI.hint = Excluding National Insurance and pension contributions
+staffCosts.pension = Pension contributions
+staffCosts.remunerations = Director’s remunerations
+staffCosts.total = Total staff costs
+error.staffCosts.wages.required = Enter 0 if you did not have any wages or salaries in the year ending {0}
+error.staffCosts.wages.range = Wages and salaries in the year ending {0} must be a number, for example 100 or 100.00
+error.staffCosts.wages.negative = Wages and salaries in the year ending {0} cannot be a negative number
+error.staffCosts.NI.required = Enter 0 if you did not have any National Insurance costs in the year ending {0}
+error.staffCosts.NI.range = National Insurance costs in the year ending {0} must be a number, for example 100 or 100.00
+error.staffCosts.NI.negative = National Insurance costs in the year ending {0} cannot be a negative number
+error.staffCosts.pension.required = Enter 0 if you did not have any pension contributions in the year ending {0}
+error.staffCosts.pension.range = Pension contributions in the year ending {0} must be a number, for example 100 or 100.00
+error.staffCosts.pension.negative = Pension contributions in the year ending {0} cannot be a negative number
+error.staffCosts.remunerations.required = Enter 0 if you did not have any director’s remunerations in the year ending {0}
+error.staffCosts.remunerations.range = Director’s remunerations in the year ending {0} must be a number, for example 100 or 100.00
+error.staffCosts.remunerations.negative = Director’s remunerations in the year ending {0} cannot be a negative number
+
 
 # GROSS PROFIT
 grossProfit.heading = Total gross profits
