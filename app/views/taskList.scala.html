@@ -1,18 +1,18 @@
 @*
- * Copyright 2024 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *@
+* Copyright 2024 HM Revenue & Customs
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*@
 
 @import actions.SessionRequest
 @import models.submissions.common.AnswerYes
@@ -53,6 +53,7 @@
   5
  }
 }
+
 @additionalInfoSection = @{
  if(isLeaseHolder && ForTypes.for6076) {
   5
@@ -317,33 +318,47 @@
    </ul>
   </li>
 
-  @if(!ForTypes.for6076){
-   <li>
-    <h2 class="app-task-list__section">
-     <span class="app-task-list__section-number">4.</span>
-     @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
-      @messages("label.section.aboutTheFranchiseLettings")
-     }
-     @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-      @messages("label.section.aboutTheFranchiseConcessions")
-     }
-     @if(forType == ForTypes.for6020) {
-      @messages("label.section.aboutTheLettings")
-     }
-    </h2>
-    <ul class="app-task-list__items">
-     @if(!(Seq(ForTypes.for6020) contains forType)) {
-      @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
-       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-       section4Completed,
-       session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-       section3Completed.isEmpty)
-     }
-     @if(forType == ForTypes.for6030) {
+  <li>
+   <h2 class="app-task-list__section">
+    <span class="app-task-list__section-number">4.</span>
+    @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
+     @messages("label.section.aboutTheFranchiseLettings")
+    }
+    @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+     @messages("label.section.aboutTheFranchiseConcessions")
+    }
+    @if(forType == ForTypes.for6020) {
+     @messages("label.section.aboutTheLettings")
+    }
+   </h2>
+   <ul class="app-task-list__items">
+    @if(!(Seq(ForTypes.for6020) contains forType)) {
+     @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+      section4Completed,
+      session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+      section3Completed.isEmpty)
+    }
+    @if(forType == ForTypes.for6030) {
+     @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
+      controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show(),
+      section4Completed,
+      session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee),
+      session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
+     )
+
+     @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
+      section4Completed,
+      session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
+      session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee).isEmpty
+     )
+    } else {
+     @if(forType != ForTypes.for6020) {
       @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-       controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show(),
+       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
        section4Completed,
-       session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee),
+       session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
        session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
       )
 
@@ -351,40 +366,24 @@
        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
        section4Completed,
        session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-       session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee).isEmpty
+       session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
       )
-     } else {
-      @if(forType != ForTypes.for6020) {
-       @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-        controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
-        section4Completed,
-        session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
-        session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-       )
-
-       @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
-        section4Completed,
-        session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-        session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
-       )
-      }else{
-       @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-        section4Completed,
-        session.aboutFranchisesOrLettings.flatMap(_.lettings),
-        section3Completed.isEmpty
-       )
-      }
+     }else{
+      @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+       section4Completed,
+       session.aboutFranchisesOrLettings.flatMap(_.lettings),
+       section3Completed.isEmpty
+      )
      }
-    </ul>
-   </li>
-  }
+    }
+   </ul>
+  </li>
 
   @if(isLeaseHolder) {
    <li>
     <h2 class="app-task-list__section">
-     <span class="app-task-list__section-number">@leaseOrAgreementSection .</span> @messages("label.section.aboutYourLeaseOrTenure")
+     <span class="app-task-list__section-number">5. </span> @messages("label.section.aboutYourLeaseOrTenure")
     </h2>
     <ul class="app-task-list__items">
      @if(forType == ForTypes.for6020) {
@@ -396,21 +395,12 @@
       )
      }
 
-     @if(ForTypes.for6076) {
-      @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
-       controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
-       section5Completed,
-       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
-       section3Completed.isEmpty
-      )
-     } else {
-      @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
-       controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
-       section5Completed,
-       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
-       section4Completed.isEmpty
-      )
-     }
+     @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+      controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+      section5Completed,
+      session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+      section4Completed.isEmpty
+     )
 
      @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
       @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
@@ -436,20 +426,8 @@
         session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
         session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
        )
-      } else {
-       @if(forType == ForTypes.for6076){
-        @includes.taskListItem("provide-details-of-your-lease", "checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease.heading",
-         controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(),
-         section5Completed,
-         session.aboutLeaseOrAgreementPartThree.flatMap(_.provideDetailsOfYourLease),
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
-        )
-        )
-       }
-      }}
-
-
-
+      }
+     }
      @if(forType == ForTypes.for6020){
       @includes.taskListItem("lease-start-date-and-rent-paid", "taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid",
        controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(),
@@ -487,7 +465,7 @@
 
   <li>
    <h2 class="app-task-list__section">
-    <span class="app-task-list__section-number">@additionalInfoSection. </span> @messages("label.section.additionalInformation")
+    <span class="app-task-list__section-number">@totalSections. </span> @messages("label.section.additionalInformation")
    </h2>
    <ul class="app-task-list__items">
    @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarksTasklist.heading",
@@ -517,4 +495,3 @@
  }
 
 }
-
