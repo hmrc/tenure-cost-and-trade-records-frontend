@@ -1,18 +1,18 @@
 @*
- * Copyright 2024 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *@
+* Copyright 2024 HM Revenue & Customs
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*@
 
 @import actions.SessionRequest
 @import models.submissions.common.AnswerYes
@@ -141,47 +141,69 @@
      section1Completed.isEmpty
     )
 
-    @if(forType != ForTypes.for6030) {
-     @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
-      controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+    @if(forType == ForTypes.for6076){
+     @includes.taskListItem("technology-type", "taskList.technologyType",
+      controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
       section2Completed,
-      session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+      session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
       session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
      )
-    } else {
-     @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
-      controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+     @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
+      controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
       section2Completed,
-      session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-      session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+      session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
+      session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty
      )
-    }
+     @includes.taskListItem("how-is-used", "taskList.howIsUsed",
+      controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
+      section2Completed,
+      session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
+      session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty
+     )
+    }else{
+
+     @if(forType != ForTypes.for6030) {
+      @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+       section2Completed,
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+       session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+      )
+     } else {
+      @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+       controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+       section2Completed,
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+       session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+      )
+     }
 
 
-    @if(forType == ForTypes.for6030 && !isLeaseHolder) {
-     @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-      controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
-      section2Completed,
-      session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
-      session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
-     )
-    }
+     @if(forType == ForTypes.for6030 && !isLeaseHolder) {
+      @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
+       section2Completed,
+       session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+      )
+     }
 
-    @if(forType != ForTypes.for6030 && forType != ForTypes.for6020) {
-     @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-      if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-       controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
-      } else {
-       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-      },
-      section2Completed,
-      if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-       session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
-      } else {
-       session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
-      },
-      session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
-     )
+     @if(forType != ForTypes.for6030 && forType != ForTypes.for6020) {
+      @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+       if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
+       } else {
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+       },
+       section2Completed,
+       if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
+       } else {
+        session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
+       },
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+      )
+     }
     }
    </ul>
   </li>
@@ -198,21 +220,65 @@
      section2Completed.isEmpty
     )
 
-    @includes.taskListItem("turnover", "turnover.heading",
-     if(forType == ForTypes.for6030) {
-      controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
-     } else {
-      controllers.aboutthetradinghistory.routes.TurnoverController.show()
-     },
-     section3Completed,
-     if(forType == ForTypes.for6030) {
-      session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
-     } else {
-      session.aboutTheTradingHistory.flatMap(_.turnoverSections)
-     },
-     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
-    )
+    @if(!(Seq(ForTypes.for6020) contains forType)) {
 
+     @includes.taskListItem("turnover", "turnover.heading",
+      if(forType == ForTypes.for6030) {
+       controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+      } else {
+       controllers.aboutthetradinghistory.routes.TurnoverController.show()
+      },
+      section3Completed,
+      if(forType == ForTypes.for6030) {
+       session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
+      } else {
+       session.aboutTheTradingHistory.flatMap(_.turnoverSections)
+      },
+      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+     )
+
+    }
+
+    @if(forType == ForTypes.for6020) {
+
+     @includes.taskListItem("fuel-sales", "taskList.fuelSales",
+      controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.totalFuelSold),
+      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+     )
+     @includes.taskListItem("bunkered-fuel", "taskList.bunkerdFuel",
+      controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion),
+      session.aboutTheTradingHistory.flatMap(_.totalFuelSold).isEmpty
+     )
+     @includes.taskListItem("customer-credit-accounts", "taskList.customerCreditAccounts",
+      controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts),
+      session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).isEmpty
+     )
+     @includes.taskListItem("low-margin-fuel-cards", "taskList.lowMarginCards",
+      controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.percentageFromFuelCards),
+      session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts).isEmpty
+     )
+     @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
+      controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.turnoverSections6020),
+      session.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).isEmpty
+     )
+     @includes.taskListItem("ev-charging-point", "taskList.EVChargingPoints",
+      controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints),
+      session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).isEmpty
+     )
+
+    }
     @if(forType == ForTypes.for6015) {
      @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
       controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
@@ -253,26 +319,26 @@
   </li>
 
   <li>
-   @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
-    <h2 class="app-task-list__section">
-     <span class="app-task-list__section-number">4.</span>
+   <h2 class="app-task-list__section">
+    <span class="app-task-list__section-number">4.</span>
+    @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
      @messages("label.section.aboutTheFranchiseLettings")
-    </h2>
-   }
-   @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-    <h2 class="app-task-list__section">
-     <span class="app-task-list__section-number">4.</span>
+    }
+    @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
      @messages("label.section.aboutTheFranchiseConcessions")
-    </h2>
-   }
+    }
+    @if(forType == ForTypes.for6020) {
+     @messages("label.section.aboutTheLettings")
+    }
+   </h2>
    <ul class="app-task-list__items">
-    @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
-     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-     section4Completed,
-     session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-     section3Completed.isEmpty
-    )
-
+    @if(!(Seq(ForTypes.for6020) contains forType)) {
+     @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+      section4Completed,
+      session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+      section3Completed.isEmpty)
+    }
     @if(forType == ForTypes.for6030) {
      @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
       controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show(),
@@ -288,19 +354,28 @@
       session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee).isEmpty
      )
     } else {
-     @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
-      section4Completed,
-      session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
-      session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-     )
+     @if(forType != ForTypes.for6020) {
+      @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
+       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
+       section4Completed,
+       session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
+       session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
+      )
 
-     @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
-      section4Completed,
-      session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-      session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
-     )
+      @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+       controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
+       section4Completed,
+       session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
+       session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
+      )
+     }else{
+      @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+       section4Completed,
+       session.aboutFranchisesOrLettings.flatMap(_.lettings),
+       section3Completed.isEmpty
+      )
+     }
     }
    </ul>
   </li>
@@ -344,15 +419,25 @@
        session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty
       )
      } else {
-      @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading",
-       controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
+      @if(forType != ForTypes.for6020) {
+       @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading",
+        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
+        section5Completed,
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+       )
+      }
+     }
+     @if(forType == ForTypes.for6020){
+      @includes.taskListItem("lease-start-date-and-rent-paid", "taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid",
+       controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(),
        section5Completed,
-       session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid),
        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
       )
      }
 
-     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
+     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6020 || forType == ForTypes.for6030) {
       @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
        section5Completed,
