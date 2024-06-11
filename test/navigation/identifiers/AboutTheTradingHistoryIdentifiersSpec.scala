@@ -80,6 +80,10 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(StaffCostsId.toString.equals("staffCostsPage"))
     }
 
+    "Identifier for GrossReceiptsForBaseLoad page" in {
+      assert(GrossReceiptsForBaseLoadId.toString.equals("grossReceiptsForBaseLoadPage"))
+    }
+
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
     }
