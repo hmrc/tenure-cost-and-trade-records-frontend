@@ -59,7 +59,7 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url
       )
     }
   }

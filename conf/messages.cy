@@ -1014,7 +1014,7 @@ error.servicePaidSeparatelyCharge.required = You must tell us the annual charge 
 # SERVICES PAID SEPARATELY LIST
 #####################################
 servicePaidSeparatelyList.heading = You have added {0} {1} which is paid for separately
-servicePaidSeparatelyListZero.heading = You have removed all the services which is paid for separately
+servicePaidSeparatelyListZero.heading = You have removed all the services which are paid for separately
 servicePaidSeparatelyList.service = service
 servicePaidSeparatelyList.services = services
 servicePaidSeparatelyList.label = Would you like to add another service?
