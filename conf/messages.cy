@@ -1905,6 +1905,75 @@ percentageFromFuelCards.label = Percentage of fuel sales on low-margin fuel card
 error.percentageFromFuelCards.required = Enter 0 if none of your total fuel sales comes from low-margin credit cards in the year ending {0}
 error.percentageFromFuelCards.range = The percentage of your total fuel sales comes from low-margin credit cards in the year ending {0} must be a number
 
+# GROSS RECEIPTS EXCLUDING VAT (FROM 6076)
+###################################################
+grossReceipts.electricitySales = Electricity sales
+grossReceipts.feedInTariff = Feed-in tariff
+grossReceipts.rocBuyout = Renewable obligation certificate (ROC) buyout
+grossReceipts.rocRecycle = ROC recycle
+grossReceipts.contractForDifference = Contract for difference
+grossReceipts.capacityMarket = Capacity market
+grossReceipts.balancingServices = Balancing services
+grossReceipts.embeddedBenefits = Embedded benefits
+grossReceipts.total = Total gross receipts
+grossReceipts.heading = Gross receipts excluding VAT
+grossReceipts.financialYearEnd = Financial year end
+grossReceipts.p1 = Provide us with details of your gross receipts.
+error.grossReceipts.electricitySales.sales.required = Enter 0 if you did not have any electricity sales receipts in the year ending {0}
+error.grossReceipts.electricitySales.sales.range = Electricity sales receipts in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.electricitySales.sales.negative = Turnover from electricity sales receipts in the year ending {0} cannot be a negative number
+error.grossReceipts.feedInTariff.sales.required = Enter 0 if you did not have any feed-in tariff in the year ending {0}
+error.grossReceipts.feedInTariff.sales.range = Feed-in tariff in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.feedInTariff.sales.negative = Turnover from feed-in tariff in the year ending {0} cannot be a negative number
+error.grossReceipts.rocBuyout.sales.required = Enter 0 if you did not have any renewable obligation certificate (ROC) buyout in the year ending {0}
+error.grossReceipts.rocBuyout.sales.range = Renewable obligation certificate (ROC) buyout in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.rocBuyout.sales.negative = Turnover from renewable obligation certificate (ROC) buyout in the year ending {0} cannot be a negative number
+error.grossReceipts.rocRecycle.sales.required = Enter 0 if you did not have any ROC recycle in the year ending {0}
+error.grossReceipts.rocRecycle.sales.range = ROC recycle in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.rocRecycle.sales.negative = Turnover from ROC recycle in the year ending {0} cannot be a negative number
+error.grossReceipts.contractForDifference.sales.required = Enter 0 if you did not have any contract for difference in the year ending {0}
+error.grossReceipts.contractForDifference.sales.range = Contract for difference in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.contractForDifference.sales.negative = Turnover from contract for difference in the year ending {0} cannot be a negative number
+error.grossReceipts.capacityMarket.sales.required = Enter 0 if you did not have any capacity market in the year ending {0}
+error.grossReceipts.capacityMarket.sales.range = Capacity market in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.capacityMarket.sales.negative = Turnover from capacity market in the year ending {0} cannot be a negative number
+error.grossReceipts.balancingServices.sales.required = Enter 0 if you did not have any balancing services in the year ending {0}
+error.grossReceipts.balancingServices.sales.range = Balancing services in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.balancingServices.sales.negative = Turnover from balancing services in the year ending {0} cannot be a negative number
+error.grossReceipts.embeddedBenefits.sales.required = Enter 0 if you did not have any embedded benefits in the year ending {0}
+error.grossReceipts.embeddedBenefits.sales.range = Embedded benefits in the year ending {0}  must be a number, for example  100 or 100.00
+error.grossReceipts.embeddedBenefits.sales.negative = Turnover from embedded benefits in the year ending {0} cannot be a negative number
+
+# GROSS RECEIPTS FOR BASELOAD (FROM 6076)
+###################################################
+grossReceiptsForBaseLoad.heading = Gross receipts for baseload generation excluding VAT
+grossReceiptsForBaseLoad.p = Provide us with details of your gorss receipts for baseload electricity generation.
+grossReceiptsForBaseLoad.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane = Renewable heat incentive
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.hint = Bio-methane tariff
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass = Renewable heat incentive
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.hint = Biomass or biogas tariff
+grossReceiptsForBaseLoad.byProductSales = By-product sales
+grossReceiptsForBaseLoad.byProductSales.hint = Compost or ash, for example
+grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales = Hot water, heat or steam sales
+grossReceiptsForBaseLoad.gateIncomeFromWaste = Gate income from waste
+grossReceiptsForBaseLoad.total = Total baseload gross receipts
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.required = Enter 0 if you did not have any renewable heat incentive in the year ending {0}
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.range = Renewable heat incentive in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.negative = Renewable heat incentive in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.required = Enter 0 if you did not have any renewable heat incentive in the year ending {0}
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.range = Renewable heat incentive in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.negative = Renewable heat incentive in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.byProductSales.required = Enter 0 if you did not have any by-product sales in the year ending {0}
+error.grossReceiptsForBaseLoad.byProductSales.range = By-product sales in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.byProductSales.negative = By-product sales in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales.required = Enter 0 if you did not have any hot water, heat or steam sales in the year ending {0}
+error.grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales.range = Hot water, heat or steam sales in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales.negative = Hot water, heat or steam sales in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.gateIncomeFromWaste.required = Enter 0 if you did not have any gate income from waste in the year ending {0}
+error.grossReceiptsForBaseLoad.gateIncomeFromWaste.range = Gate income from waste in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.gateIncomeFromWaste.negative = Gate income from waste in the year ending {0} cannot be a negative number
+
 #########################
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)

@@ -1954,6 +1954,35 @@ error.grossReceipts.embeddedBenefits.sales.required = Enter 0 if you did not hav
 error.grossReceipts.embeddedBenefits.sales.range = Embedded benefits in the year ending {0}  must be a number, for example  100 or 100.00
 error.grossReceipts.embeddedBenefits.sales.negative = Turnover from embedded benefits in the year ending {0} cannot be a negative number
 
+# GROSS RECEIPTS FOR BASELOAD (FROM 6076)
+###################################################
+grossReceiptsForBaseLoad.heading = Gross receipts for baseload generation excluding VAT
+grossReceiptsForBaseLoad.p = Provide us with details of your gorss receipts for baseload electricity generation.
+grossReceiptsForBaseLoad.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane = Renewable heat incentive
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.hint = Bio-methane tariff
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass = Renewable heat incentive
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.hint = Biomass or biogas tariff
+grossReceiptsForBaseLoad.byProductSales = By-product sales
+grossReceiptsForBaseLoad.byProductSales.hint = Compost or ash, for example
+grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales = Hot water, heat or steam sales
+grossReceiptsForBaseLoad.gateIncomeFromWaste = Gate income from waste
+grossReceiptsForBaseLoad.total = Total baseload gross receipts
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.required = Enter 0 if you did not have any renewable heat incentive in the year ending {0}
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.range = Renewable heat incentive in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.negative = Renewable heat incentive in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.required = Enter 0 if you did not have any renewable heat incentive in the year ending {0}
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.range = Renewable heat incentive in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.negative = Renewable heat incentive in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.byProductSales.required = Enter 0 if you did not have any by-product sales in the year ending {0}
+error.grossReceiptsForBaseLoad.byProductSales.range = By-product sales in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.byProductSales.negative = By-product sales in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales.required = Enter 0 if you did not have any hot water, heat or steam sales in the year ending {0}
+error.grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales.range = Hot water, heat or steam sales in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales.negative = Hot water, heat or steam sales in the year ending {0} cannot be a negative number
+error.grossReceiptsForBaseLoad.gateIncomeFromWaste.required = Enter 0 if you did not have any gate income from waste in the year ending {0}
+error.grossReceiptsForBaseLoad.gateIncomeFromWaste.range = Gate income from waste in the year ending {0} must be a number, for example 100 or 100.00
+error.grossReceiptsForBaseLoad.gateIncomeFromWaste.negative = Gate income from waste in the year ending {0} cannot be a negative number
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########

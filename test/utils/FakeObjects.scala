@@ -494,6 +494,14 @@ trait FakeObjects {
     remunerations = Some(BigDecimal(7000.00))
   )
 
+  val grossReceiptsForBaseLoad = GrossReceiptsForBaseLoad(
+    renewableHeatIncentiveBioMethane = Some(BigDecimal(50000.00)),
+    renewableHeatIncentiveBioMass = Some(BigDecimal(40000.00)),
+    byProductSales = Some(BigDecimal(30000.00)),
+    hotWaterHeatOrSteamSales = Some(BigDecimal(20000.00)),
+    gateIncomeFromWaste = Some(BigDecimal(10000.00))
+  )
+
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
@@ -503,7 +511,8 @@ trait FakeObjects {
         "5000 kWh",
         1000,
         headOfficeExpenses = 100,
-        staffCosts = staffCostsTestData
+        staffCosts = staffCostsTestData,
+        grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       ),
       TurnoverSection6076(
         LocalDate.now().minusYears(1),
@@ -511,7 +520,8 @@ trait FakeObjects {
         "5 MWh",
         2000,
         headOfficeExpenses = 100,
-        staffCosts = staffCostsTestData
+        staffCosts = staffCostsTestData,
+        grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       ),
       TurnoverSection6076(
         LocalDate.now().minusYears(2),
@@ -519,7 +529,8 @@ trait FakeObjects {
         "5 MWh",
         3000,
         headOfficeExpenses = 100,
-        staffCosts = staffCostsTestData
+        staffCosts = staffCostsTestData,
+        grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       )
     ),
     grossReceiptsExcludingVAT = Some(
