@@ -18,15 +18,15 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
-import form.aboutthetradinghistory.HeadOfficeExpensesForm.headOfficeExpensesForm
+import form.aboutthetradinghistory.OperationalExpensesForm.operationalExpensesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.TurnoverSection6076
+import models.submissions.aboutthetradinghistory.{OperationalExpenses, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.HeadOfficeExpensesId
+import navigation.identifiers.OperationalExpensesId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.headOfficeExpenses6076
+import views.html.aboutthetradinghistory.operationalExpenses6076
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -37,10 +37,10 @@ import scala.concurrent.{ExecutionContext, Future}
   * @author Yuriy Tumakha
   */
 @Singleton
-class HeadOfficeExpensesController @Inject() (
+class OperationalExpensesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  headOfficeExpensesView: headOfficeExpenses6076,
+  operationalExpensesView: operationalExpenses6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -49,14 +49,14 @@ class HeadOfficeExpensesController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
-      val years                = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val informationOrRemarks =
-        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.furtherInformationOrRemarks)
+      val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
+      val details =
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
 
       Ok(
-        headOfficeExpensesView(
-          headOfficeExpensesForm(years).fill(
-            (turnoverSections6076.map(_.headOfficeExpenses), informationOrRemarks)
+        operationalExpensesView(
+          operationalExpensesForm(years).fill(
+            (turnoverSections6076.flatMap(_.operationalExpenses), details)
           ),
           getBackLink
         )
@@ -68,20 +68,20 @@ class HeadOfficeExpensesController @Inject() (
     runWithSessionCheck { turnoverSections6076 =>
       val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[(Seq[Option[BigDecimal]], Option[String])](
-        headOfficeExpensesForm(years),
-        formWithErrors => BadRequest(headOfficeExpensesView(formWithErrors, getBackLink)),
+      continueOrSaveAsDraft[(Seq[OperationalExpenses], String)](
+        operationalExpensesForm(years),
+        formWithErrors => BadRequest(operationalExpensesView(formWithErrors, getBackLink)),
         success => {
-          val updatedSections      =
-            (success._1 zip turnoverSections6076).map { case (headOfficeExpenses, previousSection) =>
-              previousSection.copy(headOfficeExpenses = headOfficeExpenses)
+          val updatedSections =
+            (success._1 zip turnoverSections6076).map { case (operationalExpenses, previousSection) =>
+              previousSection.copy(operationalExpenses = Some(operationalExpenses))
             }
-          val informationOrRemarks = success._2
+          val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
               turnoverSections6076 = Some(updatedSections),
-              furtherInformationOrRemarks = informationOrRemarks
+              otherOperationalExpensesDetails = Option(details).filter(_.nonEmpty)
             )
           )
 
@@ -90,7 +90,7 @@ class HeadOfficeExpensesController @Inject() (
             .map { _ =>
               navigator.cyaPage
                 .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(HeadOfficeExpensesId, updatedData).apply(updatedData))
+                .getOrElse(navigator.nextPage(OperationalExpensesId, updatedData).apply(updatedData))
             }
             .map(Redirect)
         }
@@ -111,7 +111,8 @@ class HeadOfficeExpensesController @Inject() (
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     =>
-        aboutthetradinghistory.routes.OperationalExpensesController.show().url
+        // TODO: Premises costs
+        aboutthetradinghistory.routes.StaffCostsController.show().url
     }
 
 }

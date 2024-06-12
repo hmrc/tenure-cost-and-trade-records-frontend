@@ -98,9 +98,9 @@ class MonthYearFormatter(
 
   private def parseNumber(str: String, allowedRange: Range): Int =
     Try(str.trim.toInt) match {
-      case Success(number) if allowedRange.contains(number) => number
-      case Success(_)                                       => 0
-      case Failure(_)                                       => -1
+      case Success(num) if allowedRange contains num => num
+      case Success(_)                                => 0
+      case Failure(_)                                => -1
     }
 
   private def oneError(key: String, message: String, args: Seq[Any]): Left[Seq[FormError], MonthsYearDuration] =

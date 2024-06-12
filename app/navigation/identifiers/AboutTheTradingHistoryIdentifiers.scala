@@ -112,6 +112,10 @@ case object OtherIncomeId extends Identifier {
   override def toString: String = "otherIncomePage"
 }
 
+case object OperationalExpensesId extends Identifier {
+  override def toString: String = "operationalExpensesPage"
+}
+
 case object HeadOfficeExpensesId extends Identifier {
   override def toString: String = "headOfficeExpensesPage"
 }
