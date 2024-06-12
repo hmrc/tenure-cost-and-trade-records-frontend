@@ -26,12 +26,16 @@ import views.behaviours.ViewBehaviours
 
 class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix     = "maxOf5Lettings.businessOrFranchise"
+  val messageKeyPrefix     = "maxOf5Lettings"
   val messageKeyPrefix6015 = "maxOf5Lettings.businessOrConcession"
+  val messageKeyPrefix6010 = "maxOf5Lettings.businessOrFranchise"
+  val messageKeyPrefix6030 = "maxOf5Lettings.concessionOrFranchise"
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
+
+  val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
 
   val form       = MaxOfLettingsForm.maxOfLettingsForm(messages)
   def createView = () =>
@@ -42,11 +46,11 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
       Summary("10000001")
     )(sessionRequest, messages)
 
-  def prepareView(sessionRequest: SessionRequest[_]): () => Html = { () =>
+  def prepareViewFranchise(sessionRequest: SessionRequest[_]): () => Html = { () =>
     maxOfLettingsReachedView(
       form,
       "backLink",
-      "connection",
+      "franchiseCatering",
       Summary("10000001")
     )(sessionRequest, messages)
   }
@@ -65,7 +69,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
     "contain text" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("maxOf5Lettings.businessOrFranchise.heading")))
+      assert(doc.toString.contains(messages("maxOf5Lettings.heading")))
       assert(doc.toString.contains(messages("maxOf5Lettings.confirm")))
       assert(doc.toString.contains(messages("maxOf5Lettings.link")))
     }
@@ -81,8 +85,14 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
       assert(loginButton == messages("button.label.save"))
     }
   }
+  "max of Lettings franchise reached view for 6010" must {
+    behave like normalPage(prepareViewFranchise(sessionRequest), messageKeyPrefix6010)
+  }
 
-  "max of Lettings reached view for 6015" must {
-    behave like normalPage(prepareView(sessionRequest6015), messageKeyPrefix6015)
+  "max of Lettings reached franchise  view for 6015" must {
+    behave like normalPage(prepareViewFranchise(sessionRequest6015), messageKeyPrefix6015)
+  }
+  "max of Lettings reached franchise  view for 6030" must {
+    behave like normalPage(prepareViewFranchise(sessionRequest6030), messageKeyPrefix6030)
   }
 }
