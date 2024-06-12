@@ -83,11 +83,7 @@ class DoesRentIncludeParkingController @Inject() (
       case "TL" =>
         controllers.routes.TaskListController.show().url + "#does-rent-include-parking"
       case _    =>
-        if (leaseOrAgreementPartThree.exists(_.servicesPaid.nonEmpty)) {
-          controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url
-        } else {
-          controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
-        }
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url
     }
 
 }

@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 import form.confirmableActionForm.confirmableActionForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -79,9 +80,19 @@ class ServicePaidSeparatelyListController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartThree
           .map(_.servicesPaid)
           .filter(_.nonEmpty)
-          .fold(
-            Redirect(toServicePaidSeparately(index))
-          ) { existingServices =>
+          .fold {
+            data match {
+              case AnswerYes =>
+                Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show())
+              case AnswerNo  =>
+                request.sessionData.forType match {
+                  case ForTypes.for6020 =>
+                    Redirect(controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show())
+                  case _                =>
+                    Redirect(controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show())
+                }
+            }
+          } { existingServices =>
             val updatedServices = existingServices.updated(
               index,
               existingServices(index).copy(addAnotherPaidService = Some(data))
@@ -158,9 +169,6 @@ class ServicePaidSeparatelyListController @Inject() (
       }
     )
   }
-
-  private def toServicePaidSeparately(index: Int): Call =
-    controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(index))
 
   private def toServicePaidSeparatelyList(index: Int): Call =
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index)
