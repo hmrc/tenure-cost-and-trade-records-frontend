@@ -41,6 +41,19 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def workCarriedOutConditionControllerNo(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThreeNo
+    )
+  ) =
+    new WorkCarriedOutConditionController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      workCarriedOutConditionView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = workCarriedOutConditionController().show(fakeRequest)
@@ -49,6 +62,17 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = workCarriedOutConditionController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 No" in {
+      val result = workCarriedOutConditionControllerNo().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML No" in {
+      val result = workCarriedOutConditionControllerNo().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -487,35 +487,56 @@ trait FakeObjects {
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))
   )
 
+  val staffCostsTestData = StaffCosts(
+    wagesAndSalaries = Some(BigDecimal(50000.00)),
+    nationalInsurance = Some(BigDecimal(5000.00)),
+    pensionContributions = Some(BigDecimal(3000.00)),
+    remunerations = Some(BigDecimal(7000.00))
+  )
+
+  val grossReceiptsForBaseLoad = GrossReceiptsForBaseLoad(
+    renewableHeatIncentiveBioMethane = Some(BigDecimal(50000.00)),
+    renewableHeatIncentiveBioMass = Some(BigDecimal(40000.00)),
+    byProductSales = Some(BigDecimal(30000.00)),
+    hotWaterHeatOrSteamSales = Some(BigDecimal(20000.00)),
+    gateIncomeFromWaste = Some(BigDecimal(10000.00))
+  )
+
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
       TurnoverSection6076(
-        LocalDate.now(),
+        today,
         52,
         "5000 kWh",
         1000,
         CostOfSales6076Sum(1, 2, 3, 4, 5),
         OperationalExpenses(1, 2, 3, 4, 5, 6),
-        100
+        headOfficeExpenses = 100,
+        staffCosts = staffCostsTestData,
+        grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       ),
       TurnoverSection6076(
-        LocalDate.now().minusYears(1),
+        today.minusYears(1),
         52,
         "5 MWh",
         2000,
         CostOfSales6076Sum(1, 2, 3, 4, 5),
         OperationalExpenses(1, 2, 3, 4, 5, 6),
-        200
+        headOfficeExpenses = 200,
+        staffCosts = staffCostsTestData,
+        grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       ),
       TurnoverSection6076(
-        LocalDate.now().minusYears(2),
+        today.minusYears(2),
         52,
         "5 MWh",
         3000,
         CostOfSales6076Sum(1, 2, 3, 4, 5),
         OperationalExpenses(1, 2, 3, 4, 5, 6),
-        300
+        headOfficeExpenses = 300,
+        staffCosts = staffCostsTestData,
+        grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       )
     ),
     grossReceiptsExcludingVAT = Seq(

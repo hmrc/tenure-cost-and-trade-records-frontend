@@ -18,8 +18,9 @@ package navigation
 
 import utils.TestBaseSpec
 import connectors.Audit
+import form.Errors.howIsCurrentRentFixed
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentBasedOnPercentageOpenMarket, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentBasedOnPercentageOpenMarket, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
@@ -203,6 +204,23 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to setting the current rent when the current r123ent was agreed has been completed with Yes " in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
+              Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, LocalDate.of(2000, 1, 2)))
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(HowIsCurrentRentFixedId, session)
+        .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+        .show()
+    }
     "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
 
       val session = session6020.copy(

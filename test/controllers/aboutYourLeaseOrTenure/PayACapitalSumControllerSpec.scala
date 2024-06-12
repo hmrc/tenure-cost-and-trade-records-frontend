@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -38,6 +39,17 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def payACapitalSumController6020(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new PayACapitalSumController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      payACapitalSumView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = payACapitalSumController().show(fakeRequest)
@@ -46,6 +58,17 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = payACapitalSumController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6020" in {
+      val result = payACapitalSumController6020().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6020" in {
+      val result = payACapitalSumController6020().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -18,12 +18,11 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.ProvideDetailsOfYourLease
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class ProvideDetailsOfYourLeaseViewSpec extends QuestionViewBehaviours[ProvideDetailsOfYourLease] {
+class ProvideDetailsOfYourLeaseViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "provideDetailsOfYourLease"
 
@@ -31,7 +30,7 @@ class ProvideDetailsOfYourLeaseViewSpec extends QuestionViewBehaviours[ProvideDe
 
   def createView = () => provideDetailsOfYourLeaseView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ProvideDetailsOfYourLease]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     provideDetailsOfYourLeaseView(form, Summary("99996010001"))(fakeRequest, messages)
 
   "Provide details of your lease view" must {

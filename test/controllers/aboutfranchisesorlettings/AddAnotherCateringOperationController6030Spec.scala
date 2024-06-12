@@ -18,6 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
+import models.ForTypes
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -36,7 +37,7 @@ class AddAnotherCateringOperationController6030Spec extends TestBaseSpec {
       aboutFranchisesOrLettingsNavigator,
       addAnotherOperationConcessionFranchise,
       genericRemoveConfirmationView,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 

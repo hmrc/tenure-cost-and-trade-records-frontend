@@ -29,7 +29,6 @@
         formWithCSRF: FormWithCSRF
 )
 
-
 @(forType: String)(implicit request: SessionRequest[_], messages: Messages)
 
 @session = @{ request.sessionData }
@@ -46,6 +45,14 @@
  }
 }
 
+ @totalSections6076 = @{
+  if(isLeaseHolder && forType == ForTypes.for6076) {
+   5
+  } else {
+   4
+  }
+ }
+ 
 @section1Completed = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.checkYourAnswersConnectionToProperty)) }
 @section2Completed = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)) }
 @section3Completed = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory.map(_.checkYourAnswersAboutTheTradingHistory)) }
@@ -64,6 +71,16 @@
  ).count(_.contains("yes"))
 }
 
+ @completedSections6076 = @{
+  Seq(
+   section1Completed,
+   section2Completed,
+   section3Completed,
+   section5Completed,
+   section6Completed
+  ).count(_.contains("yes"))
+ }
+
 @declarationStatus = @{
  if(completedSections == totalSections) {
   "complete"
@@ -72,410 +89,456 @@
  }
 }
 
+ @declarationStatus6076 = @{
+  if(completedSections6076 == totalSections6076) {
+   "complete"
+  } else {
+   "incomplete"
+  }
+ }
+
+ @leaseOrAgreementNumber = @{
+  if(forType == ForTypes.for6076) {
+   4
+  } else {
+   5
+  }
+ }
+
 @layout(
  pageHeading = messages("taskList.heading"),
  backLinkUrl = session.lastCYAPageUrl.orElse(Some(LoginController.startPage.url)),
  summary = session.toSummary
 ) {
 
- <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Declaration @declarationStatus</h2>
- <p class="govuk-body govuk-!-margin-bottom-7">You have completed @completedSections of @totalSections sections.</p>
+ @if(forType == ForTypes.for6076) {
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Declaration @declarationStatus6076</h2>
+  <p class="govuk-body govuk-!-margin-bottom-7">You have completed @completedSections6076 of @totalSections6076 sections.</p>
+ } else {
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Declaration @declarationStatus</h2>
+  <p class="govuk-body govuk-!-margin-bottom-7">You have completed @completedSections of @totalSections sections.</p>
+ }
 
-    <ol class="app-task-list">
+ <ol class="app-task-list">
 
-     <li>
-      <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">1. </span> @messages("label.section.connectionToTheProperty")
-      </h2>
+  <li>
+   <h2 class="app-task-list__section">
+    <span class="app-task-list__section-number">1. </span> @messages("label.section.connectionToTheProperty")
+   </h2>
 
-      <ul class="app-task-list__items">
-       @includes.taskListItem("are-you-still-connected", "checkYourAnswersConnectionToProperty.connectionStatus.heading",
-        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(),
-        section1Completed,
-        session.stillConnectedDetails.flatMap(_.addressConnectionType)
-       )
+   <ul class="app-task-list__items">
+    @includes.taskListItem("are-you-still-connected", "checkYourAnswersConnectionToProperty.connectionStatus.heading",
+     controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(),
+     section1Completed,
+     session.stillConnectedDetails.flatMap(_.addressConnectionType)
+    )
 
-       @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
-        controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
-        section1Completed,
-        session.stillConnectedDetails.flatMap(_.vacantProperties),
-        session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty
-       )
+    @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
+     controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
+     section1Completed,
+     session.stillConnectedDetails.flatMap(_.vacantProperties),
+     session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty
+    )
 
-       @includes.taskListItem("name-of-operator-from-property", "checkYourAnswersConnectionToProperty.occupierDetails.heading",
-        controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
-        section1Completed,
-        session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
-        session.stillConnectedDetails.flatMap(_.vacantProperties).isEmpty
-       )
-      </ul>
-     </li>
+    @includes.taskListItem("name-of-operator-from-property", "checkYourAnswersConnectionToProperty.occupierDetails.heading",
+     controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
+     section1Completed,
+     session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
+     session.stillConnectedDetails.flatMap(_.vacantProperties).isEmpty
+    )
+   </ul>
+  </li>
 
-     <li>
-      <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">2. </span> @messages("label.section.aboutTheProperty")
-      </h2>
+  <li>
+   <h2 class="app-task-list__section">
+    <span class="app-task-list__section-number">2. </span> @messages("label.section.aboutTheProperty")
+   </h2>
 
-      <ul class="app-task-list__items">
-       @includes.taskListItem("about-you", "checkYourAnswersAboutTheProperty.aboutYou.heading",
-        controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
-        section2Completed,
-        session.aboutYouAndTheProperty.flatMap(_.customerDetails),
-        section1Completed.isEmpty
-       )
+   <ul class="app-task-list__items">
+    @includes.taskListItem("about-you", "checkYourAnswersAboutTheProperty.aboutYou.heading",
+     controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
+     section2Completed,
+     session.aboutYouAndTheProperty.flatMap(_.customerDetails),
+     section1Completed.isEmpty
+    )
 
-       @if(forType == ForTypes.for6076){
-        @includes.taskListItem("technology-type", "taskList.technologyType",
-         controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
-         section2Completed,
-         session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
-         session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
-        )
-        @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
-         controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
-         section2Completed,
-         session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
-         session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty
-        )
-        @includes.taskListItem("how-is-used", "taskList.howIsUsed",
-         controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
-         section2Completed,
-         session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
-         session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty
-        )
-       }else{
+    @if(forType == ForTypes.for6076){
+     @includes.taskListItem("technology-type", "taskList.technologyType",
+      controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
+      section2Completed,
+      session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
+      session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+     )
+     @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
+      controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
+      section2Completed,
+      session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
+      session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty
+     )
+     @includes.taskListItem("how-is-used", "taskList.howIsUsed",
+      controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
+      section2Completed,
+      session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
+      session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty
+     )
+    }else{
 
-       @if(forType != ForTypes.for6030) {
-        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
-         controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
-         section2Completed,
-         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-         session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
-        )
-       } else {
-        @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
-         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
-         section2Completed,
-         session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-         session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
-        )
-       }
-
-
-       @if(forType == ForTypes.for6030 && !isLeaseHolder) {
-        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-         controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
-         section2Completed,
-         session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
-         session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
-        )
-       }
-
-       @if(forType != ForTypes.for6030 && forType != ForTypes.for6020) {
-        @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-         if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-          controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
-         } else {
-          controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-         },
-         section2Completed,
-         if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-          session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
-         } else {
-          session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
-         },
-         session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
-        )
-       }
-      }
-      </ul>
-     </li>
-
-     <li>
-      <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">3. </span> @messages("label.section.aboutYourTradingHistory")
-      </h2>
-      <ul class="app-task-list__items">
-       @includes.taskListItem("about-your-trading-history", "aboutYourTradingHistory.heading",
-        controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(),
-        section3Completed,
-        session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation),
-        section2Completed.isEmpty
-       )
-
-       @if(!(Seq(ForTypes.for6020) contains forType)) {
-
-        @includes.taskListItem("turnover", "turnover.heading",
-         if(forType == ForTypes.for6030) {
-          controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
-         } else {
-          controllers.aboutthetradinghistory.routes.TurnoverController.show()
-         },
-         section3Completed,
-         if(forType == ForTypes.for6030) {
-          session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
-         } else {
-          session.aboutTheTradingHistory.flatMap(_.turnoverSections)
-         },
-         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
-        )
-
-       }
-
-       @if(forType == ForTypes.for6020) {
-
-        @includes.taskListItem("fuel-sales", "taskList.fuelSales",
-         controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.totalFuelSold),
-         session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
-        )
-        @includes.taskListItem("bunkered-fuel", "taskList.bunkerdFuel",
-         controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion),
-         session.aboutTheTradingHistory.flatMap(_.totalFuelSold).isEmpty
-        )
-        @includes.taskListItem("customer-credit-accounts", "taskList.customerCreditAccounts",
-         controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts),
-         session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).isEmpty
-        )
-        @includes.taskListItem("low-margin-fuel-cards", "taskList.lowMarginCards",
-         controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.percentageFromFuelCards),
-         session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts).isEmpty
-        )
-        @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
-         controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.turnoverSections6020),
-         session.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).isEmpty
-        )
-        @includes.taskListItem("ev-charging-point", "taskList.EVChargingPoints",
-         controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints),
-         session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).isEmpty
-        )
-
-       }
-       @if(forType == ForTypes.for6015) {
-        @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
-         controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections),
-         session.aboutTheTradingHistory.flatMap(_.turnoverSections).isEmpty
-        )
-
-        @includes.taskListItem("variable-operating-expenses", "taskList.variableOperatingExpense",
-         controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses),
-         session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).isEmpty
-        )
-
-        @includes.taskListItem("fixed-operating-expenses", "taskList.fixedOperatingExpenses",
-         controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections),
-         session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
-        )
-
-        @includes.taskListItem("other-costs", "taskList.otherCosts",
-         controllers.aboutthetradinghistory.routes.OtherCostsController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.otherCosts),
-         session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).isEmpty
-        )
-
-        @includes.taskListItem("income-expenditure-summary", "taskList.profitSummary",
-         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show(),
-         section3Completed,
-         session.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary),
-         session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty
-        )
-       }
-      </ul>
-     </li>
-
-     <li>
-        <h2 class="app-task-list__section">
-         <span class="app-task-list__section-number">4.</span>
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
-         @messages("label.section.aboutTheFranchiseLettings")
-        }
-         @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-          @messages("label.section.aboutTheFranchiseConcessions")
-         }
-         @if(forType == ForTypes.for6020) {
-           @messages("label.section.aboutTheLettings")
-         }
-        </h2>
-      <ul class="app-task-list__items">
-       @if(!(Seq(ForTypes.for6020) contains forType)) {
-        @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
-         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-         section4Completed,
-         session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-         section3Completed.isEmpty)
-       }
-      @if(forType == ForTypes.for6030) {
-        @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-         controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show(),
-         section4Completed,
-         session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee),
-         session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-        )
-
-        @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-         controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
-         section4Completed,
-         session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-         session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee).isEmpty
-        )
-       } else {
-         @if(forType != ForTypes.for6020) {
-          @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-           controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
-           section4Completed,
-           session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
-           session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-          )
-
-          @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-           controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
-           section4Completed,
-           session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-           session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
-          )
-         }else{
-          @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-           controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-           section4Completed,
-           session.aboutFranchisesOrLettings.flatMap(_.lettings),
-           section3Completed.isEmpty
-          )
-         }
-       }
-      </ul>
-     </li>
-
-     @if(isLeaseHolder) {
-      <li>
-       <h2 class="app-task-list__section">
-        <span class="app-task-list__section-number">5. </span> @messages("label.section.aboutYourLeaseOrTenure")
-       </h2>
-       <ul class="app-task-list__items">
-        @if(forType == ForTypes.for6020) {
-         @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading",
-          controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
-          section4Completed.isEmpty
-         )
-        }
-
-        @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
-         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
-         section5Completed,
-         session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
-         section4Completed.isEmpty
-        )
-
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
-         @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
-          controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails),
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
-         )
-        }
-
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
-         @includes.taskListItem("leaseback-arrangement", "checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading",
-          controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty
-         )
-        } else {
-          @if(forType != ForTypes.for6020) {
-         @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading",
-          controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
-         )
-         } else {
-           @if(forType == ForTypes.for6076){
-            @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease.heading",
-             controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(),
-             section5Completed,
-             session.aboutLeaseOrAgreementPartThree.flatMap(_.provideDetailsOfYourLease),
-             session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
-            )
-            )
-          }
-        }}
-
-
-
-        @if(forType == ForTypes.for6020){
-         @includes.taskListItem("lease-start-date-and-rent-paid", "taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid",
-          controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid),
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
-         )
-        }
-
-        @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6020 || forType == ForTypes.for6030) {
-         @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
-          controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails),
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent).isEmpty
-         )
-
-         @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
-          controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails),
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
-         )
-
-         @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
-          controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
-          section5Completed,
-          session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
-          session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
-         )
-        }
-       </ul>
-      </li>
+     @if(forType != ForTypes.for6030) {
+      @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+       section2Completed,
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+       session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+      )
+     } else {
+      @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+       controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+       section2Completed,
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+       session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+      )
      }
 
-     <li>
-      <h2 class="app-task-list__section">
-       <span class="app-task-list__section-number">@totalSections. </span> @messages("label.section.additionalInformation")
-      </h2>
-      <ul class="app-task-list__items">
-       @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarksTasklist.heading",
-        controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
-        section6Completed,
-        session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
-        if (isLeaseHolder) section5Completed.isEmpty
-        else section4Completed.isEmpty
+
+     @if(forType == ForTypes.for6030 && !isLeaseHolder) {
+      @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
+       section2Completed,
+       session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+      )
+     }
+
+     @if(forType != ForTypes.for6030 && forType != ForTypes.for6020) {
+      @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+       if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
+       } else {
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+       },
+       section2Completed,
+       if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
+       } else {
+        session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
+       },
+       session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+      )
+     }
+    }
+   </ul>
+  </li>
+
+  <li>
+   <h2 class="app-task-list__section">
+    <span class="app-task-list__section-number">3. </span> @messages("label.section.aboutYourTradingHistory")
+   </h2>
+   <ul class="app-task-list__items">
+    @includes.taskListItem("about-your-trading-history", "aboutYourTradingHistory.heading",
+     controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(),
+     section3Completed,
+     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation),
+     section2Completed.isEmpty
+    )
+
+    @if(!(Seq(ForTypes.for6020) contains forType)) {
+
+     @includes.taskListItem("turnover", "turnover.heading",
+      if(forType == ForTypes.for6030) {
+       controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+      } else {
+       controllers.aboutthetradinghistory.routes.TurnoverController.show()
+      },
+      section3Completed,
+      if(forType == ForTypes.for6030) {
+       session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
+      } else {
+       session.aboutTheTradingHistory.flatMap(_.turnoverSections)
+      },
+      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+     )
+
+    }
+
+    @if(forType == ForTypes.for6020) {
+
+     @includes.taskListItem("fuel-sales", "taskList.fuelSales",
+      controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.totalFuelSold),
+      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+     )
+     @includes.taskListItem("bunkered-fuel", "taskList.bunkerdFuel",
+      controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion),
+      session.aboutTheTradingHistory.flatMap(_.totalFuelSold).isEmpty
+     )
+     @includes.taskListItem("customer-credit-accounts", "taskList.customerCreditAccounts",
+      controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts),
+      session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).isEmpty
+     )
+     @includes.taskListItem("low-margin-fuel-cards", "taskList.lowMarginCards",
+      controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.percentageFromFuelCards),
+      session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts).isEmpty
+     )
+     @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
+      controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.turnoverSections6020),
+      session.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).isEmpty
+     )
+     @includes.taskListItem("ev-charging-point", "taskList.EVChargingPoints",
+      controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints),
+      session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).isEmpty
+     )
+
+    }
+    @if(forType == ForTypes.for6015) {
+     @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
+      controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections),
+      session.aboutTheTradingHistory.flatMap(_.turnoverSections).isEmpty
+     )
+
+     @includes.taskListItem("variable-operating-expenses", "taskList.variableOperatingExpense",
+      controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses),
+      session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).isEmpty
+     )
+
+     @includes.taskListItem("fixed-operating-expenses", "taskList.fixedOperatingExpenses",
+      controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections),
+      session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
+     )
+
+     @includes.taskListItem("other-costs", "taskList.otherCosts",
+      controllers.aboutthetradinghistory.routes.OtherCostsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.otherCosts),
+      session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).isEmpty
+     )
+
+     @includes.taskListItem("income-expenditure-summary", "taskList.profitSummary",
+      controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show(),
+      section3Completed,
+      session.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary),
+      session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty
+     )
+    }
+   </ul>
+  </li>
+
+  @if(forType != ForTypes.for6076) {
+   <li>
+    <h2 class="app-task-list__section">
+     <span class="app-task-list__section-number">4.</span>
+     @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
+      @messages("label.section.aboutTheFranchiseLettings")
+     }
+     @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+      @messages("label.section.aboutTheFranchiseConcessions")
+     }
+     @if(forType == ForTypes.for6020) {
+      @messages("label.section.aboutTheLettings")
+     }
+    </h2>
+    <ul class="app-task-list__items">
+     @if(!(Seq(ForTypes.for6020) contains forType)) {
+      @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
+       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+       section4Completed,
+       session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+       section3Completed.isEmpty)
+     }
+     @if(forType == ForTypes.for6030) {
+      @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
+       controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show(),
+       section4Completed,
+       session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee),
+       session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
+      )
+
+      @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+       controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
+       section4Completed,
+       session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
+       session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee).isEmpty
+      )
+     } else {
+      @if(forType != ForTypes.for6020) {
+       @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
+        controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
+        section4Completed,
+        session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
+        session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
        )
-      </ul>
-     </li>
 
-    </ol>
+       @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
+        section4Completed,
+        session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
+        session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
+       )
+      } else {
+       @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+        section4Completed,
+        session.aboutFranchisesOrLettings.flatMap(_.lettings),
+        section3Completed.isEmpty
+       )
+      }
+     }
+    </ul>
+   </li>
+  }
 
- @if(completedSections == totalSections) {
+  @if(isLeaseHolder) {
+   <li>
+    <h2 class="app-task-list__section">
+     @if(forType == ForTypes.for6076) {
+      <span class="app-task-list__section-number">4. </span>
+      @messages("label.section.aboutYourLeaseOrTenure")
+     } else {
+      <span class="app-task-list__section-number">5. </span>
+      @messages("label.section.aboutYourLeaseOrTenure")
+     }
+    </h2>
+    <ul class="app-task-list__items">
+     @if(forType == ForTypes.for6020) {
+      @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading",
+       controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+       section4Completed.isEmpty
+      )
+     }
+     @if(forType == ForTypes.for6076) {
+      @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+       controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+       section3Completed.isEmpty
+      )
+     } else {
+      @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+       controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+       section4Completed.isEmpty
+      )
+     }
+
+     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
+      @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
+       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+      )
+     }
+
+     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030 || forType == ForTypes.for6076) {
+      @includes.taskListItem("leaseback-arrangement", "checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading",
+       controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(),
+       section5Completed,
+       if(forType == ForTypes.for6076) {
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) } else {session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent)},
+       if(forType == ForTypes.for6076) {
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord).isEmpty } else {session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty}
+      )
+     } else {
+      @if(forType != ForTypes.for6020) {
+       @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading",
+        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
+        section5Completed,
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+       )
+      }
+     }
+     @if(forType == ForTypes.for6020){
+      @includes.taskListItem("lease-start-date-and-rent-paid", "taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid",
+       controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+      )
+     }
+
+     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6020 || forType == ForTypes.for6030) {
+      @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
+       controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent).isEmpty
+      )
+
+      @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
+       controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
+      )
+
+      @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
+       controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
+      )
+     }
+    </ul>
+   </li>
+  }
+
+  @if(forType == ForTypes.for6076) {
+   <li>
+    <h2 class="app-task-list__section">
+     <span class="app-task-list__section-number">@totalSections6076
+      . </span> @messages("label.section.additionalInformation")
+    </h2>
+    <ul class="app-task-list__items">
+    @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarksTasklist.heading",
+     controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
+     section6Completed,
+     session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
+     if(isLeaseHolder) section5Completed.isEmpty
+     else section4Completed.isEmpty
+    )
+    </ul>
+   </li>
+  } else {
+   <li>
+    <h2 class="app-task-list__section">
+     <span class="app-task-list__section-number">@totalSections. </span> @messages("label.section.additionalInformation")
+    </h2>
+    <ul class="app-task-list__items">
+    @includes.taskListItem("further-information-or-remarks", "furtherInformationOrRemarksTasklist.heading",
+     controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
+     section6Completed,
+     session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
+     if (isLeaseHolder) section5Completed.isEmpty
+     else section4Completed.isEmpty
+    )
+    </ul>
+   </li>
+  }
+
+ </ol>
+
+
+ @if(completedSections == totalSections || completedSections6076 == totalSections6076) {
   @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
 
    <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>

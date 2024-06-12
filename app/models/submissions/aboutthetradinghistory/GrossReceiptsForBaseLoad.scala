@@ -17,26 +17,24 @@
 package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
+import util.NumberUtil.zeroBigDecimal
 
-import java.time.LocalDate
+case class GrossReceiptsForBaseLoad(
+  renewableHeatIncentiveBioMethane: Option[BigDecimal],
+  renewableHeatIncentiveBioMass: Option[BigDecimal],
+  byProductSales: Option[BigDecimal],
+  hotWaterHeatOrSteamSales: Option[BigDecimal],
+  gateIncomeFromWaste: Option[BigDecimal]
+) {
+  def total: BigDecimal = Seq(
+    renewableHeatIncentiveBioMethane,
+    renewableHeatIncentiveBioMass,
+    byProductSales,
+    hotWaterHeatOrSteamSales,
+    gateIncomeFromWaste
+  ).flatten.sum
+}
 
-/**
-  * 6076 Trading history.
-  *
-  * @author Yuriy Tumakha
-  */
-case class TurnoverSection6076(
-  financialYearEnd: LocalDate,
-  tradingPeriod: Int,
-  electricityGenerated: Option[String] = None,
-  otherIncome: Option[BigDecimal] = None,
-  costOfSales6076Sum: Option[CostOfSales6076Sum] = None,
-  operationalExpenses: Option[OperationalExpenses] = None,
-  headOfficeExpenses: Option[BigDecimal] = None,
-  staffCosts: Option[StaffCosts] = None,
-  grossReceiptsForBaseLoad: Option[GrossReceiptsForBaseLoad] = None
-)
-
-object TurnoverSection6076 {
-  implicit val format: OFormat[TurnoverSection6076] = Json.format
+object GrossReceiptsForBaseLoad {
+  implicit val format: OFormat[GrossReceiptsForBaseLoad] = Json.format[GrossReceiptsForBaseLoad]
 }

@@ -18,29 +18,25 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
-import form.aboutthetradinghistory.OtherIncomeForm.otherIncomeForm
+import form.aboutthetradinghistory.StaffCostsForm.staffCostsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.TurnoverSection6076
+import models.submissions.aboutthetradinghistory.{CostOfSales6076Sum, StaffCosts, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.OtherIncomeId
+import navigation.identifiers.{CostOfSales6076Id, StaffCostsId}
 import play.api.i18n.I18nSupport
+import play.api.mvc.Results.Redirect
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.otherIncome6076
+import views.html.aboutthetradinghistory.staffCosts
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * Other income - 6076.
-  *
-  * @author Yuriy Tumakha
-  */
 @Singleton
-class OtherIncomeController @Inject() (
+class StaffCostsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  otherIncomeView: otherIncome6076,
+  view: staffCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -48,15 +44,11 @@ class OtherIncomeController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck { turnoverSections6076 =>
-      val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val details = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherIncomeDetails).getOrElse("")
-
+    runWithSessionCheck { case (turnoverSections6076, years) =>
+      val staffCosts = turnoverSections6076.flatMap(_.staffCosts)
       Ok(
-        otherIncomeView(
-          otherIncomeForm(years).fill(
-            (turnoverSections6076.map(_.otherIncome), details)
-          ),
+        view(
+          staffCostsForm(years).fill(staffCosts),
           getBackLink
         )
       )
@@ -64,32 +56,26 @@ class OtherIncomeController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck { turnoverSections6076 =>
-      val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-
-      continueOrSaveAsDraft[(Seq[Option[BigDecimal]], String)](
-        otherIncomeForm(years),
-        formWithErrors => BadRequest(otherIncomeView(formWithErrors, getBackLink)),
+    runWithSessionCheck { case (turnoverSections6076, years) =>
+      continueOrSaveAsDraft[Seq[StaffCosts]](
+        staffCostsForm(years),
+        formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
-            (success._1 zip turnoverSections6076).map { case (otherIncome, previousSection) =>
-              previousSection.copy(otherIncome = otherIncome)
+            (success zip turnoverSections6076).map { case (updatedCosts, turnoverSection) =>
+              turnoverSection.copy(staffCosts = Some(updatedCosts))
             }
-          val details         = success._2
-
-          val updatedData = updateAboutTheTradingHistoryPartOne(
+          val updatedData     = updateAboutTheTradingHistoryPartOne(
             _.copy(
-              turnoverSections6076 = Some(updatedSections),
-              otherIncomeDetails = Option(details).filter(_.nonEmpty)
+              turnoverSections6076 = Some(updatedSections)
             )
           )
-
           session
             .saveOrUpdate(updatedData)
             .map { _ =>
               navigator.cyaPage
                 .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(OtherIncomeId, updatedData).apply(updatedData))
+                .getOrElse(navigator.nextPage(StaffCostsId, updatedData).apply(updatedData))
             }
             .map(Redirect)
         }
@@ -98,19 +84,22 @@ class OtherIncomeController @Inject() (
   }
 
   private def runWithSessionCheck(
-    action: Seq[TurnoverSection6076] => Future[Result]
+    action: (Seq[TurnoverSection6076], Seq[String]) => Future[Result]
   )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { turnoverSections6076 =>
+        val years = turnoverSections6076.map(_.financialYearEnd.getYear.toString)
+        action(turnoverSections6076, years)
+      }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     =>
-        aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
+        aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
     }
 
 }
