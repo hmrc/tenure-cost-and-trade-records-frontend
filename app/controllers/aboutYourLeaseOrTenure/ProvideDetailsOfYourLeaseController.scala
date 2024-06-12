@@ -16,11 +16,11 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm.provideDetailsOfYourLeaseForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.ProvideDetailsOfYourLease
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.ProvideDetailsOfYourLeasePageId
 import play.api.Logging
@@ -44,22 +44,18 @@ class ProvideDetailsOfYourLeaseController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        provideDetailsOfYourLeaseView(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.provideDetailsOfYourLease) match {
-            case Some(provideDetailsOfYourLease) =>
-              provideDetailsOfYourLeaseForm.fill(provideDetailsOfYourLease)
-            case _                               => provideDetailsOfYourLeaseForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      provideDetailsOfYourLeaseView(
+        leaseOrAgreementPartThree
+          .flatMap(_.provideDetailsOfYourLease)
+          .fold(provideDetailsOfYourLeaseForm)(provideDetailsOfYourLeaseForm.fill),
+        request.sessionData.toSummary
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ProvideDetailsOfYourLease](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[String](
       provideDetailsOfYourLeaseForm,
       formWithErrors => BadRequest(provideDetailsOfYourLeaseView(formWithErrors, request.sessionData.toSummary)),
       data => {
@@ -69,5 +65,9 @@ class ProvideDetailsOfYourLeaseController @Inject() (
       }
     )
   }
+
+  private def leaseOrAgreementPartThree(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
 }

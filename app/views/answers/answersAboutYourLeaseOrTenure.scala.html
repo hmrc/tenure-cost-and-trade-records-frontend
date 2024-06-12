@@ -255,8 +255,10 @@
                 _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name).map(v => messages(s"label.$v")),
                 aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
                     sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease",
-            _.provideDetailsOfYourLease.map(_.provideDetailsOfYourLease),
+            _.provideDetailsOfYourLease.map(v => v),
             aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(), "provideDetailsOfYourLease")
+
+
         ))
     }
 
