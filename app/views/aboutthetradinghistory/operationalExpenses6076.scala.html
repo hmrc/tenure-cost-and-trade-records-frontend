@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.OperationalExpenses
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
@@ -22,6 +23,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtil
+@import util.NumberUtil._
 
 @this(
         layout: Layout,
@@ -34,8 +36,7 @@
         dateUtil: DateUtil
 )
 
-
-@(form: Form[(Seq[Option[BigDecimal]], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[(Seq[OperationalExpenses], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
 
 
 @rowLabel(labelKey: String, hintKey: String = "") = {
@@ -68,6 +69,44 @@
             )
         )
     )
+}
+
+@columns = @{
+    request.sessionData.financialYearEndDates6076.size
+}
+
+@otherExpensesDetailsTextarea = @{
+    hmrcCharacterCount(
+        CharacterCount(
+            rows = 3,
+            maxLength = 2000,
+            label = Label(
+                content = Text(messages("turnover.6076.expenses.other.details"))
+            )
+        ).withFormField(form("otherExpensesDetails"))
+    )
+}
+
+@otherExpensesDetailsContent(idx: Int) = {
+@if(columns == 1) {
+    @otherExpensesDetailsTextarea
+} else {
+    <div class="hmrc-overlap-columns-@columns-parent">
+    @if(idx == 0) {
+        <div class="hmrc-overlap-columns-@columns">
+        @otherExpensesDetailsTextarea
+        </div>
+    }
+    </div>
+}
+}
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="operationalExpensesSeq.turnover[@idx]."
+    data-total-items="advertising,administration,insurance,legalFees,interest,other">
+    @form.value.fold("")(_._1(idx).total.asMoney)
+    </span>
 }
 
 @layout(
@@ -105,8 +144,12 @@
                             turnoverRow(s"operationalExpensesSeq.turnover[$idx].interest", "turnover.6076.expenses.interest"),
                             turnoverRow(s"operationalExpensesSeq.turnover[$idx].other", "turnover.6076.expenses.other", "turnover.6076.expenses.other.hint"),
                             Seq(
+                                TableRow(),
+                                TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))
+                            ),
+                            Seq(
                                 TableRow(content = HtmlContent(rowLabel("turnover.6076.expenses.total"))),
-                                TableRow(content = HtmlContent("TODO"))
+                                TableRow(content = HtmlContent(totalContent(idx)))
                             )
                         )
                     ))
@@ -116,21 +159,10 @@
             </tbody>
         </table>
 
-        @hmrcCharacterCount(
-            CharacterCount(
-                rows = 3,
-                maxLength = 2000,
-                classes = "govuk-!-width-two-thirds",
-                label = Label(
-                    content = Text(messages("turnover.6076.expenses.other.details")),
-                    classes = "govuk-!-font-weight-bold"
-                )
-            ).withFormField(form("otherExpensesDetails"))
-        )
-
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
     <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
 
 }
