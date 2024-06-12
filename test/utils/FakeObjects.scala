@@ -1177,7 +1177,7 @@ trait FakeObjects {
     benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
-    provideDetailsOfYourLease = Some(ProvideDetailsOfYourLease("These are details of a lease"))
+    provideDetailsOfYourLease = Some("These are details of a lease")
   )
 
   val prefilledAboutLeaseOrAgreementPartThreeNo: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
@@ -1198,7 +1198,7 @@ trait FakeObjects {
     benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerNo)),
-    provideDetailsOfYourLease = Some(ProvideDetailsOfYourLease("These are details of a lease"))
+    provideDetailsOfYourLease = Some("These are details of a lease")
   )
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(

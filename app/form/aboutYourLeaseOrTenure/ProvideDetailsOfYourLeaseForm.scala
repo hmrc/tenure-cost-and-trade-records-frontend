@@ -16,19 +16,19 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.ProvideDetailsOfYourLease
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, mapping, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ProvideDetailsOfYourLeaseForm {
 
-  val provideDetailsOfYourLeaseForm = Form(
-    mapping(
-      "provideDetailsOfYourLease" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.provideDetailsOfYourLease.required"),
-        maxLength(2000, "error.provideDetailsOfYourLease.maxLength")
+  val provideDetailsOfYourLeaseForm: Form[String] =
+    Form(
+      single(
+        "provideDetailsOfYourLease" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.provideDetailsOfYourLease.required"),
+          maxLength(2000, "error.provideDetailsOfYourLease.maxLength")
+        )
       )
-    )(ProvideDetailsOfYourLease.apply)(ProvideDetailsOfYourLease.unapply)
-  )
+    )
 }
