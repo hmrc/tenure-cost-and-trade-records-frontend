@@ -48,10 +48,11 @@
 }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", rowStyle: String = "") = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, hintKey))
+            content = HtmlContent(rowLabel(labelKey, hintKey)),
+            classes = rowStyle
         ),
         TableRow(
             content = HtmlContent(
@@ -66,7 +67,8 @@
                         )
                     ).withFormField(form(formField))
                 )
-            )
+            ),
+            classes = rowStyle
         )
     )
 }
@@ -105,7 +107,7 @@
     <span
     data-total-prefix="operationalExpensesSeq.turnover[@idx]."
     data-total-items="advertising,administration,insurance,legalFees,interest,other">
-    @form.value.fold("")(_._1(idx).total.asMoney)
+    @form.value.flatMap(_._1.lift(idx)).fold("")(_.total.asMoney)
     </span>
 }
 
@@ -124,7 +126,7 @@
         content = Text(messages("turnover.6076.operationalExpenses.inset"))
     ))
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherIncomeController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OperationalExpensesController.submit()) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
@@ -142,7 +144,7 @@
                             turnoverRow(s"operationalExpensesSeq.turnover[$idx].insurance", "turnover.6076.expenses.insurance"),
                             turnoverRow(s"operationalExpensesSeq.turnover[$idx].legalFees", "turnover.6076.expenses.legalFees"),
                             turnoverRow(s"operationalExpensesSeq.turnover[$idx].interest", "turnover.6076.expenses.interest"),
-                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].other", "turnover.6076.expenses.other", "turnover.6076.expenses.other.hint"),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].other", "turnover.6076.expenses.other", "turnover.6076.expenses.other.hint", "no-border-bottom"),
                             Seq(
                                 TableRow(),
                                 TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))
