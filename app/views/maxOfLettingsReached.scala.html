@@ -39,13 +39,6 @@
 }
 @sectionHeading = @{
  source match {
-  case "connection" =>
-   forType match {
-  case ForTypes.for6010 | ForTypes.for6011 => messages(s"maxOf5Lettings.businessOrFranchise.heading")
-  case ForTypes.for6015 | ForTypes.for6016 => messages(s"maxOf5Lettings.businessOrConcession.heading")
-  case ForTypes.for6030 => messages(s"maxOf5Lettings.concessionOrFranchise.heading")
-  case _ => messages("maxOf5Lettings.heading")
- }
   case "franchiseCatering" =>
    forType match {
     case ForTypes.for6010 | ForTypes.for6011 => messages(s"maxOf5Lettings.businessOrFranchise.heading")
@@ -53,35 +46,20 @@
     case ForTypes.for6030 => messages(s"maxOf5Lettings.concessionOrFranchise.heading")
     case _ => messages("maxOf5Lettings.heading")
    }
-  case "franchiseLetting" => messages("maxOf5Lettings.heading")
-
-  case "lettings" =>  messages(s"maxOf10Lettings.aboutTheLettings.heading")
-
   case _ => messages("maxOf5Lettings.heading")
  }
 }
 
 @sectionContent = @{
  source match {
-  case "connection" =>
-   forType match {
-    case ForTypes.for6010 | ForTypes.for6011 => messages(("maxOf5Lettings.contact"), messages("maxOf5Lettings.businessOrFranchise.content"))
-    case ForTypes.for6015 | ForTypes.for6016 => messages(("maxOf5Lettings.contact"), messages("maxOf5Lettings.businessOrConcession.content"))
-    case ForTypes.for6030 => messages(("maxOf5Lettings.contact"), messages("maxOf5Lettings.concessionOrFranchise.content"))
-    case _ => messages("maxOf5Lettings.contact",  messages("maxOf5Lettings.content"))
-   }
   case "franchiseCatering" =>
    forType match {
-    case ForTypes.for6010 | ForTypes.for6011 => messages(("maxOf5Lettings.contact"), messages("maxOf5Lettings.businessOrFranchise.content"))
-    case ForTypes.for6015 | ForTypes.for6016 => messages(("maxOf5Lettings.contact"), messages("maxOf5Lettings.businessOrConcession.content"))
-    case ForTypes.for6030 => messages(("maxOf5Lettings.contact"), messages("maxOf5Lettings.concessionOrFranchise.content"))
-    case _ => messages("maxOf5Lettings.contact",  messages("maxOf5Lettings.content"))
+    case ForTypes.for6010 | ForTypes.for6011 => messages("maxOf5Lettings.businessOrFranchise.content")
+    case ForTypes.for6015 | ForTypes.for6016 => messages("maxOf5Lettings.businessOrConcession.content")
+    case ForTypes.for6030                    => messages("maxOf5Lettings.concessionOrFranchise.content")
+    case _                                   => messages("maxOf5Lettings.content")
    }
-  case "franchiseLetting" => messages("maxOf5Lettings.contact",  messages("maxOf5Lettings.content"))
-
-  case "lettings" => messages("maxOf10Lettings.contact",  messages("maxOf5Lettings.content"))
-
-  case _ => messages("maxOf5Lettings.contact",  messages("maxOf5Lettings.content"))
+  case _                                     => messages("maxOf5Lettings.content")
  }
 }
 @forType = @{request.sessionData.forType}
@@ -97,7 +75,7 @@
 ) {
 
 
-   <p class="govuk-body govuk-!-width-three-quarters">@messages(sectionContent)</p>
+   <p class="govuk-body govuk-!-width-three-quarters">@messages("maxOf5Lettings.contact", sectionContent)</p>
 
  @formWithCSRF(action = routes.MaxOfLettingsReachedController.submit(source)) {
   @govukCheckboxes(
@@ -114,7 +92,7 @@
   )
 
   <p class="govuk-body">
-   <a href="@backLink" class="govuk-link">@messages(if (source.equals("lettings")) "maxOf10Lettings.link" else "maxOf5Lettings.link")</a>
+   <a href="@backLink" class="govuk-link">@messages("maxOf5Lettings.link")</a>
   </p>
 
   <br>
