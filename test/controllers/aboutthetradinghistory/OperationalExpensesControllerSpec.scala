@@ -21,13 +21,13 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
-class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
+class OperationalExpensesControllerSpec extends TestBaseSpec {
 
-  def headOfficeExpensesController =
-    new HeadOfficeExpensesController(
+  def operationalExpensesController =
+    new OperationalExpensesController(
       stubMessagesControllerComponents(),
       aboutYourTradingHistoryNavigator,
-      headOfficeExpenses6076View,
+      operationalExpenses6076View,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
@@ -37,31 +37,30 @@ class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = headOfficeExpensesController.show(fakeRequest)
+      val result = operationalExpensesController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = headOfficeExpensesController.show(fakeRequest)
+      val result = operationalExpensesController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
-
       val content = contentAsString(result)
-      content should include("/operational-expenses")
       content should not include "/check-your-answers-about-the-trading-history"
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = headOfficeExpensesController.show(fakeRequestFromCYA)
+      val result  = operationalExpensesController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
-      content should include("/check-your-answers-about-the-trading-history")
-      content should not include "/operational-expenses"
+      content should include("""href="/send-trade-and-cost-information/check-your-answers-about-the-trading-history"""")
+      content should not include "/premises-costs"
     }
+
   }
 
   "SUBMIT /" should {
     "return 400 for empty turnoverSections" in {
-      val res = headOfficeExpensesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = operationalExpensesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST
     }
   }
