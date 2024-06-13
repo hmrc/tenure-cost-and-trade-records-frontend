@@ -21,8 +21,9 @@ import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAn
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.test.FakeRequest
 import play.api.test.Helpers
-import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -41,20 +42,32 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
-    "return 200" in {
+  "AddAnotherLowMarginFuelCardsDetailsController GET /" should {
+    "return 200 and HTML with Can Rent Be Reduced On Review in the session  return 200" in {
       val result = createAddAnotherLowMarginFuelCardsDetailsController().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)          shouldBe Status.OK
+      contentType(result)     shouldBe Some("text/html")
+      Helpers.charset(result) shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = createAddAnotherLowMarginFuelCardsDetailsController().show(0)(FakeRequest(GET, "/path?from=TL"))
+      val html   = contentAsString(result)
+
+      html should include(controllers.routes.TaskListController.show().url + "#")
+    }
+
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = createAddAnotherLowMarginFuelCardsDetailsController().show(0)(FakeRequest(GET, "/path?from=CYA"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
     }
   }
 
-  "return HTML" in {
-    val result = createAddAnotherLowMarginFuelCardsDetailsController().show(0)(fakeRequest)
-    contentType(result)     shouldBe Some("text/html")
-    Helpers.charset(result) shouldBe Some("utf-8")
-  }
-
-  "SUBMIT /" should {
+  "AddAnotherLowMarginFuelCardsDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = createAddAnotherLowMarginFuelCardsDetailsController().submit(1)(fakeRequest)
       status(result) shouldBe BAD_REQUEST
