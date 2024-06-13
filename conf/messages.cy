@@ -2196,9 +2196,6 @@ maxOf5Lettings.contact = If you have 6 or more {0} at your property, the VOA wil
 maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining businesses.
 maxOf5Lettings.link = Check or update the 5 added businesses
 maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
-maxOf10Lettings.aboutTheLettings.heading = You have added the maximum of 10 lettings
-maxOf10Lettings.contact = If you have 11 or more {0} at your property, the VOA will contact you to collect information on the remaining lettings.
-maxOf10Lettings.link = Check or update the 10 added businesses
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page

@@ -90,22 +90,24 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
           )
         ),
       data =>
-        if (data == AnswerYes) {
-          aboutTheTradingHistoryData
-            .flatMap(_.lowMarginFuelCardsDetails)
-            .filter(_.isDefinedAt(index))
-            .fold(Future.unit) { existingCards =>
-              val updatedCards =
-                existingCards.updated(index, existingCards(index).copy(addAnotherLowMarginFuelCardDetails = Some(data)))
-              val updatedData  = updateAboutTheTradingHistory(_.copy(lowMarginFuelCardsDetails = Some(updatedCards)))
-              session.saveOrUpdate(updatedData)
-            }
-            .map(_ => Redirect(routes.LowMarginFuelCardDetailsController.show()))
-        } else {
-          Redirect(
-            navigator.nextPage(AddAnotherLowMarginFuelCardsDetailsId, request.sessionData).apply(request.sessionData)
+        aboutTheTradingHistoryData
+          .flatMap(_.lowMarginFuelCardsDetails)
+          .filter(_.isDefinedAt(index))
+          .fold(Future.unit) { existingCards =>
+            val updatedCards =
+              existingCards.updated(index, existingCards(index).copy(addAnotherLowMarginFuelCardDetails = Some(data)))
+            val updatedData  = updateAboutTheTradingHistory(_.copy(lowMarginFuelCardsDetails = Some(updatedCards)))
+            session.saveOrUpdate(updatedData)
+          }
+          .map(_ =>
+            if (data == AnswerYes) Redirect(routes.LowMarginFuelCardDetailsController.show())
+            else
+              Redirect(
+                navigator
+                  .nextPage(AddAnotherLowMarginFuelCardsDetailsId, request.sessionData)
+                  .apply(request.sessionData)
+              )
           )
-        }
     )
   }
 

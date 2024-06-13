@@ -93,7 +93,7 @@ class AddOrRemoveLettingController @Inject() (
           )
         ),
       answer =>
-        if (answer == AnswerYes && numberOfLettings >= 10 && navigator.from != "CYA") {
+        if (answer == AnswerYes && numberOfLettings >= 5 && navigator.from != "CYA") {
           Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings"))))
         } else {
           lettingsData match {
