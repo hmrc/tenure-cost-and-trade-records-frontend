@@ -51,6 +51,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         .show()
         .url,
       addAnotherCateringOperationsConditionsRouting
+    ),
+    (
+      aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController
+        .show()
+        .url,
+      addAnotherLettingsConditionsRouting
     )
   )
 
@@ -348,22 +354,35 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   }
 
   private def addAnotherLettingsConditionsRouting: Session => Call = answers => {
-    val existingSection = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
+    def getLastLettingIndex(session: Session): Option[Int] =
+      session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
+        aboutFranchiseOrLettings.lettingSections.lastOption.map(_ => aboutFranchiseOrLettings.lettingSections.size)
+      }
+    val fromCYA                                            =
+      answers.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
+    val existingSection                                    = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
     existingSection match {
       case Some(letting) if isLettingDetailIncomplete(letting, answers.forType) =>
         getIncompleteLettingCall(letting, answers.forType, getLettingsIndex(answers))
+      case None                                                                 =>
+        controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
+          .show(getLettingsIndex(answers))
       case _                                                                    =>
         existingSection.flatMap(_.addAnotherLettingToProperty).get.name match {
           case "yes" =>
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
-              .show(Some(getLettingsIndex(answers) + 1))
+              .show(getLastLettingIndex(answers))
           case "no"  =>
-            controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+            if (fromCYA == true) {
+              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+            } else {
+              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+            }
           case _     =>
             logger.warn(
-              s"Navigation for add another letting reached without correct selection of conditions by controller"
+              s"123Navigation for add another letting reached without correct selection of conditions by controller"
             )
-            throw new RuntimeException("Invalid option exception for add another letting conditions routing")
+            throw new RuntimeException("123Invalid option exception for add another letting conditions routing")
         }
     }
   }
