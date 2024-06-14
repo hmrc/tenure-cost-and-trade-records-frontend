@@ -32,7 +32,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * Other income - 6076.
+  * Head office expenses - 6076.
   *
   * @author Yuriy Tumakha
   */
@@ -111,8 +111,7 @@ class HeadOfficeExpensesController @Inject() (
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     =>
-        // TODO: Operational and administrative expenses
-        aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
+        aboutthetradinghistory.routes.OperationalExpensesController.show().url
     }
 
 }

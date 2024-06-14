@@ -1,0 +1,170 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.OperationalExpenses
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
+@import util.NumberUtil._
+
+@this(
+        layout: Layout,
+        formWithCSRF: FormWithCSRF,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        hmrcCharacterCount: HmrcCharacterCount,
+        dateUtil: DateUtil
+)
+
+@(form: Form[(Seq[OperationalExpenses], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+
+
+@rowLabel(labelKey: String, hintKey: String = "") = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+    </p>
+@if(hintKey.nonEmpty) {
+    <span class="govuk-caption-m">@messages(hintKey)</span>
+}
+}
+
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", rowStyle: String = "") = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey, hintKey)),
+            classes = rowStyle
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        prefix = Some(PrefixOrSuffix(
+                            content = Text("£")
+                        )),
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))
+                )
+            ),
+            classes = rowStyle
+        )
+    )
+}
+
+@columns = @{
+    request.sessionData.financialYearEndDates6076.size
+}
+
+@otherExpensesDetailsTextarea = @{
+    hmrcCharacterCount(
+        CharacterCount(
+            rows = 3,
+            maxLength = 2000,
+            label = Label(
+                content = Text(messages("turnover.6076.expenses.other.details"))
+            )
+        ).withFormField(form("otherExpensesDetails"))
+    )
+}
+
+@otherExpensesDetailsContent(idx: Int) = {
+@if(columns == 1) {
+    @otherExpensesDetailsTextarea
+} else {
+    <div class="hmrc-overlap-columns-@columns-parent">
+    @if(idx == 0) {
+        <div class="hmrc-overlap-columns-@columns">
+        @otherExpensesDetailsTextarea
+        </div>
+    }
+    </div>
+}
+}
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="operationalExpensesSeq.turnover[@idx]."
+    data-total-items="advertising,administration,insurance,legalFees,interest,other">
+    @form.value.flatMap(_._1.lift(idx)).fold("")(_.total.asMoney)
+    </span>
+}
+
+@layout(
+    pageHeading = messages("turnover.6076.operationalExpenses.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.operationalExpenses.p1")</p>
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.6076.operationalExpenses.inset"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OperationalExpensesController.submit()) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].advertising", "turnover.6076.expenses.advertising"),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].administration", "turnover.6076.expenses.administration"),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].insurance", "turnover.6076.expenses.insurance"),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].legalFees", "turnover.6076.expenses.legalFees"),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].interest", "turnover.6076.expenses.interest"),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].other", "turnover.6076.expenses.other", "turnover.6076.expenses.other.hint", "no-border-bottom"),
+                            Seq(
+                                TableRow(),
+                                TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))
+                            ),
+                            Seq(
+                                TableRow(content = HtmlContent(rowLabel("turnover.6076.expenses.total"))),
+                                TableRow(content = HtmlContent(totalContent(idx)))
+                            )
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

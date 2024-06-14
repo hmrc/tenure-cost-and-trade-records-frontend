@@ -45,6 +45,17 @@ class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
       val result = headOfficeExpensesController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+
+      val content = contentAsString(result)
+      content should include("/operational-expenses")
+      content should not include "/check-your-answers-about-the-trading-history"
+    }
+
+    "render back link to CYA if come from CYA" in {
+      val result  = headOfficeExpensesController.show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/operational-expenses"
     }
   }
 

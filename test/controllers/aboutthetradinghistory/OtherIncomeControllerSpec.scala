@@ -45,6 +45,17 @@ class OtherIncomeControllerSpec extends TestBaseSpec {
       val result = otherIncomeController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+
+      val content = contentAsString(result)
+      content should include("/gross-receipts-for-base-load")
+      content should not include "/check-your-answers-about-the-trading-history"
+    }
+
+    "render back link to CYA if come from CYA" in {
+      val result  = otherIncomeController.show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/gross-receipts-for-base-load"
     }
   }
 

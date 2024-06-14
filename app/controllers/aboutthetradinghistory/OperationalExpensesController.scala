@@ -18,24 +18,29 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
-import form.aboutthetradinghistory.StaffCostsForm.staffCostsForm
+import form.aboutthetradinghistory.OperationalExpensesForm.operationalExpensesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{StaffCosts, TurnoverSection6076}
+import models.submissions.aboutthetradinghistory.{OperationalExpenses, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.StaffCostsId
+import navigation.identifiers.OperationalExpensesId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.staffCosts
+import views.html.aboutthetradinghistory.operationalExpenses6076
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+  * Operational and administrative expenses - 6076.
+  *
+  * @author Yuriy Tumakha
+  */
 @Singleton
-class StaffCostsController @Inject() (
+class OperationalExpensesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: staffCosts,
+  operationalExpensesView: operationalExpenses6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -43,11 +48,16 @@ class StaffCostsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck { case (turnoverSections6076, years) =>
-      val staffCosts = turnoverSections6076.flatMap(_.staffCosts)
+    runWithSessionCheck { turnoverSections6076 =>
+      val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
+      val details =
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
+
       Ok(
-        view(
-          staffCostsForm(years).fill(staffCosts),
+        operationalExpensesView(
+          operationalExpensesForm(years).fill(
+            (turnoverSections6076.flatMap(_.operationalExpenses), details)
+          ),
           getBackLink
         )
       )
@@ -55,26 +65,32 @@ class StaffCostsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck { case (turnoverSections6076, years) =>
-      continueOrSaveAsDraft[Seq[StaffCosts]](
-        staffCostsForm(years),
-        formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
+    runWithSessionCheck { turnoverSections6076 =>
+      val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
+
+      continueOrSaveAsDraft[(Seq[OperationalExpenses], String)](
+        operationalExpensesForm(years),
+        formWithErrors => BadRequest(operationalExpensesView(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
-            (success zip turnoverSections6076).map { case (updatedCosts, turnoverSection) =>
-              turnoverSection.copy(staffCosts = Some(updatedCosts))
+            (success._1 zip turnoverSections6076).map { case (operationalExpenses, previousSection) =>
+              previousSection.copy(operationalExpenses = Some(operationalExpenses))
             }
-          val updatedData     = updateAboutTheTradingHistoryPartOne(
+          val details         = success._2
+
+          val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
-              turnoverSections6076 = Some(updatedSections)
+              turnoverSections6076 = Some(updatedSections),
+              otherOperationalExpensesDetails = Option(details).filter(_.nonEmpty)
             )
           )
+
           session
             .saveOrUpdate(updatedData)
             .map { _ =>
               navigator.cyaPage
                 .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(StaffCostsId, updatedData).apply(updatedData))
+                .getOrElse(navigator.nextPage(OperationalExpensesId, updatedData).apply(updatedData))
             }
             .map(Redirect)
         }
@@ -83,22 +99,20 @@ class StaffCostsController @Inject() (
   }
 
   private def runWithSessionCheck(
-    action: (Seq[TurnoverSection6076], Seq[String]) => Future[Result]
+    action: Seq[TurnoverSection6076] => Future[Result]
   )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { turnoverSections6076 =>
-        val years = turnoverSections6076.map(_.financialYearEnd.getYear.toString)
-        action(turnoverSections6076, years)
-      }
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
-        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     =>
-        aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
+        // TODO: Premises costs
+        aboutthetradinghistory.routes.StaffCostsController.show().url
     }
 
 }

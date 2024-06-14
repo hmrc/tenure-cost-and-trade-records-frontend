@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.mvc.request.RequestTarget
 import play.api.mvc.{AnyContentAsEmpty, Request, Result}
 import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits, Injecting}
 import repositories.SessionRepository
@@ -86,7 +87,13 @@ trait TestBaseSpec
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
+
+  val fakePostRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("POST", "/")
+
+  val fakeRequestFromCYA: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
+    RequestTarget("", "", Map("from" -> Seq("CYA")))
+  )
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 

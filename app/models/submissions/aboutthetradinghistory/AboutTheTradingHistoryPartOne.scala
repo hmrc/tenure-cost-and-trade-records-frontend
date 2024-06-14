@@ -25,6 +25,7 @@ case class AboutTheTradingHistoryPartOne(
   turnoverSections6076: Option[Seq[TurnoverSection6076]] = None,
   grossReceiptsExcludingVAT: Option[Seq[GrossReceiptsExcludingVAT]] = None,
   otherIncomeDetails: Option[String] = None,
+  otherOperationalExpensesDetails: Option[String] = None,
   otherSalesDetails: Option[String] = None,
   furtherInformationOrRemarks: Option[String] = None
 )
