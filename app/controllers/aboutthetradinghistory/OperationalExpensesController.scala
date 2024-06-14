@@ -32,7 +32,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * Other income - 6076.
+  * Operational and administrative expenses - 6076.
   *
   * @author Yuriy Tumakha
   */
