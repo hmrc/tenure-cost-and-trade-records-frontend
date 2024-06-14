@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -58,7 +59,31 @@ class OperationalExpensesControllerSpec extends TestBaseSpec {
 
   }
 
+  private def operationalExpensesForYear(idx: Int): Seq[(String, String)] =
+    Seq(
+      s"operationalExpensesSeq.turnover[$idx].advertising"    -> "100.10",
+      s"operationalExpensesSeq.turnover[$idx].administration" -> "200.99",
+      s"operationalExpensesSeq.turnover[$idx].insurance"      -> "300",
+      s"operationalExpensesSeq.turnover[$idx].legalFees"      -> "400",
+      s"operationalExpensesSeq.turnover[$idx].interest"       -> "5000",
+      s"operationalExpensesSeq.turnover[$idx].other"          -> "0"
+    )
+
+  private def operationalExpensesFormData: Seq[(String, String)] =
+    operationalExpensesForYear(0) ++
+      operationalExpensesForYear(1) ++
+      operationalExpensesForYear(2)
+
   "SUBMIT /" should {
+    "save the form data and redirect to the next page" in {
+      val res = operationalExpensesController.submit(
+        fakePostRequest.withFormUrlEncodedBody(operationalExpensesFormData: _*)
+      )
+
+      status(res)           shouldBe Status.SEE_OTHER
+      redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.HeadOfficeExpensesController.show().url)
+    }
+
     "return 400 for empty turnoverSections" in {
       val res = operationalExpensesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST

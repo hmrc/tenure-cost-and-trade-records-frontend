@@ -87,7 +87,9 @@ trait TestBaseSpec
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  def fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
+  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
+
+  val fakePostRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("POST", "/")
 
   val fakeRequestFromCYA: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
     RequestTarget("", "", Map("from" -> Seq("CYA")))
