@@ -143,6 +143,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val otherIncome6076View: otherIncome6076                                               = app.injector.instanceOf[otherIncome6076]
   lazy val costOfSales6076View: costOfSales6076                                               = app.injector.instanceOf[costOfSales6076]
   lazy val staffCostsView: staffCosts                                                         = app.injector.instanceOf[staffCosts]
+  lazy val operationalExpenses6076View: operationalExpenses6076                               = app.injector.instanceOf[operationalExpenses6076]
   lazy val headOfficeExpenses6076View: headOfficeExpenses6076                                 = app.injector.instanceOf[headOfficeExpenses6076]
   lazy val fixedOperatingExpensesView: fixedOperatingExpenses                                 = app.injector.instanceOf[fixedOperatingExpenses]
   lazy val variableOperatingExpensesView: variableOperatingExpenses                           = app.injector.instanceOf[variableOperatingExpenses]
@@ -151,7 +152,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                                  = app.injector.instanceOf[bunkerFuelCardsDetails]
   lazy val addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails              =
     app.injector.instanceOf[addAnotherBunkerFuelCardDetails]
-  lazy val acceptLowMarginFuelCardView                                                        = app.injector.instanceOf[acceptLowMarginFuelCard]
+  lazy val acceptLowMarginFuelCardView: acceptLowMarginFuelCard                               = app.injector.instanceOf[acceptLowMarginFuelCard]
   lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                           = app.injector.instanceOf[lowMarginFuelCardsDetails]
   lazy val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails        =
     app.injector.instanceOf[addAnotherLowMarginFuelCardDetails]

@@ -393,7 +393,7 @@ trait FakeObjects {
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)),
     Seq(
       TurnoverSection(
-        LocalDate.now(),
+        today,
         123,
         234,
         345,
@@ -402,7 +402,7 @@ trait FakeObjects {
         678
       ),
       TurnoverSection(
-        LocalDate.now().minusYears(1),
+        today.minusYears(1),
         123,
         234,
         345,
@@ -411,7 +411,7 @@ trait FakeObjects {
         678
       ),
       TurnoverSection(
-        LocalDate.now().minusYears(2),
+        today.minusYears(2),
         123,
         234,
         345,
@@ -421,33 +421,33 @@ trait FakeObjects {
       )
     ),
     costOfSales = Seq(
-      CostOfSales(LocalDate.now(), 1, 1, 1, 1),
-      CostOfSales(LocalDate.now().minusYears(1), 1, 1, 1, 1),
-      CostOfSales(LocalDate.now().minusYears(2), 1, 1, 1, 1)
+      CostOfSales(today, 1, 1, 1, 1),
+      CostOfSales(today.minusYears(1), 1, 1, 1, 1),
+      CostOfSales(today.minusYears(2), 1, 1, 1, 1)
     ),
     totalPayrollCostSections = Seq(
-      TotalPayrollCost(LocalDate.now(), 1, 2),
-      TotalPayrollCost(LocalDate.now().minusYears(1), 1, 2),
-      TotalPayrollCost(LocalDate.now().minusYears(2), 1, 2)
+      TotalPayrollCost(today, 1, 2),
+      TotalPayrollCost(today.minusYears(1), 1, 2),
+      TotalPayrollCost(today.minusYears(2), 1, 2)
     ),
     fixedOperatingExpensesSections = Seq(
-      FixedOperatingExpenses(LocalDate.now(), 1, 1, 1, 1, 1),
-      FixedOperatingExpenses(LocalDate.now().minusYears(1), 1, 1, 1, 1, 1),
-      FixedOperatingExpenses(LocalDate.now().minusYears(2), 1, 1, 1, 1, 1)
+      FixedOperatingExpenses(today, 1, 1, 1, 1, 1),
+      FixedOperatingExpenses(today.minusYears(1), 1, 1, 1, 1, 1),
+      FixedOperatingExpenses(today.minusYears(2), 1, 1, 1, 1, 1)
     ),
     variableOperatingExpenses = VariableOperatingExpensesSections(
       Seq(
-        VariableOperatingExpenses(LocalDate.now(), 1, 1, 1, 1, 1, 1, 1, 1),
-        VariableOperatingExpenses(LocalDate.now().minusYears(1), 1, 1, 1, 1, 1, 1, 1, 1),
-        VariableOperatingExpenses(LocalDate.now().minusYears(2), 1, 1, 1, 1, 1, 1, 1, 1)
+        VariableOperatingExpenses(today, 1, 1, 1, 1, 1, 1, 1, 1),
+        VariableOperatingExpenses(today.minusYears(1), 1, 1, 1, 1, 1, 1, 1, 1),
+        VariableOperatingExpenses(today.minusYears(2), 1, 1, 1, 1, 1, 1, 1, 1)
       ),
       "Other expenses details for all years"
     ),
     otherCosts = OtherCosts(
       otherCosts = Seq(
-        OtherCost(LocalDate.now(), 1, 1),
-        OtherCost(LocalDate.now().minusYears(1), 1, 1),
-        OtherCost(LocalDate.now().minusYears(2), 1, 1)
+        OtherCost(today, 1, 1),
+        OtherCost(today.minusYears(1), 1, 1),
+        OtherCost(today.minusYears(2), 1, 1)
       ),
       "Other Costs Details"
     )
@@ -456,9 +456,9 @@ trait FakeObjects {
   val prefilledAboutYourTradingHistory6020: AboutTheTradingHistory = AboutTheTradingHistory(
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)),
     turnoverSections6020 = Seq(
-      TurnoverSection6020(LocalDate.now(), 100, 100),
-      TurnoverSection6020(LocalDate.now().minusYears(1), 200, 200),
-      TurnoverSection6020(LocalDate.now().minusYears(2), 300, 300)
+      TurnoverSection6020(today, 100, 100),
+      TurnoverSection6020(today.minusYears(1), 200, 200),
+      TurnoverSection6020(today.minusYears(2), 300, 300)
     ),
     electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
     doYouAcceptLowMarginFuelCard = AnswerYes
@@ -469,9 +469,9 @@ trait FakeObjects {
     Seq.empty,
     None,
     Seq(
-      TurnoverSection6030(LocalDate.now(), 52, 100, 100),
-      TurnoverSection6030(LocalDate.now().minusYears(1), 52, 200, 200),
-      TurnoverSection6030(LocalDate.now().minusYears(2), 52, 300, 300)
+      TurnoverSection6030(today, 52, 100, 100),
+      TurnoverSection6030(today.minusYears(1), 52, 200, 200),
+      TurnoverSection6030(today.minusYears(2), 52, 300, 300)
     ),
     Seq.empty,
     Seq.empty,
@@ -506,41 +506,46 @@ trait FakeObjects {
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
       TurnoverSection6076(
-        LocalDate.now(),
+        today,
         52,
         "5000 kWh",
         1000,
+        CostOfSales6076Sum(1, 2, 3, 4, 5),
+        OperationalExpenses(1, 2, 3, 4, 5, 6),
         headOfficeExpenses = 100,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       ),
       TurnoverSection6076(
-        LocalDate.now().minusYears(1),
+        today.minusYears(1),
         52,
         "5 MWh",
         2000,
-        headOfficeExpenses = 100,
+        CostOfSales6076Sum(1, 2, 3, 4, 5),
+        OperationalExpenses(1, 2, 3, 4, 5, 6),
+        headOfficeExpenses = 200,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       ),
       TurnoverSection6076(
-        LocalDate.now().minusYears(2),
+        today.minusYears(2),
         52,
         "5 MWh",
         3000,
-        headOfficeExpenses = 100,
+        CostOfSales6076Sum(1, 2, 3, 4, 5),
+        OperationalExpenses(1, 2, 3, 4, 5, 6),
+        headOfficeExpenses = 300,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad
       )
     ),
-    grossReceiptsExcludingVAT = Some(
-      Seq(
-        GrossReceiptsExcludingVAT(LocalDate.now()),
-        GrossReceiptsExcludingVAT(LocalDate.now().minusYears(1)),
-        GrossReceiptsExcludingVAT(LocalDate.now().minusYears(2))
-      )
+    grossReceiptsExcludingVAT = Seq(
+      GrossReceiptsExcludingVAT(today),
+      GrossReceiptsExcludingVAT(today.minusYears(1)),
+      GrossReceiptsExcludingVAT(today.minusYears(2))
     ),
     otherIncomeDetails = "OtherIncome details",
+    otherOperationalExpensesDetails = "Other expenses",
     furtherInformationOrRemarks = "Further information or remarks"
   )
 
@@ -988,8 +993,8 @@ trait FakeObjects {
         prefilledFinancialYear
       )
     ),
-    turnoverSections6020 = Some(Seq(TurnoverSection6020(LocalDate.now))),
-    turnoverSections6030 = Seq(TurnoverSection6030(LocalDate.now, 52, None, None)),
+    turnoverSections6020 = Some(Seq(TurnoverSection6020(today))),
+    turnoverSections6030 = Seq(TurnoverSection6030(today, 52, None, None)),
     unusualCircumstances = Some(UnusualCircumstances("Unusual circumstances comment"))
   )
 
@@ -1146,7 +1151,6 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPayPartTwo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
-    howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, LocalDate.of(2000, 1, 1))),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes))

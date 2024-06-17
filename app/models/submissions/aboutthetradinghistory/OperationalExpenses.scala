@@ -18,25 +18,29 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
 
-import java.time.LocalDate
-
 /**
-  * 6076 Trading history.
+  * 6076 Trading history - Operational and administrative expenses.
   *
   * @author Yuriy Tumakha
   */
-case class TurnoverSection6076(
-  financialYearEnd: LocalDate,
-  tradingPeriod: Int,
-  electricityGenerated: Option[String] = None,
-  otherIncome: Option[BigDecimal] = None,
-  costOfSales6076Sum: Option[CostOfSales6076Sum] = None,
-  operationalExpenses: Option[OperationalExpenses] = None,
-  headOfficeExpenses: Option[BigDecimal] = None,
-  staffCosts: Option[StaffCosts] = None,
-  grossReceiptsForBaseLoad: Option[GrossReceiptsForBaseLoad] = None
-)
+case class OperationalExpenses(
+  advertising: Option[BigDecimal],
+  administration: Option[BigDecimal],
+  insurance: Option[BigDecimal],
+  legalFees: Option[BigDecimal],
+  interest: Option[BigDecimal],
+  other: Option[BigDecimal]
+) {
+  def total: BigDecimal = Seq(
+    advertising,
+    administration,
+    insurance,
+    legalFees,
+    interest,
+    other
+  ).flatten.sum
+}
 
-object TurnoverSection6076 {
-  implicit val format: OFormat[TurnoverSection6076] = Json.format
+object OperationalExpenses {
+  implicit val format: OFormat[OperationalExpenses] = Json.format
 }

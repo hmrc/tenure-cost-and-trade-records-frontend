@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentBasedOnPercentageOpenMarket, CurrentRentFirstPaid, TenancyLeaseAgreementExpire, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentFirstPaid, TenancyLeaseAgreementExpire}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper

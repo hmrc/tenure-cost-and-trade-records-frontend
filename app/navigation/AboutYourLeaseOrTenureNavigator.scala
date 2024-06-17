@@ -33,10 +33,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
     (
-      aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url,
-      _ => aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-    ),
-    (
       aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url,
       _ => aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
     )

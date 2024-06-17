@@ -202,6 +202,9 @@ POST        /electricity-generated                                  controllers.
 GET         /other-income                                           controllers.aboutthetradinghistory.OtherIncomeController.show()
 POST        /other-income                                           controllers.aboutthetradinghistory.OtherIncomeController.submit()
 
+GET         /operational-expenses                                   controllers.aboutthetradinghistory.OperationalExpensesController.show()
+POST        /operational-expenses                                   controllers.aboutthetradinghistory.OperationalExpensesController.submit()
+
 GET         /head-office-expenses                                   controllers.aboutthetradinghistory.HeadOfficeExpensesController.show()
 POST        /head-office-expenses                                   controllers.aboutthetradinghistory.HeadOfficeExpensesController.submit()
 

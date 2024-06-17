@@ -17,7 +17,6 @@
 package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
-import util.NumberUtil.zeroBigDecimal
 
 case class GrossReceiptsForBaseLoad(
   renewableHeatIncentiveBioMethane: Option[BigDecimal],

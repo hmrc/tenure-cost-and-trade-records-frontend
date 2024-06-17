@@ -80,10 +80,11 @@
     ).body
 }
 
-@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) = @{
+@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[_]) = @{
     request.sessionData.forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case ForTypes.for6076 => request.sessionData.financialYearEndDates6076.map(_._1)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
 }
@@ -409,8 +410,12 @@
 
             sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                 _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
-                aboutthetradinghistory.routes.FinancialYearEndDatesController.show(), "",
-                ("valueAsHtml", _ => None))
+                forType match {
+                    case ForTypes.for6020 | ForTypes.for6076 =>
+                        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
+                    case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+                },
+                "", ("valueAsHtml", _ => None))
 ))
 
 @if(!(Seq(ForTypes.for6020, ForTypes.for6076) contains forType)) {
