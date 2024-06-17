@@ -2249,6 +2249,7 @@ checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months = Rent review due w
 checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate = Rent is reviewed or expires on {0}
 checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading = Lease details
 checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading = Your rent
+checkYourAnswersAboutYourLeaseOrTenure.yourLease.heading = Your lease
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat = Rent includes VAT?
 checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement = Leaseback arrangement?
 checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent = Current annual rent

@@ -67,12 +67,7 @@ class ConnectedToLandlordController @Inject() (
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlord = Some(data)))
         session.saveOrUpdate(updatedData)
-        navigator.from match {
-          case "CYA" =>
-            Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
-          case _     => Redirect(navigator.nextPage(ConnectedToLandlordPageId, updatedData).apply(updatedData))
-        }
-
+        Redirect(navigator.nextPage(ConnectedToLandlordPageId, updatedData).apply(updatedData))
       }
     )
   }
