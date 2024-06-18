@@ -16,9 +16,10 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -26,31 +27,44 @@ import utils.TestBaseSpec
   */
 class IsRentUnderReviewControllerSpec extends TestBaseSpec {
 
-  def isRentUnderReviewController =
-    new IsRentUnderReviewController(
-      isRentUnderReviewView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
-      mockSessionRepo,
-      stubMessagesControllerComponents()
+  def isRentUnderReviewController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
     )
+  ) = new IsRentUnderReviewController(
+    isRentUnderReviewView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo,
+    stubMessagesControllerComponents()
+  )
 
-  "GET /" should {
-    "return 200" in {
-      val result = isRentUnderReviewController.show(fakeRequest)
-      status(result) shouldBe OK
+  "IsRentUnderReviewController GET /" should {
+    "return 200 and HTML with is rent under review is present in session" in {
+      val result = isRentUnderReviewController().show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = isRentUnderReviewController.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML is rent under review is none in session" in {
+      val controller = isRentUnderReviewController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "IsRentUnderReviewController SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = isRentUnderReviewController.submit(
+      val res = isRentUnderReviewController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST

@@ -38,50 +38,45 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def leaseOrAgreementYearsControllerNo(
-    aboutLeaseOrAgreementPartOneNo: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
-  ) =
-    new LeaseOrAgreementYearsController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      leaseOrAgreementYearsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOneNo),
-      mockSessionRepo
-    )
-
-  def leaseOrAgreementYearsControllerNone =
-    new LeaseOrAgreementYearsController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      leaseOrAgreementYearsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
-      mockSessionRepo
-    )
-
   "LeaseOrAgreementYearsController GET /" should {
-    "return 200 with yes data in the session" in {
+    "return 200 and HTML with yes data in the session" in {
       val result = leaseOrAgreementYearsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML with yes data in the session" in {
-      val result = leaseOrAgreementYearsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+      )
     }
 
     "return 200 and HTML with no data in the session" in {
-      val result = leaseOrAgreementYearsControllerNo().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller =
+        leaseOrAgreementYearsController(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+      )
     }
 
     "return 200 and HTML with none data in the session" in {
-      val result = leaseOrAgreementYearsControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = leaseOrAgreementYearsController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+      )
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = leaseOrAgreementYearsController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url + "#lease-or-agreement-details"
+      )
     }
   }
 

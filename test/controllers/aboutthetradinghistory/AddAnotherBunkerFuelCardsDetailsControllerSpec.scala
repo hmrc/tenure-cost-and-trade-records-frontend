@@ -20,9 +20,7 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK}
-import play.api.mvc.AnyContentAsEmpty
-import play.api.mvc.request.RequestTarget
-import play.api.test.{FakeRequest, Helpers}
+import play.api.test.Helpers
 import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec

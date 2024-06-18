@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,25 +24,19 @@ import utils.TestBaseSpec
 
 class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
-  def IncludedInYourRentController = new IncludedInYourRentController(
+  def IncludedInYourRentController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) = new IncludedInYourRentController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     includedInYourRentView,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def IncludedInYourRentControllerNone = new IncludedInYourRentController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    includedInYourRentView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
   )
 
   "IncludedInYourRentController GET /" should {
     "return 200 and HTML with Included In Your Rent Details in the session" in {
-      val result = IncludedInYourRentController.show(fakeRequest)
+      val result = IncludedInYourRentController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -51,7 +46,8 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with no Included In Your Rent Details in the session" in {
-      val result = IncludedInYourRentControllerNone.show(fakeRequest)
+      val controller = IncludedInYourRentController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -63,7 +59,7 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
   "IncludedInYourRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = IncludedInYourRentController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = IncludedInYourRentController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST
     }
   }

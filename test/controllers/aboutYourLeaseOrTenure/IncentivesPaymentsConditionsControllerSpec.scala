@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,25 +24,19 @@ import utils.TestBaseSpec
 
 class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
-  def incentivesPaymentsConditionsController = new IncentivesPaymentsConditionsController(
+  def incentivesPaymentsConditionsController(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) = new IncentivesPaymentsConditionsController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     incentivesPaymentsConditionsView,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def incentivesPaymentsConditionsControllerNone = new IncentivesPaymentsConditionsController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    incentivesPaymentsConditionsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
     mockSessionRepo
   )
 
   "IncentivesPaymentsConditionsController GET /" should {
     "return 200 and HTML with Incentives Payments Conditions in the session" in {
-      val result = incentivesPaymentsConditionsController.show(fakeRequest)
+      val result = incentivesPaymentsConditionsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -51,7 +46,8 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with no Incentives Payments Conditions in the session" in {
-      val result = incentivesPaymentsConditionsControllerNone.show(fakeRequest)
+      val controller = incentivesPaymentsConditionsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -64,7 +60,7 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
   "IncentivesPaymentsConditionsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = incentivesPaymentsConditionsController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = incentivesPaymentsConditionsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST
     }
   }
