@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,29 +25,39 @@ import utils.TestBaseSpec
 class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec {
 
   def legalOrPlanningRestrictionsDetailsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new LegalOrPlanningRestrictionsDetailsController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      legalOrPlanningRestrictionsDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-  "GET /" should {
-    "return 200" in {
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) = new LegalOrPlanningRestrictionsDetailsController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    legalOrPlanningRestrictionsDetailsView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+    mockSessionRepo
+  )
+
+  "LegalOrPlanningRestrictionsDetailsController GET" should {
+    "return 200 and HTML with legal or planing restrictions details in the session" in {
       val result = legalOrPlanningRestrictionsDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = legalOrPlanningRestrictionsDetailsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML legal or planing restrictions details with none in the session" in {
+      val controller = legalOrPlanningRestrictionsDetailsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "LegalOrPlanningRestrictionsDetailsController SUBMIT" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = legalOrPlanningRestrictionsDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

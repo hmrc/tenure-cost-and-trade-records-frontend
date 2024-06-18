@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -29,52 +29,64 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
   def legalOrPlanningRestrictionsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       legalOrPlanningRestrictionsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
-  def legalOrPlanningRestrictionsController6020(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new LegalOrPlanningRestrictionsController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      legalOrPlanningRestrictionsView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
+  "LegalOrPlanningRestrictionsController GET /" should {
+    "return 200 and HTML with legal or planning restrictions in the session" in {
       val result = legalOrPlanningRestrictionsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = legalOrPlanningRestrictionsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with capital sum with yes in the session" in {
+      val controller = legalOrPlanningRestrictionsController(ForTypes.for6020)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
+      )
     }
 
-    "return 200 6020" in {
-      val result = legalOrPlanningRestrictionsController6020().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 and HTML with capital sum with no in the session" in {
+      val controller =
+        legalOrPlanningRestrictionsController(ForTypes.for6020, Some(prefilledAboutLeaseOrAgreementPartTwoNo))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      )
     }
 
-    "return HTML 6020" in {
-      val result = legalOrPlanningRestrictionsController6020().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML legal or planning restrictions is none in the session for 6020" in {
+      val controller = legalOrPlanningRestrictionsController(ForTypes.for6020, None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "LegalOrPlanningRestrictionsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = legalOrPlanningRestrictionsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
