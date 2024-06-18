@@ -243,6 +243,14 @@ downloadPdf.6020.url = https://www.gov.uk/government/publications/request-for-re
 downloadPdf.6020.label = VO6020 request for rental information: petrol filling stations (occupier) (opens in a new tab)
 downloadPdf.6030.url = https://www.gov.uk/government/publications/request-for-rental-information-receipts-general-basic
 downloadPdf.6030.label = VO6030 request for rental information: receipts (general basic) (opens in a new tab)
+downloadPdf.6045.url = https://www.gov.uk/government/publications/request-for-rental-information-caravan-sites-receipts
+downloadPdf.6045.label = VO6045 request for rental information: caravan sites - receipts
+downloadPdf.6046.url = https://www.gov.uk/government/publications/request-for-rental-information-caravan-sites-rental
+downloadPdf.6046.label = VO6046 request for rental information: caravan sites - rental
+downloadPdf.6048.url = https://www.gov.uk/government/publications/request-for-rental-information-receipts-general-basic
+downloadPdf.6048.label = VO6048 request for rental information: self-catering holiday homes (applies to England)
+downloadPdf.6076.url = https://www.gov.uk/government/publications/vo-6076-request-for-rental-information-renewable-energy
+downloadPdf.6076.label = VO6076 request for rental information: Renewable Energy (opens in a new tab)
 downloadPdf.subheading = The reference number you entered does not match our records
 downloadPdf.no.download = Enter the reference number as it appears on the letter you received from the VOA.
 downloadPdf.retry = If the system does not recognise your reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
