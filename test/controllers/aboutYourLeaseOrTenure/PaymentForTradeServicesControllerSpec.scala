@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeServicesForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -45,6 +46,22 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def paymentForTradeServicesController6030(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    )
+  ) =
+    new PaymentForTradeServicesController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      paymentForTradeServicesView,
+      preEnrichedActionRefiner(
+        forType = ForTypes.for6030,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
+    )
+
   "GET /"    should {
     "return 200" in {
       val result = paymentForTradeServicesController().show(fakeRequest)
@@ -53,6 +70,17 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = paymentForTradeServicesController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6030" in {
+      val result = paymentForTradeServicesController6030().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6030" in {
+      val result = paymentForTradeServicesController6030().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
