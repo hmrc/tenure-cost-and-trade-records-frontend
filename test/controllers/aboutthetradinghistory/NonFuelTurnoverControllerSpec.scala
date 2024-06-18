@@ -46,12 +46,18 @@ class NonFuelTurnoverControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "SUBMIT /" should {
-      "return 400 for empty turnoverSections" in {
-        val res = nonFuelTurnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-        status(res) shouldBe BAD_REQUEST
-      }
+    "render back link to CYA if come from CYA" in {
+      val result  = nonFuelTurnoverController().show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/financial-year-end"
     }
   }
 
+  "SUBMIT /" should {
+    "return 400 for empty turnoverSections" in {
+      val res = nonFuelTurnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
 }

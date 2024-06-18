@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class StaffCostsControllerSpec extends TestBaseSpec {
@@ -47,6 +47,14 @@ class StaffCostsControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "render back link to CYA if come from CYA" in {
+      val result  = staffCostsController.show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/financial-year-end"
+    }
+
   }
 
   "SUBMIT /" should {

@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status._
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class TotalFuelSoldControllerSpec extends TestBaseSpec {
@@ -45,12 +45,18 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = totalFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty: _*))
-        status(res) shouldBe BAD_REQUEST
-      }
+    "render back link to CYA if come from CYA" in {
+      val result  = totalFuelSoldController().show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/financial-year-end"
     }
   }
 
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = totalFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
 }
