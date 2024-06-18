@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -27,25 +28,19 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
-  def connectedToLandlordController = new ConnectedToLandlordController(
+  def connectedToLandlordController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) = new ConnectedToLandlordController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     connectedToLandlordView,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def connectedToLandlordControllerNone = new ConnectedToLandlordController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    connectedToLandlordView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
   )
 
   "ConnectedToLandlordController GET /" should {
     "return 200 and HTML with Connected To Landlord in the session" in {
-      val result = connectedToLandlordController.show(fakeRequest)
+      val result = connectedToLandlordController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -55,7 +50,8 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Connected To Landlord in the session" in {
-      val result = connectedToLandlordControllerNone.show(fakeRequest)
+      val controller = connectedToLandlordController(None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -68,7 +64,7 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
   "ConnectedToLandlordController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = connectedToLandlordController.submit(
+      val res = connectedToLandlordController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
