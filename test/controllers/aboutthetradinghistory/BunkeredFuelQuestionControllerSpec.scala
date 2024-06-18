@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.{FakeRequest, Helpers}
-import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
@@ -48,6 +48,11 @@ class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = bunkeredFuelQuestionController.show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
   }
 
