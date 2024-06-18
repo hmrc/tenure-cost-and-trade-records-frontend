@@ -52,6 +52,12 @@ class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec {
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
     }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = electricVehicleChargingPointsController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
   }
 
   "SUBMIT /" should {
