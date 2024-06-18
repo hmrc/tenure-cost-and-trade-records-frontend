@@ -20,8 +20,10 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK}
-import play.api.test.Helpers
-import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
+import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.request.RequestTarget
+import play.api.test.{FakeRequest, Helpers}
+import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -51,6 +53,13 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
     val result = createAddAnotherBunkerFuelCardsDetailsController().show(0)(fakeRequest)
     contentType(result)     shouldBe Some("text/html")
     Helpers.charset(result) shouldBe Some("utf-8")
+  }
+
+  "render back link to CYA if come from CYA" in {
+    val result  = createAddAnotherBunkerFuelCardsDetailsController().show(0)(fakeRequestFromCYA)
+    val content = contentAsString(result)
+    content should include("/check-your-answers-about-the-trading-history")
+    content should not include "/financial-year-end"
   }
 
   "SUBMIT /" should {
