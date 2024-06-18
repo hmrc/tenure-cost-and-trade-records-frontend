@@ -16,9 +16,10 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -26,31 +27,44 @@ import utils.TestBaseSpec
   */
 class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
 
-  def isVATPayableForWholePropertyController =
-    new IsVATPayableForWholePropertyController(
-      isVATPayableForWholePropertyView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
-      mockSessionRepo,
-      stubMessagesControllerComponents()
+  def isVATPayableForWholePropertyController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
     )
+  ) = new IsVATPayableForWholePropertyController(
+    isVATPayableForWholePropertyView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo,
+    stubMessagesControllerComponents()
+  )
 
-  "GET /" should {
-    "return 200" in {
-      val result = isVATPayableForWholePropertyController.show(fakeRequest)
-      status(result) shouldBe OK
+  "IsVATPayableForWholePropertyController GET /" should {
+    "return 200 and HTML with is VAT payable for whole property is present in session" in {
+      val result = isVATPayableForWholePropertyController().show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = isVATPayableForWholePropertyController.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML is VAT payable for whole property is none in session" in {
+      val controller = isVATPayableForWholePropertyController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "IsVATPayableForWholePropertyController SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = isVATPayableForWholePropertyController.submit(
+      val res = isVATPayableForWholePropertyController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST

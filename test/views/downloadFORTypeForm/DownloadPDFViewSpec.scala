@@ -35,6 +35,10 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
   def createView6016      = () => downloadPDFView("FOR6016", testReferenceNumber)(fakeRequest, messages)
   def createView6020      = () => downloadPDFView("FOR6020", testReferenceNumber)(fakeRequest, messages)
   def createView6030      = () => downloadPDFView("FOR6030", testReferenceNumber)(fakeRequest, messages)
+  def createView6045      = () => downloadPDFView("FOR6045", testReferenceNumber)(fakeRequest, messages)
+  def createView6046      = () => downloadPDFView("FOR6046", testReferenceNumber)(fakeRequest, messages)
+  def createView6048      = () => downloadPDFView("FOR6048", testReferenceNumber)(fakeRequest, messages)
+  def createView6076      = () => downloadPDFView("FOR6076", testReferenceNumber)(fakeRequest, messages)
   def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[DownloadPDF]) =>
@@ -86,6 +90,30 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
       val doc = asDocument(createView6030())
       assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6030.label")))
       assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6030.url")))
+    }
+
+    "contain link to form download 6045" in {
+      val doc = asDocument(createView6045())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6045.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6045.url")))
+    }
+
+    "contain link to form download 6046" in {
+      val doc = asDocument(createView6046())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6046.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6046.url")))
+    }
+
+    "contain link to form download 6048" in {
+      val doc = asDocument(createView6048())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6048.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6048.url")))
+    }
+
+    "contain link to form download 6076" in {
+      val doc = asDocument(createView6076())
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6076.label")))
+      assert(doc.select("a[class=govuk-link]").toString.contains(messages("downloadPdf.6076.url")))
     }
 
     "No FOR type found page" in {

@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.http.Status.SEE_OTHER
 import play.api.test.FakeRequest
@@ -24,25 +25,19 @@ import utils.TestBaseSpec
 
 class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
 
-  def capitalSumDescriptionController = new CapitalSumDescriptionController(
+  def capitalSumDescriptionController(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) = new CapitalSumDescriptionController(
     stubMessagesControllerComponents(),
     capitalSumDescriptionView,
     aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def capitalSumDescriptionControllerNone = new CapitalSumDescriptionController(
-    stubMessagesControllerComponents(),
-    capitalSumDescriptionView,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
     mockSessionRepo
   )
 
   "CapitalSumDescriptionController GET /" should {
     "return 200 and HTML with Capital Sum Description in the session" in {
-      val result = capitalSumDescriptionController.show(fakeRequest)
+      val result = capitalSumDescriptionController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -52,7 +47,8 @@ class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Capital Sum Description in the session" in {
-      val result = capitalSumDescriptionControllerNone.show(fakeRequest)
+      val controller = capitalSumDescriptionController(None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -64,7 +60,7 @@ class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
 
   "CapitalSumDescriptionController SUBMIT /" should {
     "accept an empty form when submitted" in {
-      val res = capitalSumDescriptionController.submit(
+      val res = capitalSumDescriptionController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe SEE_OTHER

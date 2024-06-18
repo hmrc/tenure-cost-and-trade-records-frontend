@@ -91,11 +91,16 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       )
     }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = aboutThePropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-        status(res) shouldBe BAD_REQUEST
-      }
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = aboutThePropertyController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = aboutThePropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 

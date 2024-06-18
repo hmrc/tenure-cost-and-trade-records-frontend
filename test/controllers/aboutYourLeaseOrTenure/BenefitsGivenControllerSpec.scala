@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
@@ -24,26 +25,21 @@ import utils.TestBaseSpec
 
 class BenefitsGivenControllerSpec extends TestBaseSpec {
 
-  def benefitsGivenController = new BenefitsGivenController(
+  def benefitsGivenController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    )
+  ) = new BenefitsGivenController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     benefitsGivenView,
-    preEnrichedActionRefiner(),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo
   )
 
-  def benefitsGivenControllerNone =
-    new BenefitsGivenController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      benefitsGivenView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
-      mockSessionRepo
-    )
-
   "BenefitsGivenController GET /" should {
     "return 200 and HTML with Benefits Given in the session" in {
-      val result = benefitsGivenController.show(fakeRequest)
+      val result = benefitsGivenController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -53,7 +49,8 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Benefits Given in the session" in {
-      val result = benefitsGivenControllerNone.show(fakeRequest)
+      val controller = benefitsGivenController(None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -65,7 +62,7 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
 
   "BenefitsGivenController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = benefitsGivenController.submit(
+      val res = benefitsGivenController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

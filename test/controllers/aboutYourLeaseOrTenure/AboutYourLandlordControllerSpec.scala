@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import config.ErrorHandler
 import connectors.AddressLookupConnector
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
-import models.{Address, AddressLookup}
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.{Address, AddressLookup, ForTypes}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -36,39 +37,25 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   val mockAddressLookupConnector: AddressLookupConnector = mock[AddressLookupConnector]
   val errorHandler: ErrorHandler                         = inject[ErrorHandler]
 
-  def aboutYourLandlordController = new AboutYourLandlordController(
+  def aboutYourLandlordController(
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) = new AboutYourLandlordController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     aboutYourLandlordView,
     mockAddressLookupConnector,
-    preEnrichedActionRefiner(),
-    errorHandler,
-    mockSessionRepo
-  )
-
-  def aboutYourLandlordController6020 = new AboutYourLandlordController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    aboutYourLandlordView,
-    mockAddressLookupConnector,
-    preEnrichedActionRefiner(forType = forType6020),
-    errorHandler,
-    mockSessionRepo
-  )
-
-  def aboutYourLandlordControllerNone = new AboutYourLandlordController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    aboutYourLandlordView,
-    mockAddressLookupConnector,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    preEnrichedActionRefiner(
+      forType = forType,
+      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne
+    ),
     errorHandler,
     mockSessionRepo
   )
 
   "AboutYourLandlordController GET /" should {
     "return 200 and HTML with About Your Landlord in the session" in {
-      val result = aboutYourLandlordController.show(fakeRequest)
+      val result = aboutYourLandlordController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -78,7 +65,8 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with About Your Landlord in the session for 6020" in {
-      val result = aboutYourLandlordController6020.show(fakeRequest)
+      val controller = aboutYourLandlordController(forType = forType6020)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -88,7 +76,8 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no About Your Landlord in the session" in {
-      val result = aboutYourLandlordControllerNone.show(fakeRequest)
+      val controller = aboutYourLandlordController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -96,11 +85,16 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
         controllers.routes.TaskListController.show().url
       )
     }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = aboutYourLandlordController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#about-your-landlord")
+    }
   }
 
   "AboutYourLandlordController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = aboutYourLandlordController.submit(
+      val res = aboutYourLandlordController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
@@ -115,7 +109,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
         Some("id")
       )
       when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
-      val res    = aboutYourLandlordController.addressLookupCallback("123")(fakeRequest)
+      val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
       status(res) shouldBe SEE_OTHER
     }
   }

@@ -46,11 +46,24 @@ class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = electricVehicleChargingPointsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
-        status(res) shouldBe BAD_REQUEST
-      }
+    "render back link to CYA if come from CYA" in {
+      val result  = electricVehicleChargingPointsController().show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/financial-year-end"
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = electricVehicleChargingPointsController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = electricVehicleChargingPointsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

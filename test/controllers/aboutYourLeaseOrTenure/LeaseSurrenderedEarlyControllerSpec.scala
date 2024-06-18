@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,31 +25,58 @@ import utils.TestBaseSpec
 class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec {
 
   def leaseSurrenderedEarlyController(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new LeaseSurrenderedEarlyController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      leaseSurrenderedEarlyView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
+  ) = new LeaseSurrenderedEarlyController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    leaseSurrenderedEarlyView,
+    preEnrichedActionRefiner(
+      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
+      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+    ),
+    mockSessionRepo
+  )
 
-  "GET /"    should {
-    "return 200" in {
+  "LeaseSurrenderedEarlyController GET /" should {
+    "return 200 and HTML with additional disregarded yes in the session" in {
       val result = leaseSurrenderedEarlyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = leaseSurrenderedEarlyController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with additional disregarded no in the session" in {
+      val controller =
+        leaseSurrenderedEarlyController(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+      )
+    }
+
+    "return 200 and HTML with none data in the session" in {
+      val controller =
+        leaseSurrenderedEarlyController(aboutLeaseOrAgreementPartTwo = None, aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
   }
-  "SUBMIT /" should {
+
+  "LeaseSurrenderedEarlyController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = leaseSurrenderedEarlyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

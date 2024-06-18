@@ -36,51 +36,39 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def intervalsOfRentReviewNoStartDate(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
-      prefilledAboutLeaseOrAgreementPartTwoNoDate
-    )
-  ) =
-    new IntervalsOfRentReviewController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      intervalsOfRentReviewView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  def intervalsOfRentReviewControllerNone = new IntervalsOfRentReviewController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    intervalsOfRentReviewView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-    mockSessionRepo
-  )
-
   "IntervalsOfRentReviewController GET /" should {
-    "return 200" in {
+    "return 200 and HTML with vacant property start date present in session" in {
       val result = intervalsOfRentReviewController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = intervalsOfRentReviewController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML vacant property start date is not present in session" in {
+      val controller = intervalsOfRentReviewController(aboutLeaseOrAgreementPartTwo =
+        Some(prefilledAboutLeaseOrAgreementPartTwoNoDate)
+      )
+      val result     = controller.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
+      )
     }
 
-    "return 200and HTML vacant property start date is not present in session" in {
-      val result = intervalsOfRentReviewNoStartDate().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 and HTML with none in session" in {
-      val result = intervalsOfRentReviewControllerNone.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML vacant property start date is none in session" in {
+      val controller = intervalsOfRentReviewController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
+      )
     }
 
     "display the page with the fields prefilled in" when {
@@ -94,7 +82,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
     }
   }
 
-  "IntervalsOfRentReviewControllerSUBMIT /" should {
+  "IntervalsOfRentReviewController SUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
 
       val res = intervalsOfRentReviewController().submit(

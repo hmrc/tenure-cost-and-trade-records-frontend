@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -27,25 +28,19 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
-  def currentLeaseOrAgreementBeginController = new CurrentLeaseOrAgreementBeginController(
+  def currentLeaseOrAgreementBeginController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) = new CurrentLeaseOrAgreementBeginController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     currentLeaseOrAgreementBeginView,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def currentLeaseOrAgreementBeginNoDate = new CurrentLeaseOrAgreementBeginController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    currentLeaseOrAgreementBeginView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
   )
 
   "CurrentLeaseOrAgreementBeginController GET /" should {
     "return 200 and HTML with Current Lease Or Agreement Begin in the session" in {
-      val result = currentLeaseOrAgreementBeginController.show(fakeRequest)
+      val result = currentLeaseOrAgreementBeginController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -55,7 +50,8 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML vacant property start date is not present in session" in {
-      val result = currentLeaseOrAgreementBeginNoDate.show()(fakeRequest)
+      val controller = currentLeaseOrAgreementBeginController(Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate))
+      val result     = controller.show()(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -68,7 +64,7 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
   "CurrentLeaseOrAgreementBeginController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = currentLeaseOrAgreementBeginController.submit(
+      val res = currentLeaseOrAgreementBeginController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
