@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.ForTypes
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,44 +25,20 @@ import utils.TestBaseSpec
 
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
-  def connectionToThePropertyController = new CurrentAnnualRentController(
+  def connectionToThePropertyController(
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) = new CurrentAnnualRentController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     currentAnnualRentView,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def connectionToThePropertyController6011Yes = new CurrentAnnualRentController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    currentAnnualRentView,
-    preEnrichedActionRefiner(forType = ForTypes.for6011),
-    mockSessionRepo
-  )
-
-  def connectionToThePropertyController6011No = new CurrentAnnualRentController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    currentAnnualRentView,
-    preEnrichedActionRefiner(
-      forType = ForTypes.for6011,
-      aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
-    ),
-    mockSessionRepo
-  )
-
-  def connectionToThePropertyController6011None = new CurrentAnnualRentController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    currentAnnualRentView,
-    preEnrichedActionRefiner(forType = ForTypes.for6011, aboutLeaseOrAgreementPartOne = None),
+    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
   )
 
   "CurrentAnnualRentController GET /" should {
     "return 200 and HTML with Current Annual Rent in the session" in {
-      val result = connectionToThePropertyController.show(fakeRequest)
+      val result = connectionToThePropertyController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -71,7 +48,8 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Connected To Landlord Yes in the session for 6011" in {
-      val result = connectionToThePropertyController6011Yes.show(fakeRequest)
+      val controller = connectionToThePropertyController(ForTypes.for6011)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -81,7 +59,9 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Connected To Landlord No in the session for 6011" in {
-      val result = connectionToThePropertyController6011No.show(fakeRequest)
+      val controller =
+        connectionToThePropertyController(ForTypes.for6011, Some(prefilledAboutLeaseOrAgreementPartOneNo))
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -91,7 +71,8 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Connected To Landlord in the session for 6011" in {
-      val result = connectionToThePropertyController6011None.show(fakeRequest)
+      val controller = connectionToThePropertyController(ForTypes.for6011, None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -103,7 +84,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
   "CurrentAnnualRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = connectionToThePropertyController.submit(
+      val res = connectionToThePropertyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.SEE_OTHER
 import play.api.test.FakeRequest
@@ -24,26 +25,21 @@ import utils.TestBaseSpec
 
 class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
 
-  def benefitsGivenDetailsController = new BenefitsGivenDetailsController(
+  def benefitsGivenDetailsController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    )
+  ) = new BenefitsGivenDetailsController(
     stubMessagesControllerComponents(),
     benefitsGivenDetailsView,
     aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo
   )
 
-  def benefitsGivenDetailsControllerNone =
-    new BenefitsGivenDetailsController(
-      stubMessagesControllerComponents(),
-      benefitsGivenDetailsView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
-      mockSessionRepo
-    )
-
   "BenefitsGivenDetailsController GET /" should {
     "return 200 and HTML with Benefits Given Details in the session" in {
-      val result = benefitsGivenDetailsController.show(fakeRequest)
+      val result = benefitsGivenDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -53,7 +49,8 @@ class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
     }
 
     "return HTML and HTML when no Benefits Given Details in the session" in {
-      val result = benefitsGivenDetailsControllerNone.show(fakeRequest)
+      val controller = benefitsGivenDetailsController(None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -65,7 +62,7 @@ class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
 
   "BenefitsGivenDetailsController SUBMIT /" should {
     "accept an empty form when submitted" in {
-      val res = benefitsGivenDetailsController.submit(
+      val res = benefitsGivenDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe SEE_OTHER

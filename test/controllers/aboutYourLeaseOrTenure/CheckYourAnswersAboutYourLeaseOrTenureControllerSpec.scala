@@ -16,6 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,68 +25,25 @@ import utils.TestBaseSpec
 
 class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec {
 
-  def cYAAboutYourLeaseOrTenureController = new CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    checkYourAnswersAboutLeaseAndTenureView,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def cYAAboutYourLeaseOrTenureControllerOneNone = new CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    checkYourAnswersAboutLeaseAndTenureView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
-    mockSessionRepo
-  )
-
-  def cYAAboutYourLeaseOrTenureControllerLegalPlanNo = new CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    checkYourAnswersAboutLeaseAndTenureView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)),
-    mockSessionRepo
-  )
-
-  def cYAAboutYourLeaseOrTenureControllerLeaseAgreeNo = new CheckYourAnswersAboutYourLeaseOrTenureController(
+  def cYAAboutYourLeaseOrTenureController(
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) = new CheckYourAnswersAboutYourLeaseOrTenureController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     checkYourAnswersAboutLeaseAndTenureView,
     preEnrichedActionRefiner(
-      aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
-      aboutLeaseOrAgreementPartTwo = None
+      forType = forType,
+      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
     ),
-    mockSessionRepo
-  )
-
-  def cYAAboutYourLeaseOrTenureControllerTwoNone = new CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    checkYourAnswersAboutLeaseAndTenureView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-    mockSessionRepo
-  )
-
-  def cYAAboutYourLeaseOrTenureControllerTwoNone6011 = new CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    checkYourAnswersAboutLeaseAndTenureView,
-    preEnrichedActionRefiner(forType = "FOR6011", aboutLeaseOrAgreementPartTwo = None),
-    mockSessionRepo
-  )
-
-  def cYAAboutYourLeaseOrTenureControllerTwoNoneOtherForms = new CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    checkYourAnswersAboutLeaseAndTenureView,
-    preEnrichedActionRefiner(forType = "FOR6020", aboutLeaseOrAgreementPartTwo = None),
     mockSessionRepo
   )
 
   "CheckYourAnswersAboutYourLeaseOrTenureController GET /" should {
     "return 200 and HTML with CYA and Legal Planning Restrictions (Yes) in the session" in {
-      val result = cYAAboutYourLeaseOrTenureController.show(fakeRequest)
+      val result = cYAAboutYourLeaseOrTenureController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -94,7 +53,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
     }
 
     "return 200 and HTML when no CYA in the session" in {
-      val result = cYAAboutYourLeaseOrTenureControllerOneNone.show(fakeRequest)
+      val controller = cYAAboutYourLeaseOrTenureController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -104,7 +64,10 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
     }
 
     "return 200 and HTML with CYA and Legal Planning Restrictions (No) in the session" in {
-      val result = cYAAboutYourLeaseOrTenureControllerLegalPlanNo.show(fakeRequest)
+      val controller = cYAAboutYourLeaseOrTenureController(aboutLeaseOrAgreementPartTwo =
+        Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+      )
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -114,7 +77,11 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
     }
 
     "return 200 and HTML with CYA and when no Legal Planning Restrictions and Lease Agreement all No in the session for 6010" in {
-      val result = cYAAboutYourLeaseOrTenureControllerLeaseAgreeNo.show(fakeRequest)
+      val controller = cYAAboutYourLeaseOrTenureController(
+        aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
+        aboutLeaseOrAgreementPartTwo = None
+      )
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -124,7 +91,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
     }
 
     "return 200 and HTML with CYA and when no Legal Planning Restrictions in the session for 6010" in {
-      val result = cYAAboutYourLeaseOrTenureControllerTwoNone.show(fakeRequest)
+      val controller = cYAAboutYourLeaseOrTenureController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -134,7 +102,9 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
     }
 
     "return 200 and HTML with CYA and when no Legal Planning Restrictions (Yes) in the session for 6011" in {
-      val result = cYAAboutYourLeaseOrTenureControllerTwoNone6011.show(fakeRequest)
+      val controller =
+        cYAAboutYourLeaseOrTenureController(forType = ForTypes.for6011, aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -144,16 +114,35 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
     }
 
     "return exception with CYA and when no Legal Planning Restrictions in the session for other forms" in {
-      val result = cYAAboutYourLeaseOrTenureControllerTwoNoneOtherForms.show(fakeRequest)
+      val controller =
+        cYAAboutYourLeaseOrTenureController(forType = ForTypes.for6020, aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe "Navigation for CYA about lease without correct selection of conditions by controller"
       }
     }
+
+    "return exception with CYA and when no Legal Planning Restrictions in the session for 6076" in {
+      val controller =
+        cYAAboutYourLeaseOrTenureController(forType = ForTypes.for6076, aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      result.failed.recover { case e: Exception =>
+        e.getMessage shouldBe "Navigation for CYA about lease without correct selection of conditions by controller"
+      }
+    }
+
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = cYAAboutYourLeaseOrTenureController().show()(FakeRequest(GET, "/path?from=CYA"))
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
+      )
+    }
+
   }
 
   "CheckYourAnswersAboutYourLeaseOrTenureController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = cYAAboutYourLeaseOrTenureController.submit(
+      val res = cYAAboutYourLeaseOrTenureController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

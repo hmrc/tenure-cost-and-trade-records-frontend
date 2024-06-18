@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,25 +24,19 @@ import utils.TestBaseSpec
 
 class DoesTheRentPayableControllerSpec extends TestBaseSpec {
 
-  def doesTheRentPayableController = new DoesTheRentPayableController(
+  def doesTheRentPayableController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) = new DoesTheRentPayableController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     doesTheRentPayableView,
-    preEnrichedActionRefiner(),
-    mockSessionRepo
-  )
-
-  def doesTheRentPayableControllerNone = new DoesTheRentPayableController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    doesTheRentPayableView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
   )
 
   "DoesTheRentPayableController GET /" should {
     "return 200 and HTML with Does The Rent Payable in the session" in {
-      val result = doesTheRentPayableController.show(fakeRequest)
+      val result = doesTheRentPayableController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -51,7 +46,8 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Does The Rent Payable in the session" in {
-      val result = doesTheRentPayableControllerNone.show(fakeRequest)
+      val controller = doesTheRentPayableController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -65,7 +61,7 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
   "DoesTheRentPayableController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = doesTheRentPayableController.submit(
+      val res = doesTheRentPayableController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST
