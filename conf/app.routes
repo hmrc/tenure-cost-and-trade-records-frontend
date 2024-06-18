@@ -249,6 +249,8 @@ POST        /gross-receipts-excluding-vat                           controllers.
 GET         /gross-receipts-for-base-load                           controllers.aboutthetradinghistory.GrossReceiptsForBaseLoadController.show()
 POST        /gross-receipts-for-base-load                           controllers.aboutthetradinghistory.GrossReceiptsForBaseLoadController.submit()
 
+GET         /premises-costs                                         controllers.aboutthetradinghistory.PremisesCostsController.show()
+POST        /premises-costs                                         controllers.aboutthetradinghistory.PremisesCostsController.submit()
 # Form 6076 routing end
 
 # About the francise or letting

@@ -174,9 +174,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     GrossReceiptsExcludingVatId              -> (_ => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()),
     OtherIncomeId                            -> (_ => aboutthetradinghistory.routes.CostOfSales6076Controller.show()),
     CostOfSales6076Id                        -> (_ => aboutthetradinghistory.routes.StaffCostsController.show()),
-    StaffCostsId                             -> (_ => // TODO: Premises costs
-      aboutthetradinghistory.routes.OperationalExpensesController.show()
-    ),
+    StaffCostsId                             -> (_ => aboutthetradinghistory.routes.PremisesCostsController.show()),
+    PremisesCostsId                          -> (_ => aboutthetradinghistory.routes.OperationalExpensesController.show()),
     GrossReceiptsForBaseLoadId               -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
     OperationalExpensesId                    -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
     HeadOfficeExpensesId                     -> (_ => // TODO: Income and expenditure summary
