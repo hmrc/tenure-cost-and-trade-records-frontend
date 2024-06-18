@@ -16,6 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,6 +26,8 @@ import utils.TestBaseSpec
 
 class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
 
+  import TestData._
+  import utils.FormBindingTestAssertions._
   def legalOrPlanningRestrictionsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
@@ -34,6 +38,18 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
+
+  def legalOrPlanningRestrictionsController6020(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new LegalOrPlanningRestrictionsController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      legalOrPlanningRestrictionsView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = legalOrPlanningRestrictionsController().show(fakeRequest)
@@ -42,6 +58,17 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = legalOrPlanningRestrictionsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6020" in {
+      val result = legalOrPlanningRestrictionsController6020().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6020" in {
+      val result = legalOrPlanningRestrictionsController6020().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -54,5 +81,24 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Legal or planning restrictions form" should {
+    "error if Legal or planning restrictions answer is missing" in {
+      val formData = baseFormData - errorKey.legalOrPlanningRestrictions
+      val form     = legalPlanningRestrictionsForm.bind(formData)
+
+      mustContainError(errorKey.legalOrPlanningRestrictions, "error.legalOrPlanningRestrictions.missing", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val legalOrPlanningRestrictions: String
+    } = new {
+      val legalOrPlanningRestrictions: String = "legalOrPlanningRestrictions"
+    }
+
+    val baseFormData: Map[String, String] = Map("legalOrPlanningRestrictions" -> "yes")
   }
 }
