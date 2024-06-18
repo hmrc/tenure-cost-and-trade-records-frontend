@@ -54,6 +54,16 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def workCarriedOutConditionControllerEmpty(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = None
+  ) = new WorkCarriedOutConditionController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    workCarriedOutConditionView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
       val result = workCarriedOutConditionController().show(fakeRequest)
@@ -73,6 +83,13 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
 
     "return HTML No" in {
       val result = workCarriedOutConditionControllerNo().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 for empty session" in {
+      val result = workCarriedOutConditionControllerEmpty().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
