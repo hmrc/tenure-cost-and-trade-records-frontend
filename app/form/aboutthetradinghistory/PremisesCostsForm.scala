@@ -35,17 +35,17 @@ object PremisesCostsForm {
 
   private def sumMapping(year: String)(implicit messages: Messages): Mapping[PremisesCosts] =
     mapping(
-      "energyAndUtilities" -> costOfSalesMapping(
+      "energyAndUtilities"           -> costOfSalesMapping(
         "premisesCosts.energyAndUtilities",
         year
       ),
-      "buildingRepairAndMaintenance"    -> costOfSalesMapping(
+      "buildingRepairAndMaintenance" -> costOfSalesMapping(
         "premisesCosts.buildingRepairAndMaintenance",
         year
       ),
-      "repairsAndRenewalsOfFixtures"                   -> costOfSalesMapping("premisesCosts.repairsAndRenewalsOfFixtures", year),
-      "rent"         -> costOfSalesMapping("premisesCosts.rent", year),
-      "businessRates"              -> costOfSalesMapping("premisesCosts.businessRates", year),
-      "buildingInsurance"              -> costOfSalesMapping("premisesCosts.buildingInsurance", year)
+      "repairsAndRenewalsOfFixtures" -> costOfSalesMapping("premisesCosts.repairsAndRenewalsOfFixtures", year),
+      "rent"                         -> costOfSalesMapping("premisesCosts.rent", year),
+      "businessRates"                -> costOfSalesMapping("premisesCosts.businessRates", year),
+      "buildingInsurance"            -> costOfSalesMapping("premisesCosts.buildingInsurance", year)
     )(PremisesCosts.apply)(PremisesCosts.unapply)
 }
