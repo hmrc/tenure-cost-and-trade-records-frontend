@@ -250,7 +250,11 @@ GET         /gross-receipts-for-base-load                           controllers.
 POST        /gross-receipts-for-base-load                           controllers.aboutthetradinghistory.GrossReceiptsForBaseLoadController.submit()
 
 GET         /premises-costs                                         controllers.aboutthetradinghistory.PremisesCostsController.show()
-POST        /premises-costs                                         controllers.aboutthetradinghistory.PremisesCostsController.submit()
+POST        /premises-costs
+                                    controllers.aboutthetradinghistory.PremisesCostsController.submit()
+GET         /income-expenditure-summary-6076                        controllers.aboutthetradinghistory.IncomeExpenditureSummary6076Controller.show()
+POST        /income-expenditure-summary-6076                        controllers.aboutthetradinghistory.IncomeExpenditureSummary6076Controller.submit()
+
 # Form 6076 routing end
 
 # About the francise or letting
