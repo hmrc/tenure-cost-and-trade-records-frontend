@@ -40,7 +40,7 @@
 
 <li class="app-task-list__item">
     <span class="app-task-list__task-name">
-        @if(cannotStartYet) {
+        @if(cannotStartYet && pageAnswer.isEmpty) {
             @messages(taskNameKey)
         } else {
             <a href="@taskPage.url?from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>

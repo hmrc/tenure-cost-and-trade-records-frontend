@@ -1466,6 +1466,9 @@ taskList.EVChargingPoints = EV charging points
 taskList.technologyType = Technology type
 taskList.siteConstructionDetails = Site construction details
 taskList.howIsUsed = How the property is used
+taskList.6076.powerGenerated = Power generated
+taskList.6076.grossReceipts = Gross receipts
+taskList.6076.operationalExpenses = Operating expenses
 
 # COST OF SALES OR GROSS PROFIT
 #########

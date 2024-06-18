@@ -241,7 +241,7 @@
      section2Completed.isEmpty
     )
 
-    @if(!(Seq(ForTypes.for6020) contains forType)) {
+    @if(!(Seq(ForTypes.for6020, ForTypes.for6076) contains forType)) {
 
      @includes.taskListItem("turnover", "turnover.heading",
       if(forType == ForTypes.for6030) {
@@ -258,6 +258,63 @@
       session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
      )
 
+    }
+
+    @if(forType == ForTypes.for6076) {
+     @includes.taskListItem("electricity-generated", "taskList.6076.powerGenerated",
+      controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated),
+      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+     )
+     @includes.taskListItem("gross-receipts", "taskList.6076.grossReceipts",
+      controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.grossReceiptsExcludingVAT).flatMap(_.headOption).flatMap(_.electricitySales),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated).isEmpty
+     )
+     @includes.taskListItem("other-income", "turnover.6076.otherIncome",
+      controllers.aboutthetradinghistory.routes.OtherIncomeController.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.otherIncome),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.grossReceiptsExcludingVAT).flatMap(_.headOption).flatMap(_.electricitySales).isEmpty
+     )
+     @includes.taskListItem("cost-of-sales", "costOfSales6076.heading",
+      controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.costOfSales6076Sum),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.otherIncome).isEmpty
+     )
+     @includes.taskListItem("staff-costs", "staffCosts.heading",
+      controllers.aboutthetradinghistory.routes.StaffCostsController.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.staffCosts),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.costOfSales6076Sum).isEmpty
+     )
+     @includes.taskListItem("premises-costs", "premisesCosts.heading",
+      Call("GET", "premises-costs"),// TODO: controllers.aboutthetradinghistory.routes.PremisesCostsController.show(),
+      section3Completed,
+      None, // TODO: session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.staffCosts).isEmpty
+     )
+     @includes.taskListItem("operational-expenses", "taskList.6076.operationalExpenses",
+      controllers.aboutthetradinghistory.routes.OperationalExpensesController.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses),
+      true // TODO: session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts).isEmpty
+     )
+     @includes.taskListItem("head-office-expenses", "turnover.6076.headOfficeExpenses.heading",
+      controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses).isEmpty
+     )
+     @includes.taskListItem("income-and-expenditure", "incomeAndExpenditure.heading",
+      Call("GET", "income-and-expenditure"),// TODO: controllers.aboutthetradinghistory.routes.IncomeAndExpenditureController.show(),
+      section3Completed,
+      None, // TODO: session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.incomeAndExpenditure),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses).isEmpty
+     )
     }
 
     @if(forType == ForTypes.for6020) {
@@ -406,13 +463,8 @@
   @if(isLeaseHolder) {
    <li>
     <h2 class="app-task-list__section">
-     @if(forType == ForTypes.for6076) {
-      <span class="app-task-list__section-number">4. </span>
+      <span class="app-task-list__section-number">@leaseOrAgreementNumber. </span>
       @messages("label.section.aboutYourLeaseOrTenure")
-     } else {
-      <span class="app-task-list__section-number">5. </span>
-      @messages("label.section.aboutYourLeaseOrTenure")
-     }
     </h2>
     <ul class="app-task-list__items">
      @if(forType == ForTypes.for6020) {
