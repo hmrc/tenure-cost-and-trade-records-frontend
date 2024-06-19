@@ -2411,6 +2411,8 @@ checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove = Add or remo
 checkYourAnswersAboutTheTradingHistory.card = card
 checkYourAnswersAboutTheTradingHistory.cards = cards
 checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates = Financial year-end updates
+checkYourAnswersAboutTheTradingHistory.electricityGenerated = Electricity generated (kWh or MWh)
+checkYourAnswersAboutTheTradingHistory.rocBuyout = ROC buyout
 
 # Confirmation Page
 ###################

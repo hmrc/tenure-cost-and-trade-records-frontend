@@ -44,6 +44,10 @@
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
 }
 
+@sectionAnswers1 = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+}
+
 @forType = @{
     request.sessionData.forType
 }
@@ -397,6 +401,46 @@
     messages(message, size, if(size == 1) messages("checkYourAnswersAboutTheTradingHistory.card") else messages("checkYourAnswersAboutTheTradingHistory.cards"))
 }
 
+@financialYearEndRow6076(pageHeadingKey: String, editPage: Call) = @{
+    SummaryListRow(
+        key = Key(Text(messages("turnover.financialYearEnd"))),
+        value = Value(HtmlContent(
+            tableRow(sectionAnswers1.answers.flatMap(_.turnoverSections6076)
+            .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))).body
+        )),
+        actions = Some(
+            Actions(items =
+                Seq(
+                    ActionItem(
+                        href = s"$editPage?from=CYA",
+                        content = Text(messages("label.change")),
+                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        attributes = Map(
+                            "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
+                        )
+                    )
+                )
+            )
+        ),
+        classes = "no-border-bottom"
+    )
+}
+
+@valuesPerYearRow(valueLabelKey: String, values: Seq[String], rowStyle: String = "no-border-bottom") = @{
+    SummaryListRow(
+        key = Key(Text(messages(valueLabelKey))),
+        value = Value(HtmlContent(
+            tableRow(values).body
+        )),
+        classes = rowStyle
+    )
+}
+
+@decimalValuesPerYearRow(valueLabelKey: String, values: Seq[Option[BigDecimal]], rowStyle: String = "no-border-bottom") = @{
+    valuesPerYearRow(valueLabelKey, values.map(_.getOrElse(zeroBigDecimal).asMoney), rowStyle)
+}
+
+
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
@@ -449,6 +493,58 @@
                 )
         }
     ))
+}
+
+@if(forType == ForTypes.for6076) {
+    <h2 class="govuk-heading-m">@messages("taskList.6076.powerGenerated")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            financialYearEndRow6076("taskList.6076.powerGenerated", aboutthetradinghistory.routes.ElectricityGeneratedController.show()),
+            valuesPerYearRow("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .map(_.tradingPeriod + " " + messages("turnover.weeks"))),
+            valuesPerYearRow("checkYourAnswersAboutTheTradingHistory.electricityGenerated",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.electricityGenerated), "")
+        )
+    ))
+
+    <h2 class="govuk-heading-m">@messages("taskList.6076.grossReceipts")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            financialYearEndRow6076("taskList.6076.powerGenerated", aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
+            decimalValuesPerYearRow("grossReceipts.electricitySales",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.electricitySales)),
+            decimalValuesPerYearRow("grossReceipts.feedInTariff",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.feedInTariff)),
+            decimalValuesPerYearRow("checkYourAnswersAboutTheTradingHistory.rocBuyout",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.rocBuyout)),
+            decimalValuesPerYearRow("grossReceipts.rocRecycle",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.rocRecycle)),
+            decimalValuesPerYearRow("grossReceipts.contractForDifference",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.contractForDifference)),
+            decimalValuesPerYearRow("grossReceipts.capacityMarket",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.capacityMarket)),
+            decimalValuesPerYearRow("grossReceipts.balancingServices",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.balancingServices)),
+            decimalValuesPerYearRow("grossReceipts.embeddedBenefits",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.embeddedBenefits)),
+            decimalValuesPerYearRow("grossReceipts.total",
+                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
+                .map(_.total), ""),
+        )
+    ))
+
 }
 
 @if(forType == ForTypes.for6030) {
