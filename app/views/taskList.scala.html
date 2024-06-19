@@ -292,16 +292,16 @@
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.costOfSales6076Sum).isEmpty
      )
      @includes.taskListItem("premises-costs", "premisesCosts.heading",
-      Call("GET", "premises-costs"),// TODO: controllers.aboutthetradinghistory.routes.PremisesCostsController.show(),
+      controllers.aboutthetradinghistory.routes.PremisesCostsController.show(),
       section3Completed,
-      None, // TODO: session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts),
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.staffCosts).isEmpty
      )
      @includes.taskListItem("operational-expenses", "taskList.6076.operationalExpenses",
       controllers.aboutthetradinghistory.routes.OperationalExpensesController.show(),
       section3Completed,
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses),
-      true // TODO: session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts).isEmpty
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts).isEmpty
      )
      @includes.taskListItem("head-office-expenses", "turnover.6076.headOfficeExpenses.heading",
       controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),

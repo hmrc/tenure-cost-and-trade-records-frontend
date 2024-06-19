@@ -2027,6 +2027,38 @@ error.grossReceiptsForBaseLoad.gateIncomeFromWaste.required = Enter 0 if you did
 error.grossReceiptsForBaseLoad.gateIncomeFromWaste.range = Gate income from waste in the year ending {0} must be a number, for example 100 or 100.00
 error.grossReceiptsForBaseLoad.gateIncomeFromWaste.negative = Gate income from waste in the year ending {0} cannot be a negative number
 
+# PREMISES COSTS (FROM 6076)
+###################################################
+premisesCosts.heading = Premises costs
+premisesCosts.p = Provide us with details of your premises costs.
+premisesCosts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+premisesCosts.energyAndUtilities = Energy and utilities
+premisesCosts.energyAndUtilities.hint = Heating, lighting, power, water
+premisesCosts.buildingRepairAndMaintenance = Building repairs and maintenance
+premisesCosts.repairsAndRenewalsOfFixtures = Repairs and renewals of fixtures, fittings, equipment and plant
+premisesCosts.rent = Rent (if applicable)
+premisesCosts.businessRates = Business rates
+premisesCosts.buildingInsurance = Building insurance
+premisesCosts.total = Total premises costs
+error.premisesCosts.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities costs in the year ending {0}
+error.premisesCosts.energyAndUtilities.range = Energy and utilities costs in the year ending {0} must be a number, for example 100 or 100.00
+error.premisesCosts.energyAndUtilities.negative = Energy and utilities costs in the year ending {0} cannot be a negative number
+error.premisesCosts.buildingRepairAndMaintenance.required = Enter 0 if you did not have any building repairs and maintenance costs in the year ending {0}
+error.premisesCosts.buildingRepairAndMaintenance.range = Building repairs and maintenance costs in the year ending {0} must be a number, for example 100 or 100.00
+error.premisesCosts.buildingRepairAndMaintenance.negative = Building repairs and maintenance costs in the year ending {0} cannot be a negative number
+error.premisesCosts.repairsAndRenewalsOfFixtures.required = Enter 0 if you did not have any repairs and renewals of fixtures, fittings, equipment and plant costs in the year ending {0}
+error.premisesCosts.repairsAndRenewalsOfFixtures.range = Repairs and renewals of fixtures, fittings, equipment and plant costs in the year ending {0} must be a number, for example 100 or 100.00
+error.premisesCosts.repairsAndRenewalsOfFixtures.negative = Repairs and renewals of fixtures, fittings, equipment and plant costs in the year ending {0} cannot be a negative number
+error.premisesCosts.rent.required = Enter 0 if you did not have any rent in the year ending {0}
+error.premisesCosts.rent.range = Rent in the year ending {0} must be a number, for example 100 or 100.00
+error.premisesCosts.rent.negative = Rent in the year ending {0} cannot be a negative number
+error.premisesCosts.businessRates.required = Enter 0 if you did not have any business rates in the year ending {0}
+error.premisesCosts.businessRates.range = Business rates in the year ending {0} must be a number, for example 100 or 100.00
+error.premisesCosts.businessRates.negative = Business rates in the year ending {0} cannot be a negative number
+error.premisesCosts.buildingInsurance.required = Enter 0 if you did not have any building insurance in the year ending {0}
+error.premisesCosts.buildingInsurance.range = Building insurance in the year ending {0} must be a number, for example 100 or 100.00
+error.premisesCosts.buildingInsurance.negative = Building insurance in the year ending {0} cannot be a negative number
+
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Rent from concessions

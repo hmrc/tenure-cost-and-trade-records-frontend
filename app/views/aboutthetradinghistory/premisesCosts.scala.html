@@ -1,0 +1,119 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
+@import models.submissions.aboutthetradinghistory.PremisesCosts
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        hmrcCharacterCount: HmrcCharacterCount,
+        dateUtil: DateUtil
+)
+
+
+@(form: Form[Seq[PremisesCosts]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+
+@totalContent(idx: Int) = {
+    <span data-total-prefix="premisesCosts.[@idx]." data-total-items="energyAndUtilities,buildingRepairAndMaintenance,repairsAndRenewalsOfFixtures,rent,businessRates,buildingInsurance">
+        form.value.fold("")(_.staffCosts(idx).total.asMoney)
+    </span>
+}
+
+@headingContent(key: String, hint: Boolean) = {
+
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages(s"premisesCosts.$key") <br>
+        @if(hint == true) { <span class="govuk-caption-m">@messages(s"premisesCosts.$key.hint")</span> }
+    </p>
+}
+
+@costRow(key: String, idx: Int, hint: Boolean = false ) = @{
+    Seq(
+        TableRow(content = HtmlContent(headingContent(key, hint))),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    prefix = Some(PrefixOrSuffix(
+                        content = Text(messages("label.pound"))
+                    )),
+                    attributes = Map(
+                        "maxlength" -> "13",
+                        "aria-label" -> messages(s"premisesCosts.$key")
+                    ),
+                ).withFormField(form(s"premisesCosts.[$idx].$key"))))
+        ))
+}
+
+@layout(
+    pageHeading = messages("premisesCosts.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages("premisesCosts.p")</p>
+
+    @govukInsetText(InsetText(content = Text(messages("premisesCosts.inset")), classes = "govuk-!-width-three-quarters" ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.PremisesCostsController.submit()) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            costRow("energyAndUtilities", idx ,true),
+                            costRow("buildingRepairAndMaintenance", idx),
+                            costRow("repairsAndRenewalsOfFixtures", idx),
+                            costRow("rent", idx),
+                            costRow("businessRates", idx),
+                            costRow("buildingInsurance", idx),
+                               Seq(
+                                  TableRow(content = Text(messages("premisesCosts.total"))),
+                                  TableRow(content = HtmlContent(totalContent(idx)))))))
+                </td>
+                }</tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+}
