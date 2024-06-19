@@ -36,36 +36,45 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def payACapitalSumDetailsNoDate(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
-      prefilledAboutLeaseOrAgreementPartTwoNoDate
-    )
-  ) =
-    new PayACapitalSumDetailsController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      payACapitalSumDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
+  "PayACapitalSumDetailsController GET /" should {
+    "return 200 and HTML with capital sum or premium with yes in the session" in {
       val result = payACapitalSumDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = payACapitalSumDetailsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with capital sum or premium with no in the session" in {
+      val controller =
+        payACapitalSumDetailsController(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+      )
     }
 
-    "return 200 vacant property start date is not present in session" in {
-      val result = payACapitalSumDetailsNoDate().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML capital sum or premium with none in the session" in {
+      val controller = payACapitalSumDetailsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = payACapitalSumDetailsController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-details"
+      )
     }
 
     "display the page with the fields prefilled in" when {
@@ -79,7 +88,7 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "PayACapitalSumDetailsController SUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
 
       val res = payACapitalSumDetailsController().submit(

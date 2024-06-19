@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -29,52 +29,101 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
   def payACapitalSumController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    )
   ) =
     new PayACapitalSumController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       payACapitalSumView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
       mockSessionRepo
     )
 
-  def payACapitalSumController6020(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new PayACapitalSumController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      payACapitalSumView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
+  "PayACapitalSumController GET /" should {
+    "return 200 and HTML with tenant additional disregarded with yes in the session" in {
       val result = payACapitalSumController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = payACapitalSumController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with tenant additional disregarded with no in the session" in {
+      val controller =
+        payACapitalSumController(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+      )
     }
 
-    "return 200 6020" in {
-      val result = payACapitalSumController6020().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 and HTML tenant additional disregarded with none in the session" in {
+      val controller = payACapitalSumController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
-    "return HTML 6020" in {
-      val result = payACapitalSumController6020().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with benefit given with yes in the session with 6020" in {
+      val controller = payACapitalSumController(ForTypes.for6020)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
+      )
+    }
+
+    "return 200 and HTML with benefit given with no in the session with 6020" in {
+      val controller = payACapitalSumController(
+        ForTypes.for6020,
+        aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url
+      )
+    }
+
+    "return 200 and HTML benefit given with none in the session with 6020" in {
+      val controller = payACapitalSumController(ForTypes.for6020, aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = payACapitalSumController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#pay-a-capital-sum")
     }
   }
 
-  "SUBMIT /" should {
+  "PayACapitalSumController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = payACapitalSumController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
