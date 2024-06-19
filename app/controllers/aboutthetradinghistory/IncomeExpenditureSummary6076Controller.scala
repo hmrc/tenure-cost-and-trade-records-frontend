@@ -128,7 +128,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
       val otherIncome         = section.otherIncome.getOrElse(BigDecimal(0))
       val costOfSales         = section.costOfSales6076Sum.map(_.total).getOrElse(BigDecimal(0))
       val staffCosts          = section.staffCosts.map(_.total).getOrElse(BigDecimal(0))
-      val premisesCosts       = BigDecimal(0) // TODO !!!!!!!
+      val premisesCosts       = section.premisesCosts.map(_.total).getOrElse(BigDecimal(0))
       val operationalExpenses = section.operationalExpenses.map(_.total).getOrElse(BigDecimal(0))
       val headOfficeExpenses  = section.headOfficeExpenses.getOrElse(BigDecimal(0))
 
@@ -147,8 +147,8 @@ class IncomeExpenditureSummary6076Controller @Inject() (
         costOfSalesUrl = routes.CostOfSales6076Controller.show().url + "?from=IES",
         totalStaffCosts = staffCosts,
         staffCostsUrl = routes.StaffCostsController.show().url + "?from=IES",
-        totalPremisesCosts = premisesCosts, // TODO !!!!!!!
-        premisesCostsUrl = "" + "?from=IES", // TODO !!!!!!!
+        totalPremisesCosts = premisesCosts,
+        premisesCostsUrl = routes.PremisesCostsController.show().url + "?from=IES",
         totalOperationalExpenses = operationalExpenses,
         operationalExpensesUrl = routes.OperationalExpensesController.show().url + "?from=IES",
         headOfficeExpenses = headOfficeExpenses,
