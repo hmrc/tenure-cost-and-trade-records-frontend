@@ -26,7 +26,7 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PaymentForTradeServicesId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.paymentForTradeServices
 
@@ -52,14 +52,7 @@ class PaymentForTradeServicesController @Inject() (
             case Some(answers) => paymentForTradeServicesForm.fill(answers)
             case _             => paymentForTradeServicesForm
           },
-          getBackLink(request.sessionData, navigator.from) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for payment for trade services page reached with error: $msg")
-              throw new RuntimeException(
-                s"Navigation for payment for trade services page reached with error $msg"
-              )
-          },
+          getBackLink(request.sessionData),
           request.sessionData.toSummary
         )
       )
@@ -73,14 +66,7 @@ class PaymentForTradeServicesController @Inject() (
         BadRequest(
           paymentView(
             formWithErrors,
-            getBackLink(request.sessionData, navigator.from) match {
-              case Right(link) => link
-              case Left(msg)   =>
-                logger.warn(s"Navigation for payment for trade services page reached with error: $msg")
-                throw new RuntimeException(
-                  s"Navigation for payment for trade services page reached with error $msg"
-                )
-            },
+            getBackLink(request.sessionData),
             request.sessionData.toSummary
           )
         ),
@@ -92,30 +78,21 @@ class PaymentForTradeServicesController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session, fromLocation: String): Either[String, String] =
-    fromLocation match {
-      case "TL" => Right(controllers.routes.TaskListController.show().url + "#payment-for-trade-services")
+  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+    navigator.from match {
+      case "TL" => controllers.routes.TaskListController.show().url + "#payment-for-trade-services"
       case _    =>
-        answers.forType match {
-          case ForTypes.for6030 =>
-            Right(getBackLinkOfrSections(answers))
-          case _                =>
-            Right(getBackLinkOfrSections(answers))
+        answers.aboutLeaseOrAgreementPartThree.flatMap { aboutYourLeaseOrAgreement =>
+          aboutYourLeaseOrAgreement.tradeServices.lastOption.map(_ => aboutYourLeaseOrAgreement.tradeServices.size - 1)
+        } match {
+          case Some(index) =>
+            controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
+          case None        =>
+            answers.forType match {
+              case ForTypes.for6030 =>
+                controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+              case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+            }
         }
     }
-
-  private def getBackLinkOfrSections(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartThree.flatMap { aboutYourLeaseOrAgreement =>
-      aboutYourLeaseOrAgreement.tradeServices.lastOption.map(_ => aboutYourLeaseOrAgreement.tradeServices.size - 1)
-    } match {
-      case Some(index) =>
-        controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
-      case None        =>
-        answers.forType match {
-          case ForTypes.for6030 =>
-            controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-          case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-        }
-    }
-
 }
