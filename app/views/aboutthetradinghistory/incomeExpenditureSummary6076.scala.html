@@ -39,8 +39,10 @@
 
 @(form: Form[String], summary: Summary, entries: Seq[IncomeExpenditure6076Entry])(implicit request: Request[_], messages: Messages)
 
+@classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
+
 @rowWithLink(msgkey: String, entryValue: IncomeExpenditure6076Entry => BigDecimal, url: IncomeExpenditure6076Entry => String) = @{
-    val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary6076.$msgkey")))
+    val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary6076.$msgkey")), classes = classes)
     val valueRows = entries.map { entry =>
         TableRow(content = Text(entryValue(entry).asMoney))
     }
@@ -64,11 +66,12 @@
     fullWidth = true
 ) {
 
+  <div class="govuk-!-padding-bottom-4 govuk-!-padding-top-4"></div>
 
     @defining(entries.map(_.financialYearEnd).distinct) { financialYears =>
         @govukTable(Table(
             rows = Seq(
-                Seq(TableRow(content = Text(messages("incomeExpenditureSummary6076.financialYearEnd")))) ++
+                Seq(TableRow(content = Text(messages("incomeExpenditureSummary6076.financialYearEnd")), classes = classes)) ++
                         financialYears.map(year => TableRow(
                             content = Text(dateUtil.formatDayMonthAbbrYear(LocalDate.parse(year))),
                             classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))) ++
