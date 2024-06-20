@@ -62,6 +62,10 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(IncomeExpenditureSummaryId.toString.equals("incomeExpenditureSummary"))
     }
 
+    "Identifier for income expenditure summary page fot 6076" in {
+      assert(IncomeExpenditureSummary6076Id.toString.equals("incomeExpenditureSummary6076"))
+    }
+
     "Identifier for unusual circumstances page" in {
       assert(UnusualCircumstancesId.toString.equals("unusualCircumstances"))
     }

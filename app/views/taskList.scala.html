@@ -309,10 +309,10 @@
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses),
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses).isEmpty
      )
-     @includes.taskListItem("income-and-expenditure", "incomeAndExpenditure.heading",
-      Call("GET", "income-and-expenditure"),// TODO: controllers.aboutthetradinghistory.routes.IncomeAndExpenditureController.show(),
+     @includes.taskListItem("income-and-expenditure", "incomeExpenditureSummary6076.heading",
+      controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
       section3Completed,
-      None, // TODO: session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.incomeAndExpenditure),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureSummary6076),
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses).isEmpty
      )
     }

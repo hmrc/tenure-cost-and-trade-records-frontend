@@ -164,6 +164,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     AddAnotherLowMarginFuelCardsDetailsId    -> (_ => aboutthetradinghistory.routes.NonFuelTurnoverController.show()),
     LowMarginFuelCardsDetailsId              -> getAddAnotherLowMarginFuelCardsDetailRouting,
     IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
+    IncomeExpenditureSummary6076Id           -> (_ =>
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    ),
     UnusualCircumstancesId                   -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
@@ -178,9 +181,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     PremisesCostsId                          -> (_ => aboutthetradinghistory.routes.OperationalExpensesController.show()),
     GrossReceiptsForBaseLoadId               -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
     OperationalExpensesId                    -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
-    HeadOfficeExpensesId                     -> (_ => // TODO: Income and expenditure summary
-      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-    ),
+    HeadOfficeExpensesId                     -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
 
