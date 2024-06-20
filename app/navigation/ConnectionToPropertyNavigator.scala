@@ -20,7 +20,7 @@ import connectors.Audit
 import controllers.connectiontoproperty.routes
 import identifiers._
 import play.api.mvc.Call
-import models.Session
+import models.{ForTypes, Session}
 import models.submissions.common.AnswerYes
 import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
 import play.api.Logging
@@ -64,7 +64,13 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
 
   private def areYouStillConnectedRouting: Session => Call = answers => {
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes")                => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
+      case Some("yes")                =>
+        answers.forType match {
+          case ForTypes.for6076 =>
+            controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+          case _                =>
+            controllers.connectiontoproperty.routes.VacantPropertiesController.show()
+        }
       case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
       case Some("no")                 => controllers.notconnected.routes.PastConnectionController.show()
       case _                          =>
@@ -73,6 +79,16 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
         )
         throw new RuntimeException("Invalid option exception for are you connected routing")
     }
+  }
+
+  private def editAddressRouting: Session => Call = answers => {
+    answers.forType match {
+      case ForTypes.for6076 =>
+        controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+      case _                =>
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show()
+    }
+
   }
 
   private def isPropertyVacant: Session => Call = answers => {
@@ -172,7 +188,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AreYouStillConnectedPageId                     -> areYouStillConnectedRouting,
-    EditAddressPageId                              -> (_ => controllers.connectiontoproperty.routes.VacantPropertiesController.show()),
+    EditAddressPageId                              -> editAddressRouting,
     ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show()),
     VacantPropertiesPageId                         -> isPropertyVacant,
     PropertyBecomeVacantPageId                     -> (_ =>
