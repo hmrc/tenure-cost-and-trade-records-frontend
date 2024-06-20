@@ -40,7 +40,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     val nextPageFunc: Session => Call = super.nextPage(id, session)
     session =>
       if (from(request) == "IES") {
-        iesSpecificRoute(session)
+        session.forType match {
+          case ForTypes.for6076 => ies6076SpecificRoute(session)
+          case _                => iesSpecificRoute(session)
+        }
+
       } else {
         nextPageFunc(session)
       }
@@ -48,6 +52,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def iesSpecificRoute(session: Session): Call =
     routes.IncomeExpenditureSummaryController.show()
+
+  private def ies6076SpecificRoute(session: Session): Call =
+    routes.IncomeExpenditureSummary6076Controller.show()
 
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutthetradinghistory.routes.FinancialYearEndController.show(),
