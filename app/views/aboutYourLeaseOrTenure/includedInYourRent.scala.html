@@ -21,6 +21,7 @@
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 
@@ -29,10 +30,47 @@
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukCheckboxes: GovukCheckboxes,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput
 )
 
-@(theForm: Form[IncludedInYourRentDetails], summary: Summary, fromLocation: String = "")(implicit request: Request[_], messages: Messages)
+
+@(theForm: Form[IncludedInYourRentDetails], summary: Summary, forTypes: String, fromLocation: String = "")(implicit request: Request[_], messages: Messages)
+
+
+Input(
+prefix = Some(PrefixOrSuffix(
+content = Text("£")
+)),
+attributes = Map(
+"maxlength" -> "13",
+"aria-label" -> messages("costOfSales.drinks")
+),
+).withFormField(form(s"costOfSales[$idx].drinks"))
+
+@vatCheckBoxItem = @{
+    CheckboxItem(
+        id = "vat",
+        content = Text(messages("label.includedInYourRent.vat")),
+        value = "vat",
+        conditionalHtml = forTypes match {
+            case ForTypes.for6045 =>
+                Some(
+                    govukInput(
+                            Input(
+                                id = "vatValue",
+                                name = "vatValue",
+                                classes = "govuk-input--width-13",
+                                value = theForm("vatValue").value,
+                                prefix = Some(PrefixOrSuffix(
+                                                content = Text(messages("label.pound")))),
+                                label = Label(
+                                                content = Text(messages("includedInYourRent.vatValue"))))))
+            case _ => None
+    }
+  )
+}
+
 
 @layout(
  pageHeading = messages("includedInYourRent.heading"),
