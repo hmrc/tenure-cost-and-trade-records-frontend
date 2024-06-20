@@ -2413,6 +2413,9 @@ checkYourAnswersAboutTheTradingHistory.cards = cards
 checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates = Financial year-end updates
 checkYourAnswersAboutTheTradingHistory.electricityGenerated = Electricity generated (kWh or MWh)
 checkYourAnswersAboutTheTradingHistory.rocBuyout = ROC buyout
+checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad = Gross receipts for baseload generation
+checkYourAnswersAboutTheTradingHistory.bioMethane = Bio-methane tariff
+checkYourAnswersAboutTheTradingHistory.bioMass = Biomass or biogas tariff
 
 # Confirmation Page
 ###################

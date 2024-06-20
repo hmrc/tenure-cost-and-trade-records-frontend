@@ -426,18 +426,18 @@
     )
 }
 
-@valuesPerYearRow(valueLabelKey: String, values: Seq[String], rowStyle: String = "no-border-bottom") = @{
+@valuesPerYearRow(valueLabelKey: String, values: Seq[String], rowStyle: String = "no-border-bottom", additionalParagraph: Option[String] = None) = @{
     SummaryListRow(
         key = Key(Text(messages(valueLabelKey))),
         value = Value(HtmlContent(
-            tableRow(values).body
+            tableRow(values).body + optionalParagraph(additionalParagraph).body
         )),
         classes = rowStyle
     )
 }
 
-@decimalValuesPerYearRow(valueLabelKey: String, values: Seq[Option[BigDecimal]], rowStyle: String = "no-border-bottom") = @{
-    valuesPerYearRow(valueLabelKey, values.map(_.getOrElse(zeroBigDecimal).asMoney), rowStyle)
+@decimalValuesPerYearRow(valueLabelKey: String, values: Seq[Option[BigDecimal]], rowStyle: String = "no-border-bottom", additionalParagraph: Option[String] = None) = @{
+    valuesPerYearRow(valueLabelKey, values.map(_.getOrElse(zeroBigDecimal).asMoney), rowStyle, additionalParagraph)
 }
 
 
@@ -514,7 +514,7 @@
 
     @govukSummaryList(SummaryList(rows =
         Seq(
-            financialYearEndRow6076("taskList.6076.powerGenerated", aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
+            financialYearEndRow6076("taskList.6076.grossReceipts", aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
             decimalValuesPerYearRow("grossReceipts.electricitySales",
                 sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
                 .map(_.electricitySales)),
@@ -542,6 +542,45 @@
             decimalValuesPerYearRow("grossReceipts.total",
                 sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
                 .map(_.total), ""),
+        )
+    ))
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            financialYearEndRow6076("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
+                aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()),
+            decimalValuesPerYearRow("checkYourAnswersAboutTheTradingHistory.bioMethane",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.grossReceiptsForBaseLoad).map(_.renewableHeatIncentiveBioMethane)),
+            decimalValuesPerYearRow("checkYourAnswersAboutTheTradingHistory.bioMass",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.grossReceiptsForBaseLoad).map(_.renewableHeatIncentiveBioMass)),
+            decimalValuesPerYearRow("grossReceiptsForBaseLoad.byProductSales",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.grossReceiptsForBaseLoad).map(_.byProductSales)),
+            decimalValuesPerYearRow("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.grossReceiptsForBaseLoad).map(_.hotWaterHeatOrSteamSales)),
+            decimalValuesPerYearRow("grossReceiptsForBaseLoad.gateIncomeFromWaste",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.grossReceiptsForBaseLoad).map(_.gateIncomeFromWaste)),
+            decimalValuesPerYearRow("grossReceiptsForBaseLoad.total",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.grossReceiptsForBaseLoad).map(g => Some(g.total)), ""),
+        )
+    ))
+
+    <h2 class="govuk-heading-m">@messages("turnover.6076.otherIncome")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            financialYearEndRow6076("turnover.6076.otherIncome",
+                aboutthetradinghistory.routes.OtherIncomeController.show()),
+            decimalValuesPerYearRow("turnover.6076.otherIncome",
+                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+                .flatMap(_.otherIncome), "", sectionAnswers1.answers.flatMap(_.otherIncomeDetails))
         )
     ))
 
