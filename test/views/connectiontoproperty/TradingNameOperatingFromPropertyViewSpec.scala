@@ -28,15 +28,17 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[Tr
 
   val messageKeyPrefix = "tradingNameFromProperty"
 
+  val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+
   override val form: Form[TradingNameOperatingFromProperty] =
     TradingNameOperatingFromPropertyForm.tradingNameOperatingFromProperty
 
   def createView: () => Html = () =>
-    tradingNameOperatingFromProperty(form, Summary("99996010001"))(fakeRequest, messages)
+    tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[TradingNameOperatingFromProperty] => Html =
     (form: Form[TradingNameOperatingFromProperty]) =>
-      tradingNameOperatingFromProperty(form, Summary("99996010001"))(fakeRequest, messages)
+      tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Trading name operating from property view" must {
 
