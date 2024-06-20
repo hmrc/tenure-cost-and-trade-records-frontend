@@ -20,10 +20,12 @@
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
+@import models.submissions.aboutthetradinghistory.GrossReceiptsExcludingVAT
 @import models.submissions.aboutthetradinghistory.OtherCosts
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.submissions.aboutthetradinghistory.TurnoverSection6030
+@import models.submissions.aboutthetradinghistory.TurnoverSection6076
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
 @import util.NumberUtil._
@@ -440,6 +442,32 @@
     valuesPerYearRow(valueLabelKey, values.map(_.getOrElse(zeroBigDecimal).asMoney), rowStyle, additionalParagraph)
 }
 
+@answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => Option[BigDecimal], additionalParagraph: Option[String] = None) = @{
+    decimalValuesPerYearRow(valueLabelKey,
+        sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
+        "no-border-bottom", additionalParagraph
+    )
+}
+
+@answer6076String(valueLabelKey: String, getAnswerString: TurnoverSection6076 => String, additionalParagraph: Option[String] = None) = @{
+    valuesPerYearRow(valueLabelKey,
+        sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswerString),
+        "no-border-bottom", additionalParagraph
+    )
+}
+
+@answerGrossReceipts(valueLabelKey: String, getAnswer: GrossReceiptsExcludingVAT => Option[BigDecimal]) = @{
+    decimalValuesPerYearRow(valueLabelKey, sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty).map(getAnswer))
+}
+
+@pageAnswers6076(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
+    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+
+@govukSummaryList(SummaryList(rows =
+    financialYearEndRow6076(pageHeadingKey, editPage) +: answerRows.dropRight(1) :+ answerRows.last.copy(classes = "")
+))
+}
+
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
@@ -496,93 +524,61 @@
 }
 
 @if(forType == ForTypes.for6076) {
-    <h2 class="govuk-heading-m">@messages("taskList.6076.powerGenerated")</h2>
 
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            financialYearEndRow6076("taskList.6076.powerGenerated", aboutthetradinghistory.routes.ElectricityGeneratedController.show()),
-            valuesPerYearRow("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .map(_.tradingPeriod + " " + messages("turnover.weeks"))),
-            valuesPerYearRow("checkYourAnswersAboutTheTradingHistory.electricityGenerated",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.electricityGenerated), "")
-        )
-    ))
+    @pageAnswers6076("taskList.6076.powerGenerated",
+        aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
+        answer6076String("checkYourAnswersAboutTheTradingHistory.tradingPeriod", _.tradingPeriod + " " + messages("turnover.weeks")),
+        answer6076String("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated.getOrElse(""))
+    )
 
-    <h2 class="govuk-heading-m">@messages("taskList.6076.grossReceipts")</h2>
+    @pageAnswers6076("taskList.6076.grossReceipts",
+        aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
+        answerGrossReceipts("grossReceipts.electricitySales", _.electricitySales),
+        answerGrossReceipts("grossReceipts.feedInTariff", _.feedInTariff),
+        answerGrossReceipts("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.rocBuyout),
+        answerGrossReceipts("grossReceipts.rocRecycle", _.rocRecycle),
+        answerGrossReceipts("grossReceipts.contractForDifference", _.contractForDifference),
+        answerGrossReceipts("grossReceipts.capacityMarket", _.capacityMarket),
+        answerGrossReceipts("grossReceipts.balancingServices", _.balancingServices),
+        answerGrossReceipts("grossReceipts.embeddedBenefits", _.embeddedBenefits),
+        answerGrossReceipts("grossReceipts.total", _.total)
+    )
 
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            financialYearEndRow6076("taskList.6076.grossReceipts", aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
-            decimalValuesPerYearRow("grossReceipts.electricitySales",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.electricitySales)),
-            decimalValuesPerYearRow("grossReceipts.feedInTariff",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.feedInTariff)),
-            decimalValuesPerYearRow("checkYourAnswersAboutTheTradingHistory.rocBuyout",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.rocBuyout)),
-            decimalValuesPerYearRow("grossReceipts.rocRecycle",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.rocRecycle)),
-            decimalValuesPerYearRow("grossReceipts.contractForDifference",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.contractForDifference)),
-            decimalValuesPerYearRow("grossReceipts.capacityMarket",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.capacityMarket)),
-            decimalValuesPerYearRow("grossReceipts.balancingServices",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.balancingServices)),
-            decimalValuesPerYearRow("grossReceipts.embeddedBenefits",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.embeddedBenefits)),
-            decimalValuesPerYearRow("grossReceipts.total",
-                sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-                .map(_.total), ""),
-        )
-    ))
+    @pageAnswers6076("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
+        aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
+        answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.bioMass", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMass)),
+        answer6076("grossReceiptsForBaseLoad.byProductSales", _.grossReceiptsForBaseLoad.flatMap(_.byProductSales)),
+        answer6076("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales", _.grossReceiptsForBaseLoad.flatMap(_.hotWaterHeatOrSteamSales)),
+        answer6076("grossReceiptsForBaseLoad.gateIncomeFromWaste", _.grossReceiptsForBaseLoad.flatMap(_.gateIncomeFromWaste)),
+        answer6076("grossReceiptsForBaseLoad.total", _.grossReceiptsForBaseLoad.map(_.total))
+    )
 
-    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad")</h2>
+    @pageAnswers6076("turnover.6076.otherIncome",
+        aboutthetradinghistory.routes.OtherIncomeController.show(),
+        answer6076("turnover.6076.otherIncome", _.otherIncome, sectionAnswers1.answers.flatMap(_.otherIncomeDetails))
+    )
 
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            financialYearEndRow6076("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
-                aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()),
-            decimalValuesPerYearRow("checkYourAnswersAboutTheTradingHistory.bioMethane",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.grossReceiptsForBaseLoad).map(_.renewableHeatIncentiveBioMethane)),
-            decimalValuesPerYearRow("checkYourAnswersAboutTheTradingHistory.bioMass",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.grossReceiptsForBaseLoad).map(_.renewableHeatIncentiveBioMass)),
-            decimalValuesPerYearRow("grossReceiptsForBaseLoad.byProductSales",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.grossReceiptsForBaseLoad).map(_.byProductSales)),
-            decimalValuesPerYearRow("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.grossReceiptsForBaseLoad).map(_.hotWaterHeatOrSteamSales)),
-            decimalValuesPerYearRow("grossReceiptsForBaseLoad.gateIncomeFromWaste",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.grossReceiptsForBaseLoad).map(_.gateIncomeFromWaste)),
-            decimalValuesPerYearRow("grossReceiptsForBaseLoad.total",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.grossReceiptsForBaseLoad).map(g => Some(g.total)), ""),
-        )
-    ))
+    @pageAnswers6076("costOfSales6076.heading",
+        aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
+        answer6076("costOfSales6076.fuelOrFeedstock", _.costOfSales6076Sum.flatMap(_.fuelOrFeedstock)),
+        answer6076("costOfSales6076.importedPower", _.costOfSales6076Sum.flatMap(_.importedPower)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.TNuoS", _.costOfSales6076Sum.flatMap(_.TNuoS)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.BSuoS", _.costOfSales6076Sum.flatMap(_.BSuoS)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.extraCost",
+            _.costOfSales6076Sum.flatMap(_.other),
+            sectionAnswers1.answers.flatMap(_.otherSalesDetails)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.totalCosts", _.costOfSales6076Sum.map(_.total))
+    )
 
-    <h2 class="govuk-heading-m">@messages("turnover.6076.otherIncome")</h2>
-
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            financialYearEndRow6076("turnover.6076.otherIncome",
-                aboutthetradinghistory.routes.OtherIncomeController.show()),
-            decimalValuesPerYearRow("turnover.6076.otherIncome",
-                sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-                .flatMap(_.otherIncome), "", sectionAnswers1.answers.flatMap(_.otherIncomeDetails))
-        )
-    ))
+    @pageAnswers6076("staffCosts.heading",
+        aboutthetradinghistory.routes.StaffCostsController.show(),
+        answer6076("staffCosts.wages", _.staffCosts.flatMap(_.wagesAndSalaries)),
+        answer6076("staffCosts.NI", _.staffCosts.flatMap(_.nationalInsurance)),
+        answer6076("staffCosts.pension", _.staffCosts.flatMap(_.pensionContributions)),
+        answer6076("staffCosts.remunerations", _.staffCosts.flatMap(_.remunerations)),
+        answer6076("staffCosts.total", _.staffCosts.map(_.total))
+    )
 
 }
 

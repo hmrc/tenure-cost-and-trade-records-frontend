@@ -235,7 +235,7 @@ POST        /unusual-circumstances                                  controllers.
 
 # Form 6015 routing end
 
-# 6076 tradin history
+# 6076 trading history
 
 GET         /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.show()
 POST        /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.submit()

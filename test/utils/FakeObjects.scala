@@ -592,6 +592,19 @@ trait FakeObjects {
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
     )
 
+  val aboutYourTradingHistory6016YesSession: Session =
+    aboutYouAndTheProperty6016YesSession.copy(
+      aboutTheTradingHistory = Some(
+        prefilledAboutYourTradingHistory
+          .copy(
+            costOfSales = Seq(CostOfSales(LocalDate.now, None, None, None, None)),
+            otherCosts = Some(OtherCosts(otherCosts = Seq(OtherCost(LocalDate.now, None, None)))),
+            totalPayrollCostSections = Seq(TotalPayrollCost(LocalDate.now, None, None))
+          )
+      ),
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
+    )
+
   val aboutYourTradingHistory6020YesSession: Session =
     aboutYouAndTheProperty6020YesSession.copy(
       aboutTheTradingHistory = Some(

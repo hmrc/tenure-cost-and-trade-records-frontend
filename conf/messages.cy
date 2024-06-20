@@ -1714,7 +1714,7 @@ staffCosts.wages = Wages and salaries
 staffCosts.wages.hint = Excluding National Insurance and pension contributions
 staffCosts.NI = National Insurance
 staffCosts.pension = Pension contributions
-staffCosts.remunerations = Director’s remunerations
+staffCosts.remunerations = Director’s remuneration
 staffCosts.total = Total staff costs
 error.staffCosts.wages.required = Enter 0 if you did not have any wages or salaries in the year ending {0}
 error.staffCosts.wages.range = Wages and salaries in the year ending {0} must be a number, for example 100 or 100.00
@@ -2416,6 +2416,10 @@ checkYourAnswersAboutTheTradingHistory.rocBuyout = ROC buyout
 checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad = Gross receipts for baseload generation
 checkYourAnswersAboutTheTradingHistory.bioMethane = Bio-methane tariff
 checkYourAnswersAboutTheTradingHistory.bioMass = Biomass or biogas tariff
+checkYourAnswersAboutTheTradingHistory.TNuoS = TNuoS
+checkYourAnswersAboutTheTradingHistory.BSuoS = BSuoS
+checkYourAnswersAboutTheTradingHistory.extraCost = Extra cost
+checkYourAnswersAboutTheTradingHistory.totalCosts = Total costs
 
 # Confirmation Page
 ###################
