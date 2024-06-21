@@ -1,0 +1,120 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import play.api.data.Form
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.pages.Summary
+@import play.api.mvc.Request
+@import play.api.i18n.Messages
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import util.DateUtil
+@import java.time.LocalDate
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
+@import util.NumberUtil.bigDecimalHelpers
+
+
+@this(
+        layout: Layout,
+        govukTable: GovukTable,
+        govukButton: GovukButton,
+        govukCheckboxes: GovukCheckboxes,
+        formWithCSRF: FormWithCSRF,
+        dateUtil: DateUtil
+)
+
+
+@(form: Form[String], summary: Summary, entries: Seq[IncomeExpenditure6076Entry])(implicit request: Request[_], messages: Messages)
+
+@classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
+
+@rowWithLink(msgkey: String, entryValue: IncomeExpenditure6076Entry => BigDecimal, url: IncomeExpenditure6076Entry => String) = @{
+    val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary6076.$msgkey")), classes = classes)
+    val valueRows = entries.map { entry =>
+        TableRow(content = Text(entryValue(entry).asMoney))
+    }
+    val changeLinkRow = url(entries.head) match {
+        case urlValue if urlValue.nonEmpty =>
+            Seq(TableRow(content = HtmlContent(s"<a href='$urlValue' class='govuk-link'>${messages("label.change")}</a>")))
+        case _ =>
+            Seq(TableRow(content = HtmlContent("")))
+    }
+    Seq(headerRow) ++ valueRows ++ changeLinkRow
+}
+
+
+@layout(
+    pageHeading = messages("incomeExpenditureSummary6076.heading"),
+    showSection = true,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show().url,
+    summary = Some(summary),
+    theForm = form,
+    fullWidth = true
+) {
+
+  <div class="govuk-!-padding-bottom-4 govuk-!-padding-top-4"></div>
+
+    @defining(entries.map(_.financialYearEnd).distinct) { financialYears =>
+        @govukTable(Table(
+            rows = Seq(
+                Seq(TableRow(content = Text(messages("incomeExpenditureSummary6076.financialYearEnd")), classes = classes)) ++
+                        financialYears.map(year => TableRow(
+                            content = Text(dateUtil.formatDayMonthAbbrYear(LocalDate.parse(year))),
+                            classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))) ++
+                Seq(
+                    rowWithLink("totalGross", _.totalGrossReceipts, _.grossReceiptsUrl),
+                    rowWithLink("totalBaseload", _.totalBaseLoadReceipts, _.baseLoadReceiptsUrl),
+                    rowWithLink("totalOther", _.totalOtherIncome, _.otherIncomeUrl),
+                    rowWithLink("totalCoS", _.totalCostOfSales, _.costOfSalesUrl),
+                    rowWithLink("totalStaff", _.totalStaffCosts, _.staffCostsUrl),
+                    rowWithLink("totalPremises", _.totalPremisesCosts, _.premisesCostsUrl),
+                    rowWithLink("totalOperational", _.totalOperationalExpenses, _.operationalExpensesUrl),
+                    rowWithLink("headOffice", _.headOfficeExpenses, _.headOfficeExpensesUrl),
+                    rowWithLink("profitOrLoss", _.netProfitOrLoss, _ => "")
+            ),
+            firstCellIsHeader = true,
+            classes = "govuk-table"
+        ))
+    }
+
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.submit()) {
+        @govukCheckboxes(
+            Checkboxes(
+                fieldset = Some(Fieldset(
+                    legend = Some(Legend(
+                        classes = "govuk-label--l",
+                        isPageHeading = false
+                    ))
+                )),
+                name = "incomeExpenditureSummary6076",
+                items = Seq(
+                    CheckboxItem(
+                        content = Text(messages("incomeExpenditureSummary6076.label")),
+                        value = "confirmed",
+                        checked = form("incomeExpenditureSummary6076").value.contains("confirmed"),
+                        label = Some(Label(classes = "govuk-body govuk-!-font-weight-bold"))
+                    )
+                )
+            ).withFormField(form("incomeExpenditureSummary6076")))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

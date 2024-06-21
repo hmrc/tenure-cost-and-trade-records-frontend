@@ -27,7 +27,9 @@ case class AboutTheTradingHistoryPartOne(
   otherIncomeDetails: Option[String] = None,
   otherOperationalExpensesDetails: Option[String] = None,
   otherSalesDetails: Option[String] = None,
-  furtherInformationOrRemarks: Option[String] = None
+  furtherInformationOrRemarks: Option[String] = None,
+  incomeExpenditureSummary6076: Option[String] = None,
+  incomeExpenditureSummary6076Data: Option[Seq[IncomeExpenditureSummary6076Data]] = None
 )
 
 object AboutTheTradingHistoryPartOne {

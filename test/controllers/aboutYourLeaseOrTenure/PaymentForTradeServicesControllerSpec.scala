@@ -19,11 +19,10 @@ package controllers.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeServicesForm
 import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
@@ -31,61 +30,73 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def paymentForTradeServicesController(
+    forType: String = ForTypes.for6010,
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
     new PaymentForTradeServicesController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       paymentForTradeServicesView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
       mockSessionRepo
     )
 
-  def paymentForTradeServicesController6030(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
-  ) =
-    new PaymentForTradeServicesController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      paymentForTradeServicesView,
-      preEnrichedActionRefiner(
-        forType = ForTypes.for6030,
-        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-      ),
-      mockSessionRepo
-    )
-
-  "GET /"    should {
-    "return 200" in {
+  "PaymentForTradeServicesController GET /" should {
+    "return 200 and HTML with trade services in the session" in {
       val result = paymentForTradeServicesController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
+      )
     }
 
-    "return HTML" in {
-      val result = paymentForTradeServicesController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML trade services with none in the session" in {
+      val controller = paymentForTradeServicesController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      )
     }
 
-    "return 200 6030" in {
-      val result = paymentForTradeServicesController6030().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 and HTML with trade services in the session for 6030" in {
+      val controller = paymentForTradeServicesController(forType = ForTypes.for6030)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
+      )
     }
 
-    "return HTML 6030" in {
-      val result = paymentForTradeServicesController6030().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML trade services with none in the session for 6030" in {
+      val controller = paymentForTradeServicesController(ForTypes.for6030, None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      )
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = paymentForTradeServicesController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url + "#payment-for-trade-services"
+      )
     }
   }
-  "SUBMIT /" should {
+
+  "PaymentForTradeServicesController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = paymentForTradeServicesController().submit(

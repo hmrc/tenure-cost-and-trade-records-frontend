@@ -96,6 +96,10 @@ case object IncomeExpenditureSummaryId extends Identifier {
   override def toString: String = "incomeExpenditureSummary"
 }
 
+case object IncomeExpenditureSummary6076Id extends Identifier {
+  override def toString: String = "incomeExpenditureSummary6076"
+}
+
 case object UnusualCircumstancesId extends Identifier {
   override def toString: String = "unusualCircumstances"
 }
@@ -136,6 +140,9 @@ case object GrossReceiptsForBaseLoadId extends Identifier {
   override def toString: String = "grossReceiptsForBaseLoadPage"
 }
 
+case object PremisesCostsId extends Identifier {
+  override def toString: String = "premisesCostsPage"
+}
 case object CheckYourAnswersAboutTheTradingHistoryId extends Identifier {
   override def toString: String = "checkYourAnswersAboutTheTradingHistory"
 }

@@ -16,11 +16,12 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromProperty
+import models.ForTypes
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
+import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, TradingNameOperatingFromProperty}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.TradingNameOperatingFromPropertyPageId
 import play.api.Logging
@@ -52,6 +53,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
             case Some(vacantProperties) => tradingNameOperatingFromProperty.fill(vacantProperties)
             case _                      => tradingNameOperatingFromProperty
           },
+          calculateBackLink,
           request.sessionData.toSummary,
           navigator.from
         )
@@ -66,6 +68,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
         BadRequest(
           nameOfBusinessOperatingFromPropertyView(
             formWithErrors,
+            calculateBackLink,
             request.sessionData.toSummary
           )
         ),
@@ -81,4 +84,24 @@ class TradingNameOperatingFromPropertyController @Inject() (
       }
     )
   }
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "TL" =>
+        controllers.routes.TaskListController.show().url + "#name-of-operator-from-property"
+      case _    =>
+        request.sessionData.forType match {
+          case ForTypes.for6076 =>
+            request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+              case Some(AddressConnectionTypeYes)              =>
+                controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+              case Some(AddressConnectionTypeYesChangeAddress) =>
+                controllers.connectiontoproperty.routes.EditAddressController.show().url
+              case _                                           =>
+                controllers.routes.TaskListController.show().url
+            }
+          case _                => controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+        }
+
+    }
 }

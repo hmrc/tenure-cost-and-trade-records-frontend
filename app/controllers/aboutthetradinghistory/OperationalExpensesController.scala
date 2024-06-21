@@ -110,9 +110,10 @@ class OperationalExpensesController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "IES" =>
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _     =>
-        // TODO: Premises costs
-        aboutthetradinghistory.routes.StaffCostsController.show().url
+        aboutthetradinghistory.routes.PremisesCostsController.show().url
     }
 
 }

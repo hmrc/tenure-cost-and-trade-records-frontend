@@ -140,6 +140,7 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val electricityGenerated6076View: electricityGenerated6076                             = app.injector.instanceOf[electricityGenerated6076]
   lazy val grossReceiptsExcludingVATView: grossReceiptsExcludingVAT                           = app.injector.instanceOf[grossReceiptsExcludingVAT]
   lazy val grossReceiptsForBaseLoadView: grossReceiptsForBaseLoad                             = app.injector.instanceOf[grossReceiptsForBaseLoad]
+  lazy val premisesCostsView: premisesCosts                                                   = app.injector.instanceOf[premisesCosts]
   lazy val otherIncome6076View: otherIncome6076                                               = app.injector.instanceOf[otherIncome6076]
   lazy val costOfSales6076View: costOfSales6076                                               = app.injector.instanceOf[costOfSales6076]
   lazy val staffCostsView: staffCosts                                                         = app.injector.instanceOf[staffCosts]
@@ -161,6 +162,8 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val customerCreditAccountsView: customerCreditAccounts                                 = app.injector.instanceOf[customerCreditAccounts]
   lazy val bunkeredFuelSoldView: bunkeredFuelSold                                             = app.injector.instanceOf[bunkeredFuelSold]
   lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                             = app.injector.instanceOf[incomeExpenditureSummary]
+  lazy val incomeExpenditureSummary6076View: incomeExpenditureSummary6076                     =
+    app.injector.instanceOf[incomeExpenditureSummary6076]
   lazy val unusualCircumstancesView: unusualCircumstances                                     = app.injector.instanceOf[unusualCircumstances]
   lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                   =
     app.injector.instanceOf[electricVehicleChargingPoints]
