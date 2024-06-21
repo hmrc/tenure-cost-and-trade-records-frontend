@@ -74,15 +74,15 @@ error.checkYourAnswersRadio.required = Dewiswch ’ydw’ os ydych wedi llenwi�
 help.date.day.month.year = Please format in dd/mm/yyyy
 help.date.month.year = Please format in mm/yyyy
 help.date.day.month = Please format in dd/mm
-label.date.day = Day
-label.date.month = Month
-label.date.year = Year
-label.buildingNameNumber = Address line 1
-label.street1 = Address line 2
+label.date.day = Diwrnod
+label.date.month = Mis
+label.date.year = Blwyddyn
+label.buildingNameNumber = Llinell cyfeiriad 1
+label.street1 = Llinell cyfeiriad 2
 label.street2= Address line 3
-label.town = Town or city
-label.county = County
-label.postcode = Postcode
+label.town = Tref neu ddinas
+label.county = Sir
+label.postcode = Cod post
 label.any.apply = Select any that apply
 label.fullName = Enw llawn
 label.contact.details = Contact details
@@ -97,7 +97,7 @@ label.percent = %
 # COMMON HINTS
 ##############
 hint.select.all = Select all that apply.
-hint.date.example = For example, 27 9 2017.
+hint.date.example = Er enghraifft, 27 9 2017.
 hint.month.year.example = For example, 9 2017.
 hint.day.month.example = For example, 04 05.
 hint.select.applicable = Select any that apply – leave blank if not applicable.
@@ -105,8 +105,8 @@ hint.all.apply = Select all that apply.
 
 # SECTION NAMES
 ###############
-label.section.connectionToTheProperty = Amdanoch chi a’r eiddo
-label.section.aboutTheProperty = About you and the property
+label.section.connectionToTheProperty = Cysylltiad â’r eiddo
+label.section.aboutTheProperty = Amdanoch chi a’r eiddo
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
@@ -159,16 +159,16 @@ error.json.page.start = Start again
 
 #LOGIN
 ##############################
-login.heading = What is your reference number and postcode?
-label.letter = You’ll find your reference number and postcode in the letter you received from the VOA.
-label.referenceNumber = Reference number
-hint.referenceNumber = For example, 1000001/101.
-label.postcode = Postcode
-hint.postcode = For example, AB12 3CD.
+login.heading = Beth yw’ch cyfeirnod a’ch cod post?
+label.letter = Gallwch ddod o hyd i’ch cyfeirnod a’ch cod post yn y llythyr a gawsoch gan y VOA.
+label.referenceNumber = Cyfeirnod
+hint.referenceNumber = Er enghraifft, 10000001/101.
+label.postcode = Cod post
+hint.postcode = Er enghraifft, AB12 3CD.
 error.invalid_refnum = Nodwch eich cyfeirnod fel y mae’n ymddangos ar eich llythyr
 error.invalid_postcode_as_on_letter = Nodwch eich cod post fel y mae’n ymddangos ar eich llythyr
-label.requestReference = I do not have my reference number
-label.downloadPdfReferenceNumberLogin = Download a PDF version
+label.requestReference = Does dim cyfeirnod gennyf
+label.downloadPdfReferenceNumberLogin = Llawrlwytho fersiwn PDF
 
 #LOGIN- Invalid Form Type
 ##############################
@@ -195,25 +195,25 @@ logout.loginAgain=Log in again
 
 # NO REFERENCE NUMBER
 ##############################
-requestReferenceNumber.heading = If you do not have a reference number
-requestReferenceNumber.subheading = If you’ve not received a letter from the VOA
-requestReferenceNumber.p1 = You only need to declare your business trade and cost information when the VOA have asked you to do so. If you think you should have received a letter, you can request a replacement from the VOA.
-requestReferenceNumber.subheading2 = If you need a replacement letter
-requestReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
-requestReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
-requestReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
-label.requestReferenceNumberBusinessTradingName = Business or trading name
+requestReferenceNumber.heading = Os nad oes gennych rif cyfeirnod
+requestReferenceNumber.subheading = Os nad ydych wedi cael llythyr gan y VOA
+requestReferenceNumber.p1 = Dim ond pan fydd y VOA wedi gofyn i chi wneud hynny y bydd angen i chi ddatgan eich masnach busnes a gwybodaeth am gostau. Os credwch y dylech fod wedi cael llythyr, gallwch ofyn am un arall gan y VOA.
+requestReferenceNumber.subheading2 = Os oes angen llythyr arall arnoch
+requestReferenceNumber.p2 = Os nad oes gennych chi fynediad at eich llythyr gan y VOA, neu os nad ydych wedi cael un ond yn meddwl y dylech fod wedi, gall y VOA anfon un arall. Cwblhewch y ffurflen ganlynol a bydd y VOA yn ailanfon un arall.
+requestReferenceNumber.p3 = Dim ond i’r cyfeiriad lle cawsant eu hanfon yn wreiddiol y gallwn ailanfon llythyrau. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Cysylltwch â’r VOA (opens in new tab)</a> os yw eich busnes wedi newid cyfeiriad yn ddiweddar.
+requestReferenceNumber.subheading3 = Beth yw manylion yr eiddo sy’n gysylltiedig â’r cyfeirnod coll?
+label.requestReferenceNumberBusinessTradingName = Enw masnachu neu enw’r busnes
 error.requestReferenceNumberBusinessTradingName.required = Enter the business or trading name
-key.requestReferenceNumberAddress = Address
-key.nameContactRequestReferenceNumber = Name and contact details
+key.requestReferenceNumberAddress = Cyfeiriad
+key.nameContactRequestReferenceNumber = Enw a’r manylion cyswllt
 error.requestReferenceNumberBusinessTradingName.maxLength = Business or trading name must be 50 characters or fewer
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
-requestReferenceNumberContactDetails.heading = Your contact details
-requestReferenceNumberContactDetails.p1 = We'll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
-label.requestReferenceNumberContactDetailsFullName = Full name
-requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
+requestReferenceNumberContactDetails.heading = Rhowch eich manylion cyswllt
+requestReferenceNumberContactDetails.p1 = Dylai’r rhain fod manylion cyswllt y person sy’n llenwi’r ffurflen hon. Dim ond er mwyn rhoi’r wybodaeth ddiweddaraf i chi am eich datganiad y byddwn yn eu defnyddio.
+label.requestReferenceNumberContactDetailsFullName = Enw llawn
+requestReferenceNumberContactDetailsAdditionalInformation.heading = Gwybodaeth ychwanegol (dewisol)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
 # DOWNLOAD FORM SECTION
@@ -221,15 +221,15 @@ error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
 # DOWNLOAD PDF REFERENCE NUMBER
 ###############################
-downloadPdfReferenceNumber.heading = What is your reference number?
-downloadPdfReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
-label.downloadPdfReferenceNumber = Reference number
+downloadPdfReferenceNumber.heading = Beth yw’ch cyfeirnod?
+downloadPdfReferenceNumber.p1 = Bydd angen y rhif cyfeirnod arnoch o’r llythyr a gawsoch gan y VOA.
+label.downloadPdfReferenceNumber = Cyfeirnod
 error.downloadPdfReferenceNumber.required = Enter your reference number
-hint.downloadPdfReferenceNumber = For example, 1000001/101.
+hint.downloadPdfReferenceNumber = Er enghraifft, 10000001/101.
 
 # DOWNLOAD PDF
 ##############
-downloadPdf.heading = Download a PDF version of this declaration
+downloadPdf.heading = Lawrlwytho’r datganiad hwn ar ffurf PDF
 downloadPdf.6010.url = https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses
 downloadPdf.6010.label = VO6010 request for rental information: public houses (opens in a new tab)
 downloadPdf.6011.url = https://www.gov.uk/government/publications/request-for-rental-information-pubs-houses-licensed-restaurants-wine-bars-receipts-only
@@ -253,8 +253,8 @@ downloadPdf.6076.label = VO6076 request for rental information: Renewable Energy
 downloadPdf.subheading = The reference number you entered does not match our records
 downloadPdf.no.download = Enter the reference number as it appears on the letter you received from the VOA.
 downloadPdf.retry = If the system does not recognise your reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
-downloadPdf.englishWelsh = PDF versions of this declaration are available in English and Welsh.
-downloadPdf.continueJourneyButton = Continue declaration online
+downloadPdf.englishWelsh = Mae’r datganiad hwn ar gael ar ffurf PDF yn Gymraeg ac yn Saesneg
+downloadPdf.continueJourneyButton = Parhau â’r datganiad ar-lein
 
 #GENERIC CONFIRMATION
 #####################
@@ -265,14 +265,14 @@ genericRemoveConfirmation.heading = Are you sure you want to remove {0}?
 
 # ARE YOU STILL CONNECTED
 #########################
-areYouConnected.title = Are you still connected to: {0}?
+areYouConnected.title = A ydych wedi cysylltu o hyd â: {0}?
 areYouConnected.heading = Are you still connected to the property?
-label.areYouConnected.addressUpdate = Yes, and I want to edit the address
-hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property.
+label.areYouConnected.addressUpdate = Iawn, ac mae angen i’r cyfeiriad gael ei ddiweddaru
+hint.noConnection = Dewiswch hwn os nad ydych chi bellach yn gysylltiedig â’r eiddo, neu os nad ydych erioed wedi cael cysylltiad â’r eiddo.
 
 # EDIT ADDRESS
 ##############
-editAddress.heading = How do you expect the connected address to be shown?
+editAddress.heading = Sut ydych chi’n disgwyl i’r cyfeiriad sy’n gysylltiedig gael ei ddangos?
 
 # CONNECTION TO THE PROPERTY
 ############################
@@ -286,85 +286,85 @@ hint.ownerTrustee = Select this if you own and occupy the property - you’re co
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
-label.tradingNameFromProperty = Trading name
-tradingNameFromProperty.heading = What is the trading name of the business or organisation operating from the property?
+label.tradingNameFromProperty = Enw masnachu
+tradingNameFromProperty.heading = Beth yw enw masnachu’r busnes neu’r sefydliad sy’n gweithredu o’r eiddo?
 error.tradingNameFromProperty.required = Nodwch enw masnachu’r busnes neu’r sefydliad
 error.tradingNameFromProperty.maxLength = Mae’n rhaid i’r enw masnachu fod yn 50 o gymeriadau neu lai
 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
 tradingNameOwnTheProperty.heading = Do you own the property?
-hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
-tradingNameOwnTheProperty.title = Does {0} own the property?
-hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
+hint.tradingNameOwnTheProperty = Peidiwch â dewis ‘iawn’ oni bai eich bod yn berchen ar y safle neu’r tir a ddefnyddir gan y busnes.
+tradingNameOwnTheProperty.title = A yw  {0} yn berchen ar yr eiddo?
+hint.tradingNameOwnTheProperty = Peidiwch â dewis ‘iawn’ oni bai eich bod yn berchen ar y safle neu’r tir a ddefnyddir gan y busnes.
 error.tradingNameOwnTheProperty.missing = Dewiswch ‘iawn’ os yw’r sefydliad yn berchen ar yr kiddo
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
 ############################################
-tradingNamePayingRent.heading = Paying rent
-tradingNamePayingRent.title = Does {0} pay rent on the property?
-tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
-tradingNamePayingRent.p2 = You should select ‘yes’ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
-tradingNamePayingRent.p3 = Select ‘no’ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
+tradingNamePayingRent.heading = Talu rhent
+tradingNamePayingRent.title = A yw {0} yn talu rhent?
+tradingNamePayingRent.p1 = Mae’n rhaid i chi ddatgan a ydych yn talu rhent o dan delerau eich prydles neu gytundeb.
+tradingNamePayingRent.p2 = Dylech ddewis ‘iawn’ hyd yn oed os ydych yn talu rhent o dan gytundeb anffurfiol, neu os oes gennych gytundeb di-rent dros dro.
+tradingNamePayingRent.p3 = Dewiswch ‘na’ os yw perchennog yr eiddo yn caniatáu i chi ei feddiannu ar gytundeb di-rent parhaol.
 error.tradingNamePayingRent.missing = Dewiswch ‘iawn’ os yw’r sefydliad yn talu rhent ar yr eiddo
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
 areYouThirdParty.heading = Are you a third party?
-areYouThirdParty.title = Are you a third party working on behalf of {0}?
-hint.areYouThirdParty.yes = Choose ‘yes’ if you have been contracted by {0} to complete this declaration.
-hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or direct employee of {0}, or you are completing this declaration on their behalf in an unofficial capacity.
+areYouThirdParty.title = A ydych chi’n drydydd parti, sy’n gweithio ar ran {0}?
+hint.areYouThirdParty.yes = Dewiswch ‘ydw’ os yw {0} wedi’ch contractio i lenwi’r datganiad.
+hint.areYouThirdParty.no = Dewiswch ‘nac ydw’ os ydych yn berchennog, cyfarwyddwr neu gyflogai uniongyrchol o {0}, neu os ydych yn llenwi’r datganiad hwn ar eu rhan mewn capasiti answyddogol.
 error.areYouThirdParty.missing = Dewiswch ‘ydw’ os ydych yn gweithredu ar ran y sefydliad
 
 # VACANT PROPERTIES
 ############################
-vacantProperties.heading = Vacant properties
-vacantProperties.p1 = You must declare if a property is vacant.
-vacantProperties.p2 = Properties can only be declared vacant if there is no kind of lease, tenancy or agreement to occupy in place.
-vacantProperties.p3 = Properties must not be declared vacant if:
-vacantProperties.item1 = the business operating from there is closed temporarily, for refurbishment, or seasonal closure, for example
-vacantProperties.item2 = the property is empty, but there is a current lease, tenancy or agreement to occupy in place
-vacantProperties.item3 = the property is being used by an individual, business or organisation under an informal arrangement
-label.vacantProperties = Is the property currently vacant?
+vacantProperties.heading = Eiddo gwag
+vacantProperties.p1 = Mae’n rhaid i chi ddatgan os oes eiddo’n wag.
+vacantProperties.p2 = Dim ond os nad oes unrhyw fath o brydles, tenantiaeth neu gytundeb i feddiannu eiddo ar gael y gellir ei ddatgan yn wag.
+vacantProperties.p3 = Ni ddylid datgan eiddo yn wag os:
+vacantProperties.item1 = mae’r busnes sy’n gweithredu oddi yno ar gau dros dro, ar gyfer gwaith adnewyddu, neu ar gau yn dymhorol, er enghraifft
+vacantProperties.item2 = mae’r eiddo’n wag, ond mae prydles, tenantiaeth neu gytundeb bresennol i feddiannu yn ei le
+vacantProperties.item3 = mae’r eiddo’n cael ei ddefnyddio gan unigolyn, busnes neu sefydliad o dan drefniant anffurfiol
+label.vacantProperties = A yw’r eiddo’n wag ar hyn o bryd?
 error.vacantProperties.required = Dewiswch ‘ydy’ os yw’r eiddo yn wag ar hyn o bryd
 
 # CHECK YOUR ANSWERS CONNECTION TO PROPERTY
 ###########################################
-checkYourAnswersConnectionToProperty.heading= Check your answers – connection to the property
-checkYourAnswersConnectionToProperty.connectionStatus.heading = Connection status
-label.connectedToTheProperty = Connected to the property?
-label.yes-change-address = Yes, and I want to edit the address
-checkYourAnswersConnectionToProperty.proposedAddress = Proposed address
-checkYourAnswersConnectionToProperty.vacancyStatus.heading = Vacancy status
-checkYourAnswersConnectionToProperty.isPropertyVacant = Is the property vacant?
-checkYourAnswersConnectionToProperty.occupierDetails.heading = Occupier details
-checkYourAnswersConnectionToProperty.nameOfOccupier = Name of occupier
-checkYourAnswersConnectionToProperty.ownsTheProperty = Owns the property?
-checkYourAnswersConnectionToProperty.payRent = Pays rent?
-checkYourAnswersConnectionToProperty.thirdParty = Third party?
+checkYourAnswersConnectionToProperty.heading= Gwirio’ch atebion – cysylltiad â’r eiddo
+checkYourAnswersConnectionToProperty.connectionStatus.heading = Statws o ran cysylltiad
+label.connectedToTheProperty = Cysylltiad â’r eiddo?
+label.yes-change-address = Iawn, ac mae angen i’r cyfeiriad gael ei ddiweddaru
+checkYourAnswersConnectionToProperty.proposedAddress = Cyfeiriad arfaethedig
+checkYourAnswersConnectionToProperty.vacancyStatus.heading = Statws eiddo gwag
+checkYourAnswersConnectionToProperty.isPropertyVacant = A yw’r eiddo yn wag ar hyn o bryd?
+checkYourAnswersConnectionToProperty.occupierDetails.heading = Manylion y meddiannydd
+checkYourAnswersConnectionToProperty.nameOfOccupier = Enw’r preswyliwr
+checkYourAnswersConnectionToProperty.ownsTheProperty = Yn berchen ar yr eiddo?
+checkYourAnswersConnectionToProperty.payRent = Yn talu rhent?
+checkYourAnswersConnectionToProperty.thirdParty = Trydydd parti?
 
 # VACANT PROPERTY START DATE
 ############################
-vacantPropertyStartDate.heading = When did the property become vacant?
+vacantPropertyStartDate.heading = Pryd daeth yr eiddo’n wag?
 label.startDateOfVacantProperty =
-label.startDateOfVacantProperty.help = For example, 27 9 2017.
+label.startDateOfVacantProperty.help = Er enghraifft, 27 9 2017.
 fieldName.startDateOfVacantProperty = Nodwch y dyddiad y daeth yr eiddo’n wag
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
-isRentReceivedFromLetting.heading = Letting income
-isRentReceivedFromLetting.label = Do you receive any rent from letting parts of your property?
-isRentReceivedFromLetting.p1 = You must declare any income received from letting parts of the property, for example advertising billboards, car parking or telephone masts. You will have the opportunity to add more than one letting if required.
+isRentReceivedFromLetting.heading = Incwm o osodiadau
+isRentReceivedFromLetting.label = A geir unrhyw rent yn dod i law o osod rhannau eraill o’r eiddo?
+isRentReceivedFromLetting.p1 = Mae’n rhaid i chi ddatgan unrhyw incwm a gafwyd o roi rhannau eraill o’r eiddo ar osod, er enghraifft byrddau postero, maes parcio neu fastiau ffôn. Cewch gyfle i ychwanegu mwy nag un gosodiad os oes angen.
 error.isRentReceivedFromLetting.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
-tenantDetails.heading = Provide the tenant''s details
-label.tenantName = Tenant''s name
-label.descriptionOfLetting = Description of letting
-hint.descriptionOfLetting = For example, a billboard, residential accommodation.
-label.addressLineOne = Address line 1
-label.addressLineTwo = Address line 2
+tenantDetails.heading = Rhowch fanylion y tenant
+label.tenantName = Enw’r tenant
+label.descriptionOfLetting = Disgrifiad o’r hyn sydd ar osod
+hint.descriptionOfLetting = Er enghraifft, bwrdd poster, llety preswyl
+label.addressLineOne = Llinell cyfeiriad 1
+label.addressLineTwo = Llinell cyfeiriad 2
 error.tenantName.required = Nodwch enw’r person neu’r busnes sy’n rhentu’r eiddo
 error.tenantName.maxLength = Mae’n rhaid i enw’r tenant fod yn 50 o gymeriadau neu lai
 error.descriptionOfLetting.required = Nodwch ddisgrifiad o’r gosodiad
@@ -376,13 +376,13 @@ error.addressLineTwo.maxLength = Mae’n rhaid i linell 2 y cyfeiriad fod yn 50 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
 lettingPartOfPropertyRentDetails.heading = Annual rent for tenant
-lettingPartOfPropertyRentDetails.title = Annual rent for {0}
+lettingPartOfPropertyRentDetails.title = Rhent blynyddol ar gyfer {0}
 fieldName.lettingPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
 lettingPartOfPropertyCheckboxesDetails.heading = Items included in your rent
-lettingPartOfPropertyCheckboxesDetails.title = Are any of the following included in your rent for {0}?
+lettingPartOfPropertyCheckboxesDetails.title = A oes unrhyw rai o’r canlynol wedi’u cynnwys yn y rhent ar gyfer {0}?
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount
@@ -396,64 +396,64 @@ label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the oc
 label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
 label.currentRentBasedOn.stepped = Stepped rent arrangement
 label.currentRentBasedOn.other = Other
-checkbox.lettingPartOfPropertyCheckboxesDetails.rates = Rates
-checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance = Property insurance
-checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
-checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
-checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
+checkbox.lettingPartOfPropertyCheckboxesDetails.rates = Ardrethi
+checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance = Yswiriant eiddo
+checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Atgyweirio y tu allan
+checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Atgyweirio y tu mewn
+checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
 error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
 error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
-addAnotherLettingPartOfProperty.heading = You have added {0} letting
+addAnotherLettingPartOfProperty.heading = Rydych wedi ychwanegu {0} gosodiad
 addAnotherLettingPartOfProperty.heading.removed = You have removed all your lettings
-label.addAnotherLettingPartOfProperty = Do you need to add another letting?
+label.addAnotherLettingPartOfProperty = A oes angen i chi ychwanegu gosodiad arall?
 error.addAnotherLetting.required = Select yes if you would like to add another letting
 
 # PROVIDE YOUR CONTACT DETAILS
 ##############################
-provideContactDetails.heading = Provide your contact details
-provideContactDetails.title = Provide your contact details
-provideContactDetails.p1 = These should be the contact details of the person completing this form. We will only use them to update you about your declaration.
-provideContactDetailsAdditionalInformation.heading = Additional Information (optional)
-provideContactDetailsAdditionalInformation.hint = For example, the name of the previous owner or occupier.
+provideContactDetails.heading = Rhowch eich manylion cyswllt
+provideContactDetails.title = Rhowch eich manylion cyswllt
+provideContactDetails.p1 = Dylai’r rhain fod manylion cyswllt y person sy’n llenwi’r ffurflen hon. Dim ond er mwyn rhoi’r wybodaeth ddiweddaraf i chi am eich datganiad y byddwn yn eu defnyddio.
+provideContactDetailsAdditionalInformation.heading = Gwybodaeth ychwanegol (dewisol)
+provideContactDetailsAdditionalInformation.hint = Er enghraifft, enw’r cyn-berchennog neu’r cyn-feddiannydd
 error.fullNameProvideDetails.maxLength = Mae’n rhaid i’ch enw chi fod yn 50 o gymeriadau neu lai
 
 # CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
-checkYourAnswersConnectionToVacantProperty.heading = Check your answers – vacant properties
-checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Connection status
-checkYourAnswersConnectionToVacantProperty.proposedAddress = Proposed address
-label.checkYourAnswersConnectionToVacantProperty = Connected to the property?
-checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading = Vacancy status
-checkYourAnswersConnectionToVacantProperty.isPropertyVacant = Property currently vacant?
-checkYourAnswersConnectionToVacantProperty.vacantDate = When the property became vacant
-checkYourAnswersConnectionToVacantProperty.lettings.heading = Lettings
-checkYourAnswersConnectionToVacantProperty.isRentReceived = Rent received from letting parts of the property?
-checkYourAnswersConnectionToVacantProperty.yourContactDetails.heading = Your contact details
-checkYourAnswersConnectionToVacantProperty.yourContactDetails.title = Contacts and additional information
-checkYourAnswersConnectionToVacantProperty.tenantDetails = Tenant''s details
-checkYourAnswersConnectionToVacantProperty.annualRent = Annual rent
+checkYourAnswersConnectionToVacantProperty.heading = Gwirio’ch atebion – eiddo gwag
+checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Statws o ran cysylltiad
+checkYourAnswersConnectionToVacantProperty.proposedAddress = Cyfeiriad arfaethedig
+label.checkYourAnswersConnectionToVacantProperty = Cysylltiad â’r eiddo?
+checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading = Statws eiddo gwag
+checkYourAnswersConnectionToVacantProperty.isPropertyVacant = A yw’r eiddo yn wag ar hyn o bryd?
+checkYourAnswersConnectionToVacantProperty.vacantDate = Pa bryd daeth yr eiddo’n wag
+checkYourAnswersConnectionToVacantProperty.lettings.heading = Gosodiadau
+checkYourAnswersConnectionToVacantProperty.isRentReceived = Rhent a gafwyd o osodiadau?
+checkYourAnswersConnectionToVacantProperty.yourContactDetails.heading = Eich manylion cyswllt
+checkYourAnswersConnectionToVacantProperty.yourContactDetails.title = Manylion cyswllt a gwybodaeth ychwanegol
+checkYourAnswersConnectionToVacantProperty.tenantDetails = Manylion y tenant
+checkYourAnswersConnectionToVacantProperty.annualRent = Rhent blynyddol
 checkYourAnswersConnectionToVacantProperty.fixedOn = Fixed on
-checkYourAnswersConnectionToVacantProperty.itemsInRent = Included in rent
+checkYourAnswersConnectionToVacantProperty.itemsInRent = Wedi’i gynnwys yn y rhent
 checkYourAnswersConnectionToVacantProperty.addAnotherLetting = Add another letting?
 checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber = Letting {0}
-checkYourAnswersConnectionToVacantProperty.addedLetting = You have added {0} letting
+checkYourAnswersConnectionToVacantProperty.addedLetting = Rydych wedi ychwanegu {0} gosodiad
 checkYourAnswersConnectionToVacantProperty.addedLettingPlural = You have added {0} lettings
 checkYourAnswersConnectionToVacantProperty.addLetting = Add or remove a letting
 
 # Confirmation Page Connection to Property
 ##########################################
-label.connectionToProperty.confirm.heading = Request sent successfully
-label.connectionToProperty.requestRefNum = Your request for a reference number has been sent to the VOA.
-label.connectionToProperty.whatNext = What happens next
-label.connectionToProperty.reissued = You will be reissued with a declaration request letter if the VOA has sent you one recently.
-label.connectionToProperty.contact = The VOA may need to contact you if:
-list.connectionToProperty.p1 = the address you supplied does not match their records
-list.connectionToProperty.p2 = they have no record of sending you a letter
-list.connectionToProperty.p3 = they require further information
+label.connectionToProperty.confirm.heading = Cais wedi’i anfon yn llwyddiannus
+label.connectionToProperty.requestRefNum = Mae eich cais i gael cyfeirnod wedi’i anfon at y VOA.
+label.connectionToProperty.whatNext = Yr hyn sy’n digwydd nesaf
+label.connectionToProperty.reissued = Bydd llythyr cais am ddatganiad yn cael ei ailanfon os yw’r VOA wedi anfon un atoch yn ddiweddar.
+label.connectionToProperty.contact = Efallai y bydd angen i’r VOA gysylltu â chi os yw’r canlynol yn gywir:
+list.connectionToProperty.p1 = nid yw’r cyfeiriad a roddwyd gennych yn cyfateb i’w cofnodion
+list.connectionToProperty.p2 = nid oes ganddynt gofnod o anfon llythyr atoch
+list.connectionToProperty.p3 = mae angen rhagor o wybodaeth arnynt
 
 # Vacant property connection
 label.vacantProperty.confirm.heading = Declaration sent successfully
@@ -821,28 +821,28 @@ error.lettingType.maxLength = Letting type must be 50 characters or fewer
 
 #ADD OR REMOVE LETTING 6020
 ##############################
-aboutTheLettings.heading = You have added {0} letting
-label.aboutTheLettings = Do you need to add another letting?
+aboutTheLettings.heading = Rydych wedi ychwanegu {0} gosodiad
+label.aboutTheLettings = A oes angen i chi ychwanegu gosodiad arall?
 lettings.typeOfLetting.other.label = Other
 aboutTheLettings.zeroLetting.heading = You have removed all your lettings
 #CHECK YOUR ANSWERS LETTING 6020 CYA
 ##############################
 checkYourAnswersLettings.heading = Check your answers - lettings
-checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} letting
+checkYourAnswersAboutFranchiseOrLettings.addedLetting = Rydych wedi ychwanegu {0} gosodiad
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPruel = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.rentReceived = Rent received from lettings?
 checkYourAnswersAboutFranchiseOrLettings.typeOfLetting = Type of letting
 checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails = ATM operator''s details
 checkYourAnswersAboutFranchiseOrLettings.rentDetails = Annual rent
-checkYourAnswersAboutFranchiseOrLettings.addedLettings = You have added {0} letting
+checkYourAnswersAboutFranchiseOrLettings.addedLettings = Rydych wedi ychwanegu {0} gosodiad
 checkYourAnswersAboutFranchiseOrLettings.addedLettingsPlural = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails = Operation company''s details
 checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails = Advertising company''s details
 checkYourAnswersAboutFranchiseOrLettings.otherDetails = Other letting operator''s details
 
 #ADD OR REMOVE LETTING 6020
-aboutTheLettings.heading = You have added {0} letting
-label.aboutTheLettings = Do you need to add another letting?
+aboutTheLettings.heading = Rydych wedi ychwanegu {0} gosodiad
+label.aboutTheLettings = A oes angen i chi ychwanegu gosodiad arall?
 lettings.typeOfLetting.other.label = Other
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
@@ -1149,7 +1149,7 @@ label.rentReview = At a rent review
 label.renewalLeaseTenancy = At a lease renewal
 label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
-label.rentActuallyAgreed.help = For example, 27 9 2017.
+label.rentActuallyAgreed.help = Er enghraifft, 27 9 2017.
 help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
 help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
 help.rentActuallyAgreed.p2 = If you are still unsure, refer to your lease or agreement.
@@ -1172,7 +1172,7 @@ hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant.
 hint.concessionTypeOfBusiness = For example, a restaurant, or leisure facilities.
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
 hint.lettingTypeOfBusiness6015 = For example, a billboard or a telephone mast.
-label.correspondenceAddress = Correspondence address
+label.correspondenceAddress = Cyfeiriad gohebu
 error.operatorName.required = Nodwch enw’r person neu’r busnes sy’n rhentu’r eiddo
 error.operatorName.maxLength = Operator‘s name must be 50 characters or fewer
 error.typeOfBusiness.required = Enter a description of the separate business
@@ -1194,8 +1194,8 @@ cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
 cateringOperationOrLettingAccommodationRentDetails.title = Annual rent for separate business
 lettingOtherPartOfPropertyRentDetails.heading = Annual rent for {0}
 lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
-label.annualRent = Annual rent payment excluding VAT
-label.dateInput = When was this sum fixed?
+label.annualRent = Taliad rhent blynyddol ac eithrio TAW
+label.dateInput = Pa bryd y penodwyd y swm hwn?
 fieldName.cateringOrLettingFixedRentDate = the date when the annual rent was fixed
 error.required.annualRentExcludingVat.annualRent = Nodwch swm y rhent blynyddol
 error.invalid_currency.annualRent.annualRent = Mae’n rhaid i’r rhent blynyddol fod yn rhif, megis 100 neu 100.00
@@ -1205,7 +1205,7 @@ error.sharedResponsibilities.required = Tell us how the responsibilities are sha
 
 # RENT RECEIVED (6015/6016 0NLY)
 rent.received.from.heading = Rent received from {0}
-rent.received.from.excluding.VAT = Annual rent payment excluding VAT
+rent.received.from.excluding.VAT = Taliad rhent blynyddol ac eithrio TAW
 rent.received.from.error = Enter the rent received
 rent.received.from.confirm = I confirm this payment was included in the turnover figures
 rent.received.from.confirm.error = Please confirm this payment was included in the turnover figures
@@ -1221,13 +1221,14 @@ calculating.the.rent.for.error = Enter the date when the annual rent was fixed
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
 cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in your rent
-cateringOperationOrLettingAccommodationCheckboxesDetails.title = Are any of the following included in your rent for {0}
-hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Select any that apply.
-checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Rates
-checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Property insurance
-checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs = Outside repairs
-checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
-checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
+cateringOperationOrLettingAccommodationCheckboxesDetails.title = A oes unrhyw rai o’r canlynol wedi’u cynnwys yn y rhent ar gyfer {0}
+hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Dewiswch unrhyw un sy’n gymwys
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Ardrethi
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Yswiriant eiddo
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs = Atgyweirio y tu allan
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Atgyweirio y tu mewn
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
+checkbox.divider = neu
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
 error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
@@ -1239,9 +1240,9 @@ addAnotherConcessionOrFranchise.heading = You have added {0} separate concession
 addAnotherConcessionOrFranchise.heading.plural = You have added {0} separate concessions or franchise
 label.addAnotherConcessionOrFranchise = Do you need to add another separate concession or franchise?
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
-label.addAnotherLettingConcessionOrFranchise = Do you need to add another letting?
+label.addAnotherLettingConcessionOrFranchise = A oes angen i chi ychwanegu gosodiad arall?
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your lettings
-addAnotherLettingConcessionOrFranchise.heading.plural = You have added {0} letting
+addAnotherLettingConcessionOrFranchise.heading.plural = Rydych wedi ychwanegu {0} gosodiad
 addAnotherCateringOperation.heading = You have added {0} separate business or franchise
 addAnotherConcessionOrLetting.heading = You have added {0} separate business or concession
 addAnotherCateringOperation.heading.plural = You have added {0} separate businesses or franchises
@@ -1249,13 +1250,13 @@ addAnotherConcession.heading = You have added {0} separate business or concessio
 addAnotherConcession.heading.plural = You have added {0} separate businesses or concessions
 addAnotherCateringOperation.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 addAnotherLettingOtherPartOfProperty.zeroBusinessOrFranchises.heading = You have removed all your separate business or concessions
-addAnotherLettingOtherPartOfProperty.heading = You have added {0} letting
-addAnotherLettingConcessionOrFranchise.heading = You have added {0} letting
+addAnotherLettingOtherPartOfProperty.heading = Rydych wedi ychwanegu {0} gosodiad
+addAnotherLettingConcessionOrFranchise.heading = Rydych wedi ychwanegu {0} gosodiad
 addAnotherConcession.heading.plural = You have added {0} separate businesses or concessions
-addAnotherLetting.heading = You have added {0} letting
+addAnotherLetting.heading = Rydych wedi ychwanegu {0} gosodiad
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
-label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
+label.addAnotherLettingOtherPartOfProperty = A oes angen i chi ychwanegu gosodiad arall?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
 error.addAnotherLetting.required = Dewiswch ‘oes’ os ydych am ychwanegu gosodiad arall
 
@@ -1359,7 +1360,7 @@ label.currentRentFirstPaid.p4 = You do not need to tell us about any changes in 
 currentRentFirstPaid.list4 = changes linked to your turnover
 currentRentFirstPaid.list5 = fluctuations in any index to which your rent may be linked, for example the retail price index (RPI)
 label.currentRentFirstPaid.p5 = When was the current rent first paid under the terms of the lease or agreement?
-label.currentRentFirstPaid.help = For example, 27 9 2017.
+label.currentRentFirstPaid.help = Er enghraifft, 27 9 2017.
 fieldName.currentRentFirstPaid = the date when the current rent was first paid
 
 # CURRENT LEASE OR AGREEMENT BEGIN
@@ -1450,6 +1451,8 @@ taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
 declaration.heading = Nawr anfonwch eich datganiad
 declaration.information = Drwy gyflwyno’r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi’n eu darparu yn gywir.
+request.heading = Anfonwch eich cais nawr
+request.information = CGwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VOA gysylltu â chi ynglŷn â’ch cais.
 hint.declaration = Gellid mynd â chi i’r llys os ydych yn cyflwyno gwybodaeth anwir
 taskList.fuelSales = Fuel sales
 taskList.bunkerdFuel = Bunkered fuel
@@ -2098,7 +2101,7 @@ error.contactDetailsQuestion.missing= Dewiswch ‘hoffwn’ os ydych am ddefnydd
 #############################
 alternativeContactDetails.heading = Alternative correspondence address
 hint.alternativeContactDetails = Give details if you would like us to contact you at a different address.
-label.alternativeContactDetails = Correspondence address
+label.alternativeContactDetails = Cyfeiriad gohebu
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
@@ -2237,7 +2240,7 @@ checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusinessPlural = You have 
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove a letting
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
-checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = You have added {0} letting
+checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = Rydych wedi ychwanegu {0} gosodiad
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Concession or franchise fee
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
@@ -2349,9 +2352,9 @@ checkYourAnswersAboutTheTradingHistory.totalGrossProfits = Total gross profits
 checkYourAnswersAboutTheTradingHistory.totalNetProfits = Total net profits
 checkYourAnswersAboutTheTradingHistory.netProfitPercentage = Total net profit as percentage of total sales revenue
 checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = I confirm that these figures are correct
-checkYourAnswersRequestReferenceNumber.heading = Check your answers – if you do not have a reference number
-checkYourAnswersRequestReferenceNumber.subheading1 = Property details
-checkYourAnswersRequestReferenceNumber.subheading2 = Your details
+checkYourAnswersRequestReferenceNumber.heading = Gwirio eich atebion - os nad oes gennych rif cyfeirnod
+checkYourAnswersRequestReferenceNumber.subheading1 = Manylion yr eiddo
+checkYourAnswersRequestReferenceNumber.subheading2 = Eich manylion
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstances affecting the turnover
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
 checkYourAnswersAboutTheTradingHistory.grossIncome = Gross receipts
@@ -2574,9 +2577,9 @@ error.date.mustBeInPast = {0} must be today or in the past
 error.date.mustBeInFuture = {0} must be today or in the future
 error.dateParts.prefix = a
 error.dateParts.separator = and
-error.dateParts.day = day
-error.dateParts.month = month
-error.dateParts.year = year
+error.dateParts.day = diwrnod
+error.dateParts.month = mis
+error.dateParts.year = blwyddyn
 error.dateParts.date = date
 error.dateParts.dayMonth = day and month
 error.dateParts.monthYear = month and year

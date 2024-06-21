@@ -37,7 +37,7 @@
         _.addressConnectionType.map(_.name.capitalize),
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
             removeConnectionDetailsAnswers.row("key.ever.connected",
-                _.pastConnectionType.map(_.name.capitalize),
+                _.pastConnectionType.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                 controllers.notconnected.routes.PastConnectionController.show(), "pastConnectionType")
 ))
 
