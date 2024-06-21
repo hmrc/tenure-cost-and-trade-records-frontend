@@ -26,20 +26,15 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TradingNameOperatingFromProperty], summary: Summary, fromLocation:String ="")(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TradingNameOperatingFromProperty], backlink: String, summary: Summary, fromLocation:String ="")(implicit request: Request[_], messages: Messages)
 
-@layout(
+ @layout(
  pageHeading = messages("tradingNameFromProperty.heading"),
  showSection = true,
  showH1 = true,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = { fromLocation match {
-  case "TL" => controllers.routes.TaskListController.show().url+"#name-of-operator-from-property"
-  case _  => controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
- }
-
- },
+ backLinkUrl = backlink,
  theForm = theForm
 ) {
  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {

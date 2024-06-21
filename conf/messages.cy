@@ -1729,6 +1729,22 @@ error.staffCosts.remunerations.required = Enter 0 if you did not have any direct
 error.staffCosts.remunerations.range = Director’s remunerations in the year ending {0} must be a number, for example 100 or 100.00
 error.staffCosts.remunerations.negative = Director’s remunerations in the year ending {0} cannot be a negative number
 
+#INCOME EXPENDITURE SUMMARY 6076
+
+incomeExpenditureSummary6076.heading = Income and expenditure summary
+incomeExpenditureSummary6076.label = I confirm that these figures are correct
+incomeExpenditureSummary6076.financialYearEnd = Financial year end
+incomeExpenditureSummary6076.totalGross = Total gross receipts
+incomeExpenditureSummary6076.totalBaseload = Total baseload receipts
+incomeExpenditureSummary6076.totalOther = Total other income
+incomeExpenditureSummary6076.totalCoS = Total cost of sales
+incomeExpenditureSummary6076.totalStaff = Total staff costs
+incomeExpenditureSummary6076.totalPremises = Total premises costs
+incomeExpenditureSummary6076.totalOperational = Total operational expenses
+incomeExpenditureSummary6076.headOffice = Head office expenses
+incomeExpenditureSummary6076.profitOrLoss = Net profit or loss
+error.incomeExpenditureSummary6076.required = Confirm that these figures are correct
+
 # GROSS PROFIT
 grossProfit.heading = Total gross profits
 grossProfit.financialYearEnd = Financial year end

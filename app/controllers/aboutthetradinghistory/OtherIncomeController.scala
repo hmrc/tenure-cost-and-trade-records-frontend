@@ -109,6 +109,8 @@ class OtherIncomeController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "IES" =>
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _     =>
         aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
     }

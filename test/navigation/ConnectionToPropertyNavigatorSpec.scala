@@ -207,4 +207,20 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
         stillConnectedDetailsYesSession
       ) mustBe controllers.routes.LoginController.show()
   }
+// 6076
+
+  "return a function that goes to the trading name page when still connected has been selected and the selection is yes" in {
+    navigator
+      .nextPage(AreYouStillConnectedPageId, stillConnectedDetails6076YesSession)
+      .apply(stillConnectedDetails6076YesSession) mustBe routes.TradingNameOperatingFromPropertyController
+      .show()
+  }
+
+  "return a function that goes from edit the address to the trading name page " in {
+    navigator
+      .nextPage(EditAddressPageId, stillConnectedDetails6076YesSession)
+      .apply(stillConnectedDetails6076YesSession) mustBe routes.TradingNameOperatingFromPropertyController
+      .show()
+  }
+
 }

@@ -91,6 +91,8 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
       case ForTypes.for6015                                       => controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show().url
       case ForTypes.for6020                                       =>
         controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show().url
+      case ForTypes.for6076                                       =>
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _                                                      =>
         logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
