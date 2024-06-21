@@ -464,7 +464,7 @@
     <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
 
 @govukSummaryList(SummaryList(rows =
-    financialYearEndRow6076(pageHeadingKey, editPage) +: answerRows.dropRight(1) :+ answerRows.last.copy(classes = "")
+    financialYearEndRow6076(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
 ))
 }
 
