@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -35,7 +36,18 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
+  def tenantsAdditionsDisregarded6020Controller(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new TenantsAdditionsDisregardedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      tenantsAdditionsDisregardedView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  "GET /" should {
     "return 200" in {
       val result = tenantsAdditionsDisregardedController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -46,6 +58,18 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return 200 6020" in {
+      val result = tenantsAdditionsDisregarded6020Controller().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6020" in {
+      val result = tenantsAdditionsDisregarded6020Controller().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
   }
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {

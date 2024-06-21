@@ -61,6 +61,17 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def rentIncludeFixtureAndFittingsNoController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "RentIncludeFixtureAndFittings controller" should {
     "return 200" in {
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
@@ -83,6 +94,13 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html with none in the session" in {
+      val result = rentIncludeFixtureAndFittingsNoController().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
