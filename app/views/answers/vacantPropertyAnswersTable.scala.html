@@ -63,7 +63,10 @@
     )
 } else {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
-    @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
+    @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(_.name).map(v =>
+        if(v.equals("yes")) messages("label.yes.iawn")
+        else if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) messages("label.areYouConnected.addressUpdate")
+        else messages("label.no.na")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
 }
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading")</h2>
 @govukSummaryList(SummaryList(rows =
