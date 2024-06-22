@@ -24,6 +24,7 @@
 @import models.submissions.aboutthetradinghistory.OtherCosts
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
+@import models.submissions.aboutthetradinghistory.TurnoverSection6020
 @import models.submissions.aboutthetradinghistory.TurnoverSection6030
 @import models.submissions.aboutthetradinghistory.TurnoverSection6076
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
@@ -403,12 +404,11 @@
     messages(message, size, if(size == 1) messages("checkYourAnswersAboutTheTradingHistory.card") else messages("checkYourAnswersAboutTheTradingHistory.cards"))
 }
 
-@financialYearEndRow6076(pageHeadingKey: String, editPage: Call) = @{
+@financialYearEndRow(pageHeadingKey: String, editPage: Call, finYearEndDates: Seq[String]) = @{
     SummaryListRow(
         key = Key(Text(messages("turnover.financialYearEnd"))),
         value = Value(HtmlContent(
-            tableRow(sectionAnswers1.answers.flatMap(_.turnoverSections6076)
-            .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))).body
+            tableRow(finYearEndDates).body
         )),
         actions = Some(
             Actions(items =
@@ -442,6 +442,48 @@
     valuesPerYearRow(valueLabelKey, values.map(_.getOrElse(zeroBigDecimal).asMoney), rowStyle, additionalParagraph)
 }
 
+@pageAnswers(pageHeadingKey: String, editPage: Call, buildFinYearRow: (String, Call) => SummaryListRow, answerRows: Seq[SummaryListRow]) = {
+    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+
+@govukSummaryList(SummaryList(rows =
+    buildFinYearRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
+))
+}
+
+@financialYearEndRow6020(pageHeadingKey: String, editPage: Call) = @{
+    financialYearEndRow(pageHeadingKey, editPage,
+        sectionAnswers.answers.flatMap(_.turnoverSections6020)
+        .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd))))
+}
+
+@financialYearEndRow6076(pageHeadingKey: String, editPage: Call) = @{
+    financialYearEndRow(pageHeadingKey, editPage,
+        sectionAnswers1.answers.flatMap(_.turnoverSections6076)
+        .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd))))
+}
+
+@pageAnswers6020(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = @{
+    pageAnswers(pageHeadingKey, editPage, financialYearEndRow6020, answerRows)
+}
+
+@pageAnswers6076(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = @{
+    pageAnswers(pageHeadingKey, editPage, financialYearEndRow6076, answerRows)
+}
+
+@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => Option[BigDecimal], additionalParagraph: Option[String] = None) = @{
+    decimalValuesPerYearRow(valueLabelKey,
+        sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer),
+        "no-border-bottom", additionalParagraph
+    )
+}
+
+@answer6020String(valueLabelKey: String, getAnswerString: TurnoverSection6020 => String, additionalParagraph: Option[String] = None) = @{
+    valuesPerYearRow(valueLabelKey,
+        sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswerString),
+        "no-border-bottom", additionalParagraph
+    )
+}
+
 @answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => Option[BigDecimal], additionalParagraph: Option[String] = None) = @{
     decimalValuesPerYearRow(valueLabelKey,
         sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
@@ -456,16 +498,8 @@
     )
 }
 
-@answerGrossReceipts(valueLabelKey: String, getAnswer: GrossReceiptsExcludingVAT => Option[BigDecimal]) = @{
+@answerGrossReceipts6076(valueLabelKey: String, getAnswer: GrossReceiptsExcludingVAT => Option[BigDecimal]) = @{
     decimalValuesPerYearRow(valueLabelKey, sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty).map(getAnswer))
-}
-
-@pageAnswers6076(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
-    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
-
-@govukSummaryList(SummaryList(rows =
-    financialYearEndRow6076(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
-))
 }
 
 
@@ -527,21 +561,21 @@
 
     @pageAnswers6076("taskList.6076.powerGenerated",
         aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
-        answer6076String("checkYourAnswersAboutTheTradingHistory.tradingPeriod", _.tradingPeriod + " " + messages("turnover.weeks")),
+        answer6076String("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
         answer6076String("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated.getOrElse(""))
     )
 
     @pageAnswers6076("taskList.6076.grossReceipts",
         aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
-        answerGrossReceipts("grossReceipts.electricitySales", _.electricitySales),
-        answerGrossReceipts("grossReceipts.feedInTariff", _.feedInTariff),
-        answerGrossReceipts("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.rocBuyout),
-        answerGrossReceipts("grossReceipts.rocRecycle", _.rocRecycle),
-        answerGrossReceipts("grossReceipts.contractForDifference", _.contractForDifference),
-        answerGrossReceipts("grossReceipts.capacityMarket", _.capacityMarket),
-        answerGrossReceipts("grossReceipts.balancingServices", _.balancingServices),
-        answerGrossReceipts("grossReceipts.embeddedBenefits", _.embeddedBenefits),
-        answerGrossReceipts("grossReceipts.total", _.total)
+        answerGrossReceipts6076("grossReceipts.electricitySales", _.electricitySales),
+        answerGrossReceipts6076("grossReceipts.feedInTariff", _.feedInTariff),
+        answerGrossReceipts6076("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.rocBuyout),
+        answerGrossReceipts6076("grossReceipts.rocRecycle", _.rocRecycle),
+        answerGrossReceipts6076("grossReceipts.contractForDifference", _.contractForDifference),
+        answerGrossReceipts6076("grossReceipts.capacityMarket", _.capacityMarket),
+        answerGrossReceipts6076("grossReceipts.balancingServices", _.balancingServices),
+        answerGrossReceipts6076("grossReceipts.embeddedBenefits", _.embeddedBenefits),
+        answerGrossReceipts6076("grossReceipts.total", _.total)
     )
 
     @pageAnswers6076("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
@@ -578,6 +612,43 @@
         answer6076("staffCosts.pension", _.staffCosts.flatMap(_.pensionContributions)),
         answer6076("staffCosts.remunerations", _.staffCosts.flatMap(_.remunerations)),
         answer6076("staffCosts.total", _.staffCosts.map(_.total))
+    )
+
+    @pageAnswers6076("premisesCosts.heading",
+        aboutthetradinghistory.routes.PremisesCostsController.show(),
+        answer6076("premisesCosts.energyAndUtilities", _.premisesCosts.flatMap(_.energyAndUtilities)),
+        answer6076("premisesCosts.buildingRepairAndMaintenance", _.premisesCosts.flatMap(_.buildingRepairAndMaintenance)),
+        answer6076("premisesCosts.repairsAndRenewalsOfFixtures", _.premisesCosts.flatMap(_.repairsAndRenewalsOfFixtures)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.rent", _.premisesCosts.flatMap(_.rent)),
+        answer6076("premisesCosts.businessRates", _.premisesCosts.flatMap(_.businessRates)),
+        answer6076("premisesCosts.buildingInsurance", _.premisesCosts.flatMap(_.buildingInsurance)),
+        answer6076("premisesCosts.total", _.premisesCosts.map(_.total))
+    )
+
+    @pageAnswers6076("taskList.6076.operationalExpenses",
+        aboutthetradinghistory.routes.OperationalExpensesController.show(),
+        answer6076("checkYourAnswersAboutTheTradingHistory.advertising", _.operationalExpenses.flatMap(_.advertising)),
+        answer6076("turnover.6076.expenses.administration", _.operationalExpenses.flatMap(_.administration)),
+        answer6076("turnover.6076.expenses.insurance", _.operationalExpenses.flatMap(_.insurance)),
+        answer6076("turnover.6076.expenses.legalFees", _.operationalExpenses.flatMap(_.legalFees)),
+        answer6076("turnover.6076.expenses.interest", _.operationalExpenses.flatMap(_.interest)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.otherExpenses",
+            _.operationalExpenses.flatMap(_.other),
+            sectionAnswers1.answers.flatMap(_.otherOperationalExpensesDetails)),
+        answer6076("turnover.6076.expenses.total", _.operationalExpenses.map(_.total))
+    )
+
+    @pageAnswers6076("turnover.6076.headOfficeExpenses.heading",
+        aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
+        answer6076("turnover.6076.headOfficeExpenses.heading", _.headOfficeExpenses, sectionAnswers1.answers.flatMap(_.furtherInformationOrRemarks))
+    )
+
+    @pageAnswers6076("incomeExpenditureSummary6076.heading",
+        aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
+        decimalValuesPerYearRow("incomeExpenditureSummary6076.profitOrLoss",
+            sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076Data).getOrElse(Seq.empty).map(_.netProfitOrLoss)),
+        valuesPerYearRow("incomeExpenditureSummary6076.label", Seq.empty, "",
+            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076).contains("confirmed")) "Yes" else "No")
     )
 
 }
@@ -760,81 +831,15 @@
         ))
     }
 
-    <h2 class="govuk-heading-m">@messages("turnover.6020.heading")</h2>
-
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            SummaryListRow(
-                key = Key(Text(messages("turnover.financialYearEnd"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))).body
-                )),
-                actions = Some(
-                    Actions(items =
-                        Seq(
-                            ActionItem(
-                                href = s"${aboutthetradinghistory.routes.NonFuelTurnoverController.show()}?from=CYA",
-                                content = Text(messages("label.change")),
-                                visuallyHiddenText = Some(messages("turnover.6020.heading")),
-                                attributes = Map(
-                                    "aria-label" -> s"${messages("label.change")} ${messages("turnover.6020.heading")}"
-                                )
-                            )
-                        )
-                    )
-                ),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.shop"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.shop.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.carWash"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.carWash.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.jetWash"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.jetWash.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.lottery"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.lottery.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.payPointOrZone"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.payPointOrZone.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.otherIncome"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.otherIncome.getOrElse(zeroBigDecimal).asMoney))).body
-                ))
-            )
-        )
-    ))
+    @pageAnswers6020("turnover.6020.heading",
+        aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+        answer6020("turnover.6020.shop", _.shop),
+        answer6020("turnover.6020.carWash", _.carWash),
+        answer6020("turnover.6020.jetWash", _.jetWash),
+        answer6020("turnover.6020.lottery", _.lottery),
+        answer6020("checkYourAnswersAboutTheTradingHistory.payPointOrZone", _.payPointOrZone),
+        answer6020("turnover.6020.otherIncome", _.otherIncome)
+    )
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints")</h2>
 

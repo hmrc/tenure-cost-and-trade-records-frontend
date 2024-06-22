@@ -2436,6 +2436,9 @@ checkYourAnswersAboutTheTradingHistory.TNuoS = TNuoS
 checkYourAnswersAboutTheTradingHistory.BSuoS = BSuoS
 checkYourAnswersAboutTheTradingHistory.extraCost = Extra cost
 checkYourAnswersAboutTheTradingHistory.totalCosts = Total costs
+checkYourAnswersAboutTheTradingHistory.rent = Rent
+checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
+checkYourAnswersAboutTheTradingHistory.otherExpenses = Other expenses
 
 # Confirmation Page
 ###################
