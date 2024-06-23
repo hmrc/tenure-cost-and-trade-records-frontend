@@ -450,7 +450,10 @@ trait FakeObjects {
         OtherCost(today.minusYears(2), 1, 1)
       ),
       "Other Costs Details"
-    )
+    ),
+    incomeExpenditureSummary = IncomeExpenditureSummary("confirmed"),
+    incomeExpenditureSummaryData = Seq(IncomeExpenditureSummaryData(today.toString, 1, 2, 3, 4, 5, 6, 7, 8, 9)),
+    unusualCircumstances = UnusualCircumstances("Unusual circumstances comment")
   )
 
   val prefilledAboutYourTradingHistory6020: AboutTheTradingHistory = AboutTheTradingHistory(
@@ -461,7 +464,16 @@ trait FakeObjects {
       TurnoverSection6020(today.minusYears(2), 300, 300)
     ),
     electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
-    doYouAcceptLowMarginFuelCard = AnswerYes
+    totalFuelSold = Seq(TotalFuelSold(today, None)),
+    bunkeredFuelQuestion = BunkeredFuelQuestion(AnswerYes),
+    bunkeredFuelSold = Seq(BunkeredFuelSold(today, 1), BunkeredFuelSold(today, 2), BunkeredFuelSold(today, 3)),
+    bunkerFuelCardsDetails = IndexedSeq(BunkerFuelCardsDetails(BunkerFuelCardDetails("Card 1", 2))),
+    customerCreditAccounts =
+      Seq(CustomerCreditAccounts(today, 5), CustomerCreditAccounts(today, 15), CustomerCreditAccounts(today, 25)),
+    doYouAcceptLowMarginFuelCard = AnswerYes,
+    percentageFromFuelCards =
+      Seq(PercentageFromFuelCards(today, 5), PercentageFromFuelCards(today, 15), PercentageFromFuelCards(today, 25)),
+    lowMarginFuelCardsDetails = IndexedSeq(LowMarginFuelCardsDetails(LowMarginFuelCardDetail("Low Margin Card", 2)))
   )
 
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(

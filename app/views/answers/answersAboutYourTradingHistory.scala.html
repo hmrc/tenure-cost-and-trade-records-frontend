@@ -477,13 +477,6 @@
     )
 }
 
-@answer6020String(valueLabelKey: String, getAnswerString: TurnoverSection6020 => String, additionalParagraph: Option[String] = None) = @{
-    valuesPerYearRow(valueLabelKey,
-        sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswerString),
-        "no-border-bottom", additionalParagraph
-    )
-}
-
 @answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => Option[BigDecimal], additionalParagraph: Option[String] = None) = @{
     decimalValuesPerYearRow(valueLabelKey,
         sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
