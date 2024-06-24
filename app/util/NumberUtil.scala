@@ -18,6 +18,7 @@ package util
 
 import java.text.NumberFormat
 import java.util.Locale
+import scala.language.implicitConversions
 import scala.math.BigDecimal.RoundingMode.HALF_UP
 
 /**
@@ -26,6 +27,30 @@ import scala.math.BigDecimal.RoundingMode.HALF_UP
 object NumberUtil {
 
   val zeroBigDecimal: BigDecimal = BigDecimal(0)
+
+  implicit def bigDecimalToString(bigDecimal: BigDecimal): String =
+    bigDecimal.asMoney
+
+  implicit def bigDecimalOptToString(bigDecimalOpt: Option[BigDecimal]): String =
+    bigDecimalOpt.getOrElse(zeroBigDecimal).asMoney
+
+  implicit def stringOptToString(stringOpt: Option[String]): String =
+    stringOpt.getOrElse("")
+
+  implicit def seqBigDecimalToSeqString(values: Seq[BigDecimal]): Seq[String] =
+    values.map(bigDecimalToString)
+
+  implicit def seqBigDecimalOptToSeqString(values: Seq[Option[BigDecimal]]): Seq[String] =
+    values.map(bigDecimalOptToString)
+
+  implicit def functionBigDecimalToFunctionString[T](function: T => BigDecimal): T => String =
+    function andThen bigDecimalToString
+
+  implicit def functionBigDecimalOptToFunctionString[T](function: T => Option[BigDecimal]): T => String =
+    function andThen bigDecimalOptToString
+
+  implicit def functionStringOptToFunctionString[T](function: T => Option[String]): T => String =
+    function andThen stringOptToString
 
   implicit class stringHelpers(str: String) {
     def removeTrailingZeros: String =

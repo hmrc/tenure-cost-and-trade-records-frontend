@@ -430,18 +430,14 @@
     )
 }
 
-@valuesPerYearRow(valueLabelKey: String, values: Seq[String], rowStyle: String = "no-border-bottom", additionalParagraph: Option[String] = None) = @{
+@answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None) = @{
     SummaryListRow(
         key = Key(Text(messages(valueLabelKey))),
         value = Value(HtmlContent(
             tableRow(values).body + optionalParagraph(additionalParagraph).body
         )),
-        classes = rowStyle
+        classes = "no-border-bottom"
     )
-}
-
-@decimalValuesPerYearRow(valueLabelKey: String, values: Seq[Option[BigDecimal]], rowStyle: String = "no-border-bottom", additionalParagraph: Option[String] = None) = @{
-    valuesPerYearRow(valueLabelKey, values.map(_.getOrElse(zeroBigDecimal).asMoney), rowStyle, additionalParagraph)
 }
 
 @pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
@@ -452,29 +448,20 @@
 ))
 }
 
-@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => Option[BigDecimal], additionalParagraph: Option[String] = None) = @{
-    decimalValuesPerYearRow(valueLabelKey,
+@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => String, additionalParagraph: Option[String] = None) = @{
+    answer(valueLabelKey,
         sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer),
-        "no-border-bottom", additionalParagraph
-    )
+        additionalParagraph)
 }
 
-@answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => Option[BigDecimal], additionalParagraph: Option[String] = None) = @{
-    decimalValuesPerYearRow(valueLabelKey,
+@answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => String, additionalParagraph: Option[String] = None) = @{
+    answer(valueLabelKey,
         sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
-        "no-border-bottom", additionalParagraph
-    )
-}
-
-@answer6076String(valueLabelKey: String, getAnswerString: TurnoverSection6076 => String, additionalParagraph: Option[String] = None) = @{
-    valuesPerYearRow(valueLabelKey,
-        sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswerString),
-        "no-border-bottom", additionalParagraph
-    )
+        additionalParagraph)
 }
 
 @answerGrossReceipts6076(valueLabelKey: String, getAnswer: GrossReceiptsExcludingVAT => Option[BigDecimal]) = @{
-    decimalValuesPerYearRow(valueLabelKey, sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty).map(getAnswer))
+    answer(valueLabelKey, sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty).map(getAnswer))
 }
 
 
@@ -536,8 +523,8 @@
 
     @pageAnswers("taskList.6076.powerGenerated",
         aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
-        answer6076String("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
-        answer6076String("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated.getOrElse(""))
+        answer6076("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
+        answer6076("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated)
     )
 
     @pageAnswers("taskList.6076.grossReceipts",
@@ -620,9 +607,9 @@
 
     @pageAnswers("incomeExpenditureSummary6076.heading",
         aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
-        decimalValuesPerYearRow("incomeExpenditureSummary6076.profitOrLoss",
+        answer("incomeExpenditureSummary6076.profitOrLoss",
             sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076Data).getOrElse(Seq.empty).map(_.netProfitOrLoss)),
-        valuesPerYearRow("incomeExpenditureSummary6076.label", Seq.empty, "",
+        answer("incomeExpenditureSummary6076.label", Seq.empty,
             if (sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076).contains("confirmed")) "Yes" else "No")
     )
 
