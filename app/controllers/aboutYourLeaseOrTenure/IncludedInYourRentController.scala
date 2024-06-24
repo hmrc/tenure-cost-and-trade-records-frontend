@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
@@ -41,13 +41,15 @@ class IncludedInYourRentController @Inject() (
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
+  def forTypes(implicit request: SessionRequest[_]): String = request.sessionData.forType
+
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         includedInYourRentView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
-            case Some(includedInYourRentDetails) => includedInYourRentForm.fill(includedInYourRentDetails)
-            case _                               => includedInYourRentForm
+            case Some(includedInYourRentDetails) => includedInYourRentForm(forTypes).fill(includedInYourRentDetails)
+            case _                               => includedInYourRentForm(forTypes)
           },
           request.sessionData.toSummary,
           request.sessionData.forType,
@@ -59,12 +61,15 @@ class IncludedInYourRentController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IncludedInYourRentDetails](
-      includedInYourRentForm,
-      formWithErrors => BadRequest(includedInYourRentView(
-        formWithErrors,
-        request.sessionData.toSummary,
-        request.sessionData.forType
-      )),
+      includedInYourRentForm(forTypes),
+      formWithErrors =>
+        BadRequest(
+          includedInYourRentView(
+            formWithErrors,
+            request.sessionData.toSummary,
+            request.sessionData.forType
+          )
+        ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(includedInYourRentDetails = Some(data)))
         session.saveOrUpdate(updatedData)

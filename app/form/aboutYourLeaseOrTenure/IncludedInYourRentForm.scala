@@ -17,13 +17,24 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
-import play.api.data.Forms.{list, mapping, text}
+import play.api.data.Forms.{list, mapping, optional, text}
+import play.api.data.validation._
+import play.api.i18n.Messages
 
 object IncludedInYourRentForm {
 
-  val includedInYourRentForm = Form(
+  private val regexForVatValue = """^\d+(\.\d+)?$"""
+
+  val vatValueNumberConstraint: Constraint[Option[String]] = Constraint("constraints.vatValueNumber") {
+    case Some(value) if value.matches(regexForVatValue) => Valid
+    case Some(_)                                        => Invalid(Seq(ValidationError("error.includedInYourRent.vatValue.range")))
+    case None                                           => Valid
+  }
+
+  def includedInYourRentForm(forTypes: String)(implicit messages: Messages): Form[IncludedInYourRentDetails] = Form(
     mapping(
       "includedInYourRent" -> list(text).verifying(
         nonEmptyList("error.includedInYourRent.required"),
@@ -31,7 +42,25 @@ object IncludedInYourRentForm {
           "noneOfThese",
           "error.includedInYourRent.noneSelectedWithOther"
         )
-      )
+      ),
+      "vatValue"           -> optional(text)
+        .verifying(vatValueNumberConstraint)
+        .transform[Option[BigDecimal]](
+          {
+            case Some(value) if value.matches(regexForVatValue) => Some(BigDecimal(value))
+            case _                                              => None
+          },
+          _.map(_.toString)
+        )
     )(IncludedInYourRentDetails.apply)(IncludedInYourRentDetails.unapply)
+      .verifying(
+        "error.includedInYourRent.vatValue.required",
+        fields =>
+          fields match {
+            case IncludedInYourRentDetails(includedInYourRent, vatValue) =>
+              if (forTypes == ForTypes.for6045 && includedInYourRent.contains("vat") && vatValue.isEmpty) false
+              else true
+          }
+      )
   )
 }

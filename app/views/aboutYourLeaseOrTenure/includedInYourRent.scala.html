@@ -38,40 +38,6 @@
 @(theForm: Form[IncludedInYourRentDetails], summary: Summary, forTypes: String, fromLocation: String = "")(implicit request: Request[_], messages: Messages)
 
 
-Input(
-prefix = Some(PrefixOrSuffix(
-content = Text("£")
-)),
-attributes = Map(
-"maxlength" -> "13",
-"aria-label" -> messages("costOfSales.drinks")
-),
-).withFormField(form(s"costOfSales[$idx].drinks"))
-
-@vatCheckBoxItem = @{
-    CheckboxItem(
-        id = "vat",
-        content = Text(messages("label.includedInYourRent.vat")),
-        value = "vat",
-        conditionalHtml = forTypes match {
-            case ForTypes.for6045 =>
-                Some(
-                    govukInput(
-                            Input(
-                                id = "vatValue",
-                                name = "vatValue",
-                                classes = "govuk-input--width-13",
-                                value = theForm("vatValue").value,
-                                prefix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.pound")))),
-                                label = Label(
-                                                content = Text(messages("includedInYourRent.vatValue"))))))
-            case _ => None
-    }
-  )
-}
-
-
 @layout(
  pageHeading = messages("includedInYourRent.heading"),
  showH1 = false,
@@ -102,7 +68,36 @@ attributes = Map(
                   CheckboxItem(
                       id = "vat",
                       content = Text(messages("label.includedInYourRent.vat")),
-                      value = "vat"
+                      value = "vat",
+                      conditionalHtml = forTypes match {
+                          case ForTypes.for6045 =>
+                              Some(
+                                  govukInput(
+                                      Input(
+                                          id = "vatValue",
+                                          name = "vatValue",
+                                          classes = "govuk-input--width-10",
+                                          value = theForm("vatValue").value,
+                                          prefix = Some(PrefixOrSuffix(
+                                              content = Text(messages("label.pound")))),
+                                          label = Label(
+                                              content = Text(messages("includedInYourRent.vatValue"))
+                                          ),
+                                          errorMessage = {
+                                              theForm.error("vatValue").orElse(
+                                                  if (theForm.globalErrors.exists(_.message == "error.includedInYourRent.vatValue.required"))
+                                                      Some(FormError("vatValue", "error.includedInYourRent.vatValue.required"))
+                                                  else
+                                                      None
+                                              ).map { error =>
+                                                  ErrorMessage(content = Text(Messages(error.message)))
+                                              }
+                                          }
+                                      )
+                                  )
+                              )
+                          case _ => None
+                      }
                   ),
                   CheckboxItem(
                       id = "nondomesticRates",
