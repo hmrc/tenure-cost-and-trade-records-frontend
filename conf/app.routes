@@ -113,7 +113,10 @@ POST        /about-you                                              controllers.
 # About the property
 GET         /about-the-property                                     controllers.aboutyouandtheproperty.AboutThePropertyController.show()
 POST        /about-the-property                                     controllers.aboutyouandtheproperty.AboutThePropertyController.submit()
+# About the property 6045/46 property currently used
 
+GET         /property-currently-used                                controllers.aboutyouandtheproperty.PropertyCurrentlyUsedController.show()
+POST        /property-currently-used                                controllers.aboutyouandtheproperty.PropertyCurrentlyUsedController.submit()
 # About the property 6030
 GET         /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.show()
 POST        /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.submit()
@@ -170,6 +173,8 @@ POST        /batteries-capacity                                     controllers.
 
 GET         /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.show()
 POST        /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.submit()
+
+
 
 # About the trading history
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
