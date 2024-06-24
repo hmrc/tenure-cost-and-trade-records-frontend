@@ -70,14 +70,9 @@
                 ("valueAsHtml", _ => None))
         ))
 
-        <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
+        <h2 class="govuk-heading-m">@messages("request.heading")</h2>
 
-        <p class="govuk-body">@messages("declaration.information")</p>
-
-        @govukWarningText(WarningText(
-            content = Text(messages("hint.declaration")),
-            classes = "govuk-!-margin-bottom-2"
-        ))
+        <p class="govuk-body">@messages("request.information")</p>
 
         @includes.acceptAndSendButton(govukButton)
 
