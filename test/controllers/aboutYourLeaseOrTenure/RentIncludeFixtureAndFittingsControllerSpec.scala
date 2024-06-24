@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -50,6 +50,38 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def rentIncludeFixtureAndFittingsController6020No(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThreeNo
+    )
+  ) =
+    new RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
+      preEnrichedActionRefiner(
+        forType = ForTypes.for6020,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
+    )
+
+  def rentIncludeFixtureAndFittingsController6030No(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThreeNo
+    )
+  ) =
+    new RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
+      preEnrichedActionRefiner(
+        forType = ForTypes.for6030,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
+    )
+
   def rentIncludeFixtureAndFittingsController6030(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
@@ -58,6 +90,17 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
       mockAboutYourLeaseOrTenureNavigator,
       rentIncludeFixtureAndFittingsView,
       preEnrichedActionRefiner(forType = ForTypes.for6030, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def rentIncludeFixtureAndFittingsNoController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
 
@@ -83,6 +126,20 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html with none in the session" in {
+      val result = rentIncludeFixtureAndFittingsNoController().show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html with none in the session 6020" in {
+      val result = rentIncludeFixtureAndFittingsController6030No().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

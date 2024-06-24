@@ -35,6 +35,17 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def rentIncreaseAnnuallyWithRPINoController(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new RentIncreaseAnnuallyWithRPIController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      rentIncreaseAnnuallyWithRPIView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
@@ -43,6 +54,13 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 and html with none in the session" in {
+      val result = rentIncreaseAnnuallyWithRPINoController().show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

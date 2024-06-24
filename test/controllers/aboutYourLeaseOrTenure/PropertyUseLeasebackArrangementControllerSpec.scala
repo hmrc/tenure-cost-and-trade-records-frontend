@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -100,6 +100,11 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = propertyUseLeasebackAgreementController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
   }
 

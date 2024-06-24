@@ -73,6 +73,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
         controllers.connectiontoproperty.routes.EditAddressController.show().url
       )
     }
+
   }
 
   "SUBMIT /" should {

@@ -10,6 +10,7 @@ button.label.continue = Continue
 button.label.sendYourFeedback = Send your feedback
 button.label.submit = Submit
 button.label.send = Accept and send
+button.label.confirm = Confirm and send
 back.link.label = Back
 button.label.save = Save as draft
 label.checkTheForm = There is a problem
@@ -212,7 +213,7 @@ error.requestReferenceNumberBusinessTradingName.maxLength = Business or trading 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
 requestReferenceNumberContactDetails.heading = Your contact details
-requestReferenceNumberContactDetails.p1 = We'll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
+requestReferenceNumberContactDetails.p1 = We''ll need the contact details of the person completing the form. We will only use them to contact you about your enquiry
 label.requestReferenceNumberContactDetailsFullName = Full name
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
@@ -403,6 +404,7 @@ checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Outside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
+checkbox.divider = or
 error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
 error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
 
@@ -1456,6 +1458,8 @@ taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
 taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid = Lease start date and rent paid
 declaration.heading = Now send your declaration
+request.heading = Now send your request
+request.information = Check the details you’ve provided are correct as the VOA may need to contact you about your request.
 declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
 hint.declaration = You could be taken to court if you submit false information.
 taskList.fuelSales = Fuel sales

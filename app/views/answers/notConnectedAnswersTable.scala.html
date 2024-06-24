@@ -34,10 +34,15 @@
 
 @govukSummaryList(SummaryList(rows =
     stillConnectedDetailsAnswers.row("key.still.connected",
-        _.addressConnectionType.map(_.name.capitalize),
+        _.addressConnectionType.map(_.name).map(v =>
+            if(v.equals("yes")) messages("label.yes.iawn")
+            else if(stillConnectedDetailsAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) messages("label.areYouConnected.addressUpdate")
+            else messages("label.no.na")
+        ),
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
             removeConnectionDetailsAnswers.row("key.ever.connected",
-                _.pastConnectionType.map(_.name.capitalize),
+                _.pastConnectionType.map(_.name).map(v =>
+                    if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                 controllers.notconnected.routes.PastConnectionController.show(), "pastConnectionType")
 ))
 
