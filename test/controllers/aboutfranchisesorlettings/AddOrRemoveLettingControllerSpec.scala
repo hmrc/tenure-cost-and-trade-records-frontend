@@ -52,6 +52,13 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = addOrRemoveLettingController().show(0)(FakeRequest(GET, "/path?from=CYA"))
+      contentAsString(result) should include(
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      )
+    }
+
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val result = addOrRemoveLettingController().submitLetting(1)(fakeRequest)

@@ -41,15 +41,15 @@ class IncludedInYourRentController @Inject() (
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def forTypes(implicit request: SessionRequest[_]): String = request.sessionData.forType
+  private def forType(implicit request: SessionRequest[_]): String = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         includedInYourRentView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
-            case Some(includedInYourRentDetails) => includedInYourRentForm(forTypes).fill(includedInYourRentDetails)
-            case _                               => includedInYourRentForm(forTypes)
+            case Some(includedInYourRentDetails) => includedInYourRentForm(forType).fill(includedInYourRentDetails)
+            case _                               => includedInYourRentForm(forType)
           },
           request.sessionData.toSummary,
           request.sessionData.forType,
@@ -61,7 +61,7 @@ class IncludedInYourRentController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IncludedInYourRentDetails](
-      includedInYourRentForm(forTypes),
+      includedInYourRentForm(forType),
       formWithErrors =>
         BadRequest(
           includedInYourRentView(

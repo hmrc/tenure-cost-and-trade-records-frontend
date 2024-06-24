@@ -20,7 +20,8 @@ import form.aboutyouandtheproperty.ThreeYearsConstructedForm.threeYearsConstruct
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._
 import play.api.test.{FakeRequest, Helpers}
-import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
+import uk.gov.hmrc.http.HttpVerbs.GET
 import utils.TestBaseSpec
 
 class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
@@ -67,6 +68,16 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
       status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
+    }
+    "return correct back link if query param from=TL is present" in {
+      val result = threeYearsConstructedController().show(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+    "return correct back link if query param from=CYA is present" in {
+      val result = threeYearsConstructedController().show(FakeRequest(GET, "/path?from=CYA"))
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      )
     }
 
     "SUBMIT /" should {
