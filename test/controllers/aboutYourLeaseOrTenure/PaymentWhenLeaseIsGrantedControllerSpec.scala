@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -35,6 +36,28 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def paymentWhenLeaseIsGrantedController6030(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  ) =
+    new PaymentWhenLeaseIsGrantedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      paymentWhenLeaseIsGrantedView,
+      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
+  def paymentWhenLeaseIsGrantedControllerNo(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new PaymentWhenLeaseIsGrantedController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      paymentWhenLeaseIsGrantedView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = paymentWhenLeaseIsGrantedController().show(fakeRequest)
@@ -43,6 +66,28 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = paymentWhenLeaseIsGrantedController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6030" in {
+      val result = paymentWhenLeaseIsGrantedController6030().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6030" in {
+      val result = paymentWhenLeaseIsGrantedController6030().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 No" in {
+      val result = paymentWhenLeaseIsGrantedControllerNo().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML No" in {
+      val result = paymentWhenLeaseIsGrantedControllerNo().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
