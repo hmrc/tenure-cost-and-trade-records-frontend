@@ -522,6 +522,20 @@ hint.propertyCurrentlyUsedString = For example, petrol station, petrol station w
 error.propertyCurrentlyUsedString.required = Enter the property’s current use
 error.propertyCurrentlyUsedString.maxLength = The property’s use must be described in 200 characters or fewer
 
+#ABOUT THE PROPERTY/ HOW IS THE PROPERTY CURRENTLY USED 6045/46
+
+propertyCurrentlyUsed.heading = How is the property currently used?
+label.propertyCurrentlyUsed.fleetCaravanPark = Fleet caravan park
+label.propertyCurrentlyUsed.privateCaravanPark = Private caravan park
+label.propertyCurrentlyUsed.residentialPark = Residential park
+label.propertyCurrentlyUsed.chaletPark = Chalet park
+label.propertyCurrentlyUsed.touringSite = Touring site
+label.propertyCurrentlyUsed.holidayCentre = Holiday centre
+label.propertyCurrentlyUsed.other = Other
+label.anotherUseDetails = Give details if the property has another use
+error.anotherUseDetails.maxLength = The property’s use must be described in 200 characters or fewer
+error.anotherUseDetails.required = Describe the use of your property if not listed.
+
 # WEBSITE FOR PROPERTY
 ######################
 buildingOperatingHaveAWebsite.heading = Does the business operating from the property have a website?

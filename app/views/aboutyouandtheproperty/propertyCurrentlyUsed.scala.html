@@ -1,0 +1,124 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukCheckboxes: GovukCheckboxes,
+        govukInput: GovukInput,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[PropertyCurrentlyUsed], summary: Summary, backLink:String)(implicit request: Request[_], messages: Messages)
+
+ @conditionalHTML = {
+ @govukInput(
+  Input(
+   id = "anotherUseDetails",
+   name = "anotherUseDetails",
+   classes = "govuk-input--width-20",
+   value = theForm("anotherUseDetails").value,
+   label = Label(
+    content = Text(messages("label.anotherUseDetails"))
+   ),
+   errorMessage = {
+    if (theForm.errors.exists(_.message == "error.anotherUseDetails.required")) {
+     ErrorMessage(content = Text(messages("error.anotherUseDetails.required")))
+    } else {
+     theForm.errors.asTextErrorMessageForField("anotherUseDetails")
+    }
+   }
+  )
+ )
+ }
+
+@layout(
+ pageHeading = messages("propertyCurrentlyUsed.heading"),
+ showH1 = false,
+ showSection = true,
+ summary = Some(summary),
+ sectionName = messages("label.section.aboutTheProperty"),
+ backLinkUrl = backLink,
+ theForm = theForm
+) {
+
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.submit()) {
+
+   @govukCheckboxes(
+    Checkboxes(
+     fieldset = Fieldset(
+      legend = Legend(
+       content = Text(Messages("propertyCurrentlyUsed.heading")),
+       classes = "govuk-label--l govuk-fieldset__legend--m",
+       isPageHeading = true
+      )
+     ),
+     name = "propertyCurrentlyUsed[]",
+     items = Seq(
+      CheckboxItem(
+       id = "fleetCaravanPark",
+       content = Text(messages("label.propertyCurrentlyUsed.fleetCaravanPark")),
+       value = "fleetCaravanPark"
+      ),
+      CheckboxItem(
+       id = "privateCaravanPark",
+       content = Text(messages("label.propertyCurrentlyUsed.privateCaravanPark")),
+       value = "privateCaravanPark"
+      ),
+      CheckboxItem(
+       id = "residentialPark",
+       content = Text(messages("label.propertyCurrentlyUsed.residentialPark")),
+       value = "residentialPark"
+      ),
+      CheckboxItem(
+      id = "chaletPark",
+      content = Text(messages("label.propertyCurrentlyUsed.chaletPark")),
+      value = "chaletPark"
+      ),
+      CheckboxItem(
+       id = "touringSite",
+       content = Text(messages("label.propertyCurrentlyUsed.touringSite")),
+       value = "touringSite"
+      ),
+      CheckboxItem(
+       id = "holidayCentre",
+       content = Text(messages("label.propertyCurrentlyUsed.holidayCentre")),
+       value = "holidayCentre"
+      ),
+      CheckboxItem(
+       id = "other",
+       content = Text(messages("label.propertyCurrentlyUsed.other")),
+       value = "other",
+       conditionalHtml =  conditionalHTML
+      )
+     ),
+     hint = Hint(content = HtmlContent(messages("hint.all.apply")))
+    ).withFormField(theForm("propertyCurrentlyUsed"))
+   )
+
+  @includes.continueSaveAsDraftButtons(govukButton)
+ }
+}
+
+
