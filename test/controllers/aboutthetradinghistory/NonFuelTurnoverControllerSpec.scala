@@ -52,6 +52,13 @@ class NonFuelTurnoverControllerSpec extends TestBaseSpec {
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
     }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = nonFuelTurnoverController().show()(FakeRequest(GET, "/path?from=TL"))
+      val html   = contentAsString(result)
+
+      html should include(controllers.routes.TaskListController.show().url + "#")
+    }
   }
 
   "SUBMIT /" should {

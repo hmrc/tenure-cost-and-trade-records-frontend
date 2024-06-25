@@ -80,7 +80,15 @@ class TradeServicesListController @Inject() (
           .map(_.tradeServices)
           .filter(_.nonEmpty)
           .fold(
-            Redirect(controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(index)))
+            Future.successful(
+              Redirect(
+                if (data == AnswerYes) {
+                  routes.TradeServicesDescriptionController.show(Some(index))
+                } else {
+                  navigator.nextPage(TradeServicesListId, request.sessionData).apply(request.sessionData)
+                }
+              )
+            )
           ) { existingSections =>
             val updatedSections = existingSections.updated(
               index,
