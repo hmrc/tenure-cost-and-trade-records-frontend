@@ -33,7 +33,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
   val mockTaskListView = mock[taskList]
   when(mockTaskListView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val checkYourAnswersAboutThePropertyController = new CheckYourAnswersAboutTheTradingHistoryController(
+  val checkYourAnswersAboutTradingHistoryController = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -41,14 +41,71 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
+  val checkYourAnswersAboutTradingHistoryController6015 = new CheckYourAnswersAboutTheTradingHistoryController(
+    stubMessagesControllerComponents(),
+    mockAboutTheTradingHistoryNavigator,
+    checkYourAnswersAboutTheTradingHistoryView,
+    preFilledSession6015,
+    mockSessionRepo
+  )
+
+  val checkYourAnswersAboutTradingHistoryController6020 = new CheckYourAnswersAboutTheTradingHistoryController(
+    stubMessagesControllerComponents(),
+    mockAboutTheTradingHistoryNavigator,
+    checkYourAnswersAboutTheTradingHistoryView,
+    preFilledSession6020,
+    mockSessionRepo
+  )
+
+  val checkYourAnswersAboutTradingHistoryController6076 = new CheckYourAnswersAboutTheTradingHistoryController(
+    stubMessagesControllerComponents(),
+    mockAboutTheTradingHistoryNavigator,
+    checkYourAnswersAboutTheTradingHistoryView,
+    preFilledSession6076,
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersAboutThePropertyController.show(fakeRequest)
+      val result = checkYourAnswersAboutTradingHistoryController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersAboutThePropertyController.show(fakeRequest)
+      val result = checkYourAnswersAboutTradingHistoryController.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6015" in {
+      val result = checkYourAnswersAboutTradingHistoryController6015.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6015" in {
+      val result = checkYourAnswersAboutTradingHistoryController6015.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6020" in {
+      val result = checkYourAnswersAboutTradingHistoryController6020.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6020" in {
+      val result = checkYourAnswersAboutTradingHistoryController6020.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6076" in {
+      val result = checkYourAnswersAboutTradingHistoryController6076.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6076" in {
+      val result = checkYourAnswersAboutTradingHistoryController6076.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -56,7 +113,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = checkYourAnswersAboutThePropertyController.submit(
+      val res = checkYourAnswersAboutTradingHistoryController.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

@@ -112,6 +112,16 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def checkYourAnswersAboutThePropertyController6076(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    checkYourAnswersAboutThePropertyView,
+    preEnrichedActionRefiner(forType = forType6076, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
   def checkYourAnswersAboutThePropertyControllerNone() = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,

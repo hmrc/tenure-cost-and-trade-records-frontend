@@ -486,6 +486,25 @@ trait FakeObjects {
     lowMarginFuelCardsDetails = IndexedSeq(LowMarginFuelCardsDetails(LowMarginFuelCardDetail("Low Margin Card", 2)))
   )
 
+  val prefilledAboutYourTradingHistoryNoBunkered: AboutTheTradingHistory = AboutTheTradingHistory(
+    OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)),
+    turnoverSections6020 = Seq(
+      TurnoverSection6020(today, 100, 100),
+      TurnoverSection6020(today.minusYears(1), 200, 200),
+      TurnoverSection6020(today.minusYears(2), 300, 300)
+    ),
+    electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
+    totalFuelSold = Seq(TotalFuelSold(today, None)),
+    bunkeredFuelQuestion = BunkeredFuelQuestion(AnswerNo),
+    bunkerFuelCardsDetails = IndexedSeq(BunkerFuelCardsDetails(BunkerFuelCardDetails("Card 1", 2))),
+    customerCreditAccounts =
+      Seq(CustomerCreditAccounts(today, 5), CustomerCreditAccounts(today, 15), CustomerCreditAccounts(today, 25)),
+    doYouAcceptLowMarginFuelCard = AnswerYes,
+    percentageFromFuelCards =
+      Seq(PercentageFromFuelCards(today, 5), PercentageFromFuelCards(today, 15), PercentageFromFuelCards(today, 25)),
+    lowMarginFuelCardsDetails = IndexedSeq(LowMarginFuelCardsDetails(LowMarginFuelCardDetail("Low Margin Card", 2)))
+  )
+
   val prefilledAboutYourTradingHistory6030: AboutTheTradingHistory = AboutTheTradingHistory(
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9)),
     Seq.empty,

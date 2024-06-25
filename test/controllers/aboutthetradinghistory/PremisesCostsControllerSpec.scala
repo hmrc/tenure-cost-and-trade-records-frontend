@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class PremisesCostsControllerSpec extends TestBaseSpec {
@@ -53,6 +53,15 @@ class PremisesCostsControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
+    }
+
+    "return correct backLink when 'from=IES' query param is present" in {
+      val result = premisesCostsController.show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      )
     }
   }
 

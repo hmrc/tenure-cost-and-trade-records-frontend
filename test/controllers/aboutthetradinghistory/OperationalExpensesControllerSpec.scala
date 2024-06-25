@@ -57,6 +57,15 @@ class OperationalExpensesControllerSpec extends TestBaseSpec {
       content should not include "/premises-costs"
     }
 
+    "return correct backLink when 'from=IES' query param is present" in {
+      val result = operationalExpensesController.show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      )
+    }
+
   }
 
   private def operationalExpensesForYear(idx: Int): Seq[(String, String)] =

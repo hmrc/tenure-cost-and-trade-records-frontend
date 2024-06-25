@@ -34,6 +34,16 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def customerCreditAccountsControllerNoBunkered(
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistoryNoBunkered)
+  ) = new CustomerCreditAccountsController(
+    stubMessagesControllerComponents(),
+    aboutYourTradingHistoryNavigator,
+    customerCreditAccountsView,
+    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+    mockSessionRepo
+  )
+
   "Customer credit account controller" should {
     "return 200" in {
       val result = customerCreditAccountsController().show(fakeRequest)
@@ -42,6 +52,17 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = customerCreditAccountsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 No Bunkered" in {
+      val result = customerCreditAccountsControllerNoBunkered().show(fakeRequest)
+      status(result) shouldBe OK
+    }
+
+    "return HTML No Bunkered" in {
+      val result = customerCreditAccountsControllerNoBunkered().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

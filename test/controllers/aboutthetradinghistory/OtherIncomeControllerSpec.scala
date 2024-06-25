@@ -57,6 +57,15 @@ class OtherIncomeControllerSpec extends TestBaseSpec {
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/gross-receipts-for-base-load"
     }
+
+    "return correct backLink when 'from=IES' query param is present" in {
+      val result = otherIncomeController.show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      )
+    }
   }
 
   "SUBMIT /" should {
