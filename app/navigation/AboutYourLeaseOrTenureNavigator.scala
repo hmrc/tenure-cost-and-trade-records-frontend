@@ -391,19 +391,31 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def tradeServicesListRouting: Session => Call = answers => {
-    val existingSection =
-      answers.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(getIndexOfTradeServices(answers)))
-    existingSection.flatMap(_.addAnotherService) match {
-      case Some(AnswerYes) =>
-        controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController
-          .show(Some(getIndexOfTradeServices(answers) + 1))
-      case Some(AnswerNo)  =>
-        controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
-      case _               =>
-        logger.warn(
-          s"Navigation for add another service reached without correct selection of conditions by controller"
+    def getLastTradeServicesIndex(session: Session): Option[Int] =
+      session.aboutLeaseOrAgreementPartThree.flatMap { aboutLeaseOrAgreementPartThree =>
+        aboutLeaseOrAgreementPartThree.tradeServices.lastOption.map(_ =>
+          aboutLeaseOrAgreementPartThree.tradeServices.size
         )
-        throw new RuntimeException("Invalid option exception for add another service conditions routing")
+      }
+    val existingSection                                          =
+      answers.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(getIndexOfTradeServices(answers)))
+    existingSection match {
+      case None =>
+        controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController
+          .show()
+      case _    =>
+        existingSection.flatMap(_.addAnotherService) match {
+          case Some(AnswerYes) =>
+            controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController
+              .show(getLastTradeServicesIndex(answers))
+          case Some(AnswerNo)  =>
+            controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
+          case _               =>
+            logger.warn(
+              s"Navigation for add another service reached without correct selection of conditions by controller"
+            )
+            throw new RuntimeException("Invalid option exception for add another service conditions routing")
+        }
     }
   }
 

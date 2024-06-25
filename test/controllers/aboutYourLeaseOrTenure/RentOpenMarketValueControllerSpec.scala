@@ -50,6 +50,17 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def rentOpenMarketValueController6020No(
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+  ) =
+    new RentOpenMarketValueController(
+      stubMessagesControllerComponents(),
+      mockAboutYourLeaseOrTenureNavigator,
+      rentOpenMarketValueView,
+      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = rentOpenMarketValueController().show(fakeRequest)
@@ -69,6 +80,17 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
 
     "return HTML 6020" in {
       val result = rentOpenMarketValueController6020().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6020 No" in {
+      val result = rentOpenMarketValueController6020No().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6020 No" in {
+      val result = rentOpenMarketValueController6020No().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
