@@ -25,7 +25,7 @@ import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutT
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
-import models.Session
+import models.{ForTypes, Session}
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import org.mockito.scalatest.MockitoSugar
@@ -114,6 +114,30 @@ trait TestBaseSpec
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
       removeConnectionDetails = Some(prefilledRemoveConnection),
       aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo)
+    )
+
+  val preFilledSession6015: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+      forType = ForTypes.for6015
+    )
+
+  val preFilledSession6020: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+      forType = ForTypes.for6020
+    )
+
+  val preFilledSession6076: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+      forType = ForTypes.for6076
     )
 
   def preEnrichedActionRefiner(
