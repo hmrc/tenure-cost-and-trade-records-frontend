@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ class CheckYourAnswersAboutTheTradingHistorySpec
     SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
   val sessionRequestFor6016: SessionRequest[AnyContentAsEmpty.type] =
-    SessionRequest(aboutYouAndTheProperty6016YesSession, fakeRequest)
+    SessionRequest(aboutYourTradingHistory6016YesSession, fakeRequest)
 
   val sessionRequestFor6020: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
@@ -64,6 +64,12 @@ class CheckYourAnswersAboutTheTradingHistorySpec
     )
   def createView6030: () => Html = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996030001"))(sessionRequestFor6030, messages)
+
+  def createView6076: () => Html = () =>
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996076001"))(
+      SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest),
+      messages
+    )
 
   def createViewUsingForm: Form[CheckYourAnswersAboutTheTradingHistory] => Html =
     (form: Form[CheckYourAnswersAboutTheTradingHistory]) =>
@@ -93,13 +99,21 @@ class CheckYourAnswersAboutTheTradingHistorySpec
       assert(loginButton == messages("button.label.continue"))
     }
   }
+
   "Check Your Answers About The Property view for 6016" must {
     behave like normalPage(createView6016, messageKeyPrefix)
   }
+
   "Check Your Answers About The Property view for 6020" must {
     behave like normalPage(createView6020, messageKeyPrefix)
   }
+
   "Check Your Answers About The Property view for 6030" must {
     behave like normalPage(createView6030, messageKeyPrefix)
   }
+
+  "Check Your Answers About The Property view for 6076" must {
+    behave like normalPage(createView6076, messageKeyPrefix)
+  }
+
 }

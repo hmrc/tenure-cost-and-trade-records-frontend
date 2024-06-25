@@ -20,10 +20,13 @@
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
+@import models.submissions.aboutthetradinghistory.GrossReceiptsExcludingVAT
 @import models.submissions.aboutthetradinghistory.OtherCosts
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
+@import models.submissions.aboutthetradinghistory.TurnoverSection6020
 @import models.submissions.aboutthetradinghistory.TurnoverSection6030
+@import models.submissions.aboutthetradinghistory.TurnoverSection6076
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
 @import util.NumberUtil._
@@ -42,6 +45,10 @@
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
+}
+
+@sectionAnswers1 = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
 }
 
 @forType = @{
@@ -397,6 +404,67 @@
     messages(message, size, if(size == 1) messages("checkYourAnswersAboutTheTradingHistory.card") else messages("checkYourAnswersAboutTheTradingHistory.cards"))
 }
 
+@financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
+    SummaryListRow(
+        key = Key(Text(messages("turnover.financialYearEnd"))),
+        value = Value(HtmlContent(
+            tableRow(
+                sectionAnswers.answers.map(financialYearEndDates).fold(Seq(""))(_.map(dateUtil.formatDayMonthAbbrYear))
+            ).body
+        )),
+        actions = Some(
+            Actions(items =
+                Seq(
+                    ActionItem(
+                        href = s"$editPage?from=CYA",
+                        content = Text(messages("label.change")),
+                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        attributes = Map(
+                            "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
+                        )
+                    )
+                )
+            )
+        ),
+        classes = "no-border-bottom"
+    )
+}
+
+@answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None) = @{
+    SummaryListRow(
+        key = Key(Text(messages(valueLabelKey))),
+        value = Value(HtmlContent(
+            tableRow(values).body + optionalParagraph(additionalParagraph).body
+        )),
+        classes = "no-border-bottom"
+    )
+}
+
+@pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
+    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+
+@govukSummaryList(SummaryList(rows =
+    financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
+))
+}
+
+@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => String, additionalParagraph: Option[String] = None) = @{
+    answer(valueLabelKey,
+        sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer),
+        additionalParagraph)
+}
+
+@answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => String, additionalParagraph: Option[String] = None) = @{
+    answer(valueLabelKey,
+        sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
+        additionalParagraph)
+}
+
+@answerGrossReceipts6076(valueLabelKey: String, getAnswer: GrossReceiptsExcludingVAT => Option[BigDecimal]) = @{
+    answer(valueLabelKey, sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty).map(getAnswer))
+}
+
+
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
 @govukSummaryList(SummaryList(rows =
@@ -449,6 +517,102 @@
                 )
         }
     ))
+}
+
+@if(forType == ForTypes.for6076) {
+
+    @pageAnswers("taskList.6076.powerGenerated",
+        aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
+        answer6076("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
+        answer6076("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated)
+    )
+
+    @pageAnswers("taskList.6076.grossReceipts",
+        aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
+        answerGrossReceipts6076("grossReceipts.electricitySales", _.electricitySales),
+        answerGrossReceipts6076("grossReceipts.feedInTariff", _.feedInTariff),
+        answerGrossReceipts6076("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.rocBuyout),
+        answerGrossReceipts6076("grossReceipts.rocRecycle", _.rocRecycle),
+        answerGrossReceipts6076("grossReceipts.contractForDifference", _.contractForDifference),
+        answerGrossReceipts6076("grossReceipts.capacityMarket", _.capacityMarket),
+        answerGrossReceipts6076("grossReceipts.balancingServices", _.balancingServices),
+        answerGrossReceipts6076("grossReceipts.embeddedBenefits", _.embeddedBenefits),
+        answerGrossReceipts6076("grossReceipts.total", _.total)
+    )
+
+    @pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
+        aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
+        answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.bioMass", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMass)),
+        answer6076("grossReceiptsForBaseLoad.byProductSales", _.grossReceiptsForBaseLoad.flatMap(_.byProductSales)),
+        answer6076("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales", _.grossReceiptsForBaseLoad.flatMap(_.hotWaterHeatOrSteamSales)),
+        answer6076("grossReceiptsForBaseLoad.gateIncomeFromWaste", _.grossReceiptsForBaseLoad.flatMap(_.gateIncomeFromWaste)),
+        answer6076("grossReceiptsForBaseLoad.total", _.grossReceiptsForBaseLoad.map(_.total))
+    )
+
+    @pageAnswers("turnover.6076.otherIncome",
+        aboutthetradinghistory.routes.OtherIncomeController.show(),
+        answer6076("turnover.6076.otherIncome", _.otherIncome, sectionAnswers1.answers.flatMap(_.otherIncomeDetails))
+    )
+
+    @pageAnswers("costOfSales6076.heading",
+        aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
+        answer6076("costOfSales6076.fuelOrFeedstock", _.costOfSales6076Sum.flatMap(_.fuelOrFeedstock)),
+        answer6076("costOfSales6076.importedPower", _.costOfSales6076Sum.flatMap(_.importedPower)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.TNuoS", _.costOfSales6076Sum.flatMap(_.TNuoS)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.BSuoS", _.costOfSales6076Sum.flatMap(_.BSuoS)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.extraCost",
+            _.costOfSales6076Sum.flatMap(_.other),
+            sectionAnswers1.answers.flatMap(_.otherSalesDetails)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.totalCosts", _.costOfSales6076Sum.map(_.total))
+    )
+
+    @pageAnswers("staffCosts.heading",
+        aboutthetradinghistory.routes.StaffCostsController.show(),
+        answer6076("staffCosts.wages", _.staffCosts.flatMap(_.wagesAndSalaries)),
+        answer6076("staffCosts.NI", _.staffCosts.flatMap(_.nationalInsurance)),
+        answer6076("staffCosts.pension", _.staffCosts.flatMap(_.pensionContributions)),
+        answer6076("staffCosts.remunerations", _.staffCosts.flatMap(_.remunerations)),
+        answer6076("staffCosts.total", _.staffCosts.map(_.total))
+    )
+
+    @pageAnswers("premisesCosts.heading",
+        aboutthetradinghistory.routes.PremisesCostsController.show(),
+        answer6076("premisesCosts.energyAndUtilities", _.premisesCosts.flatMap(_.energyAndUtilities)),
+        answer6076("premisesCosts.buildingRepairAndMaintenance", _.premisesCosts.flatMap(_.buildingRepairAndMaintenance)),
+        answer6076("premisesCosts.repairsAndRenewalsOfFixtures", _.premisesCosts.flatMap(_.repairsAndRenewalsOfFixtures)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.rent", _.premisesCosts.flatMap(_.rent)),
+        answer6076("premisesCosts.businessRates", _.premisesCosts.flatMap(_.businessRates)),
+        answer6076("premisesCosts.buildingInsurance", _.premisesCosts.flatMap(_.buildingInsurance)),
+        answer6076("premisesCosts.total", _.premisesCosts.map(_.total))
+    )
+
+    @pageAnswers("taskList.6076.operationalExpenses",
+        aboutthetradinghistory.routes.OperationalExpensesController.show(),
+        answer6076("checkYourAnswersAboutTheTradingHistory.advertising", _.operationalExpenses.flatMap(_.advertising)),
+        answer6076("turnover.6076.expenses.administration", _.operationalExpenses.flatMap(_.administration)),
+        answer6076("turnover.6076.expenses.insurance", _.operationalExpenses.flatMap(_.insurance)),
+        answer6076("turnover.6076.expenses.legalFees", _.operationalExpenses.flatMap(_.legalFees)),
+        answer6076("turnover.6076.expenses.interest", _.operationalExpenses.flatMap(_.interest)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.otherExpenses",
+            _.operationalExpenses.flatMap(_.other),
+            sectionAnswers1.answers.flatMap(_.otherOperationalExpensesDetails)),
+        answer6076("turnover.6076.expenses.total", _.operationalExpenses.map(_.total))
+    )
+
+    @pageAnswers("turnover.6076.headOfficeExpenses.heading",
+        aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
+        answer6076("turnover.6076.headOfficeExpenses.heading", _.headOfficeExpenses, sectionAnswers1.answers.flatMap(_.furtherInformationOrRemarks))
+    )
+
+    @pageAnswers("incomeExpenditureSummary6076.heading",
+        aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
+        answer("incomeExpenditureSummary6076.profitOrLoss",
+            sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076Data).getOrElse(Seq.empty).map(_.netProfitOrLoss)),
+        answer("incomeExpenditureSummary6076.label", Seq.empty,
+            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076).contains("confirmed")) "Yes" else "No")
+    )
+
 }
 
 @if(forType == ForTypes.for6030) {
@@ -629,81 +793,15 @@
         ))
     }
 
-    <h2 class="govuk-heading-m">@messages("turnover.6020.heading")</h2>
-
-    @govukSummaryList(SummaryList(rows =
-        Seq(
-            SummaryListRow(
-                key = Key(Text(messages("turnover.financialYearEnd"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))).body
-                )),
-                actions = Some(
-                    Actions(items =
-                        Seq(
-                            ActionItem(
-                                href = s"${aboutthetradinghistory.routes.NonFuelTurnoverController.show()}?from=CYA",
-                                content = Text(messages("label.change")),
-                                visuallyHiddenText = Some(messages("turnover.6020.heading")),
-                                attributes = Map(
-                                    "aria-label" -> s"${messages("label.change")} ${messages("turnover.6020.heading")}"
-                                )
-                            )
-                        )
-                    )
-                ),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.shop"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.shop.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.carWash"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.carWash.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.jetWash"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.jetWash.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.lottery"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.lottery.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.payPointOrZone"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.payPointOrZone.getOrElse(zeroBigDecimal).asMoney))).body
-                )),
-                classes = "no-border-bottom"
-            ),
-            SummaryListRow(
-                key = Key(Text(messages("turnover.6020.otherIncome"))),
-                value = Value(HtmlContent(
-                    tableRow(sectionAnswers.answers.flatMap(_.turnoverSections6020)
-                    .fold(Seq.empty[String])(_.map(_.otherIncome.getOrElse(zeroBigDecimal).asMoney))).body
-                ))
-            )
-        )
-    ))
+    @pageAnswers("turnover.6020.heading",
+        aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+        answer6020("turnover.6020.shop", _.shop),
+        answer6020("turnover.6020.carWash", _.carWash),
+        answer6020("turnover.6020.jetWash", _.jetWash),
+        answer6020("turnover.6020.lottery", _.lottery),
+        answer6020("checkYourAnswersAboutTheTradingHistory.payPointOrZone", _.payPointOrZone),
+        answer6020("turnover.6020.otherIncome", _.otherIncome)
+    )
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints")</h2>
 
