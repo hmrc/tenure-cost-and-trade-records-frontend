@@ -21,6 +21,7 @@
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
 
@@ -29,10 +30,13 @@
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukCheckboxes: GovukCheckboxes,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput
 )
 
-@(theForm: Form[IncludedInYourRentDetails], summary: Summary, fromLocation: String = "")(implicit request: Request[_], messages: Messages)
+
+@(theForm: Form[IncludedInYourRentDetails], summary: Summary, forTypes: String, fromLocation: String = "")(implicit request: Request[_], messages: Messages)
+
 
 @layout(
  pageHeading = messages("includedInYourRent.heading"),
@@ -64,7 +68,36 @@
                   CheckboxItem(
                       id = "vat",
                       content = Text(messages("label.includedInYourRent.vat")),
-                      value = "vat"
+                      value = "vat",
+                      conditionalHtml = forTypes match {
+                          case ForTypes.for6045 =>
+                              Some(
+                                  govukInput(
+                                      Input(
+                                          id = "vatValue",
+                                          name = "vatValue",
+                                          classes = "govuk-input--width-10",
+                                          value = theForm("vatValue").value,
+                                          prefix = Some(PrefixOrSuffix(
+                                              content = Text(messages("label.pound")))),
+                                          label = Label(
+                                              content = Text(messages("includedInYourRent.vatValue"))
+                                          ),
+                                          errorMessage = {
+                                              theForm.error("vatValue").orElse(
+                                                  if (theForm.globalErrors.exists(_.message == "error.includedInYourRent.vatValue.required"))
+                                                      Some(FormError("vatValue", "error.includedInYourRent.vatValue.required"))
+                                                  else
+                                                      None
+                                              ).map { error =>
+                                                  ErrorMessage(content = Text(Messages(error.message)))
+                                              }
+                                          }
+                                      )
+                                  )
+                              )
+                          case _ => None
+                      }
                   ),
                   CheckboxItem(
                       id = "nondomesticRates",
