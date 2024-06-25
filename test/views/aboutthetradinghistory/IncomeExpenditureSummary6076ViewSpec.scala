@@ -16,9 +16,9 @@
 
 package views.aboutthetradinghistory
 
-import form.aboutthetradinghistory.{IncomeExpenditureSummary6076Form, IncomeExpenditureSummaryForm}
-import models.pages.{IncomeExpenditureEntry, Summary}
-import models.submissions.aboutthetradinghistory.{IncomeExpenditure6076Entry, IncomeExpenditureSummary}
+import form.aboutthetradinghistory.IncomeExpenditureSummary6076Form
+import models.pages.Summary
+import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

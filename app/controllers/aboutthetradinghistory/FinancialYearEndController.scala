@@ -100,6 +100,12 @@ class FinancialYearEndController @Inject() (
                   isFinancialYearEndDayUnchanged,
                   isFinancialYearsListUnchanged
                 )
+              case ForTypes.for6045 =>
+                buildUpdatedData6045(
+                  aboutTheTradingHistory,
+                  newOccupationAndAccounting,
+                  isFinancialYearEndDayUnchanged
+                )
               case ForTypes.for6076 =>
                 buildUpdatedData6076(
                   aboutTheTradingHistory,
@@ -127,6 +133,11 @@ class FinancialYearEndController @Inject() (
                           .flatMap(_.turnoverSections6076)
                           .flatMap(_.headOption)
                           .exists(_.electricityGenerated.isDefined)
+                      ) || (
+                        request.sessionData.forType == ForTypes.for6045 && request.sessionData.aboutTheTradingHistoryPartOne
+                          .flatMap(_.turnoverSections6045)
+                          .flatMap(_.headOption)
+                          .exists(_.grossReceiptsFromCaravanFleetHire.isDefined)
                       ))
                   )
                   .getOrElse(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData))

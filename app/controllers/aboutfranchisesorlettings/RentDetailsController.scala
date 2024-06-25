@@ -28,7 +28,7 @@ import form.aboutfranchisesorlettings.RentDetailsForm.rentDetailsForm
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, RentDetails, TelecomMastLetting}
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext}
+import scala.concurrent.ExecutionContext
 
 class RentDetailsController @Inject() (
   mcc: MessagesControllerComponents,
@@ -107,16 +107,12 @@ class RentDetailsController @Inject() (
           val lettings                  = aboutFranchisesOrLettings.lettings.getOrElse(IndexedSeq.empty)
           if (index >= 0 && index < lettings.length) {
             if (navigator.from == "CYA") {
-              Redirect(
-                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-              )
+              Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
             } else {
-              Redirect(
-                controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(lettings.length - 1)
-              )
+              Redirect(routes.AddOrRemoveLettingController.show(lettings.length - 1))
             }
           } else {
-            Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(0))
+            Redirect(routes.AddOrRemoveLettingController.show(0))
           }
         }
       }
@@ -127,18 +123,18 @@ class RentDetailsController @Inject() (
     request: SessionRequest[AnyContent]
   ): String =
     if (navigator.from == "CYA") {
-      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {
       getUrlByType(existingDetails, idx)
     }
 
-  private def getUrlByType(existingDetails: Option[LettingPartOfProperty], idx: Option[Int]) = {
-    val backUrl = existingDetails match {
+  private def getUrlByType(existingDetails: Option[LettingPartOfProperty], idx: Option[Int]) =
+    existingDetails match {
       case Some(atm: ATMLetting)                      => routes.AtmLettingController.show(idx).url
       case Some(telecomMast: TelecomMastLetting)      => routes.TelecomMastLettingController.show(idx).url
       case Some(advertRight: AdvertisingRightLetting) => routes.AdvertisingRightLettingController.show(idx).url
       case Some(otherLetting: OtherLetting)           => routes.OtherLettingController.show(idx).url
+      case _                                          => routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     }
-    backUrl
-  }
+
 }

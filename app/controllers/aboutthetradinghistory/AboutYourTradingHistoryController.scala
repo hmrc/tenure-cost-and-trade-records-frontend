@@ -80,7 +80,8 @@ class AboutYourTradingHistoryController @Inject() (
                 navigator.from == "CYA" && occupationAndAccounting.financialYear.isDefined
                   && (
                     newFinancialYears(occupationAndAccounting) == previousFinancialYears ||
-                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6076
+                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6076 ||
+                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6045
                   )
               )
               .getOrElse(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData))

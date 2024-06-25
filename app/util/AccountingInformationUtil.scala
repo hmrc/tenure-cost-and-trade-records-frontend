@@ -60,6 +60,11 @@ object AccountingInformationUtil {
     request.sessionData.aboutTheTradingHistory
       .fold(Seq.empty[Int])(_.turnoverSections.map(_.financialYearEnd.getYear))
 
+  def previousFinancialYears6045(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+    request.sessionData.aboutTheTradingHistoryPartOne
+      .flatMap(_.turnoverSections6045)
+      .fold(Seq.empty[Int])(_.map(_.financialYearEnd.getYear))
+
   def previousFinancialYears6076(implicit request: SessionRequest[AnyContent]): Seq[Int] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
@@ -68,6 +73,48 @@ object AccountingInformationUtil {
   def newFinancialYears(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
     occupationAndAccounting.financialYear
       .fold(Seq.empty[Int])(financialYearsRequired(occupationAndAccounting.firstOccupy, _).map(_.getYear))
+
+  def buildUpdatedData6045(
+    aboutTheTradingHistory: AboutTheTradingHistory,
+    newOccupationAndAccounting: OccupationalAndAccountingInformation,
+    isFinancialYearEndDayUnchanged: Boolean
+  )(implicit request: SessionRequest[AnyContent]): Session = {
+
+    val firstOccupy                   = newOccupationAndAccounting.firstOccupy
+    val financialYear                 = newOccupationAndAccounting.financialYear.get
+    val originalTurnoverSections6045  =
+      request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).getOrElse(Seq.empty)
+    val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6045
+
+    val turnoverSections6045 =
+      if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
+        originalTurnoverSections6045
+      } else if (isFinancialYearsListUnchanged) {
+        (originalTurnoverSections6045 zip financialYearsRequired(firstOccupy, financialYear)).map {
+          case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
+        }
+      } else {
+        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
+          TurnoverSection6045(financialYearEnd = finYearEnd, tradingPeriod = 52)
+        }
+      }
+
+    val updatedData = updateAboutTheTradingHistory(
+      _.copy(
+        occupationAndAccountingInformation = Some(newOccupationAndAccounting),
+        checkYourAnswersAboutTheTradingHistory = sectionCompleted(isFinancialYearsListUnchanged, aboutTheTradingHistory)
+      )
+    )
+    updatedData.copy(
+      aboutTheTradingHistoryPartOne = Some(
+        updatedData.aboutTheTradingHistoryPartOne
+          .getOrElse(AboutTheTradingHistoryPartOne())
+          .copy(
+            turnoverSections6045 = Some(turnoverSections6045)
+          )
+      )
+    )
+  }
 
   def buildUpdatedData6076(
     aboutTheTradingHistory: AboutTheTradingHistory,
