@@ -75,15 +75,13 @@ object AccountingInformationUtil {
     isFinancialYearEndDayUnchanged: Boolean
   )(implicit request: SessionRequest[AnyContent]): Session = {
 
-    val firstOccupy                       = newOccupationAndAccounting.firstOccupy
-    val financialYear                     = newOccupationAndAccounting.financialYear.get
-    val originalTurnoverSections6076      =
+    val firstOccupy                   = newOccupationAndAccounting.firstOccupy
+    val financialYear                 = newOccupationAndAccounting.financialYear.get
+    val originalTurnoverSections6076  =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-    val originalGrossReceiptsExcludingVAT =
-      request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-    val isFinancialYearsListUnchanged     = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6076
+    val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6076
 
-    val turnoverSections6076      =
+    val turnoverSections6076 =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
         originalTurnoverSections6076
       } else if (isFinancialYearsListUnchanged) {
@@ -93,18 +91,6 @@ object AccountingInformationUtil {
       } else {
         financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection6076(financialYearEnd = finYearEnd, tradingPeriod = 52)
-        }
-      }
-    val grossReceiptsExcludingVAT =
-      if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        originalGrossReceiptsExcludingVAT
-      } else if (isFinancialYearsListUnchanged) {
-        (originalGrossReceiptsExcludingVAT zip financialYearsRequired(firstOccupy, financialYear)).map {
-          case (grossReceipt, finYearEnd) => grossReceipt.copy(financialYearEnd = finYearEnd)
-        }
-      } else {
-        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
-          GrossReceiptsExcludingVAT(financialYearEnd = finYearEnd)
         }
       }
 
@@ -119,8 +105,7 @@ object AccountingInformationUtil {
         updatedData.aboutTheTradingHistoryPartOne
           .getOrElse(AboutTheTradingHistoryPartOne())
           .copy(
-            turnoverSections6076 = Some(turnoverSections6076),
-            grossReceiptsExcludingVAT = Some(grossReceiptsExcludingVAT)
+            turnoverSections6076 = Some(turnoverSections6076)
           )
       )
     )

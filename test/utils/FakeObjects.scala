@@ -565,7 +565,8 @@ trait FakeObjects {
         headOfficeExpenses = 100,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad,
-        premisesCosts = premisesCosts
+        premisesCosts = premisesCosts,
+        grossReceiptsExcludingVAT = GrossReceiptsExcludingVAT(1, 10)
       ),
       TurnoverSection6076(
         today.minusYears(1),
@@ -577,7 +578,8 @@ trait FakeObjects {
         headOfficeExpenses = 200,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad,
-        premisesCosts = premisesCosts
+        premisesCosts = premisesCosts,
+        grossReceiptsExcludingVAT = GrossReceiptsExcludingVAT(2, 20)
       ),
       TurnoverSection6076(
         today.minusYears(2),
@@ -589,13 +591,9 @@ trait FakeObjects {
         headOfficeExpenses = 300,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad,
-        premisesCosts = premisesCosts
+        premisesCosts = premisesCosts,
+        grossReceiptsExcludingVAT = GrossReceiptsExcludingVAT(3, 30)
       )
-    ),
-    grossReceiptsExcludingVAT = Seq(
-      GrossReceiptsExcludingVAT(today),
-      GrossReceiptsExcludingVAT(today.minusYears(1)),
-      GrossReceiptsExcludingVAT(today.minusYears(2))
     ),
     otherIncomeDetails = "OtherIncome details",
     otherOperationalExpensesDetails = "Other expenses",

@@ -270,14 +270,14 @@
      @includes.taskListItem("gross-receipts", "taskList.6076.grossReceipts",
       controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
       section3Completed,
-      session.aboutTheTradingHistoryPartOne.flatMap(_.grossReceiptsExcludingVAT).flatMap(_.headOption).flatMap(_.electricitySales),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.grossReceiptsExcludingVAT),
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated).isEmpty
      )
      @includes.taskListItem("other-income", "turnover.6076.otherIncome",
       controllers.aboutthetradinghistory.routes.OtherIncomeController.show(),
       section3Completed,
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.otherIncome),
-      session.aboutTheTradingHistoryPartOne.flatMap(_.grossReceiptsExcludingVAT).flatMap(_.headOption).flatMap(_.electricitySales).isEmpty
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.grossReceiptsExcludingVAT).isEmpty
      )
      @includes.taskListItem("cost-of-sales", "costOfSales6076.heading",
       controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
@@ -312,7 +312,7 @@
      @includes.taskListItem("income-and-expenditure", "incomeExpenditureSummary6076.heading",
       controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
       section3Completed,
-      session.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureSummary6076),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076),
       session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses).isEmpty
      )
     }

@@ -20,12 +20,12 @@
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
-@import models.submissions.aboutthetradinghistory.GrossReceiptsExcludingVAT
 @import models.submissions.aboutthetradinghistory.OtherCosts
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import models.submissions.aboutthetradinghistory.TurnoverSection6020
 @import models.submissions.aboutthetradinghistory.TurnoverSection6030
+@import models.submissions.aboutthetradinghistory.TurnoverSection6045
 @import models.submissions.aboutthetradinghistory.TurnoverSection6076
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtil
@@ -91,6 +91,7 @@
     request.sessionData.forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case ForTypes.for6045 => request.sessionData.financialYearEndDates6045.map(_._1)
         case ForTypes.for6076 => request.sessionData.financialYearEndDates6076.map(_._1)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
@@ -454,14 +455,16 @@
         additionalParagraph)
 }
 
+@answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String, additionalParagraph: Option[String] = None) = @{
+    answer(valueLabelKey,
+        sectionAnswers1.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer),
+        additionalParagraph)
+}
+
 @answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => String, additionalParagraph: Option[String] = None) = @{
     answer(valueLabelKey,
         sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
         additionalParagraph)
-}
-
-@answerGrossReceipts6076(valueLabelKey: String, getAnswer: GrossReceiptsExcludingVAT => Option[BigDecimal]) = @{
-    answer(valueLabelKey, sectionAnswers1.answers.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty).map(getAnswer))
 }
 
 
@@ -479,14 +482,14 @@
             sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                 _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                 forType match {
-                    case ForTypes.for6020 | ForTypes.for6076 =>
+                    case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6076 =>
                         aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
                     case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                 },
                 "", ("valueAsHtml", _ => None))
 ))
 
-@if(!(Seq(ForTypes.for6020, ForTypes.for6076) contains forType)) {
+@if(!(Seq(ForTypes.for6020, ForTypes.for6045, ForTypes.for6076) contains forType)) {
     <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
@@ -519,6 +522,15 @@
     ))
 }
 
+@if(forType == ForTypes.for6045) {
+
+    @pageAnswers("grossReceipts.6045.caravanFleetHire.heading",
+        aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
+        answer6045("grossReceipts.6045.caravanFleetHire", _.grossReceiptsFromCaravanFleetHire),
+    )
+
+}
+
 @if(forType == ForTypes.for6076) {
 
     @pageAnswers("taskList.6076.powerGenerated",
@@ -529,15 +541,15 @@
 
     @pageAnswers("taskList.6076.grossReceipts",
         aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
-        answerGrossReceipts6076("grossReceipts.electricitySales", _.electricitySales),
-        answerGrossReceipts6076("grossReceipts.feedInTariff", _.feedInTariff),
-        answerGrossReceipts6076("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.rocBuyout),
-        answerGrossReceipts6076("grossReceipts.rocRecycle", _.rocRecycle),
-        answerGrossReceipts6076("grossReceipts.contractForDifference", _.contractForDifference),
-        answerGrossReceipts6076("grossReceipts.capacityMarket", _.capacityMarket),
-        answerGrossReceipts6076("grossReceipts.balancingServices", _.balancingServices),
-        answerGrossReceipts6076("grossReceipts.embeddedBenefits", _.embeddedBenefits),
-        answerGrossReceipts6076("grossReceipts.total", _.total)
+        answer6076("grossReceipts.electricitySales", _.grossReceiptsExcludingVAT.flatMap(_.electricitySales)),
+        answer6076("grossReceipts.feedInTariff", _.grossReceiptsExcludingVAT.flatMap(_.feedInTariff)),
+        answer6076("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.grossReceiptsExcludingVAT.flatMap(_.rocBuyout)),
+        answer6076("grossReceipts.rocRecycle", _.grossReceiptsExcludingVAT.flatMap(_.rocRecycle)),
+        answer6076("grossReceipts.contractForDifference", _.grossReceiptsExcludingVAT.flatMap(_.contractForDifference)),
+        answer6076("grossReceipts.capacityMarket", _.grossReceiptsExcludingVAT.flatMap(_.capacityMarket)),
+        answer6076("grossReceipts.balancingServices", _.grossReceiptsExcludingVAT.flatMap(_.balancingServices)),
+        answer6076("grossReceipts.embeddedBenefits", _.grossReceiptsExcludingVAT.flatMap(_.embeddedBenefits)),
+        answer6076("grossReceipts.total", _.grossReceiptsExcludingVAT.map(_.total))
     )
 
     @pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
@@ -607,10 +619,9 @@
 
     @pageAnswers("incomeExpenditureSummary6076.heading",
         aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
-        answer("incomeExpenditureSummary6076.profitOrLoss",
-            sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076Data).getOrElse(Seq.empty).map(_.netProfitOrLoss)),
+        answer6076("incomeExpenditureSummary6076.profitOrLoss", _.incomeAndExpenditureSummary.map(_.netProfitOrLoss)),
         answer("incomeExpenditureSummary6076.label", Seq.empty,
-            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureSummary6076).contains("confirmed")) "Yes" else "No")
+            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureConfirmation6076).contains("confirmed")) "Yes" else "No")
     )
 
 }

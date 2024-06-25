@@ -20,15 +20,15 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.IncomeExpenditureSummary6076Form.incomeExpenditureSummary6076Form
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, GrossReceiptsExcludingVAT, IncomeExpenditure6076Entry, IncomeExpenditureSummary, IncomeExpenditureSummary6076Data, IncomeExpenditureSummaryData, TotalPayrollCost, TurnoverSection6076}
+import models.submissions.aboutthetradinghistory.{IncomeAndExpenditureSummary6076, IncomeExpenditure6076Entry, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.IncomeExpenditureSummary6076Id
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
+import util.NumberUtil.zeroBigDecimal
 import views.html.aboutthetradinghistory.incomeExpenditureSummary6076
 
-import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,16 +44,16 @@ class IncomeExpenditureSummary6076Controller @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck { _ =>
-      val entries = request.sessionData.aboutTheTradingHistoryPartOne.map(createEntries).getOrElse(Seq.empty)
+    runWithSessionCheck { turnoverSections6076 =>
+      val entries = createEntries(turnoverSections6076)
 
       Future.successful(
         Ok(
           view(
-            request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureSummary6076) match {
-              case Some(incomeExpenditureSummary6076) =>
-                incomeExpenditureSummary6076Form.fill(incomeExpenditureSummary6076)
-              case _                                  => incomeExpenditureSummary6076Form
+            request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076) match {
+              case Some(incomeExpenditureConfirmation) =>
+                incomeExpenditureSummary6076Form.fill(incomeExpenditureConfirmation)
+              case _                                   => incomeExpenditureSummary6076Form
             },
             request.sessionData.toSummary,
             entries
@@ -64,44 +64,45 @@ class IncomeExpenditureSummary6076Controller @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[String](
-      incomeExpenditureSummary6076Form,
-      formWithErrors => {
-        val entries =
-          request.sessionData.aboutTheTradingHistoryPartOne.map(createEntries).getOrElse(Seq.empty)
-        BadRequest(view(formWithErrors, request.sessionData.toSummary, entries))
-      },
-      data => {
-        val tradingHistoryData =
-          request.sessionData.aboutTheTradingHistoryPartOne.map(createEntries).getOrElse(Seq.empty)
+    runWithSessionCheck { turnoverSections6076 =>
+      val entries = createEntries(turnoverSections6076)
 
-        val incomeExpenditureSummary6076Data: Seq[IncomeExpenditureSummary6076Data] = tradingHistoryData.map { entry =>
-          IncomeExpenditureSummary6076Data(
-            financialYearEnd = entry.financialYearEnd,
-            totalGrossReceipts = entry.totalGrossReceipts,
-            totalBaseLoadReceipts = entry.totalBaseLoadReceipts,
-            totalOtherIncome = entry.totalOtherIncome,
-            totalCostOfSales = entry.totalCostOfSales,
-            totalStaffCosts = entry.totalStaffCosts,
-            totalPremisesCosts = entry.totalPremisesCosts,
-            totalOperationalExpenses = entry.totalOperationalExpenses,
-            headOfficeExpenses = entry.headOfficeExpenses,
-            netProfitOrLoss = entry.netProfitOrLoss
-          )
+      continueOrSaveAsDraft[String](
+        incomeExpenditureSummary6076Form,
+        formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, entries)),
+        data => {
+          val updatedSections =
+            (entries zip turnoverSections6076).map { case (entry, previousSection) =>
+              previousSection.copy(
+                incomeAndExpenditureSummary = Some(
+                  IncomeAndExpenditureSummary6076(
+                    totalGrossReceipts = entry.totalGrossReceipts,
+                    totalBaseLoadReceipts = entry.totalBaseLoadReceipts,
+                    totalOtherIncome = entry.totalOtherIncome,
+                    totalCostOfSales = entry.totalCostOfSales,
+                    totalStaffCosts = entry.totalStaffCosts,
+                    totalPremisesCosts = entry.totalPremisesCosts,
+                    totalOperationalExpenses = entry.totalOperationalExpenses,
+                    headOfficeExpenses = entry.headOfficeExpenses,
+                    netProfitOrLoss = entry.netProfitOrLoss
+                  )
+                )
+              )
+            }
+
+          val updatedData = updateAboutTheTradingHistoryPartOne {
+            _.copy(
+              turnoverSections6076 = Some(updatedSections),
+              incomeExpenditureConfirmation6076 = Some(data)
+            )
+          }
+
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ => Redirect(navigator.nextPage(IncomeExpenditureSummary6076Id, updatedData).apply(updatedData)))
         }
-
-        val updatedData = updateAboutTheTradingHistoryPartOne { currentAboutTheTradingHistory =>
-          currentAboutTheTradingHistory.copy(
-            incomeExpenditureSummary6076 = Some(data),
-            incomeExpenditureSummary6076Data = Some(incomeExpenditureSummary6076Data)
-          )
-        }
-
-        session
-          .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(IncomeExpenditureSummary6076Id, updatedData).apply(updatedData)))
-      }
-    )
+      )
+    }
   }
 
   private def runWithSessionCheck(
@@ -113,24 +114,17 @@ class IncomeExpenditureSummary6076Controller @Inject() (
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
   private def createEntries(
-    aboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne
-  ): Seq[IncomeExpenditure6076Entry] = {
-
-    val grossReceiptsMap: Map[LocalDate, GrossReceiptsExcludingVAT] =
-      aboutTheTradingHistoryPartOne.grossReceiptsExcludingVAT
-        .getOrElse(Seq.empty)
-        .map(receipt => receipt.financialYearEnd -> receipt)
-        .toMap
-
-    aboutTheTradingHistoryPartOne.turnoverSections6076.getOrElse(Seq.empty).map { section =>
-      val grossReceipts       = grossReceiptsMap.get(section.financialYearEnd).map(_.total).getOrElse(BigDecimal(0))
-      val baseLoadReceipts    = section.grossReceiptsForBaseLoad.map(_.total).getOrElse(BigDecimal(0))
-      val otherIncome         = section.otherIncome.getOrElse(BigDecimal(0))
-      val costOfSales         = section.costOfSales6076Sum.map(_.total).getOrElse(BigDecimal(0))
-      val staffCosts          = section.staffCosts.map(_.total).getOrElse(BigDecimal(0))
-      val premisesCosts       = section.premisesCosts.map(_.total).getOrElse(BigDecimal(0))
-      val operationalExpenses = section.operationalExpenses.map(_.total).getOrElse(BigDecimal(0))
-      val headOfficeExpenses  = section.headOfficeExpenses.getOrElse(BigDecimal(0))
+    turnoverSections6076: Seq[TurnoverSection6076]
+  ): Seq[IncomeExpenditure6076Entry] =
+    turnoverSections6076.map { section =>
+      val grossReceipts       = section.grossReceiptsExcludingVAT.map(_.total).getOrElse(zeroBigDecimal)
+      val baseLoadReceipts    = section.grossReceiptsForBaseLoad.map(_.total).getOrElse(zeroBigDecimal)
+      val otherIncome         = section.otherIncome.getOrElse(zeroBigDecimal)
+      val costOfSales         = section.costOfSales6076Sum.map(_.total).getOrElse(zeroBigDecimal)
+      val staffCosts          = section.staffCosts.map(_.total).getOrElse(zeroBigDecimal)
+      val premisesCosts       = section.premisesCosts.map(_.total).getOrElse(zeroBigDecimal)
+      val operationalExpenses = section.operationalExpenses.map(_.total).getOrElse(zeroBigDecimal)
+      val headOfficeExpenses  = section.headOfficeExpenses.getOrElse(zeroBigDecimal)
 
       val netProfitOrLoss =
         (grossReceipts + baseLoadReceipts + otherIncome) - (costOfSales + staffCosts + premisesCosts + operationalExpenses + headOfficeExpenses)
@@ -156,5 +150,5 @@ class IncomeExpenditureSummary6076Controller @Inject() (
         netProfitOrLoss = netProfitOrLoss
       )
     }
-  }
+
 }

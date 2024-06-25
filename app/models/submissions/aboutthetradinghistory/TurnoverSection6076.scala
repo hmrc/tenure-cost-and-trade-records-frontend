@@ -34,8 +34,10 @@ case class TurnoverSection6076(
   operationalExpenses: Option[OperationalExpenses] = None,
   headOfficeExpenses: Option[BigDecimal] = None,
   staffCosts: Option[StaffCosts] = None,
+  grossReceiptsExcludingVAT: Option[GrossReceiptsExcludingVAT] = None,
   grossReceiptsForBaseLoad: Option[GrossReceiptsForBaseLoad] = None,
-  premisesCosts: Option[PremisesCosts] = None
+  premisesCosts: Option[PremisesCosts] = None,
+  incomeAndExpenditureSummary: Option[IncomeAndExpenditureSummary6076] = None
 )
 
 object TurnoverSection6076 {
