@@ -82,6 +82,8 @@ class WebsiteForPropertyController @Inject() (
     answers.forType match {
       case ForTypes.for6030 | ForTypes.for6020 =>
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show().url
       case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
     }
 }

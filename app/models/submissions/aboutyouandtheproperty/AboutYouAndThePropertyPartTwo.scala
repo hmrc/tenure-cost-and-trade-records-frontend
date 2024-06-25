@@ -23,7 +23,8 @@ import play.api.libs.json.{Json, OFormat}
 case class AboutYouAndThePropertyPartTwo(
   plantAndTechnology: Option[String] = None,
   generatorCapacity: Option[String] = None,
-  batteriesCapacity: Option[String] = None
+  batteriesCapacity: Option[String] = None,
+  propertyCurrentlyUsed: Option[PropertyCurrentlyUsed] = None
 )
 
 object AboutYouAndThePropertyPartTwo {
