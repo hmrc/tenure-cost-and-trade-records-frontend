@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec {
@@ -46,6 +46,22 @@ class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec {
       val result = grossReceiptsForBaseLoadController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=IES' query param is present" in {
+      val result = grossReceiptsForBaseLoadController.show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      )
+    }
+
+    "return correct back link if query param from=CYA is present" in {
+      val result = grossReceiptsForBaseLoadController.show(FakeRequest(GET, "/path?from=CYA"))
+      contentAsString(result) should include(
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
     }
   }
 

@@ -95,6 +95,10 @@ trait TestBaseSpec
     RequestTarget("", "", Map("from" -> Seq("CYA")))
   )
 
+  val fakeRequestFromIES: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
+    RequestTarget("", "", Map("from" -> Seq("IES")))
+  )
+
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
   def servicesConfig: ServicesConfig = app.injector.instanceOf[ServicesConfig]
