@@ -92,9 +92,8 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-
-    "return correct backLink when 'from=TL' query param is present" in {
-      val result = tradingNameOperatingFromPropertyController().show()(FakeRequest(GET, "/path?from=TL"))
+    "return correct back link if query param from=TL is present" in {
+      val result = tradingNameOperatingFromPropertyController().show(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
   }

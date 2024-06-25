@@ -726,8 +726,9 @@ error.underReview.required = Dewiswch ‘do’ os yw’r rhent yn cael ei adolyg
 
 # LEASE OR AGREEMENT DETAILS VAT
 ##############################
-includedInYourRent.heading = Are any of the following items included in your rent?
+includedInYourRent.heading = Are any of the following included in your rent?
 includedInYourRentApply.subheading = Select any that apply.
+includedInYourRent.vatValue = State the amount of VAT included in the rent
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
 label.waterCharges = A percentage of turnover of the occupier’s business
@@ -744,6 +745,8 @@ error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
 error.includedInYourRent.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 error.includedInYourRent.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
+error.includedInYourRent.vatValue.required = State the amount of VAT included in the rent
+error.includedInYourRent.vatValue.range = VAT figure must be a number like 100 or 100.00 and be greater than 0
 
 # CATERING OPERATION OR LETTING ACCOMMODATION
 ############################################

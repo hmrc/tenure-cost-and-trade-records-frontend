@@ -16,13 +16,19 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import play.api.data.Form
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class IncludedInYourRentControllerSpec extends TestBaseSpec {
+
+  val for6045 = "FOR6045"
+
+  import utils.FormBindingTestAssertions._
 
   def IncludedInYourRentController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
@@ -61,6 +67,31 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = IncludedInYourRentController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
       status(res) shouldBe BAD_REQUEST
+    }
+  }
+
+  "Form validation" should {
+
+    val baseData: Map[String, String] = Map(
+      "includedInYourRent[0]" -> "vat"
+    )
+
+    def mustContainInvalidVatValueErrorFor[T](field: String, f: Form[T]): Unit =
+      mustContainError(field, "error.includedInYourRent.vatValue.range", f)
+
+    def mustContainMissingVatValueErrorFor[T](field: String, f: Form[T]): Unit =
+      mustContainError(field, "error.includedInYourRent.vatValue.required", f)
+
+    "error if vatValue is invalid" in {
+      val formData = baseData + ("vatValue" -> "invalid")
+      val form     = includedInYourRentForm(for6045)(messages).bind(formData)
+      mustContainInvalidVatValueErrorFor("vatValue", form)
+    }
+
+    "error if vatValue is missing" in {
+      val formData = baseData + ("vatValue" -> "")
+      val form     = includedInYourRentForm(for6045)(messages).bind(formData)
+      mustContainMissingVatValueErrorFor("", form)
     }
   }
 }

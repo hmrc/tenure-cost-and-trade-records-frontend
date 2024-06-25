@@ -213,8 +213,8 @@ POST        /operational-expenses                                   controllers.
 GET         /head-office-expenses                                   controllers.aboutthetradinghistory.HeadOfficeExpensesController.show()
 POST        /head-office-expenses                                   controllers.aboutthetradinghistory.HeadOfficeExpensesController.submit()
 
-GET         /electric-vehicles-charging-points                      controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.show()
-POST        /electric-vehicles-charging-points                      controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.submit()
+GET         /electric-vehicle-charging-points                       controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.show()
+POST        /electric-vehicle-charging-points                       controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.submit()
 
 # Form 6015 routing start
 GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
