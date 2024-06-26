@@ -22,12 +22,9 @@ import play.api.data.Forms._
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-import java.time.LocalDate
-
 object GrossReceiptsExcludingVATForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[GrossReceiptsExcludingVAT] = mapping(
-    "financial-year-end"    -> ignored(LocalDate.EPOCH),
     "electricitySales"      -> turnoverSalesMappingWithYear("grossReceipts.electricitySales.sales", year),
     "feedInTariff"          -> turnoverSalesMappingWithYear("grossReceipts.feedInTariff.sales", year),
     "rocBuyout"             -> turnoverSalesMappingWithYear("grossReceipts.rocBuyout.sales", year),

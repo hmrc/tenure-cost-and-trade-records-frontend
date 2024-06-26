@@ -524,6 +524,10 @@ trait FakeObjects {
     UnusualCircumstances("unusual circumstances")
   )
 
+  val prefilledAboutYourTradingHistory6045: AboutTheTradingHistory = AboutTheTradingHistory(
+    OccupationalAndAccountingInformation(MonthsYearDuration(1, 2021), DayMonthsDuration(22, 4))
+  )
+
   val prefilledAboutYourTradingHistory6076: AboutTheTradingHistory = AboutTheTradingHistory(
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))
   )
@@ -552,6 +556,33 @@ trait FakeObjects {
     buildingInsurance = Some(BigDecimal(60000.00))
   )
 
+  val prefilledTurnoverSections6045: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
+    isFinancialYearEndDatesCorrect = true,
+    turnoverSections6045 = Seq(
+      TurnoverSection6045(
+        today,
+        52,
+        1000
+      ),
+      TurnoverSection6045(
+        today.minusYears(1),
+        52,
+        2000
+      ),
+      TurnoverSection6045(
+        today.minusYears(2),
+        52,
+        3000
+      )
+    )
+  )
+
+  val aboutYourTradingHistory6045YesSession: Session =
+    aboutYouAndTheProperty6045Session.copy(
+      aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
+      aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
+    )
+
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
@@ -565,7 +596,8 @@ trait FakeObjects {
         headOfficeExpenses = 100,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad,
-        premisesCosts = premisesCosts
+        premisesCosts = premisesCosts,
+        grossReceiptsExcludingVAT = GrossReceiptsExcludingVAT(1, 10)
       ),
       TurnoverSection6076(
         today.minusYears(1),
@@ -577,7 +609,8 @@ trait FakeObjects {
         headOfficeExpenses = 200,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad,
-        premisesCosts = premisesCosts
+        premisesCosts = premisesCosts,
+        grossReceiptsExcludingVAT = GrossReceiptsExcludingVAT(2, 20)
       ),
       TurnoverSection6076(
         today.minusYears(2),
@@ -589,13 +622,9 @@ trait FakeObjects {
         headOfficeExpenses = 300,
         staffCosts = staffCostsTestData,
         grossReceiptsForBaseLoad = grossReceiptsForBaseLoad,
-        premisesCosts = premisesCosts
+        premisesCosts = premisesCosts,
+        grossReceiptsExcludingVAT = GrossReceiptsExcludingVAT(3, 30)
       )
-    ),
-    grossReceiptsExcludingVAT = Seq(
-      GrossReceiptsExcludingVAT(today),
-      GrossReceiptsExcludingVAT(today.minusYears(1)),
-      GrossReceiptsExcludingVAT(today.minusYears(2))
     ),
     otherIncomeDetails = "OtherIncome details",
     otherOperationalExpensesDetails = "Other expenses",

@@ -65,6 +65,12 @@ class CheckYourAnswersAboutTheTradingHistorySpec
   def createView6030: () => Html = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996030001"))(sessionRequestFor6030, messages)
 
+  def createView6045: () => Html = () =>
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996045001"))(
+      SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest),
+      messages
+    )
+
   def createView6076: () => Html = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996076001"))(
       SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest),
@@ -110,6 +116,10 @@ class CheckYourAnswersAboutTheTradingHistorySpec
 
   "Check Your Answers About The Property view for 6030" must {
     behave like normalPage(createView6030, messageKeyPrefix)
+  }
+
+  "Check Your Answers About The Property view for 6045" must {
+    behave like normalPage(createView6045, messageKeyPrefix)
   }
 
   "Check Your Answers About The Property view for 6076" must {

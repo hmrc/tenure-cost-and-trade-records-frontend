@@ -18,10 +18,7 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
 
-import java.time.LocalDate
-
 case class GrossReceiptsExcludingVAT(
-  financialYearEnd: LocalDate,
   electricitySales: Option[BigDecimal] = None,
   feedInTariff: Option[BigDecimal] = None,
   rocBuyout: Option[BigDecimal] = None,
@@ -44,5 +41,5 @@ case class GrossReceiptsExcludingVAT(
 }
 
 object GrossReceiptsExcludingVAT {
-  implicit val format: OFormat[GrossReceiptsExcludingVAT] = Json.format[GrossReceiptsExcludingVAT]
+  implicit val format: OFormat[GrossReceiptsExcludingVAT] = Json.format
 }

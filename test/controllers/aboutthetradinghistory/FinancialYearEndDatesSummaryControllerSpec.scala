@@ -150,6 +150,47 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         )
       }
 
+      "redirect to the next page for 6045 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearEndDatesCorrect" -> "true"
+          )
+        val session6045     = aboutYourTradingHistory6045YesSession
+        val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+        val result =
+          financialYearEndDatesSummaryController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+            .show()
+            .url // TODO: Static caravans
+        )
+      }
+
+      "redirect to CYA for 6045 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearEndDatesCorrect" -> "true",
+            "from"                           -> "CYA"
+          )
+        val session6045     = aboutYourTradingHistory6045YesSession
+        val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+        val result =
+          financialYearEndDatesSummaryController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        )
+      }
+
       "redirect to the next page for 6076 " in {
         val requestWithForm = FakeRequest(POST, "/")
           .withFormUrlEncodedBody(

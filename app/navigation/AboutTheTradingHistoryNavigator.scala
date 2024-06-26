@@ -71,15 +71,18 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     s.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
       case Some(true) =>
         s.forType match {
-          case ForTypes.for6020 | ForTypes.for6076 =>
+          case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6076 =>
             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-          case _                                   => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+          case _                                                      => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
         }
 
       case _ =>
         s.forType match {
           case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
           case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
+          case ForTypes.for6045 =>
+            aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+              .show() // TODO: Static caravans
           case ForTypes.for6076 => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
           case _                => aboutthetradinghistory.routes.TurnoverController.show()
         }
@@ -102,6 +105,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     _.forType match {
       case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
+      case ForTypes.for6045 =>
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show() // TODO: Static caravans
       case ForTypes.for6076 => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
       case _                => aboutthetradinghistory.routes.TurnoverController.show()
     }

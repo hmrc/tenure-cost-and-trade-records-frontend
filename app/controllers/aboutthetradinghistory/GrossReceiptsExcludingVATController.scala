@@ -16,19 +16,18 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.GrossReceiptsExcludingVATForm.grossReceiptsExcludingVATForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, GrossReceiptsExcludingVAT}
+import models.submissions.aboutthetradinghistory.{GrossReceiptsExcludingVAT, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.GrossReceiptsExcludingVatId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.grossReceiptsExcludingVAT
 
-import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -43,59 +42,59 @@ class GrossReceiptsExcludingVATController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    request.sessionData.aboutTheTradingHistory
-      .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        val grossReceiptsExcludingVAT =
-          request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.grossReceiptsExcludingVAT).getOrElse(Seq.empty)
-        Ok(
-          view(
-            grossReceiptsExcludingVATForm(
-              years(request.sessionData.aboutTheTradingHistoryPartOne.getOrElse(new AboutTheTradingHistoryPartOne()))
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheck { turnoverSections6076 =>
+      val grossReceiptsExcludingVATSeq = turnoverSections6076.flatMap(_.grossReceiptsExcludingVAT)
+
+      Ok(
+        view(
+          grossReceiptsExcludingVATForm(years(turnoverSections6076)).fill(grossReceiptsExcludingVATSeq),
+          navigator.from
+        )
+      )
+    }
+  }
+
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    runWithSessionCheck { turnoverSections6076 =>
+      continueOrSaveAsDraft[Seq[GrossReceiptsExcludingVAT]](
+        grossReceiptsExcludingVATForm(years(turnoverSections6076)),
+        formWithErrors =>
+          BadRequest(
+            view(
+              formWithErrors,
+              navigator.from
             )
-              .fill(grossReceiptsExcludingVAT),
-            navigator.from
+          ),
+        success => {
+          val updatedSections =
+            (success zip turnoverSections6076).map { case (grossReceipts, previousSection) =>
+              previousSection.copy(grossReceiptsExcludingVAT = Some(grossReceipts))
+            }
+
+          val updatedData = updateAboutTheTradingHistoryPartOne(
+            _.copy(
+              turnoverSections6076 = Some(updatedSections)
+            )
           )
-        )
-      }
 
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ => Redirect(navigator.nextPage(GrossReceiptsExcludingVatId, updatedData).apply(updatedData)))
+        }
+      )
+    }
   }
 
-  def submit                                                                                                      = (Action andThen withSessionRefiner).async { implicit request =>
-    request.sessionData.aboutTheTradingHistory
-      .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
-        val aboutTheTradingHistoryPartOne =
-          request.sessionData.aboutTheTradingHistoryPartOne.getOrElse(new AboutTheTradingHistoryPartOne())
-        continueOrSaveAsDraft[Seq[GrossReceiptsExcludingVAT]](
-          grossReceiptsExcludingVATForm(years(aboutTheTradingHistoryPartOne)),
-          formWithErrors =>
-            BadRequest(
-              view(
-                formWithErrors,
-                navigator.from
-              )
-            ),
-          success => {
-            val grossReceipts =
-              (success zip financialYearEndDates(aboutTheTradingHistoryPartOne)).map {
-                case (grossReceipt, finYearEnd) =>
-                  grossReceipt.copy(financialYearEnd = finYearEnd)
-              }
+  private def runWithSessionCheck(
+    action: Seq[TurnoverSection6076] => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+    request.sessionData.aboutTheTradingHistoryPartOne
+      .flatMap(_.turnoverSections6076)
+      .filter(_.nonEmpty)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
-            val updatedData =
-              updateAboutTheTradingHistoryPartOne(_.copy(grossReceiptsExcludingVAT = Some(grossReceipts)))
-            session
-              .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(GrossReceiptsExcludingVatId, updatedData).apply(updatedData)))
-          }
-        )
-      }
-  }
-  private def financialYearEndDates(aboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne): Seq[LocalDate] =
-    aboutTheTradingHistoryPartOne.turnoverSections6076.getOrElse(Seq.empty).map(_.financialYearEnd)
+  private def years(turnoverSections6076: Seq[TurnoverSection6076]): Seq[String] =
+    turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 
-  private def years(aboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne): Seq[String] =
-    financialYearEndDates(aboutTheTradingHistoryPartOne).map(_.getYear.toString)
 }

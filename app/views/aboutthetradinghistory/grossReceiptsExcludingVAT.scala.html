@@ -76,7 +76,7 @@
     <span
     data-total-prefix="grossReceiptsExcludingVAT[@idx]."
     data-total-items="electricitySales,feedInTariff,rocBuyout,rocRecycle,contractForDifference,capacityMarket,balancingServices,embeddedBenefits">
-    @form.value.fold("")(_(idx).total.asMoney)
+    @form.value.flatMap(_.lift(idx)).fold("")(_.total.asMoney)
     </span>
 }
 

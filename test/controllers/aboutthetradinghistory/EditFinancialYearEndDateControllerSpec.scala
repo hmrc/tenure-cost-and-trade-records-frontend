@@ -18,6 +18,7 @@ package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
 import controllers.aboutthetradinghistory
+import models.Session
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -29,8 +30,8 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
   def editFinancialYearEndDateController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: String = "FOR6010",
-    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ) = new EditFinancialYearEndDateController(
+    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None
+  ): EditFinancialYearEndDateController = new EditFinancialYearEndDateController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     editFinancialYearEndDateView,
@@ -41,6 +42,13 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
     ),
     mockSessionRepo
   )
+
+  def editFinancialYearEndDateController(session: Session): EditFinancialYearEndDateController =
+    editFinancialYearEndDateController(
+      session.aboutTheTradingHistory,
+      session.forType,
+      session.aboutTheTradingHistoryPartOne
+    )
 
   "EditFinancialYearEndDateController" should {
     "return 200" in {
@@ -195,6 +203,45 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         )
       }
 
+      "redirect to the next page for 6045" in {
+        val index           = 0
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "financialYearEnd.day"   -> "22",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022"
+          )
+        val session6045     = aboutYourTradingHistory6045YesSession
+        val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+        val result = editFinancialYearEndDateController(session6045).submit(index)(sessionRequest)
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+        )
+      }
+
+      "redirect to CYA for 6045" in {
+        val index           = 0
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "financialYearEnd.day"   -> "22",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022",
+            "from"                   -> "CYA"
+          )
+        val session6045     = aboutYourTradingHistory6045YesSession
+        val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+        val result = editFinancialYearEndDateController(session6045).submit(index)(sessionRequest)
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        )
+      }
+
       "redirect to the next page for 6076" in {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/")
@@ -206,9 +253,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val session6076     = aboutYourTradingHistory6076YesSession
         val sessionRequest  = SessionRequest(session6076, requestWithForm)
 
-        val result = editFinancialYearEndDateController(session6076.aboutTheTradingHistory, session6076.forType).submit(
-          index
-        )(sessionRequest)
+        val result = editFinancialYearEndDateController(session6076).submit(index)(sessionRequest)
 
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -228,10 +273,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         val session6076     = aboutYourTradingHistory6076YesSession
         val sessionRequest  = SessionRequest(session6076, requestWithForm)
 
-        val result =
-          editFinancialYearEndDateController(session6076.aboutTheTradingHistory, session6076.forType).submit(index)(
-            sessionRequest
-          )
+        val result = editFinancialYearEndDateController(session6076).submit(index)(sessionRequest)
 
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
