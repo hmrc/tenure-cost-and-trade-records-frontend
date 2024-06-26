@@ -561,18 +561,15 @@ trait FakeObjects {
     turnoverSections6045 = Seq(
       TurnoverSection6045(
         today,
-        52,
-        1000
+        grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire()
       ),
       TurnoverSection6045(
         today.minusYears(1),
-        52,
-        2000
+        grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire(51, 2000)
       ),
       TurnoverSection6045(
         today.minusYears(2),
-        52,
-        3000
+        grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire(50, 3000)
       )
     )
   )

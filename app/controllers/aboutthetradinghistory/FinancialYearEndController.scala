@@ -137,7 +137,7 @@ class FinancialYearEndController @Inject() (
                         request.sessionData.forType == ForTypes.for6045 && request.sessionData.aboutTheTradingHistoryPartOne
                           .flatMap(_.turnoverSections6045)
                           .flatMap(_.headOption)
-                          .exists(_.grossReceiptsFromCaravanFleetHire.isDefined)
+                          .exists(_.grossReceiptsCaravanFleetHire.isDefined)
                       ))
                   )
                   .getOrElse(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData))
