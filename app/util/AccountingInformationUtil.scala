@@ -95,7 +95,7 @@ object AccountingInformationUtil {
         }
       } else {
         financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
-          TurnoverSection6045(financialYearEnd = finYearEnd, tradingPeriod = 52)
+          TurnoverSection6045(financialYearEnd = finYearEnd)
         }
       }
 

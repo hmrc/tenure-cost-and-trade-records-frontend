@@ -526,7 +526,9 @@
 
     @pageAnswers("grossReceipts.6045.caravanFleetHire.heading",
         aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show(), // TODO: Gross receipts from caravan fleet hire
-        answer6045("grossReceipts.6045.caravanFleetHire", _.grossReceiptsFromCaravanFleetHire),
+        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+            t => s"${t.grossReceiptsCaravanFleetHire.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+        answer6045("grossReceipts.6045.caravanFleetHire", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
     )
 
 }

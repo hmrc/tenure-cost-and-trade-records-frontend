@@ -91,24 +91,25 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
         ),
       data =>
         aboutTheTradingHistoryData
-        .flatMap(_.bunkerFuelCardsDetails)
-        .filter(_.isDefinedAt(index))
+          .flatMap(_.bunkerFuelCardsDetails)
+          .filter(_.isDefinedAt(index))
           .fold(Future.unit) { existingCards =>
             val updatedCards =
               existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(data)))
-            val updatedData = updateAboutTheTradingHistory(_.copy(bunkerFuelCardsDetails = Some(updatedCards)))
+            val updatedData  = updateAboutTheTradingHistory(_.copy(bunkerFuelCardsDetails = Some(updatedCards)))
             session.saveOrUpdate(updatedData)
           }
           .map(_ =>
             if (data == AnswerYes) Redirect(routes.BunkerFuelCardDetailsController.show())
             else
               Redirect(
-                navigator.nextPage(AddAnotherBunkerFuelCardsDetailsId, request.sessionData)
+                navigator
+                  .nextPage(AddAnotherBunkerFuelCardsDetailsId, request.sessionData)
                   .apply(request.sessionData)
-               )
               )
-              )
-        }
+          )
+    )
+  }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     getCardName(idx)

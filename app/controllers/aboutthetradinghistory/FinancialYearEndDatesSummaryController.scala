@@ -104,7 +104,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6045)
           .flatMap(_.headOption)
-          .exists(_.grossReceiptsFromCaravanFleetHire.isDefined)
+          .exists(_.grossReceiptsCaravanFleetHire.isDefined)
       case ForTypes.for6076 =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6076)
