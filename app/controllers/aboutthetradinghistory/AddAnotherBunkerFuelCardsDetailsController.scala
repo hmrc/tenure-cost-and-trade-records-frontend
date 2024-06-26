@@ -89,46 +89,26 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             )
           )
         ),
-      data => {
-        def updateAndRedirect(
-          updatedCards: IndexedSeq[BunkerFuelCardsDetails],
-          index: Int
-        )(implicit request: SessionRequest[AnyContent]): Future[Result] = {
-          val updatedTradingHistory = request.sessionData.aboutTheTradingHistory
-            .getOrElse(AboutTheTradingHistory())
-            .copy(bunkerFuelCardsDetails = Some(updatedCards))
-
-          val updatedSessionData = request.sessionData.copy(aboutTheTradingHistory = Some(updatedTradingHistory))
-          session.saveOrUpdate(updatedSessionData).map { _ =>
-            if (updatedCards.lastOption.flatMap(_.addAnotherBunkerFuelCardDetails).contains(AnswerYes)) {
-              Redirect(routes.BunkerFuelCardDetailsController.show())
-            } else {
-              Redirect(
-                navigator.nextPage(AddAnotherBunkerFuelCardsDetailsId, updatedSessionData).apply(updatedSessionData)
-              )
-            }
-          }
-        }
-
-        val existingCards =
-          request.sessionData.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails).getOrElse(IndexedSeq.empty)
-
-        if (data == AnswerYes) {
-          if (existingCards.isDefinedAt(index)) {
+      data =>
+        aboutTheTradingHistoryData
+        .flatMap(_.bunkerFuelCardsDetails)
+        .filter(_.isDefinedAt(index))
+          .fold(Future.unit) { existingCards =>
             val updatedCards =
               existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(data)))
-            updateAndRedirect(updatedCards, index)
-          } else {
-            Redirect(routes.BunkerFuelCardDetailsController.show())
+            val updatedData = updateAboutTheTradingHistory(_.copy(bunkerFuelCardsDetails = Some(updatedCards)))
+            session.saveOrUpdate(updatedData)
           }
-        } else {
-          val updatedCards =
-            existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(data)))
-          updateAndRedirect(updatedCards, index)
+          .map(_ =>
+            if (data == AnswerYes) Redirect(routes.BunkerFuelCardDetailsController.show())
+            else
+              Redirect(
+                navigator.nextPage(AddAnotherBunkerFuelCardsDetailsId, request.sessionData)
+                  .apply(request.sessionData)
+               )
+              )
+              )
         }
-      }
-    )
-  }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     getCardName(idx)
