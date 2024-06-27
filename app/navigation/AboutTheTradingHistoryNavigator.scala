@@ -155,6 +155,20 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
+  private def otherHolidayAccommodationRouting(answers: Session): Call =
+    //TODO this needs updating once next pages are implemented
+    answers.aboutTheTradingHistoryPartOne.flatMap(
+      _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)
+    ) match {
+      case Some(AnswerYes) => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for other holiday accommodation reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for other holiday accommodation")
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                   -> financialYearEndRouting,
@@ -194,6 +208,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     GrossReceiptsForBaseLoadId               -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
     OperationalExpensesId                    -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
     HeadOfficeExpensesId                     -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
+    OtherHolidayAccommodationId              -> otherHolidayAccommodationRouting,
     CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
   )
 

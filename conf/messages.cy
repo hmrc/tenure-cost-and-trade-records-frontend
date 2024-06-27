@@ -2071,6 +2071,18 @@ error.premisesCosts.buildingInsurance.required = Enter 0 if you did not have any
 error.premisesCosts.buildingInsurance.range = Building insurance in the year ending {0} must be a number, for example 100 or 100.00
 error.premisesCosts.buildingInsurance.negative = Building insurance in the year ending {0} cannot be a negative number
 
+# OTHER HOLIDAY ACCOMMODATION (FORM 6045/46)
+####################################
+otherHolidayAccommodation.heading = Other holiday accommodation
+otherHolidayAccommodation.question = Are there any chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units located on your site?
+help.otherHolidayAccommodation.title = Help with defining other holiday accommodation
+help.otherHolidayAccommodation.p1 = For the purpose of this declaration, other holiday accommodation is defined as having the following characteristics:
+help.otherHolidayAccommodation.list1.p1 = permanent structures
+help.otherHolidayAccommodation.list1.p2 = brought onto site in more than two parts
+help.otherHolidayAccommodation.list1.p3 = assembled on site
+help.otherHolidayAccommodation.list1.p4 = cannot be transported by road once assembled
+error.otherHolidayAccommodation.required =  Select yes if there are other holiday letting units located on your site.
+
 #########################
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)

@@ -216,6 +216,12 @@ POST        /head-office-expenses                                   controllers.
 GET         /electric-vehicle-charging-points                       controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.show()
 POST        /electric-vehicle-charging-points                       controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.submit()
 
+# FORM 6045/46 routing start
+GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
+POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
+
+# FORM 6045/46 routing end
+
 # Form 6015 routing start
 GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
 POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()

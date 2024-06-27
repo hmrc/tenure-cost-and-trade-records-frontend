@@ -30,7 +30,8 @@ case class AboutTheTradingHistoryPartOne(
   furtherInformationOrRemarks: Option[String] = None,
   incomeExpenditureConfirmation6076: Option[String] = None,
   // 6045/6046
-  turnoverSections6045: Option[Seq[TurnoverSection6045]] = None
+  turnoverSections6045: Option[Seq[TurnoverSection6045]] = None,
+  otherHolidayAccommodation: Option[OtherHolidayAccommodation] = None
 )
 
 object AboutTheTradingHistoryPartOne {
@@ -49,5 +50,13 @@ object AboutTheTradingHistoryPartOne {
 
     sessionRequest.sessionData.copy(aboutTheTradingHistoryPartOne = updateAboutTheTradingHistoryPartOne)
   }
+  def updateOtherHolidayAccommodation(
+    update: OtherHolidayAccommodation => OtherHolidayAccommodation
+  )(implicit sessionRequest: SessionRequest[_]): Session =
+    updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
+      val otherHolidayAccommodation =
+        update(aboutTheTradingHistoryPartOne.otherHolidayAccommodation.getOrElse(OtherHolidayAccommodation()))
+      aboutTheTradingHistoryPartOne.copy(otherHolidayAccommodation = Some(otherHolidayAccommodation))
+    }
 
 }
