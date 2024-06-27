@@ -85,7 +85,7 @@ class NonFuelTurnoverController @Inject() (
             .saveOrUpdate(updatedData)
             .map { _ =>
               navigator.cyaPage
-                .filter(_ => navigator.from == "CYA" && tradingHistory.electricVehicleChargingPoints.isDefined)
+                  .filter(_ => navigator.from == "CYA" && tradingHistory.electricVehicleChargingPoints.isDefined)
                 .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
             }
             .map(Redirect)
