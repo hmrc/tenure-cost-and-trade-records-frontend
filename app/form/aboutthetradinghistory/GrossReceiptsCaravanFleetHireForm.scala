@@ -18,11 +18,9 @@ package form.aboutthetradinghistory
 
 import form.MappingSupport._
 import models.submissions.aboutthetradinghistory.GrossReceiptsCaravanFleetHire
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
-
-import scala.util.Try
 
 /**
   * 6045/6046 Trading history form - Gross receipts from static caravan fleet hire.
@@ -33,13 +31,7 @@ object GrossReceiptsCaravanFleetHireForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[GrossReceiptsCaravanFleetHire] =
     mapping(
-      "weeks"         -> default(text, "")
-        .verifying(messages("error.weeksMapping.blank", year), _.trim.nonEmpty)
-        .transform[Int](
-          str => Try(str.toInt).getOrElse(-1),
-          _.toString
-        )
-        .verifying(messages("error.weeksMapping.invalid", year), (0 to 52).contains(_)),
+      "weeks"         -> tradingPeriodWeeks(year),
       "grossReceipts" -> turnoverSalesMappingWithYear("turnover.6045.caravanFleetHire.grossReceipts", year)
     )(GrossReceiptsCaravanFleetHire.apply)(GrossReceiptsCaravanFleetHire.unapply)
 

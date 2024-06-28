@@ -21,8 +21,6 @@ import play.api.data.Forms.{default, text, tuple}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-import scala.util.Try
-
 /**
   * 6076 Electricity generated form.
   *
@@ -31,13 +29,7 @@ import scala.util.Try
 object ElectricityGeneratedForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[(Int, String)] = tuple(
-    "weeks"                -> default(text, "")
-      .verifying(messages("error.weeksMapping.blank", year), _.trim.nonEmpty)
-      .transform[Int](
-        str => Try(str.toInt).getOrElse(-1),
-        _.toString
-      )
-      .verifying(messages("error.weeksMapping.invalid", year), (0 to 52).contains(_)),
+    "weeks"                -> tradingPeriodWeeks(year),
     "electricityGenerated" -> default(text, "")
       .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
   )
