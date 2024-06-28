@@ -1107,6 +1107,17 @@ trait FakeObjects {
 
   val prefilledAboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne()
 
+  val prefilledOtherHolidayAccommodationYes: Option[OtherHolidayAccommodation] = Some(
+    OtherHolidayAccommodation(Some(AnswerYes))
+  )
+  val prefilledOtherHolidayAccommodationNo: Option[OtherHolidayAccommodation]  = Some(
+    OtherHolidayAccommodation(Some(AnswerNo))
+  )
+  val prefilledAboutTheTradingHistoryPartOneYes                                =
+    prefilledAboutTheTradingHistoryPartOne.copy(otherHolidayAccommodation = prefilledOtherHolidayAccommodationYes)
+  val prefilledAboutTheTradingHistoryPartOneNo                                 =
+    prefilledAboutTheTradingHistoryPartOne.copy(otherHolidayAccommodation = prefilledOtherHolidayAccommodationNo)
+
   val prefilledVacantProperties = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
