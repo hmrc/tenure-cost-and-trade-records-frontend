@@ -1,0 +1,130 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.GrossReceiptsCaravanFleetHire
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtil
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        dateUtil: DateUtil
+)
+
+
+@(form: Form[Seq[GrossReceiptsCaravanFleetHire]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+
+
+@rowLabel(labelKey: String, hintKey: String) = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span> @messages("turnover.6045.excludingVAT")
+    </p>
+    @if(hintKey.nonEmpty) {
+        <span class="govuk-caption-m">@messages(hintKey)</span>
+    }
+}
+
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey, hintKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        classes = "govuk-input--width-10",
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))
+                )
+            )
+        )
+    )
+}
+
+@layout(
+    pageHeading = messages("turnover.6045.caravanFleetHire.grossReceipts.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6045.caravanFleetHire.p1")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("turnover.6045.caravanFleetHire.list1.item1")</li>
+        <li>@messages("turnover.6045.caravanFleetHire.list1.item2")</li>
+    </ul>
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6045.caravanFleetHire.p2")</p>
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.submit()) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("turnover.tradingPeriod"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "2",
+                                                "aria-label" -> messages("turnover.tradingPeriod")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("turnover.weeks"))
+                                            ))
+                                        ).withFormField(form(s"turnover[$idx].weeks")))
+                                    )
+                                )
+                            ),
+                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravanFleetHire.grossReceipts")
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

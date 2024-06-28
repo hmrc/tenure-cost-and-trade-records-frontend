@@ -91,7 +91,7 @@
     request.sessionData.forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 => request.sessionData.financialYearEndDates6045.map(_._1)
+        case ForTypes.for6045 | ForTypes.for6046 => request.sessionData.financialYearEndDates6045.map(_._1)
         case ForTypes.for6076 => request.sessionData.financialYearEndDates6076.map(_._1)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
@@ -482,14 +482,14 @@
             sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                 _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                 forType match {
-                    case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6076 =>
+                    case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6076 =>
                         aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
                     case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                 },
                 "", ("valueAsHtml", _ => None))
 ))
 
-@if(!(Seq(ForTypes.for6020, ForTypes.for6045, ForTypes.for6076) contains forType)) {
+@if(!(Seq(ForTypes.for6020, ForTypes.for6045, ForTypes.for6046, ForTypes.for6076) contains forType)) {
     <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
@@ -522,10 +522,10 @@
     ))
 }
 
-@if(forType == ForTypes.for6045) {
+@if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
 
     @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
-        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show(), // TODO: GrossReceiptsFromCaravanFleetHireController
+        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
         answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
             t => s"${t.grossReceiptsCaravanFleetHire.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
         answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),

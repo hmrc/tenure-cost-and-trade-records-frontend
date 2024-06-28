@@ -53,7 +53,7 @@ class EditFinancialYearEndDateController @Inject() (
             case ForTypes.for6020 =>
               aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-            case ForTypes.for6045 =>
+            case ForTypes.for6045 | ForTypes.for6046 =>
               request.sessionData.aboutTheTradingHistoryPartOne
                 .flatMap(_.turnoverSections6045)
                 .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
@@ -80,7 +80,7 @@ class EditFinancialYearEndDateController @Inject() (
     request.sessionData.forType match {
       case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.exists(_.nonEmpty)
       case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
-      case ForTypes.for6045 =>
+      case ForTypes.for6045 | ForTypes.for6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).exists(_.nonEmpty)
       case ForTypes.for6076 =>
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).exists(_.nonEmpty)
@@ -95,7 +95,7 @@ class EditFinancialYearEndDateController @Inject() (
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case ForTypes.for6030 =>
           request.sessionData.aboutTheTradingHistory.get.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 =>
+        case ForTypes.for6045 | ForTypes.for6046 =>
           request.sessionData.aboutTheTradingHistoryPartOne
             .flatMap(_.turnoverSections6045)
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
@@ -136,7 +136,7 @@ class EditFinancialYearEndDateController @Inject() (
                 buildUpdateData6020(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
               case ForTypes.for6030 =>
                 buildUpdateData6030(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
-              case ForTypes.for6045 => buildUpdatedData6045(index, data, newOccupationAndAccounting)
+              case ForTypes.for6045 | ForTypes.for6046 => buildUpdatedData6045(index, data, newOccupationAndAccounting)
               case ForTypes.for6076 => buildUpdatedData6076(index, data, newOccupationAndAccounting)
               case _                => buildUpdateData(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
             }
@@ -162,7 +162,7 @@ class EditFinancialYearEndDateController @Inject() (
       case ForTypes.for6020 =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
       case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
-      case ForTypes.for6045 =>
+      case ForTypes.for6045 | ForTypes.for6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6045)
           .flatMap(_.headOption)

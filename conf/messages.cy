@@ -1598,6 +1598,10 @@ error.turnover.6020.otherIncome.negative = Other income in the year ending {0} c
 
 # TURNOVER 6045
 turnover.6045.caravanFleetHire.grossReceipts.heading = Gross receipts from all static caravan fleet hire
+turnover.6045.caravanFleetHire.p1 = Include the income received from fleet hire of single and twin-unit static caravans:
+turnover.6045.caravanFleetHire.list1.item1 = owned by the operator
+turnover.6045.caravanFleetHire.list1.item2 = sub-let by the operator to holidaymakers on behalf of private owners
+turnover.6045.caravanFleetHire.p2 = All figures should exclude VAT, but include any charges made for gas and electricity. State all totals before the deduction of any agents’ letting commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 turnover.6045.caravanFleetHire.grossReceipts = Gross receipts
 turnover.6045.excludingVAT = (excluding VAT)
 error.turnover.6045.caravanFleetHire.grossReceipts.required = Enter 0 if you did not have any gross receipts from static caravan fleet hire in the year ending {0}
