@@ -524,11 +524,11 @@
 
 @if(forType == ForTypes.for6045) {
 
-    @pageAnswers("grossReceipts.6045.caravanFleetHire.heading",
-        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show(), // TODO: Gross receipts from caravan fleet hire
+    @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show(), // TODO: GrossReceiptsFromCaravanFleetHireController
         answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
             t => s"${t.grossReceiptsCaravanFleetHire.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
-        answer6045("grossReceipts.6045.caravanFleetHire", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
+        answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
     )
 
 }

@@ -1618,6 +1618,14 @@ error.turnover.6020.otherIncome.required = Enter 0 if you did not have any other
 error.turnover.6020.otherIncome.range = Other income in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6020.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
 
+# TURNOVER 6045
+turnover.6045.caravanFleetHire.grossReceipts.heading = Gross receipts from all static caravan fleet hire
+turnover.6045.caravanFleetHire.grossReceipts = Gross receipts
+turnover.6045.excludingVAT = (excluding VAT)
+error.turnover.6045.caravanFleetHire.grossReceipts.required = Enter 0 if you did not have any gross receipts from static caravan fleet hire in the year ending {0}
+error.turnover.6045.caravanFleetHire.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.caravanFleetHire.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+
 # TURNOVER 6076
 turnover.6076.heading = How much electricity did you generate?
 turnover.6076.p1 = State whether your electricity generated figures are in kilowatt hours (kWh) or megawatt hours (MWh). If any of the financial years cover a period that is not 52 weeks, state the relevant number of weeks.
