@@ -22,7 +22,6 @@ import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
 import play.api.data.Forms.{list, mapping, optional, text}
 import play.api.data.validation._
-import play.api.i18n.Messages
 
 object IncludedInYourRentForm {
 
@@ -34,7 +33,7 @@ object IncludedInYourRentForm {
     case None                                           => Valid
   }
 
-  def includedInYourRentForm(forTypes: String)(implicit messages: Messages): Form[IncludedInYourRentDetails] = Form(
+  def includedInYourRentForm(forTypes: String): Form[IncludedInYourRentDetails] = Form(
     mapping(
       "includedInYourRent" -> list(text).verifying(
         nonEmptyList("error.includedInYourRent.required"),

@@ -77,7 +77,7 @@ class IsVATPayableForWholePropertyController @Inject() (
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink: String =
     controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
 
 }
