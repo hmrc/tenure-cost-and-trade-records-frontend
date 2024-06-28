@@ -29,77 +29,62 @@ import utils.TestBaseSpec
 class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   import TestData._
   def propertyUseLeasebackAgreementController(
+    forType: String = ForTypes.for6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new PropertyUseLeasebackArrangementController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       propertyUseLeasebackAgreementView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
     )
-
-  def propertyUseLeasebackAgreementController6020Yes(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new PropertyUseLeasebackArrangementController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      propertyUseLeasebackAgreementView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def propertyUseLeasebackAgreementController6020No(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
-  ) =
-    new PropertyUseLeasebackArrangementController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      propertyUseLeasebackAgreementView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def propertyUseLeasebackAgreementControllerNone = new PropertyUseLeasebackArrangementController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    propertyUseLeasebackAgreementView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
-    mockSessionRepo
-  )
 
   "PropertyUseLeasebackArrangementController GET /" should {
-    "return 200 with data in the session" in {
+    "return 200 and HTML with property use lease back yes in the session" in {
       val result = propertyUseLeasebackAgreementController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+      )
     }
 
-    "return HTML with data in the session" in {
-      val result = propertyUseLeasebackAgreementController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML property use lease back with none in the session" in {
+      val controller = propertyUseLeasebackAgreementController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+      )
     }
 
-    "return 200 and html 6020 yes data in the session" in {
-      val result = propertyUseLeasebackAgreementController6020Yes().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with connection to landlord yes in the session for 6020" in {
+      val controller = propertyUseLeasebackAgreementController(forType = ForTypes.for6020)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+      )
     }
 
-    "return 200 and html 6020 no data in the session" in {
-      val result = propertyUseLeasebackAgreementController6020No().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 and html with none in the session" in {
-      val result = propertyUseLeasebackAgreementControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with connection to landlord no in the session for 6020" in {
+      val controller = propertyUseLeasebackAgreementController(
+        forType = ForTypes.for6020,
+        aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+      )
     }
 
     "return correct backLink when 'from=TL' query param is present" in {
