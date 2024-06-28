@@ -29,7 +29,7 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
 
   val from = "FROM6011"
 
-  override val form = IncludedInYourRentForm.includedInYourRentForm(from)(messages)
+  override val form = IncludedInYourRentForm.includedInYourRentForm(from)
 
   def createView = () => includedInYourRentView(form, Summary("99996010001"), from)(fakeRequest, messages)
 

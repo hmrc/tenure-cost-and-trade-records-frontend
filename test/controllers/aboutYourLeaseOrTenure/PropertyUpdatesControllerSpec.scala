@@ -21,7 +21,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class PropertyUpdatesControllerSpec extends TestBaseSpec {
@@ -42,19 +42,30 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
-    "return 200" in {
+  "PropertyUpdatesController GET /" should {
+    "return 200 and HTML with property updates in the session" in {
       val result = propertyUpdateController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = propertyUpdateController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML property updates with none in the session" in {
+      val controller = propertyUpdateController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+      )
     }
   }
-  "SUBMIT /" should {
+
+  "PropertyUpdatesController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = propertyUpdateController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

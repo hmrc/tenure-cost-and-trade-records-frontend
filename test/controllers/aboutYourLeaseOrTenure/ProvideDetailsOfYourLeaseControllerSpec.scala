@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm.provideDetailsOfYourLeaseForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -27,17 +28,32 @@ class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
-  def provideDetailsOfYourLeaseController = new ProvideDetailsOfYourLeaseController(
+  def provideDetailsOfYourLeaseController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    )
+  ) = new ProvideDetailsOfYourLeaseController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     provideDetailsOfYourLeaseView,
-    preEnrichedActionRefiner(),
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo
   )
 
   "ConnectedToLandlordDetailsController GET /" should {
     "return 200 and HTML with Connected To Landlord Details in the session" in {
-      val result = provideDetailsOfYourLeaseController.show(fakeRequest)
+      val result = provideDetailsOfYourLeaseController().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show().url
+      )
+    }
+
+    "return 200 and HTML Connected To Landlord Details with none in the session" in {
+      val controller = provideDetailsOfYourLeaseController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -50,7 +66,7 @@ class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec {
   "ConnectedToLandlordDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
-      val res = provideDetailsOfYourLeaseController.submit(
+      val res = provideDetailsOfYourLeaseController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
       )
       status(res) shouldBe BAD_REQUEST

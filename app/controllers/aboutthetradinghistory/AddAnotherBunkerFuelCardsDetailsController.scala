@@ -22,12 +22,12 @@ import form.confirmableActionForm.confirmableActionForm
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, BunkerFuelCardsDetails}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AddAnotherBunkerFuelCardsDetailsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.addAnotherBunkerFuelCardDetails
 import views.html.genericRemoveConfirmation
