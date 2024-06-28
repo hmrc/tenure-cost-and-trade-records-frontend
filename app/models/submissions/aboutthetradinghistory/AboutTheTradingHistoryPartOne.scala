@@ -31,7 +31,8 @@ case class AboutTheTradingHistoryPartOne(
   incomeExpenditureConfirmation6076: Option[String] = None,
   // 6045/6046
   turnoverSections6045: Option[Seq[TurnoverSection6045]] = None,
-  otherHolidayAccommodation: Option[OtherHolidayAccommodation] = None
+  otherHolidayAccommodation: Option[OtherHolidayAccommodation] = None,
+  fromCYA: Option[Boolean] = None
 )
 
 object AboutTheTradingHistoryPartOne {
@@ -50,6 +51,7 @@ object AboutTheTradingHistoryPartOne {
 
     sessionRequest.sessionData.copy(aboutTheTradingHistoryPartOne = updateAboutTheTradingHistoryPartOne)
   }
+
   def updateOtherHolidayAccommodation(
     update: OtherHolidayAccommodation => OtherHolidayAccommodation
   )(implicit sessionRequest: SessionRequest[_]): Session =
