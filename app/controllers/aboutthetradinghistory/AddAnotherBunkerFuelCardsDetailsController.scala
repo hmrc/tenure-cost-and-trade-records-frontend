@@ -21,12 +21,13 @@ import controllers.FORDataCaptureController
 import form.confirmableActionForm.confirmableActionForm
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, BunkerFuelCardsDetails}
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AddAnotherBunkerFuelCardsDetailsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.addAnotherBunkerFuelCardDetails
 import views.html.genericRemoveConfirmation
@@ -50,6 +51,11 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] =
     request.sessionData.aboutTheTradingHistory
+
+  private def aboutTheTradingHistoryDataPartOne(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[AboutTheTradingHistoryPartOne] =
+    request.sessionData.aboutTheTradingHistoryPartOne
 
   private def getCardName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
     aboutTheTradingHistoryData
@@ -76,6 +82,9 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val fromCYA =
+      aboutTheTradingHistoryDataPartOne.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
+
     continueOrSaveAsDraft[AnswersYesNo](
       addAnotherBunkerFuelCardsDetailsForm,
       formWithErrors =>
@@ -94,14 +103,31 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
           .flatMap(_.bunkerFuelCardsDetails)
           .filter(_.isDefinedAt(index))
           .fold(Future.unit) { existingCards =>
-            val updatedCards =
+            val updatedCards   =
               existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(data)))
-            val updatedData  = updateAboutTheTradingHistory(_.copy(bunkerFuelCardsDetails = Some(updatedCards)))
+            val updatedData    = updateAboutTheTradingHistory(
+              _.copy(
+                bunkerFuelCardsDetails = Some(updatedCards)
+              )
+            )
+            val updatedDataCYA = updateAboutTheTradingHistoryPartOne(
+              _.copy(
+                fromCYA = Some(fromCYA)
+              )
+            )
             session.saveOrUpdate(updatedData)
+            session.saveOrUpdate(updatedDataCYA)
           }
           .map(_ =>
-            if (data == AnswerYes) Redirect(routes.BunkerFuelCardDetailsController.show())
-            else
+            if (data == AnswerNo && fromCYA == true) {
+              Redirect(
+                routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+              )
+            } else if (data == AnswerYes) {
+              Redirect(
+                routes.BunkerFuelCardDetailsController.show()
+              )
+            } else
               Redirect(
                 navigator
                   .nextPage(AddAnotherBunkerFuelCardsDetailsId, request.sessionData)

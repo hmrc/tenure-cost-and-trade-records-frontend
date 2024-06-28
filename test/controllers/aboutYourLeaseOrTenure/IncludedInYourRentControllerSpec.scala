@@ -84,13 +84,13 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
     "error if vatValue is invalid" in {
       val formData = baseData + ("vatValue" -> "invalid")
-      val form     = includedInYourRentForm(for6045)(messages).bind(formData)
+      val form     = includedInYourRentForm(for6045).bind(formData)
       mustContainInvalidVatValueErrorFor("vatValue", form)
     }
 
     "error if vatValue is missing" in {
       val formData = baseData + ("vatValue" -> "")
-      val form     = includedInYourRentForm(for6045)(messages).bind(formData)
+      val form     = includedInYourRentForm(for6045).bind(formData)
       mustContainMissingVatValueErrorFor("", form)
     }
   }
