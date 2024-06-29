@@ -119,7 +119,7 @@ class CheckYourAnswersAboutTheTradingHistorySpec
   }
 
   "Check Your Answers About The Property view for 6045" must {
-    behave like normalPage(createView6045, messageKeyPrefix)
+    behave like normalPage(createView6045, "checkYourAnswersAboutTheTradingHistory.6045.caravans")
   }
 
   "Check Your Answers About The Property view for 6076" must {

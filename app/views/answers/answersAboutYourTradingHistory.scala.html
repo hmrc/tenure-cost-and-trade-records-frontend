@@ -88,7 +88,7 @@
 }
 
 @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[_]) = @{
-    request.sessionData.forType match {
+    forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
         case ForTypes.for6045 | ForTypes.for6046 => request.sessionData.financialYearEndDates6045.map(_._1)
@@ -449,10 +449,8 @@
 ))
 }
 
-@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => String, additionalParagraph: Option[String] = None) = @{
-    answer(valueLabelKey,
-        sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer),
-        additionalParagraph)
+@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => String) = @{
+    answer(valueLabelKey, sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer))
 }
 
 @answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String, additionalParagraph: Option[String] = None) = @{
@@ -523,6 +521,10 @@
 }
 
 @if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+
+    <h2 class="govuk-heading-l">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.section")</h2>
+
+
 
     @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
         aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),

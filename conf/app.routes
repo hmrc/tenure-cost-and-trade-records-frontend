@@ -217,6 +217,9 @@ GET         /electric-vehicle-charging-points                       controllers.
 POST        /electric-vehicle-charging-points                       controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.submit()
 
 # FORM 6045/46 routing start
+GET         /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.show()
+POST        /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.submit()
+
 GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
 POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
 

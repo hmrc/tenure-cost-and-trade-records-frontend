@@ -62,7 +62,7 @@ object AboutLeaseOrAgreementPartThree {
     update: CarParking => CarParking
   )(implicit sessionRequest: SessionRequest[_]): Session =
     updateAboutLeaseOrAgreementPartThree { aboutLeaseOrAgreementPartThree =>
-      val carParking = update(aboutLeaseOrAgreementPartThree.carParking.getOrElse(CarParking()))
+      val carParking = update(aboutLeaseOrAgreementPartThree.carParking getOrElse CarParking())
       aboutLeaseOrAgreementPartThree.copy(carParking = Some(carParking))
     }
 
@@ -71,7 +71,7 @@ object AboutLeaseOrAgreementPartThree {
   )(implicit sessionRequest: SessionRequest[_]): Session =
     updateAboutLeaseOrAgreementPartThree { aboutLeaseOrAgreementPartThree =>
       val throughputAffectsRent = update(
-        aboutLeaseOrAgreementPartThree.throughputAffectsRent.getOrElse(ThroughputAffectsRent(AnswerNo))
+        aboutLeaseOrAgreementPartThree.throughputAffectsRent getOrElse ThroughputAffectsRent(AnswerNo)
       )
       aboutLeaseOrAgreementPartThree.copy(throughputAffectsRent = Some(throughputAffectsRent))
     }

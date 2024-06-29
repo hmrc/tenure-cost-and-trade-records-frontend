@@ -74,17 +74,17 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         s.forType match {
           case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6076 =>
             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-          case _                                                      => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+          case _                                                                         => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
         }
 
       case _ =>
         s.forType match {
-          case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
-          case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
+          case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
+          case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
           case ForTypes.for6045 | ForTypes.for6046 =>
             aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show() // TODO: Static caravans
-          case ForTypes.for6076 => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
-          case _                => aboutthetradinghistory.routes.TurnoverController.show()
+          case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+          case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
         }
     }
   }
@@ -103,12 +103,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def financialYearEndDatesRouting: Session => Call =
     _.forType match {
-      case ForTypes.for6020 => aboutthetradinghistory.routes.TotalFuelSoldController.show()
-      case ForTypes.for6030 => aboutthetradinghistory.routes.Turnover6030Controller.show()
+      case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
+      case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
       case ForTypes.for6045 | ForTypes.for6046 =>
         aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show() // TODO: Static caravans
-      case ForTypes.for6076 => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
-      case _                => aboutthetradinghistory.routes.TurnoverController.show()
+      case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+      case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
   private def turnoverRouting: Session => Call =

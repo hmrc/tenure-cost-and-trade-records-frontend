@@ -97,20 +97,20 @@ class FinancialYearEndDatesSummaryController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(implicit request: SessionRequest[AnyContent]) =
     request.sessionData.forType match {
-      case ForTypes.for6020 =>
+      case ForTypes.for6020                    =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
-      case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
+      case ForTypes.for6030                    => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
       case ForTypes.for6045 | ForTypes.for6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6045)
           .flatMap(_.headOption)
           .exists(_.grossReceiptsCaravanFleetHire.isDefined)
-      case ForTypes.for6076 =>
+      case ForTypes.for6076                    =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6076)
           .flatMap(_.headOption)
           .exists(_.electricityGenerated.isDefined)
-      case _                => aboutTheTradingHistory.turnoverSections.head.alcoholicDrinks.isDefined
+      case _                                   => aboutTheTradingHistory.turnoverSections.head.alcoholicDrinks.isDefined
     }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]) =
