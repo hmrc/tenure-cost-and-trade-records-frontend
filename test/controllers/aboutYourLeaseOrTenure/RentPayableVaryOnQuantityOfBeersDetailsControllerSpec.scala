@@ -35,31 +35,26 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
       mockSessionRepo
     )
 
-  def rentPayableVaryOnQuantityOfBeersDetailsControllerNone = new RentPayableVaryOnQuantityOfBeersDetailsController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    rentPayableVaryOnQuantityOfBeersDetailsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-    mockSessionRepo
-  )
-
   "RentPayableVaryOnQuantityOfBeersDetailsController GET /" should {
     "return 200" in {
       val result = rentPayableVaryOnQuantityOfBeersDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = rentPayableVaryOnQuantityOfBeersDetailsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
+      )
     }
 
     "return 200 and HTML with none in the session" in {
-      val result = rentPayableVaryOnQuantityOfBeersDetailsControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = rentPayableVaryOnQuantityOfBeersDetailsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
+      )
     }
   }
 

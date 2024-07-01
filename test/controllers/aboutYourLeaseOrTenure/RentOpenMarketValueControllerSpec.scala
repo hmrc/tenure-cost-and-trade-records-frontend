@@ -29,74 +29,62 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
   def rentOpenMarketValueController(
+    forType: String = ForTypes.for6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentOpenMarketValueController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentOpenMarketValueView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  ) = new RentOpenMarketValueController(
+    stubMessagesControllerComponents(),
+    mockAboutYourLeaseOrTenureNavigator,
+    rentOpenMarketValueView,
+    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    mockSessionRepo
+  )
 
-  def rentOpenMarketValueController6020(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentOpenMarketValueController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentOpenMarketValueView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def rentOpenMarketValueController6020No(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
-  ) =
-    new RentOpenMarketValueController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentOpenMarketValueView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
+  "RentOpenMarketValueController GET /" should {
+    "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with Yes in the sessions" in {
       val result = rentOpenMarketValueController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = rentOpenMarketValueController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with None in the sessions" in {
+      val controller = rentOpenMarketValueController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+      )
     }
 
-    "return 200 6020" in {
-      val result = rentOpenMarketValueController6020().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with Yes in the sessions with 6020" in {
+      val controller = rentOpenMarketValueController(forType = ForTypes.for6020)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+      )
     }
 
-    "return HTML 6020" in {
-      val result = rentOpenMarketValueController6020().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 6020 No" in {
-      val result = rentOpenMarketValueController6020No().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML 6020 No" in {
-      val result = rentOpenMarketValueController6020No().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with No in the sessions with 6020" in {
+      val controller = rentOpenMarketValueController(ForTypes.for6020, Some(prefilledAboutLeaseOrAgreementPartOneNo))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "RentOpenMarketValueController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentOpenMarketValueController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

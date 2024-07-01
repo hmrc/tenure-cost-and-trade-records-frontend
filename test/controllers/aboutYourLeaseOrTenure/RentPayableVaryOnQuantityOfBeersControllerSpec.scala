@@ -35,31 +35,26 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def rentPayableVaryOnQuantityOfBeersControllerNone = new RentPayableVaryOnQuantityOfBeersController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    rentPayableVaryOnQuantityOfBeersView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-    mockSessionRepo
-  )
-
   "RentPayableVaryOnQuantityOfBeers controller" should {
-    "return 200 for rent payable vary on quantity of beer" in {
+    "return 200 and HTML for rent payable vary on quantity of beer" in {
       val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML for rent payable vary on quantity of beer" in {
-      val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+      )
     }
 
     "return 200 and HTML with none for rent payable vary on quantity of beer" in {
-      val result = rentPayableVaryOnQuantityOfBeersControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = rentPayableVaryOnQuantityOfBeersController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+      )
     }
   }
 

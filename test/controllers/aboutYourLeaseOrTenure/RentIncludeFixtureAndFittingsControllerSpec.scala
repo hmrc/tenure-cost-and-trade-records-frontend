@@ -29,121 +29,116 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
   val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
   def rentIncludeFixtureAndFittingsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentIncludeFixtureAndFittingsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludeFixtureAndFittingsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def rentIncludeFixtureAndFittingsController6020(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentIncludeFixtureAndFittingsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludeFixtureAndFittingsView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def rentIncludeFixtureAndFittingsController6020No(
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThreeNo
+      prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new RentIncludeFixtureAndFittingsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludeFixtureAndFittingsView,
-      preEnrichedActionRefiner(
-        forType = ForTypes.for6020,
-        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-      ),
-      mockSessionRepo
-    )
-
-  def rentIncludeFixtureAndFittingsController6030No(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThreeNo
-    )
-  ) =
-    new RentIncludeFixtureAndFittingsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludeFixtureAndFittingsView,
-      preEnrichedActionRefiner(
-        forType = ForTypes.for6030,
-        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-      ),
-      mockSessionRepo
-    )
-
-  def rentIncludeFixtureAndFittingsController6030(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentIncludeFixtureAndFittingsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludeFixtureAndFittingsView,
-      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def rentIncludeFixtureAndFittingsNoController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
-  ) =
-    new RentIncludeFixtureAndFittingsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludeFixtureAndFittingsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  ) = new RentIncludeFixtureAndFittingsController(
+    stubMessagesControllerComponents(),
+    mockAboutYourLeaseOrTenureNavigator,
+    rentIncludeFixtureAndFittingsView,
+    preEnrichedActionRefiner(
+      forType = forType,
+      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+    ),
+    mockSessionRepo
+  )
 
   "RentIncludeFixtureAndFittings controller" should {
-    "return 200" in {
+    "return 200 and HTML with Rent Includes trade services with yes in the session" in {
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
+      )
     }
 
-    "return 200 and html 6020 data in the session" in {
-      val result = rentIncludeFixtureAndFittingsController6020().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Includes trade services with no in the session" in {
+      val controller = rentIncludeFixtureAndFittingsController(
+        aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      )
     }
 
-    "return 200 and html 6030 data in the session" in {
-      val result = rentIncludeFixtureAndFittingsController6030().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Rent Includes trade services with none in the session" in {
+      val controller = rentIncludeFixtureAndFittingsController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Paid Separately with yes in the session for 6020" in {
+      val result = rentIncludeFixtureAndFittingsController(forType = ForTypes.for6020).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show().url
+      )
     }
 
-    "return 200 and html with none in the session" in {
-      val result = rentIncludeFixtureAndFittingsNoController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Rent Paid Separately with one in the session for 6020" in {
+      val result = rentIncludeFixtureAndFittingsController(
+        forType = ForTypes.for6020,
+        aboutLeaseOrAgreementPartThree = None
+      ).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
+      )
     }
 
-    "return 200 and html with none in the session 6020" in {
-      val result = rentIncludeFixtureAndFittingsController6030No().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Payment For Trade Services with yes in the session for 6030" in {
+      val result = rentIncludeFixtureAndFittingsController(forType = ForTypes.for6030).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(1).url
+      )
     }
 
+    "return 200 and HTML with Payment For Trade Services with no in the session for 6030" in {
+      val result = rentIncludeFixtureAndFittingsController(
+        forType = ForTypes.for6030,
+        aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
+      ).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+      )
+    }
+
+    "return 200 and HTML Payment For Trade Services with none in the session for 6030" in {
+      val result = rentIncludeFixtureAndFittingsController(
+        forType = ForTypes.for6030,
+        aboutLeaseOrAgreementPartThree = None
+      ).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
+    }
   }
 
   "SUBMIT /" should {

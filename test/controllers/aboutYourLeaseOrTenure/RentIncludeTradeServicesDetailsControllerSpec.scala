@@ -27,28 +27,38 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
 
   def rentIncludeTradeServicesDetailsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentIncludeTradeServicesDetailsController(
-      stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      rentIncludeTradeServicesDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-  "GET /" should {
-    "return 200" in {
+  ) = new RentIncludeTradeServicesDetailsController(
+    stubMessagesControllerComponents(),
+    app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+    rentIncludeTradeServicesDetailsView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    mockSessionRepo
+  )
+
+  "RentIncludeTradeServicesDetailsController GET /" should {
+    "return 200 and HTML with Rent Include Trade Services Details in the session" in {
       val result = rentIncludeTradeServicesDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = rentIncludeTradeServicesDetailsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Rent Include Trade Services Details with none in the session" in {
+      val controller = rentIncludeTradeServicesDetailsController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "RentIncludeTradeServicesDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentIncludeTradeServicesDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
