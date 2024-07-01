@@ -39,7 +39,7 @@ case class AboutLeaseOrAgreementPartThree(
   benefitsGivenDetails: Option[BenefitsGivenDetails] = None,
   workCarriedOutDetails: Option[WorkCarriedOutDetails] = None,
   workCarriedOutCondition: Option[WorkCarriedOutCondition] = None,
-  provideDetailsOfYourLease: Option[String] = None // Added June 2024z
+  provideDetailsOfYourLease: Option[String] = None // Added June 2024
 )
 
 object AboutLeaseOrAgreementPartThree {

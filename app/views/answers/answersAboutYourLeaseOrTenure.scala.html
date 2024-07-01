@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
 @import models.submissions.common.AnswerYes
 @import navigation.AboutYourLeaseOrTenureNavigator
 @import navigation.identifiers.TradeServicesDescriptionId
+
 @this(
         govukSummaryList: GovukSummaryList,
         navigator: AboutYourLeaseOrTenureNavigator,
@@ -133,7 +134,7 @@
                 aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
 ))
 
-@if(commenceWithinThreeYears.equals(Some("no")) && agreedReviewedAlteredThreeYears.equals(Some("no")) && rentUnderReviewNegotiated.equals(Some("no"))) {
+@if(commenceWithinThreeYears.contains("no") && agreedReviewedAlteredThreeYears.contains("no") && rentUnderReviewNegotiated.contains("no")) {
 
     @if(sectionAnswers.answers.exists(a => a.leaseOrAgreementYearsDetails.isDefined || a.currentRentPayableWithin12Months.isDefined)) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading")</h2>
@@ -701,7 +702,7 @@
             sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020",
                 _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => messages(s"label.$v")),
                 aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
-                    sectionAnswers2.conditionalOptionalRow(_.payACapitalSumDetails.map(_.capitalSumOrPremium.name.contains("yes")).getOrElse(false),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
+                    sectionAnswers2.conditionalOptionalRow(_.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
                         _.capitalSumDescription.map( capitalSum => capitalSum.capitalSumDescription),
                         aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "",
                         ("valueAsHtml", _ => None)) ++
