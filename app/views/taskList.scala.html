@@ -483,13 +483,23 @@
        section3Completed.isEmpty
       )
      } else {
-      @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
-       controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
-       section5Completed,
-       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
-       section4Completed.isEmpty
-      )
+      @if(forType == ForTypes.for6020) {
+       @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+        section5Completed,
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+        session.aboutLeaseOrAgreementPartThree.flatMap(_.typeOfTenure).isEmpty
+       )
+      } else {
+       @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+        section5Completed,
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+        section4Completed.isEmpty
+       )
+      }
      }
+
 
      @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030) {
       @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
