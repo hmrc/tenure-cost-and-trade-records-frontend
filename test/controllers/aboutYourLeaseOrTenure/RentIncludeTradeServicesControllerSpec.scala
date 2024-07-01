@@ -27,26 +27,35 @@ class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
 
   def rentIncludeTradeServicesController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentIncludeTradeServicesController(
-      stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      rentIncludeTradeServicesView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  ) = new RentIncludeTradeServicesController(
+    stubMessagesControllerComponents(),
+    app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+    rentIncludeTradeServicesView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    mockSessionRepo
+  )
+
   "RentIncludetradeServices controller" should {
-    "return 200" in {
+    "return 200 and HTML with Rent Include Trade Services in the session" in {
       val result = rentIncludeTradeServicesController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = rentIncludeTradeServicesController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Rent Include Trade Services with none in the session" in {
+      val controller = rentIncludeTradeServicesController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
+      )
     }
-
   }
 
   "SUBMIT /" should {
