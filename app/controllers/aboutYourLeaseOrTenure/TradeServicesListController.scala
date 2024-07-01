@@ -162,7 +162,10 @@ class TradeServicesListController @Inject() (
           }
           Redirect(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0))
         case AnswerNo  =>
-          Redirect(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index))
+          Redirect(
+            controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController
+              .show(request.sessionData.aboutLeaseOrAgreementPartThree.map(_.tradeServices.size - 1).getOrElse(0))
+          )
       }
     )
   }
