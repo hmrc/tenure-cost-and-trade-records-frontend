@@ -29,28 +29,38 @@ class RentIncludesVatControllerSpec extends TestBaseSpec {
 
   def rentIncludesVatController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentIncludesVatController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentIncludesVatView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
+  ) = new RentIncludesVatController(
+    stubMessagesControllerComponents(),
+    mockAboutYourLeaseOrTenureNavigator,
+    rentIncludesVatView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    mockSessionRepo
+  )
 
-  "GET /"    should {
-    "return 200" in {
+  "RentIncludesVatController GET /" should {
+    "return 200 and HTML with Rent Includes VAT in the session" in {
       val result = rentIncludesVatController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = rentIncludesVatController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Rent Includes VAT with none in the session" in {
+      val controller = rentIncludesVatController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
+      )
     }
   }
-  "SUBMIT /" should {
+
+  "RentIncludesVatController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = rentIncludesVatController().submit(

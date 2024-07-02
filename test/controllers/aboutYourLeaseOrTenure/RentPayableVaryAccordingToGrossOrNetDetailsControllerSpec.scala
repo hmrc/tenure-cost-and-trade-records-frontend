@@ -39,32 +39,26 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
       mockSessionRepo
     )
 
-  def rentPayableVaryAccordingToGrossOrNetDetailsControllerNone =
-    new RentPayableVaryAccordingToGrossOrNetDetailsController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      rentPayableVaryAccordingToGrossOrNetDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-      mockSessionRepo
-    )
-
   "RentPayableVaryAccordingToGrossOrNetDetailsController GET /" should {
-    "return 200 with data in the session" in {
+    "return 200 with Rent Payable Vary Gross or Net Details in the session" in {
       val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+      )
     }
 
-    "return HTML with data in the session" in {
-      val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 and HTML with None in the session" in {
-      val result = rentPayableVaryAccordingToGrossOrNetDetailsControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 with Rent Payable Vary Gross or Net Details with none in the session" in {
+      val controller = rentPayableVaryAccordingToGrossOrNetDetailsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+      )
     }
   }
 
