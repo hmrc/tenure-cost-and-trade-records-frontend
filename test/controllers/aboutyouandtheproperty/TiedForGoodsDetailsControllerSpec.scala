@@ -24,6 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions._
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
 

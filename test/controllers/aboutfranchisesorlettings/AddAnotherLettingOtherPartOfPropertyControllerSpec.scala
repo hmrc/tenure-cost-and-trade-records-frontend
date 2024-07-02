@@ -23,6 +23,7 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import actions.SessionRequest
+import scala.language.reflectiveCalls
 
 class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 

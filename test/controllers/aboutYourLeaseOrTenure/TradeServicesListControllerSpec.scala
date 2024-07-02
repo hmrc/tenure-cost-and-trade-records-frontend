@@ -25,6 +25,7 @@ import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class TradeServicesListControllerSpec extends TestBaseSpec {
 

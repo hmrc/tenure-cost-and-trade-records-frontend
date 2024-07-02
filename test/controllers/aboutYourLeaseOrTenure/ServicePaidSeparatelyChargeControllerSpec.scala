@@ -20,7 +20,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status._
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
@@ -29,25 +29,42 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new ServicePaidSeparatelyChargeController(
-      stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      servicePaidSeparatelyChargeView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
+  ) = new ServicePaidSeparatelyChargeController(
+    stubMessagesControllerComponents(),
+    app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+    servicePaidSeparatelyChargeView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo
+  )
 
   "Service paid separately charge controller" should {
-    "return 200" in {
+    "return 200 and HTML with Service Paid Separately Charge in the session" in {
       val result = servicePaidSeparatelyChargeController().show(0)(fakeRequest)
-      status(result) shouldBe OK
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(0)).url
+      )
     }
 
-    "return HTML" in {
-      val result = servicePaidSeparatelyChargeController().show(0)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML without Service Paid Separately Charge in the session" in {
+      val controller = servicePaidSeparatelyChargeController(
+        aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
+      )
+      val result     = controller.show(0)(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(0)).url
+      )
+    }
+
+    "return 200 and HTML with none in the session" in {
+      val controller = servicePaidSeparatelyChargeController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(0)(fakeRequest)
+      status(result) shouldBe SEE_OTHER
     }
 
     "SUBMIT /" should {

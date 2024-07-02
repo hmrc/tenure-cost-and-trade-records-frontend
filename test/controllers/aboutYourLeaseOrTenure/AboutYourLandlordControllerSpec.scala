@@ -26,6 +26,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 import scala.concurrent.Future
 

@@ -15,6 +15,7 @@
  */
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 package object controllers {
   implicit def toOpt[A](a: A): Option[A] = Some(a)

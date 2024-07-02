@@ -25,6 +25,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   import TestData._

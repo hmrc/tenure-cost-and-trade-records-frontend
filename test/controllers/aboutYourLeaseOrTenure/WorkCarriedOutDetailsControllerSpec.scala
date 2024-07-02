@@ -24,6 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
 

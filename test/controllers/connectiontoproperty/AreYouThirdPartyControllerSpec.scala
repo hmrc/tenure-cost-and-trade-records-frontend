@@ -24,6 +24,7 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
+import scala.language.reflectiveCalls
 
 class AreYouThirdPartyControllerSpec extends TestBaseSpec {
 
