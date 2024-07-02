@@ -21,6 +21,7 @@ label.underReview=(under review)
 label.yes = Yes
 label.no = No
 label.pound = £
+label.weeks = weeks
 
 # OTHER FOOTER LINKS:
 ########
@@ -2101,6 +2102,37 @@ help.otherHolidayAccommodation.list1.p2 = brought onto site in more than two par
 help.otherHolidayAccommodation.list1.p3 = assembled on site
 help.otherHolidayAccommodation.list1.p4 = cannot be transported by road once assembled
 error.otherHolidayAccommodation.required =  Select yes if there are other holiday letting units located on your site.
+
+##########################
+
+#TOURING AND TENTING PITCHES QUESTION
+
+touringAndTentingPitches.heading = Touring and tenting pitches
+
+touringAndTentingPitches.question.heading = Do you have any touring and tenting pitches on your site?
+error.touringAndTentingPitches.question.missing = Select yes if you have any touring and tenting pitches on your site
+help.touringAndTentingPitches.question.title = Help with defining touring and tenting pitches
+help.touringAndTentingPitches.question.p = For the purposes of this declaration, touring and tenting pitches are defined as:
+help.touringAndTentingPitches.question.pitches = pitches for caravans, motor homes, or tents
+help.touringAndTentingPitches.question.glamping = glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
+help.touringAndTentingPitches.question.rally = rally areas
+
+
+# ARE YOUR TOURING AND TENTING PITCHES OPEN ALL YEAR
+
+areYourPitchesOpen.heading = Are your touring and tenting pitches open all year?
+error.areYourPitchesOpen.missing = Select yes if your touring and tenting pitches open all year
+areYourPitchesOpen.conditional.label = Enter a number of weeks the site remains open in a year
+error.areYourPitchesOpen.conditional.value.invalid = Number of weeks should be from 1 to 52
+error.areYourPitchesOpen.conditional.value.missing = Provide a number of weeks the site remains open in a year
+
+# CYA TOURING AND TENTS PITCHES
+
+cYa.touringAndTentingPitches.heading = Check your answers - touring and tent pitches
+cYa.touringAndTentingPitches.occupation.heading = Occupation and accounting information
+cYa.touringAndTentingPitches.occupation.label = Occupation date and financial year end
+cYa.touringAndTentingPitches.pitches.heading = Touring and tenting pitches
+cYa.touringAndTentingPitches.pitches.label = Touring and tenting pitches on site?
 
 #########################
 

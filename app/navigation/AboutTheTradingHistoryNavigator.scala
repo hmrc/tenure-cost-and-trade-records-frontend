@@ -173,6 +173,19 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for other holiday accommodation")
     }
 
+  private def tentingPitchesOnSiteRouting(answers: Session): Call =
+    answers.aboutTheTradingHistoryPartOne.flatMap(
+      _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
+    ) match {
+      case Some(AnswerYes) => aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
+      case Some(AnswerNo) => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+      case _ =>
+        logger.warn(
+          s"Navigation for tenting pitches on site reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for tenting pitches all year")
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId               -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                      -> financialYearEndRouting,
@@ -221,6 +234,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OtherHolidayAccommodationDetailsId          -> (_ =>
       controllers.routes.TaskListController.show()
     ), //TODO Letting units owned by site operator
+    TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
+    TentingPitchesAllYearId                     -> (_ =>
+        aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+                 // TODO: Pitches for caravans and motor homes
+      ),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )

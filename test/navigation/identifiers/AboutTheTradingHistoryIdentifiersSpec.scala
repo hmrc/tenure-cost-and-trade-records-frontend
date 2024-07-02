@@ -91,6 +91,12 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for PremisesCosts page" in {
       assert(PremisesCostsId.toString.equals("premisesCostsPage"))
     }
+    "Identifier for tentingPitchesOnSiteId page" in {
+      assert(tentingPitchesOnSiteId.toString.equals("tentingPitchesOnSiteIdPage"))
+    }
+    "Identifier for tentingPitchesAllYearId page" in {
+      assert(tentingPitchesAllYearId.toString.equals("tentingPitchesAllYearIdPage"))
+    }
 
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))

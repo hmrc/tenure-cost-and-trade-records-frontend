@@ -226,11 +226,20 @@ POST        /gross-receipts-fleet-caravans                          controllers.
 GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
 POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
 
+GET         /tenting-pitches-on-site                                controllers.aboutthetradinghistory.TentingPitchesOnSiteController.show()
+POST        /tenting-pitches-on-site                                controllers.aboutthetradinghistory.TentingPitchesOnSiteController.submit()
+
+GET         /tenting-pitches-all-year                               controllers.aboutthetradinghistory.TentingPitchesAllYearController.show()
+POST        /tenting-pitches-all-year                               controllers.aboutthetradinghistory.TentingPitchesAllYearController.submit()
+
 GET         /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.show()
 POST        /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.submit()
 
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
+
+GET         /check-your-answers-tenting-pitches                     controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.show()
+POST        /check-your-answers-tenting-pitches                     controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.submit()
 # FORM 6045/46 routing end
 
 # Form 6015 routing start
