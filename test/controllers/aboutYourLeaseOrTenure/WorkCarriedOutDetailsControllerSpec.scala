@@ -21,9 +21,10 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
@@ -43,20 +44,30 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  "WorkCarriedOutDetailsController GET /" should {
+    "return 200 and HTML with Work Carried Out Details in the session" in {
       val result = workCarriedOutDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = workCarriedOutDetailsController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
+      )
+    }
+
+    "return 200 and HTML with Work Carried Out Details in the session" in {
+      val controller = workCarriedOutDetailsController(aboutLeaseOrAgreementPartThree = None)
+      val result = controller.show(fakeRequest)
+      status(result) shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "WorkCarriedOutDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = workCarriedOutDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

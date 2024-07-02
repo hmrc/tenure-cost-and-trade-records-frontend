@@ -21,9 +21,10 @@ import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidS
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status._
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
@@ -44,16 +45,15 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  "ServicePaidSeparatelyListController" should {
+    "return 200 and HTML with Services Paid Separately List in the session0" in {
       val result = servicePaidSeparatelyListController().show(1)(fakeRequest)
       status(result) shouldBe OK
-    }
-
-    "return HTML" in {
-      val result = servicePaidSeparatelyListController().show(1)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(0).url
+      )
     }
 
     "SUBMIT /" should {
