@@ -228,7 +228,6 @@ trait FakeObjects {
     baseFilled6030Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetails6030YesSession: Session =
     baseFilled6030Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
-
   val stillConnectedDetails6020NoSession: Session  =
     baseFilled6020Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetails6020YesSession: Session =
@@ -240,8 +239,12 @@ trait FakeObjects {
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetails6076YesSession: Session            =
     baseFilled6076Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+  val stillConnectedDetails6076NoSession: Session             =
+    baseFilled6076Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   val stillConnectedDetails6045YesSession: Session            =
     baseFilled6045Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+  val stillConnectedDetails6045NoSession: Session             =
+    baseFilled6045Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
   // Not connected sessions
   val prefilledNotConnectedYes: RemoveConnectionDetails       = RemoveConnectionDetails(
     Some(
@@ -366,36 +369,41 @@ trait FakeObjects {
     )
   )
 
-  val aboutYouAndTheProperty6010YesSession: Session            =
+  val aboutYouAndTheProperty6010YesSession: Session =
     stillConnectedDetailsYesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
-  val aboutYouAndTheProperty6010NoSession: Session             =
+  val aboutYouAndTheProperty6010NoSession: Session  =
     stillConnectedDetailsNoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
-  val aboutYouAndTheProperty6011YesSession: Session            =
+  val aboutYouAndTheProperty6011YesSession: Session =
     stillConnectedDetails6011YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
-  val aboutYouAndTheProperty6011NoSession: Session             =
+  val aboutYouAndTheProperty6011NoSession: Session  =
     stillConnectedDetails6011NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
-  val aboutYouAndTheProperty6015YesSession: Session            =
+  val aboutYouAndTheProperty6015YesSession: Session =
     stillConnectedDetails6015YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
-  val aboutYouAndTheProperty6015NoSession: Session             =
+  val aboutYouAndTheProperty6015NoSession: Session  =
     stillConnectedDetails6015NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
-  val aboutYouAndTheProperty6016YesSession: Session            =
+  val aboutYouAndTheProperty6016YesSession: Session =
     stillConnectedDetails6016YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
-  val aboutYouAndTheProperty6016NoSession: Session             =
+  val aboutYouAndTheProperty6016NoSession: Session  =
     stillConnectedDetails6016NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
-  val aboutYouAndTheProperty6020YesSession: Session            =
+  val aboutYouAndTheProperty6020YesSession: Session =
     stillConnectedDetails6020YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
-  val aboutYouAndTheProperty6020NoSession: Session             =
+  val aboutYouAndTheProperty6020NoSession: Session  =
     stillConnectedDetails6020NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
-  val aboutYouAndTheProperty6030YesSession: Session            =
+  val aboutYouAndTheProperty6030YesSession: Session =
     stillConnectedDetails6030YesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYesString))
-  val aboutYouAndTheProperty6030NoSession: Session             =
+  val aboutYouAndTheProperty6030NoSession: Session  =
     stillConnectedDetails6030NoSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNoString))
-  val aboutYouAndTheProperty6076Session: Session               =
+  val aboutYouAndTheProperty6076Session: Session    =
     stillConnectedDetails6076YesSession.copy(aboutYouAndThePropertyPartTwo =
       Some(prefilledAboutYouAndThePropertyPartTwo)
     )
-  val aboutYouAndTheProperty6045Session: Session               =
+  val aboutYouAndTheProperty6045YesSession: Session =
     stillConnectedDetails6045YesSession.copy(aboutYouAndThePropertyPartTwo =
+      Some(prefilledAboutYouAndThePropertyPartTwo6045)
+    )
+
+  val aboutYouAndTheProperty6045NoSession: Session             =
+    stillConnectedDetails6045NoSession.copy(aboutYouAndThePropertyPartTwo =
       Some(prefilledAboutYouAndThePropertyPartTwo6045)
     )
   // Trading history
@@ -575,7 +583,7 @@ trait FakeObjects {
   )
 
   val aboutYourTradingHistory6045YesSession: Session =
-    aboutYouAndTheProperty6045Session.copy(
+    aboutYouAndTheProperty6045YesSession.copy(
       aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
       aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
     )
