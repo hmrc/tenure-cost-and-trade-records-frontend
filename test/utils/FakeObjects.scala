@@ -816,6 +816,22 @@ trait FakeObjects {
     Some(AnswerYes)
   )
 
+  val prefilledAboutFranchiseOrLettingsNo6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+    Some(AnswerNo),
+    Some(AnswerNo),
+    0,
+    None,
+    IndexedSeq(prefilledCateringOperationSectionNo),
+    Some(IndexedSeq(prefilledCateringOperationBusinessSectionNo)),
+    Some(AnswerNo),
+    0,
+    None,
+    IndexedSeq(prefilledLettingSectionNo),
+    None,
+    Some(false),
+    Some(AnswerNo)
+  )
+
   val prefilledAboutFranchiseOrLettings: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
     Some(AnswerYes),
