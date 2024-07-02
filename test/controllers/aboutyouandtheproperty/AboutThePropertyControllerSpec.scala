@@ -23,6 +23,7 @@ import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyHotel}
 import play.api.test.FakeRequest
+import scala.language.reflectiveCalls
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
 

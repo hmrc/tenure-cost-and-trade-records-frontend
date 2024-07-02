@@ -24,6 +24,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class AddAnotherLettingOtherPartOfPropertyController6030Spec extends TestBaseSpec {
 

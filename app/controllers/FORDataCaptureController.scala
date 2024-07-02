@@ -20,6 +20,7 @@ import actions.SessionRequest
 import play.api.data.Form
 import play.api.mvc.{AnyContent, MessagesControllerComponents, Request, Result}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import scala.language.implicitConversions
 
 import scala.concurrent.Future
 

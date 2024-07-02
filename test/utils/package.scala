@@ -15,6 +15,7 @@
  */
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 package object utils {
   implicit def toFut[A](a: A): Future[A]                     = Future.successful(a)

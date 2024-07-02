@@ -1311,7 +1311,9 @@ trait FakeObjects {
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
     tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"), Some(AnswerYes))),
-    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
+    servicesPaid = IndexedSeq(
+      ServicesPaid(ServicePaidSeparately("service-paid-1"), ServicePaidSeparatelyCharge(BigDecimal(1000)), AnswerYes)
+    ),
     throughputAffectsRent = ThroughputAffectsRent(AnswerYes, "Throughput affects rent details"),
     isVATPayableForWholeProperty = AnswerYes,
     isRentUnderReview = AnswerNo,

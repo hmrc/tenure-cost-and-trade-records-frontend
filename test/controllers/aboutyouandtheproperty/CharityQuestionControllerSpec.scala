@@ -22,6 +22,7 @@ import play.api.http.Status._
 import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class CharityQuestionControllerSpec extends TestBaseSpec {
   import TestData._

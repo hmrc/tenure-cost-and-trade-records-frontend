@@ -22,6 +22,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
 
