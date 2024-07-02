@@ -23,6 +23,7 @@ import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class GeneratorCapacityControllerSpec extends TestBaseSpec {
 

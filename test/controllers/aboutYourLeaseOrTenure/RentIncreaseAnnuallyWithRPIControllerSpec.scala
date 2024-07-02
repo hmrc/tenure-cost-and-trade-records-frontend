@@ -35,38 +35,43 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def rentIncreaseAnnuallyWithRPINoController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNo)
-  ) =
-    new RentIncreaseAnnuallyWithRPIController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      rentIncreaseAnnuallyWithRPIView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
+  "RentIncreaseAnnuallyWithRPIController GET /" should {
+    "return 200 and HTML with Rent Increased Annual RPI and Open market with Yes in the sessions" in {
       val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Increased Annual RPI and Open market with No in the sessions" in {
+      val controller = rentIncreaseAnnuallyWithRPIController(
+        aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
+      )
     }
 
-    "return 200 and html with none in the session" in {
-      val result = rentIncreaseAnnuallyWithRPINoController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Rent Increased Annual RPI and Open market with None in the sessions" in {
+      val controller = rentIncreaseAnnuallyWithRPIController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "RentIncreaseAnnuallyWithRPIController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentIncreaseAnnuallyWithRPIController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

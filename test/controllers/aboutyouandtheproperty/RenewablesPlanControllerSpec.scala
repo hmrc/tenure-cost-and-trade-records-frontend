@@ -25,6 +25,7 @@ import utils.FormBindingTestAssertions.mustContainError
 import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
 import models.submissions.common.{AnswerNo, AnswerYes}
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class RenewablesPlanControllerSpec extends TestBaseSpec {
 

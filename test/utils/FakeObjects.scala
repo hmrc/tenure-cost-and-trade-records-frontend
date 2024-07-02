@@ -1178,11 +1178,16 @@ trait FakeObjects {
     includedInYourRentDetails = Some(IncludedInYourRentDetails(List.empty)),
     doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeTradeServicesInformation =
+      Some(RentIncludeTradeServicesInformationDetails(BigDecimal(100), "Describe the services")),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentIncludeFixtureAndFittingsDetails = Some(RentIncludeFixturesOrFittingsInformationDetails(BigDecimal(100))),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),
     whatIsYourCurrentRentBasedOnDetails =
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("Open market"))),
-    checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes"))
+    rentIncreasedAnnuallyWithRPIDetails = Some(RentIncreasedAnnuallyWithRPIDetails(AnswerYes)),
+    checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes")),
+    rentIncludesVat = Some(RentIncludesVatDetails(AnswerYes))
   )
 
   val prefilledAboutLeaseOrAgreementPartOneNoOpenMarket: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
@@ -1229,11 +1234,14 @@ trait FakeObjects {
     Some(prefilledAnnualRent),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),
-    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo))
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo)),
+    rentIncreasedAnnuallyWithRPIDetails = Some(RentIncreasedAnnuallyWithRPIDetails(AnswerNo))
   )
 
   val prefilledAboutLeaseOrAgreementPartTwo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
+    rentPayableVaryAccordingToGrossOrNetInformationDetails =
+      Some(RentPayableVaryAccordingToGrossOrNetInformationDetails("Test Content")),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersInformationDetails =
       Some(RentPayableVaryOnQuantityOfBeersInformationDetails("Test Content")),
@@ -1295,7 +1303,9 @@ trait FakeObjects {
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
     tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"), Some(AnswerYes))),
-    servicesPaid = IndexedSeq(ServicesPaid(ServicePaidSeparately("service-paid-1"))),
+    servicesPaid = IndexedSeq(
+      ServicesPaid(ServicePaidSeparately("service-paid-1"), ServicePaidSeparatelyCharge(BigDecimal(1000)), AnswerYes)
+    ),
     throughputAffectsRent = ThroughputAffectsRent(AnswerYes, "Throughput affects rent details"),
     isVATPayableForWholeProperty = AnswerYes,
     isRentUnderReview = AnswerNo,

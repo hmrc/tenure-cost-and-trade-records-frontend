@@ -24,6 +24,7 @@ import play.api.test.Helpers
 import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
 

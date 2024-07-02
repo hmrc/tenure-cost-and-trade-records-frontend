@@ -18,74 +18,71 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def rentPayableVaryAccordingToGrossOrNetController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentPayableVaryAccordingToGrossOrNetController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      rentPayableVaryAccordingToGrossOrNetView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def rentPayableVaryAccordingToGrossOrNetController6030(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new RentPayableVaryAccordingToGrossOrNetController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      rentPayableVaryAccordingToGrossOrNetView,
-      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  def rentPayableVaryAccordingToGrossOrNetControllerNone = new RentPayableVaryAccordingToGrossOrNetController(
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) = new RentPayableVaryAccordingToGrossOrNetController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     rentPayableVaryAccordingToGrossOrNetView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
+    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
     mockSessionRepo
   )
 
   "RentPayableVaryAccordingToGrossOrNet controller GET /" should {
-    "return 200" in {
+    "return 200 and HTML with Rent Payable Vary Gross or Net and 6010 in the sessions" in {
       val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
+      )
     }
 
-    "return 200 and html 6030 data in the session" in {
-      val result = rentPayableVaryAccordingToGrossOrNetController6030().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Payable Vary Gross or Net with none and 6010 in the sessions" in {
+      val controller = rentPayableVaryAccordingToGrossOrNetController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Payable Vary Gross or Net and form type invalid in the sessions" in {
+      val controller = rentPayableVaryAccordingToGrossOrNetController(forType = "6060")
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
-    "return 200 and HTML with None in the session" in {
-      val result = rentPayableVaryAccordingToGrossOrNetControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Rent Payable Vary Gross or Net and 6030 in the sessions" in {
+      val controller = rentPayableVaryAccordingToGrossOrNetController(forType = ForTypes.for6030)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
+      )
     }
   }
 

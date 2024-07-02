@@ -23,6 +23,7 @@ import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
 import uk.gov.hmrc.http.HttpVerbs.GET
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
   import TestData._

@@ -16,9 +16,10 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -26,50 +27,51 @@ import utils.TestBaseSpec
   */
 class RentedEquipmentDetailsControllerSpec extends TestBaseSpec {
 
-  def rentedEquipmentDetailsController =
-    new RentedEquipmentDetailsController(
-      rentedEquipmentDetailsView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
-      mockSessionRepo,
-      stubMessagesControllerComponents()
+  def rentedEquipmentDetailsController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
     )
-
-  def rentedEquipmentDetailsControllerNone =
-    new RentedEquipmentDetailsController(
-      rentedEquipmentDetailsView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
-      mockSessionRepo,
-      stubMessagesControllerComponents()
-    )
+  ) = new RentedEquipmentDetailsController(
+    rentedEquipmentDetailsView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo,
+    stubMessagesControllerComponents()
+  )
 
   "RentedEquipmentDetailsController GET /" should {
     "return 200 and HTML with Rented Equipment Details in the session" in {
-      val result = rentedEquipmentDetailsController.show(fakeRequest)
-      status(result)      shouldBe OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val result = rentedEquipmentDetailsController().show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+      )
     }
 
     "return 200 and HTML when no Rented Equipment Details in the session" in {
-      val result = rentedEquipmentDetailsControllerNone.show(fakeRequest)
-      status(result)      shouldBe OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = rentedEquipmentDetailsController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+      )
     }
   }
 
   "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = rentedEquipmentDetailsController.submit(
+      val res = rentedEquipmentDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "redirect to the next page if field `rentedEquipmentDetails` is filled" in {
-      val res = rentedEquipmentDetailsController.submit(
+      val res = rentedEquipmentDetailsController().submit(
         FakeRequest("POST", "/").withFormUrlEncodedBody("rentedEquipmentDetails" -> "Equipment details")
       )
       status(res) shouldBe SEE_OTHER
