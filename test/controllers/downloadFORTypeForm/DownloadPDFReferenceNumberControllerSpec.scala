@@ -21,6 +21,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import stub.StubBackendConnector
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
 

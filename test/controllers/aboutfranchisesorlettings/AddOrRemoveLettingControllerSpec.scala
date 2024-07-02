@@ -24,6 +24,7 @@ import utils.FormBindingTestAssertions.mustContainError
 import play.api.test.Helpers._
 import actions.SessionRequest
 import play.api.test.FakeRequest
+import scala.language.reflectiveCalls
 
 class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
   import TestData._

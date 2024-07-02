@@ -22,6 +22,7 @@ import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 /**
   * @author Yuriy Tumakha

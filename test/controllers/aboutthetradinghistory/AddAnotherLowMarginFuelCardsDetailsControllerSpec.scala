@@ -26,6 +26,7 @@ import play.api.test.Helpers
 import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
 

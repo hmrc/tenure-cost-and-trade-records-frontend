@@ -24,7 +24,7 @@ import org.scalatest.BeforeAndAfterAll
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, Upstream4xxResponse}
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, UpstreamErrorResponse}
 import utils.TestBaseSpec
 
 class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
@@ -155,7 +155,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
           .willReturn(aResponse().withStatus(403))
       )
 
-      intercept[Upstream4xxResponse] {
+      intercept[UpstreamErrorResponse] {
         await(backendConnector.deleteSubmissionDraft(testId, new HeaderCarrier()))
       }
     }

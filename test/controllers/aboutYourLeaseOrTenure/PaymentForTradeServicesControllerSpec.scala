@@ -24,6 +24,7 @@ import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
 

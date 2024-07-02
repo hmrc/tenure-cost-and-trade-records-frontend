@@ -23,6 +23,8 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
+
 class AddAnotherCateringOperationControllerSpec extends TestBaseSpec {
 
   import TestData._

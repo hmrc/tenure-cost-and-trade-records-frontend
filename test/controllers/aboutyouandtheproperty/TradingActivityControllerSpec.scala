@@ -22,6 +22,7 @@ import play.api.http.Status._
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class TradingActivityControllerSpec extends TestBaseSpec {
 

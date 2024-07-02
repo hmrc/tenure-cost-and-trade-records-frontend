@@ -24,6 +24,7 @@ import play.api.test.Helpers._
 import play.api.http.Status
 import play.api.test.FakeRequest
 import utils.FormBindingTestAssertions.mustContainError
+import scala.language.reflectiveCalls
 
 class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
 

@@ -22,6 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class PremisesLicenseGrantedDetailsControllerSpec extends TestBaseSpec {
 

@@ -22,6 +22,7 @@ import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
+import scala.language.reflectiveCalls
 
 class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
 
