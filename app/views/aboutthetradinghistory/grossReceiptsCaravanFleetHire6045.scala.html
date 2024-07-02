@@ -52,6 +52,9 @@
             content = HtmlContent(
                 govukInput(
                     Input(
+                        prefix = Some(PrefixOrSuffix(
+                            content = Text("£")
+                        )),
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
