@@ -34,19 +34,16 @@
 @(form: Form[Seq[GrossReceiptsCaravanFleetHire]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
 
 
-@rowLabel(labelKey: String, hintKey: String) = {
+@rowLabel(labelKey: String) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span> @messages("turnover.6045.excludingVAT")
     </p>
-    @if(hintKey.nonEmpty) {
-        <span class="govuk-caption-m">@messages(hintKey)</span>
-    }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, hintKey))
+            content = HtmlContent(rowLabel(labelKey))
         ),
         TableRow(
             content = HtmlContent(

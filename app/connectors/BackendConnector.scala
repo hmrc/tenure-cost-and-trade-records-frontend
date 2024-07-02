@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import com.google.inject.ImplementedBy
 import config.AppConfig
 import models.{Credentials, FORLoginResponse, SubmissionDraft}
 import play.api.libs.json.Writes
-import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, Upstream4xxResponse}
+import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, UpstreamErrorResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import javax.inject.{Inject, Singleton}
@@ -42,14 +42,11 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
 
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
-  def readsHack(implicit httpReads: HttpReads[FORLoginResponse]) =
-    new HttpReads[FORLoginResponse] {
-      override def read(method: String, url: String, response: HttpResponse): FORLoginResponse =
-        response.status match {
-          case 400 => throw new BadRequestException(response.body)
-          case 401 => throw new Upstream4xxResponse(response.body, 401, 401, response.allHeaders)
-          case _   => httpReads.read(method, url, response)
-        }
+  private def readsHack(implicit httpReads: HttpReads[FORLoginResponse]): HttpReads[FORLoginResponse] =
+    (method: String, url: String, response: HttpResponse) => response.status match {
+      case 400 => throw new BadRequestException(response.body)
+      case 401 => throw UpstreamErrorResponse(response.body, 401, 401)
+      case _ => httpReads.read(method, url, response)
     }
 
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
@@ -57,7 +54,9 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   ): Future[FORLoginResponse] = {
     val credentials            = Credentials(cleanedRefNumber(refNumber), postcode)
     val wrtCredentials         = implicitly[Writes[Credentials]]
-    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+
     http.POST[Credentials, FORLoginResponse](
       url("authenticate"),
       credentials
@@ -65,7 +64,7 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   }
 
   override def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] = {
-    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
 
     http
       .GET(url(s"${cleanedRefNumber(referenceNumber)}/forType"))(HttpReads.Implicits.readRaw, headerCarrier, ec)
@@ -77,7 +76,8 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
     submissionDraft: SubmissionDraft,
     hc: HeaderCarrier
   ): Future[Unit] = {
-    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+
     http.PUT(
       saveAsDraftUrl(referenceNumber),
       submissionDraft
@@ -87,14 +87,16 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   }
 
   override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] = {
-    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+
     http.GET[Option[SubmissionDraft]](
       saveAsDraftUrl(referenceNumber)
     )(HttpReads.Implicits.readOptionOfNotFound[SubmissionDraft], headerCarrier, ec)
   }
 
   override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] = {
-    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+
     http
       .DELETE(saveAsDraftUrl(referenceNumber))
       .map(res => (res.json \ "deletedCount").as[Int])
