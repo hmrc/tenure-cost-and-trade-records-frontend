@@ -50,6 +50,16 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def websiteForPropertyController6045(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyBlank)
+  ) = new WebsiteForPropertyController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    websiteForPropertyView,
+    preEnrichedActionRefiner(forType = "FOR6045", aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
   "WebsiteForProperty controller" should {
     "GET / return 200 website present in session" in {
       val result = websiteForPropertyController().show(fakeRequest)
@@ -72,6 +82,16 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
+      )
+    }
+
+    "GET / return 200 website not present in session 6045" in {
+      val result = websiteForPropertyController6045().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show().url
       )
     }
 

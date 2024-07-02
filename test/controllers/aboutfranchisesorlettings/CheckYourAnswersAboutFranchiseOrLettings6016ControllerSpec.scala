@@ -44,6 +44,21 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
       mockSessionRepo
     )
 
+  def checkYourAnswersAboutFranchiseOrLettingsControllerNo(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettingsNo6016)
+  ) =
+    new CheckYourAnswersAboutFranchiseOrLettingsController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      checkYourAnswersAboutFranchiseOrLettings,
+      preEnrichedActionRefiner(
+        referenceNumber = "99996016004",
+        forType = "FOR6016",
+        aboutFranchisesOrLettings = aboutFranchisesOrLettings
+      ),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
@@ -52,6 +67,17 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
 
     "return HTML" in {
       val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 No" in {
+      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML No" in {
+      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -64,6 +64,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case ForTypes.for6015 | ForTypes.for6016 =>
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
       case ForTypes.for6030                    => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show()
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       case _                                   => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
 
     }

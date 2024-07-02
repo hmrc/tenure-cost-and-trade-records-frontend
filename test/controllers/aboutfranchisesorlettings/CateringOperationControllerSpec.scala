@@ -40,6 +40,17 @@ class CateringOperationControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def cateringOperationOrLettingAccommodationController6015(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ) =
+    new CateringOperationController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      cateringOperationView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = cateringOperationOrLettingAccommodationController().show(fakeRequest)
@@ -48,6 +59,17 @@ class CateringOperationControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = cateringOperationOrLettingAccommodationController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6015" in {
+      val result = cateringOperationOrLettingAccommodationController6015().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML 6015" in {
+      val result = cateringOperationOrLettingAccommodationController6015().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
