@@ -144,6 +144,13 @@ trait TestBaseSpec
       forType = ForTypes.for6076
     )
 
+  val preFilledSession6045: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      referenceNumber = "99996045004",
+      aboutTheTradingHistory = prefilledAboutYourTradingHistory6045,
+      aboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045,
+      forType = ForTypes.for6045
+    )
   def preEnrichedActionRefiner(
     referenceNumber: String = "99996010004",
     forType: String = "FOR6010",
@@ -162,7 +169,7 @@ trait TestBaseSpec
     ),
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA),
     downloadPDFDetails: Option[DownloadPDFDetails] = None
-  ): WithSessionRefiner =
+  ): WithSessionRefiner                        =
     new WithSessionRefiner(mockSessionRepository) {
 
       override def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =

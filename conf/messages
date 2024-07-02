@@ -2539,7 +2539,10 @@ checkYourAnswersAboutTheTradingHistory.totalCosts = Total costs
 checkYourAnswersAboutTheTradingHistory.rent = Rent
 checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
 checkYourAnswersAboutTheTradingHistory.otherExpenses = Other expenses
-
+#CYA OTHER HOLIDAY ACCOMMODATION 6045/46
+checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
+checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation
+checkYourAnswersOtherHolidayAccommodation.onSite = Other holiday accommodation on site?
 # Confirmation Page
 ###################
 confirmation.heading = Declaration sent successfully

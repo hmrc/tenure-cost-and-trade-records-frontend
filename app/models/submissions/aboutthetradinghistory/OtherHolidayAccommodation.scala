@@ -20,7 +20,8 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class OtherHolidayAccommodation(
-  otherHolidayAccommodation: Option[AnswersYesNo] = None
+  otherHolidayAccommodation: Option[AnswersYesNo] = None,
+  checkYourAnswersOtherHolidayAccommodation: Option[CheckYourAnswersOtherHolidayAccommodation] = None
 )
 
 object OtherHolidayAccommodation {

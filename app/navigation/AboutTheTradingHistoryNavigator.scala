@@ -162,7 +162,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)
     ) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
       case _               =>
         logger.warn(
           s"Navigation for other holiday accommodation reached without correct selection of conditions by controller"
@@ -171,46 +171,47 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AboutYourTradingHistoryPageId            -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
-    FinancialYearEndPageId                   -> financialYearEndRouting,
-    FinancialYearEndDatesPageId              -> financialYearEndDatesRouting,
-    TurnoverPageId                           -> turnoverRouting,
-    CostOfSalesId                            -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
-    TotalPayrollCostId                       -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
-    TotalFuelSoldId                          -> (_ => aboutthetradinghistory.routes.BunkeredFuelQuestionController.show()),
-    VariableOperatingExpensesId              -> (_ => aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
-    FixedOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
-    OtherCostsId                             -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
-    BunkeredFuelQuestionId                   -> bunkeredFuelQuestionRouting,
-    BunkeredFuelSoldId                       -> (_ => aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(None)),
-    CustomerCreditAccountsId                 -> (_ => aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show()),
-    PercentageFromFuelCardsId                -> (_ => aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show()),
-    BunkerFuelCardsDetailsId                 -> getAddAnotherBunkerFuelCardsDetailRouting,
-    AddAnotherBunkerFuelCardsDetailsId       -> (_ => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()),
-    AcceptLowMarginFuelCardsId               -> acceptLowMarginFuelCardsRouting,
-    AddAnotherLowMarginFuelCardsDetailsId    -> (_ => aboutthetradinghistory.routes.NonFuelTurnoverController.show()),
-    LowMarginFuelCardsDetailsId              -> getAddAnotherLowMarginFuelCardsDetailRouting,
-    IncomeExpenditureSummaryId               -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
-    IncomeExpenditureSummary6076Id           -> (_ =>
+    AboutYourTradingHistoryPageId               -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
+    FinancialYearEndPageId                      -> financialYearEndRouting,
+    FinancialYearEndDatesPageId                 -> financialYearEndDatesRouting,
+    TurnoverPageId                              -> turnoverRouting,
+    CostOfSalesId                               -> (_ => aboutthetradinghistory.routes.TotalPayrollCostsController.show()),
+    TotalPayrollCostId                          -> (_ => aboutthetradinghistory.routes.VariableOperatingExpensesController.show()),
+    TotalFuelSoldId                             -> (_ => aboutthetradinghistory.routes.BunkeredFuelQuestionController.show()),
+    VariableOperatingExpensesId                 -> (_ => aboutthetradinghistory.routes.FixedOperatingExpensesController.show()),
+    FixedOperatingExpensesId                    -> (_ => aboutthetradinghistory.routes.OtherCostsController.show()),
+    OtherCostsId                                -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show()),
+    BunkeredFuelQuestionId                      -> bunkeredFuelQuestionRouting,
+    BunkeredFuelSoldId                          -> (_ => aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(None)),
+    CustomerCreditAccountsId                    -> (_ => aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show()),
+    PercentageFromFuelCardsId                   -> (_ => aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show()),
+    BunkerFuelCardsDetailsId                    -> getAddAnotherBunkerFuelCardsDetailRouting,
+    AddAnotherBunkerFuelCardsDetailsId          -> (_ => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()),
+    AcceptLowMarginFuelCardsId                  -> acceptLowMarginFuelCardsRouting,
+    AddAnotherLowMarginFuelCardsDetailsId       -> (_ => aboutthetradinghistory.routes.NonFuelTurnoverController.show()),
+    LowMarginFuelCardsDetailsId                 -> getAddAnotherLowMarginFuelCardsDetailRouting,
+    IncomeExpenditureSummaryId                  -> (_ => aboutthetradinghistory.routes.UnusualCircumstancesController.show()),
+    IncomeExpenditureSummary6076Id              -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
-    UnusualCircumstancesId                   -> (_ =>
+    UnusualCircumstancesId                      -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
-    ElectricVehicleChargingPointsId          -> (_ =>
+    ElectricVehicleChargingPointsId             -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
-    ElectricityGeneratedId                   -> (_ => aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
-    GrossReceiptsExcludingVatId              -> (_ => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()),
-    OtherIncomeId                            -> (_ => aboutthetradinghistory.routes.CostOfSales6076Controller.show()),
-    CostOfSales6076Id                        -> (_ => aboutthetradinghistory.routes.StaffCostsController.show()),
-    StaffCostsId                             -> (_ => aboutthetradinghistory.routes.PremisesCostsController.show()),
-    PremisesCostsId                          -> (_ => aboutthetradinghistory.routes.OperationalExpensesController.show()),
-    GrossReceiptsForBaseLoadId               -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
-    OperationalExpensesId                    -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
-    HeadOfficeExpensesId                     -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
-    OtherHolidayAccommodationId              -> otherHolidayAccommodationRouting,
-    CheckYourAnswersAboutTheTradingHistoryId -> (_ => controllers.routes.TaskListController.show())
+    ElectricityGeneratedId                      -> (_ => aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
+    GrossReceiptsExcludingVatId                 -> (_ => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()),
+    OtherIncomeId                               -> (_ => aboutthetradinghistory.routes.CostOfSales6076Controller.show()),
+    CostOfSales6076Id                           -> (_ => aboutthetradinghistory.routes.StaffCostsController.show()),
+    StaffCostsId                                -> (_ => aboutthetradinghistory.routes.PremisesCostsController.show()),
+    PremisesCostsId                             -> (_ => aboutthetradinghistory.routes.OperationalExpensesController.show()),
+    GrossReceiptsForBaseLoadId                  -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
+    OperationalExpensesId                       -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
+    HeadOfficeExpensesId                        -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
+    OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
+    CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
+    CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )
 
 }
