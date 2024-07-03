@@ -82,7 +82,7 @@ class FinancialYearEndController @Inject() (
             val isFinancialYearsListUnchanged  = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears
 
             val updatedData: Session = request.sessionData.forType match {
-              case ForTypes.for6020 =>
+              case ForTypes.for6020                    =>
                 buildUpdateData6020(
                   firstOccupy,
                   data._1,
@@ -91,7 +91,7 @@ class FinancialYearEndController @Inject() (
                   isFinancialYearEndDayUnchanged,
                   isFinancialYearsListUnchanged
                 )
-              case ForTypes.for6030 =>
+              case ForTypes.for6030                    =>
                 buildUpdateData6030(
                   firstOccupy,
                   data._1,
@@ -100,19 +100,19 @@ class FinancialYearEndController @Inject() (
                   isFinancialYearEndDayUnchanged,
                   isFinancialYearsListUnchanged
                 )
-              case ForTypes.for6045 =>
+              case ForTypes.for6045 | ForTypes.for6046 =>
                 buildUpdatedData6045(
                   aboutTheTradingHistory,
                   newOccupationAndAccounting,
                   isFinancialYearEndDayUnchanged
                 )
-              case ForTypes.for6076 =>
+              case ForTypes.for6076                    =>
                 buildUpdatedData6076(
                   aboutTheTradingHistory,
                   newOccupationAndAccounting,
                   isFinancialYearEndDayUnchanged
                 )
-              case _                =>
+              case _                                   =>
                 buildUpdateData(
                   firstOccupy,
                   data._1,
@@ -134,10 +134,11 @@ class FinancialYearEndController @Inject() (
                           .flatMap(_.headOption)
                           .exists(_.electricityGenerated.isDefined)
                       ) || (
-                        request.sessionData.forType == ForTypes.for6045 && request.sessionData.aboutTheTradingHistoryPartOne
-                          .flatMap(_.turnoverSections6045)
-                          .flatMap(_.headOption)
-                          .exists(_.grossReceiptsCaravanFleetHire.isDefined)
+                        (request.sessionData.forType == ForTypes.for6045 || request.sessionData.forType == ForTypes.for6046) &&
+                          request.sessionData.aboutTheTradingHistoryPartOne
+                            .flatMap(_.turnoverSections6045)
+                            .flatMap(_.headOption)
+                            .exists(_.grossReceiptsCaravanFleetHire.isDefined)
                       ))
                   )
                   .getOrElse(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData))

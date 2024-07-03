@@ -165,9 +165,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
 
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
-            .show()
-            .url // TODO: Static caravans
+          aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url // TODO: Static caravans
         )
       }
 
