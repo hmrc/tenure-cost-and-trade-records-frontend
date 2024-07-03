@@ -60,6 +60,48 @@ class PropertyCurrentlyUsedViewSpec extends QuestionViewBehaviours[PropertyCurre
       assertContainsText(doc, messages("label.propertyCurrentlyUsed.fleetCaravanPark"))
     }
 
+    "contain checkbox for the privateCaravanPark" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(
+        doc,
+        "privateCaravanPark",
+        "propertyCurrentlyUsed[]",
+        "privateCaravanPark",
+        isChecked = false
+      )
+      assertContainsText(doc, messages("label.propertyCurrentlyUsed.privateCaravanPark"))
+    }
+
+    "contain checkbox for the residentialPark" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "residentialPark", "propertyCurrentlyUsed[]", "residentialPark", isChecked = false)
+      assertContainsText(doc, messages("label.propertyCurrentlyUsed.residentialPark"))
+    }
+
+    "contain checkbox for the chaletPark" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "chaletPark", "propertyCurrentlyUsed[]", "chaletPark", isChecked = false)
+      assertContainsText(doc, messages("label.propertyCurrentlyUsed.chaletPark"))
+    }
+
+    "contain checkbox for the touringSite" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "touringSite", "propertyCurrentlyUsed[]", "touringSite", isChecked = false)
+      assertContainsText(doc, messages("label.propertyCurrentlyUsed.touringSite"))
+    }
+
+    "contain checkbox for the holidayCentre" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "holidayCentre", "propertyCurrentlyUsed[]", "holidayCentre", isChecked = false)
+      assertContainsText(doc, messages("label.propertyCurrentlyUsed.holidayCentre"))
+    }
+
+    "contain checkbox for the other" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "other", "propertyCurrentlyUsed[]", "other", isChecked = false)
+      assertContainsText(doc, messages("label.propertyCurrentlyUsed.other"))
+    }
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
