@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.BunkeredFuelSoldForm.bunkeredFuelSoldForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -50,6 +50,7 @@ class BunkeredFuelSoldController @Inject() (
           view(
             bunkeredFuelSoldForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.bunkeredFuelSold.getOrElse(Seq.empty)),
+            calculateBackLink(request),
             request.sessionData.toSummary
           )
         )
@@ -67,6 +68,7 @@ class BunkeredFuelSoldController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
+                calculateBackLink(request),
                 request.sessionData.toSummary
               )
             ),
@@ -79,11 +81,32 @@ class BunkeredFuelSoldController @Inject() (
             val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelSold = Some(bunkeredFuelSold)))
             session
               .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(BunkeredFuelSoldId, updatedData).apply(updatedData)))
+              .map { _ =>
+                val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(request) == "CYA")
+                val nextPage =
+                  redirectToCYA.getOrElse(navigator.nextPage(BunkeredFuelSoldId, updatedData).apply(updatedData))
+                Redirect(nextPage)
+              }
           }
         )
       }
   }
+
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "TL" => controllers.routes.TaskListController.show().url + "#bunkered-fuel-sales"
+      case _ =>
+        request.sessionData.aboutTheTradingHistory.flatMap(
+          _.occupationAndAccountingInformation.flatMap(_.yearEndChanged)
+        ) match {
+          case Some(true) => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
+          case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+          case _ => controllers.routes.TaskListController.show().url
+        }
+    }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)

@@ -32,7 +32,7 @@
         dateUtil: DateUtil
 )
 
-@(form: Form[Seq[BunkeredFuelSold]], summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[BunkeredFuelSold]], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 @bunkeredFuelRowContent = {
     <p class="govuk-body govuk-!-font-weight-bold">
@@ -47,7 +47,7 @@
     showH1  = false ,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url),
+    backLinkUrl = Some(backLink),
     fullWidth = true,
     theForm = form
 ) {
