@@ -122,6 +122,26 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  def checkYourAnswersAboutThePropertyControllerYes6045(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new CheckYourAnswersAboutThePropertyController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    checkYourAnswersAboutThePropertyView,
+    preEnrichedActionRefiner(forType = forType6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
+  def checkYourAnswersAboutThePropertyControllerNo6045(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    checkYourAnswersAboutThePropertyView,
+    preEnrichedActionRefiner(forType = forType6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    mockSessionRepo
+  )
+
   def checkYourAnswersAboutThePropertyControllerNone() = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
@@ -225,6 +245,26 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
+      )
+    }
+
+    "return 200 no about you and the property CYA in the session 6076" in {
+      val result = checkYourAnswersAboutThePropertyController6076().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
+      )
+    }
+
+    "return 200 no about you and the property CYA in the session 6045" in {
+      val result = checkYourAnswersAboutThePropertyControllerYes6045().show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
       )
     }
 

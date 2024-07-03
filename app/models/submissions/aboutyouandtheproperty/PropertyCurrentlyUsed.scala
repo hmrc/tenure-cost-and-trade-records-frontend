@@ -21,7 +21,6 @@ import play.api.libs.json.{Format, Json}
 case class PropertyCurrentlyUsed(
   propertyCurrentlyUsed: List[String] = List.empty,
   anotherUseDetails: Option[String] = None
-                                
 )
 object PropertyCurrentlyUsed {
   implicit val format: Format[PropertyCurrentlyUsed] = Json.format[PropertyCurrentlyUsed]

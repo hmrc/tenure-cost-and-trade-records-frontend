@@ -48,7 +48,7 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
         ) shouldBe controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
     }
 
-    "123return a function that goes to property currently used when contact details question have been completed with no" in {
+    "return a function that goes to website when property currently used has been completed" in {
 
       val answers = baseFilled6045Session.copy(
         aboutYouAndThePropertyPartTwo = Some(
