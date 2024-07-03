@@ -20,9 +20,10 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
@@ -33,30 +34,6 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new WorkCarriedOutConditionController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      workCarriedOutConditionView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
-
-  def workCarriedOutConditionControllerNo(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThreeNo
-    )
-  ) =
-    new WorkCarriedOutConditionController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      workCarriedOutConditionView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
-
-  def workCarriedOutConditionControllerEmpty(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = None
   ) = new WorkCarriedOutConditionController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
@@ -65,38 +42,43 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
-    "return 200" in {
+  "WorkCarriedOutConditionController GET /" should {
+    "return 200 and HTML with Work Carried Out Conditions with yes in the session" in {
       val result = workCarriedOutConditionController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = workCarriedOutConditionController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Work Carried Out Conditions with no in the session" in {
+      val controller = workCarriedOutConditionController(aboutLeaseOrAgreementPartThree =
+        Some(prefilledAboutLeaseOrAgreementPartThreeNo)
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
+      )
     }
 
-    "return 200 No" in {
-      val result = workCarriedOutConditionControllerNo().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML No" in {
-      val result = workCarriedOutConditionControllerNo().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 for empty session" in {
-      val result = workCarriedOutConditionControllerEmpty().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Work Carried Out Conditions with none in the session" in {
+      val controller = workCarriedOutConditionController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "WorkCarriedOutConditionController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = workCarriedOutConditionController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

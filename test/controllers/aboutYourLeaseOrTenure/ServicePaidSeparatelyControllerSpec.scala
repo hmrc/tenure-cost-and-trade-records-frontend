@@ -31,23 +31,18 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new ServicePaidSeparatelyController(
-      stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      servicePaidSeparatelyView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
+  ) = new ServicePaidSeparatelyController(
+    stubMessagesControllerComponents(),
+    app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+    servicePaidSeparatelyView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo
+  )
 
   "Service paid separately controller" should {
-    "return 200" in {
-      val result = servicePaidSeparatelyController().show(None)(fakeRequest)
-      status(result) shouldBe OK
-    }
-
-    "return HTML" in {
-      val result = servicePaidSeparatelyController().show(None)(fakeRequest)
+    "return 200 and HTML with Services Paid Separately in the session" in {
+      val result = servicePaidSeparatelyController().show(Some(0))(fakeRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -70,6 +65,7 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
         }
       }
     }
+
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = servicePaidSeparatelyController().submit(None)(

@@ -18,8 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import navigation.AboutYourLeaseOrTenureNavigator
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -31,59 +30,53 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def ultimatelyResponsibleOutsideRepairsController(
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new UltimatelyResponsibleOutsideRepairsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleOutsideRepairsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  def ultimatelyResponsibleOutsideRepairsController6020(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new UltimatelyResponsibleOutsideRepairsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleOutsideRepairsView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  def ultimatelyResponsibleOutsideRepairsControllerNone =
-    new UltimatelyResponsibleOutsideRepairsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleOutsideRepairsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-      mockSessionRepo
-    )
+  ) = new UltimatelyResponsibleOutsideRepairsController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    ultimatelyResponsibleOutsideRepairsView,
+    preEnrichedActionRefiner(
+      forType = forType,
+      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
+    ),
+    mockSessionRepo
+  )
 
   "UltimatelyResponsibleOutsideRepairsController GET /" should {
     "return 200 and HTML with Ultimately Responsible Outside Repairs in the session" in {
       val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
+      )
     }
 
     "return 200 and HTML with Ultimately Responsible Outside Repairs 6020 in the session" in {
-      val result = ultimatelyResponsibleOutsideRepairsController6020().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = ultimatelyResponsibleOutsideRepairsController(forType = ForTypes.for6020)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show().url
+      )
     }
 
     "return 200 and HTML when no Ultimately Responsible Outside Repairs in the session" in {
-      val result = ultimatelyResponsibleOutsideRepairsControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = ultimatelyResponsibleOutsideRepairsController(ForTypes.for6020, None, None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+      )
     }
   }
 

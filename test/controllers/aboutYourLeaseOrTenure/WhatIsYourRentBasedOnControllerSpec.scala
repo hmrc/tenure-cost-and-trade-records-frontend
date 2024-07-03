@@ -50,20 +50,27 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
   "WhatIsYourRentBasedOnController GET /" should {
     "return 200 and HTML with What Is Your Rent Based On in the session" in {
       val result = whatIsYourRentBasedOnController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
+      )
     }
 
     "return 200 and HTML when no What Is Your Rent Based On in the session" in {
-      val result = whatIsYourRentBasedOnControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = whatIsYourRentBasedOnController(aboutLeaseOrAgreementPartOne = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "WhatIsYourRentBasedOnController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = whatIsYourRentBasedOnController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

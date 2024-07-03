@@ -1212,7 +1212,7 @@ trait FakeObjects {
     Some(prefilledAnnualRent),
     currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
     currentLeaseOrAgreementBegin = Some(CurrentLeaseOrAgreementBegin(MonthsYearDuration(4, 2024), "Granted for")),
-    includedInYourRentDetails = Some(IncludedInYourRentDetails(List.empty)),
+    includedInYourRentDetails = Some(IncludedInYourRentDetails(List("vat"), BigDecimal(100))),
     doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeTradeServicesInformation =

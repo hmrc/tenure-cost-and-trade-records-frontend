@@ -18,7 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -30,41 +29,36 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def ultimatelyResponsibleInsideRepairsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new UltimatelyResponsibleInsideRepairsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleInsideRepairsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  def ultimatelyResponsibleInsideRepairsControllerNone =
-    new UltimatelyResponsibleInsideRepairsController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleInsideRepairsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-      mockSessionRepo
-    )
+  ) = new UltimatelyResponsibleInsideRepairsController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    ultimatelyResponsibleInsideRepairsView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+    mockSessionRepo
+  )
 
   "UltimatelyResponsibleInsideRepairsController GET /" should {
     "return 200 and HTML with Ultimately Responsible Inside Repairs in the session" in {
       val result = ultimatelyResponsibleInsideRepairsController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show().url
+      )
     }
 
     "return 200 and HTML when no Ultimately Responsible Inside Repairs in the session" in {
-      val result = ultimatelyResponsibleInsideRepairsControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = ultimatelyResponsibleInsideRepairsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show().url
+      )
     }
   }
 
