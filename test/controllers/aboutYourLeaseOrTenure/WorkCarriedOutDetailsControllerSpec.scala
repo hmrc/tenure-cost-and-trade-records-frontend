@@ -47,20 +47,20 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
   "WorkCarriedOutDetailsController GET /" should {
     "return 200 and HTML with Work Carried Out Details in the session" in {
       val result = workCarriedOutDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
       )
     }
 
-    "return 200 and HTML with Work Carried Out Details in the session" in {
+    "return 200 and HTML with None in the session" in {
       val controller = workCarriedOutDetailsController(aboutLeaseOrAgreementPartThree = None)
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
       )

@@ -18,7 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -30,45 +29,40 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec 
   import TestData._
   import utils.FormBindingTestAssertions._
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def ultimatelyResponsibleBuildingInsuranceController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new UltimatelyResponsibleBuildingInsuranceController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleBuildingInsuranceView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  def ultimatelyResponsibleBuildingInsuranceControllerNone =
-    new UltimatelyResponsibleBuildingInsuranceController(
-      stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
-      ultimatelyResponsibleBuildingInsuranceView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-      mockSessionRepo
-    )
+  ) = new UltimatelyResponsibleBuildingInsuranceController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    ultimatelyResponsibleBuildingInsuranceView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+    mockSessionRepo
+  )
 
   "UltimatelyResponsibleBuildingInsuranceController GET /" should {
     "return 200 and HTML with Ultimately Responsible Building Insurance in the session" in {
       val result = ultimatelyResponsibleBuildingInsuranceController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
+      )
     }
 
     "return 200 and HTML when no Ultimately Responsible Building Insurance in the session" in {
-      val result = ultimatelyResponsibleBuildingInsuranceControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = ultimatelyResponsibleBuildingInsuranceController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "UltimatelyResponsibleBuildingInsuranceController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = ultimatelyResponsibleBuildingInsuranceController().submit(

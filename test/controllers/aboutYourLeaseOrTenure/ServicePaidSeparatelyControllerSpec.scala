@@ -32,17 +32,17 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) = new ServicePaidSeparatelyController(
-      stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
-      servicePaidSeparatelyView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
-    )
+    stubMessagesControllerComponents(),
+    app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+    servicePaidSeparatelyView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo
+  )
 
   "Service paid separately controller" should {
     "return 200 and HTML with Services Paid Separately in the session" in {
-      val result = servicePaidSeparatelyController().show(None)(fakeRequest)
-      status(result) shouldBe OK
+      val result = servicePaidSeparatelyController().show(Some(0))(fakeRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
