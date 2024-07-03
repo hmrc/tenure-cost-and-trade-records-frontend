@@ -151,7 +151,9 @@ case object GrossReceiptsCaravanFleetHireId extends Identifier {
 case object OtherHolidayAccommodationId extends Identifier {
   override def toString: String = "otherHolidayAccommodationPage"
 }
-
+case object CheckYourAnswersOtherHolidayAccommodationId extends Identifier {
+  override def toString: String = "checkYourAnswersOtherHolidayAccommodation"
+}
 case object CheckYourAnswersAboutTheTradingHistoryId extends Identifier {
   override def toString: String = "checkYourAnswersAboutTheTradingHistory"
 }

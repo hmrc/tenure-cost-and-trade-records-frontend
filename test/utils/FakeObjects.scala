@@ -580,7 +580,15 @@ trait FakeObjects {
       aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
     )
 
-  val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
+  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSession: Session      =
+    aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
+      prefilledAboutTheTradingHistoryPartOneCYA6045
+    )
+  val prefilledAboutTheTradingHistoryPartOneCYA6045: AboutTheTradingHistoryPartOne =
+    prefilledTurnoverSections6045.copy(otherHolidayAccommodation =
+      Some(OtherHolidayAccommodation(Some(AnswerNo), None))
+    )
+  val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne                 = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
       TurnoverSection6076(
@@ -1113,9 +1121,14 @@ trait FakeObjects {
   val prefilledOtherHolidayAccommodationNo: Option[OtherHolidayAccommodation]  = Some(
     OtherHolidayAccommodation(Some(AnswerNo))
   )
-  val prefilledAboutTheTradingHistoryPartOneYes                                =
+
+  val prefilledCYAOtherHolidayAccommodationNo: Option[OtherHolidayAccommodation] = Some(
+    OtherHolidayAccommodation(Some(AnswerNo), None)
+  )
+
+  val prefilledAboutTheTradingHistoryPartOneYes =
     prefilledAboutTheTradingHistoryPartOne.copy(otherHolidayAccommodation = prefilledOtherHolidayAccommodationYes)
-  val prefilledAboutTheTradingHistoryPartOneNo                                 =
+  val prefilledAboutTheTradingHistoryPartOneNo  =
     prefilledAboutTheTradingHistoryPartOne.copy(otherHolidayAccommodation = prefilledOtherHolidayAccommodationNo)
 
   val prefilledVacantProperties = StillConnectedDetails(
