@@ -83,7 +83,7 @@ class BunkeredFuelSoldController @Inject() (
               .saveOrUpdate(updatedData)
               .map { _ =>
                 val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(request) == "CYA")
-                val nextPage =
+                val nextPage      =
                   redirectToCYA.getOrElse(navigator.nextPage(BunkeredFuelSoldId, updatedData).apply(updatedData))
                 Redirect(nextPage)
               }
@@ -92,20 +92,11 @@ class BunkeredFuelSoldController @Inject() (
       }
   }
 
-
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL" => controllers.routes.TaskListController.show().url + "#bunkered-fuel-sales"
-      case _ =>
-        request.sessionData.aboutTheTradingHistory.flatMap(
-          _.occupationAndAccountingInformation.flatMap(_.yearEndChanged)
-        ) match {
-          case Some(true) => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
-          case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
-          case _ => controllers.routes.TaskListController.show().url
-        }
+      case _     => controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
     }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
