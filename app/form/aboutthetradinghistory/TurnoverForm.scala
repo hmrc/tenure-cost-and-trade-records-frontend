@@ -16,15 +16,14 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.turnoverSalesMappingWithYear
+import form.MappingSupport.{tradingPeriodWeeks, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.TurnoverSection
-import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{ignored, mapping, optional}
-import play.api.i18n.Messages
 import play.api.data.Forms._
+import play.api.data.{Form, Mapping}
+import play.api.i18n.Messages
 
-import scala.util.Try
 import java.time.LocalDate
+import scala.util.Try
 
 object TurnoverForm {
 
@@ -46,13 +45,7 @@ object TurnoverForm {
 
     def columnMapping(year: String)(implicit messages: Messages): Mapping[TurnoverSection] = mapping(
       "financial-year-end"     -> ignored(LocalDate.EPOCH),
-      "weeks"                  -> text
-        .verifying(messages("error.weeksMapping.blank", year), _.nonEmpty)
-        .transform[Int](
-          str => Try(str.toInt).getOrElse(-1),
-          int => int.toString
-        )
-        .verifying(messages("error.weeksMapping.invalid", year), weeks => weeks == 0 || (weeks >= 1 && weeks <= 52)),
+      "weeks"                  -> tradingPeriodWeeks(year),
       "alcoholic-drinks"       -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),
       "food"                   -> turnoverSalesMappingWithYear("turnover.food.sales", year),
       "other-receipts"         -> turnoverSalesMappingWithYear("turnover.other.sales", year),

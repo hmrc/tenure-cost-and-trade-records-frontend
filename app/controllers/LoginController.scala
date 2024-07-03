@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import play.api.mvc._
 import repositories.SessionRepo
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
-import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, Upstream4xxResponse}
+import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, UpstreamErrorResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import util.DateUtil.nowInUK
 import views.html._
@@ -167,11 +167,11 @@ class LoginController @Inject() (
         }
       }
       .recover {
-        case Upstream4xxResponse(_, 409, _, _)    =>
+        case UpstreamErrorResponse(_, 409, _, _)    =>
           Conflict(errorView(409))
-        case Upstream4xxResponse(_, 403, _, _)    =>
+        case UpstreamErrorResponse(_, 403, _, _)    =>
           Conflict(errorView(403))
-        case Upstream4xxResponse(body, 401, _, _) =>
+        case UpstreamErrorResponse(body, 401, _, _) =>
           val failed            = Json.parse(body).as[FailedLoginResponse]
           val remainingAttempts = failed.numberOfRemainingTriesUntilIPLockout
           logger.warn(s"Failed login: RefNum: $referenceNumber Attempts remaining: $remainingAttempts")

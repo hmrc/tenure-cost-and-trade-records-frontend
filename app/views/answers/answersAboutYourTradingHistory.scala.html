@@ -88,10 +88,10 @@
 }
 
 @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[_]) = @{
-    request.sessionData.forType match {
+    forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 => request.sessionData.financialYearEndDates6045.map(_._1)
+        case ForTypes.for6045 | ForTypes.for6046 => request.sessionData.financialYearEndDates6045.map(_._1)
         case ForTypes.for6076 => request.sessionData.financialYearEndDates6076.map(_._1)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
@@ -449,10 +449,8 @@
 ))
 }
 
-@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => String, additionalParagraph: Option[String] = None) = @{
-    answer(valueLabelKey,
-        sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer),
-        additionalParagraph)
+@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => String) = @{
+    answer(valueLabelKey, sectionAnswers.answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer))
 }
 
 @answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String, additionalParagraph: Option[String] = None) = @{
@@ -482,14 +480,14 @@
             sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                 _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                 forType match {
-                    case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6076 =>
+                    case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6076 =>
                         aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
                     case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                 },
                 "", ("valueAsHtml", _ => None))
 ))
 
-@if(!(Seq(ForTypes.for6020, ForTypes.for6045, ForTypes.for6076) contains forType)) {
+@if(!(Seq(ForTypes.for6020, ForTypes.for6045, ForTypes.for6046, ForTypes.for6076) contains forType)) {
     <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
@@ -522,13 +520,17 @@
     ))
 }
 
-@if(forType == ForTypes.for6045) {
+@if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
 
-    @pageAnswers("grossReceipts.6045.caravanFleetHire.heading",
-        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show(), // TODO: Gross receipts from caravan fleet hire
+    <h2 class="govuk-heading-l">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.section")</h2>
+
+
+
+    @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
+        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
         answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
             t => s"${t.grossReceiptsCaravanFleetHire.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
-        answer6045("grossReceipts.6045.caravanFleetHire", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
+        answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
     )
 
 }

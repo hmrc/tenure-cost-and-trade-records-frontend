@@ -44,7 +44,7 @@
     val financialYearEndDates = request.sessionData.forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
+        case ForTypes.for6045 | ForTypes.for6046 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case ForTypes.for6076 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }

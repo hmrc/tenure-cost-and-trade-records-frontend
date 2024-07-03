@@ -23,7 +23,6 @@ import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
 import java.time.LocalDate
-import scala.util.Try
 
 /**
   * @author Yuriy Tumakha
@@ -32,10 +31,7 @@ object FeeReceivedForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[FeeReceivedPerYear] = mapping(
     "financialYearEnd"         -> ignored(LocalDate.EPOCH),
-    "tradingPeriod"            -> text
-      .verifying(messages("error.weeksMapping.blank", year), _.nonEmpty)
-      .transform[Int](str => Try(str.toInt).getOrElse(-1), _.toString)
-      .verifying(messages("error.weeksMapping.invalid", year), (0 to 52) contains _),
+    "tradingPeriod"            -> tradingPeriodWeeks(year),
     "concessionOrFranchiseFee" -> turnoverSalesMappingWithYear("feeReceived.concessionOrFranchiseFee", year)
   )(FeeReceivedPerYear.apply)(FeeReceivedPerYear.unapply)
 

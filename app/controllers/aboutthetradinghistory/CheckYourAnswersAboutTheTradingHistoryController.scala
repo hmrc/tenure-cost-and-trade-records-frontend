@@ -88,9 +88,13 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
     answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6016 =>
         controllers.aboutthetradinghistory.routes.TurnoverController.show().url
-      case ForTypes.for6015                                       => controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show().url
+      case ForTypes.for6015 | ForTypes.for6030                    =>
+        controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show().url
       case ForTypes.for6020                                       =>
         controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show().url
+      case ForTypes.for6045 |
+          ForTypes.for6046 => // TODO: Static caravans OR What is the current annual pitch fee for a single-unit static caravan
+        controllers.aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
       case ForTypes.for6076                                       =>
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _                                                      =>

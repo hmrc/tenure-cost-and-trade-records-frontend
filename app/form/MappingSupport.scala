@@ -271,6 +271,15 @@ object MappingSupport {
       else Valid
     }
 
+  def tradingPeriodWeeks(year: String)(implicit messages: Messages) =
+    default(text, "")
+      .verifying(messages("error.weeksMapping.blank", year), _.trim.nonEmpty)
+      .transform[Int](
+        str => Try(str.toInt).getOrElse(-1),
+        _.toString
+      )
+      .verifying(messages("error.weeksMapping.invalid", year), (0 to 52).contains(_))
+
   private val salesMax = BigDecimal(1000000000000L)
 
   def turnoverSalesMappingWithYear(field: String, year: String)(implicit

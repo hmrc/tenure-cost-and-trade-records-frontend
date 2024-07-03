@@ -50,18 +50,18 @@ class EditFinancialYearEndDateController @Inject() (
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
         val financialYearEnd: Seq[LocalDate] = {
           request.sessionData.forType match {
-            case ForTypes.for6020 =>
+            case ForTypes.for6020                    =>
               aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
-            case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-            case ForTypes.for6045 =>
+            case ForTypes.for6030                    => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+            case ForTypes.for6045 | ForTypes.for6046 =>
               request.sessionData.aboutTheTradingHistoryPartOne
                 .flatMap(_.turnoverSections6045)
                 .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
-            case ForTypes.for6076 =>
+            case ForTypes.for6076                    =>
               request.sessionData.aboutTheTradingHistoryPartOne
                 .flatMap(_.turnoverSections6076)
                 .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
-            case _                => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+            case _                                   => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
           }
         }
         val prefilledForm = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
@@ -78,32 +78,32 @@ class EditFinancialYearEndDateController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(implicit request: SessionRequest[AnyContent]): Boolean =
     request.sessionData.forType match {
-      case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.exists(_.nonEmpty)
-      case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
-      case ForTypes.for6045 =>
+      case ForTypes.for6020                    => aboutTheTradingHistory.turnoverSections6020.exists(_.nonEmpty)
+      case ForTypes.for6030                    => aboutTheTradingHistory.turnoverSections6030.nonEmpty
+      case ForTypes.for6045 | ForTypes.for6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).exists(_.nonEmpty)
-      case ForTypes.for6076 =>
+      case ForTypes.for6076                    =>
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).exists(_.nonEmpty)
-      case _                => aboutTheTradingHistory.turnoverSections.nonEmpty
+      case _                                   => aboutTheTradingHistory.turnoverSections.nonEmpty
     }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val financialYearEnd: Seq[LocalDate] = {
       request.sessionData.forType match {
-        case ForTypes.for6020 =>
+        case ForTypes.for6020                    =>
           request.sessionData.aboutTheTradingHistory.get.turnoverSections6020
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
-        case ForTypes.for6030 =>
+        case ForTypes.for6030                    =>
           request.sessionData.aboutTheTradingHistory.get.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 =>
+        case ForTypes.for6045 | ForTypes.for6046 =>
           request.sessionData.aboutTheTradingHistoryPartOne
             .flatMap(_.turnoverSections6045)
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
-        case ForTypes.for6076 =>
+        case ForTypes.for6076                    =>
           request.sessionData.aboutTheTradingHistoryPartOne
             .flatMap(_.turnoverSections6076)
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
-        case _                => request.sessionData.aboutTheTradingHistory.get.turnoverSections.map(_.financialYearEnd)
+        case _                                   => request.sessionData.aboutTheTradingHistory.get.turnoverSections.map(_.financialYearEnd)
       }
     }
     val prefilledForm = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
@@ -132,13 +132,13 @@ class EditFinancialYearEndDateController @Inject() (
               }
 
             val updatedData: Session = request.sessionData.forType match {
-              case ForTypes.for6020 =>
+              case ForTypes.for6020                    =>
                 buildUpdateData6020(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
-              case ForTypes.for6030 =>
+              case ForTypes.for6030                    =>
                 buildUpdateData6030(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
-              case ForTypes.for6045 => buildUpdatedData6045(index, data, newOccupationAndAccounting)
-              case ForTypes.for6076 => buildUpdatedData6076(index, data, newOccupationAndAccounting)
-              case _                => buildUpdateData(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
+              case ForTypes.for6045 | ForTypes.for6046 => buildUpdatedData6045(index, data, newOccupationAndAccounting)
+              case ForTypes.for6076                    => buildUpdatedData6076(index, data, newOccupationAndAccounting)
+              case _                                   => buildUpdateData(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
             }
             session
               .saveOrUpdate(updatedData)
@@ -159,20 +159,20 @@ class EditFinancialYearEndDateController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(implicit request: SessionRequest[AnyContent]) =
     request.sessionData.forType match {
-      case ForTypes.for6020 =>
+      case ForTypes.for6020                    =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
-      case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
-      case ForTypes.for6045 =>
+      case ForTypes.for6030                    => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
+      case ForTypes.for6045 | ForTypes.for6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6045)
           .flatMap(_.headOption)
           .exists(_.grossReceiptsCaravanFleetHire.isDefined)
-      case ForTypes.for6076 =>
+      case ForTypes.for6076                    =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6076)
           .flatMap(_.headOption)
           .exists(_.electricityGenerated.isDefined)
-      case _                => aboutTheTradingHistory.turnoverSections.head.alcoholicDrinks.isDefined
+      case _                                   => aboutTheTradingHistory.turnoverSections.head.alcoholicDrinks.isDefined
     }
 
   private def buildUpdateData(

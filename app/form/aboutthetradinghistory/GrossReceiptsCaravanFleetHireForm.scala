@@ -17,24 +17,27 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport._
-import play.api.data.Forms.{default, text, tuple}
+import models.submissions.aboutthetradinghistory.GrossReceiptsCaravanFleetHire
+import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
 /**
-  * 6076 Electricity generated form.
+  * 6045/6046 Trading history form - Gross receipts from static caravan fleet hire.
   *
   * @author Yuriy Tumakha
   */
-object ElectricityGeneratedForm {
+object GrossReceiptsCaravanFleetHireForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[(Int, String)] = tuple(
-    "weeks"                -> tradingPeriodWeeks(year),
-    "electricityGenerated" -> default(text, "")
-      .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
-  )
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[GrossReceiptsCaravanFleetHire] =
+    mapping(
+      "weeks"         -> tradingPeriodWeeks(year),
+      "grossReceipts" -> turnoverSalesMappingWithYear("turnover.6045.caravanFleetHire.grossReceipts", year)
+    )(GrossReceiptsCaravanFleetHire.apply)(GrossReceiptsCaravanFleetHire.unapply)
 
-  def electricityGeneratedForm(years: Seq[String])(implicit messages: Messages): Form[Seq[(Int, String)]] =
+  def grossReceiptsCaravanFleetHireForm(
+    years: Seq[String]
+  )(implicit messages: Messages): Form[Seq[GrossReceiptsCaravanFleetHire]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

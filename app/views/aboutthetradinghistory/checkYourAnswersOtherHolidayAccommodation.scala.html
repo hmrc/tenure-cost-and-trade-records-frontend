@@ -16,33 +16,23 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+@import models.submissions.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodation
 @import models.pages.Summary
-@import views.html.answers.answersAboutYourTradingHistory
+@import views.html.answers.answersOtherHolidayAccommodation
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory,
+        answersSectionOtherHolidayAccommodation: answersOtherHolidayAccommodation,
         formWithCSRF: FormWithCSRF
 )
 
 
-@(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[CheckYourAnswersOtherHolidayAccommodation], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
-@forType = @{
-    request.sessionData.forType
-}
-
-@cyaPageHeading = @{
-    forType match {
-        case ForTypes.for6045 | ForTypes.for6046 => messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.heading")
-        case _ => messages("checkYourAnswersAboutTheTradingHistory.heading")
-    }
-}
 
 @layout(
-    pageHeading = cyaPageHeading,
+    pageHeading = messages("checkYourAnswersOtherHolidayAccommodation.heading"),
     backLinkUrl = backLink,
     showSection = true,
     fullWidth = true,
@@ -51,14 +41,14 @@
     theForm = theForm
 ) {
 
-    @answersSectionAboutYourTradingHistory()
+    @answersSectionOtherHolidayAccommodation()
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.submit()) {
 
         @includes.checkYourAnswersRadioButtons(
             govukRadios,
             theForm,
-            "checkYourAnswersAboutTheTradingHistory"
+            "checkYourAnswersOtherHolidayAccommodation"
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)
