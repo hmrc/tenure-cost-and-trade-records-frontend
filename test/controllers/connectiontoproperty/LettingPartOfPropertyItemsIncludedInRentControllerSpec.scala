@@ -36,20 +36,25 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  "LettingPartOfPropertyItemsIncludedInRentController GET /" should {
+    "return 200 and HTML with Letting Part of PropertyItems Included in session" in {
       val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0).url
+      )
     }
 
-    "return HTML" in {
-      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML no Letting Part of PropertyItems Included with None in session" in {
+      val controller = lettingPartOfPropertyItemsIncludedInRentController(stillConnectedDetails = None)
+      val result     = controller.show(0)(fakeRequest)
+      status(result) shouldBe Status.SEE_OTHER
     }
   }
 
-  "SUBMIT /" should {
+  "LettingPartOfPropertyItemsIncludedInRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = lettingPartOfPropertyItemsIncludedInRentController().submit(0)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

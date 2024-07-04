@@ -40,33 +40,37 @@ class PastConnectionControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def pastConnectionControllerEmpty(
-    removeConnectionDetails: Option[RemoveConnectionDetails] = None
-  ) = new PastConnectionController(
-    stubMessagesControllerComponents(),
-    removeConnectionNavigator,
-    pastConnectionView,
-    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-    mockSessionRepo
-  )
-
   "Premises licence conditions controller" should {
-    "return 200" in {
+    "return 200 and HTML with Past Connections with yes in the session" in {
       val result = pastConnectionController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = pastConnectionController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with Past Connections with none in the session" in {
+      val controller = pastConnectionController(Some(prefilledNotConnectedNone))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
     }
 
-    "return 200 for empty session" in {
-      val result = pastConnectionControllerEmpty().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Past Connections with none in the session" in {
+      val controller = pastConnectionController(None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
     }
 
     "SUBMIT /" should {

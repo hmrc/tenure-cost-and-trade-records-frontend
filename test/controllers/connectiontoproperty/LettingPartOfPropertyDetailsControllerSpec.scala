@@ -37,17 +37,28 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
-      val result = lettingPartOfPropertyDetailsControllerr().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
+  "LettingPartOfPropertyDetailsController GET /" should {
+    "return 200 and HTML with Letting Part of Property Details in session" in {
+      val result = lettingPartOfPropertyDetailsControllerr().show(Some(0))(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = lettingPartOfPropertyDetailsControllerr().show(None)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Letting Part of Property Details with none in session" in {
+      val controller = lettingPartOfPropertyDetailsControllerr(stillConnectedDetails = None)
+      val result     = controller.show(Some(0))(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
+      )
     }
+
     "render a page with an empty form" when {
       "not given an index" in {
         val result = lettingPartOfPropertyDetailsControllerr().show(None)(fakeRequest)
@@ -61,6 +72,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
         Option(html.getElementById("correspondenceAddress.county").`val`()).value             shouldBe ""
         Option(html.getElementById("correspondenceAddress.postcode").`val`()).value           shouldBe ""
       }
+
       "given an index" which {
         "doesn't already exist in the session" in {
           val result = lettingPartOfPropertyDetailsControllerr().show(Some(2))(fakeRequest)
@@ -76,9 +88,9 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
         }
       }
     }
+
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-
         val res = lettingPartOfPropertyDetailsControllerr().submit(None)(
           FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
         )
