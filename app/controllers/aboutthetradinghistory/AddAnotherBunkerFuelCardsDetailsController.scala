@@ -119,7 +119,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             session.saveOrUpdate(updatedDataCYA)
           }
           .map(_ =>
-            if (data == AnswerNo && fromCYA == true) {
+            if (data == AnswerNo && fromCYA) {
               Redirect(
                 routes.CheckYourAnswersAboutTheTradingHistoryController.show()
               )
