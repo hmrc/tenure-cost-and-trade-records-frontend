@@ -579,7 +579,8 @@ trait FakeObjects {
         today.minusYears(2),
         grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire(50, 3000)
       )
-    )
+    ),
+    caravans = Caravans(AnswerYes, AnswerNo, 26)
   )
 
   val aboutYourTradingHistory6045YesSession: Session =
