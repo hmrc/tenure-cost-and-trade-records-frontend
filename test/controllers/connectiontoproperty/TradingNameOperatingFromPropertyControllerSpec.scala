@@ -32,74 +32,74 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   import TestData._
 
   def tradingNameOperatingFromPropertyController(
+    forType: String = ForTypes.for6010,
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      preEnrichedActionRefiner(forType = forType, stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
     )
 
-  def tradingNameOperatingFromProperty6076Controller(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def tradingNameOperatingFromPropertyControllerNoTradingName(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200 when trading name present in session" in {
+  "TradingNameOperatingFromPropertyController GET /" should {
+    "return 200 and HTML with trading name present in session" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with trading name present in session for 6076" in {
+      val controller = tradingNameOperatingFromPropertyController(forType = ForTypes.for6076)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
     }
 
-    "return 200 when trading name present in session 6076" in {
-      val result = tradingNameOperatingFromProperty6076Controller().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML 6076" in {
-      val result = tradingNameOperatingFromProperty6076Controller().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 when trading name present is not session for 6076" in {
+      val controller = tradingNameOperatingFromPropertyController(
+        forType = ForTypes.for6076,
+        stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit)
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.EditAddressController.show().url
+      )
     }
 
     "return 200 when trading name present is not session" in {
-      val result = tradingNameOperatingFromPropertyControllerNoTradingName().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = tradingNameOperatingFromPropertyController(
+        forType = ForTypes.for6076,
+        stillConnectedDetails = None
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
+
     "return correct back link if query param from=TL is present" in {
       val result = tradingNameOperatingFromPropertyController().show(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
   }
 
-  "SUBMIT /" should {
+  "TradingNameOperatingFromPropertyController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tradingNameOperatingFromPropertyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

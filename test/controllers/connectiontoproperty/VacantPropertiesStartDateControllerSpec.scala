@@ -37,34 +37,26 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def vacantPropertiesStartDateControllerNoStartDate(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) =
-    new VacantPropertiesStartDateController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      vacantPropertiesStartDateView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200 vacant property start date present in session" in {
+  "VacantPropertiesStartDateController GET /" should {
+    "return 200 and HTML with vacant property start date present in session" in {
       val result = vacantPropertiesStartDateController().show()(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = vacantPropertiesStartDateController().show()(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 vacant property start date is not present in session" in {
-      val result = vacantPropertiesStartDateControllerNoStartDate().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with vacant property start date is not present in session" in {
+      val controller = vacantPropertiesStartDateController(Some(prefilledStillConnectedDetailsYes))
+      val result     = controller.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+      )
     }
 
     "display the page with the fields prefilled in" when {
@@ -78,7 +70,7 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "VacantPropertiesStartDateController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = vacantPropertiesStartDateController().submit()(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
