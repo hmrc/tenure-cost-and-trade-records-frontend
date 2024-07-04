@@ -20,7 +20,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class TypeOfTenureControllerSpec extends TestBaseSpec {
@@ -38,36 +38,35 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def typeOfTenureControllerNone =
-    new TypeOfTenureController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      typeOfTenureView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
-      mockSessionRepo
-    )
-
-  " TypeOfTenureController GET /" should {
-    "return 200 with data in session" in {
+  "TypeOfTenureController GET /" should {
+    "return 200 and HTML with Type of Tenure in the session" in {
       val result = typeOfTenureController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
-    "return HTML with data in session" in {
-      val result = typeOfTenureController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Type of Tenure with none in the session" in {
+      val controller = typeOfTenureController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
-    "return 200 with no data in session" in {
-      val result = typeOfTenureControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = typeOfTenureController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#type-of-tenure")
     }
   }
 
-  "SUBMIT /" should {
+  "TypeOfTenureController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = typeOfTenureController().submit(

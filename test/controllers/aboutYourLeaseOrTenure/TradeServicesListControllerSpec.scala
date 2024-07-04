@@ -22,9 +22,10 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class TradeServicesListControllerSpec extends TestBaseSpec {
@@ -57,17 +58,24 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
 
   "TradeServicesListController GET /" should {
     "return 200 and HTML with Trade Services List in the session" in {
-      val result = tradeServicesListController().show(1)(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val result = tradeServicesListController().show(0)(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(0)).url
+      )
     }
 
     "return 200 and HTML when no Trade Services List in the session" in {
-      val result = tradeServicesListControllerNone.show(1)(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = tradeServicesListController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(0)(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(0)).url
+      )
     }
 
     "SUBMIT /" should {

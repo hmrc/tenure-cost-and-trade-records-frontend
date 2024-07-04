@@ -42,13 +42,17 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
     )
 
   "Trade services description controller" should {
-    "return 200" in {
-      val result = tradeServicesDescriptionController().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 and HTML with Trade Services Description in the session" in {
+      val result = tradeServicesDescriptionController().show(Some(0))(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML" in {
-      val result = tradeServicesDescriptionController().show(None)(fakeRequest)
+    "return 200 and HTML Trade Services Description with none in the session" in {
+      val controller = tradeServicesDescriptionController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(None)(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -71,6 +75,7 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
         }
       }
     }
+
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = tradeServicesDescriptionController().submit(None)(

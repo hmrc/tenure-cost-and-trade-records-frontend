@@ -27,57 +27,47 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
 
   def tenancyLeaseAgreementExpireController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new TenancyLeaseAgreementExpireController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      tenantsLeaseAgreementExpireView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  def tenancyLeaseAgreementExpireNoStartDate(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
-      prefilledAboutLeaseOrAgreementPartTwoNoDate
-    )
-  ) =
-    new TenancyLeaseAgreementExpireController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      tenantsLeaseAgreementExpireView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
-    )
-
-  def tenancyLeaseAgreementExpireControllerNone =
-    new TenancyLeaseAgreementExpireController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      tenantsLeaseAgreementExpireView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = None),
-      mockSessionRepo
-    )
+  ) = new TenancyLeaseAgreementExpireController(
+    stubMessagesControllerComponents(),
+    aboutYourLeaseOrTenureNavigator,
+    tenantsLeaseAgreementExpireView,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+    mockSessionRepo
+  )
 
   "TenancyLeaseAgreementExpireController GET /" should {
     "return 200 and HTML with Tenancy Lease Agreement Expire in the session" in {
       val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
+      )
     }
 
     "return 200 and HTML vacant property start date is not present in session" in {
-      val result = tenancyLeaseAgreementExpireNoStartDate().show()(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = tenancyLeaseAgreementExpireController(aboutLeaseOrAgreementPartTwo =
+        Some(prefilledAboutLeaseOrAgreementPartTwoNoDate)
+      )
+      val result     = controller.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
+      )
     }
 
     "return 200 and HTML when no Tenancy Lease Agreement Expire in the session" in {
-      val result = tenancyLeaseAgreementExpireControllerNone.show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val controller = tenancyLeaseAgreementExpireController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
+      )
     }
 
     "display the page with the fields prefilled in" when {
@@ -90,7 +80,7 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
       }
     }
 
-    "SUBMIT /" should {
+    "TenancyLeaseAgreementExpireController SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = tenancyLeaseAgreementExpireController().submit(
           FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

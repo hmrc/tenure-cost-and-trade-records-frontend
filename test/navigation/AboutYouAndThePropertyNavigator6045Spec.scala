@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, ContactDetailsQuestion, PropertyCurrentlyUsed, WebsiteForPropertyDetails}
+import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.AnswerNo
 import navigation.identifiers._
 import play.api.libs.json.JsObject
