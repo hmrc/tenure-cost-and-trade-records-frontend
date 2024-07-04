@@ -208,10 +208,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     GrossReceiptsForBaseLoadId                  -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
     OperationalExpensesId                       -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
     HeadOfficeExpensesId                        -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
-    GrossReceiptsCaravanFleetHireId          -> (_ =>
+    GrossReceiptsCaravanFleetHireId             -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
         .show() // TODO: Single caravans owned by the operator
-      ),
+    ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
