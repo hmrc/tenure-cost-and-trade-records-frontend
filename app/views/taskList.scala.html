@@ -185,7 +185,9 @@
 
      @if(forType != ForTypes.for6030) {
       @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
-       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+       if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+       controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()}
+       else {controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()},
        section2Completed,
        session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
