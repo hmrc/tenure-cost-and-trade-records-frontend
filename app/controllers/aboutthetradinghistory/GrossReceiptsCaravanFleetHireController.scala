@@ -106,10 +106,8 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case _     =>
-        aboutthetradinghistory.routes.FinancialYearEndController
-          .show()
-          .url // TODO: Are your static caravans open all year?
+      case _     => // TODO: Are your static caravans open all year?
+        aboutthetradinghistory.routes.StaticCaravansController.show().url
     }
 
 }

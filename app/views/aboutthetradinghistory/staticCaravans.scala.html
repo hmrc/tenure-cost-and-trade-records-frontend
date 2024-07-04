@@ -37,12 +37,10 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6045.anyStaticLeisureCaravansOnSite.p1")</p>
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6045.anyStaticLeisureCaravansOnSite.p2")</p>
+    <p class="govuk-body">@messages("turnover.6045.anyStaticLeisureCaravansOnSite.p1")</p>
+    <p class="govuk-body">@messages("turnover.6045.anyStaticLeisureCaravansOnSite.p2")</p>
 
-@* TODO:   StaticCaravansController *@
-
-    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.StaticCaravansController.submit()) {
 
         @includes.radioButtonsYesNo(
             govukRadios,
@@ -51,7 +49,7 @@
             "turnover.6045.anyStaticLeisureCaravansOnSite.question",
             "label.yes",
             "label.no",
-            "govuk-fieldset__legend--l"
+            "govuk-fieldset__legend--m"
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)

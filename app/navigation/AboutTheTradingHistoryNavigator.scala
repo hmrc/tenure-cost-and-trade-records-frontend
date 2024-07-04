@@ -81,8 +81,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         s.forType match {
           case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
           case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
-          case ForTypes.for6045 | ForTypes.for6046 =>
-            aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show() // TODO: Static caravans
+          case ForTypes.for6045 | ForTypes.for6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
           case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
           case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
         }
@@ -105,8 +104,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     _.forType match {
       case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
-      case ForTypes.for6045 | ForTypes.for6046 =>
-        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show() // TODO: Static caravans
+      case ForTypes.for6045 | ForTypes.for6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
       case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
       case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
     }
@@ -138,6 +136,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     _.aboutTheTradingHistory.flatMap(_.doYouAcceptLowMarginFuelCard) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.PercentageFromFuelCardsController.show()
       case _               => aboutthetradinghistory.routes.NonFuelTurnoverController.show()
+    }
+
+  private def staticCaravansRouting: Session => Call =
+    _.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite) match {
+      case Some(AnswerYes) => // TODO: Are your static caravans open all year?
+        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()
+      case _               => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     }
 
   private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call = {
@@ -208,6 +213,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     GrossReceiptsForBaseLoadId                  -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
     OperationalExpensesId                       -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
     HeadOfficeExpensesId                        -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
+    StaticCaravansId                            -> staticCaravansRouting,
     GrossReceiptsCaravanFleetHireId             -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
         .show() // TODO: Single caravans owned by the operator

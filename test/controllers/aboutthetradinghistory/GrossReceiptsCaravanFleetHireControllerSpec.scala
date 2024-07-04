@@ -24,6 +24,12 @@ import utils.TestBaseSpec
 
 class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
 
+  private val previousPage = // TODO: Are your static caravans open all year?
+    aboutthetradinghistory.routes.StaticCaravansController.show().url
+
+  private val nextPage = // TODO: Single caravans owned by the operator
+    aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+
   def grossReceiptsCaravanFleetHireController =
     new GrossReceiptsCaravanFleetHireController(
       stubMessagesControllerComponents(),
@@ -48,7 +54,7 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
 
       val content = contentAsString(result)
-      content should include("/financial-year-end") // TODO: Are your static caravans open all year?
+      content should include(previousPage)
       content should not include "/check-your-answers-about-the-trading-history"
 
     }
@@ -57,7 +63,7 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
       val result  = grossReceiptsCaravanFleetHireController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
-      content should not include "/financial-year-end" // TODO: Are your static caravans open all year?
+      content should not include previousPage
     }
   }
 
@@ -83,9 +89,7 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
         fakePostRequest.withFormUrlEncodedBody(validFormData: _*)
       )
       status(res)           shouldBe Status.SEE_OTHER
-      redirectLocation(res) shouldBe Some(
-        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      ) // TODO: Single caravans owned by the operator
+      redirectLocation(res) shouldBe Some(nextPage)
     }
 
     "return 400 and error message for invalid weeks" in {
