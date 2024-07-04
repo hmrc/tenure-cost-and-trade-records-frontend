@@ -185,7 +185,9 @@
 
      @if(forType != ForTypes.for6030) {
       @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
-       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(),
+       if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+       controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()}
+       else {controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()},
        section2Completed,
        session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
        session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
@@ -209,7 +211,7 @@
       )
      }
 
-     @if(forType != ForTypes.for6030 && forType != ForTypes.for6020) {
+     @if(forType != ForTypes.for6030 && forType != ForTypes.for6020 && forType != ForTypes.for6045 && forType != ForTypes.for6046)  {
       @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
        if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
@@ -408,6 +410,9 @@
      }
      @if(forType == ForTypes.for6020) {
       @messages("label.section.aboutTheLettings")
+     }
+     @if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+      @messages("label.section.aboutTheConcessionsFranchisesLettings")
      }
     </h2>
     <ul class="app-task-list__items">

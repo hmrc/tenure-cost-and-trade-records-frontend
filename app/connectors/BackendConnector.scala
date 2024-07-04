@@ -43,17 +43,18 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
   private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
 
   private def readsHack(implicit httpReads: HttpReads[FORLoginResponse]): HttpReads[FORLoginResponse] =
-    (method: String, url: String, response: HttpResponse) => response.status match {
-      case 400 => throw new BadRequestException(response.body)
-      case 401 => throw UpstreamErrorResponse(response.body, 401, 401)
-      case _ => httpReads.read(method, url, response)
-    }
+    (method: String, url: String, response: HttpResponse) =>
+      response.status match {
+        case 400 => throw new BadRequestException(response.body)
+        case 401 => throw UpstreamErrorResponse(response.body, 401, 401)
+        case _   => httpReads.read(method, url, response)
+      }
 
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
     hc: HeaderCarrier
   ): Future[FORLoginResponse] = {
-    val credentials            = Credentials(cleanedRefNumber(refNumber), postcode)
-    val wrtCredentials         = implicitly[Writes[Credentials]]
+    val credentials    = Credentials(cleanedRefNumber(refNumber), postcode)
+    val wrtCredentials = implicitly[Writes[Credentials]]
 
     implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
 

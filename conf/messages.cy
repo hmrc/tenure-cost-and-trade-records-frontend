@@ -110,6 +110,7 @@ label.section.aboutTheProperty = Amdanoch chi a’r eiddo
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
+label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises and lettings
 label.section.aboutTheLettings = Lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Gwybodaeth ychwanegol
