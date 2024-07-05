@@ -19,6 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TenancyLeaseAgreementExpirePageId
@@ -59,8 +60,11 @@ class TenancyLeaseAgreementExpireController @Inject() (
     continueOrSaveAsDraft[TenancyLeaseAgreementExpire](
       tenancyLeaseAgreementExpireForm,
       formWithErrors => BadRequest(tenancyLeaseAgreementExpireView(formWithErrors, request.sessionData.toSummary)),
-      data =>
+      data => {
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenancyLeaseAgreementExpire = Some(data)))
+        session.saveOrUpdate(updatedData)
         Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId, request.sessionData).apply(request.sessionData))
+      }
     )
   }
 

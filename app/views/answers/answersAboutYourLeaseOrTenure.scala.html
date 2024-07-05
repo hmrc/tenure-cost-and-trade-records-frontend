@@ -236,13 +236,13 @@
             _.annualRent.map(_.amount.asMoney),
             aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat",
-                    _.rentIncludesVat.map(_.rentIncludesVatAnswer.name).map(v => messages(s"label.$v")),
+                    _.rentIncludesVat.map(_.rentIncludesVatAnswer.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                     Call("GET", "rent-includes-vat"), "rentIncludesVat") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
                     _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
-                    aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
+                    aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.day") ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
-                    _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire.shortDate),
+                    _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire).map(v => dateUtil.formatDayMonthAbbrYear(v)),
                     aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
     ))
 }

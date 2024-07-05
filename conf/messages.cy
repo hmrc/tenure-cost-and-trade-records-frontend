@@ -1072,13 +1072,13 @@ error.rentedEquipmentDetails.maxLength = Rented equipment details must be {0} ch
 
 #RENT INCLUDES VAT
 #################
-rentIncludesVat.heading = Does the current annual rent include VAT?
+rentIncludesVat.heading = A yw’r rhent presennol yn cynnwys TAW?
 rentIncludesVat.error = Select yes if the rent includes VAT
 
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
-rentIncludeFixturesAndFittingsDetails.heading = What sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?
-rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised.
+rentIncludeFixturesAndFittingsDetails.heading = Os yw wedi’i restru’n benodol, pa swm sydd wedi’i gynnwys yn y rhent i dalu am offer a ddarperir gan y landlord, heb gynnwys TAW?
+rentIncludeFixturesAndFittingsDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
 error.rentIncludeFixturesAndFittingsDetails.title = Sum included to cover equipment
 
 # INCENTIVES, PAYMENTS AND CONDITIONS
@@ -1394,7 +1394,7 @@ label.currentLeaseOrAgreementBegin.help = Er enghraifft, 9 2017.
 intervalsOfRentReview.heading = Adolygiadau rhent
 intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
 intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p2 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’.
+intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’.
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
@@ -2192,13 +2192,13 @@ label.alternativeContactDetails = Cyfeiriad gohebu
 
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
-tenancyLeaseAgreementExpire.heading = Lease review or expiry
-tenancyLeaseAgreementExpire.title = When will the current tenancy, lease or agreement be reviewed, or expire?
-tenancyLeaseAgreementExpire.p1 = You must declare the date of the next review of your tenancy, lease, or agreement.
-tenancyLeaseAgreementExpire.p2 = Alternatively, you should declare the expiry date of your tenancy, lease, or agreement if it will not be reviewed before it ends.
-tenancyLeaseAgreementExpire.p3 = You do not need to tell us about any changes in the rent which are part of your current agreement. These could include, but are not limited to:
-tenancyLeaseAgreementExpire.item1 = changes linked to your turnover
-tenancyLeaseAgreementExpire.item2 = fluctuations in any index to which your rent may be linked, for example the retail price index (RPI)
+tenancyLeaseAgreementExpire.heading = Dyddiad adolygu neu ddyddiad dod i ben y brydles
+tenancyLeaseAgreementExpire.title = Pryd bydd dyddiad adolygu neu ddyddiad dod i ben y denantiaeth, y brydles neu’r cytundeb presennol?
+tenancyLeaseAgreementExpire.p1 = Mae’n rhaid i chi ddatgan dyddiad yr adolygiad rhent nesaf o’ch tenantiaeth, prydles neu gytundeb.
+tenancyLeaseAgreementExpire.p2 = Fel arall, dylech ddatgan dyddiad dod i ben eich tenantiaeth, prydles, neu gytundeb os na chynhelir adolygiad cyn y dyddiad dod i ben.
+tenancyLeaseAgreementExpire.p3 = Nid oes angen i chi roi gwybod i ni am unrhyw newidiadau yn y rhent sy’n rhan o’ch cytundeb presennol. Gallai’r rhain gynnwys, ond heb fod yn gyfyngedig i’r canlynol:
+tenancyLeaseAgreementExpire.item1 = newidiadau sy’n gysylltiedig â’ch trosiant
+tenancyLeaseAgreementExpire.item2 = amrywiadau mewn unrhyw fynegai y gall eich rhent fod yn gysylltiedig ag ef, er enghraifft y mynegai prisiau manwerthu (RPI)
 fieldName.tenancyLeaseAgreementExpire = the renewal or expiry date of the current lease
 
 # CONNECTED TO LANDLORD
@@ -2356,7 +2356,7 @@ checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement = Trefniant adlesu?
 checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent = Rhent blynyddol presennol
 checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid = Dyddiad y talwyd y rhent resennol am y tro cyntaf
 checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration = Dyddiad cychwyn y brydles a hyd y tymor
-checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Date lease expires or is reviewed
+checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Dyddiad y daw’r brydles bresennol i ben neu y caiff ei hadolygu
 checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = Beth mae’r rhent yn ei gynnwys
 checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Taliadau wedi’u cynnwys yn y rhent
 checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Eitemau y mae’r rhent yn eu cynnwys neu’n ymwneud ag ef
