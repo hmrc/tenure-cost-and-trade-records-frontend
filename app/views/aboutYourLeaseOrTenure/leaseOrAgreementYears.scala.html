@@ -60,8 +60,8 @@
     name = "commenceWithinThreeYears",
     idPrefix = Option("commenceWithinThreeYears"),
     items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
+     "yes" -> messages("label.yes.do"),
+     "no" -> messages("label.no.naddo")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
      checked = radioItem._1.equals(theForm("commenceWithinThreeYears").value.getOrElse("")),
@@ -88,8 +88,8 @@
     name = "agreedReviewedAlteredThreeYears",
     idPrefix = Option("agreedReviewedAlteredThreeYears"),
     items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
+     "yes" -> messages("label.yes.do"),
+     "no" -> messages("label.no.naddo")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
      checked = radioItem._1.equals(theForm("agreedReviewedAlteredThreeYears").value.getOrElse("")),
@@ -116,8 +116,8 @@
     name = "rentUnderReviewNegotiated",
     idPrefix = Option("rentUnderReviewNegotiated"),
     items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
+     "yes" -> messages("label.yes.ydy"),
+     "no" -> messages("label.no.nac.ydy")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
      checked = radioItem._1.equals(theForm("rentUnderReviewNegotiated").value.getOrElse("")),
