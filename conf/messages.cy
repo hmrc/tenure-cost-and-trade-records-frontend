@@ -2419,6 +2419,7 @@ checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = Check your answers – trading history
 checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers – static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans
+checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Static caravans on site?
 checkYourAnswersAboutTheTradingHistory.occupationDate = Occupation date
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
