@@ -1598,6 +1598,12 @@ error.turnover.6020.otherIncome.range = Other income in the year ending {0} must
 error.turnover.6020.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
 
 # TURNOVER 6045
+turnover.6045.anyStaticLeisureCaravansOnSite.heading = Static caravans
+turnover.6045.anyStaticLeisureCaravansOnSite.p1 = The questions in this section relate to static caravans used for holiday or leisure purposes. These could be let out to holidaymakers or used by private as holiday or second homes.
+turnover.6045.anyStaticLeisureCaravansOnSite.p2 = You should not include details of any residential caravans occupied as sole or main residence.
+turnover.6045.anyStaticLeisureCaravansOnSite.question = Do you have any static holiday or leisure caravans located on your site?
+error.turnover.6045.anyStaticLeisureCaravansOnSite.required = Select yes if you have any static holiday or leisure caravans located on your site
+
 turnover.6045.caravanFleetHire.grossReceipts.heading = Gross receipts from all static caravan fleet hire
 turnover.6045.caravanFleetHire.p1 = Include the income received from fleet hire of single and twin-unit static caravans:
 turnover.6045.caravanFleetHire.list1.item1 = owned by the operator

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,12 @@
 package util
 
 import actions.SessionRequest
+import controllers.aboutthetradinghistory
 import models.Session
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory._
+import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.AnyContent
 
 import java.time.LocalDate
@@ -166,6 +168,23 @@ object AccountingInformationUtil {
       aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
     } else {
       None
+    }
+
+  def backLinkToFinancialYearEndDates(
+    navigator: AboutTheTradingHistoryNavigator
+  )(implicit request: SessionRequest[AnyContent]): String =
+    navigator.from match {
+      case "CYA" =>
+        navigator.cyaPage
+          .getOrElse(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+          .url
+      case _     =>
+        request.sessionData.aboutTheTradingHistory
+          .flatMap(_.occupationAndAccountingInformation)
+          .flatMap(_.yearEndChanged) match {
+          case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+          case _          => aboutthetradinghistory.routes.FinancialYearEndController.show().url
+        }
     }
 
 }

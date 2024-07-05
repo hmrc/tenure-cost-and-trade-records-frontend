@@ -17,7 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
-import controllers.{FORDataCaptureController, aboutthetradinghistory}
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.ElectricityGeneratedForm.electricityGeneratedForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.TurnoverSection6076
@@ -26,6 +26,7 @@ import navigation.identifiers.ElectricityGeneratedId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
+import util.AccountingInformationUtil.backLinkToFinancialYearEndDates
 import views.html.aboutthetradinghistory.electricityGenerated6076
 
 import javax.inject.{Inject, Named, Singleton}
@@ -103,16 +104,6 @@ class ElectricityGeneratedController @Inject() (
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case _     =>
-        request.sessionData.aboutTheTradingHistory
-          .flatMap(_.occupationAndAccountingInformation)
-          .flatMap(_.yearEndChanged) match {
-          case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-          case _          => aboutthetradinghistory.routes.FinancialYearEndController.show().url
-        }
-    }
+    backLinkToFinancialYearEndDates(navigator)
 
 }
