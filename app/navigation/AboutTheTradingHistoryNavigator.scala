@@ -161,11 +161,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def otherHolidayAccommodationRouting(answers: Session): Call =
-    //TODO this needs updating once next pages are implemented
     answers.aboutTheTradingHistoryPartOne.flatMap(
       _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)
     ) match {
-      case Some(AnswerYes) => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      case Some(AnswerYes) => aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show()
       case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
       case _               =>
         logger.warn(
@@ -219,6 +218,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         .show() // TODO: Single caravans owned by the operator
     ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
+    OtherHolidayAccommodationDetailsId          -> (_ =>
+      controllers.routes.TaskListController.show()
+    ), //TODO Letting units owned by site operator
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )

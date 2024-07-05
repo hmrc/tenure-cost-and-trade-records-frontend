@@ -37,19 +37,18 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  "LettingPartOfPropertyDetailsRentController GET /" should {
+    "return 200 and HTML with Letting Part of Property Details Rent in session" in {
       val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(0)).url
+      )
     }
 
-    "return HTML" in {
-      val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "redirect the user to the other Letting other part of property details page" when {
+    "redirect the user to the other Letting other part of property details rent page" when {
       "given an index" which {
         "does not exist within the session" in {
           val result = lettingPartOfPropertyDetailsRentController().show(2)(fakeRequest)
@@ -76,7 +75,7 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "LettingPartOfPropertyDetailsRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = lettingPartOfPropertyDetailsRentController().submit(0)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

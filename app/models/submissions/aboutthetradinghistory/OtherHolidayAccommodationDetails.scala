@@ -19,12 +19,11 @@ package models.submissions.aboutthetradinghistory
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
-case class OtherHolidayAccommodation(
-  otherHolidayAccommodation: Option[AnswersYesNo] = None,
-  otherHolidayAccommodationDetails: Option[OtherHolidayAccommodationDetails] = None,
-  checkYourAnswersOtherHolidayAccommodation: Option[CheckYourAnswersOtherHolidayAccommodation] = None
+case class OtherHolidayAccommodationDetails(
+  otherHolidayAccommodationOpenAllYear: AnswersYesNo,
+  weeksOpen: Option[Int] = None
 )
 
-object OtherHolidayAccommodation {
-  implicit val format: OFormat[OtherHolidayAccommodation] = Json.format
+object OtherHolidayAccommodationDetails {
+  implicit val format: OFormat[OtherHolidayAccommodationDetails] = Json.format
 }

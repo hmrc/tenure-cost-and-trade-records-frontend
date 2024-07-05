@@ -271,6 +271,15 @@ object MappingSupport {
       else Valid
     }
 
+  def weeksInYearMapping(implicit messages: Messages) =
+    default(text, "")
+      .verifying(messages("error.weeksInYearMapping.blank"), _.trim.nonEmpty)
+      .transform[Int](
+        str => Try(str.toInt).getOrElse(-1),
+        _.toString
+      )
+      .verifying(messages("error.weeksInYearMapping.invalid"), (0 to 52).contains(_))
+
   def tradingPeriodWeeks(year: String)(implicit messages: Messages) =
     default(text, "")
       .verifying(messages("error.weeksMapping.blank", year), _.trim.nonEmpty)

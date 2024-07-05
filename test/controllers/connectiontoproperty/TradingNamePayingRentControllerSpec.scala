@@ -21,9 +21,10 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class TradingNamePayingRentControllerSpec extends TestBaseSpec {
@@ -39,34 +40,27 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def tradingNamePayingRentControllerNoPayingRent(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoneOwnProperty)
-  ) =
-    new TradingNamePayingRentController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      tradingNamePayRentView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
   "AreYouThirdPartyController GET /" should {
-
-    "return 200 trading name paying rent present in session" in {
+    "return 200 and HTML with trading name paying rent present in session" in {
       val result = tradingNamePayingRentController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = tradingNamePayingRentController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 trading name paying rent is not present in session" in {
-      val result = tradingNamePayingRentControllerNoPayingRent().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with trading name paying rent is not present in session" in {
+      val controller =
+        tradingNamePayingRentController(stillConnectedDetails = Some(prefilledStillConnectedDetailsNoneOwnProperty))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+      )
     }
   }
 

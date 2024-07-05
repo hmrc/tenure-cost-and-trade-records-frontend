@@ -245,8 +245,9 @@ trait FakeObjects {
     baseFilled6045Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
   val stillConnectedDetails6045NoSession: Session             =
     baseFilled6045Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  // Not connected sessions
-  val prefilledNotConnectedYes: RemoveConnectionDetails       = RemoveConnectionDetails(
+
+// Not connected sessions
+  val prefilledNotConnectedYes: RemoveConnectionDetails  = RemoveConnectionDetails(
     Some(
       RemoveConnectionsDetails(
         prefilledFakeName,
@@ -255,6 +256,10 @@ trait FakeObjects {
       )
     ),
     Some(PastConnectionTypeYes)
+  )
+  val prefilledNotConnectedNone: RemoveConnectionDetails = RemoveConnectionDetails(
+    Some(RemoveConnectionsDetails(prefilledFakeName, ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail), None)),
+    None
   )
 
   val notConnected6010NoSession: Session =

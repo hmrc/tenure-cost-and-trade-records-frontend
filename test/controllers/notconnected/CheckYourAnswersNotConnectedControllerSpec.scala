@@ -49,15 +49,14 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
   )
 
   "Not connected CYA controller" should {
-    "return 200" in {
+    "return 200 and HTML with CYA with yes in the session" in {
       val result = checkYourAdditionalInformationController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = checkYourAdditionalInformationController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.notconnected.routes.RemoveConnectionController.show().url
+      )
     }
 
     "handle submit form with all sections" in {

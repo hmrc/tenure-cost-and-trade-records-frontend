@@ -2128,6 +2128,14 @@ help.otherHolidayAccommodation.list1.p3 = assembled on site
 help.otherHolidayAccommodation.list1.p4 = cannot be transported by road once assembled
 error.otherHolidayAccommodation.required =  Select yes if there are other holiday letting units located on your site.
 
+# OTHER HOLIDAY ACCOMMODATION DETAILS(FORM 6045/46)
+####################################
+otherHolidayAccommodationDetails.heading = Is your other holiday acommodation open all year?
+otherHolidayAccommodationDetails.weeksOpen = Enter number of weeks the site remains open in a year
+error.weeksInYearMapping.invalid = The number of weeks should be a number from 1 to 52
+error.weeksInYearMapping.blank =  Enter the number of weeks
+error.otherHolidayAccommodationOpenAllYear.required = Select yes if your other holiday accommodation open all year
+
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Rent from concessions
