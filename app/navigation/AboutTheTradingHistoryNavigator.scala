@@ -33,6 +33,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
+
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]

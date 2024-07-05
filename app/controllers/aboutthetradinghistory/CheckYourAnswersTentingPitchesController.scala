@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersTentingPitchesForm.checkYourAnswersTentingPitchesForm
 import models.Session
@@ -53,7 +53,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
               checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
             case _                                            => checkYourAnswersTentingPitchesForm
           },
-          getBackLink(request.sessionData),
+          calculateBackLink,
           request.sessionData.toSummary
         )
       )
@@ -67,7 +67,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            getBackLink(request.sessionData),
+            calculateBackLink,
             request.sessionData.toSummary
           )
         ),
@@ -82,6 +82,13 @@ class CheckYourAnswersTentingPitchesController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
-    controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
+          _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
+        ) match {
+          case Some(true) => controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show().url
+          case Some(false) => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
+          case _ => controllers.routes.TaskListController.show().url
+        }
+
 }

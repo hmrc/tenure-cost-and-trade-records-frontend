@@ -15,13 +15,11 @@
  */
 
 package form.aboutthetradinghistory
-
-import controllers.toOpt
 import form.MappingSupport.createYesNoType
 import models.submissions.aboutthetradinghistory.TentingPitchesAllYear
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import play.api.data.{Form, Mapping}
-import play.api.data.Forms.{default, mapping, nonEmptyText, number, optional, text}
+import models.submissions.common.AnswerNo
+import play.api.data.Form
+import play.api.data.Forms.{default, mapping, text}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
@@ -38,20 +36,22 @@ object TentingPitchesAllYearForm {
         int => int.toString
       )
 
-  private def weeksDurationConstraint(): Constraint[String] =
-    Constraint("constraints.nonNegative")(text =>
+  private def weeksDurationConstraint(): Constraint[String] = Constraint("constraints.weeksDuration") { text =>
+    if (text.trim.isEmpty)
+      Invalid(ValidationError("error.areYourPitchesOpen.conditional.value.missing"))
+    else
       Try(text.toDouble).toOption match {
         case Some(num) if num >= 0 && num <= 52 => Valid
-        case _ => Invalid(ValidationError("test"))
+        case _ => Invalid(ValidationError("error.areYourPitchesOpen.conditional.value.invalid"))
       }
-    )
+  }
 
     val tentingPitchesAllYearForm = Form(
       mapping(
-        "tentingPitchesAllYear" -> createYesNoType("error.electricVehicleChargingPoints.required"),
+        "tentingPitchesAllYear" -> createYesNoType("error.areYourPitchesOpen.missing"),
         "weekOfPitchesUse" -> mandatoryIfEqual(
           "tentingPitchesAllYear",
-          AnswerYes.name,
+          AnswerNo.name,
           validateWeeksDuration
         )
       )(TentingPitchesAllYear.apply)(TentingPitchesAllYear.unapply)

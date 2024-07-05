@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesAllYearForm.tentingPitchesAllYearForm
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, TentingPitchesAllYear}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.TentingPitchesOnSiteId
+import navigation.identifiers.{TentingPitchesAllYearId, TentingPitchesOnSiteId}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -78,14 +78,14 @@ class TentingPitchesAllYearController @Inject() (
           touringAndTentingPitches.copy(tentingPitchesAllYear = Some(data))
         }
         session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPage(TentingPitchesOnSiteId, updatedSession).apply(updatedSession))
+        Redirect(navigator.nextPage(TentingPitchesAllYearId, updatedSession).apply(updatedSession))
       }
     )
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show.url
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show.url
       case "TL"  => controllers.routes.TaskListController.show().url + "#" // TODO with TaskList ticket for 6045
       case _     => controllers.routes.TaskListController.show().url       // TODO with ticket for other holiday CYA page
 

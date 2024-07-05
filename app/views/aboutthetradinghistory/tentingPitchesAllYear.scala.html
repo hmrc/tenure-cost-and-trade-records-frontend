@@ -70,16 +70,23 @@
       RadioItem(
          content = Text(messages("label.no")),
          value = Some("no"),
-         conditionalHtml = Some(govukInput(
+         conditionalHtml = Some(
+             govukInput(
                         Input(
                             id      = "weekOfPitchesUse",
                             name    = "weekOfPitchesUse",
                             classes = "govuk-input--width-5",
                             value   = theForm("weekOfPitchesUse").value,
                             suffix  = Some(PrefixOrSuffix(content = Text(messages("label.weeks")))),
-                            label   = Label(content = Text(messages("areYourPitchesOpen.conditional.label")))))))),
+                            label   = Label(content = Text(messages("areYourPitchesOpen.conditional.label"))),
+                            errorMessage = {
+                                theForm.error("weekOfPitchesUse").map { error =>
+                                    ErrorMessage(content = Text(Messages(error.message)))
+                                }
+                            }
+                        ))))),
          errorMessage = theForm.errors.asTextErrorMessageForField("tentingPitchesAllYear"))
-         .withFormField(theForm("tentingPitchesAllYear")))
+                                      .withFormField(theForm("tentingPitchesAllYear")))
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

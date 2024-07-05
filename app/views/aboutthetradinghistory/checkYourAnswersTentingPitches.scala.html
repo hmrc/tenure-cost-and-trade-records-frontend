@@ -16,23 +16,27 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodation
+@import util.SectionAnswersRowBuilder
 @import models.pages.Summary
-@import views.html.answers.answersOtherHolidayAccommodation
+@import models.submissions.common.AnswerNo
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        answersSectionOtherHolidayAccommodation: answersOtherHolidayAccommodation,
-        formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF,
+        govukSummaryList: GovukSummaryList
 )
 
 
 @(theForm: Form[String], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 
+@answers = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+}
+
 @layout(
-    pageHeading = messages("checkYourAnswersOtherHolidayAccommodation.heading"),
+    pageHeading = messages("cYa.touringAndTentingPitches.heading"),
     backLinkUrl = backLink,
     showSection = true,
     fullWidth = true,
@@ -41,14 +45,34 @@
     theForm = theForm
 ) {
 
-    @answersSectionOtherHolidayAccommodation()
+
+        <h2 class="govuk-heading-m">@messages("cYa.touringAndTentingPitches.heading")</h2>
+        @govukSummaryList(SummaryList(rows =
+
+            answers.row(
+                "cYa.touringAndTentingPitches.pitches.label",
+                _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => messages(s"label.${x.name}"))).orElse(""),
+                controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(), "touringAndTentingPitches") ++
+
+            answers.conditionRow(
+                        _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.map(_.name)).contains("yes"),
+                        "cYa.touringAndTentingPitches.pitchesAllYear.label",
+                        _.touringAndTentingPitches.flatMap(_.tentingPitchesAllYear).map(pitch =>
+                            Seq(pitch.tentingPitchesAllYear.name).map(item => messages(s"label.$item"))
+                                    ++ pitch.weekOfPitchesUse.fold(Seq.empty[String])(d => Seq(Text(d.toString).asHtml.body))
+                        ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(), "",
+                        ("valueAsHtml", _ => None))
+
+        ))
+
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.submit()) {
 
         @includes.checkYourAnswersRadioButtons(
             govukRadios,
             theForm,
-            "checkYourAnswersOtherHolidayAccommodation"
+            "checkYourAnswersTentingPitches"
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)
