@@ -168,10 +168,17 @@ trait FakeViews { this: GuiceOneAppPerSuite =>
   lazy val unusualCircumstancesView: unusualCircumstances                                           = app.injector.instanceOf[unusualCircumstances]
   lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                         =
     app.injector.instanceOf[electricVehicleChargingPoints]
+  lazy val grossReceiptsCaravanFleetHireView: grossReceiptsCaravanFleetHire6045                     =
   lazy val staticCaravansView: staticCaravans                                                       = app.injector.instanceOf[staticCaravans]
   lazy val grossReceiptsCaravanFleetHireView: grossReceiptsCaravanFleetHire6045                     =
     app.injector.instanceOf[grossReceiptsCaravanFleetHire6045]
   lazy val otherHolidayAccommodationView: otherHolidayAccommodation                                 = app.injector.instanceOf[otherHolidayAccommodation]
+  lazy val tentingPitchesAllYearView: tentingPitchesAllYear                                         =
+    app.injector.instanceOf[tentingPitchesAllYear]
+  lazy val tentingPitchesOnSiteView: tentingPitchesOnSite                                           =
+    app.injector.instanceOf[tentingPitchesOnSite]
+  lazy val checkYourAnswersTentingPitchesView: checkYourAnswersTentingPitches                       =
+    app.injector.instanceOf[checkYourAnswersTentingPitches]
   lazy val otherHolidayAccommodationDetailsView: otherHolidayAccommodationDetails                   =
     app.injector.instanceOf[otherHolidayAccommodationDetails]
   lazy val checkYourAnswersOtherHolidayAccommodationView: checkYourAnswersOtherHolidayAccommodation =

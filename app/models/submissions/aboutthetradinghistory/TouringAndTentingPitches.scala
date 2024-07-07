@@ -19,17 +19,14 @@ package models.submissions.aboutthetradinghistory
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
-case class TouringAndTentingPitches (
+case class TouringAndTentingPitches(
   tentingPitchesOnSite: Option[AnswersYesNo] = None,
   tentingPitchesAllYear: Option[TentingPitchesAllYear] = None,
-  cya: Option[String] = None
-  )
+  checkYourAnswersTentingPitches: Option[AnswersYesNo] = None
+)
 
 object TouringAndTentingPitches {
 
   implicit val format: OFormat[TouringAndTentingPitches] = Json.format[TouringAndTentingPitches]
 
 }
-
-
-

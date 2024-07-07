@@ -18,7 +18,8 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.common.ContactDetails
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, TouringAndTentingPitches}
+import models.submissions.common.{AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import navigation.identifiers._
@@ -64,6 +65,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
   val sessionAboutYou6015 = sessionAboutYou.copy(referenceNumber = "99996015004", forType = "FOR6015")
   val sessionAboutYou6020 = sessionAboutYou.copy(referenceNumber = "99996020004", forType = "FOR6020")
   val sessionAboutYou6030 = sessionAboutYou.copy(referenceNumber = "99996030004", forType = "FOR6030")
+  val sessionAboutYou6045 = sessionAboutYou.copy(referenceNumber = "99996045004", forType = "FOR6045")
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -233,6 +235,49 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(TurnoverPageId, sessionAboutYou6030)
         .apply(sessionAboutYou6030) mustBe controllers.aboutthetradinghistory.routes.UnusualCircumstancesController
+        .show()
+    }
+
+    //6045
+
+    "return a function that goes the cya tenting pitches page when tenting pitches on site completed with no" in {
+      val sessionWithNoTentingPitchesOnSite = sessionAboutYou6045.copy(
+        aboutTheTradingHistoryPartOne = Some(
+          AboutTheTradingHistoryPartOne(
+            touringAndTentingPitches = Some(
+              TouringAndTentingPitches(
+                tentingPitchesOnSite = Some(AnswerNo)
+              )
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPageForTentingPitches(TentingPitchesOnSiteId, sessionWithNoTentingPitchesOnSite)
+        .apply(
+          sessionWithNoTentingPitchesOnSite
+        ) mustBe controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController
+        .show()
+    }
+    "return a function that goes the tenting pitches all year page when tenting pitches on site completed with yes" in {
+      val sessionWithYesTentingPitchesOnSite = sessionAboutYou6045.copy(
+        aboutTheTradingHistoryPartOne = Some(
+          AboutTheTradingHistoryPartOne(
+            touringAndTentingPitches = Some(
+              TouringAndTentingPitches(
+                tentingPitchesOnSite = Some(AnswerYes)
+              )
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPageForTentingPitches(TentingPitchesOnSiteId, sessionWithYesTentingPitchesOnSite)
+        .apply(
+          sessionWithYesTentingPitchesOnSite
+        ) mustBe controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController
         .show()
     }
 

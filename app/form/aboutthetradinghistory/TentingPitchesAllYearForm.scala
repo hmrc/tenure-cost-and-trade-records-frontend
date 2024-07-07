@@ -25,7 +25,6 @@ import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 import scala.util.Try
 
-
 object TentingPitchesAllYearForm {
 
   def validateWeeksDuration =
@@ -42,18 +41,18 @@ object TentingPitchesAllYearForm {
     else
       Try(text.toDouble).toOption match {
         case Some(num) if num >= 0 && num <= 52 => Valid
-        case _ => Invalid(ValidationError("error.areYourPitchesOpen.conditional.value.invalid"))
+        case _                                  => Invalid(ValidationError("error.areYourPitchesOpen.conditional.value.invalid"))
       }
   }
 
-    val tentingPitchesAllYearForm = Form(
-      mapping(
-        "tentingPitchesAllYear" -> createYesNoType("error.areYourPitchesOpen.missing"),
-        "weekOfPitchesUse" -> mandatoryIfEqual(
-          "tentingPitchesAllYear",
-          AnswerNo.name,
-          validateWeeksDuration
-        )
-      )(TentingPitchesAllYear.apply)(TentingPitchesAllYear.unapply)
-    )
+  val tentingPitchesAllYearForm = Form(
+    mapping(
+      "tentingPitchesAllYear" -> createYesNoType("error.areYourPitchesOpen.missing"),
+      "weekOfPitchesUse"      -> mandatoryIfEqual(
+        "tentingPitchesAllYear",
+        AnswerNo.name,
+        validateWeeksDuration
+      )
+    )(TentingPitchesAllYear.apply)(TentingPitchesAllYear.unapply)
+  )
 }

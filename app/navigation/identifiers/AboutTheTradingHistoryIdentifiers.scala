@@ -162,8 +162,8 @@ case object TentingPitchesOnSiteId extends Identifier {
 case object TentingPitchesAllYearId extends Identifier {
   override def toString: String = "tentingPitchesAllYearPage"
 }
-case object CYATentingPitchesId extends Identifier {
-  override def toString: String = "cYATentingPitchesPage"
+case object CheckYourAnswersTentingPitchesId extends Identifier {
+  override def toString: String = "checkYourAnswersTentingPitchesPage"
 }
 
 case object OtherHolidayAccommodationDetailsId extends Identifier {

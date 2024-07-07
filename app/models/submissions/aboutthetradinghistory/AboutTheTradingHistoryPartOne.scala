@@ -72,8 +72,8 @@ object AboutTheTradingHistoryPartOne {
     }
 
   def updateTouringAndTentingPitches(
-                                       update: TouringAndTentingPitches => TouringAndTentingPitches
-                                     )(implicit sessionRequest: SessionRequest[_]): Session =
+    update: TouringAndTentingPitches => TouringAndTentingPitches
+  )(implicit sessionRequest: SessionRequest[_]): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val touringAndTentingPitches =
         update(aboutTheTradingHistoryPartOne.touringAndTentingPitches.getOrElse(TouringAndTentingPitches()))

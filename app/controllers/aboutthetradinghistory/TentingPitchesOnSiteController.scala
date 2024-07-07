@@ -33,15 +33,14 @@ import javax.inject.{Inject, Named}
 import scala.concurrent.Future
 
 class TentingPitchesOnSiteController @Inject() (
-                                              mcc: MessagesControllerComponents,
-                                              navigator: AboutTheTradingHistoryNavigator,
-                                              view: tentingPitchesOnSite,
-                                              withSessionRefiner: WithSessionRefiner,
-                                              @Named("session") val session: SessionRepo
-                                            ) extends FORDataCaptureController(mcc)
-  with I18nSupport
-  with Logging {
-
+  mcc: MessagesControllerComponents,
+  navigator: AboutTheTradingHistoryNavigator,
+  view: tentingPitchesOnSite,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FORDataCaptureController(mcc)
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -49,8 +48,7 @@ class TentingPitchesOnSiteController @Inject() (
         view(
           request.sessionData.aboutTheTradingHistoryPartOne
             .flatMap(_.touringAndTentingPitches)
-            .flatMap(_.tentingPitchesOnSite)
-          match {
+            .flatMap(_.tentingPitchesOnSite) match {
             case Some(answers) => tentingPitchesOnSiteForm.fill(answers)
             case None          => tentingPitchesOnSiteForm
           },
@@ -60,7 +58,6 @@ class TentingPitchesOnSiteController @Inject() (
       )
     )
   }
-
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
@@ -80,17 +77,17 @@ class TentingPitchesOnSiteController @Inject() (
         }
 
         session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPage(TentingPitchesOnSiteId, updatedSession).apply(updatedSession))
+        Redirect(navigator.nextPageForTentingPitches(TentingPitchesOnSiteId, updatedSession).apply(updatedSession))
       }
     )
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#" // TODO with TaskList ticket for 6045
-      case _     => controllers.routes.TaskListController.show().url       // TODO with ticket for other holiday CYA page
+      case _     => controllers.routes.TaskListController.show().url // TODO with ticket for other holiday CYA page
 
     }
-
 }

@@ -33,6 +33,21 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
+  def cyaPageForTentingPitches: Option[Call]           =
+    Some(aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show())
+
+  def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call = {
+    val nextPageFunc: Session => Call = super.nextWithoutRedirectToCYA(id, session)
+    session =>
+      if (from == "CYA") {
+        cyaPageForTentingPitches.getOrElse(nextPageFunc(session))
+      } else {
+        nextPageFunc(session)
+      }
+  }
 
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
@@ -50,7 +65,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         nextPageFunc(session)
       }
   }
-
   private def iesSpecificRoute(session: Session): Call =
     routes.IncomeExpenditureSummaryController.show()
 
@@ -179,8 +193,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
     ) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
-      case Some(AnswerNo) => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
-      case _ =>
+      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+      case _               =>
         logger.warn(
           s"Navigation for tenting pitches on site reached without correct selection of conditions by controller"
         )
@@ -237,10 +251,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ), //TODO Letting units owned by site operator
     TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
     TentingPitchesAllYearId                     -> (_ =>
-        aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
-                 // TODO: Pitches for caravans and motor homes
-      ),
+      controllers.routes.TaskListController.show()
+      // TODO: Pitches for caravans and motor homes
+    ),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
+    CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )
 

@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 @import models.pages.Summary
-@import models.submissions.common.AnswerNo
+@import models.submissions.common.AnswersYesNo
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,7 +28,7 @@
 )
 
 
-@(theForm: Form[String], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
 
 
 @answers = @{

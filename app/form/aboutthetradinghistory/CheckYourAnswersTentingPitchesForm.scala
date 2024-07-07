@@ -16,20 +16,18 @@
 
 package form.aboutthetradinghistory
 
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.nonEmpty
 
 object CheckYourAnswersTentingPitchesForm {
 
-  val checkYourAnswersTentingPitchesForm: Form[String] =
+  val checkYourAnswersTentingPitchesForm: Form[AnswersYesNo] =
     Form(
       single(
-        "checkYourAnswersTentingPitches" -> default(text, "")
-          .verifying(
-            nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
-          )
+        "checkYourAnswersTentingPitches" -> createYesNoType("error.checkYourAnswersRadio.required")
       )
     )
-
 }

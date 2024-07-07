@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesAllYearForm.tentingPitchesAllYearForm
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, TentingPitchesAllYear}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.{TentingPitchesAllYearId, TentingPitchesOnSiteId}
+import navigation.identifiers.TentingPitchesAllYearId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -32,15 +32,14 @@ import javax.inject.{Inject, Named}
 import scala.concurrent.Future
 
 class TentingPitchesAllYearController @Inject() (
-                                                  mcc: MessagesControllerComponents,
-                                                  navigator: AboutTheTradingHistoryNavigator,
-                                                  view: tentingPitchesAllYear,
-                                                  withSessionRefiner: WithSessionRefiner,
-                                                  @Named("session") val session: SessionRepo
-                                                ) extends FORDataCaptureController(mcc)
-  with I18nSupport
-  with Logging {
-
+  mcc: MessagesControllerComponents,
+  navigator: AboutTheTradingHistoryNavigator,
+  view: tentingPitchesAllYear,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+) extends FORDataCaptureController(mcc)
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -48,8 +47,7 @@ class TentingPitchesAllYearController @Inject() (
         view(
           request.sessionData.aboutTheTradingHistoryPartOne
             .flatMap(_.touringAndTentingPitches)
-            .flatMap(_.tentingPitchesAllYear)
-          match {
+            .flatMap(_.tentingPitchesAllYear) match {
             case Some(answers) => tentingPitchesAllYearForm.fill(answers)
             case None          => tentingPitchesAllYearForm
           },
@@ -59,7 +57,6 @@ class TentingPitchesAllYearController @Inject() (
       )
     )
   }
-
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TentingPitchesAllYear](
@@ -78,7 +75,7 @@ class TentingPitchesAllYearController @Inject() (
           touringAndTentingPitches.copy(tentingPitchesAllYear = Some(data))
         }
         session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPage(TentingPitchesAllYearId, updatedSession).apply(updatedSession))
+        Redirect(navigator.nextPageForTentingPitches(TentingPitchesAllYearId, updatedSession).apply(updatedSession))
       }
     )
   }
@@ -87,7 +84,7 @@ class TentingPitchesAllYearController @Inject() (
     navigator.from match {
       case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show.url
       case "TL"  => controllers.routes.TaskListController.show().url + "#" // TODO with TaskList ticket for 6045
-      case _     => controllers.routes.TaskListController.show().url       // TODO with ticket for other holiday CYA page
+      case _     => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
 
     }
 
