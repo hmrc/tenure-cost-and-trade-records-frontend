@@ -2123,7 +2123,7 @@ help.touringAndTentingPitches.question.rally = rally areas
 areYourPitchesOpen.heading = Are your touring and tenting pitches open all year?
 error.areYourPitchesOpen.missing = Select yes if your touring and tenting pitches open all year
 areYourPitchesOpen.conditional.label = Enter a number of weeks the site remains open in a year
-error.areYourPitchesOpen.conditional.value.invalid = Number of weeks the site remains open in a year should be an integer from 0 to 52
+error.areYourPitchesOpen.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
 error.areYourPitchesOpen.conditional.value.missing = Provide a number of weeks the site remains open in a year
 
 # CYA TOURING AND TENTS PITCHES
