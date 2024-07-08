@@ -281,5 +281,20 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to lettings  page when tenting pitches all year completed" in {
+      navigator
+        .nextPage(TentingPitchesAllYearId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) mustBe controllers.routes.TaskListController.show()
+      // TODO change when letting page implemented
+    }
+
+    "return a function that starts new section, when CYA for tenting pitches ready " in {
+      navigator
+        .nextPage(CheckYourAnswersTentingPitchesId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) mustBe controllers.routes.TaskListController.show()
+
+      // TODO change when section tenting pitches ready
+    }
+
   }
 }
