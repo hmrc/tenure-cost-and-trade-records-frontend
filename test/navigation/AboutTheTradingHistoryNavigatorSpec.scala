@@ -66,6 +66,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
   val sessionAboutYou6020 = sessionAboutYou.copy(referenceNumber = "99996020004", forType = "FOR6020")
   val sessionAboutYou6030 = sessionAboutYou.copy(referenceNumber = "99996030004", forType = "FOR6030")
   val sessionAboutYou6045 = sessionAboutYou.copy(referenceNumber = "99996045004", forType = "FOR6045")
+  val sessionAboutYou6076 = sessionAboutYou.copy(referenceNumber = "99996076004", forType = "FOR6076")
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -284,8 +285,49 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes to lettings  page when tenting pitches all year completed" in {
       navigator
         .nextPage(TentingPitchesAllYearId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) mustBe controllers.routes.TaskListController.show()
-      // TODO change when letting page implemented
+        .apply(sessionAboutYou6045) mustBe controllers.aboutthetradinghistory.routes.PitchesForCaravansController.show()
+    }
+
+    "return a function that goes to gross receipts for base load page when  gross receipts excluding vat completed" in {
+      navigator
+        .nextPage(GrossReceiptsExcludingVatId, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) mustBe controllers.aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController
+        .show()
+    }
+
+    "return a function that goes to cost of sales 6076 page when  other income completed" in {
+      navigator
+        .nextPage(OtherIncomeId, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) mustBe controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show()
+    }
+    "return a function that goes to staff costs page when  cost of sales 6076 completed" in {
+      navigator
+        .nextPage(CostOfSales6076Id, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) mustBe controllers.aboutthetradinghistory.routes.StaffCostsController.show()
+    }
+    "return a function that goes to premises  costs page when  staff costs completed" in {
+      navigator
+        .nextPage(StaffCostsId, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) mustBe controllers.aboutthetradinghistory.routes.PremisesCostsController.show()
+    }
+
+    "return a function that goes to operational expenses page when  premises  costs completed" in {
+      navigator
+        .nextPage(PremisesCostsId, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) mustBe controllers.aboutthetradinghistory.routes.OperationalExpensesController
+        .show()
+    }
+    "return a function that goes to other income page when operational cost completed" in {
+      navigator
+        .nextPage(GrossReceiptsForBaseLoadId, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) mustBe controllers.aboutthetradinghistory.routes.OtherIncomeController.show()
+    }
+    "return a function that goes to expenditure page when head office expenses completed" in {
+      navigator
+        .nextPage(HeadOfficeExpensesId, sessionAboutYou6076)
+        .apply(
+          sessionAboutYou6076
+        ) mustBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()
     }
 
     "return a function that starts new section, when CYA for tenting pitches ready " in {

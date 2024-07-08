@@ -242,9 +242,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       controllers.routes.TaskListController.show()
     ), //TODO Letting units owned by site operator
     TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
-    TentingPitchesAllYearId                     -> (_ =>
+    TentingPitchesAllYearId                     -> (_ => aboutthetradinghistory.routes.PitchesForCaravansController.show()),
+    PitchesForCaravansId                        -> (_ =>
       controllers.routes.TaskListController.show()
-      // TODO: Pitches for caravans and motor homes
+      // TODO: Pitches For Glamping
     ),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
