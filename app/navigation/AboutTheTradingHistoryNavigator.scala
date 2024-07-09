@@ -22,8 +22,8 @@ import controllers.aboutthetradinghistory.routes
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{ForTypes, Session}
 import navigation.identifiers._
-import play.api.mvc.{AnyContent, Call, Request}
 import play.api.Logging
+import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
@@ -33,42 +33,34 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
-  def cyaPageForTentingPitches: Option[Call]           =
-    Some(aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show())
+  def cyaPageForTentingPitches: Call = aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
 
   def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
-  ): Session => Call = {
-    val nextPageFunc: Session => Call = super.nextWithoutRedirectToCYA(id, session)
-    session =>
-      if (from == "CYA") {
-        cyaPageForTentingPitches.getOrElse(nextPageFunc(session))
-      } else {
-        nextPageFunc(session)
-      }
-  }
+  ): Session => Call =
+    if (from == "CYA") { _ =>
+      cyaPageForTentingPitches
+    } else {
+      nextWithoutRedirectToCYA(id, session)
+    }
 
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
-  ): Session => Call = {
-    val nextPageFunc: Session => Call = super.nextPage(id, session)
-    session =>
-      if (from(request) == "IES") {
-        session.forType match {
-          case ForTypes.for6076 => ies6076SpecificRoute(session)
-          case _                => iesSpecificRoute(session)
-        }
-
-      } else {
-        nextPageFunc(session)
+  ): Session => Call                 =
+    if (from == "IES") {
+      _.forType match {
+        case ForTypes.for6076 => ies6076SpecificRoute
+        case _                => iesSpecificRoute
       }
-  }
-  private def iesSpecificRoute(session: Session): Call =
+    } else {
+      super.nextPage(id, session)
+    }
+  private def iesSpecificRoute: Call =
     routes.IncomeExpenditureSummaryController.show()
 
-  private def ies6076SpecificRoute(session: Session): Call =
+  private def ies6076SpecificRoute: Call =
     routes.IncomeExpenditureSummary6076Controller.show()
 
   override val postponeCYARedirectPages: Set[String] = Set(
