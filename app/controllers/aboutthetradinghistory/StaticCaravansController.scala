@@ -71,7 +71,7 @@ class StaticCaravansController @Inject() (
           .map { _ =>
             navigator.cyaPage
               .filter(_ => navigator.from == "CYA" && (data == AnswerNo || savedAnswer.contains(AnswerYes)))
-              .getOrElse(navigator.nextPage(StaticCaravansId, updatedData).apply(updatedData))
+              .getOrElse(navigator.nextWithoutRedirectToCYA(StaticCaravansId, updatedData).apply(updatedData))
           }
           .map(Redirect)
       }
