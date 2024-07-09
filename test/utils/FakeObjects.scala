@@ -1173,6 +1173,28 @@ trait FakeObjects {
     Some(AnswerNo)
   )
 
+  val prefilledNotVacantPropertiesNoCYA = StillConnectedDetails(
+    Some(AddressConnectionTypeNo),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress),
+    Some(prefilledVacantPropertiesDetails),
+    Some(prefilledTradingNameOperatingFromProperty),
+    Some(AnswerYes),
+    Some(AnswerYes),
+    Some(AnswerNo)
+  )
+
+  val prefilledNotVacantPropertiesEditCYA = StillConnectedDetails(
+    Some(AddressConnectionTypeYesChangeAddress),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress),
+    Some(prefilledVacantPropertiesDetails),
+    Some(prefilledTradingNameOperatingFromProperty),
+    Some(AnswerYes),
+    Some(AnswerYes),
+    Some(AnswerNo)
+  )
+
   val prefilledAboutLeaseOrAgreement6010Route: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     Some(AnswerYes),

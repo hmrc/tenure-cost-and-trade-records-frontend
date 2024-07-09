@@ -53,6 +53,28 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def tradingNameOperatingFromProperty6076ChangeAddressController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesEditCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  def tradingNameOperatingFromProperty6076NoController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesNoCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   def tradingNameOperatingFromPropertyControllerNoTradingName(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
   ) =
@@ -72,6 +94,28 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 when trading name present in session change address" in {
+      val result = tradingNameOperatingFromProperty6076ChangeAddressController().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML change address" in {
+      val result = tradingNameOperatingFromProperty6076ChangeAddressController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 when trading name present in session no" in {
+      val result = tradingNameOperatingFromProperty6076NoController().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML no" in {
+      val result = tradingNameOperatingFromProperty6076NoController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

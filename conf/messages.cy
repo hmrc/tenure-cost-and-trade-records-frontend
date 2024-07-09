@@ -1100,9 +1100,8 @@ error.propertyUpdates.missing   = Select yes if the property been altered, impro
 
 #WORK CARRIED OUT DETAILS
 #########################
-
-workCarriedOutDetails.heading = Give the details of the work carried out
-workCarriedOutDetails.hint = Give a brief description of the work, how much it cost, and the date it was completed
+workCarriedOutDetails.heading = Rhowch fanylion y gwaith a waned
+workCarriedOutDetails.hint = Rhowch ddisgrifiad byr o’r gwaith, faint a gostiodd, a’r dyddiad cwblhau.
 error.workCarriedOutDetails.required = Enter a description of the work carried out
 error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
 
