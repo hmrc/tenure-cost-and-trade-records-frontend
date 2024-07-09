@@ -33,6 +33,22 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
+  def cyaPageForTentingPitches: Option[Call]           =
+    Some(aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show())
+
+  def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call = {
+    val nextPageFunc: Session => Call = super.nextWithoutRedirectToCYA(id, session)
+    session =>
+      if (from == "CYA") {
+        cyaPageForTentingPitches.getOrElse(nextPageFunc(session))
+      } else {
+        nextPageFunc(session)
+      }
+  }
+
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
@@ -49,7 +65,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         nextPageFunc(session)
       }
   }
-
   private def iesSpecificRoute(session: Session): Call =
     routes.IncomeExpenditureSummaryController.show()
 
@@ -173,6 +188,19 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for other holiday accommodation")
     }
 
+  private def tentingPitchesOnSiteRouting(answers: Session): Call =
+    answers.aboutTheTradingHistoryPartOne.flatMap(
+      _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
+    ) match {
+      case Some(AnswerYes) => aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
+      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for tenting pitches on site reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for tenting pitches all year")
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId               -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                      -> financialYearEndRouting,
@@ -221,7 +249,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OtherHolidayAccommodationDetailsId          -> (_ =>
       controllers.routes.TaskListController.show()
     ), //TODO Letting units owned by site operator
+    TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
+    TentingPitchesAllYearId                     -> (_ =>
+      controllers.routes.TaskListController.show()
+      // TODO: Pitches for caravans and motor homes
+    ),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
+    CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )
 

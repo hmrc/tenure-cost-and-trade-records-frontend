@@ -91,7 +91,15 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for PremisesCosts page" in {
       assert(PremisesCostsId.toString.equals("premisesCostsPage"))
     }
-
+    "Identifier for tentingPitchesOnSiteId page" in {
+      assert(TentingPitchesOnSiteId.toString.equals("tentingPitchesOnSitePage"))
+    }
+    "Identifier for tentingPitchesAllYearId page" in {
+      assert(TentingPitchesAllYearId.toString.equals("tentingPitchesAllYearPage"))
+    }
+    "Identifier for CheckYourAnswersTentingPitchesId page" in {
+      assert(CheckYourAnswersTentingPitchesId.toString.equals("checkYourAnswersTentingPitchesPage"))
+    }
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
     }
@@ -128,6 +136,37 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     }
     "Identifier for other holiday accommodation details page" in {
       assert(OtherHolidayAccommodationDetailsId.toString.equals("otherHolidayAccommodationDetailsPage"))
+    }
+    "Identifier for other CYA holiday accommodation details page" in {
+      assert(CheckYourAnswersOtherHolidayAccommodationId.toString.equals("checkYourAnswersOtherHolidayAccommodation"))
+    }
+
+    "Identifier for Gross Receipts Caravan Fleet Hire page" in {
+      assert(GrossReceiptsCaravanFleetHireId.toString.equals("grossReceiptsCaravanFleetHirePage"))
+    }
+
+    "Identifier for Gross Receipts Excluding Vat  page" in {
+      assert(GrossReceiptsExcludingVatId.toString.equals("grossReceiptsExcludingVatPage"))
+    }
+
+    "Identifier for Head Office Expenses  page" in {
+      assert(HeadOfficeExpensesId.toString.equals("headOfficeExpensesPage"))
+    }
+
+    "Identifier for   Operational Expenses  page" in {
+      assert(OperationalExpensesId.toString.equals("operationalExpensesPage"))
+    }
+
+    "Identifier for Other Holiday Accommodation  page" in {
+      assert(OtherHolidayAccommodationId.toString.equals("otherHolidayAccommodationPage"))
+    }
+
+    "Identifier for  Other Income  page" in {
+      assert(OtherIncomeId.toString.equals("otherIncomePage"))
+    }
+
+    "Identifier for  Static Caravans  page" in {
+      assert(StaticCaravansId.toString.equals("staticCaravansPage"))
     }
   }
 }
