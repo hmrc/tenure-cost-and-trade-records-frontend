@@ -21,6 +21,7 @@ label.underReview=(under review)
 label.yes = Yes
 label.no = No
 label.pound = £
+label.weeks = weeks
 
 # OTHER FOOTER LINKS:
 ########
@@ -1606,6 +1607,12 @@ error.turnover.6020.otherIncome.range = Other income in the year ending {0} must
 error.turnover.6020.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
 
 # TURNOVER 6045
+turnover.6045.anyStaticLeisureCaravansOnSite.heading = Static caravans
+turnover.6045.anyStaticLeisureCaravansOnSite.p1 = The questions in this section relate to static caravans used for holiday or leisure purposes. These could be let out to holidaymakers or used by private as holiday or second homes.
+turnover.6045.anyStaticLeisureCaravansOnSite.p2 = You should not include details of any residential caravans occupied as sole or main residence.
+turnover.6045.anyStaticLeisureCaravansOnSite.question = Do you have any static holiday or leisure caravans located on your site?
+error.turnover.6045.anyStaticLeisureCaravansOnSite.required = Select yes if you have any static holiday or leisure caravans located on your site
+
 turnover.6045.caravanFleetHire.grossReceipts.heading = Gross receipts from all static caravan fleet hire
 turnover.6045.caravanFleetHire.p1 = Include the income received from fleet hire of single and twin-unit static caravans:
 turnover.6045.caravanFleetHire.list1.item1 = owned by the operator
@@ -2104,6 +2111,35 @@ help.otherHolidayAccommodation.list1.p3 = assembled on site
 help.otherHolidayAccommodation.list1.p4 = cannot be transported by road once assembled
 error.otherHolidayAccommodation.required =  Select yes if there are other holiday letting units located on your site.
 
+##########################
+
+#TOURING AND TENTING PITCHES QUESTION
+
+touringAndTentingPitches.heading = Touring and tenting pitches
+
+touringAndTentingPitches.question.heading = Do you have any touring and tenting pitches on your site?
+error.touringAndTentingPitches.question.missing = Select yes if you have any touring and tenting pitches on your site
+help.touringAndTentingPitches.question.title = Help with defining touring and tenting pitches
+help.touringAndTentingPitches.question.p = For the purposes of this declaration, touring and tenting pitches are defined as:
+help.touringAndTentingPitches.question.pitches = pitches for caravans, motor homes, or tents
+help.touringAndTentingPitches.question.glamping = glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
+help.touringAndTentingPitches.question.rally = rally areas
+
+
+# ARE YOUR TOURING AND TENTING PITCHES OPEN ALL YEAR
+
+areYourPitchesOpen.heading = Are your touring and tenting pitches open all year?
+error.areYourPitchesOpen.missing = Select yes if your touring and tenting pitches open all year
+areYourPitchesOpen.conditional.label = Enter a number of weeks the site remains open in a year
+error.areYourPitchesOpen.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
+error.areYourPitchesOpen.conditional.value.missing = Provide a number of weeks the site remains open in a year
+
+# CYA TOURING AND TENTS PITCHES
+
+cYa.touringAndTentingPitches.heading = Check your answers - touring and tent pitches
+cYa.touringAndTentingPitches.pitches.heading = Touring and tenting pitches
+cYa.touringAndTentingPitches.pitches.label = Touring and tenting pitches on site?
+
 #########################
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
@@ -2425,6 +2461,7 @@ checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 checkYourAnswersAboutTheTradingHistory.heading = Check your answers – trading history
 checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers – static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans
+checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Static caravans on site?
 checkYourAnswersAboutTheTradingHistory.occupationDate = Occupation date
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period

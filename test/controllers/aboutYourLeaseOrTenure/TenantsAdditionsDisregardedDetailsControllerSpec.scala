@@ -16,7 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,30 +25,40 @@ import utils.TestBaseSpec
 class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
 
   def tenantsAdditionsDisregardedDetailsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new TenantsAdditionsDisregardedDetailsController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       tenantsAdditionsDisregardedDetailsView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
-  "GET /" should {
-    "return 200" in {
+  "TenantsAdditionsDisregardedDetailsController GET /" should {
+    "return 200 and HTML with Tenants Additional Disregard Details in the session" in {
       val result = tenantsAdditionsDisregardedDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = tenantsAdditionsDisregardedDetailsController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Tenants Additional Disregard Details with none in the session" in {
+      val controller = tenantsAdditionsDisregardedDetailsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "TenantsAdditionsDisregardedDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tenantsAdditionsDisregardedDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

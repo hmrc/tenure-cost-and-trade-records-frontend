@@ -17,11 +17,11 @@
 package controllers.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm
-import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.{FakeRequest, Helpers}
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
@@ -29,59 +29,53 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
   def propertyCurrentlyUsedController(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
-      prefilledAboutYouAndThePropertyPartTwo6045
-    )
-  ) =
-    new PropertyCurrentlyUsedController(
-      stubMessagesControllerComponents(),
-      aboutYouAndThePropertyNavigator,
-      propertyCurrentlyUsedView,
-      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-      mockSessionRepo
-    )
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
+  ) = new PropertyCurrentlyUsedController(
+    stubMessagesControllerComponents(),
+    aboutYouAndThePropertyNavigator,
+    propertyCurrentlyUsedView,
+    preEnrichedActionRefiner(
+      aboutYouAndTheProperty = aboutYouAndTheProperty,
+      aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
+    ),
+    mockSessionRepo
+  )
 
-  def propertyCurrentlyUsedControllerYes(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
-      prefilledAboutYouAndThePropertyPartTwo6045
-    )
-  ) =
-    new PropertyCurrentlyUsedController(
-      stubMessagesControllerComponents(),
-      aboutYouAndThePropertyNavigator,
-      propertyCurrentlyUsedView,
-      preEnrichedActionRefiner(
-        aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes),
-        aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
-      ),
-      mockSessionRepo
-    )
-
-  def propertyCurrentlyUsedControllerNone(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
-      prefilledAboutYouAndThePropertyPartTwo6045
-    )
-  ) =
-    new PropertyCurrentlyUsedController(
-      stubMessagesControllerComponents(),
-      aboutYouAndThePropertyNavigator,
-      propertyCurrentlyUsedView,
-      preEnrichedActionRefiner(
-        aboutYouAndTheProperty = None,
-        aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
-      ),
-      mockSessionRepo
-    )
-  " PropertyCurrentlyUsedController GET /" should {
-    "return 200 with data in session" in {
+  "PropertyCurrentlyUsedController GET /" should {
+    "return 200 and HTML with Property Currently Used with yes in the session" in {
       val result = propertyCurrentlyUsedController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML with data in session" in {
-      val result = propertyCurrentlyUsedController().show(fakeRequest)
+      status(result)          shouldBe Status.OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
+      contentAsString(result)   should include(
+        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+      )
+    }
+
+    "return 200 and HTML with Property Currently Used with no in the session" in {
+      val controller = propertyCurrentlyUsedController(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
+      val result     = controller.show(fakeRequest)
+      status(result)          shouldBe Status.OK
+      contentType(result)     shouldBe Some("text/html")
+      Helpers.charset(result) shouldBe Some("utf-8")
+      contentAsString(result)   should include(
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+      )
+    }
+
+    "return 200 and HTML Property Currently Used with none in the session" in {
+      val controller = propertyCurrentlyUsedController(
+        aboutYouAndTheProperty = None,
+        aboutYouAndThePropertyPartTwo = None
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)          shouldBe Status.OK
+      contentType(result)     shouldBe Some("text/html")
+      Helpers.charset(result) shouldBe Some("utf-8")
+      contentAsString(result)   should include(
+        controllers.routes.TaskListController.show().url
+      )
     }
 
     "return correct backLink when 'from=TL' query param is present" in {
@@ -95,20 +89,6 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
-
-    "return HTML with data in session if the previous answer is Yes" in {
-      val result = propertyCurrentlyUsedControllerYes().show(fakeRequest)
-      contentType(result)     shouldBe Some("text/html")
-      Helpers.charset(result) shouldBe Some("utf-8")
-    }
-
-    "GET / return 200 no about the property in the session" in {
-      val result = propertyCurrentlyUsedControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
   }
 
   "SUBMIT /" should {

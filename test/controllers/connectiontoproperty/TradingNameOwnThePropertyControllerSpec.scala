@@ -21,9 +21,10 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
@@ -39,35 +40,27 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def tradingNameOwnThePropertyControllerNoOwner(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) =
-    new TradingNameOwnThePropertyController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      tradingNameOwnThePropertyView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
   "AreYouThirdPartyController GET /" should {
-
-    "return 200 with owner of the property present in session" in {
+    "return 200 and HTML with owner of the property present in session" in {
       val result = tradingNameOwnThePropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = tradingNameOwnThePropertyController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return 200 with owner of the property is not present" in {
-      val result = tradingNameOwnThePropertyControllerNoOwner().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with owner of the property is not present" in {
+      val controller =
+        tradingNameOwnThePropertyController(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
+      )
     }
   }
 

@@ -21,6 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 
 case class OtherHolidayAccommodation(
   otherHolidayAccommodation: Option[AnswersYesNo] = None,
+  otherHolidayAccommodationDetails: Option[OtherHolidayAccommodationDetails] = None,
   checkYourAnswersOtherHolidayAccommodation: Option[CheckYourAnswersOtherHolidayAccommodation] = None
 )
 

@@ -38,25 +38,10 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def vacantPropertiesControllerNoVacantProperty(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsEdit)
-  ) =
-    new VacantPropertiesController(
-      stubMessagesControllerComponents(),
-      vacantPropertiesNavigator,
-      vacantPropertiesView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200 when vacant property is present in session" in {
+  "VacantPropertiesController GET /" should {
+    "return 200 and HTML with vacant property is present in session" in {
       val result = vacantPropertiesController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = vacantPropertiesController().show(fakeRequest)
+      status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -64,8 +49,9 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 when vacant property is not present in session" in {
-      val result = vacantPropertiesControllerNoVacantProperty().show(fakeRequest)
+    "return 200 and HTML with vacant property is not present in session" in {
+      val controller = vacantPropertiesController(Some(prefilledStillConnectedDetailsEdit))
+      val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -73,10 +59,9 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
         controllers.connectiontoproperty.routes.EditAddressController.show().url
       )
     }
-
   }
 
-  "SUBMIT /" should {
+  "VacantPropertiesController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = vacantPropertiesController().submit(

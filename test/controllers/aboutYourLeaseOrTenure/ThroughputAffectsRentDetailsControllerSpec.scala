@@ -16,9 +16,10 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -26,31 +27,44 @@ import utils.TestBaseSpec
   */
 class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec {
 
-  def throughputAffectsRentDetailsController =
-    new ThroughputAffectsRentDetailsController(
-      throughputAffectsRentDetailsView,
-      aboutYourLeaseOrTenureNavigator,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
-      mockSessionRepo,
-      stubMessagesControllerComponents()
+  def throughputAffectsRentDetailsController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
     )
+  ) = new ThroughputAffectsRentDetailsController(
+    throughputAffectsRentDetailsView,
+    aboutYourLeaseOrTenureNavigator,
+    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    mockSessionRepo,
+    stubMessagesControllerComponents()
+  )
 
-  "GET /" should {
-    "return 200" in {
-      val result = throughputAffectsRentDetailsController.show(fakeRequest)
-      status(result) shouldBe OK
+  "ThroughputAffectsRentDetailsController GET /" should {
+    "return 200 and HTML with Through Put Affect Rent Details in the session" in {
+      val result = throughputAffectsRentDetailsController().show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = throughputAffectsRentDetailsController.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Through Put Affect Rent Details with none in the session" in {
+      val controller = throughputAffectsRentDetailsController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
+      )
     }
   }
 
-  "SUBMIT /" should {
+  "ThroughputAffectsRentDetailsController SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = throughputAffectsRentDetailsController.submit(
+      val res = throughputAffectsRentDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST

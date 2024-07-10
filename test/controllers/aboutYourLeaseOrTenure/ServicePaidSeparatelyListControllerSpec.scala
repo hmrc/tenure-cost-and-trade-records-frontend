@@ -38,7 +38,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
   ) =
     new ServicePaidSeparatelyListController(
       stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+      inject[AboutYourLeaseOrTenureNavigator],
       servicePaidSeparatelyListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),

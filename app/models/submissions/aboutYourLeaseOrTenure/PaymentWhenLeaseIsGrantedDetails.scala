@@ -24,5 +24,5 @@ case class PaymentWhenLeaseIsGrantedDetails(
 )
 
 object PaymentWhenLeaseIsGrantedDetails {
-  implicit val format: OFormat[PaymentWhenLeaseIsGrantedDetails] = Json.format[PaymentWhenLeaseIsGrantedDetails]
+  implicit val format: OFormat[PaymentWhenLeaseIsGrantedDetails] = Json.format
 }

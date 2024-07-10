@@ -23,7 +23,5 @@ case class ConnectedToLandlordInformationDetails(
 )
 
 object ConnectedToLandlordInformationDetails {
-  implicit val format: OFormat[ConnectedToLandlordInformationDetails] =
-    Json.format[ConnectedToLandlordInformationDetails]
-
+  implicit val format: OFormat[ConnectedToLandlordInformationDetails] = Json.format
 }

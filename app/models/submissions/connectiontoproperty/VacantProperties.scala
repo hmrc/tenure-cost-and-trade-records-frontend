@@ -23,6 +23,5 @@ case class VacantProperties(
 )
 
 object VacantProperties {
-  implicit val format: OFormat[VacantProperties] = Json.format[VacantProperties]
-
+  implicit val format: OFormat[VacantProperties] = Json.format
 }

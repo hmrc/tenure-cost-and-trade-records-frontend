@@ -22,8 +22,8 @@ import controllers.aboutthetradinghistory.routes
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{ForTypes, Session}
 import navigation.identifiers._
-import play.api.mvc.{AnyContent, Call, Request}
 import play.api.Logging
+import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
@@ -33,27 +33,34 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def cyaPage: Option[Call] =
     Some(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
+  def cyaPageForTentingPitches: Call = aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+
+  def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call =
+    if (from == "CYA") { _ =>
+      cyaPageForTentingPitches
+    } else {
+      nextWithoutRedirectToCYA(id, session)
+    }
+
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
-  ): Session => Call = {
-    val nextPageFunc: Session => Call = super.nextPage(id, session)
-    session =>
-      if (from(request) == "IES") {
-        session.forType match {
-          case ForTypes.for6076 => ies6076SpecificRoute(session)
-          case _                => iesSpecificRoute(session)
-        }
-
-      } else {
-        nextPageFunc(session)
+  ): Session => Call                 =
+    if (from == "IES") {
+      _.forType match {
+        case ForTypes.for6076 => ies6076SpecificRoute
+        case _                => iesSpecificRoute
       }
-  }
-
-  private def iesSpecificRoute(session: Session): Call =
+    } else {
+      super.nextPage(id, session)
+    }
+  private def iesSpecificRoute: Call =
     routes.IncomeExpenditureSummaryController.show()
 
-  private def ies6076SpecificRoute(session: Session): Call =
+  private def ies6076SpecificRoute: Call =
     routes.IncomeExpenditureSummary6076Controller.show()
 
   override val postponeCYARedirectPages: Set[String] = Set(
@@ -81,8 +88,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         s.forType match {
           case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
           case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
-          case ForTypes.for6045 | ForTypes.for6046 =>
-            aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show() // TODO: Static caravans
+          case ForTypes.for6045 | ForTypes.for6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
           case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
           case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
         }
@@ -105,8 +111,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     _.forType match {
       case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
-      case ForTypes.for6045 | ForTypes.for6046 =>
-        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show() // TODO: Static caravans
+      case ForTypes.for6045 | ForTypes.for6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
       case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
       case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
     }
@@ -140,6 +145,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _               => aboutthetradinghistory.routes.NonFuelTurnoverController.show()
     }
 
+  private def staticCaravansRouting: Session => Call =
+    _.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite) match {
+      case Some(AnswerYes) => // TODO: Are your static caravans open all year?
+        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()
+      case _               => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    }
+
   private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call = {
     val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails) match {
       case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
@@ -156,17 +168,29 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def otherHolidayAccommodationRouting(answers: Session): Call =
-    //TODO this needs updating once next pages are implemented
     answers.aboutTheTradingHistoryPartOne.flatMap(
       _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)
     ) match {
-      case Some(AnswerYes) => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      case Some(AnswerYes) => aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show()
       case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
       case _               =>
         logger.warn(
           s"Navigation for other holiday accommodation reached without correct selection of conditions by controller"
         )
         throw new RuntimeException("Invalid option exception for other holiday accommodation")
+    }
+
+  private def tentingPitchesOnSiteRouting(answers: Session): Call =
+    answers.aboutTheTradingHistoryPartOne.flatMap(
+      _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
+    ) match {
+      case Some(AnswerYes) => aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
+      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for tenting pitches on site reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for tenting pitches all year")
     }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
@@ -208,12 +232,22 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     GrossReceiptsForBaseLoadId                  -> (_ => aboutthetradinghistory.routes.OtherIncomeController.show()),
     OperationalExpensesId                       -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
     HeadOfficeExpensesId                        -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
+    StaticCaravansId                            -> staticCaravansRouting,
     GrossReceiptsCaravanFleetHireId             -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
         .show() // TODO: Single caravans owned by the operator
     ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
+    OtherHolidayAccommodationDetailsId          -> (_ =>
+      controllers.routes.TaskListController.show()
+    ), //TODO Letting units owned by site operator
+    TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
+    TentingPitchesAllYearId                     -> (_ =>
+      controllers.routes.TaskListController.show()
+      // TODO: Pitches for caravans and motor homes
+    ),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
+    CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )
 

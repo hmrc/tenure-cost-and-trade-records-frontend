@@ -136,6 +136,21 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       )
     }
 
+=======
+    }
+
+    "return 200 and HTML with trading name present in session for 6076" in {
+      val controller = tradingNameOperatingFromPropertyController(forType = ForTypes.for6076)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
+    }
+
+>>>>>>> main
     "return 200 when trading name present is not session for 6076" in {
       val controller = tradingNameOperatingFromPropertyController(
         forType = ForTypes.for6076,

@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,52 +26,52 @@ import utils.TestBaseSpec
 class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
 
   def tenantsAdditionsDisregardedController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new TenantsAdditionsDisregardedController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       tenantsAdditionsDisregardedView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
       mockSessionRepo
     )
 
-  def tenantsAdditionsDisregarded6020Controller(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new TenantsAdditionsDisregardedController(
-      stubMessagesControllerComponents(),
-      aboutYourLeaseOrTenureNavigator,
-      tenantsAdditionsDisregardedView,
-      preEnrichedActionRefiner(forType = ForTypes.for6020, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
+  "TenantsAdditionsDisregardedController GET /" should {
+    "return 200 and HTML with Tenants Additional Disregard in the session" in {
       val result = tenantsAdditionsDisregardedController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = tenantsAdditionsDisregardedController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML Tenants Additional Disregard with none in the session" in {
+      val controller = tenantsAdditionsDisregardedController(forType = ForTypes.for6020)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
+      )
     }
 
-    "return 200 6020" in {
-      val result = tenantsAdditionsDisregarded6020Controller().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 None" in {
+      val controller = tenantsAdditionsDisregardedController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+      )
     }
-
-    "return HTML 6020" in {
-      val result = tenantsAdditionsDisregarded6020Controller().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
   }
-  "SUBMIT /" should {
+
+  "TenantsAdditionsDisregardedController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tenantsAdditionsDisregardedController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)

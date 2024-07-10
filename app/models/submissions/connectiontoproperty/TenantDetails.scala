@@ -22,5 +22,5 @@ case class TenantDetails(name: String, descriptionOfLetting: String, corresponde
     extends PrintableTenantDetails
 
 object TenantDetails {
-  implicit val format: OFormat[TenantDetails] = Json.format[TenantDetails]
+  implicit val format: OFormat[TenantDetails] = Json.format
 }

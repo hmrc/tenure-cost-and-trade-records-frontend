@@ -23,6 +23,5 @@ case class CheckYourAnswersConnectionToVacantProperty(
 )
 
 object CheckYourAnswersConnectionToVacantProperty {
-  implicit val format: OFormat[CheckYourAnswersConnectionToVacantProperty] =
-    Json.format[CheckYourAnswersConnectionToVacantProperty]
+  implicit val format: OFormat[CheckYourAnswersConnectionToVacantProperty] = Json.format
 }

@@ -27,8 +27,7 @@ import views.behaviours.QuestionViewBehaviours
 class CheckYourAnswersAboutFranchiseOrLettings6015ViewSpec
     extends QuestionViewBehaviours[CheckYourAnswersAboutFranchiseOrLettings] {
 
-  def checkYourAnswersAboutFranchiseOrLettingsView =
-    app.injector.instanceOf[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
+  def cyaFranchiseOrLettingsView = inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
 
   val messageKeyPrefix = "checkYourAnswersAboutConcessionsOrLettings"
 
@@ -39,10 +38,10 @@ class CheckYourAnswersAboutFranchiseOrLettings6015ViewSpec
   val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6015YesSession, fakeRequest)
 
   def createView = () =>
-    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
+    cyaFranchiseOrLettingsView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutFranchiseOrLettings]) =>
-    checkYourAnswersAboutFranchiseOrLettingsView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
+    cyaFranchiseOrLettingsView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
 
   "Check Your Answers About Franchise Or Lettings view" must {
 

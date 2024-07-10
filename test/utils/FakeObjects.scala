@@ -245,8 +245,9 @@ trait FakeObjects {
     baseFilled6045Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
   val stillConnectedDetails6045NoSession: Session             =
     baseFilled6045Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
-  // Not connected sessions
-  val prefilledNotConnectedYes: RemoveConnectionDetails       = RemoveConnectionDetails(
+
+// Not connected sessions
+  val prefilledNotConnectedYes: RemoveConnectionDetails  = RemoveConnectionDetails(
     Some(
       RemoveConnectionsDetails(
         prefilledFakeName,
@@ -255,6 +256,10 @@ trait FakeObjects {
       )
     ),
     Some(PastConnectionTypeYes)
+  )
+  val prefilledNotConnectedNone: RemoveConnectionDetails = RemoveConnectionDetails(
+    Some(RemoveConnectionsDetails(prefilledFakeName, ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail), None)),
+    None
   )
 
   val notConnected6010NoSession: Session =
@@ -353,7 +358,8 @@ trait FakeObjects {
   val prefilledAboutYouAndThePropertyPartTwo: AboutYouAndThePropertyPartTwo = AboutYouAndThePropertyPartTwo(
     plantAndTechnology = Some("plant and technology"),
     generatorCapacity = Some("generator capacity"),
-    batteriesCapacity = Some("batteries capacity")
+    batteriesCapacity = Some("batteries capacity"),
+    PropertyCurrentlyUsed(List("fleetCaravanPark", "chaletPark", "other"), Some("another use details"))
   )
 
   val prefilledAboutYouAndThePropertyPartTwo6045: AboutYouAndThePropertyPartTwo =
@@ -1311,6 +1317,7 @@ trait FakeObjects {
     canRentBeReducedOnReviewDetails = Some(CanRentBeReducedOnReviewDetails(AnswerYes)),
     incentivesPaymentsConditionsDetails = Some(IncentivesPaymentsConditionsDetails(AnswerYes)),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
+    tenantsAdditionsDisregardedDetails = Some(TenantsAdditionsDisregardedDetails("Test Content")),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
     legalOrPlanningRestrictionsDetails = Some(LegalOrPlanningRestrictionsDetails("Legal planning restrictions")),
     capitalSumDescription = Some(CapitalSumDescription("capital Sum Description")),

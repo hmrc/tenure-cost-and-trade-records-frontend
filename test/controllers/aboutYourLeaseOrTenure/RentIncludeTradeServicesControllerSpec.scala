@@ -29,7 +29,7 @@ class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new RentIncludeTradeServicesController(
     stubMessagesControllerComponents(),
-    app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+    inject[AboutYourLeaseOrTenureNavigator],
     rentIncludeTradeServicesView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo

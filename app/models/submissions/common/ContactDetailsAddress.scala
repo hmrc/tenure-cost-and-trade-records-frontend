@@ -28,5 +28,5 @@ case class ContactDetailsAddress(
 ) extends PrintableAddress
 
 object ContactDetailsAddress {
-  implicit val format: OFormat[ContactDetailsAddress] = Json.format[ContactDetailsAddress]
+  implicit val format: OFormat[ContactDetailsAddress] = Json.format
 }

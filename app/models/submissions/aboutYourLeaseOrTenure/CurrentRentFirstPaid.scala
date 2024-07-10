@@ -23,5 +23,5 @@ import java.time.LocalDate
 case class CurrentRentFirstPaid(currentRentFirstPaid: LocalDate)
 
 object CurrentRentFirstPaid {
-  implicit val format: OFormat[CurrentRentFirstPaid] = Json.format[CurrentRentFirstPaid]
+  implicit val format: OFormat[CurrentRentFirstPaid] = Json.format
 }

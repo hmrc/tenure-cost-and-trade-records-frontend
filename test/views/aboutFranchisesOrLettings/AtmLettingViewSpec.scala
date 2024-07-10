@@ -25,8 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting] {
 
-  def AtmLettingView =
-    app.injector.instanceOf[views.html.aboutfranchisesorlettings.atmLetting]
+  def AtmLettingView = inject[views.html.aboutfranchisesorlettings.atmLetting]
 
   val messageKeyPrefix = "label.atmLetting"
   val backLink         = controllers.routes.TaskListController.show().url

@@ -34,7 +34,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
   private val endpointBase = "/tenure-cost-and-trade-records/saveAsDraft/"
 
   // Inject the required dependencies
-  val backendConnector: DefaultBackendConnector = app.injector.instanceOf[DefaultBackendConnector]
+  val backendConnector: DefaultBackendConnector = inject[DefaultBackendConnector]
 
   protected def basicWireMockConfig(): WireMockConfiguration = wireMockConfig()
 

@@ -23,5 +23,5 @@ case class DownloadPDFReferenceNumber(
 )
 
 object DownloadPDFReferenceNumber {
-  implicit val format: OFormat[DownloadPDFReferenceNumber] = Json.format[DownloadPDFReferenceNumber]
+  implicit val format: OFormat[DownloadPDFReferenceNumber] = Json.format
 }

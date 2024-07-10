@@ -524,14 +524,22 @@
 
     <h2 class="govuk-heading-l">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.section")</h2>
 
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite",
+            _.caravans.flatMap(_.anyStaticLeisureCaravansOnSite).map(yesNo => messages(s"label.${yesNo.name}")),
+            aboutthetradinghistory.routes.StaticCaravansController.show(), "anyStaticLeisureCaravansOnSite")
+    ))
 
 
-    @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
-        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
-        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-            t => s"${t.grossReceiptsCaravanFleetHire.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
-        answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
-    )
+    @if(sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).contains(AnswerYes)) {
+        @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
+            aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
+            answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+                t => s"${t.grossReceiptsCaravanFleetHire.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+            answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
+        )
+
+    }
 
 }
 

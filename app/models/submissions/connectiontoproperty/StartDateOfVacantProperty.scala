@@ -23,5 +23,5 @@ import java.time.LocalDate
 case class StartDateOfVacantProperty(datePropertyBecomeVacant: LocalDate)
 
 object StartDateOfVacantProperty {
-  implicit val format: OFormat[StartDateOfVacantProperty] = Json.format[StartDateOfVacantProperty]
+  implicit val format: OFormat[StartDateOfVacantProperty] = Json.format
 }

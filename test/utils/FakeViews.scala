@@ -16,7 +16,7 @@
 
 package utils
 
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.test.Injecting
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
@@ -31,343 +31,268 @@ import views.html.notconnected._
 import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
 import views.html._
 
-trait FakeViews { this: GuiceOneAppPerSuite =>
+trait FakeViews { this: Injecting =>
 
   // Test sign
-  lazy val testSignView: testSign = app.injector.instanceOf[testSign]
+  lazy val testSignView: testSign = inject[testSign]
   // Sign in
-  lazy val loginView: login       = app.injector.instanceOf[login]
+  lazy val loginView: login       = inject[login]
 
   // Error pages
-  lazy val jsonErrorView: JsonParseError                                                      = app.injector.instanceOf[JsonParseError]
-  lazy val errorView: error                                                                   = app.injector.instanceOf[error]
+  lazy val jsonErrorView: JsonParseError                                                      = inject[JsonParseError]
+  lazy val errorView: error                                                                   = inject[error]
   // Request reference number
   lazy val checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber =
-    app.injector.instanceOf[checkYourAnswersRequestReferenceNumber]
+    inject[checkYourAnswersRequestReferenceNumber]
   lazy val confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber         =
-    app.injector.instanceOf[confirmationRequestReferenceNumber]
+    inject[confirmationRequestReferenceNumber]
 
   //generic confirmation page
-  lazy val genericRemoveConfirmationView = app.injector.instanceOf[genericRemoveConfirmation]
+  lazy val genericRemoveConfirmationView = inject[genericRemoveConfirmation]
   // Connection to the property
 
-  lazy val areYouThirdPartyView: areYouThirdParty                                                 = app.injector.instanceOf[areYouThirdParty]
-  lazy val areYouStillConnectedView: areYouStillConnected                                         = app.injector.instanceOf[areYouStillConnected]
-  lazy val connectionToThePropertyView: connectionToTheProperty                                   = app.injector.instanceOf[connectionToTheProperty]
-  lazy val editAddressView: editAddress                                                           = app.injector.instanceOf[editAddress]
-  lazy val requestReferenceAddressView: requestReferenceNumber                                    = app.injector.instanceOf[requestReferenceNumber]
-  lazy val downloadPDFReferenceNumberView: downloadPDFReferenceNumber                             =
-    app.injector.instanceOf[downloadPDFReferenceNumber]
-  lazy val downloadPDFView: downloadPDF                                                           =
-    app.injector.instanceOf[downloadPDF]
+  lazy val areYouThirdPartyView: areYouThirdParty                                                 = inject[areYouThirdParty]
+  lazy val areYouStillConnectedView: areYouStillConnected                                         = inject[areYouStillConnected]
+  lazy val connectionToThePropertyView: connectionToTheProperty                                   = inject[connectionToTheProperty]
+  lazy val editAddressView: editAddress                                                           = inject[editAddress]
+  lazy val requestReferenceAddressView: requestReferenceNumber                                    = inject[requestReferenceNumber]
+  lazy val downloadPDFReferenceNumberView: downloadPDFReferenceNumber                             = inject[downloadPDFReferenceNumber]
+  lazy val downloadPDFView: downloadPDF                                                           = inject[downloadPDF]
   lazy val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails         =
-    app.injector.instanceOf[requestReferenceNumberContactDetails]
+    inject[requestReferenceNumberContactDetails]
   lazy val checkYourAnswersConnectionToProperty: checkYourAnswersConnectionToProperty             =
-    app.injector.instanceOf[checkYourAnswersConnectionToProperty]
+    inject[checkYourAnswersConnectionToProperty]
   lazy val checkYourAnswersConnectionToVacantProperty: checkYourAnswersConnectionToVacantProperty =
-    app.injector.instanceOf[checkYourAnswersConnectionToVacantProperty]
-  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     =
-    app.injector.instanceOf[confirmationConnectionToProperty]
-  lazy val confirmationVacantProperty: confirmationVacantProperty                                 =
-    app.injector.instanceOf[confirmationVacantProperty]
-  lazy val confirmation: confirmation                                                             =
-    app.injector.instanceOf[confirmation]
+    inject[checkYourAnswersConnectionToVacantProperty]
+  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     = inject[confirmationConnectionToProperty]
+  lazy val confirmationVacantProperty: confirmationVacantProperty                                 = inject[confirmationVacantProperty]
+  lazy val confirmation: confirmation                                                             = inject[confirmation]
   lazy val confirmationRequestReferenceNumber: confirmationRequestReferenceNumber                 =
-    app.injector.instanceOf[confirmationRequestReferenceNumber]
-  lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty                     =
-    app.injector.instanceOf[tradingNameOperatingFromProperty]
-  lazy val tradingNameOwnThePropertyView: tradingNameOwnTheProperty                               = app.injector.instanceOf[tradingNameOwnTheProperty]
-  lazy val tradingNamePayRentView: tradingNamePayingRent                                          = app.injector.instanceOf[tradingNamePayingRent]
-  lazy val vacantPropertiesStartDateView: vacantPropertyStartDate                                 = app.injector.instanceOf[vacantPropertyStartDate]
-  lazy val isRentReceivedFromLettingView: isRentReceivedFromLetting                               = app.injector.instanceOf[isRentReceivedFromLetting]
-  lazy val provideContactDetailsView: provideContactDetails                                       = app.injector.instanceOf[provideContactDetails]
+    inject[confirmationRequestReferenceNumber]
+  lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty                     = inject[tradingNameOperatingFromProperty]
+  lazy val tradingNameOwnThePropertyView: tradingNameOwnTheProperty                               = inject[tradingNameOwnTheProperty]
+  lazy val tradingNamePayRentView: tradingNamePayingRent                                          = inject[tradingNamePayingRent]
+  lazy val vacantPropertiesStartDateView: vacantPropertyStartDate                                 = inject[vacantPropertyStartDate]
+  lazy val isRentReceivedFromLettingView: isRentReceivedFromLetting                               = inject[isRentReceivedFromLetting]
+  lazy val provideContactDetailsView: provideContactDetails                                       = inject[provideContactDetails]
   lazy val addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty                   =
-    app.injector.instanceOf[addAnotherLettingPartOfProperty]
-  lazy val tenantDetailsView: tenantDetails                                                       = app.injector.instanceOf[tenantDetails]
+    inject[addAnotherLettingPartOfProperty]
+  lazy val tenantDetailsView: tenantDetails                                                       = inject[tenantDetails]
   lazy val lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails                 =
-    app.injector.instanceOf[lettingPartOfPropertyRentDetails]
+    inject[lettingPartOfPropertyRentDetails]
   lazy val lettingPartOfPropertyRentIncludesView: lettingPartOfPropertyRentIncludes               =
-    app.injector.instanceOf[lettingPartOfPropertyRentIncludes]
+    inject[lettingPartOfPropertyRentIncludes]
   // Not connected
-  val pastConnectionView: pastConnection                                                          = app.injector.instanceOf[pastConnection]
-  val removeConnectionView: removeConnection                                                      = app.injector.instanceOf[removeConnection]
-  val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected                              =
-    app.injector.instanceOf[checkYourAnswersNotConnected]
-  val confirmationNotConnectedView: confirmationNotConnected                                      = app.injector.instanceOf[confirmationNotConnected]
-  val vacantPropertiesView: vacantProperties                                                      = app.injector.instanceOf[vacantProperties]
+  val pastConnectionView: pastConnection                                                          = inject[pastConnection]
+  val removeConnectionView: removeConnection                                                      = inject[removeConnection]
+  val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected                              = inject[checkYourAnswersNotConnected]
+  val confirmationNotConnectedView: confirmationNotConnected                                      = inject[confirmationNotConnected]
+  val vacantPropertiesView: vacantProperties                                                      = inject[vacantProperties]
 
   // About you and the property
-  lazy val aboutYouView: aboutYou                                                    = app.injector.instanceOf[aboutYou]
-  lazy val aboutThePropertyView: aboutTheProperty                                    = app.injector.instanceOf[aboutTheProperty]
-  lazy val aboutThePropertyStringView: aboutThePropertyString                        = app.injector.instanceOf[aboutThePropertyString]
-  lazy val propertyCurrentlyUsedView: propertyCurrentlyUsed                          = app.injector.instanceOf[propertyCurrentlyUsed]
-  lazy val websiteForPropertyView: websiteForProperty                                = app.injector.instanceOf[websiteForProperty]
-  lazy val premisesLicenceGrantedView: premisesLicenseGranted                        = app.injector.instanceOf[premisesLicenseGranted]
-  lazy val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails          =
-    app.injector.instanceOf[premisesLicenseGrantedDetails]
-  lazy val licensableActivitiesView: licensableActivities                            = app.injector.instanceOf[licensableActivities]
-  lazy val licensableActivitiesDetailsView: licensableActivitiesDetails              =
-    app.injector.instanceOf[licensableActivitiesDetails]
-  lazy val premisesLicensableView: premisesLicenseConditions                         = app.injector.instanceOf[premisesLicenseConditions]
+  lazy val aboutYouView: aboutYou                                                    = inject[aboutYou]
+  lazy val aboutThePropertyView: aboutTheProperty                                    = inject[aboutTheProperty]
+  lazy val aboutThePropertyStringView: aboutThePropertyString                        = inject[aboutThePropertyString]
+  lazy val propertyCurrentlyUsedView: propertyCurrentlyUsed                          = inject[propertyCurrentlyUsed]
+  lazy val websiteForPropertyView: websiteForProperty                                = inject[websiteForProperty]
+  lazy val premisesLicenceGrantedView: premisesLicenseGranted                        = inject[premisesLicenseGranted]
+  lazy val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails          = inject[premisesLicenseGrantedDetails]
+  lazy val licensableActivitiesView: licensableActivities                            = inject[licensableActivities]
+  lazy val licensableActivitiesDetailsView: licensableActivitiesDetails              = inject[licensableActivitiesDetails]
+  lazy val premisesLicensableView: premisesLicenseConditions                         = inject[premisesLicenseConditions]
   lazy val premisesLicenceConditionsDetailsView: premisesLicenseConditionsDetails    =
-    app.injector.instanceOf[premisesLicenseConditionsDetails]
-  lazy val enforcementActionsTakenView: enforcementActionBeenTaken                   = app.injector.instanceOf[enforcementActionBeenTaken]
+    inject[premisesLicenseConditionsDetails]
+  lazy val enforcementActionsTakenView: enforcementActionBeenTaken                   = inject[enforcementActionBeenTaken]
   lazy val enforcemenntActionBeenTakenDetailsView: enforcementActionBeenTakenDetails =
-    app.injector.instanceOf[enforcementActionBeenTakenDetails]
-  lazy val tiedForGoodsView: tiedForGoods                                            = app.injector.instanceOf[tiedForGoods]
-  lazy val tiedForGoodsDetailsView: tiedForGoodsDetails                              = app.injector.instanceOf[tiedForGoodsDetails]
+    inject[enforcementActionBeenTakenDetails]
+  lazy val tiedForGoodsView: tiedForGoods                                            = inject[tiedForGoods]
+  lazy val tiedForGoodsDetailsView: tiedForGoodsDetails                              = inject[tiedForGoodsDetails]
   lazy val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty    =
-    app.injector.instanceOf[checkYourAnswersAboutTheProperty]
-  lazy val charityQuestionView                                                       = app.injector.instanceOf[charityQuestion]
-  lazy val tradingActivityView                                                       = app.injector.instanceOf[tradingActivity]
-  lazy val renewablesPlantView                                                       = app.injector.instanceOf[renewablesPlant]
-  lazy val threeYearsConstructedView                                                 = app.injector.instanceOf[threeYearsConstructed]
-  lazy val costsBreakdownView                                                        = app.injector.instanceOf[costsBreakdown]
-  lazy val plantAndTechnologyView                                                    = app.injector.instanceOf[plantAndTechnology]
-  lazy val generatorCapacityView                                                     = app.injector.instanceOf[generatorCapacity]
-  lazy val batteriesCapacityView                                                     = app.injector.instanceOf[batteriesCapacity]
+    inject[checkYourAnswersAboutTheProperty]
+  lazy val charityQuestionView                                                       = inject[charityQuestion]
+  lazy val tradingActivityView                                                       = inject[tradingActivity]
+  lazy val renewablesPlantView                                                       = inject[renewablesPlant]
+  lazy val threeYearsConstructedView                                                 = inject[threeYearsConstructed]
+  lazy val costsBreakdownView                                                        = inject[costsBreakdown]
+  lazy val plantAndTechnologyView                                                    = inject[plantAndTechnology]
+  lazy val generatorCapacityView                                                     = inject[generatorCapacity]
+  lazy val batteriesCapacityView                                                     = inject[batteriesCapacity]
 
   // About your trading history
-  lazy val aboutYourTradingHistoryView: aboutYourTradingHistory                                     = app.injector.instanceOf[aboutYourTradingHistory]
-  lazy val financialYearEndView: financialYearEnd                                                   = app.injector.instanceOf[financialYearEnd]
-  lazy val financialYearEndDatesView: financialYearEndDates                                         = app.injector.instanceOf[financialYearEndDates]
-  lazy val editFinancialYearEndDateView: editFinancialYearEndDate                                   = app.injector.instanceOf[editFinancialYearEndDate]
-  lazy val financialYearEndDatesSummaryView: financialYearEndDatesSummary                           =
-    app.injector.instanceOf[financialYearEndDatesSummary]
-  lazy val turnoverView: turnover                                                                   = app.injector.instanceOf[turnover]
-  lazy val turnover6020View: turnover6020                                                           = app.injector.instanceOf[turnover6020]
-  lazy val turnover6030View: turnover6030                                                           = app.injector.instanceOf[turnover6030]
-  lazy val otherCostsView: otherCosts                                                               = app.injector.instanceOf[otherCosts]
-  lazy val electricityGenerated6076View: electricityGenerated6076                                   = app.injector.instanceOf[electricityGenerated6076]
-  lazy val grossReceiptsExcludingVATView: grossReceiptsExcludingVAT                                 = app.injector.instanceOf[grossReceiptsExcludingVAT]
-  lazy val grossReceiptsForBaseLoadView: grossReceiptsForBaseLoad                                   = app.injector.instanceOf[grossReceiptsForBaseLoad]
-  lazy val premisesCostsView: premisesCosts                                                         = app.injector.instanceOf[premisesCosts]
-  lazy val otherIncome6076View: otherIncome6076                                                     = app.injector.instanceOf[otherIncome6076]
-  lazy val costOfSales6076View: costOfSales6076                                                     = app.injector.instanceOf[costOfSales6076]
-  lazy val staffCostsView: staffCosts                                                               = app.injector.instanceOf[staffCosts]
-  lazy val operationalExpenses6076View: operationalExpenses6076                                     = app.injector.instanceOf[operationalExpenses6076]
-  lazy val headOfficeExpenses6076View: headOfficeExpenses6076                                       = app.injector.instanceOf[headOfficeExpenses6076]
-  lazy val fixedOperatingExpensesView: fixedOperatingExpenses                                       = app.injector.instanceOf[fixedOperatingExpenses]
-  lazy val variableOperatingExpensesView: variableOperatingExpenses                                 = app.injector.instanceOf[variableOperatingExpenses]
-  lazy val totalPayrollCostsView: totalPayrollCosts                                                 = app.injector.instanceOf[totalPayrollCosts]
-  lazy val bunkeredFuelQuestionView: bunkeredFuelQuestion                                           = app.injector.instanceOf[bunkeredFuelQuestion]
-  lazy val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                                        = app.injector.instanceOf[bunkerFuelCardsDetails]
+  lazy val aboutYourTradingHistoryView: aboutYourTradingHistory                                     = inject[aboutYourTradingHistory]
+  lazy val financialYearEndView: financialYearEnd                                                   = inject[financialYearEnd]
+  lazy val financialYearEndDatesView: financialYearEndDates                                         = inject[financialYearEndDates]
+  lazy val editFinancialYearEndDateView: editFinancialYearEndDate                                   = inject[editFinancialYearEndDate]
+  lazy val financialYearEndDatesSummaryView: financialYearEndDatesSummary                           = inject[financialYearEndDatesSummary]
+  lazy val turnoverView: turnover                                                                   = inject[turnover]
+  lazy val turnover6020View: turnover6020                                                           = inject[turnover6020]
+  lazy val turnover6030View: turnover6030                                                           = inject[turnover6030]
+  lazy val otherCostsView: otherCosts                                                               = inject[otherCosts]
+  lazy val electricityGenerated6076View: electricityGenerated6076                                   = inject[electricityGenerated6076]
+  lazy val grossReceiptsExcludingVATView: grossReceiptsExcludingVAT                                 = inject[grossReceiptsExcludingVAT]
+  lazy val grossReceiptsForBaseLoadView: grossReceiptsForBaseLoad                                   = inject[grossReceiptsForBaseLoad]
+  lazy val premisesCostsView: premisesCosts                                                         = inject[premisesCosts]
+  lazy val otherIncome6076View: otherIncome6076                                                     = inject[otherIncome6076]
+  lazy val costOfSales6076View: costOfSales6076                                                     = inject[costOfSales6076]
+  lazy val staffCostsView: staffCosts                                                               = inject[staffCosts]
+  lazy val operationalExpenses6076View: operationalExpenses6076                                     = inject[operationalExpenses6076]
+  lazy val headOfficeExpenses6076View: headOfficeExpenses6076                                       = inject[headOfficeExpenses6076]
+  lazy val fixedOperatingExpensesView: fixedOperatingExpenses                                       = inject[fixedOperatingExpenses]
+  lazy val variableOperatingExpensesView: variableOperatingExpenses                                 = inject[variableOperatingExpenses]
+  lazy val totalPayrollCostsView: totalPayrollCosts                                                 = inject[totalPayrollCosts]
+  lazy val bunkeredFuelQuestionView: bunkeredFuelQuestion                                           = inject[bunkeredFuelQuestion]
+  lazy val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                                        = inject[bunkerFuelCardsDetails]
   lazy val addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails                    =
-    app.injector.instanceOf[addAnotherBunkerFuelCardDetails]
-  lazy val acceptLowMarginFuelCardView: acceptLowMarginFuelCard                                     = app.injector.instanceOf[acceptLowMarginFuelCard]
-  lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                                 = app.injector.instanceOf[lowMarginFuelCardsDetails]
+    inject[addAnotherBunkerFuelCardDetails]
+  lazy val acceptLowMarginFuelCardView: acceptLowMarginFuelCard                                     = inject[acceptLowMarginFuelCard]
+  lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                                 = inject[lowMarginFuelCardsDetails]
   lazy val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails              =
-    app.injector.instanceOf[addAnotherLowMarginFuelCardDetails]
-  lazy val totalFuelSoldView: totalFuelSold                                                         = app.injector.instanceOf[totalFuelSold]
-  lazy val percentageFromFuelCardsView: percentageFromFuelCards                                     = app.injector.instanceOf[percentageFromFuelCards]
-  lazy val customerCreditAccountsView: customerCreditAccounts                                       = app.injector.instanceOf[customerCreditAccounts]
-  lazy val bunkeredFuelSoldView: bunkeredFuelSold                                                   = app.injector.instanceOf[bunkeredFuelSold]
-  lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                                   = app.injector.instanceOf[incomeExpenditureSummary]
-  lazy val incomeExpenditureSummary6076View: incomeExpenditureSummary6076                           =
-    app.injector.instanceOf[incomeExpenditureSummary6076]
-  lazy val unusualCircumstancesView: unusualCircumstances                                           = app.injector.instanceOf[unusualCircumstances]
-  lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                         =
-    app.injector.instanceOf[electricVehicleChargingPoints]
+    inject[addAnotherLowMarginFuelCardDetails]
+  lazy val totalFuelSoldView: totalFuelSold                                                         = inject[totalFuelSold]
+  lazy val percentageFromFuelCardsView: percentageFromFuelCards                                     = inject[percentageFromFuelCards]
+  lazy val customerCreditAccountsView: customerCreditAccounts                                       = inject[customerCreditAccounts]
+  lazy val bunkeredFuelSoldView: bunkeredFuelSold                                                   = inject[bunkeredFuelSold]
+  lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                                   = inject[incomeExpenditureSummary]
+  lazy val incomeExpenditureSummary6076View: incomeExpenditureSummary6076                           = inject[incomeExpenditureSummary6076]
+  lazy val unusualCircumstancesView: unusualCircumstances                                           = inject[unusualCircumstances]
+  lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                         = inject[electricVehicleChargingPoints]
   lazy val grossReceiptsCaravanFleetHireView: grossReceiptsCaravanFleetHire6045                     =
-    app.injector.instanceOf[grossReceiptsCaravanFleetHire6045]
-  lazy val otherHolidayAccommodationView: otherHolidayAccommodation                                 = app.injector.instanceOf[otherHolidayAccommodation]
+    inject[grossReceiptsCaravanFleetHire6045]
+  lazy val staticCaravansView: staticCaravans                                                       = inject[staticCaravans]
+  lazy val otherHolidayAccommodationView: otherHolidayAccommodation                                 = inject[otherHolidayAccommodation]
+  lazy val checkYourAnswersTentingPitchesView: checkYourAnswersTentingPitches                       = inject[checkYourAnswersTentingPitches]
+  lazy val tentingPitchesAllYearView: tentingPitchesAllYear                                         = inject[tentingPitchesAllYear]
+  lazy val tentingPitchesOnSiteView: tentingPitchesOnSite                                           = inject[tentingPitchesOnSite]
+  lazy val otherHolidayAccommodationDetailsView: otherHolidayAccommodationDetails                   =
+    inject[otherHolidayAccommodationDetails]
   lazy val checkYourAnswersOtherHolidayAccommodationView: checkYourAnswersOtherHolidayAccommodation =
-    app.injector.instanceOf[checkYourAnswersOtherHolidayAccommodation]
+    inject[checkYourAnswersOtherHolidayAccommodation]
   lazy val checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory       =
-    app.injector.instanceOf[checkYourAnswersAboutTheTradingHistory]
+    inject[checkYourAnswersAboutTheTradingHistory]
 
   // About the franchise or letting
   lazy val franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty                        =
-    app.injector.instanceOf[franchiseOrLettingsTiedToProperty]
+    inject[franchiseOrLettingsTiedToProperty]
   lazy val cateringOperationView: cateringOperationOrLettingAccommodation                                  =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
+    inject[cateringOperationOrLettingAccommodation]
   lazy val cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails                    =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
+    inject[cateringOperationOrLettingAccommodationDetails]
   lazy val cateringOperationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails            =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
+    inject[cateringOperationOrLettingAccommodationRentDetails]
   lazy val cateringOperationRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes          =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
-  lazy val feeReceivedView: feeReceived                                                                    =
-    app.injector.instanceOf[feeReceived]
+    inject[cateringOperationOrLettingAccommodationRentIncludes]
+  lazy val feeReceivedView: feeReceived                                                                    = inject[feeReceived]
   lazy val lettingOtherPartOfPropertyView: cateringOperationOrLettingAccommodation                         =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
+    inject[cateringOperationOrLettingAccommodation]
   lazy val lettingOtherPartOfPropertyDetailsView: cateringOperationOrLettingAccommodationDetails           =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationDetails]
+    inject[cateringOperationOrLettingAccommodationDetails]
   lazy val lettingOtherPartOfPropertyRentDetailsView: cateringOperationOrLettingAccommodationRentDetails   =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentDetails]
+    inject[cateringOperationOrLettingAccommodationRentDetails]
   lazy val lettingOtherPartOfPropertyRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodationRentIncludes]
+    inject[cateringOperationOrLettingAccommodationRentIncludes]
   lazy val concessionOrFranchiseView: cateringOperationOrLettingAccommodation                              =
-    app.injector.instanceOf[cateringOperationOrLettingAccommodation]
+    inject[cateringOperationOrLettingAccommodation]
   lazy val addAnotherOperationConcessionFranchise: addAnotherCateringOperationOrLettingAccommodation       =
-    app.injector.instanceOf[addAnotherCateringOperationOrLettingAccommodation]
+    inject[addAnotherCateringOperationOrLettingAccommodation]
   lazy val checkYourAnswersAboutFranchiseOrLettings: checkYourAnswersAboutFranchiseOrLettings              =
-    app.injector.instanceOf[checkYourAnswersAboutFranchiseOrLettings]
-  lazy val rentFromConcession: rentFromConcessions                                                         =
-    app.injector.instanceOf[rentFromConcessions]
-  lazy val rentReceivedFromView: rentReceivedFrom                                                          =
-    app.injector.instanceOf[rentReceivedFrom]
-  lazy val calculatingTheRentView: calculatingTheRentFor                                                   =
-    app.injector.instanceOf[calculatingTheRentFor]
-  lazy val typeOfLettingView: typeOfLetting                                                                =
-    app.injector.instanceOf[typeOfLetting]
-  lazy val telecomMastLettingView: telecomMastLetting                                                      =
-    app.injector.instanceOf[telecomMastLetting]
-  lazy val rentDetailsView: rentDetails                                                                    =
-    app.injector.instanceOf[rentDetails]
-  lazy val otherLettingView: otherLetting                                                                  =
-    app.injector.instanceOf[otherLetting]
-  lazy val atmLettingView: atmLetting                                                                      =
-    app.injector.instanceOf[atmLetting]
-  lazy val advertisingRightView: advertisingRightLetting                                                   =
-    app.injector.instanceOf[advertisingRightLetting]
-  lazy val addOrRemoveLettingView: addOrRemoveLetting                                                      =
-    app.injector.instanceOf[addOrRemoveLetting]
+    inject[checkYourAnswersAboutFranchiseOrLettings]
+  lazy val rentFromConcession: rentFromConcessions                                                         = inject[rentFromConcessions]
+  lazy val rentReceivedFromView: rentReceivedFrom                                                          = inject[rentReceivedFrom]
+  lazy val calculatingTheRentView: calculatingTheRentFor                                                   = inject[calculatingTheRentFor]
+  lazy val typeOfLettingView: typeOfLetting                                                                = inject[typeOfLetting]
+  lazy val telecomMastLettingView: telecomMastLetting                                                      = inject[telecomMastLetting]
+  lazy val rentDetailsView: rentDetails                                                                    = inject[rentDetails]
+  lazy val otherLettingView: otherLetting                                                                  = inject[otherLetting]
+  lazy val atmLettingView: atmLetting                                                                      = inject[atmLetting]
+  lazy val advertisingRightView: advertisingRightLetting                                                   = inject[advertisingRightLetting]
+  lazy val addOrRemoveLettingView: addOrRemoveLetting                                                      = inject[addOrRemoveLetting]
   // About the lease or tenure
-  lazy val aboutYourLandlordView: aboutYourLandlord                                                        = app.injector.instanceOf[aboutYourLandlord]
-  lazy val typeOfTenureView: typeOfTenure                                                                  = app.injector.instanceOf[typeOfTenure]
+  lazy val aboutYourLandlordView: aboutYourLandlord                                                        = inject[aboutYourLandlord]
+  lazy val typeOfTenureView: typeOfTenure                                                                  = inject[typeOfTenure]
 
-  lazy val currentRentPayableWithin12MonthsView                               =
-    app.injector.instanceOf[currentRentPayableWithin12Months]
-  lazy val propertyUseLeasebackAgreementView: propertyUseLeasebackArrangement =
-    app.injector.instanceOf[propertyUseLeasebackArrangement]
-  lazy val currentAnnualRentView                                              =
-    app.injector.instanceOf[currentAnnualRent]
-  lazy val leaseOrAgreementYearsView                                          =
-    app.injector.instanceOf[leaseOrAgreementYears]
+  lazy val currentRentPayableWithin12MonthsView                               = inject[currentRentPayableWithin12Months]
+  lazy val propertyUseLeasebackAgreementView: propertyUseLeasebackArrangement = inject[propertyUseLeasebackArrangement]
+  lazy val currentAnnualRentView                                              = inject[currentAnnualRent]
+  lazy val leaseOrAgreementYearsView                                          = inject[leaseOrAgreementYears]
 
-  lazy val rentIncludeTradeServicesView                    =
-    app.injector.instanceOf[rentIncludeTradeServices]
-  lazy val doesTheRentPayableView                          =
-    app.injector.instanceOf[doesTheRentPayable]
-  lazy val currentRentFirstPaidView                        =
-    app.injector.instanceOf[currentRentFirstPaid]
-  lazy val ultimatelyResponsibleInsideRepairsView          =
-    app.injector.instanceOf[ultimatelyResponsibleInsideRepairs]
-  lazy val ultimatelyResponsibleOutsideRepairsView         =
-    app.injector.instanceOf[ultimatelyResponsibleOutsideRepairs]
-  lazy val ultimatelyResponsibleBuildingInsuranceView      =
-    app.injector.instanceOf[ultimatelyResponsibleBuildingInsurance]
-  lazy val intervalsOfRentReviewView                       =
-    app.injector.instanceOf[intervalsOfRentReview]
-  lazy val includedInYourRentView                          =
-    app.injector.instanceOf[includedInYourRent]
-  lazy val currentLeaseOrAgreementBeginView                =
-    app.injector.instanceOf[currentLeaseOrAgreementBegin]
-  lazy val connectedToLandlordView                         =
-    app.injector.instanceOf[connectedToLandlord]
-  lazy val connectedToLandlordDetailsView                  =
-    app.injector.instanceOf[connectedToLandlordDetails]
-  lazy val provideDetailsOfYourLeaseView                   =
-    app.injector.instanceOf[provideDetailsOfYourLease]
-  lazy val rentOpenMarketValueView                         =
-    app.injector.instanceOf[rentOpenMarketValue]
-  lazy val whatIsYourRentBasedOnView                       =
-    app.injector.instanceOf[whatIsYourRentBasedOn]
-  lazy val rentIncreaseAnnuallyWithRPIView                 =
-    app.injector.instanceOf[rentIncreaseAnnuallyWithRPI]
-  lazy val rentIncludeFixtureAndFittingsView               =
-    app.injector.instanceOf[rentIncludeFixtureAndFittings]
-  lazy val rentIncludeFixtureAndFittingsDetailsView        =
-    app.injector.instanceOf[rentIncludeFixtureAndFittingsDetails]
-  lazy val rentIncludesVatView                             =
-    app.injector.instanceOf[rentIncludesVat]
-  lazy val rentIncludeTradeServicesDetailsView             =
-    app.injector.instanceOf[rentIncludeTradeServicesDetails]
-  lazy val rentPayableVaryAccordingToGrossOrNetView        =
-    app.injector.instanceOf[rentPayableVaryAccordingToGrossOrNet]
-  lazy val legalOrPlanningRestrictionsView                 =
-    app.injector.instanceOf[legalOrPlanningRestrictions]
-  lazy val legalOrPlanningRestrictionsDetailsView          =
-    app.injector.instanceOf[legalOrPlanningRestrictionsDetails]
-  lazy val checkYourAnswersAboutYourLeaseOrTenureView      =
-    app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
-  lazy val tenantsLeaseAgreementExpireView                 =
-    app.injector.instanceOf[tenancyLeaseAgreementExpire]
-  lazy val tenantsAdditionsDisregardedDetailsView          =
-    app.injector.instanceOf[tenantsAdditionsDisregardedDetails]
-  lazy val workCarriedOutDetailsView                       =
-    app.injector.instanceOf[workCarriedOutDetails]
-  lazy val workCarriedOutConditionView                     =
-    app.injector.instanceOf[workCarriedOutCondition]
-  lazy val tenantsAdditionsDisregardedView                 =
-    app.injector.instanceOf[tenantsAdditionsDisregarded]
-  lazy val leaseSurrenderedEarlyView                       =
-    app.injector.instanceOf[leaseSurrenderdEarly]
-  lazy val benefitsGivenView                               =
-    app.injector.instanceOf[benefitsGiven]
-  lazy val benefitsGivenDetailsView                        =
-    app.injector.instanceOf[benefitsGivenDetails]
-  lazy val capitalSumDescriptionView                       =
-    app.injector.instanceOf[capitalSumDescription]
-  lazy val methodToFixCurrentRentView                      =
-    app.injector.instanceOf[methodToFixCurrentRent]
-  lazy val rentPayableVaryAccordingToGrossOrNetDetailsView =
-    app.injector.instanceOf[rentPayableVaryAccordingToGrossOrNetDetails]
-  lazy val rentPayableVaryOnQuantityOfBeersView            =
-    app.injector.instanceOf[rentPayableVaryOnQuantityOfBeers]
-  lazy val incentivesPaymentsConditionsView                =
-    app.injector.instanceOf[incentivesPaymentsConditions]
-  lazy val paymentWhenLeaseIsGrantedView                   =
-    app.injector.instanceOf[paymentWhenLeaseIsGranted]
-  lazy val propertyUseLeasebackArrangementView             =
-    app.injector.instanceOf[propertyUseLeasebackArrangement]
-  lazy val payACapitalSumView                              =
-    app.injector.instanceOf[payACapitalSum]
-  lazy val payACapitalSumDetailsView                       =
-    app.injector.instanceOf[payACapitalSumDetails]
-  lazy val canRentBeReducedOnReviewView                    =
-    app.injector.instanceOf[canRentBeReducedOnReview]
-  lazy val rentPayableVaryOnQuantityOfBeersDetailsView     =
-    app.injector.instanceOf[rentPayableVaryOnQuantityOfBeersDetails]
-  lazy val howIsCurrentRentFixedView                       =
-    app.injector.instanceOf[howIsCurrentRentFixed]
-  lazy val checkYourAnswersAboutLeaseAndTenureView         =
-    app.injector.instanceOf[checkYourAnswersAboutYourLeaseOrTenure]
-  lazy val paymentForTradeServicesView                     =
-    app.injector.instanceOf[paymentForTradeServices]
-  lazy val tradeServicesDescriptionView                    =
-    app.injector.instanceOf[tradeServicesDescription]
-  lazy val tradeServicesListView                           =
-    app.injector.instanceOf[tradeServicesList]
-  lazy val servicePaidSeparatelyView                       =
-    app.injector.instanceOf[servicePaidSeparately]
-  lazy val servicePaidSeparatelyChargeView                 =
-    app.injector.instanceOf[servicePaidSeparatelyCharge]
-  lazy val servicePaidSeparatelyListView                   =
-    app.injector.instanceOf[servicePaidSeparatelyList]
-  lazy val propertyUpdatesView                             =
-    app.injector.instanceOf[propertyUpdates]
+  lazy val rentIncludeTradeServicesView                    = inject[rentIncludeTradeServices]
+  lazy val doesTheRentPayableView                          = inject[doesTheRentPayable]
+  lazy val currentRentFirstPaidView                        = inject[currentRentFirstPaid]
+  lazy val ultimatelyResponsibleInsideRepairsView          = inject[ultimatelyResponsibleInsideRepairs]
+  lazy val ultimatelyResponsibleOutsideRepairsView         = inject[ultimatelyResponsibleOutsideRepairs]
+  lazy val ultimatelyResponsibleBuildingInsuranceView      = inject[ultimatelyResponsibleBuildingInsurance]
+  lazy val intervalsOfRentReviewView                       = inject[intervalsOfRentReview]
+  lazy val includedInYourRentView                          = inject[includedInYourRent]
+  lazy val currentLeaseOrAgreementBeginView                = inject[currentLeaseOrAgreementBegin]
+  lazy val connectedToLandlordView                         = inject[connectedToLandlord]
+  lazy val connectedToLandlordDetailsView                  = inject[connectedToLandlordDetails]
+  lazy val provideDetailsOfYourLeaseView                   = inject[provideDetailsOfYourLease]
+  lazy val rentOpenMarketValueView                         = inject[rentOpenMarketValue]
+  lazy val whatIsYourRentBasedOnView                       = inject[whatIsYourRentBasedOn]
+  lazy val rentIncreaseAnnuallyWithRPIView                 = inject[rentIncreaseAnnuallyWithRPI]
+  lazy val rentIncludeFixtureAndFittingsView               = inject[rentIncludeFixtureAndFittings]
+  lazy val rentIncludeFixtureAndFittingsDetailsView        = inject[rentIncludeFixtureAndFittingsDetails]
+  lazy val rentIncludesVatView                             = inject[rentIncludesVat]
+  lazy val rentIncludeTradeServicesDetailsView             = inject[rentIncludeTradeServicesDetails]
+  lazy val rentPayableVaryAccordingToGrossOrNetView        = inject[rentPayableVaryAccordingToGrossOrNet]
+  lazy val legalOrPlanningRestrictionsView                 = inject[legalOrPlanningRestrictions]
+  lazy val legalOrPlanningRestrictionsDetailsView          = inject[legalOrPlanningRestrictionsDetails]
+  lazy val checkYourAnswersAboutYourLeaseOrTenureView      = inject[checkYourAnswersAboutYourLeaseOrTenure]
+  lazy val tenantsLeaseAgreementExpireView                 = inject[tenancyLeaseAgreementExpire]
+  lazy val tenantsAdditionsDisregardedDetailsView          = inject[tenantsAdditionsDisregardedDetails]
+  lazy val workCarriedOutDetailsView                       = inject[workCarriedOutDetails]
+  lazy val workCarriedOutConditionView                     = inject[workCarriedOutCondition]
+  lazy val tenantsAdditionsDisregardedView                 = inject[tenantsAdditionsDisregarded]
+  lazy val leaseSurrenderedEarlyView                       = inject[leaseSurrenderdEarly]
+  lazy val benefitsGivenView                               = inject[benefitsGiven]
+  lazy val benefitsGivenDetailsView                        = inject[benefitsGivenDetails]
+  lazy val capitalSumDescriptionView                       = inject[capitalSumDescription]
+  lazy val methodToFixCurrentRentView                      = inject[methodToFixCurrentRent]
+  lazy val rentPayableVaryAccordingToGrossOrNetDetailsView = inject[rentPayableVaryAccordingToGrossOrNetDetails]
+  lazy val rentPayableVaryOnQuantityOfBeersView            = inject[rentPayableVaryOnQuantityOfBeers]
+  lazy val incentivesPaymentsConditionsView                = inject[incentivesPaymentsConditions]
+  lazy val paymentWhenLeaseIsGrantedView                   = inject[paymentWhenLeaseIsGranted]
+  lazy val propertyUseLeasebackArrangementView             = inject[propertyUseLeasebackArrangement]
+  lazy val payACapitalSumView                              = inject[payACapitalSum]
+  lazy val payACapitalSumDetailsView                       = inject[payACapitalSumDetails]
+  lazy val canRentBeReducedOnReviewView                    = inject[canRentBeReducedOnReview]
+  lazy val rentPayableVaryOnQuantityOfBeersDetailsView     = inject[rentPayableVaryOnQuantityOfBeersDetails]
+  lazy val howIsCurrentRentFixedView                       = inject[howIsCurrentRentFixed]
+  lazy val checkYourAnswersAboutLeaseAndTenureView         = inject[checkYourAnswersAboutYourLeaseOrTenure]
+  lazy val paymentForTradeServicesView                     = inject[paymentForTradeServices]
+  lazy val tradeServicesDescriptionView                    = inject[tradeServicesDescription]
+  lazy val tradeServicesListView                           = inject[tradeServicesList]
+  lazy val servicePaidSeparatelyView                       = inject[servicePaidSeparately]
+  lazy val servicePaidSeparatelyChargeView                 = inject[servicePaidSeparatelyCharge]
+  lazy val servicePaidSeparatelyListView                   = inject[servicePaidSeparatelyList]
+  lazy val propertyUpdatesView                             = inject[propertyUpdates]
 
   // Car parking lease
-  lazy val doesRentIncludeParkingView        = app.injector.instanceOf[doesRentIncludeParking]
-  lazy val includedInRentParkingSpacesView   = app.injector.instanceOf[includedInRentParkingSpaces]
-  lazy val isParkingRentPaidSeparatelyView   = app.injector.instanceOf[isParkingRentPaidSeparately]
-  lazy val rentedSeparatelyParkingSpacesView = app.injector.instanceOf[rentedSeparatelyParkingSpaces]
-  lazy val carParkingAnnualRentView          = app.injector.instanceOf[carParkingAnnualRent]
+  lazy val doesRentIncludeParkingView        = inject[doesRentIncludeParking]
+  lazy val includedInRentParkingSpacesView   = inject[includedInRentParkingSpaces]
+  lazy val isParkingRentPaidSeparatelyView   = inject[isParkingRentPaidSeparately]
+  lazy val rentedSeparatelyParkingSpacesView = inject[rentedSeparatelyParkingSpaces]
+  lazy val carParkingAnnualRentView          = inject[carParkingAnnualRent]
 
-  lazy val throughputAffectsRentView        = app.injector.instanceOf[throughputAffectsRent]
-  lazy val throughputAffectsRentDetailsView = app.injector.instanceOf[throughputAffectsRentDetails]
-  lazy val isVATPayableForWholePropertyView = app.injector.instanceOf[isVATPayableForWholeProperty]
-  lazy val isRentUnderReviewView            = app.injector.instanceOf[isRentUnderReview]
-  lazy val rentedEquipmentDetailsView       = app.injector.instanceOf[rentedEquipmentDetails]
-  lazy val includedInRent6020View           = app.injector.instanceOf[includedInRent6020]
+  lazy val throughputAffectsRentView        = inject[throughputAffectsRent]
+  lazy val throughputAffectsRentDetailsView = inject[throughputAffectsRentDetails]
+  lazy val isVATPayableForWholePropertyView = inject[isVATPayableForWholeProperty]
+  lazy val isRentUnderReviewView            = inject[isRentUnderReview]
+  lazy val rentedEquipmentDetailsView       = inject[rentedEquipmentDetails]
+  lazy val includedInRent6020View           = inject[includedInRent6020]
 
   // Max letting reached
-  lazy val maxOfLettingsReachedView =
-    app.injector.instanceOf[maxOfLettingsReached]
+  lazy val maxOfLettingsReachedView = inject[maxOfLettingsReached]
 
   // Additional information
-  lazy val furtherInformationOrRemarksView: furtherInformationOrRemarks                     =
-    app.injector.instanceOf[furtherInformationOrRemarks]
-  lazy val alternativeContactDetailsView: alternativeContactDetails                         =
-    app.injector.instanceOf[alternativeContactDetails]
-  lazy val contactDetailsQuestionView: contactDetailsQuestion                               =
-    app.injector.instanceOf[contactDetailsQuestion]
+  lazy val furtherInformationOrRemarksView: furtherInformationOrRemarks                     = inject[furtherInformationOrRemarks]
+  lazy val alternativeContactDetailsView: alternativeContactDetails                         = inject[alternativeContactDetails]
+  lazy val contactDetailsQuestionView: contactDetailsQuestion                               = inject[contactDetailsQuestion]
   lazy val checkYourAnswersAdditionalInformationView: checkYourAnswersAdditionalInformation =
-    app.injector.instanceOf[checkYourAnswersAdditionalInformation]
+    inject[checkYourAnswersAdditionalInformation]
 
   // Feedback
-  val feedbackView: feedback   = app.injector.instanceOf[feedback]
-  val feedbackThx: feedbackThx = app.injector.instanceOf[feedbackThx]
+  val feedbackView: feedback   = inject[feedback]
+  val feedbackThx: feedbackThx = inject[feedbackThx]
+
 }

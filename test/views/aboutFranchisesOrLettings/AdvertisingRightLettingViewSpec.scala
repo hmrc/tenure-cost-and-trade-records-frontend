@@ -25,8 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[AdvertisingRightLetting] {
 
-  def advertisingRightLettingView =
-    app.injector.instanceOf[views.html.aboutfranchisesorlettings.advertisingRightLetting]
+  def advertisingRightLettingView = inject[views.html.aboutfranchisesorlettings.advertisingRightLetting]
 
   val messageKeyPrefix = "label.advertisingRightLetting"
   val backLink         = controllers.routes.TaskListController.show().url

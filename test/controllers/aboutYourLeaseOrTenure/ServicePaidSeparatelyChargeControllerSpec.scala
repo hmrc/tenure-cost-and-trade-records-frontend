@@ -31,7 +31,7 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
     )
   ) = new ServicePaidSeparatelyChargeController(
     stubMessagesControllerComponents(),
-    app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+    inject[AboutYourLeaseOrTenureNavigator],
     servicePaidSeparatelyChargeView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo

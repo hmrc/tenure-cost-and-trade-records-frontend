@@ -33,8 +33,7 @@ case class SensitiveRemoveConnectionDetails(
 object SensitiveRemoveConnectionDetails {
 
   import crypto.SensitiveFormats._
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionDetails] =
-    Json.format[SensitiveRemoveConnectionDetails]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionDetails] = Json.format
 
   def apply(removeConnectionDetails: RemoveConnectionDetails): SensitiveRemoveConnectionDetails =
     SensitiveRemoveConnectionDetails(

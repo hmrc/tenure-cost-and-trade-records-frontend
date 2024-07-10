@@ -26,6 +26,5 @@ case class NotConnectedContactDetails(
 )
 
 object NotConnectedContactDetails {
-  implicit val format: OFormat[NotConnectedContactDetails] = Json.format[NotConnectedContactDetails]
-
+  implicit val format: OFormat[NotConnectedContactDetails] = Json.format
 }

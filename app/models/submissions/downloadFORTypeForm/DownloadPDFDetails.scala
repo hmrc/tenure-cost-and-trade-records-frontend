@@ -26,7 +26,7 @@ case class DownloadPDFDetails(
 )
 
 object DownloadPDFDetails {
-  implicit val format: OFormat[DownloadPDFDetails] = Json.format[DownloadPDFDetails]
+  implicit val format: OFormat[DownloadPDFDetails] = Json.format
 
   def updateDownloadPDFDetails(
     copy: DownloadPDFDetails => DownloadPDFDetails

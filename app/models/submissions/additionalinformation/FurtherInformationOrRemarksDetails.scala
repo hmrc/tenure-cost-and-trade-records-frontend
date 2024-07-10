@@ -21,5 +21,5 @@ import play.api.libs.json.{Json, OFormat}
 case class FurtherInformationOrRemarksDetails(furtherInformationOrRemarksDetails: String)
 
 object FurtherInformationOrRemarksDetails {
-  implicit val format: OFormat[FurtherInformationOrRemarksDetails] = Json.format[FurtherInformationOrRemarksDetails]
+  implicit val format: OFormat[FurtherInformationOrRemarksDetails] = Json.format
 }
