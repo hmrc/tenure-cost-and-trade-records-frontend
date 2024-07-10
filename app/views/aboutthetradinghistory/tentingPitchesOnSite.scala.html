@@ -59,11 +59,12 @@
             classes = "govuk-fieldset__legend--m"
         )
 
+        @govukDetails(Details(
+            summary = Text(messages("help.touringAndTentingPitches.title")),
+            content = HtmlContent(details))
+        )
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 
-    @govukDetails(Details(
-        summary = Text(messages("help.touringAndTentingPitches.title")),
-        content = HtmlContent(details))
-    )
+
 }
