@@ -25,6 +25,5 @@ case class UltimatelyResponsibleBuildingInsurance(
 )
 
 object UltimatelyResponsibleBuildingInsurance {
-  implicit val format: OFormat[UltimatelyResponsibleBuildingInsurance] =
-    Json.format[UltimatelyResponsibleBuildingInsurance]
+  implicit val format: OFormat[UltimatelyResponsibleBuildingInsurance] = Json.format
 }

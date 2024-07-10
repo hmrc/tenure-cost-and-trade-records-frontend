@@ -22,5 +22,5 @@ import play.api.libs.json.{Json, OFormat}
 case class CurrentLeaseOrAgreementBegin(leaseBegin: MonthsYearDuration, grantedFor: String)
 
 object CurrentLeaseOrAgreementBegin {
-  implicit val format: OFormat[CurrentLeaseOrAgreementBegin] = Json.format[CurrentLeaseOrAgreementBegin]
+  implicit val format: OFormat[CurrentLeaseOrAgreementBegin] = Json.format
 }

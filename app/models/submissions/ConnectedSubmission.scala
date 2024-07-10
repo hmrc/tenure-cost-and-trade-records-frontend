@@ -54,7 +54,7 @@ case class ConnectedSubmission(
 
 object ConnectedSubmission {
 
-  implicit val format: OFormat[ConnectedSubmission] = Json.format[ConnectedSubmission]
+  implicit val format: OFormat[ConnectedSubmission] = Json.format
 
   def apply(session: Session): ConnectedSubmission = ConnectedSubmission(
     session.referenceNumber,

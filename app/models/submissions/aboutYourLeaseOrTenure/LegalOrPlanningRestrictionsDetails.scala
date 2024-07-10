@@ -23,5 +23,5 @@ case class LegalOrPlanningRestrictionsDetails(
 )
 
 object LegalOrPlanningRestrictionsDetails {
-  implicit val format: OFormat[LegalOrPlanningRestrictionsDetails] = Json.format[LegalOrPlanningRestrictionsDetails]
+  implicit val format: OFormat[LegalOrPlanningRestrictionsDetails] = Json.format
 }

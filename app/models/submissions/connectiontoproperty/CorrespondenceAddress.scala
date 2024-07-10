@@ -28,6 +28,5 @@ case class CorrespondenceAddress(
 ) extends PrintableAddress
 
 object CorrespondenceAddress {
-  implicit val format: OFormat[CorrespondenceAddress] = Json.format[CorrespondenceAddress]
-
+  implicit val format: OFormat[CorrespondenceAddress] = Json.format
 }

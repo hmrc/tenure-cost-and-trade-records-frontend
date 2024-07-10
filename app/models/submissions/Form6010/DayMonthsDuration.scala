@@ -28,6 +28,6 @@ case class DayMonthsDuration(days: Int, months: Int) {
 }
 
 object DayMonthsDuration {
-  implicit val format: OFormat[DayMonthsDuration] = Json.format[DayMonthsDuration]
+  implicit val format: OFormat[DayMonthsDuration] = Json.format
 
 }

@@ -111,6 +111,6 @@ case class Session(
 }
 
 object Session {
-  implicit val format: OFormat[Session] = Json.format[Session]
+  implicit val format: OFormat[Session] = Json.format
 
 }

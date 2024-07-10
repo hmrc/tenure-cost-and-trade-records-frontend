@@ -23,5 +23,5 @@ case class DownloadPDF(
 )
 
 object DownloadPDF {
-  implicit val format: OFormat[DownloadPDF] = Json.format[DownloadPDF]
+  implicit val format: OFormat[DownloadPDF] = Json.format
 }

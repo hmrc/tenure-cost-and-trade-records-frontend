@@ -23,5 +23,5 @@ case class TenantsAdditionsDisregardedDetails(
 )
 
 object TenantsAdditionsDisregardedDetails {
-  implicit val format: OFormat[TenantsAdditionsDisregardedDetails] = Json.format[TenantsAdditionsDisregardedDetails]
+  implicit val format: OFormat[TenantsAdditionsDisregardedDetails] = Json.format
 }

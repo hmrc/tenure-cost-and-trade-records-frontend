@@ -23,6 +23,5 @@ case class RentPayableVaryAccordingToGrossOrNetInformationDetails(
 )
 
 object RentPayableVaryAccordingToGrossOrNetInformationDetails {
-  implicit val format: OFormat[RentPayableVaryAccordingToGrossOrNetInformationDetails] =
-    Json.format[RentPayableVaryAccordingToGrossOrNetInformationDetails]
+  implicit val format: OFormat[RentPayableVaryAccordingToGrossOrNetInformationDetails] = Json.format
 }

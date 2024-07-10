@@ -24,5 +24,5 @@ case class CanRentBeReducedOnReviewDetails(
 )
 
 object CanRentBeReducedOnReviewDetails {
-  implicit val format: OFormat[CanRentBeReducedOnReviewDetails] = Json.format[CanRentBeReducedOnReviewDetails]
+  implicit val format: OFormat[CanRentBeReducedOnReviewDetails] = Json.format
 }

@@ -24,5 +24,5 @@ case class TypeOfTenure(
 )
 
 object TypeOfTenure {
-  implicit val format: Format[TypeOfTenure] = Json.format[TypeOfTenure]
+  implicit val format: Format[TypeOfTenure] = Json.format
 }

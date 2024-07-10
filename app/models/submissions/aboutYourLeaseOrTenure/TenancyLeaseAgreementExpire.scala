@@ -23,5 +23,5 @@ import java.time.LocalDate
 case class TenancyLeaseAgreementExpire(tenancyLeaseAgreementExpire: LocalDate)
 
 object TenancyLeaseAgreementExpire {
-  implicit val format: OFormat[TenancyLeaseAgreementExpire] = Json.format[TenancyLeaseAgreementExpire]
+  implicit val format: OFormat[TenancyLeaseAgreementExpire] = Json.format
 }

@@ -33,5 +33,5 @@ case class SubmissionDraft(
 }
 
 object SubmissionDraft {
-  implicit val format: OFormat[SubmissionDraft] = Json.format[SubmissionDraft]
+  implicit val format: OFormat[SubmissionDraft] = Json.format
 }

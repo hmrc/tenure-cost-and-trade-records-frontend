@@ -22,6 +22,5 @@ case class EditTheAddress(
   editAddress: EditAddress
 )
 object EditTheAddress {
-  implicit val format: OFormat[EditTheAddress] = Json.format[EditTheAddress]
-
+  implicit val format: OFormat[EditTheAddress] = Json.format
 }

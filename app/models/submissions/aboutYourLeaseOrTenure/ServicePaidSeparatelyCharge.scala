@@ -23,5 +23,5 @@ case class ServicePaidSeparatelyCharge(
 )
 
 object ServicePaidSeparatelyCharge {
-  implicit val format: OFormat[ServicePaidSeparatelyCharge] = Json.format[ServicePaidSeparatelyCharge]
+  implicit val format: OFormat[ServicePaidSeparatelyCharge] = Json.format
 }

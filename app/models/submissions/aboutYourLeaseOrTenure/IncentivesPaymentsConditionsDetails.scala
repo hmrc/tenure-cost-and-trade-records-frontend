@@ -24,5 +24,5 @@ case class IncentivesPaymentsConditionsDetails(
 )
 
 object IncentivesPaymentsConditionsDetails {
-  implicit val format: OFormat[IncentivesPaymentsConditionsDetails] = Json.format[IncentivesPaymentsConditionsDetails]
+  implicit val format: OFormat[IncentivesPaymentsConditionsDetails] = Json.format
 }

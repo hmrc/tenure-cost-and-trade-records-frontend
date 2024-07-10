@@ -30,8 +30,7 @@ case class SensitiveProvideContactDetails(
 }
 
 object SensitiveProvideContactDetails {
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveProvideContactDetails] =
-    Json.format[SensitiveProvideContactDetails]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveProvideContactDetails] = Json.format
 
   def apply(provideContactDetails: ProvideContactDetails): SensitiveProvideContactDetails =
     SensitiveProvideContactDetails(

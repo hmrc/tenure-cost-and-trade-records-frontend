@@ -22,5 +22,5 @@ import play.api.libs.json.{Json, OFormat}
 case class RentOpenMarketValueDetails(rentOpenMarketValues: AnswersYesNo)
 
 object RentOpenMarketValueDetails {
-  implicit val format: OFormat[RentOpenMarketValueDetails] = Json.format[RentOpenMarketValueDetails]
+  implicit val format: OFormat[RentOpenMarketValueDetails] = Json.format
 }

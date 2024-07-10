@@ -31,8 +31,7 @@ case class SensitiveEditTheAddress(
 
 object SensitiveEditTheAddress {
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveEditTheAddress] =
-    Json.format[SensitiveEditTheAddress]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveEditTheAddress] = Json.format
 
   def apply(editTheAddress: EditTheAddress): SensitiveEditTheAddress = SensitiveEditTheAddress(
     SensitiveEditAddress(editTheAddress.editAddress)

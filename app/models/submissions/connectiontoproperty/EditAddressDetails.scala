@@ -28,5 +28,5 @@ case class EditAddress(
 ) extends PrintableAddress
 
 object EditAddress {
-  implicit val format: OFormat[EditAddress] = Json.format[EditAddress]
+  implicit val format: OFormat[EditAddress] = Json.format
 }
