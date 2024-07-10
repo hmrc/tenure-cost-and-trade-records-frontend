@@ -25,8 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[TenancyLeaseAgreementExpire] {
 
-  def tenancyLeaseAgreementExpireView =
-    app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire]
+  def tenancyLeaseAgreementExpireView = inject[views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire]
 
   val messageKeyPrefix = "tenancyLeaseAgreementExpire"
 

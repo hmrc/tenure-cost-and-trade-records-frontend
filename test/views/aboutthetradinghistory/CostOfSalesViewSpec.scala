@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
   // NOTE: this is a holding view test until the cost of sales page is implemented
-  def costOfSalesView = app.injector.instanceOf[views.html.aboutthetradinghistory.costOfSales]
+  def costOfSalesView = inject[views.html.aboutthetradinghistory.costOfSales]
 
   val messageKeyPrefix = "costOfSales"
   val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)

@@ -21,9 +21,9 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.FakeRequest
+import play.api.test.{FakeRequest, Injecting}
 
-class ErrorHandlerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite {
+class ErrorHandlerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with Injecting {
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -36,7 +36,7 @@ class ErrorHandlerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuit
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val handler = app.injector.instanceOf[ErrorHandler]
+  private val handler = inject[ErrorHandler]
 
   "standardErrorTemplate" should {
     "render HTML" in {

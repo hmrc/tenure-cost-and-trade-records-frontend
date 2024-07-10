@@ -39,7 +39,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
   ) =
     new TradeServicesListController(
       stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+      inject[AboutYourLeaseOrTenureNavigator],
       tradeServicesListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
@@ -49,7 +49,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
   def tradeServicesListControllerNone =
     new TradeServicesListController(
       stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+      inject[AboutYourLeaseOrTenureNavigator],
       tradeServicesListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),

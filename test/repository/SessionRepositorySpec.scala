@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec {
 
-  lazy val repository = app.injector.instanceOf[SessionRepo]
+  lazy val repository = inject[SessionRepo]
 
   "session repository" should {
 

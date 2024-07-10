@@ -40,7 +40,7 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
       )
       .build()
 
-  private lazy val connector: AddressLookupConnector = app.injector.instanceOf[AddressLookupConnector]
+  private lazy val connector: AddressLookupConnector = inject[AddressLookupConnector]
   private implicit val language: Lang                = Lang("en")
   val call: Call                                     = Call("GET", "/callback-url")
   val testResponseAddress: JsValue                   =
