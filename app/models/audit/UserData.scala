@@ -51,5 +51,5 @@ case class UserData(
 )
 
 object UserData {
-  implicit val format: OFormat[UserData] = Json.format[UserData]
+  implicit val format: OFormat[UserData] = Json.format
 }

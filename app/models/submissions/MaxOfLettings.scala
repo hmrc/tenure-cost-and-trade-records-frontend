@@ -23,5 +23,5 @@ case class MaxOfLettings(
 )
 
 object MaxOfLettings {
-  implicit val format: OFormat[MaxOfLettings] = Json.format[MaxOfLettings]
+  implicit val format: OFormat[MaxOfLettings] = Json.format
 }

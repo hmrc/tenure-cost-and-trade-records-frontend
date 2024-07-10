@@ -25,8 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetting] {
 
-  def TelecomMastLettingView =
-    app.injector.instanceOf[views.html.aboutfranchisesorlettings.telecomMastLetting]
+  def TelecomMastLettingView = inject[views.html.aboutfranchisesorlettings.telecomMastLetting]
 
   val messageKeyPrefix = "label.telecomMastLetting"
   val backLink         = controllers.routes.TaskListController.show().url

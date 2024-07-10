@@ -22,7 +22,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
 
-  def login = app.injector.instanceOf[views.html.login]
+  def login = inject[views.html.login]
 
   val messageKeyPrefix = "login"
 

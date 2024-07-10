@@ -24,5 +24,5 @@ case class PayACapitalSumDetails(
 )
 
 object PayACapitalSumDetails {
-  implicit val format: OFormat[PayACapitalSumDetails] = Json.format[PayACapitalSumDetails]
+  implicit val format: OFormat[PayACapitalSumDetails] = Json.format
 }

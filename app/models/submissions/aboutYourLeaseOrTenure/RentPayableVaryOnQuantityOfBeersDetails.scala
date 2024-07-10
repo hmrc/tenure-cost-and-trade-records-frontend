@@ -24,6 +24,5 @@ case class RentPayableVaryOnQuantityOfBeersDetails(
 )
 
 object RentPayableVaryOnQuantityOfBeersDetails {
-  implicit val format: OFormat[RentPayableVaryOnQuantityOfBeersDetails] =
-    Json.format[RentPayableVaryOnQuantityOfBeersDetails]
+  implicit val format: OFormat[RentPayableVaryOnQuantityOfBeersDetails] = Json.format
 }

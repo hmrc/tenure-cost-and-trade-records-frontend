@@ -81,11 +81,9 @@ trait TestBaseSpec
   override implicit val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = Span(10, Seconds), interval = Span(20, Millis))
 
-  def injector: Injector = app.injector
+  def frontendAppConfig: AppConfig = inject[AppConfig]
 
-  def frontendAppConfig: AppConfig = injector.instanceOf[AppConfig]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+  def messagesApi: MessagesApi = inject[MessagesApi]
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
@@ -101,12 +99,12 @@ trait TestBaseSpec
 
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  def servicesConfig: ServicesConfig = app.injector.instanceOf[ServicesConfig]
+  def servicesConfig: ServicesConfig = inject[ServicesConfig]
 
   def requestWithQueryParam[A](fakeRequest: FakeRequest[A], queryParam: String): FakeRequest[A] =
     FakeRequest(fakeRequest.method, s"${fakeRequest.uri}?$queryParam", fakeRequest.headers, fakeRequest.body)
 
-  implicit def ec: ExecutionContext = app.injector.instanceOf[ExecutionContext]
+  implicit def ec: ExecutionContext = inject[ExecutionContext]
 
   implicit val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("my-session")))
   implicit val clock: Clock      = Clock.fixed(Instant.now(), ZoneId.systemDefault())

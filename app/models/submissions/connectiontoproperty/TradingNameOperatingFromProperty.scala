@@ -21,5 +21,5 @@ import play.api.libs.json.{Json, OFormat}
 case class TradingNameOperatingFromProperty(tradingName: String)
 
 object TradingNameOperatingFromProperty {
-  implicit val format: OFormat[TradingNameOperatingFromProperty] = Json.format[TradingNameOperatingFromProperty]
+  implicit val format: OFormat[TradingNameOperatingFromProperty] = Json.format
 }

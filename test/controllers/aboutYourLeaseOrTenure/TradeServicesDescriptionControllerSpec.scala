@@ -35,7 +35,7 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
   ) =
     new TradeServicesDescriptionController(
       stubMessagesControllerComponents(),
-      app.injector.instanceOf[AboutYourLeaseOrTenureNavigator],
+      inject[AboutYourLeaseOrTenureNavigator],
       tradeServicesDescriptionView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
       mockSessionRepo

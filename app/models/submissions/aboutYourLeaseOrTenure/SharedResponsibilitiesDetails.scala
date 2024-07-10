@@ -23,5 +23,5 @@ case class SharedResponsibilitiesDetails(
 )
 
 object SharedResponsibilitiesDetails {
-  implicit val format: OFormat[SharedResponsibilitiesDetails] = Json.format[SharedResponsibilitiesDetails]
+  implicit val format: OFormat[SharedResponsibilitiesDetails] = Json.format
 }

@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class AboutYourLandlordViewSpec extends QuestionViewBehaviours[AboutTheLandlord] {
 
-  def aboutYourLandordView = app.injector.instanceOf[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
+  def aboutYourLandordView = inject[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
 
   val messageKeyPrefix = "aboutYourLandlord"
   val backLink         = controllers.routes.TaskListController.show().url

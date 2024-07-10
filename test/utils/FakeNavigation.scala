@@ -17,21 +17,20 @@
 package utils
 
 import navigation._
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.mvc.AnyContentAsEmpty
-import play.api.test.FakeRequest
+import play.api.test.{FakeRequest, Injecting}
 
-trait FakeNavigation { this: GuiceOneAppPerSuite =>
+trait FakeNavigation { this: Injecting =>
 
   implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
-  lazy val requestReferenceNumberNavigator    = app.injector.instanceOf[RequestReferenceNumberNavigator]
-  lazy val connectedToPropertyNavigator       = app.injector.instanceOf[ConnectionToPropertyNavigator]
-  lazy val removeConnectionNavigator          = app.injector.instanceOf[RemoveConnectionNavigator]
-  lazy val aboutYouAndThePropertyNavigator    = app.injector.instanceOf[AboutYouAndThePropertyNavigator]
-  lazy val aboutYourTradingHistoryNavigator   = app.injector.instanceOf[AboutTheTradingHistoryNavigator]
-  lazy val aboutFranchisesOrLettingsNavigator = app.injector.instanceOf[AboutFranchisesOrLettingsNavigator]
-  lazy val aboutYourLeaseOrTenureNavigator    = app.injector.instanceOf[AboutYourLeaseOrTenureNavigator]
-  lazy val additionalInformationNavigator     = app.injector.instanceOf[AdditionalInformationNavigator]
+  lazy val requestReferenceNumberNavigator    = inject[RequestReferenceNumberNavigator]
+  lazy val connectedToPropertyNavigator       = inject[ConnectionToPropertyNavigator]
+  lazy val removeConnectionNavigator          = inject[RemoveConnectionNavigator]
+  lazy val aboutYouAndThePropertyNavigator    = inject[AboutYouAndThePropertyNavigator]
+  lazy val aboutYourTradingHistoryNavigator   = inject[AboutTheTradingHistoryNavigator]
+  lazy val aboutFranchisesOrLettingsNavigator = inject[AboutFranchisesOrLettingsNavigator]
+  lazy val aboutYourLeaseOrTenureNavigator    = inject[AboutYourLeaseOrTenureNavigator]
+  lazy val additionalInformationNavigator     = inject[AdditionalInformationNavigator]
 
 }

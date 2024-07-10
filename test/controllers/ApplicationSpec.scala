@@ -22,7 +22,7 @@ import utils.TestBaseSpec
 
 class ApplicationSpec extends TestBaseSpec {
 
-  private val controller = app.injector.instanceOf[controllers.Application]
+  private val controller = inject[controllers.Application]
 
   "GET /" should {
     "return 200" in {

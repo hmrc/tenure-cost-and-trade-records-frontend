@@ -23,7 +23,7 @@ class ServiceSpec extends TestBaseSpec {
 
   "Service" should {
     "be loaded correctly from configuration" in {
-      val config                = app.injector.instanceOf[Configuration]
+      val config                = inject[Configuration]
       val internalAuth: Service = config.get[Service]("microservice.services.internal-auth")
       internalAuth.host     shouldBe "localhost"
       internalAuth.port     shouldBe "8470"

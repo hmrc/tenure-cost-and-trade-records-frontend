@@ -26,5 +26,5 @@ case class ServicesPaid(
 )
 
 object ServicesPaid {
-  implicit val format: OFormat[ServicesPaid] = Json.format[ServicesPaid]
+  implicit val format: OFormat[ServicesPaid] = Json.format
 }
