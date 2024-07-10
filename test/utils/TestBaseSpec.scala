@@ -81,11 +81,9 @@ trait TestBaseSpec
   override implicit val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = Span(10, Seconds), interval = Span(20, Millis))
 
-  def injector: Injector = app.injector
+  def frontendAppConfig: AppConfig = inject[AppConfig]
 
-  def frontendAppConfig: AppConfig = injector.instanceOf[AppConfig]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
+  def messagesApi: MessagesApi = inject[MessagesApi]
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
