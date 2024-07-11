@@ -53,7 +53,8 @@ class RentedEquipmentDetailsController @Inject() (
         leaseOrAgreementPartThree
           .flatMap(_.rentedEquipmentDetails)
           .fold(rentedEquipmentDetailsForm)(rentedEquipmentDetailsForm.fill),
-        getBackLink
+        getBackLink,
+        request.sessionData.toSummary
       )
     )
   }
@@ -61,7 +62,8 @@ class RentedEquipmentDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       rentedEquipmentDetailsForm,
-      formWithErrors => BadRequest(rentedEquipmentDetailsView(formWithErrors, getBackLink)),
+      formWithErrors =>
+        BadRequest(rentedEquipmentDetailsView(formWithErrors, getBackLink, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentedEquipmentDetails = Some(data)))
 

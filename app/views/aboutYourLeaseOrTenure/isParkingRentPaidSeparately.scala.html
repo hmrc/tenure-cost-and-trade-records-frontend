@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import actions.SessionRequest
+@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(
@@ -24,13 +24,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(form: Form[_], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+
+@(form: Form[_], backLinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("isParkingRentPaidSeparately.heading"),
     showH1 = false,
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLinkUrl,
     theForm = form

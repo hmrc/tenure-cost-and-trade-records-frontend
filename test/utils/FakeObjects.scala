@@ -603,6 +603,16 @@ trait FakeObjects {
     prefilledTurnoverSections6045.copy(otherHolidayAccommodation =
       Some(OtherHolidayAccommodation(Some(AnswerNo), None))
     )
+  val prefilledAboutTheTradingHistoryPartOneTentYes: AboutTheTradingHistoryPartOne =
+    prefilledTurnoverSections6045.copy(
+      otherHolidayAccommodation = Some(OtherHolidayAccommodation(Some(AnswerNo), None)),
+      touringAndTentingPitches = Some(TouringAndTentingPitches(Some(AnswerYes)))
+    )
+  val prefilledAboutTheTradingHistoryPartOneTentNo: AboutTheTradingHistoryPartOne  =
+    prefilledTurnoverSections6045.copy(
+      otherHolidayAccommodation = Some(OtherHolidayAccommodation(Some(AnswerNo), None)),
+      touringAndTentingPitches = Some(TouringAndTentingPitches(Some(AnswerNo)))
+    )
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne                 = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(

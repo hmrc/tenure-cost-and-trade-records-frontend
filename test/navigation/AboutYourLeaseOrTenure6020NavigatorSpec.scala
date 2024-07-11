@@ -49,6 +49,12 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .apply(session6020) mustBe controllers.routes.LoginController.show()
     }
 
+    "return a function that goes to connected to landlord page when about your landlord has been completed" in {
+      navigator
+        .nextPage(AboutTheLandlordPageId, session6020)
+        .apply(session6020) mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+    }
+
     "return a function that goes to lease surrendered early page when disregarded addition has been completed no" in {
 
       val session = session6020.copy(
@@ -64,6 +70,13 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(TenantsAdditionsDisregardedId, session)
         .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
+    }
+
+    "return a function that goes to throughput page when disregarded addition details has been completed " in {
+      navigator
+        .nextPage(CurrentAnnualRentPageId, session6020)
+        .apply(session6020) mustBe controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController
+        .show()
     }
 
     "return a function that goes to lease surrendered early page when disregarded addition details has been completed " in {

@@ -90,6 +90,13 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "throw a BAD_REQUEST if an empty form is submitted 6016" in {
+      val res = checkYourAnswersAboutFranchiseOrLettingsControllerNo().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 
   "Add another letting accommodation form" should {

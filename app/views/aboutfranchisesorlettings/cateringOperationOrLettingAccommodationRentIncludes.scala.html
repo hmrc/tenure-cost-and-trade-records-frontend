@@ -76,19 +76,23 @@
     items = Seq(
      CheckboxItem(
       value = "rates",
-      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates"))
+      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates")),
+      id = "rates"
      ),
      CheckboxItem(
       value = "propertyInsurance",
-      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance"))
+      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance")),
+      id = "propertyInsurance"
      ),
      CheckboxItem(
       value = "outsideRepairs",
-      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs"))
+      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs")),
+      id = "outsideRepairs"
      ),
      CheckboxItem(
       value = "insideRepairs",
-      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs"))
+      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs")),
+      id = "insideRepairs"
      ),
      CheckboxItem(
       divider = "or"
@@ -96,7 +100,8 @@
      CheckboxItem(
       behaviour = ExclusiveCheckbox,
       value = "noneOfThese",
-      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese"))
+      content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese")),
+      id = "noneOfThese"
      )
     ),
     hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationCheckboxesDetails"))))

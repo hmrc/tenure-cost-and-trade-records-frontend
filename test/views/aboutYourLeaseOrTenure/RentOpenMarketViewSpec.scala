@@ -56,7 +56,7 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
       backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
     }
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page123" in {
+    "has a link marked with back.link.label leading to the franchise or letting tied to property Page 6020" in {
       val doc          = asDocument(createView6020())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")

@@ -37,8 +37,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () =>
-    cyaFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+  def createView = () => cyaFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutFranchiseOrLettings]) =>
     cyaFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)

@@ -2154,7 +2154,7 @@ error.concessionOrFranchise.missing = Select yes if you receive any rent from th
 lettingsIncome.heading = Letting income
 lettingsIncome.label = Is any rent received from letting other parts of the property?
 lettingsIncome.p1 = You must declare any income received from letting other parts of the property, for example advertising billboards, car parking or telephone masts. You will have the opportunity to add more than one letting if required.
-lettingsIncome.missing = Select yes if any rent is received from letting out parts of the property
+lettingsIncome.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 
 # ADDITIONAL INFORMATION
 ########################

@@ -53,7 +53,7 @@ class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[CapitalSumDes
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain an input for Benefits given details " in {
+    "contain an input for capital sum details " in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "capitalSumDescription")
     }

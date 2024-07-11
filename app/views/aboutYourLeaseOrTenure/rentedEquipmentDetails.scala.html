@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits._
+@import models.pages.Summary
 
 @this(
         layout: Layout,
@@ -27,13 +28,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(form: Form[String], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+
+@(form: Form[String], backLinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
 
 @layout(
     pageHeading = messages("rentedEquipmentDetails.heading"),
     showH1 = true,
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLinkUrl,
     theForm = form

@@ -59,6 +59,11 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
+    "contain char count box for rentPayableVaryAccordingToGrossOrNetDetails" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsText(doc, "rentPayableVaryAccordingToGrossOrNetDetails")
+    }
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()

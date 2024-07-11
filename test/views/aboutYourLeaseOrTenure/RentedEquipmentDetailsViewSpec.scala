@@ -16,51 +16,62 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm
+import form.aboutYourLeaseOrTenure.RentedEquipmentDetailsForm
+import form.aboutyouandtheproperty.TiedForGoodsDetailsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
+import models.submissions.aboutyouandtheproperty._
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[ConnectedToLandlordInformationDetails] {
+class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "connectedToLandlordDetails"
+  val messageKeyPrefix = "rentedEquipmentDetails"
 
-  override val form = ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
+  override val form: Form[String] = RentedEquipmentDetailsForm.rentedEquipmentDetailsForm
 
-  def createView = () => connectedToLandlordDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  val backLink: String = controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url
 
-  def createViewUsingForm = (form: Form[ConnectedToLandlordInformationDetails]) =>
-    connectedToLandlordDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
 
-  "Connected to landlord details view" must {
+  def createViewUsingForm: Form[String] => Html =
+    (form: Form[String]) => rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+
+  "rentedEquipmentDetails view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task Page" in {
+    "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    "contain an input for connectedToLandlordDetails" in {
+    "contain char count box for rentPayableVaryOnQuantityOfBeersDetails" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "connectedToLandlordDetails")
+      assertContainsText(doc, "rentedEquipmentDetails")
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
+    }
+
+    "contain save as draft button with the value Save as draft" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("save").text()
+      assert(loginButton == messages("button.label.save"))
     }
   }
 }

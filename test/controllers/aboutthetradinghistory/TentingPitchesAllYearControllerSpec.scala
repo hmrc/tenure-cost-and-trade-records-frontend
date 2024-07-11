@@ -60,10 +60,12 @@ class TentingPitchesAllYearControllerSpec extends TestBaseSpec {
       contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
 
-    //    "return correct backLink when 'from=CYA' query param is present" in {
-    //      val result = tentingPitchesAllYearController().show()(FakeRequest(GET, "/path?from=CYA"))
-    //      contentAsString(result) should include(controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url)
-    //    }
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = tentingPitchesAllYearController().show()(FakeRequest(GET, "/path?from=CYA"))
+      contentAsString(result) should include(
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
+      )
+    }
 
   }
 

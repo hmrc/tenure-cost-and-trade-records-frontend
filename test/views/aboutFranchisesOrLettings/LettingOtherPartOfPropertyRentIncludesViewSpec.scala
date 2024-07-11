@@ -64,6 +64,45 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
       assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
     }
 
+    "contain checkbox for the rates" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "rates", "itemsInRent[]", "rates", isChecked = false)
+      assertContainsText(doc, messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates"))
+    }
+
+    "contain checkbox for the propertyInsurance" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "propertyInsurance", "itemsInRent[]", "propertyInsurance", isChecked = false)
+      assertContainsText(
+        doc,
+        messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance")
+      )
+    }
+
+    "contain checkbox for the outsideRepairs" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "outsideRepairs", "itemsInRent[]", "outsideRepairs", isChecked = false)
+      assertContainsText(
+        doc,
+        messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs")
+      )
+    }
+
+    "contain checkbox for the insideRepairs" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "insideRepairs", "itemsInRent[]", "insideRepairs", isChecked = false)
+      assertContainsText(
+        doc,
+        messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs")
+      )
+    }
+
+    "contain checkbox for the noneOfThese" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertContainsCheckBox(doc, "noneOfThese", "itemsInRent[]", "noneOfThese", isChecked = false)
+      assertContainsText(doc, messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese"))
+    }
+
 // Tests excluded as they created for wrong checkboxes implementation
 
 //    "contain checkbox for the value Rates" in {
