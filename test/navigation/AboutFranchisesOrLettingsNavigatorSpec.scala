@@ -33,6 +33,22 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutFranchiseOrLetting6010YesSession) mustBe controllers.routes.LoginController.show()
     }
 
+    "return a function that goes to catering operation page when concession page has been completed yes" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010YesSession
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
+    }
+
+    "return a function that goes to catering operation page when lettings page has been completed yes" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010NoSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010NoSession
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    }
+
     "return a function that goes to catering operation page when franchise page has been completed yes" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6010YesSession)
