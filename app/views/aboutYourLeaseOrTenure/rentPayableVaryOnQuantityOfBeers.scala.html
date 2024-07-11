@@ -40,7 +40,15 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.submit()) {
 
-  @includes.radioButtonsYesNo(govukRadios, theForm, "rentPayableVaryOnQuantityOfBeers", "rentPayableVaryOnQuantityOfBeers.heading", classes = "govuk-fieldset__legend--l", isHeading = true)
+  @includes.radioButtonsYesNo(
+   govukRadios,
+   theForm,
+   "rentPayableVaryOnQuantityOfBeers",
+   "rentPayableVaryOnQuantityOfBeers.heading",
+   messages("label.yes.ydy"),
+   messages("label.no.nac.ydy"),
+   classes = "govuk-fieldset__legend--l",
+   isHeading = true)
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }

@@ -34,7 +34,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  val sessionRequest     = SessionRequest(baseFilled6010Session, fakeRequest)
+  val sessionRequest6011 = SessionRequest(baseFilled6011Session, fakeRequest)
 
   val sessionRequest6030 = SessionRequest(prefilledFull6030Session, fakeRequest)
 
@@ -43,6 +44,9 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
 
   def createView = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+
+  def createView6011 = () =>
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(sessionRequest6011, messages)
 
   def createView6020 = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(sessionRequest6020full, messages)
@@ -58,6 +62,14 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
 
     "has a link marked with back.link.label leading to the website for property Page" in {
       val doc          = asDocument(createView())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText mustBe messages("back.link.label")
+      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+    }
+
+    "has a link marked with back.link.label leading to the website for property Page for 6011" in {
+      val doc          = asDocument(createView6011())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")

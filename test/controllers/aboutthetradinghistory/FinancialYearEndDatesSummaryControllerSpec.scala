@@ -54,6 +54,13 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = financialYearEndDatesSummaryController().show()(FakeRequest(GET, "/path?from=CYA"))
+      contentAsString(result) should include(
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
     "SUBMIT /" should {
       "return redirect 400 for empty request" in {
         val res = financialYearEndDatesSummaryController().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))

@@ -58,8 +58,8 @@
     name = "rentIncreasedAnnuallyWithRPIs",
     idPrefix = Option("rentIncreaseAnnuallyWithRPI"),
     items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
+     "yes" -> messages("label.yes.ydy"),
+     "no" -> messages("label.no.nac.ydy")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
      checked = radioItem._1.equals(theForm("rentIncreasedAnnuallyWithRPIs").value.getOrElse("")),

@@ -55,7 +55,8 @@ class IsParkingRentPaidSeparatelyController @Inject() (
           .flatMap(_.carParking)
           .flatMap(_.isRentPaidSeparately)
           .fold(isParkingRentPaidSeparatelyForm)(isParkingRentPaidSeparatelyForm.fill),
-        getBackLink
+        getBackLink,
+        request.sessionData.toSummary
       )
     )
   }
@@ -63,7 +64,8 @@ class IsParkingRentPaidSeparatelyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       isParkingRentPaidSeparatelyForm,
-      formWithErrors => BadRequest(isParkingRentPaidSeparatelyView(formWithErrors, getBackLink)),
+      formWithErrors =>
+        BadRequest(isParkingRentPaidSeparatelyView(formWithErrors, getBackLink, request.sessionData.toSummary)),
       data => {
         val updatedData = updateCarParking(_.copy(isRentPaidSeparately = Some(data)))
 

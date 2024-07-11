@@ -43,6 +43,30 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
+  val checkYourAnswersTentingPitchesControllerYesTent = new CheckYourAnswersTentingPitchesController(
+    stubMessagesControllerComponents(),
+    mockAboutTheTradingHistoryNavigator,
+    checkYourAnswersTentingPitchesView,
+    preEnrichedActionRefiner(
+      referenceNumber = "99996045333",
+      forType = "FOR6045",
+      aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneTentYes)
+    ),
+    mockSessionRepo
+  )
+
+  val checkYourAnswersTentingPitchesControllerNoTent = new CheckYourAnswersTentingPitchesController(
+    stubMessagesControllerComponents(),
+    mockAboutTheTradingHistoryNavigator,
+    checkYourAnswersTentingPitchesView,
+    preEnrichedActionRefiner(
+      referenceNumber = "99996045333",
+      forType = "FOR6045",
+      aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneTentNo)
+    ),
+    mockSessionRepo
+  )
+
   "GET /" should {
     "return 200" in {
       val result = checkYourAnswersTentingPitchesController.show(fakeRequest)
@@ -51,6 +75,28 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
 
     "return HTML" in {
       val result = checkYourAnswersTentingPitchesController.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 yes tent" in {
+      val result = checkYourAnswersTentingPitchesControllerYesTent.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML yes tent" in {
+      val result = checkYourAnswersTentingPitchesControllerYesTent.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 no tent" in {
+      val result = checkYourAnswersTentingPitchesControllerNoTent.show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML no tent" in {
+      val result = checkYourAnswersTentingPitchesControllerNoTent.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

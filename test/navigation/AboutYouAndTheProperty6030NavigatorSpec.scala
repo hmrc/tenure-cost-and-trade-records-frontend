@@ -47,6 +47,15 @@ class AboutYouAndTheProperty6030NavigatorSpec extends TestBaseSpec {
     }
   }
 
+  "return a function that goes to charity page when about the property website page has been completed" in {
+    aboutYouAndThePropertyNavigator
+      .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6030NoSession)
+      .apply(
+        aboutYouAndTheProperty6030NoSession
+      ) mustBe controllers.aboutyouandtheproperty.routes.CharityQuestionController
+      .show()
+  }
+
   "return a function that goes to about the property alternative contact details page when yes is answered for contact details and has been completed" in {
     aboutYouAndThePropertyNavigator
       .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030YesSession)

@@ -54,6 +54,12 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
     }
 
+    "return a function that goes to current annual rent page when about your landlord has been completed" in {
+      navigator
+        .nextPage(ConnectedToLandlordDetailsPageId, session6011)
+        .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+    }
+
     "return a function that goes to connected to landlord details page when connected to landlord and answer is 'yes'" in {
       val answers = session6011.copy(
         aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerYes)))

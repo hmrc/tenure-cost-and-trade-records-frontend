@@ -43,8 +43,52 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "TradingNameOperatingFromPropertyController GET /" should {
-    "return 200 and HTML with trading name present in session" in {
+  def tradingNameOperatingFromProperty6076Controller(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  def tradingNameOperatingFromProperty6076ChangeAddressController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesEditCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  def tradingNameOperatingFromProperty6076NoController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesNoCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  def tradingNameOperatingFromPropertyControllerNoTradingName(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  "GET /" should {
+    "return 200 when trading name present in session" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -52,6 +96,33 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
       )
+    }
+
+    "return 200 when trading name present in session change address" in {
+      val result = tradingNameOperatingFromProperty6076ChangeAddressController().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML change address" in {
+      val result = tradingNameOperatingFromProperty6076ChangeAddressController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 when trading name present in session no" in {
+      val result = tradingNameOperatingFromProperty6076NoController().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return HTML no" in {
+      val result = tradingNameOperatingFromProperty6076NoController().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 when trading name present in session 6076" in {
+      val result = tradingNameOperatingFromProperty6076Controller().show(fakeRequest)
+      status(result) shouldBe Status.OK
     }
 
     "return 200 and HTML with trading name present in session for 6076" in {

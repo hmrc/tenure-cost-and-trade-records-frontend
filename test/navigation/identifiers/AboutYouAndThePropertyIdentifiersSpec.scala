@@ -121,6 +121,10 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
       assert(CostsBreakdownId.toString.equals("costsBreakdownPage"))
     }
 
+    "Identifier for property currently used page" in {
+      assert(PropertyCurrentlyUsedPageId.toString.equals("propertyCurrentlyUsedPage"))
+    }
+
     "Identifier for check your answers page" in {
       assert(CheckYourAnswersAboutThePropertyPageId.toString.equals("checkYourAnswersAboutThePropertyPage"))
     }

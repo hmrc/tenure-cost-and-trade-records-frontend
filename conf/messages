@@ -895,7 +895,7 @@ checkbox.rentPayable.shellUnit = A ‘shell’ unit you had to fit out yourself
 checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of these options
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Additional information
-hint.detailsToQuestions = Give details if you want to tell us more about any options that may apply.
+hint.detailsToQuestions = Examples of acceptable descriptions include "the rent includes residential accommodation", or "also includes the premises next door".
 error.doesTheRentPayable.required = Select items included in your rent, or select ’No, the rent does not include any of these options’
 error.doesTheRentPayable.noneSelectedWithOther = Select items included in your rent, or select ’No, the rent does not include any of these options’
 error.detailsToQuestions.required = Please provide further information
@@ -1005,12 +1005,11 @@ error.tradeServiceDescription.maxLength = The description of the trade services 
 
 # TRADE SERVICES ADDED
 #####################################
-addTradeService.heading = You have added {0} {1} {2}
+addTradeService.heading = You have added {0} service {2}
+addTradeServicePlural.heading = You have added {0} services {2}
 addTradeService.heading.landlord = provided by the landlord
 addTradeService.heading.rent = included in your rent
 addTradeServiceZero.heading = You have removed all the services provided by your landlord
-addTradeService.service = service
-addTradeService.services = services
 addTradeService.label = Would you like to add another service which is included in the rent?
 addTradeService.label6020 = Would you like to add another service?
 error.addTradeService.required = Select yes if you would like to add another service provided by the landlord
@@ -1039,10 +1038,9 @@ error.servicePaidSeparatelyCharge.required = You must tell us the annual charge 
 
 # SERVICES PAID SEPARATELY LIST
 #####################################
-servicePaidSeparatelyList.heading = You have added {0} {1} which is paid for separately
+servicePaidSeparatelyList.heading = You have added {0} service which is paid for separately
+servicePaidSeparatelyListPlural.heading = You have added {0} services which are paid for separately
 servicePaidSeparatelyListZero.heading = You have removed all the services which are paid for separately
-servicePaidSeparatelyList.service = service
-servicePaidSeparatelyList.services = services
 servicePaidSeparatelyList.label = Would you like to add another service?
 error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
@@ -2496,7 +2494,7 @@ checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Payment 
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent = Other factors affecting the rent?
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails = Description of factors affecting the rent
 checkYourAnswersAboutYourLeaseOrTenure.typeOfTenure = Type of tenure
-checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput = Rent varies with throughout?
+checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput = Rent varies with throughput?
 checkYourAnswersAboutYourLeaseOrTenure.vatPayable = VAT payable?
 checkYourAnswersAboutYourLeaseOrTenure.howThroughputAffectsRent = How throughput affects rent
 checkYourAnswersAboutYourLeaseOrTenure.tradingServiceCount = Included trade service {0}

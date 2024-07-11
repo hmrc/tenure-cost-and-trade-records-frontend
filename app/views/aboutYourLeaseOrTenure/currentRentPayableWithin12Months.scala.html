@@ -67,8 +67,8 @@
     name = "rentPayable",
     idPrefix = Option("currentRentPayableWithin12Months"),
     items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
+     "yes" -> messages("label.yes.oes"),
+     "no" -> messages("label.no.nac.oes")
     ).map(radioItem => RadioItem(
      content = Text(radioItem._2),
      checked = radioItem._1.equals(theForm("rentPayable").value.getOrElse("")),

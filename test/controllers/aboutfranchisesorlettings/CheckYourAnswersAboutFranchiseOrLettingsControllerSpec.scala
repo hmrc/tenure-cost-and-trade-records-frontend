@@ -52,6 +52,20 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
       mockSessionRepo
     )
+
+  def checkYourAnswersAboutFranchiseOrLettingsControllerNo(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
+      prefilledAboutFranchiseOrLettingsNo
+    )
+  ) =
+    new CheckYourAnswersAboutFranchiseOrLettingsController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      checkYourAnswersAboutFranchiseOrLettings,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
@@ -60,6 +74,11 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
 
     "return 200 6020" in {
       val result = checkYourAnswersAboutFranchiseOrLettingsController6020().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return 200 no" in {
+      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
@@ -73,6 +92,19 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       val result = checkYourAnswersAboutFranchiseOrLettingsController6020().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return HTML no" in {
+      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = checkYourAnswersAboutFranchiseOrLettingsController().show()(FakeRequest(GET, "/path?from=CYA"))
+      contentAsString(result) should include(
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      )
     }
   }
 

@@ -141,6 +141,13 @@ trait TestBaseSpec
       forType = ForTypes.for6076
     )
 
+  val preFilledSessionNone: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = None,
+      removeConnectionDetails = None,
+      aboutYouAndTheProperty = None
+    )
+
   val preFilledSession6045: WithSessionRefiner =
     preEnrichedActionRefiner(
       referenceNumber = "99996045004",

@@ -136,6 +136,14 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       ) mustBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
   }
 
+  "return a function that goes from the vacant property page to Vacent property Start Date page if answer no" in {
+    navigator
+      .nextPage(VacantPropertiesPageId, stillConnectedDetailsNoToAllSession)
+      .apply(
+        stillConnectedDetailsNoToAllSession
+      ) mustBe controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+  }
+
   "return a function that goes from Letting Income page to vacant properties start date page if there is an income" in {
     navigator
       .nextPage(LettingIncomePageId, stillConnectedDetailsYesToAllSession)

@@ -603,6 +603,16 @@ trait FakeObjects {
     prefilledTurnoverSections6045.copy(otherHolidayAccommodation =
       Some(OtherHolidayAccommodation(Some(AnswerNo), None))
     )
+  val prefilledAboutTheTradingHistoryPartOneTentYes: AboutTheTradingHistoryPartOne =
+    prefilledTurnoverSections6045.copy(
+      otherHolidayAccommodation = Some(OtherHolidayAccommodation(Some(AnswerNo), None)),
+      touringAndTentingPitches = Some(TouringAndTentingPitches(Some(AnswerYes)))
+    )
+  val prefilledAboutTheTradingHistoryPartOneTentNo: AboutTheTradingHistoryPartOne  =
+    prefilledTurnoverSections6045.copy(
+      otherHolidayAccommodation = Some(OtherHolidayAccommodation(Some(AnswerNo), None)),
+      touringAndTentingPitches = Some(TouringAndTentingPitches(Some(AnswerNo)))
+    )
   val prefilledTurnoverSections6076: AboutTheTradingHistoryPartOne                 = AboutTheTradingHistoryPartOne(
     isFinancialYearEndDatesCorrect = true,
     turnoverSections6076 = Seq(
@@ -1170,6 +1180,28 @@ trait FakeObjects {
 
   val prefilledNotVacantPropertiesCYA = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress),
+    Some(prefilledVacantPropertiesDetails),
+    Some(prefilledTradingNameOperatingFromProperty),
+    Some(AnswerYes),
+    Some(AnswerYes),
+    Some(AnswerNo)
+  )
+
+  val prefilledNotVacantPropertiesNoCYA = StillConnectedDetails(
+    Some(AddressConnectionTypeNo),
+    Some(ConnectionToThePropertyOccupierTrustee),
+    Some(prefilledEditTheAddress),
+    Some(prefilledVacantPropertiesDetails),
+    Some(prefilledTradingNameOperatingFromProperty),
+    Some(AnswerYes),
+    Some(AnswerYes),
+    Some(AnswerNo)
+  )
+
+  val prefilledNotVacantPropertiesEditCYA = StillConnectedDetails(
+    Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledEditTheAddress),
     Some(prefilledVacantPropertiesDetails),

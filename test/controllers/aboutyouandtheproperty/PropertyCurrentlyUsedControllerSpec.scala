@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import form.aboutyouandtheproperty.PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
@@ -25,6 +26,8 @@ import utils.TestBaseSpec
 
 class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
 
+  import TestData._
+  import utils.FormBindingTestAssertions._
   def propertyCurrentlyUsedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
@@ -96,5 +99,24 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Trading activity form" should {
+    "error if trading activity answer is missing" in {
+      val formData = baseFormData - errorKey.propertyCurrentlyUsed
+      val form     = propertyCurrentlyUsedForm.bind(formData)
+
+      mustContainError(errorKey.propertyCurrentlyUsed, "error.propertyCurrentlyUsed.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: Object {
+      val propertyCurrentlyUsed: String
+    } = new {
+      val propertyCurrentlyUsed: String = "propertyCurrentlyUsed"
+    }
+
+    val baseFormData: Map[String, String] = Map("propertyCurrentlyUsed" -> "yes")
   }
 }
