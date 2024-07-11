@@ -65,7 +65,9 @@ class OtherHolidayAccommodationController @Inject() (
         val updatedData = updateOtherHolidayAccommodation(_.copy(otherHolidayAccommodation = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(OtherHolidayAccommodationId, updatedData).apply(updatedData))
+          Redirect(
+            navigator.nextPageForOtherHolidayAccommodation(OtherHolidayAccommodationId, updatedData).apply(updatedData)
+          )
         }
       }
     )

@@ -35,12 +35,24 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   def cyaPageForTentingPitches: Call = aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
 
+  def cyaPageForOtherHolidayAccommodation =
+    aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
   def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call                      =
+    if (from == "CYA") { _ =>
+      cyaPageForTentingPitches
+    } else {
+      nextWithoutRedirectToCYA(id, session)
+    }
+
+  def nextPageForOtherHolidayAccommodation(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
     if (from == "CYA") { _ =>
-      cyaPageForTentingPitches
+      cyaPageForOtherHolidayAccommodation
     } else {
       nextWithoutRedirectToCYA(id, session)
     }
@@ -239,6 +251,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
     OtherHolidayAccommodationDetailsId          -> (_ =>
+      aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show()
+    ),
+    GrossReceiptsHolidayUnitsId                 -> (_ =>
       controllers.routes.TaskListController.show()
     ), //TODO Letting units owned by site operator
     TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
@@ -251,5 +266,4 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )
-
 }

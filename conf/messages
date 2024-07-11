@@ -23,6 +23,7 @@ label.yes = Yes
 label.no = No
 label.pound = £
 label.weeks = weeks
+label.units = units
 
 # OTHER FOOTER LINKS:
 ########
@@ -1641,6 +1642,21 @@ turnover.6045.excludingVAT = (excluding VAT)
 error.turnover.6045.caravanFleetHire.grossReceipts.required = Enter 0 if you did not have any gross receipts from static caravan fleet hire in the year ending {0}
 error.turnover.6045.caravanFleetHire.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravanFleetHire.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+
+turnover.6045.lettingUnits.grossReceipts.heading = Letting units owned by site operator
+turnover.6045.lettingUnits.p1.beginning = Enter your gross receipts from any of these units which are
+turnover.6045.lettingUnits.p1.bold = owned by the site operator.
+turnover.6045.lettingUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.lettingUnits.grossReceipts.inset = All fields are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.lettingUnits.grossReceipts = Gross receipts
+turnover.6045.lettingUnits.grossReceipts.hint = Inclusive of electricity changes and gas supplied if any.
+turnover.6045.lettingUnits.numberOfUnits = Number of units
+error.turnover.6045.lettingUnits.grossReceipts.required = Enter 0 if you did not have any gross receipts from letting units  the year ending {0}
+error.turnover.6045.lettingUnits.grossReceipts.ranged =  Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.lettingUnits.grossReceipts.negative =  Gross receipts in the year ending {0} cannot be a negative number
+error.numberOfUnits.required = Enter the number of letting units
+error.numberOfUnits.negative = Number of letting units cannot be a negative number
+error.numberOfUnits.nonNumeric = The number of letting units must be a number between 1 and 999
 
 # TURNOVER 6076
 turnover.6076.heading = How much electricity did you generate?
