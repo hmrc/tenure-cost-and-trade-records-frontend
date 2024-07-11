@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm.checkYourAnswersAboutTheTradingHistoryForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+import models.submissions.common.AnswerYes
 import models.{ForTypes, Session}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
@@ -92,9 +93,17 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
         controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show().url
       case ForTypes.for6020                                       =>
         controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show().url
-      case ForTypes.for6045 |
-          ForTypes.for6046 => // TODO: Static caravans OR What is the current annual pitch fee for a single-unit static caravan
-        controllers.aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
+      case ForTypes.for6045 | ForTypes.for6046                    =>
+        if (
+          answers.aboutTheTradingHistoryPartOne
+            .flatMap(_.caravans)
+            .flatMap(_.anyStaticLeisureCaravansOnSite)
+            .contains(AnswerYes)
+        )
+          // TODO: What is the current annual pitch fee for a single-unit static caravan
+          controllers.aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
+        else
+          controllers.aboutthetradinghistory.routes.StaticCaravansController.show().url
       case ForTypes.for6076                                       =>
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _                                                      =>

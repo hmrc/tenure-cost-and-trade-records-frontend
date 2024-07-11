@@ -88,6 +88,10 @@ class CaravansOpenAllYearController @Inject() (
     .flatMap(_.caravans)
     .flatMap(caravans => caravans.openAllYear.map((_, caravans.weeksPerYear)))
 
-  private def getBackLink: String = routes.StaticCaravansController.show().url
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    navigator.cyaPage
+      .filter(_ => navigator.from == "CYA")
+      .getOrElse(routes.StaticCaravansController.show())
+      .url
 
 }
