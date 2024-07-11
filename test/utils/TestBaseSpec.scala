@@ -37,7 +37,6 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.Injector
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.request.RequestTarget
 import play.api.mvc.{AnyContentAsEmpty, Request, Result}

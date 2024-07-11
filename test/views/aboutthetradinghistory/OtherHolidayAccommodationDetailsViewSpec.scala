@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ class OtherHolidayAccommodationDetailsViewSpec extends QuestionViewBehaviours[Ot
   val backLink = controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
 
   override val form: Form[OtherHolidayAccommodationDetails] =
-    OtherHolidayAccommodationDetailsForm.otherHolidayAccommodationDetailsForm(messages)
+    OtherHolidayAccommodationDetailsForm.otherHolidayAccommodationDetailsForm
 
   def createView: () => Html = () =>
     otherHolidayAccommodationDetailsView(form, Summary("99996010001"), backLink)(fakeRequest, messages)

@@ -15,43 +15,26 @@
  */
 
 package form.aboutthetradinghistory
-import form.MappingSupport.createYesNoType
+
+import form.MappingSupport.{createYesNoType, weeksMapping}
 import models.submissions.aboutthetradinghistory.TentingPitchesAllYear
 import models.submissions.common.AnswerNo
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.mapping
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
-import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-
-import scala.util.Try
 
 object TentingPitchesAllYearForm {
 
-  def validateWeeksDuration =
-    default(text, "")
-      .verifying(weeksDurationConstraint())
-      .transform[Int](
-        str => Try(str.toInt).getOrElse(-1),
-        int => int.toString
-      )
-
-  private def weeksDurationConstraint(): Constraint[String] = Constraint("constraints.weeksDuration") { text =>
-    if (text.trim.isEmpty)
-      Invalid(ValidationError("error.areYourPitchesOpen.conditional.value.missing"))
-    else
-      Try(text.toDouble).toOption match {
-        case Some(num) if num >= 0 && num <= 52 => Valid
-        case _                                  => Invalid(ValidationError("error.areYourPitchesOpen.conditional.value.invalid"))
-      }
-  }
-
-  val tentingPitchesAllYearForm = Form(
+  val tentingPitchesAllYearForm: Form[TentingPitchesAllYear] = Form(
     mapping(
       "tentingPitchesAllYear" -> createYesNoType("error.areYourPitchesOpen.missing"),
       "weekOfPitchesUse"      -> mandatoryIfEqual(
         "tentingPitchesAllYear",
         AnswerNo.name,
-        validateWeeksDuration
+        weeksMapping(
+          "error.areYourPitchesOpen.conditional.value.missing",
+          "error.areYourPitchesOpen.conditional.value.invalid"
+        )
       )
     )(TentingPitchesAllYear.apply)(TentingPitchesAllYear.unapply)
   )

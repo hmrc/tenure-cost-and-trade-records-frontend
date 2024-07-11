@@ -147,8 +147,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def staticCaravansRouting: Session => Call =
     _.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite) match {
-      case Some(AnswerYes) => // TODO: Are your static caravans open all year?
-        aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()
+      case Some(AnswerYes) => aboutthetradinghistory.routes.CaravansOpenAllYearController.show()
       case _               => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     }
 
@@ -233,6 +232,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OperationalExpensesId                       -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
     HeadOfficeExpensesId                        -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
     StaticCaravansId                            -> staticCaravansRouting,
+    CaravansOpenAllYearId                       -> (_ => aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()),
     GrossReceiptsCaravanFleetHireId             -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
         .show() // TODO: Single caravans owned by the operator

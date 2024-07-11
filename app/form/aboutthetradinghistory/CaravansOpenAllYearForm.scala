@@ -16,18 +16,32 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{createYesNoType, weeksInYearMapping}
-import models.submissions.aboutthetradinghistory.OtherHolidayAccommodationDetails
+import form.MappingSupport._
+import models.submissions.common.{AnswerNo, AnswersYesNo}
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.tuple
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
-object OtherHolidayAccommodationDetailsForm {
+/**
+  * 6045/6046 Trading history - Are your static caravans open all year.
+  *
+  * @author Yuriy Tumakha
+  */
+object CaravansOpenAllYearForm {
 
-  val otherHolidayAccommodationDetailsForm: Form[OtherHolidayAccommodationDetails] = Form(
-    mapping(
-      "otherHolidayAccommodationOpenAllYear" -> createYesNoType("error.otherHolidayAccommodationOpenAllYear.required"),
-      "weeksOpen"                            -> mandatoryIfEqual("otherHolidayAccommodationOpenAllYear", "no", weeksInYearMapping)
-    )(OtherHolidayAccommodationDetails.apply)(OtherHolidayAccommodationDetails.unapply)
-  )
+  val caravansOpenAllYearForm: Form[(AnswersYesNo, Option[Int])] =
+    Form(
+      tuple(
+        "openAllYear"  -> createYesNoType("error.caravans.openAllYear.required"),
+        "weeksPerYear" -> mandatoryIfEqual(
+          "openAllYear",
+          AnswerNo.name,
+          weeksMapping(
+            "error.caravans.weeksPerYear.required",
+            "error.caravans.weeksPerYear.invalid"
+          )
+        )
+      )
+    )
+
 }
