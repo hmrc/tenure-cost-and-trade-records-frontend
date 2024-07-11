@@ -235,6 +235,9 @@ POST        /tenting-pitches-on-site                                controllers.
 GET         /tenting-pitches-all-year                               controllers.aboutthetradinghistory.TentingPitchesAllYearController.show()
 POST        /tenting-pitches-all-year                               controllers.aboutthetradinghistory.TentingPitchesAllYearController.submit()
 
+GET         /pitches-for-caravans                                   controllers.aboutthetradinghistory.PitchesForCaravansController.show()
+POST        /pitches-for-caravans                                   controllers.aboutthetradinghistory.PitchesForCaravansController.submit()
+
 GET         /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.show()
 POST        /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.submit()
 

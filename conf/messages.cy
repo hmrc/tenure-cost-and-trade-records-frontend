@@ -2112,6 +2112,7 @@ error.otherHolidayAccommodation.required =  Select yes if there are other holida
 ##########################
 
 #TOURING AND TENTING PITCHES QUESTION
+#####################################
 
 touringAndTentingPitches.heading = Touring and tenting pitches
 
@@ -2125,6 +2126,7 @@ help.touringAndTentingPitches.question.rally = rally areas
 
 
 # ARE YOUR TOURING AND TENTING PITCHES OPEN ALL YEAR
+#####################################################
 
 areYourPitchesOpen.heading = Are your touring and tenting pitches open all year?
 error.areYourPitchesOpen.missing = Select yes if your touring and tenting pitches open all year
@@ -2133,10 +2135,32 @@ error.areYourPitchesOpen.conditional.value.invalid = Number of weeks the site re
 error.areYourPitchesOpen.conditional.value.missing = Provide a number of weeks the site remains open in a year
 
 # CYA TOURING AND TENTS PITCHES
+###############################
 
 cYa.touringAndTentingPitches.heading = Check your answers - touring and tent pitches
 cYa.touringAndTentingPitches.pitches.heading = Touring and tenting pitches
 cYa.touringAndTentingPitches.pitches.label = Touring and tenting pitches on site?
+
+#PITCHES FOR CARAVANS
+#####################
+
+pitchesForCaravans.heading = Pitches for caravans, motor homes or tenting units, including any 28-day rights
+pitchesForCaravans.p = Enter your gross receipts from these pitches excluding VAT and electricity costs.
+
+error.tentingPitches.grossReceipts.required = Enter 0 if you did not have any gross receipts in the year ending {0}
+error.tentingPitches.grossReceipts.range = Wages and salaries in the year ending {0} must be a positive number, for example 100 or 100.00
+error.tentingPitches.numberOfPitches.required = Enter 0 if you did not have any pitches in the year ending {0}
+error.tentingPitches.numberOfPitches.range = Number of pitches in the year ending {0} must be a positive number, for example 1 or 100
+
+#TENTING PITCHES TRADING COMMON LABELS
+######################################
+
+tentingPitches.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+tentingPitches.common.stateTheNumber = Where accounts do not relate to the whole of your season, state the number of relevant weeks.
+tentingPitches.common.financialYearEnd = Financial year end
+tentingPitches.common.tradingPeriod = Trading period
+tentingPitches.common.grossReceipts = Gross receipts
+tentingPitches.common.numberOfPitches = Number of pitches
 
 #########################
 

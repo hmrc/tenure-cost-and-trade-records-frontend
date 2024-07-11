@@ -286,6 +286,30 @@ object MappingSupport {
       )
       .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
+  def numberOfPitches(year: String)(implicit messages: Messages) = {
+    val numberOfPitchesMax = 1000000000
+    default(text, "")
+      .verifying(messages("error.tentingPitches.numberOfPitches.required", year), _.trim.nonEmpty)
+      .transform[Option[Int]](
+        {
+          case str if str.trim.isEmpty => None
+          case str                     =>
+            Try(str.toInt).toOption
+        },
+        {
+          case Some(value) => value.toString
+          case None        => ""
+        }
+      )
+      .verifying(
+        messages("error.tentingPitches.numberOfPitches.range", year),
+        {
+          case Some(n) => (0 to numberOfPitchesMax).contains(n)
+          case None    => false
+        }
+      )
+  }
+
   private val salesMax = BigDecimal(1000000000000L)
 
   def turnoverSalesMappingWithYear(field: String, year: String)(implicit
