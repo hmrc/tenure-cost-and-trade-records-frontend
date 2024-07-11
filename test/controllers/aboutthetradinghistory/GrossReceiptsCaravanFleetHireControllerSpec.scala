@@ -24,8 +24,7 @@ import utils.TestBaseSpec
 
 class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
 
-  private val previousPage = // TODO: Are your static caravans open all year?
-    aboutthetradinghistory.routes.StaticCaravansController.show().url
+  private val previousPage = aboutthetradinghistory.routes.CaravansOpenAllYearController.show().url
 
   private val nextPage = // TODO: Single caravans owned by the operator
     aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

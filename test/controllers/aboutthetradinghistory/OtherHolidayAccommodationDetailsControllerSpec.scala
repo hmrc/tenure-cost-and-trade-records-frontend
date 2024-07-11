@@ -78,7 +78,7 @@ class OtherHolidayAccommodationDetailsControllerSpec extends TestBaseSpec {
   "OtherHolidayAccommodationDetails" should {
     "error if otherHolidayAccommodationOpenAllYear answer is missing" in {
       val formData = baseFormData - errorKey.otherHolidayAccommodationOpenAllYear
-      val form     = otherHolidayAccommodationDetailsForm(messages).bind(formData)
+      val form     = otherHolidayAccommodationDetailsForm.bind(formData)
 
       mustContainError(
         errorKey.otherHolidayAccommodationOpenAllYear,

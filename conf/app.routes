@@ -220,6 +220,9 @@ POST        /electric-vehicle-charging-points                       controllers.
 GET         /static-caravans                                        controllers.aboutthetradinghistory.StaticCaravansController.show()
 POST        /static-caravans                                        controllers.aboutthetradinghistory.StaticCaravansController.submit()
 
+GET         /are-caravans-open-all-year                             controllers.aboutthetradinghistory.CaravansOpenAllYearController.show()
+POST        /are-caravans-open-all-year                             controllers.aboutthetradinghistory.CaravansOpenAllYearController.submit()
+
 GET         /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.show()
 POST        /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.submit()
 

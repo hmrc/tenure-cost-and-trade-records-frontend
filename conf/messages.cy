@@ -1605,6 +1605,12 @@ turnover.6045.anyStaticLeisureCaravansOnSite.p2 = You should not include details
 turnover.6045.anyStaticLeisureCaravansOnSite.question = Do you have any static holiday or leisure caravans located on your site?
 error.turnover.6045.anyStaticLeisureCaravansOnSite.required = Select yes if you have any static holiday or leisure caravans located on your site
 
+turnover.6045.caravansOpenAllYear.heading = Are your static caravans open all year?
+turnover.6045.weeksPerYear.label = Enter number of weeks the site remains open in a year
+error.caravans.openAllYear.required = Select yes if your static caravans are open all year
+error.caravans.weeksPerYear.required = Enter the number of weeks
+error.caravans.weeksPerYear.invalid = The number of weeks should be a number from 1 to 52
+
 turnover.6045.caravanFleetHire.grossReceipts.heading = Gross receipts from all static caravan fleet hire
 turnover.6045.caravanFleetHire.p1 = Include the income received from fleet hire of single and twin-unit static caravans:
 turnover.6045.caravanFleetHire.list1.item1 = owned by the operator

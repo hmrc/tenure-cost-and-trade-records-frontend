@@ -27,8 +27,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
 
   private val previousPage = "/financial-year-end"
 
-  private val nextPageOnYes = // TODO: Are your static caravans open all year?
-    aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
+  private val nextPageOnYes = aboutthetradinghistory.routes.CaravansOpenAllYearController.show().url
 
   private val nextPageOnNo = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 

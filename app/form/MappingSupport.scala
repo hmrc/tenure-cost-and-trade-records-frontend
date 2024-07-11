@@ -271,23 +271,20 @@ object MappingSupport {
       else Valid
     }
 
-  def weeksInYearMapping(implicit messages: Messages) =
-    default(text, "")
-      .verifying(messages("error.weeksInYearMapping.blank"), _.trim.nonEmpty)
-      .transform[Int](
-        str => Try(str.toInt).getOrElse(-1),
-        _.toString
-      )
-      .verifying(messages("error.weeksInYearMapping.invalid"), (0 to 52).contains(_))
+  def weeksInYearMapping: Mapping[Int] =
+    weeksMapping("error.weeksInYearMapping.blank", "error.weeksInYearMapping.invalid")
 
-  def tradingPeriodWeeks(year: String)(implicit messages: Messages) =
+  def tradingPeriodWeeks(year: String)(implicit messages: Messages): Mapping[Int] =
+    weeksMapping(messages("error.weeksMapping.blank", year), messages("error.weeksMapping.invalid", year), 0)
+
+  def weeksMapping(blankErrorMessage: String, invalidErrorMessage: String, minWeeks: Int = 1): Mapping[Int] =
     default(text, "")
-      .verifying(messages("error.weeksMapping.blank", year), _.trim.nonEmpty)
+      .verifying(blankErrorMessage, _.trim.nonEmpty)
       .transform[Int](
         str => Try(str.toInt).getOrElse(-1),
         _.toString
       )
-      .verifying(messages("error.weeksMapping.invalid", year), (0 to 52).contains(_))
+      .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
   private val salesMax = BigDecimal(1000000000000L)
 
