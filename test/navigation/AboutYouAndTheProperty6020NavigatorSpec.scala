@@ -45,6 +45,15 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
         .show()
     }
+
+    "return a function that goes to website page when no is answered for about the property and has been completed123" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6020NoSession)
+        .apply(
+          aboutYouAndTheProperty6020NoSession
+        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        .show()
+    }
   }
 
   "return a function that goes to about the property alternative contact details page when yes is answered for contact details and has been completed" in {

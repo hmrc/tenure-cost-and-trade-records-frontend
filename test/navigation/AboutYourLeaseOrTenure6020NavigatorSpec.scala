@@ -185,7 +185,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .apply(session) mustBe controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
     }
 
-    "return a function that goes to what is the rent based on when the current rent was agreed has been completed with No123 " in {
+    "return a function that goes to ultimately responsible OR based on when is VAT Payable has been completed with No " in {
 
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
