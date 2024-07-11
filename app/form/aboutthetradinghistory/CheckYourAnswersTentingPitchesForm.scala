@@ -19,8 +19,7 @@ package form.aboutthetradinghistory
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{default, single, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.single
 
 object CheckYourAnswersTentingPitchesForm {
 

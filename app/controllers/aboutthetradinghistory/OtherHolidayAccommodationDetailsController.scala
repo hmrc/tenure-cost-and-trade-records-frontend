@@ -21,8 +21,6 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OtherHolidayAccommodationDetailsForm.otherHolidayAccommodationDetailsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateOtherHolidayAccommodation
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, OtherHolidayAccommodationDetails}
-import models.submissions.common.AnswerNo
-import models.{ForTypes, Session}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.OtherHolidayAccommodationDetailsId
 import play.api.Logging

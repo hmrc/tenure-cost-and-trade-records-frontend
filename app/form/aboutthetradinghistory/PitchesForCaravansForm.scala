@@ -16,10 +16,9 @@
 
 package form.aboutthetradinghistory
 
-import controllers.toOpt
 import form.MappingSupport.{mappingPerYear, numberOfPitches, tradingPeriodWeeks, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.PitchesForCaravans
-import play.api.data.Forms.{mapping, optional, text}
+import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
