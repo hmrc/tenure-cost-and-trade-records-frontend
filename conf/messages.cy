@@ -2144,7 +2144,7 @@ pitchesForCaravans.p = Enter your gross receipts from these pitches excluding VA
 error.tentingPitches.grossReceipts.required = Enter 0 if you did not have any gross receipts in the year ending {0}
 error.tentingPitches.grossReceipts.range = Wages and salaries in the year ending {0} must be a positive number, for example 100 or 100.00
 error.tentingPitches.numberOfPitches.required = Enter 0 if you did not have any pitches in the year ending {0}
-error.tentingPitches.numberOfPitches.range = Number of pitches in the year ending {0} must be a number, for example 100 or 100.00
+error.tentingPitches.numberOfPitches.range = Number of pitches in the year ending {0} must be a positive number, for example 1 or 100
 
 #TENTING PITCHES TRADING COMMON LABELS
 ######################################
