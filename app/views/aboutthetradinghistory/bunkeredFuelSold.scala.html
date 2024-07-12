@@ -17,7 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.BunkeredFuelSold
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtil
+@import util.DateUtilLocalised
 @import actions.SessionRequest
 @import models.pages.Summary
 
@@ -29,7 +29,7 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
-        dateUtil: DateUtil
+        dateUtil: DateUtilLocalised
 )
 
 @(form: Form[Seq[BunkeredFuelSold]], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)

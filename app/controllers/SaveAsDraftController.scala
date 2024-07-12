@@ -28,7 +28,7 @@ import play.api.mvc.{MessagesControllerComponents, Request, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import util.{AlphanumericPasswordGenerator, DateUtil}
+import util.{AlphanumericPasswordGenerator, DateUtilLocalised}
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
 
 import java.time.LocalDate
@@ -45,7 +45,7 @@ class SaveAsDraftController @Inject() (
   submissionDraftSavedView: submissionDraftSaved,
   saveAsDraftLoginView: saveAsDraftLogin,
   sessionTimeoutView: sessionTimeout,
-  dateUtil: DateUtil,
+  dateUtil: DateUtilLocalised,
   mongoHasher: MongoHasher,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") sessionRepo: SessionRepo,

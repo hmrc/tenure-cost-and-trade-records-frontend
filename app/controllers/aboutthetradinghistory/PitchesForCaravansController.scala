@@ -75,8 +75,9 @@ class PitchesForCaravansController @Inject() (
             )
           )
 
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPageForTentingPitches(PitchesForCaravansId, updatedData).apply(updatedData))
+          session.saveOrUpdate(updatedData).map { _ =>
+            Redirect(navigator.nextPageForTentingPitches(PitchesForCaravansId, updatedData).apply(updatedData))
+          }
         }
       )
     }

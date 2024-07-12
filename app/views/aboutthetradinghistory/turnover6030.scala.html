@@ -18,7 +18,7 @@
 @import models.submissions.aboutthetradinghistory.TurnoverSection6030
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtil
+@import util.DateUtilLocalised
 @import util.NumberUtil._
 
 
@@ -30,7 +30,7 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
-        dateUtil: DateUtil
+        dateUtil: DateUtilLocalised
 )
 
 @(form: Form[Seq[TurnoverSection6030]],fromLocation:String="")(implicit request: SessionRequest[_], messages: Messages)

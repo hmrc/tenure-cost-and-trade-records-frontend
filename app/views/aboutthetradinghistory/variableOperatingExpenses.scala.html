@@ -22,7 +22,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtil
+@import util.DateUtilLocalised
 @import util.NumberUtil._
 
 @this(layout: Layout,
@@ -33,7 +33,7 @@
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
         hmrcCharacterCount: HmrcCharacterCount,
-        dateUtil: DateUtil
+        dateUtil: DateUtilLocalised
 )
 
 @(form: Form[VariableOperatingExpensesSections], fromLocation:String = "")(implicit request: SessionRequest[_], messages: Messages)

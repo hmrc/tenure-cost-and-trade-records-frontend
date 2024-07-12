@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration._
-import org.scalatest.BeforeAndAfterAll
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, UpstreamErrorResponse}
 import utils.TestBaseSpec
 
-class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
+class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll with BeforeAndAfterEach {
 
   //private val wireMockPort = 11111
 
@@ -53,6 +53,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
         "microservice.services.tenure-cost-and-trade-records.port" -> 11111
       )
       .build()
+
   override def beforeAll(): Unit = {
     super.beforeAll()
     configureFor("localhost", 11111)
@@ -61,6 +62,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll {
 
   override def afterEach(): Unit =
     wireMockServer.resetAll()
+
   override def afterAll(): Unit = {
     wireMockServer.stop()
     super.afterAll()

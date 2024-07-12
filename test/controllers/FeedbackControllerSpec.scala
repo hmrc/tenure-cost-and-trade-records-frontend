@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,7 @@ package controllers
 import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
-import org.mockito.scalatest.MockitoSugar
 import org.scalatest.BeforeAndAfter
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status
 import play.api.http.Status._
 import play.api.test.FakeRequest
@@ -31,14 +27,7 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
 import utils.{HtmlAssertionHelper, TestBaseSpec}
 
-class FeedbackControllerSpec
-    extends AnyWordSpec
-    with Matchers
-    with MockitoSugar
-    with GuiceOneAppPerSuite
-    with BeforeAndAfter
-    with HtmlAssertionHelper
-    with TestBaseSpec {
+class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlAssertionHelper {
 
   private val postRequest = FakeRequest("POST", "/")
 

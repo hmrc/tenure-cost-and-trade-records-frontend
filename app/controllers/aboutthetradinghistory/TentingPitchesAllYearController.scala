@@ -82,7 +82,7 @@ class TentingPitchesAllYearController @Inject() (
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show.url
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#" // TODO with TaskList ticket for 6045
       case _     => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
 

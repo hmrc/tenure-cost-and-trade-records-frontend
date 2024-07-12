@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,31 +16,15 @@
 
 package config
 
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.Application
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.test.{FakeRequest, Injecting}
+import utils.TestBaseSpec
 
-class ErrorHandlerSpec extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with Injecting {
+class ErrorHandlerSpec extends TestBaseSpec {
 
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"                         -> false,
-        "metrics.enabled"                     -> false,
-        "create-internal-auth-token-on-start" -> false
-      )
-      .build()
-
-  private val fakeRequest = FakeRequest("GET", "/")
-
-  private val handler = inject[ErrorHandler]
+  private val errorHandler = inject[ErrorHandler]
 
   "standardErrorTemplate" should {
     "render HTML" in {
-      val html = handler.standardErrorTemplate("title", "heading", "message")(fakeRequest)
+      val html = errorHandler.standardErrorTemplate("title", "heading", "message")(fakeRequest)
       html.contentType shouldBe "text/html"
     }
   }
