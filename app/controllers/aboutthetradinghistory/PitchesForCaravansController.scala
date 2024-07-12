@@ -17,7 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
-import controllers.{FORDataCaptureController, aboutthetradinghistory}
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.PitchesForCaravansForm.pitchesForCaravansForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{PitchesForCaravans, TurnoverSection6045}

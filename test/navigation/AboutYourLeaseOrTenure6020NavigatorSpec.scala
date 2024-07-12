@@ -164,6 +164,13 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to lease or agreement page when about the landlord has been completed " in {
+      navigator
+        .nextPage(AboutTheLandlordPageId, session6020)
+        .apply(session6020) mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController
+        .show()
+    }
+
     "return a function that goes to when the current rent was agreed  when does the rent payable include has been completed " in {
       navigator
         .nextPage(IncludedInRent6020Id, session6020)

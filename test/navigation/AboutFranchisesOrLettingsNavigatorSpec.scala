@@ -65,12 +65,36 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) mustBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
 
+    "return a function that goes to catering operation page when concession page has been completed yes" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010YesSession
+        ) mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
+    }
+
+    "return a function that goes to letting other part of property page when franchise page has been completed no" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010NoSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010NoSession
+        ) mustBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+    }
+
     "return a function that goes to catering operation page when franchise page has been completed yes 6015" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6015YesSession)
         .apply(
           sessionAboutFranchiseOrLetting6015YesSession
         ) mustBe controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
+    }
+
+    "return a function that goes to rent received from page when catering operation page has been completed yes 6015" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(CateringOperationDetailsPageId, sessionAboutFranchiseOrLetting6015YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6015YesSession
+        ) mustBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(0)
     }
 
     "return a function that goes to catering operation details page when rent from concession is completed yes 6015" in {
