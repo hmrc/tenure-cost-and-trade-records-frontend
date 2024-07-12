@@ -25,5 +25,5 @@ case class PercentageFromFuelCards(
   percentage: Option[BigDecimal]
 )
 object PercentageFromFuelCards {
-  implicit val format: OFormat[PercentageFromFuelCards] = Json.format[PercentageFromFuelCards]
+  implicit val format: OFormat[PercentageFromFuelCards] = Json.format
 }

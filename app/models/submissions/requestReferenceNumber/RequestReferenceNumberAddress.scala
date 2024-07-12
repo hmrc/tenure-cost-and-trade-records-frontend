@@ -28,5 +28,5 @@ case class RequestReferenceNumberAddress(
 ) extends PrintableAddress
 
 object RequestReferenceNumberAddress {
-  implicit val format: OFormat[RequestReferenceNumberAddress] = Json.format[RequestReferenceNumberAddress]
+  implicit val format: OFormat[RequestReferenceNumberAddress] = Json.format
 }

@@ -25,5 +25,5 @@ case class LowMarginFuelCardsDetails(
 )
 
 object LowMarginFuelCardsDetails {
-  implicit val format: OFormat[LowMarginFuelCardsDetails] = Json.format[LowMarginFuelCardsDetails]
+  implicit val format: OFormat[LowMarginFuelCardsDetails] = Json.format
 }

@@ -28,6 +28,5 @@ case class LettingSection(
 )
 
 object LettingSection {
-  implicit val format: OFormat[LettingSection] = Json.format[LettingSection]
-
+  implicit val format: OFormat[LettingSection] = Json.format
 }

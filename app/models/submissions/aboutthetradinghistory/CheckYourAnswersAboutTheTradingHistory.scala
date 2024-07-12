@@ -23,6 +23,5 @@ case class CheckYourAnswersAboutTheTradingHistory(
 )
 
 object CheckYourAnswersAboutTheTradingHistory {
-  implicit val format: OFormat[CheckYourAnswersAboutTheTradingHistory] =
-    Json.format[CheckYourAnswersAboutTheTradingHistory]
+  implicit val format: OFormat[CheckYourAnswersAboutTheTradingHistory] = Json.format
 }

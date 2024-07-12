@@ -25,6 +25,5 @@ case class OccupationalAndAccountingInformation(
   yearEndChanged: Option[Boolean] = Some(false)
 )
 object OccupationalAndAccountingInformation {
-  implicit val format: OFormat[OccupationalAndAccountingInformation] = Json.format[OccupationalAndAccountingInformation]
-
+  implicit val format: OFormat[OccupationalAndAccountingInformation] = Json.format
 }

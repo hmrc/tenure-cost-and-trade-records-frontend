@@ -24,5 +24,5 @@ case class PropertyDetails(
 )
 
 object PropertyDetails {
-  implicit val format: OFormat[PropertyDetails] = Json.format[PropertyDetails]
+  implicit val format: OFormat[PropertyDetails] = Json.format
 }

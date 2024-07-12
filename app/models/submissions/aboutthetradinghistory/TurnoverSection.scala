@@ -33,5 +33,5 @@ case class TurnoverSection(
 }
 
 object TurnoverSection {
-  implicit val format: OFormat[TurnoverSection] = Json.format[TurnoverSection]
+  implicit val format: OFormat[TurnoverSection] = Json.format
 }

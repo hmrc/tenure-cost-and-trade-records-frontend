@@ -25,5 +25,5 @@ case class UltimatelyResponsibleInsideRepairs(
 )
 
 object UltimatelyResponsibleInsideRepairs {
-  implicit val format: OFormat[UltimatelyResponsibleInsideRepairs] = Json.format[UltimatelyResponsibleInsideRepairs]
+  implicit val format: OFormat[UltimatelyResponsibleInsideRepairs] = Json.format
 }

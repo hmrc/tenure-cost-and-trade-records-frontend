@@ -24,5 +24,5 @@ case class WorkCarriedOutCondition(
 )
 
 object WorkCarriedOutCondition {
-  implicit val format: OFormat[WorkCarriedOutCondition] = Json.format[WorkCarriedOutCondition]
+  implicit val format: OFormat[WorkCarriedOutCondition] = Json.format
 }

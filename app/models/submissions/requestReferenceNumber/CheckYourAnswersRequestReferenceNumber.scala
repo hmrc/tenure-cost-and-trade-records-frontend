@@ -23,7 +23,5 @@ case class CheckYourAnswersRequestReferenceNumber(
 )
 
 object CheckYourAnswersRequestReferenceNumber {
-  implicit val format: OFormat[CheckYourAnswersRequestReferenceNumber] =
-    Json.format[CheckYourAnswersRequestReferenceNumber]
-
+  implicit val format: OFormat[CheckYourAnswersRequestReferenceNumber] = Json.format
 }

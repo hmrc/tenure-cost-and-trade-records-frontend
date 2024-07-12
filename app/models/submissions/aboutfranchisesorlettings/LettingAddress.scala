@@ -28,6 +28,5 @@ case class LettingAddress(
 ) extends PrintableAddress
 
 object LettingAddress {
-  implicit val format: OFormat[LettingAddress] = Json.format[LettingAddress]
-
+  implicit val format: OFormat[LettingAddress] = Json.format
 }

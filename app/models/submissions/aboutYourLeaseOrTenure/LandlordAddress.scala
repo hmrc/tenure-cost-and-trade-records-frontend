@@ -28,5 +28,5 @@ case class LandlordAddress(
 ) extends PrintableAddress
 
 object LandlordAddress {
-  implicit val format: OFormat[LandlordAddress] = Json.format[LandlordAddress]
+  implicit val format: OFormat[LandlordAddress] = Json.format
 }

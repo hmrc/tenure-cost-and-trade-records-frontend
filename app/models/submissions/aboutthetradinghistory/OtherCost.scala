@@ -30,5 +30,5 @@ case class OtherCost(
 }
 
 object OtherCost {
-  implicit val format: OFormat[OtherCost] = Json.format[OtherCost]
+  implicit val format: OFormat[OtherCost] = Json.format
 }

@@ -26,5 +26,5 @@ case class TotalFuelSold(
 )
 
 object TotalFuelSold {
-  implicit val format: OFormat[TotalFuelSold] = Json.format[TotalFuelSold]
+  implicit val format: OFormat[TotalFuelSold] = Json.format
 }

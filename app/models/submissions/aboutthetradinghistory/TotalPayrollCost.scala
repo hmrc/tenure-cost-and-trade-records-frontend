@@ -29,6 +29,5 @@ case class TotalPayrollCost(
 }
 
 object TotalPayrollCost {
-  implicit val format: OFormat[TotalPayrollCost] = Json.format[TotalPayrollCost]
-
+  implicit val format: OFormat[TotalPayrollCost] = Json.format
 }

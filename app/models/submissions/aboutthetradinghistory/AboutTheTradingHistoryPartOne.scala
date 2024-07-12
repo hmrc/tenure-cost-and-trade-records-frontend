@@ -38,7 +38,7 @@ case class AboutTheTradingHistoryPartOne(
 )
 
 object AboutTheTradingHistoryPartOne {
-  implicit val format: OFormat[AboutTheTradingHistoryPartOne] = Json.format[AboutTheTradingHistoryPartOne]
+  implicit val format: OFormat[AboutTheTradingHistoryPartOne] = Json.format
 
   def updateAboutTheTradingHistoryPartOne(
     copy: AboutTheTradingHistoryPartOne => AboutTheTradingHistoryPartOne

@@ -23,7 +23,5 @@ case class PremisesLicenseGrantedInformationDetails(
 )
 
 object PremisesLicenseGrantedInformationDetails {
-  implicit val format: OFormat[PremisesLicenseGrantedInformationDetails] =
-    Json.format[PremisesLicenseGrantedInformationDetails]
-
+  implicit val format: OFormat[PremisesLicenseGrantedInformationDetails] = Json.format
 }

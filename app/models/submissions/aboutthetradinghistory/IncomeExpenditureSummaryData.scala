@@ -32,7 +32,5 @@ case class IncomeExpenditureSummaryData(
 )
 
 object IncomeExpenditureSummaryData {
-
-  implicit val format: OFormat[IncomeExpenditureSummaryData] = Json.format[IncomeExpenditureSummaryData]
-
+  implicit val format: OFormat[IncomeExpenditureSummaryData] = Json.format
 }

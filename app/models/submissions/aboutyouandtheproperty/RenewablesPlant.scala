@@ -23,6 +23,5 @@ case class RenewablesPlant(
 )
 
 object RenewablesPlant {
-
-  implicit val format: OFormat[RenewablesPlant] = Json.format[RenewablesPlant]
+  implicit val format: OFormat[RenewablesPlant] = Json.format
 }

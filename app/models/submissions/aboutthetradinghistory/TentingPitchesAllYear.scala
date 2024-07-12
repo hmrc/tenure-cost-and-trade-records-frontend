@@ -25,5 +25,5 @@ case class TentingPitchesAllYear(
 )
 
 object TentingPitchesAllYear {
-  implicit val format: OFormat[TentingPitchesAllYear] = Json.format[TentingPitchesAllYear]
+  implicit val format: OFormat[TentingPitchesAllYear] = Json.format
 }

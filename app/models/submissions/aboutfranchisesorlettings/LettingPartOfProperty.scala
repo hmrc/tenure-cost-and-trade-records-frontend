@@ -61,7 +61,7 @@ case class RentDetails(
   sumFixedDate: LocalDate
 )
 object RentDetails {
-  implicit val format: Format[RentDetails] = Json.format[RentDetails]
+  implicit val format: Format[RentDetails] = Json.format
 }
 
 case class ATMLetting(
@@ -74,7 +74,7 @@ case class ATMLetting(
 }
 
 object ATMLetting {
-  implicit val format: Format[ATMLetting] = Json.format[ATMLetting]
+  implicit val format: Format[ATMLetting] = Json.format
 }
 
 case class TelecomMastLetting(
@@ -88,7 +88,7 @@ case class TelecomMastLetting(
 }
 
 object TelecomMastLetting {
-  implicit val format: Format[TelecomMastLetting] = Json.format[TelecomMastLetting]
+  implicit val format: Format[TelecomMastLetting] = Json.format
 }
 
 case class AdvertisingRightLetting(
@@ -102,7 +102,7 @@ case class AdvertisingRightLetting(
 }
 
 object AdvertisingRightLetting {
-  implicit val format: Format[AdvertisingRightLetting] = Json.format[AdvertisingRightLetting]
+  implicit val format: Format[AdvertisingRightLetting] = Json.format
 }
 
 case class OtherLetting(
@@ -116,5 +116,5 @@ case class OtherLetting(
 }
 
 object OtherLetting {
-  implicit val format: Format[OtherLetting] = Json.format[OtherLetting]
+  implicit val format: Format[OtherLetting] = Json.format
 }

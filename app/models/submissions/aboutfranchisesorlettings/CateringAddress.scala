@@ -28,6 +28,5 @@ case class CateringAddress(
 ) extends PrintableAddress
 
 object CateringAddress {
-  implicit val format: OFormat[CateringAddress] = Json.format[CateringAddress]
-
+  implicit val format: OFormat[CateringAddress] = Json.format
 }

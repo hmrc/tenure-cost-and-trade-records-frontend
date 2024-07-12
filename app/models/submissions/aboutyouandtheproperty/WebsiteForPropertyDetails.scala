@@ -24,6 +24,5 @@ case class WebsiteForPropertyDetails(
 )
 
 object WebsiteForPropertyDetails {
-  implicit val format: OFormat[WebsiteForPropertyDetails] = Json.format[WebsiteForPropertyDetails]
-
+  implicit val format: OFormat[WebsiteForPropertyDetails] = Json.format
 }

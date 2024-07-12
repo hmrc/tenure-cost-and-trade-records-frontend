@@ -23,6 +23,5 @@ case class CheckYourAnswersAboutYourProperty(
 )
 
 object CheckYourAnswersAboutYourProperty {
-  implicit val format: OFormat[CheckYourAnswersAboutYourProperty] = Json.format[CheckYourAnswersAboutYourProperty]
-
+  implicit val format: OFormat[CheckYourAnswersAboutYourProperty] = Json.format
 }
