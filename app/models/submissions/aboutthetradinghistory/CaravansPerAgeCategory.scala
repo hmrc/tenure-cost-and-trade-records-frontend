@@ -16,22 +16,20 @@
 
 package models.submissions.aboutthetradinghistory
 
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 /**
-  * 6045/6046 Trading history - Static holiday or leisure caravans pages.
-  *
   * @author Yuriy Tumakha
   */
-case class Caravans(
-  anyStaticLeisureCaravansOnSite: Option[AnswersYesNo] = None,
-  openAllYear: Option[AnswersYesNo] = None,
-  weeksPerYear: Option[Int] = None,
-  singleCaravansAge: Option[CaravansAge] = None,
-  twinUnitCaravansAge: Option[CaravansAge] = None
-)
+case class CaravansPerAgeCategory(
+  years0_5: Int = 0,
+  years6_10: Int = 0,
+  years11_15: Int = 0,
+  years15plus: Int = 0
+) {
+  def total: Int = years0_5 + years6_10 + years11_15 + years15plus
+}
 
-object Caravans {
-  implicit val format: OFormat[Caravans] = Json.format
+object CaravansPerAgeCategory {
+  implicit val format: OFormat[CaravansPerAgeCategory] = Json.format
 }
