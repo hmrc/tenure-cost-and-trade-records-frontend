@@ -46,8 +46,9 @@ class AboutYourLeaseOrTenure6015NavigatorSpec extends TestBaseSpec {
 
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
-      navigator.nextPage(UnknownIdentifier, session6015).apply(session6015) mustBe controllers.routes.LoginController
-        .show
+      navigator
+        .nextPage(UnknownIdentifier, session6015)
+        .apply(session6015) mustBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to connected to landlord page when about your landlord has been completed" in {
