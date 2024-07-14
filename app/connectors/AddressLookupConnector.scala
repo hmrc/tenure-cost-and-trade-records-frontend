@@ -51,7 +51,7 @@ class AddressLookupConnector @Inject() (
     val addressLookupUrl = s"$serviceUrl/api/v2/init"
     val addressConfig    = Json.toJson(addressLookupConfig.config(continueUrl = continueUrl, feedbackUrl = feedbackUrl))
     http
-      .POST[JsValue, HttpResponse](addressLookupUrl, body = addressConfig)
+      .POST[JsValue, HttpResponse](addressLookupUrl, body = addressConfig, Seq.empty)
       .map { response =>
         response.status match {
           case 202   =>
@@ -74,6 +74,6 @@ class AddressLookupConnector @Inject() (
   def getAddress(id: String)(implicit hc: HeaderCarrier): Future[AddressLookup] = {
 
     val getAddressUrl = s"$serviceUrl/api/confirmed?id=$id"
-    http.GET[AddressLookup](getAddressUrl)
+    http.GET[AddressLookup](getAddressUrl, Seq.empty, Seq.empty)
   }
 }

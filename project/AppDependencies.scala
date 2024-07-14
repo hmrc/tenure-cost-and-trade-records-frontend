@@ -1,21 +1,21 @@
 import play.core.PlayVersion
-import sbt._
+import sbt.*
 
 object AppDependencies {
 
-  val bootstrapVersion     = "8.4.0"
-  val playFrontendVersion  = "8.5.0"
-  val mongoVersion         = "1.7.0"
-  val cryptoJsonVersion    = "7.6.0"
-  val jodaVersion          = "2.9.4"
-  val cachingClientVersion = "10.0.0-play-28"
+  val bootstrapVersion    = "9.0.0"
+  val playFrontendVersion = "10.4.0"
+  val mongoVersion        = "2.1.0"
+  val cryptoJsonVersion   = "8.0.0"
 
   // Test dependencies
-  val scalatestPlusPlayVersion = "7.0.1"
-  val scalatestVersion         = "3.2.18"
-  val mockitoScalaVersion      = "1.17.30"
-  val flexMarkVersion          = "0.64.8"
-  val wireMockVersion          = "2.21.0"
+  val scalatestPlusPlayVersion       = "7.0.1"
+  val scalatestVersion               = "3.2.19"
+  val scalaTestPlusScalaCheckVersion = "3.2.19.0"
+  val scalaTestPlusMockitoVersion    = "3.2.19.0"
+  val flexMarkVersion                = "0.64.8"
+  val wiremockVersion                = "2.21.0" // 3.8.0
+  val jsoupVersion                   = "1.17.2"
 
   private val compile = Seq(
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30" % bootstrapVersion,
@@ -25,17 +25,17 @@ object AppDependencies {
   )
 
   private val test = Seq(
-    "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % bootstrapVersion         % Test,
-    "org.playframework"      %% "play-test"               % PlayVersion.current      % Test,
-    "org.scalatest"          %% "scalatest"               % scalatestVersion         % Test,
-    "org.scalatestplus.play" %% "scalatestplus-play"      % scalatestPlusPlayVersion % Test,
-    "com.vladsch.flexmark"    % "flexmark-all"            % flexMarkVersion          % Test, // for scalatest 3.2.x
-    "com.github.tomakehurst"  % "wiremock"                % wireMockVersion          % Test,
-    "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % mongoVersion             % Test,
-    "org.scalatestplus"      %% "scalacheck-1-17"         % "3.2.17.0"               % Test,
-    "org.scalatestplus"      %% "mockito-4-11"            % "3.2.17.0"               % Test,
-    "org.mockito"            %% "mockito-scala-scalatest" % mockitoScalaVersion      % Test,
-    "org.jsoup"               % "jsoup"                   % "1.16.1"                 % Test
+    "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % bootstrapVersion               % Test,
+    "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % mongoVersion                   % Test,
+    "org.playframework"      %% "play-test"               % PlayVersion.current            % Test,
+    "org.scalatest"          %% "scalatest"               % scalatestVersion               % Test,
+    "org.scalatestplus.play" %% "scalatestplus-play"      % scalatestPlusPlayVersion       % Test,
+    "org.scalatestplus"      %% "scalacheck-1-18"         % scalaTestPlusScalaCheckVersion % Test,
+    "org.scalatestplus"      %% "mockito-5-12"            % scalaTestPlusMockitoVersion    % Test,
+    "com.vladsch.flexmark"    % "flexmark-all"            % flexMarkVersion                % Test, // for scalatest 3.2.x
+    // "org.wiremock" % "wiremock" % wiremockVersion % Test
+    "com.github.tomakehurst"  % "wiremock"                % wiremockVersion                % Test,
+    "org.jsoup"               % "jsoup"                   % jsoupVersion                   % Test
   )
 
   val appDependencies: Seq[ModuleID] = compile ++ test

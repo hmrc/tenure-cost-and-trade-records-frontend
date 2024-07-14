@@ -28,7 +28,6 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import models.{ForTypes, Session}
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
-import org.mockito.scalatest.MockitoSugar
 import org.scalatest.{Inside, OptionValues}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
@@ -54,7 +53,7 @@ trait TestBaseSpec
     with Matchers
     with FutureAwaits
     with DefaultAwaitTimeout
-    with MockitoSugar
+    with MockitoExtendedSugar
     with ScalaFutures
     with Inside
     with GuiceOneAppPerSuite

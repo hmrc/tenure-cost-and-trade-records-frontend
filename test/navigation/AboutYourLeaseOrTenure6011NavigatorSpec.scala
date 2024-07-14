@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
     "go to sign in from an identifier that doesn't exist in the route map" in {
       case object UnknownIdentifier extends Identifier
       navigator.nextPage(UnknownIdentifier, session6011).apply(session6011) mustBe controllers.routes.LoginController
-        .show()
+        .show
     }
 
     "return a function that goes to connected to landlord page when about your landlord has been completed" in {

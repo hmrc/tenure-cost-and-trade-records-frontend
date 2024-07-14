@@ -129,9 +129,9 @@ object MappingSupport {
     .verifying(nonEmpty(errorMessage = Errors.annualRentExcludingVAT + fieldErrorPart))
     .verifying(
       Errors.annualRentExcludingVATCurrency + fieldErrorPart,
-      x => x == "" || ((x.replace(",", "") matches decimalRegex) && BigDecimal(x.replace(",", "")) >= 0.000)
+      x => x == "" || (x.replace(",", "").matches(decimalRegex) && BigDecimal(x.replace(",", "")) >= 0.000)
     )
-    .transform({ s: String => BigDecimal(s.replace(",", "")) }, { v: BigDecimal => v.toString })
+    .transform((s: String) => BigDecimal(s.replace(",", "")), (v: BigDecimal) => v.toString)
     .verifying(Errors.maxCurrencyAmountExceeded + fieldErrorPart, _ <= cdbMaxCurrencyAmount)
 
   val contactDetailsMapping: Mapping[ContactDetails] =
@@ -232,11 +232,11 @@ object MappingSupport {
   def mandatoryBooleanWithError(message: String) =
     optional(boolean)
       .verifying(message, _.isDefined)
-      .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
+      .transform((s: Option[Boolean]) => s.get, (v: Boolean) => Some(v))
 
   val mandatoryBoolean = optional(boolean)
     .verifying(Errors.booleanMissing, _.isDefined)
-    .transform({ s: Option[Boolean] => s.get }, { v: Boolean => Some(v) })
+    .transform((s: Option[Boolean]) => s.get, (v: Boolean) => Some(v))
 
   def intMapping(): Mapping[Int] = default(text, "0")
     .verifying("error.invalid_number", x => x == "0" || intRegex.findFirstIn(x).isDefined)

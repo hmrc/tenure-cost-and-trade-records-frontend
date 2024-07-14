@@ -113,18 +113,18 @@ class LoginController @Inject() (
     Future.successful(Ok(login(form)))
   }
 
-  def logout = (Action andThen withSessionRefiner).async { implicit request =>
+  def logout: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     session.remove().map { _ =>
       audit.sendExplicitAudit("Logout", request.sessionData.toUserData)
       Redirect(routes.LoginController.loggedOut).withNewSession
     }
   }
 
-  def loggedOut = Action.async { implicit request =>
+  def loggedOut: Action[AnyContent] = Action.async { implicit request =>
     Ok(loggedOutView())
   }
 
-  def submit = Action.async { implicit request =>
+  def submit: Action[AnyContent] = Action.async { implicit request =>
     loginForm
       .bindFromRequest()
       .fold(
@@ -214,11 +214,11 @@ class LoginController @Inject() (
     audit.sendExplicitAudit("LockedOut", detailJson)
   }
 
-  def lockedOut = Action { implicit request =>
+  def lockedOut: Action[AnyContent] = Action { implicit request =>
     Unauthorized(lockedOutView())
   }
 
-  def loginFailed(attemptsRemaining: Int) = Action { implicit request =>
+  def loginFailed(attemptsRemaining: Int): Action[AnyContent] = Action { implicit request =>
     Unauthorized(loginFailedView(attemptsRemaining))
   }
 

@@ -60,7 +60,8 @@ class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConf
 
     http.POST[Credentials, FORLoginResponse](
       url("authenticate"),
-      credentials
+      credentials,
+      Seq.empty
     )(wrtCredentials, readsHack, headerCarrier, ec)
   }
 

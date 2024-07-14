@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -47,37 +47,38 @@
 @(theForm: Form[TypeOfLetting], index: Option[Int], summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
 
 @content = {
-  @govukRadios(Radios(
-    fieldset =  Some(Fieldset(
-      legend = Some(Legend(
-        content = Text(Messages("lettings.typeOfLetting.heading")),
-        classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--m",
-        isPageHeading = true
-      ))
-    )),
-    name = "typeOfLetting",
-    items = Seq(
-      RadioItem(
-        content = Text(messages("lettings.typeOfLetting.automatedTellerMachine")),
-        value = Some("automatedTellerMachine")
-      ),
-      RadioItem(
-        content = Text(messages("lettings.typeOfLetting.telecomMast")),
-        value = Some("telecomMast")
-      ),
-      RadioItem(
-        content = Text(messages("lettings.typeOfLetting.advertisingRight")),
-        value = Some("advertisingRight")
-      ),
-      RadioItem(
-        content = Text(messages("lettings.typeOfLetting.other")),
-        value = Some("other")
-      )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("typeOfLetting"),
-    formGroupClasses = "govuk-!-margin-bottom-3",
-  ).withFormField(theForm("typeOfLetting"))
-  )
+    @govukRadios(
+        Radios(
+            fieldset = Some(Fieldset(
+                legend = Some(Legend(
+                    content = Text(Messages("lettings.typeOfLetting.heading")),
+                    classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--m",
+                    isPageHeading = true
+                ))
+            )),
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("lettings.typeOfLetting.automatedTellerMachine")),
+                    value = Some("automatedTellerMachine")
+                ),
+                RadioItem(
+                    content = Text(messages("lettings.typeOfLetting.telecomMast")),
+                    value = Some("telecomMast")
+                ),
+                RadioItem(
+                    content = Text(messages("lettings.typeOfLetting.advertisingRight")),
+                    value = Some("advertisingRight")
+                ),
+                RadioItem(
+                    content = Text(messages("lettings.typeOfLetting.other")),
+                    value = Some("other")
+                )
+            ),
+            formGroup = FormGroup(
+                classes = "govuk-!-margin-bottom-3",
+            )
+        ).withFormField(theForm("typeOfLetting"))
+    )
 }
 
 @layout(

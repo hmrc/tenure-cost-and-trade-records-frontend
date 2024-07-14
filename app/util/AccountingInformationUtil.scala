@@ -41,7 +41,7 @@ object AccountingInformationUtil {
     val financialYearEndMonth = financialYear.months
 
     val currentFinancialYear =
-      if (now isBefore LocalDate.of(yearNow, financialYearEndMonth, financialYearEndDay)) {
+      if (now.isBefore(LocalDate.of(yearNow, financialYearEndMonth, financialYearEndDay))) {
         yearNow
       } else {
         yearNow + 1

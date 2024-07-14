@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[Elect
 
   val messageKeyPrefix = "electricVehicleChargingPoints"
 
-  val backLink = controllers.routes.LoginController.show().url
+  val backLink = controllers.routes.LoginController.show.url
 
   override val form: Form[ElectricVehicleChargingPoints] =
     ElectricVehicleChargingPointsForm.electricVehicleChargingPointsForm
@@ -49,7 +49,7 @@ class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[Elect
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText mustBe messages("back.link.label")
       val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.LoginController.show().url
+      backlinkUrl mustBe controllers.routes.LoginController.show.url
     }
 
     "Section heading is visible" in {

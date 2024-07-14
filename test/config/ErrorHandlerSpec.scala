@@ -24,7 +24,7 @@ class ErrorHandlerSpec extends TestBaseSpec {
 
   "standardErrorTemplate" should {
     "render HTML" in {
-      val html = errorHandler.standardErrorTemplate("title", "heading", "message")(fakeRequest)
+      val html = await(errorHandler.standardErrorTemplate("title", "heading", "message")(fakeRequest))
       html.contentType shouldBe "text/html"
     }
   }

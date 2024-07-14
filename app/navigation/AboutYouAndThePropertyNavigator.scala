@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,7 +93,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
           throw new RuntimeException("Invalid option exception for licence activity routing")
       }
     } else {
-      controllers.routes.LoginController.show()
+      controllers.routes.LoginController.show
     }
   }
 

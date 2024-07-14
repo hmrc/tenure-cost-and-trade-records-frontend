@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       aboutFranchisesOrLettingsNavigator
         .nextPage(UnknownIdentifier, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(sessionAboutFranchiseOrLetting6010YesSession) mustBe controllers.routes.LoginController.show()
+        .apply(sessionAboutFranchiseOrLetting6010YesSession) mustBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to catering operation page when concession page has been completed yes" in {

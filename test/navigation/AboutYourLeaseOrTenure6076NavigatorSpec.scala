@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -107,7 +107,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, session6010)
-        .apply(session6010) mustBe controllers.routes.LoginController.show()
+        .apply(session6010) mustBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to lease or agreement years page when about your landlord has been completed" in {

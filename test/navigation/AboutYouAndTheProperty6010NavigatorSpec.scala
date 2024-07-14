@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, aboutYouAndTheProperty6010YesSession)
-        .apply(aboutYouAndTheProperty6010YesSession) mustBe controllers.routes.LoginController.show()
+        .apply(aboutYouAndTheProperty6010YesSession) mustBe controllers.routes.LoginController.show
     }
 
     // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey

@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 @import util.DateUtil
 
 @(  form: Form[_],
@@ -100,7 +101,9 @@
     @govukDate(
         DateInput(
             id = field,
-            formGroupClasses = if(form.errors.exists(e => e.key.contains(field))) "govuk-form-group--error" else "",
+            formGroup = FormGroup(
+                classes = if(form.errors.exists(e => e.key.contains(field))) "govuk-form-group--error" else ""
+            ),
             items = dateInputItems,
             hint = Hint(
                 content = HtmlContent(helpText.getOrElse(
@@ -122,7 +125,9 @@
       @govukDate(
           DateInput(
               id = field,
-              formGroupClasses = if(form.errors.exists(e => e.key.contains(field))) "govuk-form-group--error" else "",
+              formGroup = FormGroup(
+                  classes = if(form.errors.exists(e => e.key.contains(field))) "govuk-form-group--error" else ""
+              ),
               items = dateInputItems,
               hint = Hint(
                   content = HtmlContent(helpText.getOrElse(

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, sessionAboutYou)
-        .apply(sessionAboutYou) mustBe controllers.routes.LoginController.show()
+        .apply(sessionAboutYou) mustBe controllers.routes.LoginController.show
     }
 
     "return a function that goes financial-year-end page when about your trading history has been completed" in {

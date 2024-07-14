@@ -23,7 +23,7 @@ import play.api.data.{Form, FormError}
 import play.api.data.Forms.{list, mapping, text}
 import play.api.data.validation.Constraints.maxLength
 
-import scala.collection.compat.immutable.ArraySeq
+import scala.collection.immutable.ArraySeq
 
 /**
   * @author Yuriy Tumakha

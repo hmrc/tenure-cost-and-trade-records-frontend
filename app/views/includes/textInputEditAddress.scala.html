@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
 @(govukInput: GovukInput,
@@ -34,21 +35,17 @@
         value: String = ""
 )(implicit messages: Messages)
 
-@govukInput(Input(
-    id=id,
-    name=id,
-    inputType = "text",
-    value = value,
-    classes=classes,
-    autocomplete=Some(autoCompleteLabel),
-    formGroupClasses = formGroupClasses,
-    label = if(optional)
-        Label(content = Text(s"${messages(s"label.$labelContent")} ${messages("hintText.optional")}"), classes = labelClasses)
-    else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
-    errorMessage = theForm.errors.asTextErrorMessageForField(id),
-    hint = if(hintMsg.nonEmpty)
-        Some(Hint(content = Text(messages(s"hint.$hintMsg"))))
-    else None,
-).withFormField(theForm(id)))
-
-
+@govukInput(
+    Input(
+        inputType = "text",
+        value = value,
+        classes = classes,
+        autocomplete = autoCompleteLabel,
+        formGroup = FormGroup(
+            classes = formGroupClasses,
+        ),
+        label = if(optional) Label(content = Text(s"${messages(s"label.$labelContent")} ${messages("hintText.optional")}"), classes = labelClasses)
+                else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
+        hint = if(hintMsg.nonEmpty) Some(Hint(content = Text(messages(s"hint.$hintMsg")))) else None
+    ).withFormField(theForm(id))
+)

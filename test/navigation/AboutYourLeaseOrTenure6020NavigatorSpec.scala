@@ -46,7 +46,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, session6020)
-        .apply(session6020) mustBe controllers.routes.LoginController.show()
+        .apply(session6020) mustBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to connected to landlord page when about your landlord has been completed" in {

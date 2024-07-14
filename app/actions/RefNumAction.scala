@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class RefNumAction @Inject() (bodyParser: BodyParsers.Default, messagesApi: Mess
 
     request.session.get("refNum") match {
       case Some(refNum) => Right(new RefNumRequest(refNum, request, messagesApi))
-      case None         => Left(Redirect(controllers.routes.LoginController.show()))
+      case None         => Left(Redirect(controllers.routes.LoginController.show))
     }
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,16 @@
 
 package controllers
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
+import controllers.FeedbackFormMapper.feedbackForm
 import models.Session
 import models.submissions.ConnectedSubmission
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -48,26 +49,18 @@ class FormSubmissionController @Inject() (
     with Logging
     with I18nSupport {
 
-  import FeedbackFormMapper.feedbackForm
-
-  lazy val confirmationUrl = controllers.routes.FormSubmissionController.confirmation().url
-
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit()
-  }
-
-  private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     val auditType      = "FormSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject] ++ Audit.languageJson
     val session        = request.sessionData
 
-    submitToBackend(session).flatMap { _ =>
+    submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
-      Future.successful(Redirect(controllers.routes.FormSubmissionController.confirmation()))
-    } recover { case e: Exception =>
+      Redirect(controllers.routes.FormSubmissionController.confirmation())
+    } recoverWith { case e: Exception =>
       val failureReason =
         s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
       logger.error(failureReason, e)
@@ -77,7 +70,7 @@ class FormSubmissionController @Inject() (
         "failureReason"   -> failureReason
       )
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
-      InternalServerError(errorHandler.internalServerErrorTemplate(request))
+      errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
     }
   }
 

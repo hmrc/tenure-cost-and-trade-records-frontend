@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 @import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 @import models.pages.Summary
 
@@ -48,53 +49,54 @@
 
 @content = {
 @if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {
-  @govukRadios(Radios(
-    fieldset =  Some(Fieldset(
-      legend = Some(Legend(
-        content = Text(Messages("aboutProperty.heading")),
-        classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--m",
-        isPageHeading = true
-      ))
-    )),
-    hint = Hint(content = HtmlContent(messages("hint.select.main"))),
-    name = "propertyCurrentlyUsed",
-    items = Seq(
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.publicHouse")),
-        value = Some("publicHouse")
+  @govukRadios(
+    Radios(
+      fieldset = Some(Fieldset(
+        legend = Some(Legend(
+          content = Text(Messages("aboutProperty.heading")),
+          classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--m",
+          isPageHeading = true
+        ))
+      )),
+      hint = Hint(content = HtmlContent(messages("hint.select.main"))),
+      items = Seq(
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.publicHouse")),
+          value = Some("publicHouse")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
+          value = Some("wineCafeBar")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.otherBar")),
+          value = Some("otherBar")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
+          value = Some("pubRestaurant")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
+          value = Some("licencedRestaurant")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.hotel")),
+          value = Some("hotel")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
+          value = Some("discoNightclub")
+        ),
+        RadioItem(
+          content = Text(messages("propertyCurrentlyUsed.other")),
+          value = Some("other"),
+        )
       ),
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.wineCafeBar")),
-        value = Some("wineCafeBar")
-      ),
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.otherBar")),
-        value = Some("otherBar")
-      ),
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.pubRestaurant")),
-        value = Some("pubRestaurant")
-      ),
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.licencedRestaurant")),
-        value = Some("licencedRestaurant")
-      ),
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.hotel")),
-        value = Some("hotel")
-      ),
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.discoNightclub")),
-        value = Some("discoNightclub")
-      ),
-      RadioItem(
-        content = Text(messages("propertyCurrentlyUsed.other")),
-        value = Some("other"),
+      formGroup = FormGroup(
+        classes = "govuk-!-margin-bottom-3"
       )
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed"),
-    formGroupClasses = "govuk-!-margin-bottom-3",
-  ).withFormField(theForm("propertyCurrentlyUsed"))
+    ).withFormField(theForm("propertyCurrentlyUsed"))
   )
 
   @govukInput(
@@ -111,8 +113,9 @@
 }
 
 @if(forType.equals(ForTypes.for6015) || forType.equals(ForTypes.for6016)) {
-  @govukRadios(Radios(
-      fieldset =  Some(Fieldset(
+  @govukRadios(
+    Radios(
+      fieldset = Some(Fieldset(
         legend = Some(Legend(
           content = Text(Messages("aboutProperty.heading")),
           classes = "govuk-label--l govuk-fieldset__legend--m",
@@ -143,8 +146,9 @@
           conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
         )
       ),
-      errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsed"),
-      formGroupClasses = "govuk-!-margin-bottom-3",
+      formGroup = FormGroup(
+        classes = "govuk-!-margin-bottom-3"
+      )
     ).withFormField(theForm("propertyCurrentlyUsed"))
   )
 }
