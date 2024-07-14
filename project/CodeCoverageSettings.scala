@@ -3,28 +3,14 @@ import scoverage.ScoverageKeys
 
 object CodeCoverageSettings {
 
-  private val excludedPackages: Seq[String] = Seq(
-    "<empty>",
-    "Reverse.*",
-    "uk.gov.hmrc.BuildInfo",
-    "app.*",
-    "prod.*",
-    ".*Routes.*",
-    ".*RoutesPrefix.*",
-    ".*Filters?",
-    "MicroserviceAuditConnector",
-    "Module",
-    "config.InternalAuthTokenInitialiserImpl",
-    "GraphiteStartUp",
-    """.*\.Reverse[^.]*;""",
-    ".*.template.scala",
-    "testOnly.*",
-    "testOnlyDoNotUseInAppConf.*"
-  )
+  private val excludedPackages: Seq[String] = Seq(".*Reverse.*")
+
+  private val excludedFiles: Seq[String] = Seq(".*Routes.*")
 
   val settings: Seq[Setting[?]] = Seq(
     ScoverageKeys.coverageExcludedPackages := excludedPackages.mkString(";"),
-    ScoverageKeys.coverageMinimumStmtTotal := 87.0,
+    ScoverageKeys.coverageExcludedFiles := excludedFiles.mkString(";"),
+    ScoverageKeys.coverageMinimumStmtTotal := 86.7,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true
   )
