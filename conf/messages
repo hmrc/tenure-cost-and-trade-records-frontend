@@ -1274,6 +1274,7 @@ addAnotherConcession.heading.plural = You have added {0} separate businesses or 
 addAnotherLetting.heading = You have added {0} letting
 label.addAnotherCateringOperation = Do you need to add another separate business or franchise?
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
+label.addAnotherConcession = Do you need to add another separate business or concession?
 label.addAnotherLettingOtherPartOfProperty = Do you need to add another letting?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
 error.addAnotherSeparateConcessionOrFranchise.required = Select yes if you need to add another separate concession or franchise
