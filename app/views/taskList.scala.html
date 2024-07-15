@@ -53,12 +53,13 @@
   }
  }
  
-@section1Completed = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.checkYourAnswersConnectionToProperty)) }
-@section2Completed = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)) }
-@section3Completed = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory.map(_.checkYourAnswersAboutTheTradingHistory)) }
-@section4Completed = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings.map(_.checkYourAnswersAboutFranchiseOrLettings)) }
-@section5Completed = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure.map(_.checkYourAnswersAboutYourLeaseOrTenure)) }
-@section6Completed = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
+@section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.checkYourAnswersConnectionToProperty)) }
+@section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)) }
+@section3Completed       = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory.map(_.checkYourAnswersAboutTheTradingHistory)) }
+@section3point1Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation.map(_.checkYourAnswersOtherHolidayAccommodation))}
+@section4Completed       = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings.map(_.checkYourAnswersAboutFranchiseOrLettings)) }
+@section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure.map(_.checkYourAnswersAboutYourLeaseOrTenure)) }
+@section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
 
 @completedSections = @{
  Seq(
@@ -80,6 +81,8 @@
    section6Completed
   ).count(_.contains("yes"))
  }
+
+
 
 @declarationStatus = @{
  if(completedSections == totalSections) {
@@ -243,7 +246,7 @@
      section2Completed.isEmpty
     )
 
-    @if(!(Seq(ForTypes.for6020, ForTypes.for6076) contains forType)) {
+    @if(!(Seq(ForTypes.for6020, ForTypes.for6076, ForTypes.for6045) contains forType)) {
 
      @includes.taskListItem("turnover", "turnover.heading",
       if(forType == ForTypes.for6030) {
@@ -394,6 +397,13 @@
       session.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary),
       session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty
      )
+    }
+    @if(forType == ForTypes.for6045) {
+     @includes.taskListItem("other-holiday-accommodation", "taskList.otherHolidayAccommodation",
+      controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(),
+      section3point1Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).isEmpty)
     }
    </ul>
   </li>

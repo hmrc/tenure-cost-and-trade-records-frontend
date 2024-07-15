@@ -1474,6 +1474,7 @@ taskList.variableOperatingExpense = Variable operating expense
 taskList.fixedOperatingExpenses = Fixed operating expenses
 taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
+taskList.otherHolidayAccommodation = Other holiday accommodation
 taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid = Lease start date and rent paid
 declaration.heading = Now send your declaration
 request.heading = Now send your request
