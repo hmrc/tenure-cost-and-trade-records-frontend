@@ -26,6 +26,5 @@ case class CurrentRentPayableWithin12Months(
 )
 
 object CurrentRentPayableWithin12Months {
-  implicit val format: OFormat[CurrentRentPayableWithin12Months] = Json.format[CurrentRentPayableWithin12Months]
-
+  implicit val format: OFormat[CurrentRentPayableWithin12Months] = Json.format
 }

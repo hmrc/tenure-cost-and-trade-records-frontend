@@ -31,6 +31,5 @@ case class CostOfSales(
 }
 
 object CostOfSales {
-  implicit val format: OFormat[CostOfSales] = Json.format[CostOfSales]
-
+  implicit val format: OFormat[CostOfSales] = Json.format
 }

@@ -23,5 +23,5 @@ import java.time.LocalDate
 case class HowIsCurrentRentFixed(currentRentFixed: CurrentRentFixed, rentActuallyAgreed: LocalDate)
 
 object HowIsCurrentRentFixed {
-  implicit val format: OFormat[HowIsCurrentRentFixed] = Json.format[HowIsCurrentRentFixed]
+  implicit val format: OFormat[HowIsCurrentRentFixed] = Json.format
 }

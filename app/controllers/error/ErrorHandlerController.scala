@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ class ErrorHandlerController @Inject() (
     with I18nSupport {
 
   def showJsonError = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(jsonErrorView(Some(controllers.routes.LoginController.show().url))))
+    Future.successful(Ok(jsonErrorView(Some(controllers.routes.LoginController.show.url))))
   }
 
 }

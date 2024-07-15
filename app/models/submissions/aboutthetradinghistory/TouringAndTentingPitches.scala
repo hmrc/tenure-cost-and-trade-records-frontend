@@ -26,7 +26,5 @@ case class TouringAndTentingPitches(
 )
 
 object TouringAndTentingPitches {
-
-  implicit val format: OFormat[TouringAndTentingPitches] = Json.format[TouringAndTentingPitches]
-
+  implicit val format: OFormat[TouringAndTentingPitches] = Json.format
 }

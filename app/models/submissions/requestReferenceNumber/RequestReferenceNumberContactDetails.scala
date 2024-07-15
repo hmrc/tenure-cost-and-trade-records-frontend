@@ -26,7 +26,5 @@ case class RequestReferenceNumberContactDetails(
 )
 
 object RequestReferenceNumberContactDetails {
-  implicit val format1: OFormat[RequestReferenceNumberContactDetails] =
-    Json.format[RequestReferenceNumberContactDetails]
-
+  implicit val format1: OFormat[RequestReferenceNumberContactDetails] = Json.format
 }

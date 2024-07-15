@@ -27,9 +27,13 @@ import java.time.LocalDate
   */
 case class TurnoverSection6045(
   financialYearEnd: LocalDate,
+  // 3. Caravans
   grossReceiptsCaravanFleetHire: Option[GrossReceiptsCaravanFleetHire] = None,
-  pitchesForCaravans: Option[PitchesForCaravans] = None,
-  grossReceiptsLettingUnits: Option[GrossReceiptsLettingUnits] = None
+  // 3.1.0 Other holiday accommodation
+  grossReceiptsLettingUnits: Option[GrossReceiptsLettingUnits] = None,
+  // 3.2.0 Touring and tenting pitches
+  pitchesForCaravans: Option[PitchesForCaravans] = None
+  // 3.3.0 Additional activities
 )
 
 object TurnoverSection6045 {

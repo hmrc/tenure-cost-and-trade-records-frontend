@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.NotConnectedSubmission
 import models.submissions.notconnected.RemoveConnectionDetails
-import org.mockito.ArgumentMatchers.anyString
 import play.api.http.Status
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
@@ -61,7 +60,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
     "handle submit form with all sections" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
-      when(mockSubmissionConnector.submitNotConnected(anyString(), any[NotConnectedSubmission])(any[HeaderCarrier]))
+      when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(any[HeaderCarrier]))
         .thenReturn(Future.successful(()))
       val result = checkYourAdditionalInformationController().submit(fakeRequest)
       status(result) shouldBe FOUND

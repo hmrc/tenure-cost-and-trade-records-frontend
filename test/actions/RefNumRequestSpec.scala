@@ -38,7 +38,7 @@ class RefNumActionSpec extends TestBaseSpec {
         action.invokeBlock(sessionRequest, (_: RefNumRequest[AnyContentAsEmpty.type]) => Future.successful(Ok("")))
 
       status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(controllers.routes.LoginController.show().url)
+      redirectLocation(result) mustBe Some(controllers.routes.LoginController.show.url)
     }
 
     "return OK  when 'refNum' is present in session" in {

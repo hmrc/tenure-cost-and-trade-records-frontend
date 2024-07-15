@@ -26,5 +26,5 @@ case class BunkeredFuelSold(
 )
 
 object BunkeredFuelSold {
-  implicit val format: OFormat[BunkeredFuelSold] = Json.format[BunkeredFuelSold]
+  implicit val format: OFormat[BunkeredFuelSold] = Json.format
 }

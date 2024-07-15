@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 package repository
 
 import models.Session
-import org.mockito.scalatest.MockitoSugar
 import repositories.SessionRepo
+import utils.MockitoExtendedSugar
 
 import scala.concurrent.Future
 
-trait RepositoryUtils { this: MockitoSugar =>
+trait RepositoryUtils { this: MockitoExtendedSugar =>
   val mockSessionRepo: SessionRepo = mock[SessionRepo]
   when(mockSessionRepo.start(any[Session])(any, any)).thenReturn(Future.successful(()))
   when(mockSessionRepo.saveOrUpdate(any[Session])(any, any)).thenReturn(Future.successful(()))

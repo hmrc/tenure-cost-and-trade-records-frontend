@@ -35,5 +35,5 @@ case class GrossReceiptsForBaseLoad(
 }
 
 object GrossReceiptsForBaseLoad {
-  implicit val format: OFormat[GrossReceiptsForBaseLoad] = Json.format[GrossReceiptsForBaseLoad]
+  implicit val format: OFormat[GrossReceiptsForBaseLoad] = Json.format
 }

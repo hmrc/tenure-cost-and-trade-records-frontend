@@ -28,7 +28,7 @@ class TentingPitchesAllYearViewSpec extends QuestionViewBehaviours[TentingPitche
 
   override val form = TentingPitchesAllYearForm.tentingPitchesAllYearForm
 
-  val backLink = controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show.url
+  val backLink = controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
 
   def createView = () => tentingPitchesAllYearView(form, backLink, Summary("99996045001"))(fakeRequest, messages)
 
@@ -44,7 +44,7 @@ class TentingPitchesAllYearViewSpec extends QuestionViewBehaviours[TentingPitche
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show.url
+      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
     }
 
     "Section heading is visible" in {

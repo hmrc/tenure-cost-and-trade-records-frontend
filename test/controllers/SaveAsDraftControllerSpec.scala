@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import crypto.MongoHasher
 import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER, TEMPORARY_REDIRECT}
 import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
-import util.DateUtil
+import util.DateUtilLocalised
 import utils.TestBaseSpec
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
 
@@ -45,7 +45,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     inject[submissionDraftSaved],
     inject[saveAsDraftLogin],
     inject[sessionTimeout],
-    inject[DateUtil],
+    inject[DateUtilLocalised],
     inject[MongoHasher],
     WithSessionRefiner(sessionRepo),
     sessionRepo,

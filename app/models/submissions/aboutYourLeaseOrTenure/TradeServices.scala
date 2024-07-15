@@ -25,5 +25,5 @@ case class TradeServices(
 )
 
 object TradeServices {
-  implicit val format: OFormat[TradeServices] = Json.format[TradeServices]
+  implicit val format: OFormat[TradeServices] = Json.format
 }

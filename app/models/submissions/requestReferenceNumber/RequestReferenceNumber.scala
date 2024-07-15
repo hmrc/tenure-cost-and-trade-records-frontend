@@ -24,5 +24,5 @@ case class RequestReferenceNumber(
 )
 
 object RequestReferenceNumber {
-  implicit val format: OFormat[RequestReferenceNumber] = Json.format[RequestReferenceNumber]
+  implicit val format: OFormat[RequestReferenceNumber] = Json.format
 }

@@ -23,7 +23,5 @@ case class LicensableActivitiesInformationDetails(
 )
 
 object LicensableActivitiesInformationDetails {
-  implicit val format: OFormat[LicensableActivitiesInformationDetails] =
-    Json.format[LicensableActivitiesInformationDetails]
-
+  implicit val format: OFormat[LicensableActivitiesInformationDetails] = Json.format
 }

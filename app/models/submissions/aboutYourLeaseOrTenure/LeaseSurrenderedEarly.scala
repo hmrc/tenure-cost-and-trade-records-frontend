@@ -24,5 +24,5 @@ case class LeaseSurrenderedEarly(
 )
 
 object LeaseSurrenderedEarly {
-  implicit val format: OFormat[LeaseSurrenderedEarly] = Json.format[LeaseSurrenderedEarly]
+  implicit val format: OFormat[LeaseSurrenderedEarly] = Json.format
 }

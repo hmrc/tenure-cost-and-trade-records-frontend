@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutyouandtheproperty
+package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
 
-case class PropertyDetails(
-  propertyCurrentlyUsed: CurrentPropertyUsed,
-  currentlyUsedOtherField: Option[String]
-)
+/**
+  * @author Yuriy Tumakha
+  */
+case class CaravansPerAgeCategory(
+  years0_5: Int = 0,
+  years6_10: Int = 0,
+  years11_15: Int = 0,
+  years15plus: Int = 0
+) {
+  def total: Int = years0_5 + years6_10 + years11_15 + years15plus
+}
 
-object PropertyDetails {
-  implicit val format: OFormat[PropertyDetails] = Json.format
+object CaravansPerAgeCategory {
+  implicit val format: OFormat[CaravansPerAgeCategory] = Json.format
 }

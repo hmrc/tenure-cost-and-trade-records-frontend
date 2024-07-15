@@ -23,5 +23,5 @@ case class PropertyCurrentlyUsed(
   anotherUseDetails: Option[String] = None
 )
 object PropertyCurrentlyUsed {
-  implicit val format: Format[PropertyCurrentlyUsed] = Json.format[PropertyCurrentlyUsed]
+  implicit val format: Format[PropertyCurrentlyUsed] = Json.format
 }

@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
 
 @layout(
     pageHeading = messages("heading.login.loginFailed"),
-    backLinkUrl = controllers.routes.LoginController.show().url,
+    backLinkUrl = controllers.routes.LoginController.show.url,
     withTimeoutDialog = false
 ) {
 
@@ -37,12 +37,12 @@
         <p class="govuk-body">@HtmlContent(messages("error.login.warning")).asHtml</p>
         <p class="govuk-body">@HtmlContent(messages("error.login.attemptsleftSubheading")).asHtml</p>
 
-    <a href="@routes.LoginController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
+    <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
 
     } else {
         <p class="govuk-body">@messages("error.login.failed") @warningMessage</p>
         <p class="govuk-body">@HtmlContent(messages("error.login.attemptsleftSubheading")).asHtml</p>
 
-        <a href="@routes.LoginController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
+        <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
     }
 }

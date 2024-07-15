@@ -23,6 +23,5 @@ case class BenefitsGivenDetails(
 )
 
 object BenefitsGivenDetails {
-  implicit val format: OFormat[BenefitsGivenDetails] = Json.format[BenefitsGivenDetails]
-
+  implicit val format: OFormat[BenefitsGivenDetails] = Json.format
 }

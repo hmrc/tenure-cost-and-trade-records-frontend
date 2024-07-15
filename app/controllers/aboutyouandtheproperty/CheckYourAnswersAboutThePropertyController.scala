@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,6 +119,6 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
       case ForTypes.for6045 | ForTypes.for6046 =>
         controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
       case ForTypes.for6076                    => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
-      case _                                   => controllers.routes.LoginController.show().url
+      case _                                   => controllers.routes.LoginController.show.url
     }
 }

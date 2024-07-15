@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ case class WithSessionRefiner @Inject() (
   override protected def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
     sessionRepository.get(implicitly[Reads[Session]], hc(request)).map {
       case Some(s) => Right(actions.SessionRequest(sessionData = s, request = request))
-      case None    => Left(TemporaryRedirect(controllers.routes.LoginController.show().url))
+      case None    => Left(TemporaryRedirect(controllers.routes.LoginController.show.url))
     }
 
 }

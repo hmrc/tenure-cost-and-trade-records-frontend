@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import play.api.http.Status
 import play.api.test.Helpers.{status, stubMessagesControllerComponents}
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
-import org.mockito.ArgumentMatchers.anyString
 import play.api.mvc.Request
 import play.twirl.api.Html
 import uk.gov.hmrc.http.HeaderCarrier
@@ -53,7 +52,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
 
     "submission is successful" should {
       "redirect (HTTP 303)" in {
-        when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
+        when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
           .thenReturn(Future.successful(()))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)
         status(result) shouldBe Status.SEE_OTHER
@@ -62,10 +61,10 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
 
     "submission fails" should {
       "return InternalServerError" in {
-        when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
+        when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
           .thenReturn(Future.failed(new RuntimeException("Test error")))
         when(errorHandler.internalServerErrorTemplate(org.mockito.ArgumentMatchers.any(classOf[Request[_]])))
-          .thenReturn(Html("Some Error Message"))
+          .thenReturn(Future.successful(Html("Some Error Message")))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)
         status(result) shouldBe Status.INTERNAL_SERVER_ERROR
       }

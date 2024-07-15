@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 
 package controllers.connectiontoproperty
+
 import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
@@ -65,7 +66,7 @@ class ConnectionToPropertySubmissionController @Inject() (
       Future.successful(
         Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
       )
-    } recover { case e: Exception =>
+    } recoverWith { case e: Exception =>
       val failureReason =
         s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
       logger.error(failureReason, e)
@@ -75,7 +76,7 @@ class ConnectionToPropertySubmissionController @Inject() (
         "failureReason"   -> failureReason
       )
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
-      InternalServerError(errorHandler.internalServerErrorTemplate(request))
+      errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
     }
   }
 

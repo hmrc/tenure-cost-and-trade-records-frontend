@@ -4,10 +4,10 @@
 
 GET         /assets/*file                                           controllers.Assets.versioned(path = "/public", file: Asset)
 # Dummy start page
-GET         /                                                       controllers.Application.index()
+GET         /                                                       controllers.Application.index
 # Sign in page
-GET         /login                                                  controllers.LoginController.show()
-POST        /login                                                  controllers.LoginController.submit()
+GET         /login                                                  controllers.LoginController.show
+POST        /login                                                  controllers.LoginController.submit
 GET         /$count<\d>-sign-in-attempts-remaining                  controllers.LoginController.loginFailed(count: Int)
 GET         /lockedout                                              controllers.LoginController.lockedOut
 GET         /logout                                                 controllers.LoginController.logout

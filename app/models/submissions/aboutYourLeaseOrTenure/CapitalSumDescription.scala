@@ -23,5 +23,5 @@ case class CapitalSumDescription(
 )
 
 object CapitalSumDescription {
-  implicit val format: OFormat[CapitalSumDescription] = Json.format[CapitalSumDescription]
+  implicit val format: OFormat[CapitalSumDescription] = Json.format
 }

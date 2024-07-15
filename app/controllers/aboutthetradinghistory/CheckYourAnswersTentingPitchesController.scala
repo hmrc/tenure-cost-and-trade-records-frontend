@@ -76,8 +76,9 @@ class CheckYourAnswersTentingPitchesController @Inject() (
         val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
           touringAndTentingPitches.copy(checkYourAnswersTentingPitches = Some(data))
         }
-        session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPage(CheckYourAnswersTentingPitchesId, updatedSession).apply(updatedSession))
+        session.saveOrUpdate(updatedSession).map { _ =>
+          Redirect(navigator.nextPage(CheckYourAnswersTentingPitchesId, updatedSession).apply(updatedSession))
+        }
       }
     )
   }

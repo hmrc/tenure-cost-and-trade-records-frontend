@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
-import org.mockito.ArgumentMatchers.anyString
 import play.api.test.Helpers._
 import stub.StubSessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -50,7 +49,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
   "FormSubmissionController" should {
     "handle submit form with all sections" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
-      when(submissionConnector.submitConnected(anyString(), any[ConnectedSubmission])(any[HeaderCarrier]))
+      when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
         .thenReturn(Future.successful(()))
       val result = formSubmissionController.submit(fakeRequest)
       status(result)           shouldBe SEE_OTHER

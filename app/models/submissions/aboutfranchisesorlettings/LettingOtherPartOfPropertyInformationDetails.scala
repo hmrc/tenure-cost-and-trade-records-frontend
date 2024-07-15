@@ -25,7 +25,5 @@ case class LettingOtherPartOfPropertyInformationDetails(
 )
 
 object LettingOtherPartOfPropertyInformationDetails {
-  implicit val format: OFormat[LettingOtherPartOfPropertyInformationDetails] =
-    Json.format[LettingOtherPartOfPropertyInformationDetails]
-
+  implicit val format: OFormat[LettingOtherPartOfPropertyInformationDetails] = Json.format
 }

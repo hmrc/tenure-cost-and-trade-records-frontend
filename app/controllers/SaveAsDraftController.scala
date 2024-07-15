@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import form.CustomUserPasswordForm.customUserPasswordForm
 import form.SaveAsDraftLoginForm.saveAsDraftLoginForm
 import models.{Session, SubmissionDraft}
 import play.api.i18n.{I18nSupport, Messages}
-import play.api.mvc.{MessagesControllerComponents, Request, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import util.{AlphanumericPasswordGenerator, DateUtil}
+import util.{AlphanumericPasswordGenerator, DateUtilLocalised}
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
 
 import java.time.LocalDate
@@ -45,7 +45,7 @@ class SaveAsDraftController @Inject() (
   submissionDraftSavedView: submissionDraftSaved,
   saveAsDraftLoginView: saveAsDraftLogin,
   sessionTimeoutView: sessionTimeout,
-  dateUtil: DateUtil,
+  dateUtil: DateUtilLocalised,
   mongoHasher: MongoHasher,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") sessionRepo: SessionRepo,
@@ -58,27 +58,29 @@ class SaveAsDraftController @Inject() (
 
   private val saveForDays = 90
 
-  def customPassword(exitPath: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    val session = request.sessionData
-    if (session.saveAsDraftPassword.isDefined) {
-      saveSubmissionDraft(session, exitPath)
-    } else {
-      Ok(customPasswordSaveAsDraftView(customUserPasswordForm, expiryDate, exitPath, request.sessionData.toSummary))
-    }
+  def customPassword(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      val session = request.sessionData
+      if (session.saveAsDraftPassword.isDefined) {
+        saveSubmissionDraft(session, exitPath)
+      } else {
+        Ok(customPasswordSaveAsDraftView(customUserPasswordForm, expiryDate, exitPath, request.sessionData.toSummary))
+      }
   }
 
-  def saveAsDraft(exitPath: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    customUserPasswordForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath, request.sessionData.toSummary)),
-        validData => {
-          val session = request.sessionData.copy(saveAsDraftPassword = mongoHasher.hash(validData.password))
-          sessionRepo.saveOrUpdate(session)
-          saveSubmissionDraft(session, exitPath)
-        }
-      )
+  def saveAsDraft(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      customUserPasswordForm
+        .bindFromRequest()
+        .fold(
+          formWithErrors =>
+            Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath, request.sessionData.toSummary)),
+          validData => {
+            val session = request.sessionData.copy(saveAsDraftPassword = mongoHasher.hash(validData.password))
+            sessionRepo.saveOrUpdate(session)
+            saveSubmissionDraft(session, exitPath)
+          }
+        )
   }
 
   private def expiryDate(implicit messages: Messages): String = dateUtil formatDate LocalDate.now.plusDays(saveForDays)
@@ -96,11 +98,11 @@ class SaveAsDraftController @Inject() (
     }
   }
 
-  def loginToResume = (Action andThen withSessionRefiner).async { implicit request =>
+  def loginToResume: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(saveAsDraftLoginView(saveAsDraftLoginForm))
   }
 
-  def resume = (Action andThen withSessionRefiner).async { implicit request =>
+  def resume: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val session = request.sessionData
 
     saveAsDraftLoginForm
@@ -108,14 +110,14 @@ class SaveAsDraftController @Inject() (
       .fold(
         formWithErrors => BadRequest(saveAsDraftLoginView(formWithErrors)),
         password =>
-          backendConnector.loadSubmissionDraft(session.referenceNumber, hc).map {
+          backendConnector.loadSubmissionDraft(session.referenceNumber, hc).flatMap {
             case Some(draft) if draft.session.saveAsDraftPassword.exists(mongoHasher.verify(password, _)) =>
               val restoredSession = draft.session.copy(token = session.token, saveAsDraftPassword = None)
               sessionRepo.saveOrUpdate(restoredSession)
 
               Redirect(draft.exitPath)
             case None                                                                                     =>
-              NotFound(errorHandler.notFoundTemplate(request))
+              errorHandler.notFoundTemplate(request).map(NotFound(_))
             case _                                                                                        =>
               val formWithLoginError = saveAsDraftLoginForm.withError("password", "saveAsDraft.error.invalidPassword")
               BadRequest(saveAsDraftLoginView(formWithLoginError))
@@ -123,12 +125,12 @@ class SaveAsDraftController @Inject() (
       )
   }
 
-  def startAgain = (Action andThen withSessionRefiner).async { implicit request =>
+  def startAgain: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     backendConnector.deleteSubmissionDraft(request.sessionData.referenceNumberCleaned, hc)
     Redirect(LoginController.startPage)
   }
 
-  def timeout(exitPath: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def timeout(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val session = request.sessionData
     if (session.saveAsDraftPassword.isDefined) {
       saveSubmissionDraft(session, exitPath)
@@ -146,7 +148,7 @@ class SaveAsDraftController @Inject() (
     }
   }
 
-  def sessionTimeout = Action { implicit request =>
+  def sessionTimeout: Action[AnyContent] = Action { implicit request =>
     val generatedPassword = request.session.get("generatedPassword").getOrElse("")
     Ok(sessionTimeoutView(generatedPassword, expiryDate))
   }

@@ -28,7 +28,7 @@ case class AboutYouAndThePropertyPartTwo(
 )
 
 object AboutYouAndThePropertyPartTwo {
-  implicit val format: OFormat[AboutYouAndThePropertyPartTwo] = Json.format[AboutYouAndThePropertyPartTwo]
+  implicit val format: OFormat[AboutYouAndThePropertyPartTwo] = Json.format
 
   def updateAboutYouAndThePropertyPartTwo(
     copy: AboutYouAndThePropertyPartTwo => AboutYouAndThePropertyPartTwo

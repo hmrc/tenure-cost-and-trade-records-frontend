@@ -26,6 +26,5 @@ case class TiedForGoodsInformationDetails(
 )
 
 object TiedForGoodsInformationDetails {
-  implicit val format: OFormat[TiedForGoodsInformationDetails] = Json.format[TiedForGoodsInformationDetails]
-
+  implicit val format: OFormat[TiedForGoodsInformationDetails] = Json.format
 }

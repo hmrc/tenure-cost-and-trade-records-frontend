@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,16 +82,16 @@ class CheckYourAnswersNotConnectedController @Inject() (
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
       Redirect(confirmationUrl)
-    } recover { case e: Exception =>
+    } recoverWith { case e: Exception =>
       val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")}"
-      logger.error(failureReason)
+      logger.error(failureReason, e)
       val outcome       = Json.obj(
         "isSuccessful"    -> false,
         "failureCategory" -> INTERNAL_SERVER_ERROR,
         "failureReason"   -> failureReason
       )
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
-      InternalServerError(errorHandler.internalServerErrorTemplate(request))
+      errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
     }
   }
 

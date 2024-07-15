@@ -586,7 +586,19 @@ trait FakeObjects {
         grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire(50, 3000)
       )
     ),
-    caravans = Caravans(AnswerYes, AnswerNo, 26)
+    caravans = Caravans( // 6045/46
+      anyStaticLeisureCaravansOnSite = AnswerYes,
+      openAllYear = AnswerNo,
+      weeksPerYear = 26,
+      singleCaravansAge = CaravansAge(
+        fleetHire = CaravansPerAgeCategory(10, 20, 30, 40),
+        privateSublet = CaravansPerAgeCategory(5, 6, 7, 8)
+      ),
+      twinUnitCaravansAge = CaravansAge(
+        fleetHire = CaravansPerAgeCategory(100, 200, 300, 400),
+        privateSublet = CaravansPerAgeCategory(1, 2, 3, 4)
+      )
+    )
   )
 
   val aboutYourTradingHistory6045YesSession: Session =

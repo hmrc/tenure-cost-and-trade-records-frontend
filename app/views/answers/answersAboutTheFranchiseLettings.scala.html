@@ -20,7 +20,7 @@
 @import models.submissions.common.AnswerYes
 @import navigation.AboutFranchisesOrLettingsNavigator
 @import navigation.identifiers._
-@import util.DateUtil
+@import util.DateUtilLocalised
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 @import models.submissions.aboutfranchisesorlettings.CateringOperationSection
@@ -28,7 +28,7 @@
 @this(
         govukSummaryList: GovukSummaryList,
         navigator: AboutFranchisesOrLettingsNavigator,
-        dateUtil: DateUtil
+        dateUtil: DateUtilLocalised
 )
 
 @()(implicit request: SessionRequest[_], messages: Messages)

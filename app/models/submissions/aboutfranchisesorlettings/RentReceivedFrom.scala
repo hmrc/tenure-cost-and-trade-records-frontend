@@ -24,6 +24,5 @@ case class RentReceivedFrom(
 )
 
 object RentReceivedFrom {
-  implicit val format: OFormat[RentReceivedFrom] = Json.format[RentReceivedFrom]
-
+  implicit val format: OFormat[RentReceivedFrom] = Json.format
 }

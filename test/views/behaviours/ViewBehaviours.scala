@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 
 package views.behaviours
 
+import org.scalatest.Assertion
 import org.scalatest.matchers.must.Matchers._
 import play.api.i18n.Lang
-import play.twirl.api.HtmlFormat
+import play.twirl.api.{Html, HtmlFormat}
 import views.ViewSpecBase
 
 import java.util.Locale
@@ -36,17 +37,7 @@ trait ViewBehaviours extends ViewSpecBase {
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc  = asDocument(view())
-          val nav  = Option {
-            doc.getElementById("proposition-menu")
-          }.getOrElse(
-            doc
-              .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
-              .first()
-              .parent()
-          )
-          val span = nav.children.first
-          span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+          checkServiceNameInHeaderBanner(view())
         }
 
         "display the correct browser title" in {
@@ -82,17 +73,7 @@ trait ViewBehaviours extends ViewSpecBase {
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc  = asDocument(view())
-          val nav  = Option {
-            doc.getElementById("proposition-menu")
-          }.getOrElse(
-            doc
-              .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
-              .first()
-              .parent()
-          )
-          val span = nav.children.first
-          span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+          checkServiceNameInHeaderBanner(view())
         }
 
         "display the correct browser title" in {
@@ -132,17 +113,7 @@ trait ViewBehaviours extends ViewSpecBase {
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc  = asDocument(view())
-          val nav  = Option {
-            doc.getElementById("proposition-menu")
-          }.getOrElse(
-            doc
-              .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
-              .first()
-              .parent()
-          )
-          val span = nav.children.first
-          span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+          checkServiceNameInHeaderBanner(view())
         }
 
         "display the correct browser title" in {
@@ -183,17 +154,7 @@ trait ViewBehaviours extends ViewSpecBase {
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc  = asDocument(view())
-          val nav  = Option {
-            doc.getElementById("proposition-menu")
-          }.getOrElse(
-            doc
-              .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
-              .first()
-              .parent()
-          )
-          val span = nav.children.first
-          span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+          checkServiceNameInHeaderBanner(view())
         }
 
         "display the correct browser title" in {
@@ -232,17 +193,7 @@ trait ViewBehaviours extends ViewSpecBase {
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc  = asDocument(view())
-          val nav  = Option {
-            doc.getElementById("proposition-menu")
-          }.getOrElse(
-            doc
-              .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
-              .first()
-              .parent()
-          )
-          val span = nav.children.first
-          span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+          checkServiceNameInHeaderBanner(view())
         }
 
         "display the correct browser title" in {
@@ -272,4 +223,12 @@ trait ViewBehaviours extends ViewSpecBase {
         }
       }
     }
+
+  protected def checkServiceNameInHeaderBanner(html: Html): Assertion = {
+    val doc    = asDocument(html)
+    val header = doc.getElementsByAttributeValue("class", "govuk-header__content").first()
+    val link   = header.children.first
+    link.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+  }
+
 }

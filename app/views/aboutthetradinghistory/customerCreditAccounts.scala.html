@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtil
+@import util.DateUtilLocalised
 @import actions.SessionRequest
 @import models.pages.Summary
 @import models.submissions.aboutthetradinghistory.CustomerCreditAccounts
@@ -29,7 +29,7 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
-        dateUtil: DateUtil
+        dateUtil: DateUtilLocalised
 )
 
 @(form: Form[Seq[CustomerCreditAccounts]], backlink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)

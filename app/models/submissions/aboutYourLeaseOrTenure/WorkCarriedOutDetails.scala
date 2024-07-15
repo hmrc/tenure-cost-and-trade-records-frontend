@@ -23,5 +23,5 @@ case class WorkCarriedOutDetails(
 )
 
 object WorkCarriedOutDetails {
-  implicit val format: OFormat[WorkCarriedOutDetails] = Json.format[WorkCarriedOutDetails]
+  implicit val format: OFormat[WorkCarriedOutDetails] = Json.format
 }

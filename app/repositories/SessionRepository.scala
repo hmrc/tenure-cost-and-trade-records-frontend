@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,7 +120,7 @@ case class SessionData(_id: String, data: Session, createdAt: Instant = Instant.
 object SessionData {
 
   implicit val formatInstant: Format[Instant] = MongoJavatimeFormats.instantFormat
-  val format                                  = Json.format[SessionData]
+  val format: OFormat[SessionData]            = Json.format
 }
 
 case class SensitiveSessionData(_id: String, data: SensitiveSession, createdAt: Instant = Instant.now)
@@ -135,7 +135,7 @@ case class SensitiveSessionData(_id: String, data: SensitiveSession, createdAt: 
 object SensitiveSessionData {
 
   implicit val formatInstant: Format[Instant]                                      = MongoJavatimeFormats.instantFormat
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSessionData] = Json.format[SensitiveSessionData]
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSessionData] = Json.format
 
   def apply(sessionData: SessionData): SensitiveSessionData = SensitiveSessionData(
     sessionData._id,

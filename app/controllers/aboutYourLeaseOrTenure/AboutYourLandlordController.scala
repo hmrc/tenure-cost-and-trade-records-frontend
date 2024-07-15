@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,13 +119,12 @@ class AboutYourLandlordController @Inject() (
         addressLookupConnector
           .initialise(routes.AboutYourLandlordController.addressLookupCallback(), from)
           .flatMap {
-            case Some(url) =>
-              Future.successful(SeeOther(url))
+            case Some(url) => SeeOther(url)
             case None      =>
               val failureReason =
                 s"AddressLookup initialisation failed for ${request.sessionData.referenceNumber} - ${hc.sessionId.getOrElse("")}"
               logger.error(failureReason)
-              Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request)))
+              errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
           }
       }
     )

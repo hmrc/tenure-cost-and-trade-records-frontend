@@ -27,7 +27,7 @@ case class RequestReferenceNumberDetails(
 )
 
 object RequestReferenceNumberDetails {
-  implicit val format: OFormat[RequestReferenceNumberDetails] = Json.format[RequestReferenceNumberDetails]
+  implicit val format: OFormat[RequestReferenceNumberDetails] = Json.format
 
   def updateRequestReferenceNumber(
     copy: RequestReferenceNumberDetails => RequestReferenceNumberDetails

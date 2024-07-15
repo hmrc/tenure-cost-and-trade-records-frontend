@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,7 @@ import form.connectiontoproperty.AreYouThirdPartyForm
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
-import play.api.i18n.Lang
 import views.behaviours.QuestionViewBehaviours
-
-import java.util.Locale
 
 class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
@@ -44,17 +41,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in {
-          val doc  = asDocument(createView())
-          val nav  = Option {
-            doc.getElementById("proposition-menu")
-          }.getOrElse(
-            doc
-              .getElementsByAttributeValue("class", "hmrc-header__service-name hmrc-header__service-name--linked")
-              .first()
-              .parent()
-          )
-          val span = nav.children.first
-          span.text mustBe messagesApi("site.service_name")(Lang(Locale.UK))
+          checkServiceNameInHeaderBanner(createView())
         }
 
         "Section heading is visible" in {

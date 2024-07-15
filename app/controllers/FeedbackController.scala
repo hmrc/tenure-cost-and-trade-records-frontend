@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,11 +46,11 @@ class FeedbackController @Inject() (
 
   import FeedbackFormMapper.feedbackForm
 
-  def feedback() = Action { implicit request =>
+  def feedback(): Action[AnyContent] = Action { implicit request =>
     Ok(feedbackView(feedbackForm))
   }
 
-  def feedbackThx() = Action { implicit request =>
+  def feedbackThx(): Action[AnyContent] = Action { implicit request =>
     Ok(feedbackThxView())
   }
 
@@ -92,7 +92,7 @@ class FeedbackController @Inject() (
     }
   }
 
-  def feedbackConnectedSubmit = (Action andThen withSessionRefiner).async { implicit request =>
+  def feedbackConnectedSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -107,7 +107,7 @@ class FeedbackController @Inject() (
       )
   }
 
-  def feedbackNotConnectedSubmit = (Action andThen withSessionRefiner).async { implicit request =>
+  def feedbackNotConnectedSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -122,7 +122,7 @@ class FeedbackController @Inject() (
       )
   }
 
-  def feedbackVacantPropertySubmit = (Action andThen withSessionRefiner).async { implicit request =>
+  def feedbackVacantPropertySubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
