@@ -16,6 +16,7 @@
 
 package config
 
+import config.Service.convertToString
 import play.api.Configuration
 import utils.TestBaseSpec
 
@@ -25,10 +26,12 @@ class ServiceSpec extends TestBaseSpec {
     "be loaded correctly from configuration" in {
       val config                = inject[Configuration]
       val internalAuth: Service = config.get[Service]("microservice.services.internal-auth")
-      internalAuth.host     shouldBe "localhost"
-      internalAuth.port     shouldBe "8470"
-      internalAuth.protocol shouldBe "http"
-      internalAuth.baseUrl  shouldBe "http://localhost:8470"
+      internalAuth.host             shouldBe "localhost"
+      internalAuth.port             shouldBe "8470"
+      internalAuth.protocol         shouldBe "http"
+      internalAuth.baseUrl          shouldBe "http://localhost:8470"
+      internalAuth.toString         shouldBe "http://localhost:8470"
+      convertToString(internalAuth) shouldBe "http://localhost:8470"
     }
   }
 

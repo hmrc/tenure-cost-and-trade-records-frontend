@@ -16,24 +16,32 @@
 
 package controllers.aboutthetradinghistory
 
+import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.OtherHolidayAccommodationDetailsForm.otherHolidayAccommodationDetailsForm
+import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
-import play.api.http.Status.{BAD_REQUEST, OK}
+import models.submissions.common.AnswerNo
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.libs.json.Writes
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 
+import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
 class OtherHolidayAccommodationDetailsControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+
+  private val nextPage = aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show().url
   def otherHolidayAccommodationDetailsController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ) = new OtherHolidayAccommodationDetailsController(
+  )                    = new OtherHolidayAccommodationDetailsController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     otherHolidayAccommodationDetailsView,
@@ -72,6 +80,32 @@ class OtherHolidayAccommodationDetailsControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+    "save the form data and redirect to the next page on answer No with weeks field filled" in {
+      val res = otherHolidayAccommodationDetailsController().submit(
+        fakePostRequest
+          .withFormUrlEncodedBody("otherHolidayAccommodationOpenAllYear" -> AnswerNo.name, "weeksOpen" -> "33")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(nextPage)
+    }
+
+    "handle save as draft and redirect to the draft page" in {
+      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+        .thenReturn(Future.successful(()))
+      val saveAsDraftUri  = "/test-uri"
+      val saveAsDraftPage = controllers.routes.SaveAsDraftController.customPassword(saveAsDraftUri).url
+
+      val res = otherHolidayAccommodationDetailsController().submit(
+        FakeRequest("POST", saveAsDraftUri).withFormUrlEncodedBody(
+          "otherHolidayAccommodationOpenAllYear" -> AnswerNo.name,
+          "weeksOpen"                            -> "33",
+          "save_button"                          -> "save_button"
+        )
+      )
+
+      status(res)           shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(saveAsDraftPage)
     }
   }
 

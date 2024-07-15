@@ -20,13 +20,16 @@ import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
+import org.mockito.Mockito.spy
+import play.api.libs.json.JsObject
+import play.api.mvc.{Request, Result}
 import play.api.test.Helpers._
 import stub.StubSessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import views.html.confirmation
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * @author Yuriy Tumakha
@@ -36,12 +39,13 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
   private val sessionRepo              = StubSessionRepo()
   val submissionConnector              = mock[SubmissionConnector]
   val errorHandler                     = mock[ErrorHandler]
+  val audit                            = spy(inject[Audit])
   private def formSubmissionController = new FormSubmissionController(
     stubMessagesControllerComponents(),
     submissionConnector,
     errorHandler,
     inject[confirmation],
-    inject[Audit],
+    audit,
     WithSessionRefiner(sessionRepo),
     sessionRepo
   )
@@ -66,6 +70,21 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include("confirmation.heading")
       content should include("print-link")
+    }
+
+    "handle errors in submit form" in {
+      sessionRepo.saveOrUpdate(prefilledBaseSession)
+      val exception = new RuntimeException("Test exception")
+      when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
+        .thenReturn(Future.failed(exception))
+      when(errorHandler.internalServerErrorTemplate(any[Request[_]]))
+        .thenReturn(Future.successful(play.twirl.api.HtmlFormat.empty))
+
+      val result: Future[Result] = formSubmissionController.submit(fakeRequest)
+
+      status(result) shouldBe INTERNAL_SERVER_ERROR
+      verify(audit, times(2)).sendExplicitAudit(anyString, any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+      verify(errorHandler, times(1)).internalServerErrorTemplate(any[Request[_]])
     }
   }
 
