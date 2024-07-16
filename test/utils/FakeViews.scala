@@ -160,6 +160,7 @@ trait FakeViews { this: Injecting =>
     inject[grossReceiptsCaravanFleetHire6045]
   lazy val staticCaravansView: staticCaravans                                                       = inject[staticCaravans]
   lazy val caravansOpenAllYearView: caravansOpenAllYear                                             = inject[caravansOpenAllYear]
+  lazy val caravansAgeCategoriesView: caravansAgeCategories                                         = inject[caravansAgeCategories]
   lazy val otherHolidayAccommodationView: otherHolidayAccommodation                                 = inject[otherHolidayAccommodation]
   lazy val checkYourAnswersTentingPitchesView: checkYourAnswersTentingPitches                       = inject[checkYourAnswersTentingPitches]
   lazy val tentingPitchesAllYearView: tentingPitchesAllYear                                         = inject[tentingPitchesAllYear]

@@ -17,13 +17,11 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits._
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
 
 @this(
         layout: Layout,
         govukButton: GovukButton,
-        hmrcCurrencyInput: HmrcCurrencyInput,
+        govukInput: GovukInput,
         govukDateInput: GovukDateInput,
         formWithCSRF: FormWithCSRF
 )
@@ -42,20 +40,19 @@
 
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.submit()) {
 
-        @hmrcCurrencyInput(
-            CurrencyInput(
-                id = "annualRent",
-                name = "annualRent",
-                value = form("annualRent").value,
+        @govukInput(
+            Input(
+                prefix = PrefixOrSuffix(
+                    content = Text("£")
+                ),
                 classes = "govuk-input--width-10",
                 attributes = Map(
                     "maxlength" -> "8",
                     "aria-label" -> messages("label.annualRent")
                 ),
-                hint = Some(Hint(content = Text(messages("hint.currentAnnualRent")))),
-                autocomplete = Some("off"),
-                errorMessage = form.errors.asTextErrorMessageForField("annualRent"),
-            )
+                hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
+                autocomplete = "off",
+            ).withFormField(form("annualRent"))
         )
 
         @includes.dateFields(form, "fixedRentFrom", govukDateInput, showDays = true)

@@ -83,11 +83,7 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
 
           session
             .saveOrUpdate(updatedData)
-            .map { _ =>
-              navigator.cyaPage
-                .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(GrossReceiptsCaravanFleetHireId, updatedData).apply(updatedData))
-            }
+            .map(_ => navigator.nextPage(GrossReceiptsCaravanFleetHireId, updatedData).apply(updatedData))
             .map(Redirect)
         }
       )

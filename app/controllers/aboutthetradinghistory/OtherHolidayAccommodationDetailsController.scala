@@ -86,9 +86,9 @@ class OtherHolidayAccommodationDetailsController @Inject() (
   }
 
   private def backLink(implicit request: SessionRequest[AnyContent]): String =
-    navigator.cyaPage
-      .filter(_ => navigator.from == "CYA")
-      .getOrElse(routes.OtherHolidayAccommodationController.show())
-      .url
+    if (navigator.from == "CYA")
+      navigator.cyaPageForOtherHolidayAccommodation.url
+    else
+      routes.OtherHolidayAccommodationController.show().url
 
 }

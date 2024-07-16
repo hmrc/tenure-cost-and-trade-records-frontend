@@ -1,0 +1,152 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.CaravansAge
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.CaravanHireType
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.FleetHire
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.PrivateSublet
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.CaravanUnitType
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        formWithCSRF: FormWithCSRF
+)
+
+@(form: Form[CaravansAge], caravansUnitType: CaravanUnitType, backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+
+
+@caravansHireTypeWithLabel = @{
+    Seq[(CaravanHireType, String)](
+        FleetHire -> messages("turnover.6045.caravans.age.fleetCaravans"),
+        PrivateSublet -> messages("turnover.6045.caravans.age.privateCaravans")
+    )
+}
+
+@ageCategoryRow(hireType: CaravanHireType, formField: String, labelKey: String) = @{
+    Seq(
+        TableRow(
+            content = Text(messages(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        classes = "govuk-input--width-4",
+                        attributes = Map(
+                            "maxlength" -> "6",
+                            "aria-label" -> s"$hireType ${messages(labelKey)}"
+                        )
+                    ).withFormField(form(formField))
+                )
+            )
+        )
+    )
+}
+
+@totalValue(hireType: CaravanHireType) = @{
+    hireType match {
+        case FleetHire => form.value.map(_.fleetHire).fold(0)(_.total)
+        case PrivateSublet => form.value.map(_.privateSublet).fold(0)(_.total)
+        case _ => 0
+    }
+}
+
+@totalContent(hireType: CaravanHireType) = {
+    <span
+    data-total-is-money="false"
+    data-total-prefix="@hireType."
+    data-total-items="years0_5,years6_10,years11_15,years15plus">
+    @totalValue(hireType)
+    </span>
+}
+
+
+@layout(
+    pageHeading = messages(s"turnover.6045.${caravansUnitType}CaravansAgeCategories.heading"),
+    showH1 = true,
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLinkUrl,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages(s"turnover.6045.${caravansUnitType}CaravansAgeCategories.p1")</p>
+
+    <h2 class="govuk-heading-m">@messages("turnover.6045.caravans.age.fleet")</h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("turnover.6045.caravans.age.fleet.item1")</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">@messages("turnover.6045.caravans.age.private")</h2>
+
+    <p class="govuk-body">@messages("turnover.6045.caravans.age.private.p1")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("turnover.6045.caravans.age.private.item1")</li>
+        <li>@messages("turnover.6045.caravans.age.private.item2")</li>
+        <li>@messages("turnover.6045.caravans.age.private.item3")</li>
+    </ul>
+
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.6045.caravans.age.inset"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.submit()) {
+
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @caravansHireTypeWithLabel.map { case (hireType, label) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.6045.caravans.age"))),
+                            HeadCell(content = Text(label))
+                        ),
+                        firstCellIsHeader = true,
+                        rows =
+                            Seq("years0_5", "years6_10", "years11_15", "years15plus")
+                            .map(ageCategory => ageCategoryRow(hireType, s"$hireType.$ageCategory", s"turnover.6045.caravans.age.$ageCategory")) ++
+                                    Seq(
+                                        Seq(
+                                            TableRow(content = Text(messages("turnover.6045.caravans.age.total"))),
+                                            TableRow(content = HtmlContent(totalContent(hireType)))
+                                        )
+                                    )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}
