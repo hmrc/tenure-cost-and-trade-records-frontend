@@ -1824,7 +1824,7 @@ costOfSales6076.TNuoS = Transmission network use of systems (TNuoS)
 costOfSales6076.BSuoS = Balancing service use of system (BSuoS)
 costOfSales6076.otherSales = Other costs (specify)
 costOfSales6076.otherSales.hint = Include any other costs of sales not listed previously
-costOfSales6076.otherSales.label = Give details of the sources of your other income
+costOfSales6076.otherSales.label = Give details of any costs not listed
 costOfSales6076.total = Total cost
 error.costOfSales6076.details.required = Please provide details of the sources of your other income
 error.costOfSales6076.details.maxlength = Details of the sources of your other income must be 2,000 characters or fewer
@@ -2338,7 +2338,7 @@ error.threeYearsConstructed.required = Select yes if the site was constructed in
 #BREAKDOWN OF THE CAPITAL COSTS
 ##############################
 costsBreakdown.heading = Provide a breakdown of the capital cost of the site construction
-costsBreakdown.hint = If you're unable to provide a breakdown, please provide a total
+costsBreakdown.hint = If you‘re unable to provide a breakdown, please provide a total
 error.costsBreakdown.maxLength = Description of a breakdown must be 2,000 characters or fewer
 error.costsBreakdown.required = Give details of a breakdown of the capital cost of the site construction
 

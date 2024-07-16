@@ -93,12 +93,7 @@
     },
     theForm = form
 ) {
-    <p class="govuk-body">@messages("grossReceipts.p1")</p>
-
-    @govukInsetText(InsetText(
-        content = Text(messages("turnover.inset"))
-    ))
-
+    <p class="govuk-body">@messages("turnover.inset")</p>
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.submit()) {
 
