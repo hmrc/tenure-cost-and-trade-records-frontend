@@ -26,7 +26,7 @@ object LeaseSurrenderedEarlyForm {
   val leaseSurrenderedEarlyForm = Form(
     mapping(
       "leaseSurrenderedEarly" -> createYesNoType("error.leaseSurrenderedEarly.required")
-    )(LeaseSurrenderedEarly.apply)(LeaseSurrenderedEarly.unapply)
+    )(LeaseSurrenderedEarly.apply)(o => Some(o.leaseSurrenderedEarly))
   )
 
 }

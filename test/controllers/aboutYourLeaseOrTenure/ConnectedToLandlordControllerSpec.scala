@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = connectedToLandlordController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -82,9 +82,9 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val connectedToLandlord: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val connectedToLandlord: String = "connectedToLandlord"
     }
 

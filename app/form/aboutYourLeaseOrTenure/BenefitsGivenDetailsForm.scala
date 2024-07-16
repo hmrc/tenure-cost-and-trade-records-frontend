@@ -26,6 +26,6 @@ object BenefitsGivenDetailsForm {
     mapping(
       "benefitsGivenDetails" -> default(text, "")
         .verifying(maxLength(2000, "error.benefitsGivenDetails.maxLength"))
-    )(BenefitsGivenDetails.apply)(BenefitsGivenDetails.unapply)
+    )(BenefitsGivenDetails.apply)(o => Some(o.benefitsGivenDetails))
   )
 }

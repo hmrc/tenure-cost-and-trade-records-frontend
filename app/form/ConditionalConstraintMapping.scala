@@ -53,6 +53,6 @@ case class ConditionalConstraintMapping[T](
   def withPrefix(prefix: String): Mapping[T] =
     copy(conditionalMapping = conditionalMapping.withPrefix(prefix), defaultMapping = defaultMapping.withPrefix(prefix))
 
-  val mappings: Seq[Mapping[_]] = (conditionalMapping.mappings ++ defaultMapping.mappings) :+ this
+  val mappings: Seq[Mapping[?]] = (conditionalMapping.mappings ++ defaultMapping.mappings) :+ this
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = financialYearEndController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = financialYearEndController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -119,9 +119,9 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val request       = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val request       = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
-        .thenReturn(Future.successful(Right(())))
+        .thenReturn(Future.unit)
 
       // Act
       val result = financialYearEndController().submit(request)
@@ -137,10 +137,10 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession, request)
       when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
-        .thenReturn(Future.successful(Right(())))
+        .thenReturn(Future.unit)
 
       // Act
       val result =
@@ -158,10 +158,10 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, request)
       when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
-        .thenReturn(Future.successful(Right(())))
+        .thenReturn(Future.unit)
 
       // Act
       val result =
@@ -179,11 +179,11 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         "yearEndChanged"      -> "true"
       )
       val session6045    = aboutYourTradingHistory6045YesSession
-      val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6045, request)
 
       when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
-        .thenReturn(Future.successful(Right(())))
+        .thenReturn(Future.unit)
 
       val result =
         financialYearEndController(session6045.forType, session6045.aboutTheTradingHistory).submit(sessionRequest)
@@ -201,11 +201,11 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         "yearEndChanged"      -> "true"
       )
       val session6076    = aboutYourTradingHistory6076YesSession
-      val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq: _*)
+      val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6076, request)
 
       when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
-        .thenReturn(Future.successful(Right(())))
+        .thenReturn(Future.unit)
 
       val result =
         financialYearEndController(session6076.forType, session6076.aboutTheTradingHistory).submit(sessionRequest)
@@ -218,10 +218,9 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val financialYearDay: String
-      val financialYearMonth: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val financialYearDay   = "financialYear.day"
       val financialYearMonth = "financialYear.month"
     }

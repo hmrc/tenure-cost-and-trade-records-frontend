@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package views
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.twirl.api.Html
 import utils.TestBaseSpec
 
@@ -34,14 +33,14 @@ trait ViewSpecBase extends TestBaseSpec {
 
     if (elements.isEmpty) throw new IllegalArgumentException(s"CSS Selector $cssSelector wasn't rendered.")
 
-    //<p> HTML elements are rendered out with a carriage return on some pages, so discount for comparison
+    // <p> HTML elements are rendered out with a carriage return on some pages, so discount for comparison
     assert(elements.first().html().replace("\n", "") == expectedValue)
   }
 
   def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*) = {
     val headers = doc.getElementsByTag("h1")
-    headers.size mustBe 1
-    headers.first.text.replaceAll("\u00a0", " ") mustBe messages(expectedMessageKey, args: _*).replaceAll("&nbsp;", " ")
+    headers.size                                 shouldBe 1
+    headers.first.text.replaceAll("\u00a0", " ") shouldBe messages(expectedMessageKey, args*).replaceAll("&nbsp;", " ")
   }
 
   def assertContainsText(doc: Document, text: String) =
@@ -50,7 +49,7 @@ trait ViewSpecBase extends TestBaseSpec {
   def assertContainsMessages(doc: Document, expectedMessageKeys: String*) =
     for (key <- expectedMessageKeys) assertContainsText(doc, messages(key))
 
-  def assertRenderedById(doc: Document, id: String)                       =
+  def assertRenderedById(doc: Document, id: String) =
     assert(doc.getElementById(id) != null, "\n\nElement " + id + " was not rendered on the page.\n")
 
   def assertNotRenderedById(doc: Document, id: String) =

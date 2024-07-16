@@ -36,7 +36,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RequestReferenceNumber])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RequestReferenceNumber])(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("requestReferenceNumber.heading"),

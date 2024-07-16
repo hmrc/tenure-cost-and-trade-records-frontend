@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
 @this(govukSummaryList: GovukSummaryList)
 
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@()(implicit request: SessionRequest[?], messages: Messages)
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutYouAndTheProperty)
@@ -48,7 +48,6 @@
         aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
         ("valueAsHtml", _ => None)) ++
-
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.alternative.address",
         _.altDetailsQuestion.map(_.contactDetailsQuestion.name).map(v => messages(s"label.$v")),
@@ -56,7 +55,6 @@
         "contactDetailsQuestion",
         ("valueAsHtml", _ => None)
         ) ++
-
     sectionAnswers.conditionRow(
          _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
          "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
@@ -92,7 +90,6 @@
             aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
             "threeYearsConstructed",
             ("valueAsHtml", _ => None)) ++
-
         sectionAnswers.conditionRow(
             _.threeYearsConstructed.contains(AnswerYes),
             "checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails",
@@ -123,7 +120,6 @@
 
 } else if(forType == ForTypes.for6030) {
 @govukSummaryList(SummaryList(rows =
-
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${Text(x.propertyDetailsString).asHtml}</p>"),
@@ -131,7 +127,6 @@
         "propertyCurrentlyUsedString",
         ("valueAsHtml", _ => None)
     ) ++
-
     sectionAnswers.optionalRow(
          "checkYourAnswersAboutTheProperty.hasWebsite",
          _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
@@ -142,7 +137,6 @@
          "buildingOperatingHaveAWebsite",
          ("valueAsHtml", _ => None)
             ) ++
-
     sectionAnswers.row(
             "checkYourAnswersAboutTheProperty.charity",
             _.charityQuestion.map(x => s"<p class=\"govuk-body\">${x.name.capitalize} </p>"),
@@ -150,7 +144,6 @@
             "propertyCurrentlyUsedString",
             ("valueAsHtml", _ => None)
         ) ++
-
     sectionAnswers.conditionalOptionalRow(
             _.charityQuestion.map(_.name).contains("yes"),
             "checkYourAnswersAboutTheProperty.trading",
@@ -175,7 +168,6 @@
                 "plantAndTechnology",
                 ("valueAsHtml", _ => None)
             ) ++
-
             sectionAnswersPartTwo.row(
                 "checkYourAnswersAboutTheProperty.generator",
                 _.generatorCapacity.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
@@ -183,7 +175,6 @@
                 "generatorCapacity",
                 ("valueAsHtml", _ => None)
             ) ++
-
             sectionAnswersPartTwo.row(
                  "checkYourAnswersAboutTheProperty.battery",
                  _.batteriesCapacity.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
@@ -194,22 +185,17 @@
 
     } else if (forType == ForTypes.for6045 || forType == ForTypes.for6046) {
             @govukSummaryList(SummaryList(rows =
-
     sectionAnswersPartTwo.optionalRow(
         "checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyCurrentlyUsed.map(r =>
             r.propertyCurrentlyUsed.map(item => messages(s"label.propertyCurrentlyUsed.$item"))
         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>"
         +
-
                 sectionAnswersPartTwo.answers.filter(_.propertyCurrentlyUsed.flatMap(_.anotherUseDetails).flatMap(_.contains("other"))).flatMap(
             _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>"))),
 
         aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
-        ("valueAsHtml", _ => None))
-
-            ++
-
+        ("valueAsHtml", _ => None)) ++
             sectionAnswers.optionalRow(
                 "checkYourAnswersAboutTheProperty.hasWebsite",
                 _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
@@ -220,7 +206,6 @@
                 "buildingOperatingHaveAWebsite",
                 ("valueAsHtml", _ => None)
             )))
-
     } else {
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",

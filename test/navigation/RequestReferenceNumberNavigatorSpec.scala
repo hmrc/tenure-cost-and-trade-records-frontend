@@ -18,7 +18,6 @@ package navigation
 
 import connectors.Audit
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -40,7 +39,7 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.LoginController.show
+        .apply(stillConnectedDetailsYesSession) shouldBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to RequestReferenceNumberContactDetailsController from NoReferenceNumberPageId" in {
@@ -48,7 +47,7 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .nextPage(NoReferenceNumberPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
+        ) shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
         .show()
     }
 
@@ -57,7 +56,7 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .nextPage(NoReferenceNumberContactDetailsPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) mustBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+        ) shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
         .show()
     }
 
@@ -66,7 +65,7 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersRequestReferenceNumberPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) mustBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+        ) shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
         .confirmation()
     }
 

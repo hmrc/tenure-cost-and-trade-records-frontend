@@ -91,9 +91,9 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val isParkingRentPaidSeparately: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val isParkingRentPaidSeparately: String = "isParkingRentPaidSeparately"
     }
 

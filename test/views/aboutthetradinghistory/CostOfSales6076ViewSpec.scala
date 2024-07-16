@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.CostOfSales6076Form
 import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import utils.TestBaseSpec
 import views.behaviours.ViewBehaviours
@@ -44,7 +43,7 @@ class CostOfSales6076ViewSpec extends TestBaseSpec with ViewBehaviours {
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
+      backlinkText shouldBe messages("back.link.label")
     }
 
     "Section heading is visible" in {

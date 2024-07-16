@@ -27,7 +27,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(form: Form[(AnswersYesNo, Option[Int])], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[(AnswersYesNo, Option[Int])], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @conditionalHtmlOnNo = {
 @govukInput(

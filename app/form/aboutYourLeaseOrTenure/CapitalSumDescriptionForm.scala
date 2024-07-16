@@ -26,6 +26,6 @@ object CapitalSumDescriptionForm {
     mapping(
       "capitalSumDescription" -> default(text, "")
         .verifying(maxLength(2000, "error.capitalSumDescription.maxLength"))
-    )(CapitalSumDescription.apply)(CapitalSumDescription.unapply)
+    )(CapitalSumDescription.apply)(o => Some(o.capitalSumDescription))
   )
 }

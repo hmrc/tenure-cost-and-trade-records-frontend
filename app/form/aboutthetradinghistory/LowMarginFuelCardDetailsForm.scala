@@ -43,6 +43,6 @@ object LowMarginFuelCardDetailsForm {
       ),
       "handlingFee" -> bigDecimalWithCustomError("error.lowMarginFuelCardDetails.handlingFee.invalidFormat")
         .verifying(positiveBigDecimal)
-    )(LowMarginFuelCardDetail.apply)(LowMarginFuelCardDetail.unapply)
+    )(LowMarginFuelCardDetail.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

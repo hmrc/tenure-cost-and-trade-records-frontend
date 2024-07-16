@@ -54,7 +54,7 @@ class BunkeredFuelSoldControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = bunkeredFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty: _*))
+        val res = bunkeredFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }

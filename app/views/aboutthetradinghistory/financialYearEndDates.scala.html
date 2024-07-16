@@ -29,7 +29,7 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[Seq[LocalDate]], finYears: Seq[Int])(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[LocalDate]], finYears: Seq[Int])(implicit request: SessionRequest[?], messages: Messages)
 
 @financialYearEndContent(idx: Int) = {
     @includes.dateFields(

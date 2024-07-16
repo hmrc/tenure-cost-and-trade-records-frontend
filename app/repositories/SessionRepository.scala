@@ -19,22 +19,21 @@ package repositories
 import com.google.inject.Singleton
 import crypto.MongoCrypto
 import models.{SensitiveSession, Session}
-
-import javax.inject.Inject
-import org.mongodb.scala.model.IndexModel
-import play.api.libs.json._
-import org.mongodb.scala.model.Filters._
-import org.mongodb.scala.model._
+import org.mongodb.scala.SingleObservableFuture
+import org.mongodb.scala.model.Filters.*
+import org.mongodb.scala.model.*
+import play.api.libs.json.*
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import uk.gov.hmrc.mongo.MongoComponent
+import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
+import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import uk.gov.hmrc.play.http.logging.Mdc
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.concurrent.duration._
 import java.time.Instant
-import uk.gov.hmrc.mongo.play.json.formats.{MongoJavatimeFormats}
+import javax.inject.Inject
+import scala.concurrent.duration.*
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class SessionRepository @Inject() (mongo: MongoComponent)(implicit
@@ -78,7 +77,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
         sessionId   <- getSessionId
         maybeOption <- collection.find(Filters.equal("_id", sessionId)).headOption()
       } yield maybeOption.map(
-        (_.data.decryptedValue)
+        _.data.decryptedValue
       )
     }
 

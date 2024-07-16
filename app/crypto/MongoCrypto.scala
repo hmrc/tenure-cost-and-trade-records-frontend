@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class MongoCrypto @Inject() (configuration: Configuration) extends Encrypter with Decrypter {
 
-  private val symmetricCrypto: Encrypter with Decrypter =
+  private val symmetricCrypto: Encrypter & Decrypter =
     SymmetricCryptoFactory.aesGcmCryptoFromConfig("crypto", configuration.underlying)
 
   override def encrypt(plain: PlainContent): Crypted = symmetricCrypto.encrypt(plain)

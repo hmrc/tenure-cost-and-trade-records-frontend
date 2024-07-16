@@ -18,7 +18,6 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.CostsBreakdownForm
 import models.pages.Summary
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -45,7 +44,7 @@ class CostsBreakdownViewSpec extends QuestionViewBehaviours[String] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
+      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
     }
 
     "Section heading is visible" in {

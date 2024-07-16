@@ -34,10 +34,10 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
   val audit               = mock[Audit]
   val submissionConnector = mock[SubmissionConnector]
   val errorHandler        = mock[ErrorHandler]
-  //doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+  // doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  )                       =
+  ) =
     new ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
       submissionConnector,
@@ -63,7 +63,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
       "return InternalServerError" in {
         when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
           .thenReturn(Future.failed(new RuntimeException("Test error")))
-        when(errorHandler.internalServerErrorTemplate(org.mockito.ArgumentMatchers.any(classOf[Request[_]])))
+        when(errorHandler.internalServerErrorTemplate(org.mockito.ArgumentMatchers.any(classOf[Request[?]])))
           .thenReturn(Future.successful(Html("Some Error Message")))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)
         status(result) shouldBe Status.INTERNAL_SERVER_ERROR

@@ -33,7 +33,7 @@ object FeeReceivedForm {
     "financialYearEnd"         -> ignored(LocalDate.EPOCH),
     "tradingPeriod"            -> tradingPeriodWeeks(year),
     "concessionOrFranchiseFee" -> turnoverSalesMappingWithYear("feeReceived.concessionOrFranchiseFee", year)
-  )(FeeReceivedPerYear.apply)(FeeReceivedPerYear.unapply)
+  )(FeeReceivedPerYear.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   private def feeReceivedPerYearSeq(
     years: Seq[String]
@@ -42,13 +42,13 @@ object FeeReceivedForm {
 
   def feeReceivedForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[FeeReceived]                =
+  )(implicit messages: Messages): Form[FeeReceived] =
     Form {
       mapping(
         "feeReceivedPerYear"    -> feeReceivedPerYearSeq(years),
         "feeCalculationDetails" -> optional(text(maxLength = 2000))
           .verifying(messages("error.feeReceived.feeCalculationDetails.required"), _.nonEmpty)
-      )(FeeReceived.apply)(FeeReceived.unapply)
+      )(FeeReceived.apply)(o => Some(Tuple.fromProductTyped(o)))
     }
 
 }

@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -43,9 +42,9 @@ class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSe
     "has a link marked with back.link.label leading to payment for trade services question page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
     }
 
     "Section heading is visible" in {

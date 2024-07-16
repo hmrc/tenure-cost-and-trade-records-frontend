@@ -25,7 +25,7 @@ import play.api.data.Forms._
 // TODO: Remove package uk.gov.voa.play.form if library uk.gov.hmrc:play-conditional-form-mapping_2.13 for Scala 2.13 released
 // https://artefacts.tax.service.gov.uk/ui/packages?name=%2Aplay-conditional-form-mapping%2A&type=packages
 
-class onlyIfAny extends AnyFlatSpec with should.Matchers {
+class OnlyIfAny extends AnyFlatSpec with should.Matchers {
   import ConditionalMappings._
 
   behavior of "only if any"
@@ -56,7 +56,7 @@ class onlyIfAny extends AnyFlatSpec with should.Matchers {
         Seq("s1" -> "magicValue", "s2" -> "magicValue", "s3" -> "magicValue"),
         optional(nonEmptyText)
       )
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   case class Model(s1: String, s2: String, s3: String, target: Option[String])

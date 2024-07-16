@@ -54,7 +54,7 @@ case class LoginDetails(referenceNumber: String, postcode: String, startTime: Zo
 object LoginController {
   val loginForm = Form(
     mapping(
-      //format of reference number should be 7 or 8 digits then / then 3 digits
+      // format of reference number should be 7 or 8 digits then / then 3 digits
       "referenceNumber" -> text.verifying(
         Errors.invalidRefNum,
         x => {
@@ -69,7 +69,7 @@ object LoginController {
           .transform[ZonedDateTime](_.atZone(ZoneOffset.UTC), _.toLocalDateTime),
         nowInUK
       )
-    )(LoginDetails.apply)(LoginDetails.unapply)
+    )(LoginDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   val startPage: Call = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show()

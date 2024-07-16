@@ -48,7 +48,7 @@ class FinancialYearEndDatesControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "return redirect 303 for empty turnoverSections" in {
-        val res = financialYearEndDatesController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = financialYearEndDatesController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe SEE_OTHER
       }
     }

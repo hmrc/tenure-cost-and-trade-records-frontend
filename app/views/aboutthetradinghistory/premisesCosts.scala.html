@@ -36,7 +36,7 @@
 )
 
 
-@(form: Form[Seq[PremisesCosts]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[PremisesCosts]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @totalContent(idx: Int) = {
     <span data-total-prefix="premisesCosts.[@idx]." data-total-items="energyAndUtilities,buildingRepairAndMaintenance,repairsAndRenewalsOfFixtures,rent,businessRates,buildingInsurance">

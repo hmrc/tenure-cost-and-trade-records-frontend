@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,15 +29,15 @@ class AlphanumericPasswordGeneratorSpec extends AnyFlatSpec with should.Matchers
     AlphanumericPasswordGenerator.generatePassword should have length passwordLength
   }
 
-  it                              should "generate password using only allowed digits and chars" in {
+  it should "generate password using only allowed digits and chars" in {
     AlphanumericPasswordGenerator.generatePassword should fullyMatch regex s"^[abcdefghjkmnpqrstuvwxyz23456789]{$passwordLength}$$"
   }
 
-  it                              should "generate different password each time" in {
+  it should "generate different password each time" in {
     AlphanumericPasswordGenerator.generatePassword should not be AlphanumericPasswordGenerator.generatePassword
   }
 
-  it                              should "have at least 4 different chars in password" in {
+  it should "have at least 4 different chars in password" in {
     AlphanumericPasswordGenerator.generatePassword.toSet.size should be >= 4
   }
 

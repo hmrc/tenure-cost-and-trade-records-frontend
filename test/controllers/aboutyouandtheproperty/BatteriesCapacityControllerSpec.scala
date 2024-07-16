@@ -71,7 +71,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec {
   "SUBMIT / batteries capacity" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = batteriesCapacityController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(result) shouldBe BAD_REQUEST
     }
@@ -87,7 +87,9 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey = new ErrorKey
+
+    class ErrorKey {
       val batteriesCapacity = "batteriesCapacity"
     }
 

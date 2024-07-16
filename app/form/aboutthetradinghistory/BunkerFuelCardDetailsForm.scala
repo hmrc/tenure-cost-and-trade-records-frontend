@@ -42,6 +42,6 @@ object BunkerFuelCardDetailsForm {
       ),
       "handlingFee" -> bigDecimalWithCustomError("error.bunkerFuelCard.handlingFee.invalidFormat")
         .verifying(positiveBigDecimal)
-    )(BunkerFuelCardDetails.apply)(BunkerFuelCardDetails.unapply)
+    )(BunkerFuelCardDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

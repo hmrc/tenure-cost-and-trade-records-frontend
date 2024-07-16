@@ -16,7 +16,6 @@
 
 package actions
 
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.mvc.Results._
 import play.api.mvc.{AnyContentAsEmpty, BodyParsers, Result}
 import play.api.test.Helpers._
@@ -37,8 +36,8 @@ class RefNumActionSpec extends TestBaseSpec {
       val result: Future[Result] =
         action.invokeBlock(sessionRequest, (_: RefNumRequest[AnyContentAsEmpty.type]) => Future.successful(Ok("")))
 
-      status(result) mustBe SEE_OTHER
-      redirectLocation(result) mustBe Some(controllers.routes.LoginController.show.url)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(controllers.routes.LoginController.show.url)
     }
 
     "return OK  when 'refNum' is present in session" in {
@@ -51,7 +50,7 @@ class RefNumActionSpec extends TestBaseSpec {
           Future.successful(Ok(s"RefNum: ${refNumRequest.refNum}"))
       )
 
-      status(result) mustBe OK
+      status(result) shouldBe OK
     }
   }
 }

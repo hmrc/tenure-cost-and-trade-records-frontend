@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
 
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = areYouThirdPartyController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -116,13 +116,13 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "Throw a bad request if an empty form is submitted" in {
-      val result = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val result = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(result) shouldBe BAD_REQUEST
     }
 
     "Throw a bad request if not empty form submitted and save data in the session" in {
       val testData = Map("areYouThirdParty" -> "yes")
-      val result   = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq: _*))
+      val result   = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq*))
 
       status(result) shouldBe BAD_REQUEST
     }
@@ -131,7 +131,9 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
 }
 
 object TestData {
-  val errorKey = new {
+  val errorKey = new ErrorKey
+
+  class ErrorKey {
     val areYouThirdParty = "areYouThirdParty"
   }
 

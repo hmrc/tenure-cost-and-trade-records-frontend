@@ -17,8 +17,9 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport.nonNegativeNumber
-import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.{CaravanHireType, FleetHire, PrivateSublet}
-import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.CaravanUnitType
+import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType
+import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.{FleetHire, PrivateSublet}
+import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
 import models.submissions.aboutthetradinghistory.{CaravansAge, CaravansPerAgeCategory}
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -33,7 +34,7 @@ object CaravansAgeCategoriesForm {
       mapping(
         caravansPerAgeCategoryMapping(caravanUnitType, FleetHire),
         caravansPerAgeCategoryMapping(caravanUnitType, PrivateSublet)
-      )(CaravansAge.apply)(CaravansAge.unapply)
+      )(CaravansAge.apply)(o => Some(Tuple.fromProductTyped(o)))
     }
 
   private def caravansPerAgeCategoryMapping(unitType: CaravanUnitType, hireType: CaravanHireType) = {
@@ -46,7 +47,7 @@ object CaravansAgeCategoriesForm {
       caravansAmountMapping("years6_10"),
       caravansAmountMapping("years11_15"),
       caravansAmountMapping("years15plus")
-    )(CaravansPerAgeCategory.apply)(CaravansPerAgeCategory.unapply)
+    )(CaravansPerAgeCategory.apply)(o => Some(Tuple.fromProductTyped(o)))
   }
 
 }

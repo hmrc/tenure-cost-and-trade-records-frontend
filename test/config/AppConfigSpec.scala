@@ -16,7 +16,6 @@
 
 package config
 
-import org.scalatestplus.play._
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

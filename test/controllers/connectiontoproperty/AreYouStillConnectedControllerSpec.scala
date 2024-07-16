@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = areYouStillConnectedController().submit(
-        fakeRequest.withFormUrlEncodedBody(Seq.empty: _*)
+        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -88,7 +88,9 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey = new ErrorKey
+
+    class ErrorKey {
       val isRelated = "isRelated"
     }
 

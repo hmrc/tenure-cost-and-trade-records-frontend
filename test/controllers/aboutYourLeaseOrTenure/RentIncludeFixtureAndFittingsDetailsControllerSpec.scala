@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,14 +60,14 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
   "RentIncludeFixtureAndFittingsDetailsController SUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
       val res = rentIncludeFixtureAndFittingsDetailsController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe SEE_OTHER
     }
 
     "throw a See_Other if an empty form is submitted with no data in session" in {
       val controller = rentIncludeFixtureAndFittingsDetailsController(aboutLeaseOrAgreementPartOne = None)
-      val res        = controller.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res        = controller.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe SEE_OTHER
     }
   }

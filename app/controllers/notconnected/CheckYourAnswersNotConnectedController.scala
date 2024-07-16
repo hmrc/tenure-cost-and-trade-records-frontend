@@ -73,7 +73,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     } yield Found(confirmationUrl)
   }
 
-  def submitNotConnected(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Result] = {
+  def submitNotConnected(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
     val auditType      = "NotConnectedSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     val session        = request.sessionData

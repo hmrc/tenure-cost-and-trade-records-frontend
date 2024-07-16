@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = removeConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = removeConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -116,28 +116,22 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val fullName: String
+    val errorKey: ErrorKey = new ErrorKey
 
-      val phone: String
-
-      val email: String
-    } = new {
+    class ErrorKey {
       val fullName: String = "removeConnectionFullName"
       val phone            = "removeConnectionDetails.phone"
       val email            = "removeConnectionDetails.email"
     }
 
-    val formErrors: Object {
-      val required: Object {
-        val fullName: FormError
-      }
-    } = new {
-      val required: Object {
-        val fullName: FormError
-      } = new {
-        val fullName: FormError = FormError(errorKey.fullName, Errors.required)
-      }
+    val formErrors: FormErrors = new FormErrors
+
+    class RequiredError {
+      val fullName: FormError = FormError(errorKey.fullName, Errors.required)
+    }
+
+    class FormErrors {
+      val required: RequiredError = new RequiredError
     }
 
     val baseFormData: Map[String, String] = Map(

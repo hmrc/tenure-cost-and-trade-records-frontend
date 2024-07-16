@@ -90,7 +90,7 @@ class CaravansOpenAllYearControllerSpec extends TestBaseSpec {
     }
 
     "return 400 for empty form data" in {
-      val res = caravansOpenAllYearController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = caravansOpenAllYearController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

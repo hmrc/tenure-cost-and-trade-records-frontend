@@ -37,7 +37,7 @@ object TurnoverForm6020 {
     "lottery"            -> turnoverSalesMappingWithYear("turnover.6020.lottery", year),
     "payPointOrZone"     -> turnoverSalesMappingWithYear("turnover.6020.payPointOrZone", year),
     "otherIncome"        -> turnoverSalesMappingWithYear("turnover.6020.otherIncome", year)
-  )(TurnoverSection6020.apply)(TurnoverSection6020.unapply)
+  )(TurnoverSection6020.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def turnoverForm6020(years: Seq[String])(implicit messages: Messages): Form[Seq[TurnoverSection6020]] =
     Form {

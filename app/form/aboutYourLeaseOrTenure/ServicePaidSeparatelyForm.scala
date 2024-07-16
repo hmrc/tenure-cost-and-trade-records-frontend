@@ -32,6 +32,6 @@ object ServicePaidSeparatelyForm {
               nonEmpty(errorMessage = "servicePaidSeparately.describe.error"),
               maxLength(500, "error.tradeServiceDescription.maxLength")
             )
-      )(ServicePaidSeparately.apply)(ServicePaidSeparately.unapply)
+      )(ServicePaidSeparately.apply)(o => Some(o.description))
     )
 }

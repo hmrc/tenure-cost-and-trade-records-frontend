@@ -20,7 +20,6 @@ import connectors.Audit
 import navigation.identifiers._
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
@@ -38,7 +37,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, aboutYouAndTheProperty6010YesSession)
-        .apply(aboutYouAndTheProperty6010YesSession) mustBe controllers.routes.LoginController.show
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe controllers.routes.LoginController.show
     }
 
     // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
@@ -48,7 +47,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010NoSession)
         .apply(
           aboutYouAndTheProperty6010NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
         .show()
     }
 
@@ -57,7 +56,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010NoSession)
         .apply(
           aboutYouAndTheProperty6010NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
         .show()
     }
 
@@ -66,7 +65,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(LicensableActivityPageId, aboutYouAndTheProperty6010NoSession)
         .apply(
           aboutYouAndTheProperty6010NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
         .show()
     }
 
@@ -75,7 +74,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenceConditionsPageId, aboutYouAndTheProperty6010NoSession)
         .apply(
           aboutYouAndTheProperty6010NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController
         .show()
     }
 
@@ -84,7 +83,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(EnforcementActionBeenTakenPageId, aboutYouAndTheProperty6010NoSession)
         .apply(
           aboutYouAndTheProperty6010NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController
         .show()
     }
 
@@ -93,7 +92,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(TiedForGoodsPageId, aboutYouAndTheProperty6010NoSession)
         .apply(
           aboutYouAndTheProperty6010NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }
@@ -105,7 +104,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
         .show()
     }
 
@@ -114,7 +113,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(LicensableActivityPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController
         .show()
     }
 
@@ -123,7 +122,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(LicensableActivityDetailsPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
         .show()
     }
 
@@ -132,7 +131,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenceConditionsPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController
         .show()
     }
 
@@ -141,7 +140,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenceConditionsDetailsPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController
         .show()
     }
 
@@ -150,7 +149,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(EnforcementActionBeenTakenPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
+        ) shouldBe controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
     }
 
     "return a function that goes to tied for goods page when enforcement action taken details page has been completed" in {
@@ -158,7 +157,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(EnforcementActionBeenTakenDetailsPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.TiedForGoodsController
         .show()
     }
 
@@ -167,7 +166,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(TiedForGoodsPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController
         .show()
     }
 
@@ -176,7 +175,7 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .nextPage(TiedForGoodsDetailsPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
   }
 

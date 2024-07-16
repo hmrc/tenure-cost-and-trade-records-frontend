@@ -33,9 +33,9 @@ object CostOfSales6076Form {
       "TNuoS"           -> costOfSalesMapping("costOfSales6076.TNuoS", year),
       "BSuoS"           -> costOfSalesMapping("costOfSales6076.BSuoS", year),
       "otherSales"      -> costOfSalesMapping("costOfSales6076.otherSales", year)
-    )(CostOfSales6076Sum.apply)(CostOfSales6076Sum.unapply)
+    )(CostOfSales6076Sum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def costOfSales6076Mapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[CostOfSales6076Sum]]     =
+  def costOfSales6076Mapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
 
   def costOfSales6076Form(years: Seq[String])(implicit messages: Messages): Form[(Seq[CostOfSales6076Sum], String)] =

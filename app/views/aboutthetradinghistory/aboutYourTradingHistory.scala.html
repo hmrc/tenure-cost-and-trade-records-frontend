@@ -28,7 +28,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[MonthsYearDuration])(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[MonthsYearDuration])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("firstOccupy.heading"),

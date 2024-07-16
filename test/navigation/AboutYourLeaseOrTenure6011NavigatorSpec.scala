@@ -21,7 +21,6 @@ import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentFirstPaid, TenancyLeaseAgreementExpire}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -46,19 +45,19 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, session6011)
-        .apply(session6011) mustBe controllers.routes.LoginController.show
+        .apply(session6011) shouldBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to connected to landlord page when about your landlord has been completed" in {
       navigator
         .nextPage(AboutTheLandlordPageId, session6011)
-        .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
+        .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
     }
 
     "return a function that goes to current annual rent page when about your landlord has been completed" in {
       navigator
         .nextPage(ConnectedToLandlordDetailsPageId, session6011)
-        .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+        .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
     "return a function that goes to connected to landlord details page when connected to landlord and answer is 'yes'" in {
@@ -66,7 +65,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerYes)))
       )
       val result  = navigator.connectedToLandlordRouting(answers)
-      result mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
 
     }
 
@@ -75,25 +74,25 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerNo)))
       )
       val result  = navigator.connectedToLandlordRouting(answers)
-      result mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
     "return a function that goes to  rent includes VAT page when current annual rent has been completed" in {
       navigator
         .nextPage(CurrentAnnualRentPageId, session6011)
-        .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show()
+        .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show()
     }
 
     "return a function that goes to current rent first paid page when  rent includes VAT has been completed" in {
       navigator
         .nextPage(RentIncludesVatPageId, session6011)
-        .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
+        .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 
     "return a function that goes to tenancy lease agreement expire page when current rent first paid has been completed" in {
       navigator
         .nextPage(CurrentRentFirstPaidPageId, session6011)
-        .apply(session6011) mustBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+        .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
         .show()
     }
 
@@ -110,7 +109,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentRentFirstPaidPageId, session)
         .apply(
           session
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
         .show()
     }
 
@@ -129,7 +128,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentRentFirstPaidPageId, session)
         .apply(
           session
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
         .show()
     }
 
@@ -138,7 +137,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         .nextPage(TenancyLeaseAgreementExpirePageId, session6011)
         .apply(
           session6011
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
   }
 }

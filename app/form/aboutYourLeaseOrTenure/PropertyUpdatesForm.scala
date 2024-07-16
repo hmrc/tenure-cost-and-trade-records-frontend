@@ -25,6 +25,6 @@ object PropertyUpdatesForm {
   val propertyUpdatesForm = Form(
     mapping(
       "propertyUpdates" -> createYesNoType("error.propertyUpdates.missing")
-    )(PropertyUpdates.apply)(PropertyUpdates.unapply)
+    )(PropertyUpdates.apply)(o => Some(o.updates))
   )
 }

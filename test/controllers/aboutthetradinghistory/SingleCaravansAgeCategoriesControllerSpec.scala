@@ -65,7 +65,7 @@ class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "return 400 for empty form data" in {
-      val res = staticCaravansController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = staticCaravansController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

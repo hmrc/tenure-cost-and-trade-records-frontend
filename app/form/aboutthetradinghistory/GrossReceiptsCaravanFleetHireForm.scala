@@ -33,7 +33,7 @@ object GrossReceiptsCaravanFleetHireForm {
     mapping(
       "weeks"         -> tradingPeriodWeeks(year),
       "grossReceipts" -> turnoverSalesMappingWithYear("turnover.6045.caravanFleetHire.grossReceipts", year)
-    )(GrossReceiptsCaravanFleetHire.apply)(GrossReceiptsCaravanFleetHire.unapply)
+    )(GrossReceiptsCaravanFleetHire.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def grossReceiptsCaravanFleetHireForm(
     years: Seq[String]

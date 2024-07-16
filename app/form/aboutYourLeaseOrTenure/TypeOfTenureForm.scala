@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ object TypeOfTenureForm {
     ),
     "typeOfTenureDetails" -> optional(text)
       .verifying("error.typeOfTenureDetails.maxLength", it => it.forall(_.length <= 2000))
-  )(TypeOfTenure.apply)(TypeOfTenure.unapply)
+  )(TypeOfTenure.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   val typeOfTenureForm: Form[TypeOfTenure] = Form(
     typeOfTenureMapping.verifying(typeOfTenureDetailsRequired)

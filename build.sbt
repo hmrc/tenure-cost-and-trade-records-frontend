@@ -5,7 +5,7 @@ val defaultPort = 9526
 val appName     = "tenure-cost-and-trade-records-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "2.13.14"
+ThisBuild / scalaVersion := "3.4.2"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
@@ -31,4 +31,4 @@ lazy val it =
     .dependsOn(microservice % "test->test")
     .settings(itSettings())
 
-addCommandAlias("precommit", ";scalafmtSbt;scalafmtAll;it/test:scalafmt;coverage;test;it/test;coverageReport")
+addCommandAlias("precommit", ";scalafmtSbt;scalafmtAll;it/Test/scalafmt;coverage;test;it/test;coverageReport")

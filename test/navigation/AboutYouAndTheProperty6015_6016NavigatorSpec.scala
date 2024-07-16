@@ -17,7 +17,6 @@
 package navigation
 
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
@@ -31,7 +30,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6015NoSession)
         .apply(
           aboutYouAndTheProperty6010NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
         .show()
     }
 
@@ -40,7 +39,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6015NoSession)
         .apply(
           aboutYouAndTheProperty6015NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
         .show()
     }
 
@@ -49,7 +48,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6015NoSession)
         .apply(
           aboutYouAndTheProperty6015NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }
@@ -61,7 +60,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
         .show()
     }
 
@@ -70,7 +69,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
         .show()
     }
 
@@ -79,7 +78,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
         .show()
     }
 
@@ -88,7 +87,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
         .show()
     }
 
@@ -97,7 +96,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6015YesSession)
         .apply(
           aboutYouAndTheProperty6015YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }
@@ -111,7 +110,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
         .show()
     }
 
@@ -120,7 +119,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }
@@ -132,7 +131,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
         .show()
     }
 
@@ -141,7 +140,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
         .show()
     }
 
@@ -150,7 +149,7 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6016NoSession)
         .apply(
           aboutYouAndTheProperty6016YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class IncludedInYourRentController @Inject() (
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[_]): String = request.sessionData.forType
+  private def forType(implicit request: SessionRequest[?]): String = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(

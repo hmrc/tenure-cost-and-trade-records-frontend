@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.BenefitsGivenForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.BenefitsGiven
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -42,9 +41,9 @@ class BenefitsGivenViewSpec extends QuestionViewBehaviours[BenefitsGiven] {
     "has a link marked with back.link.label leading to lease surrendered early page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show().url
     }
 
     "Section heading is visible" in {

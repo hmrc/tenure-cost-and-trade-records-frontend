@@ -114,9 +114,9 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
 
   }
   object TestData {
-    val errorKey: Object {
-      val addAnotherBunkerFuelCardsDetails: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val addAnotherBunkerFuelCardsDetails: String =
         "addAnotherBunkerFuelCardsDetails"
     }

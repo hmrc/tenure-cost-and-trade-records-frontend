@@ -36,6 +36,6 @@ object TentingPitchesAllYearForm {
           "error.areYourPitchesOpen.conditional.value.invalid"
         )
       )
-    )(TentingPitchesAllYear.apply)(TentingPitchesAllYear.unapply)
+    )(TentingPitchesAllYear.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

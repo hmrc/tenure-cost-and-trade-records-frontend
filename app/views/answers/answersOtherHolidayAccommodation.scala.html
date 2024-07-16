@@ -29,7 +29,7 @@
 )
 
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@()(implicit request: SessionRequest[?], messages: Messages)
     @sectionAnswersPartOne = @{
         SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
     }

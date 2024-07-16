@@ -27,7 +27,7 @@
 )
 
 
-@(theForm: Form[BunkeredFuelQuestion], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[BunkeredFuelQuestion], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("bunkeredFuelQuestion.heading"),

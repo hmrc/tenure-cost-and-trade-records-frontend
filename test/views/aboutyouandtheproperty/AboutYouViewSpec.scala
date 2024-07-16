@@ -43,9 +43,9 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
     "has a link marked with back.link.label leading to the Are still connected Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.TaskListController.show().url + "#about-you"
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.routes.TaskListController.show().url + "#about-you"
     }
 
     "Section heading is visible" in {

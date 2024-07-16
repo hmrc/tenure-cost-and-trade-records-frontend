@@ -21,7 +21,6 @@ import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentBasedOnPercentageOpenMarket, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, WhatIsYourCurrentRentBasedOnDetails}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -46,13 +45,13 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, session6016)
-        .apply(session6016) mustBe controllers.routes.LoginController.show
+        .apply(session6016) shouldBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to connected to landlord page when about your landlord has been completed" in {
       navigator
         .nextPage(AboutTheLandlordPageId, session6016)
-        .apply(session6016) mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
+        .apply(session6016) shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
     }
 
     "return a function that goes to connected to landlord details page when connected to landlord and answer is 'yes'" in {
@@ -60,7 +59,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerYes)))
       )
       val result  = navigator.connectedToLandlordRouting(answers)
-      result mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
 
     }
 
@@ -69,7 +68,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerNo)))
       )
       val result  = navigator.connectedToLandlordRouting(answers)
-      result mustBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
 
     }
 
@@ -78,7 +77,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentRentPayableWithin12monthsPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
 
     "return a function that goes to current annual rent agreement page when current rent first paid has been completed" in {
@@ -86,7 +85,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentAnnualRentPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 
     "return a function that goes to lease length and start date page when current rent first paid has been completed" in {
@@ -94,7 +93,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentRentFirstPaidPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
     }
 
     "return a function that goes to included in your rent page when current lease begin has been completed" in {
@@ -102,7 +101,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentLeaseBeginPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()
     }
 
     "return a function that goes to does the rent payable page when included in your rent has been completed" in {
@@ -110,7 +109,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(IncludedInYourRentPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
     }
 
     "return a function that goes to ultimately responsible OR page when does the rent payable has been completed" in {
@@ -118,7 +117,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(DoesRentPayablePageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     }
 
     "return a function that goes to ultimately responsible IR page when ultimately responsible OR has been completed" in {
@@ -126,7 +125,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
     }
 
     "return a function that goes to ultimately responsible BI page when ultimately responsible IR has been completed" in {
@@ -134,7 +133,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleInsideRepairsPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
     }
 
     "return a function that goes to trade services page when ultimately responsible BI has been completed" in {
@@ -142,7 +141,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
     }
 
     "return a function that goes to rent include fixture and fittings when trade services details has been completed" in {
@@ -150,7 +149,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(RentFixtureAndFittingsDetailsPageId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
     }
 
     "return a function that goes to how is current rent fixed when RentPayableVaryAccordingToGrossOrNetDetails has been completed" in {
@@ -158,7 +157,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
     }
 
     "return a function that goes to can rent be reduced on view when intervals of rent review has been completed" in {
@@ -166,7 +165,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(IntervalsOfRentReviewId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
     }
 
     "return a function that goes to capital sum when tenants additions has been completed" in {
@@ -174,7 +173,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(TenantsAdditionsDisregardedDetailsId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     }
     "return a function that goes to how is current rent fixed when What is your current rent has been completed" in {
 
@@ -191,7 +190,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(WhatRentBasedOnPageId, session)
         .apply(
           session
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
         .show()
     }
 
@@ -210,7 +209,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(HowIsCurrentRentFixedId, session)
         .apply(
           session
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
         .show()
     }
 
@@ -229,7 +228,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
         .show()
     }
 
@@ -238,7 +237,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(LegalOrPlanningRestrictionDetailsId, session6016)
         .apply(
           session6016
-        ) mustBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
   }
 }

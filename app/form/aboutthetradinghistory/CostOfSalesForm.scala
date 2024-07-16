@@ -32,7 +32,7 @@ object CostOfSalesForm {
     "food"               -> turnoverSalesMappingWithYear("turnover.food.sales", year),
     "drinks"             -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),
     "other"              -> turnoverSalesMappingWithYear("turnover.other.sales", year)
-  )(CostOfSales.apply)(CostOfSales.unapply)
+  )(CostOfSales.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def costOfSalesForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CostOfSales]] =
     Form {

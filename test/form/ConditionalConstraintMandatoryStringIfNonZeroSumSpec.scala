@@ -47,7 +47,7 @@ class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec w
       ).verifying(
         maxLength(2000, "error.otherIncomeDetails.maxLength")
       )
-    )(NonZeroSumModel.apply)(NonZeroSumModel.unapply)
+    )(NonZeroSumModel.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   "mandatoryStringIfNonZeroSum" should "bind all mapped values" in {

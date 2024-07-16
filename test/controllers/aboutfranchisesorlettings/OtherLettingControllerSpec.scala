@@ -74,7 +74,7 @@ class OtherLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.county"             -> "Countyshire",
       "correspondenceAddress.postcode"           -> "DD1 1DD"
     )
-    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val result         = otherLettingController().submit(Some(3))(sessionRequest)
     status(result)           shouldBe SEE_OTHER
@@ -91,7 +91,7 @@ class OtherLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.county"             -> "Countyshire",
       "correspondenceAddress.postcode"           -> "DD1 1DD"
     )
-    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val result         = otherLettingController().submit(Some(4))(sessionRequest)
     status(result)           shouldBe SEE_OTHER

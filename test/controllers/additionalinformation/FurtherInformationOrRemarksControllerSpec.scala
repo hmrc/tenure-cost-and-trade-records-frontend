@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "return 303 if an empty form is submitted as field is optional" in {
       val result = furtherInformationOrRemarksController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(result) shouldBe SEE_OTHER
     }

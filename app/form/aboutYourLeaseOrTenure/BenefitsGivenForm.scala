@@ -26,6 +26,6 @@ object BenefitsGivenForm {
   val benefitsGivenForm = Form(
     mapping(
       "benefitsGiven" -> createYesNoType("error.benefitsGiven.required")
-    )(BenefitsGiven.apply)(BenefitsGiven.unapply)
+    )(BenefitsGiven.apply)(o => Some(o.benefitsGiven))
   )
 }

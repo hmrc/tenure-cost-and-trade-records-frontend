@@ -62,7 +62,7 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = totalFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty: _*))
+      val res = totalFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

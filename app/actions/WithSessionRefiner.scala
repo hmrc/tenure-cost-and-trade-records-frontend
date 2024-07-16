@@ -32,7 +32,7 @@ case class WithSessionRefiner @Inject() (
 )(implicit override val executionContext: ExecutionContext)
     extends ActionRefiner[Request, SessionRequest] {
 
-  implicit def hc(implicit request: Request[_]): HeaderCarrier =
+  implicit def hc(implicit request: Request[?]): HeaderCarrier =
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
   override protected def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =

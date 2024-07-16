@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.CalculatingTheRentForm
 import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.CalculatingTheRent
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -51,9 +50,9 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx = 0).url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx = 0).url
     }
 
     "Section heading is visible" in {

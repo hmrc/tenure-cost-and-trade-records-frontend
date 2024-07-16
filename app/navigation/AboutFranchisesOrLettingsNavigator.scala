@@ -60,7 +60,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     )
   )
 
-  private def franchiseOrLettingConditionsRouting: Session => Call = answers => {
+  private def franchiseOrLettingConditionsRouting: Session => Call = answers =>
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
       case Some("yes") =>
         answers.forType match {
@@ -82,7 +82,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         )
         throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
     }
-  }
 
   private def concessionOrFranchiseFeeRouting: Session => Call = answers =>
     answers.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee.map(_.name)) match {
@@ -90,7 +89,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       case _           => aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
-  private def cateringOperationsConditionsRouting: Session => Call = answers => {
+  private def cateringOperationsConditionsRouting: Session => Call = answers =>
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
       case Some("yes") =>
         answers.forType match {
@@ -131,7 +130,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         )
         throw new RuntimeException("Invalid option exception for catering operations conditions routing")
     }
-  }
 
   private def getCateringOperationsIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
@@ -184,7 +182,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     }
     isCommonConditionMet || isSpecificConditionMet
   }
-  def getIncompleteLettingCall(detail: LettingSection, forType: String, idx: Int): Call = {
+  def getIncompleteLettingCall(detail: LettingSection, forType: String, idx: Int): Call   = {
     val for601516 = if (forType.equals("FOR6015") || forType.equals("FOR6016")) true else false
     if (detail.lettingOtherPartOfPropertyInformationDetails == null)
       controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
@@ -197,7 +195,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     else controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
   }
 
-  private def cateringOperationsDetailsConditionsRouting: Session => Call = answers => {
+  private def cateringOperationsDetailsConditionsRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6015 | ForTypes.for6016 =>
         controllers.aboutfranchisesorlettings.routes.RentReceivedFromController
@@ -206,27 +204,22 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
           .show(getCateringOperationsIndex(answers))
     }
-  }
 
-  private def rentReceivedFromRouting: Session => Call = answers => {
+  private def rentReceivedFromRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController
       .show(getCateringOperationsIndex(answers))
-  }
 
-  private def calculatingTheRentForRouting: Session => Call = answers => {
+  private def calculatingTheRentForRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
       .show(getCateringOperationsIndex(answers))
-  }
 
-  private def cateringOperationsRentDetailsConditionsRouting: Session => Call = answers => {
+  private def cateringOperationsRentDetailsConditionsRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
       .show(getCateringOperationsIndex(answers))
-  }
 
-  private def cateringOperationsRentIncludesConditionsRouting: Session => Call = answers => {
+  private def cateringOperationsRentIncludesConditionsRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
       .show(getCateringOperationsIndex(answers))
-  }
 
   private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
     def getLastCateringOperationIndex(session: Session): Option[Int] =
@@ -302,7 +295,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     }
   }
 
-  private def rentForConcessionsRouting: Session => Call = answers => {
+  private def rentForConcessionsRouting: Session => Call = answers =>
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
       case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
       case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
@@ -312,9 +305,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         )
         throw new RuntimeException("Invalid option exception for catering operations conditions routing")
     }
-  }
 
-  private def lettingAccommodationConditionsRouting: Session => Call = answers => {
+  private def lettingAccommodationConditionsRouting: Session => Call = answers =>
     answers.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty.map(_.name)) match {
       case Some("yes") =>
         val maybeLetting = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lastOption)
@@ -333,25 +325,21 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         )
         throw new RuntimeException("Invalid option exception for lettings conditions routing")
     }
-  }
 
   private def getLettingsIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.lettingCurrentIndex).getOrElse(0)
 
-  private def lettingsDetailsConditionsRouting: Session => Call = answers => {
+  private def lettingsDetailsConditionsRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
       .show(getLettingsIndex(answers))
-  }
 
-  private def lettingsRentDetailsConditionsRouting: Session => Call = answers => {
+  private def lettingsRentDetailsConditionsRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController
       .show(getLettingsIndex(answers))
-  }
 
-  private def lettingsRentIncludesConditionsRouting: Session => Call = answers => {
+  private def lettingsRentIncludesConditionsRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
       .show(getLettingsIndex(answers))
-  }
 
   private def addAnotherLettingsConditionsRouting: Session => Call = answers => {
     def getLastLettingIndex(session: Session): Option[Int] =

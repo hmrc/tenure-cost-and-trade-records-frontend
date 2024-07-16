@@ -49,7 +49,8 @@ class ProblemWithPlayFrameworkMappings extends AnyFlatSpec with should.Matchers 
       "nonUkResident" -> boolean,
       "country"       -> optional(nonEmptyText),
       "email"         -> nonEmptyText
-    )(Model.apply)(Model.unapply).verifying("Error.countryRequired", x => x.nonUkResident && x.country.isDefined)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
+      .verifying("Error.countryRequired", x => x.nonUkResident && x.country.isDefined)
   )
 
 }
@@ -75,6 +76,6 @@ class SolutionUsingConditionalMappings extends AnyFlatSpec with should.Matchers 
       "nonUkResident" -> boolean,
       "country"       -> mandatoryIfTrue("nonUkResident", nonEmptyText),
       "email"         -> nonEmptyText
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

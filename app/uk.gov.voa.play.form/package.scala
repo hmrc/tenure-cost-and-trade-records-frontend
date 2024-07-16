@@ -23,7 +23,7 @@ package object form {
   implicit val emptyOption: Option[Nothing] = None
   implicit val emptyList: Seq[Nothing]      = List()
   implicit class conditionOpts(c: Condition) {
-    def and(c2: Condition): Condition = d => c(d) && c2(d)
+    infix def and(c2: Condition): Condition = d => c(d) && c2(d)
   }
   type Condition = Map[String, String] => Boolean
 }

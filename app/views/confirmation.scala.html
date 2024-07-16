@@ -36,7 +36,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[Feedback])(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[Feedback])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("confirmation.heading"),

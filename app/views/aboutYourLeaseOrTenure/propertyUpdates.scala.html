@@ -27,7 +27,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyUpdates], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PropertyUpdates], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("propertyUpdates.heading"),

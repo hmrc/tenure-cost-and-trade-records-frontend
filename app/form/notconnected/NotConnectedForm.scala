@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,6 @@ object NotConnectedForm {
       "fullName"              -> nonEmptyText(maxLength = 50),
       "contactDetails"        -> contactDetailsMapping,
       "additionalInformation" -> optional(text)
-    )(NotConnectedContactDetails.apply)(NotConnectedContactDetails.unapply)
+    )(NotConnectedContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

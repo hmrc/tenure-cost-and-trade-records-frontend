@@ -23,7 +23,7 @@
         govukWarningText: GovukWarningText
 )
 
-@(password: String, expiryDate: String)(implicit request: Request[_],  messages: Messages)
+@(password: String, expiryDate: String)(implicit request: Request[?],  messages: Messages)
 
 @layout(
   pageHeading = messages("saveAsDraft.preHeaderTimeout"),

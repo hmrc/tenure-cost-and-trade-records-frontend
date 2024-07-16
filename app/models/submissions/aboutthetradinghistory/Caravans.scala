@@ -35,16 +35,18 @@ case class Caravans(
 object Caravans {
   implicit val format: OFormat[Caravans] = Json.format
 
-  object CaravanUnitType extends Enumeration {
-    type CaravanUnitType = Value
-    val Single: CaravanUnitType = Value("single")
-    val Twin: CaravanUnitType   = Value("twin")
-  }
+  enum CaravanUnitType(unitType: String):
+    override def toString: String = unitType
 
-  object CaravanHireType extends Enumeration {
-    type CaravanHireType = Value
-    val FleetHire: CaravanHireType     = Value("fleetHire")
-    val PrivateSublet: CaravanHireType = Value("privateSublet")
-  }
+    case Single extends CaravanUnitType("single")
+    case Twin extends CaravanUnitType("twin")
+  end CaravanUnitType
+
+  enum CaravanHireType(hireType: String):
+    override def toString: String = hireType
+
+    case FleetHire extends CaravanHireType("fleetHire")
+    case PrivateSublet extends CaravanHireType("privateSublet")
+  end CaravanHireType
 
 }

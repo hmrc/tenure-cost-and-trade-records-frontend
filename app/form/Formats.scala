@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,10 +64,10 @@ object Formats {
 
     def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
   }
-  def answersYesNoDefFormat(errorMessage: String): Formatter[AnswersYesNo] =
+  def answersYesNoDefFormat(errorMessage: String): Formatter[AnswersYesNo]                              =
     namedEnumFormatter(AnswersYesNo, errorMessage)
-  implicit val userTypeFormat: Formatter[UserType]                         = namedEnumFormatter(UserType, Errors.userTypeRequired)
-  implicit val cyaYesNoFormat: Formatter[CYAYesNo]                         =
+  implicit val userTypeFormat: Formatter[UserType]                                                      = namedEnumFormatter(UserType, Errors.userTypeRequired)
+  implicit val cyaYesNoFormat: Formatter[CYAYesNo]                                                      =
     namedEnumFormatter(CYAYesNo, Errors.booleanMissing)
 
   implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
@@ -129,7 +129,7 @@ object Formats {
   implicit val includedInYourRentFormatter: Formatter[IncludedInYourRentInformation] =
     namedEnumFormatter(IncludedInYourRentInformation, Errors.currentRentBasedOn)
 
-  //About Franchises or Lettings
+  // About Franchises or Lettings
   implicit val typeOfLettingFormat: Formatter[TypeOfLetting] =
     namedEnumFormatter(TypeOfLetting, Errors.typeOfLetting)
 }

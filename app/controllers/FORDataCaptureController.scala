@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
   private def isSaveAsDraft(implicit request: SessionRequest[AnyContent]) =
     request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined
 
-  private def saveAsDraftRedirect(implicit request: Request[_]): Result = Redirect(
+  private def saveAsDraftRedirect(implicit request: Request[?]): Result = Redirect(
     controllers.routes.SaveAsDraftController.customPassword(request.uri)
   )
 

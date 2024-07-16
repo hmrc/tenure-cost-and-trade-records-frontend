@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
 
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tradingNamePayingRentController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -84,7 +84,9 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val tradingNamePayingRent = "tradingNamePayingRent"
     }
 

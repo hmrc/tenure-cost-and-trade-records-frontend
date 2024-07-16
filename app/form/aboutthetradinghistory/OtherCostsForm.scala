@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,12 +39,12 @@ object OtherCostsForm {
     "financialYearEnd"          -> ignored(LocalDate.EPOCH),
     "contributionsToHeadOffice" -> otherCostValueMapping("otherCosts.contributionsToHeadOffice"),
     "otherCosts"                -> otherCostValueMapping("otherCosts.otherCosts")
-  )(OtherCost.apply)(OtherCost.unapply)
+  )(OtherCost.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   val otherCostsMapping: Mapping[OtherCosts] = mapping(
     "otherCosts"       -> seq(otherCostMapping),
     "otherCostDetails" -> optional(text(maxLength = 2000))
-  )(OtherCosts.apply)(OtherCosts.unapply)
+  )(OtherCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   val form: Form[OtherCosts] = Form(
     otherCostsMapping.verifying(otherCostDetailsRequired)

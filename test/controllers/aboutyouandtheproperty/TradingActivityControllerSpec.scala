@@ -68,7 +68,7 @@ class TradingActivityControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = tradingActivityController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = tradingActivityController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -84,9 +84,9 @@ class TradingActivityControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val tradingActivity: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val tradingActivity: String = "tradingActivityQuestion"
     }
 

@@ -22,7 +22,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 @import util.DateUtil
 
-@(  form: Form[_],
+@(  form: Form[?],
     field: String,
     govukDate: GovukDateInput,
     helpText: Option[String] = None,
@@ -47,7 +47,7 @@
         if(msg.isEmpty) {
             if(form.errors.exists(x => x.key.contains(field))){
                 val firstError = form.errors.find(x => x.key.contains(field))
-                msg = Some(ErrorMessage(content = Text(messages(firstError.get.message.replaceAll("[\\[|\\]]", ""), firstError.get.args: _*))))
+                msg = Some(ErrorMessage(content = Text(messages(firstError.get.message.replaceAll("[\\[|\\]]", ""), firstError.get.args*))))
             }
         }
         msg

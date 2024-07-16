@@ -19,7 +19,7 @@
 
 @this(layout: Layout, govukWarningText: GovukWarningText, govukBackLink: GovukBackLink)
 
-@(remainingAttempts: Int)(implicit request: Request[_], messages: Messages)
+@(remainingAttempts: Int)(implicit request: Request[?], messages: Messages)
 
 @warningMessage = @{
     val remainingAttemptsAsWord = messages(remainingAttempts.toString)

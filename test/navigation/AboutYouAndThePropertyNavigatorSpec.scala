@@ -18,7 +18,6 @@ package navigation
 
 import connectors.Audit
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -38,7 +37,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, aboutYouAndTheProperty6010YesSession)
-        .apply(aboutYouAndTheProperty6010YesSession) mustBe controllers.routes.LoginController.show
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to about the property when about you page has been completed" in {
@@ -46,7 +45,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(AboutYouPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController
         .show()
     }
 
@@ -55,7 +54,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
         .show()
     }
 
@@ -64,7 +63,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
         .show()
     }
 
@@ -73,7 +72,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
         .show()
     }
 
@@ -82,7 +81,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
         .show()
     }
 
@@ -91,7 +90,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(LicensableActivityPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController
         .show()
     }
 
@@ -100,7 +99,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(LicensableActivityDetailsPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController
         .show()
     }
 
@@ -109,7 +108,7 @@ class AboutYouAndThePropertyNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersAboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
         .apply(
           aboutYouAndTheProperty6010YesSession
-        ) mustBe controllers.routes.TaskListController
+        ) shouldBe controllers.routes.TaskListController
         .show()
     }
   }

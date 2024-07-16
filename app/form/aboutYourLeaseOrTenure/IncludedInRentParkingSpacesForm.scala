@@ -32,7 +32,7 @@ object IncludedInRentParkingSpacesForm {
         "openSpaces"    -> nonNegativeNumber("included.openSpaces"),
         "coveredSpaces" -> nonNegativeNumber("included.coveredSpaces"),
         "garages"       -> nonNegativeNumber("included.garages", "0")
-      )(CarParkingSpaces.apply)(CarParkingSpaces.unapply)
+      )(CarParkingSpaces.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 
 }

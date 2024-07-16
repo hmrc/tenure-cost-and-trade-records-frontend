@@ -26,7 +26,7 @@ object BunkeredFuelQuestionForm {
   val bunkeredFuelQuestionForm = Form(
     mapping(
       "bunkeredFuelQuestion" -> createYesNoType("error.bunkeredFuelQuestion.required")
-    )(BunkeredFuelQuestion.apply)(BunkeredFuelQuestion.unapply)
+    )(BunkeredFuelQuestion.apply)(o => Some(o.bunkeredFuelQuestion))
   )
 
 }

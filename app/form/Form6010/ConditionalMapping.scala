@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ case class IfElseMapping[T](
   def withPrefix(prefix: String): IfElseMapping[T] =
     copy(trueMapping = trueMapping.withPrefix(prefix), falseMapping = falseMapping.withPrefix(prefix))
 
-  val mappings: Seq[Mapping[_]] = trueMapping.mappings :+ this
+  val mappings: Seq[Mapping[?]] = trueMapping.mappings :+ this
 
   override val key: String = trueMapping.key
 }
@@ -94,6 +94,6 @@ case class NonEmptyTextOrMapping(
   def withPrefix(prefix: String): Mapping[String] =
     copy(wrapped = wrapped.withPrefix(prefix))
 
-  val mappings: Seq[Mapping[_]] = wrapped.mappings :+ this
+  val mappings: Seq[Mapping[?]] = wrapped.mappings :+ this
 
 }

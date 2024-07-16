@@ -29,7 +29,7 @@ object StaffCostsForm {
       "NI"            -> costOfSalesMapping("staffCosts.NI", year),
       "pension"       -> costOfSalesMapping("staffCosts.pension", year),
       "remunerations" -> costOfSalesMapping("staffCosts.remunerations", year)
-    )(StaffCosts.apply)(StaffCosts.unapply)
+    )(StaffCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def staffCostsForm(years: Seq[String])(implicit messages: Messages): Form[Seq[StaffCosts]] =
     Form {

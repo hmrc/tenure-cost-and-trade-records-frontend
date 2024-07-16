@@ -32,7 +32,7 @@
 )
 
 
-@(form: Form[BenefitsGivenDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[BenefitsGivenDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("benefitsGivenDetails.heading"),

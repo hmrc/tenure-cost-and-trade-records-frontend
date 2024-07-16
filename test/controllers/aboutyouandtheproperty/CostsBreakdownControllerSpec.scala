@@ -70,7 +70,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
   "SUBMIT / costs breakdown" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = costsBreakdownController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(result) shouldBe BAD_REQUEST
     }
@@ -86,7 +86,9 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey = new ErrorKey
+
+    class ErrorKey {
       val costsBreakdown = "costsBreakdown"
     }
 

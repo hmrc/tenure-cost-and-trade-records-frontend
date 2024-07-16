@@ -41,7 +41,7 @@
 )
 
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@()(implicit request: SessionRequest[?], messages: Messages)
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
@@ -87,7 +87,7 @@
     ).body
 }
 
-@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[_]) = @{
+@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
     forType match {
         case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
@@ -472,11 +472,9 @@
     sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
         _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
         aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
-
             sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
                 _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
                 aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
-
             sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                 _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                 forType match {

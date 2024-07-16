@@ -46,7 +46,7 @@ class MandatoryIfExists extends AnyFlatSpec with should.Matchers {
     mapping(
       "source" -> optional(nonEmptyText),
       "target" -> mandatoryIfExists("source", nonEmptyText)
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   case class Model(source: Option[String], target: Option[String])

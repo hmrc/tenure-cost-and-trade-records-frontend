@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,9 +40,9 @@ case class AboutYouAndTheProperty(
   tiedForGoods: Option[AnswersYesNo] = None,
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
   checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None,
-  propertyDetailsString: Option[PropertyDetailsString] = None, //added for 6030 - February 2024
+  propertyDetailsString: Option[PropertyDetailsString] = None, // added for 6030 - February 2024
   charityQuestion: Option[AnswersYesNo] = None, // 6030
-  tradingActivity: Option[TradingActivity] = None, //6030
+  tradingActivity: Option[TradingActivity] = None, // 6030
   renewablesPlant: Option[RenewablesPlant] = None, // 6076
   threeYearsConstructed: Option[AnswersYesNo] = None, // 6076
   costsBreakdown: Option[String] = None // 6076
@@ -53,7 +53,7 @@ object AboutYouAndTheProperty {
 
   def updateAboutYouAndTheProperty(
     copy: AboutYouAndTheProperty => AboutYouAndTheProperty
-  )(implicit sessionRequest: SessionRequest[_]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session = {
 
     val currentAboutTheProperty = sessionRequest.sessionData.aboutYouAndTheProperty
 

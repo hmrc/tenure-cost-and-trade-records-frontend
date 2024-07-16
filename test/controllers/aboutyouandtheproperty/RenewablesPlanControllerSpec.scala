@@ -113,7 +113,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = renewablesPlantController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = renewablesPlantController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -128,9 +128,9 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val renewablesPlant: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val renewablesPlant: String = "renewablesPlant"
     }
 

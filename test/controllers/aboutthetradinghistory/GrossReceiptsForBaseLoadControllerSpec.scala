@@ -67,7 +67,7 @@ class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "return 400 for form with errors" in {
-      val res = grossReceiptsForBaseLoadController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = grossReceiptsForBaseLoadController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

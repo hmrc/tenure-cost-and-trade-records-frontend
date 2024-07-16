@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.CapitalSumDescriptionForm.capitalSumDescriptionForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -42,9 +41,9 @@ class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[CapitalSumDes
 
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
     }
 
     "Section heading is visible" in {

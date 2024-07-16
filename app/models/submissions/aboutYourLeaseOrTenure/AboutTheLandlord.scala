@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import play.api.libs.functional.syntax.{toFunctionalBuilderOps, unlift}
+import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Format, JsPath}
 
 case class AboutTheLandlord(
@@ -28,5 +28,5 @@ object AboutTheLandlord {
   implicit val format: Format[AboutTheLandlord] = (
     (JsPath \ "landlordFullName").format[String] and
       (JsPath \ "landlordAddress").formatNullable[LandlordAddress]
-  )(AboutTheLandlord.apply, unlift(AboutTheLandlord.unapply))
+  )(AboutTheLandlord.apply, o => Tuple.fromProductTyped(o))
 }

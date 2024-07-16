@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 class OtherCostsControllerSpec extends TestBaseSpec {
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
-  val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty: _*))
+  val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
 
   val otherCostsController = new OtherCostsController(
     stubMessagesControllerComponents(),

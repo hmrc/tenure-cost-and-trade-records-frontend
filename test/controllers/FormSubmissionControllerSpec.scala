@@ -77,14 +77,14 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
       val exception = new RuntimeException("Test exception")
       when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
         .thenReturn(Future.failed(exception))
-      when(errorHandler.internalServerErrorTemplate(any[Request[_]]))
+      when(errorHandler.internalServerErrorTemplate(any[Request[?]]))
         .thenReturn(Future.successful(play.twirl.api.HtmlFormat.empty))
 
       val result: Future[Result] = formSubmissionController.submit(fakeRequest)
 
       status(result) shouldBe INTERNAL_SERVER_ERROR
       verify(audit, times(2)).sendExplicitAudit(anyString, any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
-      verify(errorHandler, times(1)).internalServerErrorTemplate(any[Request[_]])
+      verify(errorHandler, times(1)).internalServerErrorTemplate(any[Request[?]])
     }
   }
 

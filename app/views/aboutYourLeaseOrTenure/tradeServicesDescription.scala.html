@@ -34,7 +34,7 @@
         govukCharacterCount: GovukCharacterCount,
 )
 
-@(theForm: Form[TradeServicesDetails], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TradeServicesDetails], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("tradeServiceDescription.heading"),

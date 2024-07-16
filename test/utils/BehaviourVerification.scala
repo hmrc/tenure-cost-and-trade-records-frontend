@@ -22,18 +22,15 @@ import security.ArgumentsDidNotMatch
 import scala.concurrent.Future
 
 trait BehaviourVerification extends should.Matchers {
-  def respondWith[A, B](a: A)(b: B): A => Future[B] = aa => {
+  def respondWith[A, B](a: A)(b: B): A => Future[B] = aa =>
     if (a == aa) Future.successful(b) else throw ArgumentsDidNotMatch(Seq(a), Seq(aa))
-  }
 
-  def respondWith[A, B, C](a: A, b: B)(c: C): (A, B) => Future[C] = (aa, bb) => {
+  def respondWith[A, B, C](a: A, b: B)(c: C): (A, B) => Future[C] = (aa, bb) =>
     if (aa == a && bb == b) Future.successful(c) else throw ArgumentsDidNotMatch(Seq(a, b), Seq(aa, bb))
-  }
 
-  def respondWith[A, B, C, D](a: A, b: B, c: C)(d: D): (A, B, C) => Future[D] = (aa, bb, cc) => {
+  def respondWith[A, B, C, D](a: A, b: B, c: C)(d: D): (A, B, C) => Future[D] = (aa, bb, cc) =>
     if (aa == a && bb == b && cc == c) Future.successful(d)
     else throw ArgumentsDidNotMatch(Seq(a, b, c), Seq(aa, bb, cc))
-  }
 
   def expect[A](a: A): A => Future[Unit] =
     x => Future.successful(assert(x === a))

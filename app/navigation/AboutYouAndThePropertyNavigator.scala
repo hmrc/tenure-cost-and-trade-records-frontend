@@ -40,7 +40,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
   ).map(_.url)
 
-  private def alternativeContactDetailsRouting: Session => Call = answers => {
+  private def alternativeContactDetailsRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6020 | ForTypes.for6030 =>
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
@@ -49,7 +49,6 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
       case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
     }
-  }
 
   private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
     val answersForType = answers.forType
@@ -59,7 +58,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
   }
 
-  private def websiteForPropertyRouting: Session => Call     = answers => {
+  private def websiteForPropertyRouting: Session => Call     = answers =>
     answers.forType match {
       case ForTypes.for6015 | ForTypes.for6016 =>
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
@@ -69,8 +68,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case _                                   => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
 
     }
-  }
-  private def charityQuestionRouting: Session => Call        = answers => {
+  private def charityQuestionRouting: Session => Call        = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
       case Some(AnswerNo)  => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
@@ -78,8 +76,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         logger.warn(s"Navigation for about the property reached without correct option by controller")
         throw new RuntimeException("Invalid option exception for charity question routing")
     }
-  }
-  private def premisesLicenseGrantedRouting: Session => Call = answers => {
+  private def premisesLicenseGrantedRouting: Session => Call = answers =>
     if (answers.forType.equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)) {
       answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
         case Some("yes") =>
@@ -95,16 +92,14 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     } else {
       controllers.routes.LoginController.show
     }
-  }
 
-  private def premisesLicenseGrantedDetailsRouting: Session => Call = answers => {
+  private def premisesLicenseGrantedDetailsRouting: Session => Call = answers =>
     if (answers.forType == ForTypes.for6015 || answers.forType == ForTypes.for6016)
       controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-  }
 
-  private def licensableActivityRouting: Session => Call = answers => {
+  private def licensableActivityRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
       case Some("no")  => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
@@ -114,9 +109,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for licence activity routing")
     }
-  }
 
-  private def premisesLicenceConditionsRouting: Session => Call = answers => {
+  private def premisesLicenceConditionsRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
       case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
@@ -126,9 +120,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for premises licence conditions routing")
     }
-  }
 
-  private def enforcementActionTakenRouting: Session => Call = answers => {
+  private def enforcementActionTakenRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
       case Some("no")  =>
@@ -139,9 +132,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for enforcement action taken routing")
     }
-  }
 
-  private def tiedGoodsRouting: Session => Call = answers => {
+  private def tiedGoodsRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
       case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
       case Some("no")  => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
@@ -151,9 +143,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for tied goods routing")
     }
-  }
 
-  private def contactDetailsQuestionRouting: Session => Call = answers => {
+  private def contactDetailsQuestionRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion)) match {
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
       case Some(AnswerNo)  =>
@@ -172,9 +163,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
 
         throw new RuntimeException("Invalid option exception for alternative details question routing")
     }
-  }
 
-  private def threeYearsConstructedRouting: Session => Call = answers => {
+  private def threeYearsConstructedRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
       case Some(AnswerNo)  => controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
@@ -184,7 +174,6 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for tied goods routing")
     }
-  }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),

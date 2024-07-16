@@ -71,7 +71,7 @@ class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "return 400 for empty turnoverSections" in {
-      val res = headOfficeExpensesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = headOfficeExpensesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

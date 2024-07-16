@@ -39,7 +39,7 @@ class ConditionalConstraintMappingsSpec extends AnyFlatSpec with should.Matchers
       ).verifying(
         maxLength(2000, "error.itemsDescription.maxLength")
       )
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   "mandatoryStringIfExists" should "bind all mapped values" in {

@@ -55,14 +55,14 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
 
   "Feedback controller" should {
     "return HTML and 200 status for feedback form page" in {
-      val result = feedbackController().feedback()(fakeRequest)
+      val result = feedbackController().feedback(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML and 200 status for thank you page" in {
-      val result = feedbackController().feedbackThx()(fakeRequest)
+      val result = feedbackController().feedbackThx(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -85,7 +85,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
 
     "in page feedback is posted to audit" should {
       "return redirect to thx page SEE_OTHER" in {
-        val result = feedbackController().feedbackSubmit()(
+        val result = feedbackController().feedbackSubmit(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> comments,
             "feedback-rating"   -> rating
@@ -111,7 +111,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
 
     "SUBMIT connected feedback empty" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = feedbackController().feedbackConnectedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = feedbackController().feedbackConnectedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -131,7 +131,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
 
     "SUBMIT vacant property feedback empty" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = feedbackController().feedbackVacantPropertySubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = feedbackController().feedbackVacantPropertySubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -152,14 +152,14 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
 
   "SUBMIT not connected feedback empty" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = feedbackController().feedbackNotConnectedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = feedbackController().feedbackNotConnectedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }
 
   "feedbackSubmitWithoutSession" should {
     "return BadRequest for invalid form submission" in {
-      val result = feedbackController().feedbackSubmitWithoutSession()(
+      val result = feedbackController().feedbackSubmitWithoutSession(
         postRequest.withFormUrlEncodedBody(
           "feedback-rating" -> ""
         )
@@ -169,7 +169,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
     }
 
     "return Redirect to feedbackThx for valid form submission" in {
-      val result = feedbackController().feedbackSubmitWithoutSession()(
+      val result = feedbackController().feedbackSubmitWithoutSession(
         postRequest.withFormUrlEncodedBody(
           "feedback-comments" -> "Good feedback",
           "feedback-rating"   -> "5"

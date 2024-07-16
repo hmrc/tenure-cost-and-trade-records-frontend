@@ -50,15 +50,14 @@ class FinancialYearEndDatesController @Inject() (
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
-        val financialYearEnd: Seq[LocalDate] = {
+        val occupationAndAccounting          = aboutTheTradingHistory.occupationAndAccountingInformation.get
+        val financialYearEnd: Seq[LocalDate] =
           request.sessionData.forType match {
             case ForTypes.for6020 =>
               aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
             case _                => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
           }
-        }
         Ok(
           financialYearEndDatesView(
             financialYearEndDatesForm().fill(financialYearEnd),

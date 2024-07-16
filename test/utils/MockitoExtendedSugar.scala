@@ -54,15 +54,15 @@ trait MockitoExtendedSugar extends MockitoSugar {
 
   def doNothing: Stubber = Mockito.doNothing()
 
-  def reset(mocks: AnyRef*): Unit = Mockito.reset(mocks: _*)
+  def reset(mocks: AnyRef*): Unit = Mockito.reset(mocks*)
 
   def verify[T](mock: T): T = Mockito.verify(mock)
 
   def verify[T](mock: T, mode: VerificationMode): T = Mockito.verify(mock, mode)
 
-  def verifyNoInteractions(mocks: AnyRef*): Unit = Mockito.verifyNoInteractions(mocks: _*)
+  def verifyNoInteractions(mocks: AnyRef*): Unit = Mockito.verifyNoInteractions(mocks*)
 
-  def verifyNoMoreInteractions(mocks: AnyRef*): Unit = Mockito.verifyNoMoreInteractions(mocks: _*)
+  def verifyNoMoreInteractions(mocks: AnyRef*): Unit = Mockito.verifyNoMoreInteractions(mocks*)
 
   def atLeastOnce: VerificationMode = Mockito.atLeastOnce()
 

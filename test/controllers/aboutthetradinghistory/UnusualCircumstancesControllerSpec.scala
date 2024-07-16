@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
   "UnusualCircumstancesController SUBMIT /" should {
     "Redirect to CYA if an empty form is submitted" in {
-      val result = unusualCircumstancesController6015.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val result = unusualCircumstancesController6015.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(
         "/send-trade-and-cost-information/check-your-answers-about-the-trading-history"
@@ -90,7 +90,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
     "Redirect to CYA if not empty form submitted and save data in the session" in {
       val testData = Map("unusualCircumstances" -> "test text")
-      val result   = unusualCircumstancesController6015.submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq: _*))
+      val result   = unusualCircumstancesController6015.submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq*))
 
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(

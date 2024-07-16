@@ -47,7 +47,7 @@ class VariableOperatingExpensesControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = variableOperatingExpensesController.submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

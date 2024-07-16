@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import form.aboutthetradinghistory.IncomeExpenditureSummary6076Form
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -64,9 +63,9 @@ class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show().url
     }
 
     "Section heading is visible" in {

@@ -80,7 +80,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "return redirect 400 for empty request" in {
-        val res = editFinancialYearEndDateController().submit(0)(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = editFinancialYearEndDateController().submit(0)(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -95,7 +95,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
             "financialYearEnd.year"  -> "2022"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6010YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6010YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController().submit(index)(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -113,7 +116,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
             "from"                   -> "CYA"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6010YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6010YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController().submit(index)(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -130,7 +136,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
             "financialYearEnd.year"  -> "2022"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6020YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6020YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
           forType = "FOR6020"
@@ -151,7 +160,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
             "from"                   -> "CYA"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6020YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6020YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
           forType = "FOR6020"
@@ -171,7 +183,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
             "financialYearEnd.year"  -> "2022"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6030YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6030YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
           forType = "FOR6030"
@@ -192,7 +207,10 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
             "from"                   -> "CYA"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6030YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6030YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
           forType = "FOR6030"

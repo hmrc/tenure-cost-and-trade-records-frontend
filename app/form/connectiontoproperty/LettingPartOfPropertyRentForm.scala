@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,9 +30,7 @@ object LettingPartOfPropertyRentForm {
       mapping(
         "annualRent" -> currencyMapping(".annualRent"),
         "dateInput"  -> requiredDateMapping("lettingPartOfPropertyFixedRentDate", allowPastDates = true)
-      )(LettingPartOfPropertyRentDetails.apply)(
-        LettingPartOfPropertyRentDetails.unapply
-      )
+      )(LettingPartOfPropertyRentDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 
 }

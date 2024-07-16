@@ -47,5 +47,5 @@ object PremisesCostsForm {
       "rent"                         -> costOfSalesMapping("premisesCosts.rent", year),
       "businessRates"                -> costOfSalesMapping("premisesCosts.businessRates", year),
       "buildingInsurance"            -> costOfSalesMapping("premisesCosts.buildingInsurance", year)
-    )(PremisesCosts.apply)(PremisesCosts.unapply)
+    )(PremisesCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
 }

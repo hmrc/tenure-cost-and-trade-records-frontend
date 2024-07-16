@@ -44,6 +44,6 @@ object TotalFuelSoldForm {
           )
           .verifying(messages("error.totalFuelSold.range", year), _ >= 0)
       ).verifying(messages("error.totalFuelSold.required", year), _.isDefined)
-    )(TotalFuelSold.apply)(TotalFuelSold.unapply)
+    )(TotalFuelSold.apply)(o => Some(Tuple.fromProductTyped(o)))
 
 }

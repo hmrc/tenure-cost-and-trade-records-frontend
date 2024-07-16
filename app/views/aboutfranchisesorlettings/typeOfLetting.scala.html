@@ -44,7 +44,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TypeOfLetting], index: Option[Int], summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TypeOfLetting], index: Option[Int], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @content = {
     @govukRadios(

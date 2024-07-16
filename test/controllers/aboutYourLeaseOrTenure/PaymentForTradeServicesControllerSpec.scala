@@ -101,7 +101,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = paymentForTradeServicesController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -117,9 +117,9 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val paymentForTradeServices: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val paymentForTradeServices: String = "paymentForTradeServices"
     }
 

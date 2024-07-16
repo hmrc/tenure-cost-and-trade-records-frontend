@@ -45,9 +45,9 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYe
     "has a link marked with back.link.label leading to the licensable activities Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
     }
 
     "Section heading is visible" in {

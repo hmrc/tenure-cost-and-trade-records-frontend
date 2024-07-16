@@ -45,9 +45,9 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[Further
     "has a link marked with back.link.label leading to the task Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.routes.TaskListController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
     }
 
     "Section heading is visible" in {

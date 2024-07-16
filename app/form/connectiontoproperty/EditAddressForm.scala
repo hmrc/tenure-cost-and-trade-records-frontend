@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,6 @@ object EditAddressForm {
   val editAddressForm: Form[EditTheAddress] = Form(
     mapping(
       "editAddress" -> editAddressMapping
-    )(EditTheAddress.apply)(EditTheAddress.unapply)
+    )(EditTheAddress.apply)(Option(_).map(_.editAddress))
   )
 }

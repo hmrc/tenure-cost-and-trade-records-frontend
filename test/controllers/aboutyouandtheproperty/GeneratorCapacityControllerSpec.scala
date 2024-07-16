@@ -71,7 +71,7 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
   "SUBMIT / generator capacity" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = generatorCapacityController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(result) shouldBe BAD_REQUEST
     }
@@ -87,7 +87,9 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey = new ErrorKey
+
+    class ErrorKey {
       val generatorCapacity = "generatorCapacity"
     }
 

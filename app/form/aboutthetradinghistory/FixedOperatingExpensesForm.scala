@@ -33,7 +33,7 @@ object FixedOperatingExpensesForm {
     "insurance"          -> turnoverSalesMappingWithYear("fixedExpenses.insurance", year),
     "loan-interest"      -> turnoverSalesMappingWithYear("fixedExpenses.loanInterest", year),
     "depreciation"       -> turnoverSalesMappingWithYear("fixedExpenses.depreciation", year)
-  )(FixedOperatingExpenses.apply)(FixedOperatingExpenses.unapply)
+  )(FixedOperatingExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def fixedOperatingExpensesForm(years: Seq[String])(implicit messages: Messages): Form[Seq[FixedOperatingExpenses]] =
     Form {

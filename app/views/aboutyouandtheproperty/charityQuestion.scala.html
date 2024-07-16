@@ -26,7 +26,7 @@
 )
 
 
-@(theForm: Form[AnswersYesNo], summary: Summary, fromLocation:String = "")(implicit request: Request[_], messages: Messages)
+@(theForm: Form[AnswersYesNo], summary: Summary, fromLocation:String = "")(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("charityQuestion.heading"),

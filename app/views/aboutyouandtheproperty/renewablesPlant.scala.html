@@ -30,7 +30,7 @@
 )
 
 
-@(theForm: Form[RenewablesPlant], backLink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[RenewablesPlant], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("renewablesPlant.heading"),

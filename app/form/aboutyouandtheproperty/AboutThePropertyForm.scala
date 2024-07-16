@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ object AboutThePropertyForm {
           maxLength(200, "error.propertyCurrentlyUsed.maxLength")
         )
       )
-    )(PropertyDetails.apply)(PropertyDetails.unapply).verifying(
+    )(PropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o))).verifying(
       "error.propertyCurrentlyUsed.required",
       pd => !(pd.propertyCurrentlyUsed == CurrentPropertyOther && pd.currentlyUsedOtherField.isEmpty)
     )

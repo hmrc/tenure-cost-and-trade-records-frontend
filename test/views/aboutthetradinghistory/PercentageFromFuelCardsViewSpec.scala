@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.PercentageFromFuelCardsForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.PercentageFromFuelCards
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
@@ -46,9 +45,9 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
     "has a link marked with back.link.label leading to customer credit accounts Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
     }
 
     "Section heading is visible" in {

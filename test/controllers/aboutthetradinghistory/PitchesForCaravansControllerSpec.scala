@@ -58,7 +58,7 @@ class PitchesForCaravansControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "return 400 for form with errors" in {
-      val res = pitchesForCaravansController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = pitchesForCaravansController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

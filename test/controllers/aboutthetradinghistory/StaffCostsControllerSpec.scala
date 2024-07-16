@@ -68,7 +68,7 @@ class StaffCostsControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "return 400 for form with errors" in {
-      val res = staffCostsController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = staffCostsController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

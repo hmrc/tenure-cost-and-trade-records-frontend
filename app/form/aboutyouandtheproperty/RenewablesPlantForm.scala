@@ -25,6 +25,6 @@ object RenewablesPlantForm {
   val renewablesPlantForm = Form(
     mapping(
       "renewablesPlant" -> renewablesPlantMapping
-    )(RenewablesPlant.apply)(RenewablesPlant.unapply)
+    )(RenewablesPlant.apply)(o => Some(o.renewablesPlant))
   )
 }

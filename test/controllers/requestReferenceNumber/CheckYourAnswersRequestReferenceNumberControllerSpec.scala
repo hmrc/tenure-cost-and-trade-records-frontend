@@ -140,9 +140,9 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
   }
 
   object TestData {
-    val errorKey: Object {
-      val checkYourAnswersRequestReferenceNumber: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val checkYourAnswersRequestReferenceNumber: String =
         "checkYourAnswersRequestReferenceNumber"
     }

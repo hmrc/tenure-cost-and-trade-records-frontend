@@ -72,14 +72,14 @@ object AboutTheTradingHistory {
       (__ \ "percentageFromFuelCards").readNullable[Seq[PercentageFromFuelCards]] and
       (__ \ "lowMarginFuelCardsDetails").readNullable[IndexedSeq[LowMarginFuelCardsDetails]] and
       (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[CheckYourAnswersAboutTheTradingHistory]
-  )(AboutTheTradingHistory.apply _)
+  )(AboutTheTradingHistory.apply)
 
   implicit val format: Format[AboutTheTradingHistory] =
     Format(aboutTheTradingHistoryReads, Json.writes[AboutTheTradingHistory])
 
   def updateAboutTheTradingHistory(
     copy: AboutTheTradingHistory => AboutTheTradingHistory
-  )(implicit sessionRequest: SessionRequest[_]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session = {
 
     val currentAboutTheTradingHistory = sessionRequest.sessionData.aboutTheTradingHistory
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherVa
     postcode.bind(formData).value shouldBe "BN12 4AX"
   }
 
-  it               should "sucessfully format and validate all correct postcodes" in {
+  it should "sucessfully format and validate all correct postcodes" in {
     forAll(positiveTestData) { (rawPostcode: String, formattedPostcode: String) =>
       val form   = Form("postcode" -> PostcodeMapping.postcode())
       val result = form.bind(Map("postcode" -> rawPostcode)).value
@@ -59,7 +59,7 @@ class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherVa
     }
   }
 
-  it               should "produce an error for each invalid postcode" in {
+  it should "produce an error for each invalid postcode" in {
     forAll(negativeTestData) { (rawPostcode: String, _, errorMessage: String) =>
       val result = Form("postcode" -> PostcodeMapping.postcode()).bind(Map("postcode" -> rawPostcode))
       result.errors should contain oneElementOf List(FormError("postcode", errorMessage))

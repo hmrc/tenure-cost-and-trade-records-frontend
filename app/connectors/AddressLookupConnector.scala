@@ -36,7 +36,7 @@ class AddressLookupConnector @Inject() (
 )(implicit executionContext: ExecutionContext)
     extends Logging {
 
-  private val serviceUrl = servicesConfig.baseUrl("address-lookup-frontend")
+  private val serviceUrl                                                                                            = servicesConfig.baseUrl("address-lookup-frontend")
   def initialise(call: Call, from: String = "")(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
 
     lazy val hostUrl     = appConfig.tctrFrontendUrl

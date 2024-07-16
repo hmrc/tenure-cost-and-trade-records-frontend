@@ -51,7 +51,7 @@ object TurnoverForm {
       "other-receipts"         -> turnoverSalesMappingWithYear("turnover.other.sales", year),
       "accommodation"          -> turnoverSalesMappingWithYear("turnover.accommodation.sales", year),
       "average-occupancy-rate" -> averageOccupancyRateMapping(year)
-    )(TurnoverSection.apply)(TurnoverSection.unapply)
+    )(TurnoverSection.apply)(o => Some(Tuple.fromProductTyped(o)))
 
     val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 

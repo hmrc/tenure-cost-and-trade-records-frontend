@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@
 )
 
 
-@(form: Form[Seq[GrossReceiptsExcludingVAT]],fromLocation:String = "")(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[GrossReceiptsExcludingVAT]],fromLocation:String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 @electricitySalesHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.electricitySales")</span></p>

@@ -82,7 +82,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
 
   "handle form submission with valid data correctly for telco mast" in {
     val validFormData = Map("addAnotherLetting" -> "yes")
-    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
     val result = controller.submitLetting(1)(request)
@@ -94,7 +94,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
 
   "handle form submission with valid data correctly for ATM " in {
     val validFormData = Map("addAnotherLetting" -> "yes")
-    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
     val result = controller.submitLetting(0)(request)
@@ -106,7 +106,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
 
   "handle form submission with valid data correctly for Advertising Right " in {
     val validFormData = Map("addAnotherLetting" -> "yes")
-    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
     val result = controller.submitLetting(2)(request)
@@ -118,7 +118,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
 
   "handle form submission with valid data correctly for Other letting " in {
     val validFormData = Map("addAnotherLetting" -> "yes")
-    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
     val result = controller.submitLetting(3)(request)
@@ -130,7 +130,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
 
   "redirect to CYA page if No value for Radio Buttons selected" in {
     val validFormData = Map("addAnotherLetting" -> "no")
-    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
     val result        = controller.submitLetting(1)(request)
     status(result)           shouldBe SEE_OTHER
@@ -141,7 +141,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
 
   "ensure maximum limit for lettings is respected" in {
     val validFormData = Map("addAnotherLetting" -> "yes")
-    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController(Some(prefilledAboutFranchiseOrLettingsWith6020MaxLettings))
     val result        = controller.submitLetting(10)(request)
     status(result)           shouldBe SEE_OTHER
@@ -219,9 +219,9 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val addAnotherLetting: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val addAnotherLetting: String =
         "addAnotherLetting"
     }

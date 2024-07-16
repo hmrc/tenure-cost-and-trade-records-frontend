@@ -85,7 +85,7 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = grossReceiptsCaravanFleetHireController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData: _*)
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe Status.SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
@@ -93,14 +93,14 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
 
     "return 400 and error message for invalid weeks" in {
       val res = grossReceiptsCaravanFleetHireController.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData: _*)
+        fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include("""<a href="#turnover[0].weeks">error.weeksMapping.invalid</a>""")
     }
 
     "return 400 for empty turnoverSections" in {
-      val res = grossReceiptsCaravanFleetHireController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = grossReceiptsCaravanFleetHireController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }
