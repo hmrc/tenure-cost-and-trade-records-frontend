@@ -26,6 +26,11 @@
 
 @()(implicit request: SessionRequest[_], messages: Messages)
 
+@forType = @{
+    request.sessionData.forType
+}
+
+
     @sectionAnswers = @{
         SectionAnswersRowBuilder(request.sessionData.stillConnectedDetails)
     }
@@ -47,10 +52,13 @@
             else if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) messages("label.areYouConnected.addressUpdate")
             else messages("label.no.na")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
     }
+
+@if(forType != ForTypes.for6076) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.vacancyStatus.heading")</h2>
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersConnectionToProperty.isPropertyVacant", _.vacantProperties.map(_.vacantProperties.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")), connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties")
     ))
+}
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.occupierDetails.heading")</h2>
     @govukSummaryList(SummaryList(rows =
