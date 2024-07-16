@@ -33,7 +33,7 @@ object ServicePaidSeparatelyChargeForm {
               s => s.isEmpty || (s.matches("^\\d*\\.?\\d+$") && BigDecimal(s) >= BigDecimal(0))
             )
             .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString)
-      )(ServicePaidSeparatelyCharge.apply)(ServicePaidSeparatelyCharge.unapply)
+      )(ServicePaidSeparatelyCharge.apply)(o => Some(o.annualCharge))
     )
 
 }

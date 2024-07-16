@@ -32,7 +32,7 @@ object RentedSeparatelyParkingSpacesForm {
         "openSpaces"    -> nonNegativeNumber("rentedSeparately.openSpaces"),
         "coveredSpaces" -> nonNegativeNumber("rentedSeparately.coveredSpaces"),
         "garages"       -> nonNegativeNumber("rentedSeparately.garages", "0")
-      )(CarParkingSpaces.apply)(CarParkingSpaces.unapply)
+      )(CarParkingSpaces.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 
 }

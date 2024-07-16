@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ object IntervalsOfRentReviewForm {
         "intervalsOfRentReview" -> optional(text)
           .verifying("error.intervalsOfRent.maxLength", mL => mL.forall(_.length <= 2000)),
         "nextReview"            -> optional(requiredDateMapping("nextReview", allowFutureDates = true))
-      )(IntervalsOfRentReview.apply)(IntervalsOfRentReview.unapply)
+      )(IntervalsOfRentReview.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 
 }

@@ -42,9 +42,9 @@ class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[AnnualRent] {
     "has a link marked with back.link.label leading to the about the landlord Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
     }
 
     "Section heading is visible" in {

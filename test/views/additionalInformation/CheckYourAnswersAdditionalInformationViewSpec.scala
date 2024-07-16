@@ -47,9 +47,9 @@ class CheckYourAnswersAdditionalInformationViewSpec
     "has a link marked with back.link.label leading to the further information Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
     }
 
     "Section heading is visible" in {

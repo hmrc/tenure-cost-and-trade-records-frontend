@@ -47,7 +47,7 @@ class MandatoryIfEqual extends AnyFlatSpec with should.Matchers {
     mapping(
       "country" -> nonEmptyText,
       "town"    -> mandatoryIfEqual("country", "England", nonEmptyText)
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   case class Model(country: String, town: Option[String])

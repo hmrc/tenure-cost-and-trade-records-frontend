@@ -24,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(form: Form[_], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[?], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("doesRentVaryToThroughput.heading"),

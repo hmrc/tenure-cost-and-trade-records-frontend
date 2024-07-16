@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ case class AboutLeaseOrAgreementPartTwo(
   tenantAdditionsDisregardedDetails: Option[TenantAdditionsDisregardedDetails] = None,
   tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
   payACapitalSumDetails: Option[PayACapitalSumDetails] = None,
-  payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, //Added Feb 2024 - 6030 Journey
+  payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, // Added Feb 2024 - 6030 Journey
   capitalSumDescription: Option[CapitalSumDescription] = None, // 6020
   paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
   tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
@@ -52,7 +52,7 @@ object AboutLeaseOrAgreementPartTwo {
 
   def updateAboutLeaseOrAgreementPartTwo(
     copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo
-  )(implicit sessionRequest: SessionRequest[_]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session = {
     val currentAboutLeaseOrAgreementPartTwo = sessionRequest.sessionData.aboutLeaseOrAgreementPartTwo
 
     val updatedAboutLeaseOrAgreementPartTwo = currentAboutLeaseOrAgreementPartTwo match {

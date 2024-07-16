@@ -105,7 +105,7 @@ class AddAnotherCateringOperationController @Inject() (
       continueOrSaveAsDraft[AnswersYesNo](
         addAnotherCateringOperationForm,
         formWithErrors =>
-          (BadRequest(
+          BadRequest(
             addAnotherCateringOperationOrLettingAccommodationView(
               formWithErrors,
               index,
@@ -115,7 +115,7 @@ class AddAnotherCateringOperationController @Inject() (
               getBackLink(index),
               request.sessionData.toSummary
             )
-          )),
+          ),
         data =>
           if (forType == ForTypes.for6030) {
             Redirect(

@@ -171,7 +171,7 @@ trait TestBaseSpec
     ),
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA),
     downloadPDFDetails: Option[DownloadPDFDetails] = None
-  ): WithSessionRefiner                        =
+  ): WithSessionRefiner =
     new WithSessionRefiner(mockSessionRepository) {
 
       override def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =

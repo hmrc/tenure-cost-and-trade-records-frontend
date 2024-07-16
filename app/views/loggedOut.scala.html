@@ -16,7 +16,7 @@
 
 @this(layout: Layout)
 
-@()(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("logout.header"),

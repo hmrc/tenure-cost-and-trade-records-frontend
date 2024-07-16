@@ -46,7 +46,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
       Summary("10000001")
     )(sessionRequest, messages)
 
-  def prepareViewFranchise(sessionRequest: SessionRequest[_]): () => Html = { () =>
+  def prepareViewFranchise(sessionRequest: SessionRequest[?]): () => Html = { () =>
     maxOfLettingsReachedView(
       form,
       "backLink",

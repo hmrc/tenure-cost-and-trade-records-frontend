@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
   ).map(_.url)
 
-  private def areYouStillConnectedRouting: Session => Call = answers => {
+  private def areYouStillConnectedRouting: Session => Call = answers =>
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
       case Some("yes")                =>
         answers.forType match {
@@ -79,9 +79,8 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
         )
         throw new RuntimeException("Invalid option exception for are you connected routing")
     }
-  }
 
-  private def editAddressRouting: Session => Call = answers => {
+  private def editAddressRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6076 =>
         controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
@@ -89,9 +88,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
         controllers.connectiontoproperty.routes.VacantPropertiesController.show()
     }
 
-  }
-
-  private def isPropertyVacant: Session => Call = answers => {
+  private def isPropertyVacant: Session => Call = answers =>
     answers.stillConnectedDetails.flatMap(_.vacantProperties.map(_.vacantProperties.name)) match {
       case Some("yes") => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
       case Some("no")  => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
@@ -101,9 +98,8 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
         )
         throw new RuntimeException("Invalid option exception for is property vacant conditions routing")
     }
-  }
 
-  private def isAnyRentReceived: Session => Call                          = answers => {
+  private def isAnyRentReceived: Session => Call                          = answers =>
     answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
       case Some("yes") =>
         answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
@@ -125,8 +121,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
         )
         throw new RuntimeException("Invalid option exception for is any rent received conditions routing")
     }
-  }
-  private def tradingNameOwnTheProperty: Session => Call                  = answers => {
+  private def tradingNameOwnTheProperty: Session => Call                  = answers =>
     answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
       case Some("yes") => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
       case Some("no")  => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
@@ -136,24 +131,20 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
         )
         throw new RuntimeException("Invalid option exception for trading name own the property conditions routing")
     }
-  }
   private def getLettingPartOfPropertyDetailsIndex(session: Session): Int =
     session.stillConnectedDetails.map(_.lettingPartOfPropertyDetailsIndex).getOrElse(0)
 
-  private def lettingPartOfPropertyRentDetailsConditionsRouting: Session => Call = answers => {
+  private def lettingPartOfPropertyRentDetailsConditionsRouting: Session => Call = answers =>
     controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController
       .show(getLettingPartOfPropertyDetailsIndex(answers))
-  }
 
-  private def lettingsPartOfPropertyRentDetailsConditionsRouting: Session => Call = answers => {
+  private def lettingsPartOfPropertyRentDetailsConditionsRouting: Session => Call = answers =>
     controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController
       .show(getLettingPartOfPropertyDetailsIndex(answers))
-  }
 
-  private def lettingPartOfPropertyItemsIncludedInRentConditionsRouting: Session => Call = answers => {
+  private def lettingPartOfPropertyItemsIncludedInRentConditionsRouting: Session => Call = answers =>
     controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
       .show(getLettingPartOfPropertyDetailsIndex(answers))
-  }
 
   private def addAnotherLettingsConditionsRouting: Session => Call = answers => {
     val existingSectionOpt = answers.stillConnectedDetails.flatMap(

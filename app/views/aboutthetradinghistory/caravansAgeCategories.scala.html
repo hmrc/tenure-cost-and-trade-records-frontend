@@ -16,10 +16,10 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.CaravansAge
-@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.CaravanHireType
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.FleetHire
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.PrivateSublet
-@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.CaravanUnitType
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
@@ -33,7 +33,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(form: Form[CaravansAge], caravansUnitType: CaravanUnitType, backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[CaravansAge], caravansUnitType: CaravanUnitType, backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @caravansHireTypeWithLabel = @{
@@ -68,7 +68,6 @@
     hireType match {
         case FleetHire => form.value.map(_.fleetHire).fold(0)(_.total)
         case PrivateSublet => form.value.map(_.privateSublet).fold(0)(_.total)
-        case _ => 0
     }
 }
 

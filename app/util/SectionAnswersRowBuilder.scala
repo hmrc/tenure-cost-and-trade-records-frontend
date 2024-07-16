@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     conditionalTextMapping: (String, T => Option[String])*
   ): Seq[SummaryListRow] =
     if (answers.exists(condition)) {
-      row(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping: _*)
+      row(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping*)
     } else {
       Seq.empty[SummaryListRow]
     }
@@ -109,7 +109,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
       getAnswerValue,
       editPage,
       editField,
-      conditionalTextMapping: _*
+      conditionalTextMapping*
     )
 
   def conditionalOptionalRow(
@@ -121,7 +121,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     conditionalTextMapping: (String, T => Option[String])*
   ): Seq[SummaryListRow] =
     if (answers.exists(condition))
-      optionalRow(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping: _*)
+      optionalRow(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping*)
     else
       Seq.empty[SummaryListRow]
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ class RequestReferenceNumberFormSubmissionController @Inject() (
 
   def submitRequestReferenceNumberInformation(
     refNum: String
-  )(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Unit] = {
+  )(implicit hc: HeaderCarrier, request: SessionRequest[?]): Future[Unit] = {
     val auditType      = "RequestReferenceNumber"
     // Dummy data from session to able creation of audit dashboards
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]

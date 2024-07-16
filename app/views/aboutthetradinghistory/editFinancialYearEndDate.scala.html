@@ -29,7 +29,7 @@
         govukDetails: GovukDetails
 )
 
-@(form: Form[LocalDate], index: Int )(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[LocalDate], index: Int )(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
   pageHeading = messages("financialYearEndDates.heading"),

@@ -105,7 +105,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = checkYourAnswersTentingPitchesController.submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

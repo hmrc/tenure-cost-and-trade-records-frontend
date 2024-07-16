@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = currentLeaseOrAgreementBeginController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -96,12 +96,9 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val occupyMonth: String
-      val occupyYear: String
-      val financialYearDay: String
-      val financialYearMonth: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val occupyMonth        = "leaseBegin.month"
       val occupyYear         = "leaseBegin.year"
       val financialYearDay   = "financialYear.day"

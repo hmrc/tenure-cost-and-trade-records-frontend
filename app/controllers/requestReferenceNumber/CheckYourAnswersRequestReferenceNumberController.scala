@@ -77,7 +77,7 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
     submitRequestReferenceNumber()(hc, request)
   }
 
-  def submitRequestReferenceNumber()(implicit hc: HeaderCarrier, request: SessionRequest[_]): Future[Result] = {
+  def submitRequestReferenceNumber()(implicit hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
     val auditType      = "NoReferenceSubmission"
     val session        = request.sessionData
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]

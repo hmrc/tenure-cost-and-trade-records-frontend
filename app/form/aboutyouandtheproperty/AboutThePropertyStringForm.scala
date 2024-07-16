@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ object AboutThePropertyStringForm {
         nonEmpty(errorMessage = "error.propertyCurrentlyUsedString.required"),
         maxLength(200, "error.propertyCurrentlyUsedString.maxLength")
       )
-    )(PropertyDetailsString.apply)(PropertyDetailsString.unapply)
+    )(PropertyDetailsString.apply)(o => Some(o.propertyDetailsString))
   )
 
 }

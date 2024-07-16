@@ -25,7 +25,7 @@
 )
 
 
-@(form: Form[_], backLinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[?], backLinkUrl: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("isParkingRentPaidSeparately.heading"),

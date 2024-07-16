@@ -61,7 +61,7 @@ class CateringOperationBusinessDetails6030ControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = cateringOperationOrLettingAccommodationDetailsController().submit(None)(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -77,7 +77,9 @@ class CateringOperationBusinessDetails6030ControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object { val operatorName: String } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val operatorName = "operatorName6030"
     }
 

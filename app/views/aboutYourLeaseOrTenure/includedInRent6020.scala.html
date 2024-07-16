@@ -31,7 +31,7 @@
 )
 
 
-@(form: Form[DoesTheRentPayable], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[DoesTheRentPayable], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("includedInRent6020.heading"),

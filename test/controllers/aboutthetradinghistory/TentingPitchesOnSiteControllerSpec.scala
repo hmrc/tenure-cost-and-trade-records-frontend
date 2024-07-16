@@ -81,19 +81,15 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
 
   "TentingPitchesOnSiteController" should {
     "error if TentingPitchesOnSiteController answer is missing" in {
-      val formData = baseFormData - errorKey.tentingPitchesOnSite
+      val formData = baseFormData - tentingPitchesOnSiteErrorKey
       val form     = tentingPitchesOnSiteForm.bind(formData)
 
-      mustContainError(errorKey.tentingPitchesOnSite, "error.touringAndTentingPitches.missing", form)
+      mustContainError(tentingPitchesOnSiteErrorKey, "error.touringAndTentingPitches.missing", form)
     }
   }
 
   object TestData {
-    val errorKey: Object {
-      val tentingPitchesOnSite: String
-    } = new {
-      val tentingPitchesOnSite: String = "tentingPitchesOnSite"
-    }
+    val tentingPitchesOnSiteErrorKey: String = "tentingPitchesOnSite"
 
     val baseFormData: Map[String, String] = Map("tentingPitchesOnSite" -> "yes")
   }

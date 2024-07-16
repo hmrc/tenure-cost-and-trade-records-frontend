@@ -32,7 +32,7 @@
 )
 
 
-@(form: Form[Seq[PitchesForCaravans]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[PitchesForCaravans]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @rowLabel(labelKey: String) = {

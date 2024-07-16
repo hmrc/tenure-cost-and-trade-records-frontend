@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,6 @@ object PremisesLicenseConditionsDetailsForm {
         nonEmpty(errorMessage = "error.premisesLicenseConditionsDetails.required"),
         maxLength(200, "error.premisesLicenseConditionsDetails.maxLength")
       )
-    )(PremisesLicenseConditionsDetails.apply)(PremisesLicenseConditionsDetails.unapply)
+    )(PremisesLicenseConditionsDetails.apply)(o => Some(o.premisesLicenseConditionsDetails))
   )
 }

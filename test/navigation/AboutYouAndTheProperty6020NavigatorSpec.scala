@@ -19,7 +19,6 @@ package navigation
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
@@ -33,7 +32,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030NoSession)
         .apply(
           aboutYouAndTheProperty6030NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
         .show()
     }
 
@@ -42,7 +41,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
         .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6030NoSession)
         .apply(
           aboutYouAndTheProperty6030NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
         .show()
     }
 
@@ -51,7 +50,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
         .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6020NoSession)
         .apply(
           aboutYouAndTheProperty6020NoSession
-        ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
     }
   }
@@ -61,7 +60,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030YesSession)
       .apply(
         aboutYouAndTheProperty6030YesSession
-      ) mustBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
+      ) shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
       .show()
   }
 
@@ -70,7 +69,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6030YesSession)
       .apply(
         aboutYouAndTheProperty6030YesSession
-      ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
+      ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
       .show()
   }
 
@@ -79,7 +78,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6030YesSession)
       .apply(
         aboutYouAndTheProperty6030YesSession
-      ) mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
+      ) shouldBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
       .show()
   }
   "return a function that goes to trading activity page when charity question is  completed with Yes" in {
@@ -91,7 +90,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(CharityQuestionPageId, answers)
       .apply(
         answers
-      ) mustBe controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
+      ) shouldBe controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
   }
 
   "return a function that goes to contact details question page when about you is completed" in {
@@ -100,7 +99,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(AboutYouPageId, aboutYouAndTheProperty6020YesSession)
       .apply(
         aboutYouAndTheProperty6020YesSession
-      ) mustBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController
+      ) shouldBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController
       .show()
   }
 
@@ -110,7 +109,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6020YesSession)
       .apply(
         aboutYouAndTheProperty6020YesSession
-      ) mustBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
+      ) shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
       .show()
   }
 
@@ -120,7 +119,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6020YesSession)
       .apply(
         aboutYouAndTheProperty6020YesSession
-      ) mustBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
+      ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
       .show()
   }
 
@@ -133,6 +132,6 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       .nextPage(CharityQuestionPageId, answers)
       .apply(
         answers
-      ) mustBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
   }
 }

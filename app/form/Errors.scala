@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ package form
 
 object Errors {
 
-  //annual rent
+  // annual rent
   val annualRentExcludingVAT         = "error.required.annualRentExcludingVat"
   val annualRentExcludingVATCurrency = "error.invalid_currency.annualRent"
 
-  //address
+  // address
   val addressRequired                    = "address.required"
   val addressBuildingNameNumberRequired  = "error.buildingNameNumber.required"
   val buildingMaxLength                  = "error.buildingNameNumber.maxLength"
@@ -37,7 +37,7 @@ object Errors {
   val postcodeInvalid                    = "error.postcode.invalid"
   val postcodeMaxLength                  = "error.postcode.maxLength"
 
-  //Login
+  // Login
   val invalidRefNum             = "error.invalid_refnum"
   val maxCurrencyAmountExceeded = "error.maxCurrencyAmountExceeded"
   val minSuceeded               = "error.invalid_postcode"
@@ -47,12 +47,12 @@ object Errors {
   val invalidPostcode           = "error.invalid_postcode"
   val invalidPostcodeOnLetter   = "error.invalid_postcode_as_on_letter"
 
-  //Are you still connected Error
+  // Are you still connected Error
   val isConnectedError                = "error.isRelated"
   val connectionToPropertyError       = "error.no.connection.selected"
   // Not connected
   val isPastConnected                 = "error.pastConnectionType"
-  //About You Errors
+  // About You Errors
   val userTypeRequired                = "error.userType.required"
   val contactDetailsMissing           = "error.contact.details.missing"
   val contactPhoneRequired            = "error.contact.phone.required"
@@ -66,61 +66,61 @@ object Errors {
   val alternativeAddressMissing       = "error.alternative.address.missing"
   val alternativeContactMissing       = "error.alternative.contact.missing"
 
-  //Vacant properties
+  // Vacant properties
   val vacantProperties = "error.vacantProperties.required"
 
-  //Website for property
+  // Website for property
   val buildingOperatingHaveAWebsite = "error.buildingOperatingHaveAWebsite.required"
   val webAddressBlank               = "error.websiteAddressForProperty.required"
   val webaddressFormat              = "error.webaddressFormat.required"
 
-  //Electric Vehicle Charging Points
+  // Electric Vehicle Charging Points
   val spacesOrBays       = "error.spacesOrBays.required"
   val spacesOrBaysNumber = "error.spacesOrBaysNumber.required"
 
-  //About The Property Errors
+  // About The Property Errors
   val currentOccupierName   = "error.currentOccupierName.required"
   val propertyCurrentlyUsed = "error.currentPropertyUse.required"
 
-  //About Franchises or Lettings
+  // About Franchises or Lettings
   val typeOfLetting = "error.typeOfLetting.required"
 
-  //Incentives, Payments and Conditions
+  // Incentives, Payments and Conditions
   val formerLeaseAgreementSurrendered = "error.formerLeaseAgreementSurrendered.required"
   val rentReducedOnReview             = "error.rentReducedOnReview.required"
   val capitalSumOrPremium             = "error.capitalSumOrPremium.required"
   val receivePaymentWhenLeaseGranted  = "error.receivePaymentWhenLeaseGranted.required"
 
-  //Tied For Goods details
+  // Tied For Goods details
   val tiedTypeRequired    = "error.tiedType.required"
   val tiedForGoodsDetails = "error.tiedForGoodsDetails.required"
 
   // Renewables plant
   val renewablesPlant = "error.renewablesPlant.required"
 
-  //Current Rent Payable Within 12 Months
+  // Current Rent Payable Within 12 Months
   val currentRentPayableWithin12Months = "error.currentRentPayableWithin12Months.required"
 
-  //Lease or Agreement Details - Three Radio buttons on one page
+  // Lease or Agreement Details - Three Radio buttons on one page
   val tenancy3Years = "error.tenancy3Years.required"
   val rent3Years    = "error.rent3Years.required"
   val underReview   = "error.underReview.required"
 
-  //How is current rent fixed
+  // How is current rent fixed
   val howIsCurrentRentFixed = "error.howIsCurrentRentFixed.required"
 
-  //Method to fix current rent
+  // Method to fix current rent
   val methodToFixCurrentRents = "error.methodToFixCurrentRents.required"
 
-  //Ultimately Responsible
+  // Ultimately Responsible
   val outsideRepairs    = "error.outsideRepairs.required"
   val insideRepairs     = "error.insideRepairs.required"
   val buildingInsurance = "error.buildingInsurance.required"
 
-  //What is your current rent based on
+  // What is your current rent based on
   val currentRentBasedOn = "error.currentRentBasedOn.required"
 
-  //generic errors
+  // generic errors
   val required                   = "error.required"
   val booleanMissing             = "error.boolean_missing"
   val noValueSelected            = "error.no_value_selected"
@@ -133,12 +133,12 @@ object Errors {
   val invalidCurrency            = "error.invalid_currency"
   val password                   = "error.invalid_password"
 
-  //numeric errors
+  // numeric errors
   val invalidNumber      = "error.invalid_number"
   val bigDecimalNegative = "error.BigDecimal_negative"
   val number             = "error.number"
 
-  //Dates
+  // Dates
   val dateBeforeToday       = "error.date_before_today"
   val dateBefore1900        = "error.date_before_1900"
   val invalidDate           = "error.invalid_date"

@@ -30,7 +30,7 @@ object WorkCarriedOutDetailsForm {
           nonEmpty(errorMessage = "error.workCarriedOutDetails.required"),
           maxLength(2000, "error.workCarriedOutDetails.maxLength")
         )
-    )(WorkCarriedOutDetails.apply)(WorkCarriedOutDetails.unapply)
+    )(WorkCarriedOutDetails.apply)(o => Some(o.workCarriedOutDetails))
   )
 
 }

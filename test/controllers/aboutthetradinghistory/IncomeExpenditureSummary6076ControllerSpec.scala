@@ -50,7 +50,7 @@ class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = controller().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = controller().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

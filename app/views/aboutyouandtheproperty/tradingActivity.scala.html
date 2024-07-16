@@ -37,7 +37,7 @@
 )
 
 
-@(theForm: Form[TradingActivity], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[TradingActivity], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @conditionalHTML = {
 @govukInput(

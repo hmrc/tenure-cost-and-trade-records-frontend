@@ -33,7 +33,7 @@
 )
 
 
-@(form: Form[Seq[TotalFuelSold]], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TotalFuelSold]], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("totalFuelSold.heading"),

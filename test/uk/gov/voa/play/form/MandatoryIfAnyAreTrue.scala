@@ -49,7 +49,7 @@ class MandatoryIfAnyAreTrue extends AnyFlatSpec with should.Matchers {
       "f2"     -> boolean,
       "f3"     -> boolean,
       "target" -> mandatoryIfAnyAreTrue(Seq("f1", "f2", "f3"), nonEmptyText)
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   case class Model(f1: Boolean, f2: Boolean, f3: Boolean, target: Option[String])

@@ -59,7 +59,7 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = checkYourAnswersOtherHolidayAccommodationController.submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

@@ -78,7 +78,7 @@ class OtherHolidayAccommodationController @Inject() (
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    //TODO update CYA?
+    // TODO update CYA?
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url
       case _    => controllers.routes.TaskListController.show().url

@@ -61,7 +61,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
-  ): Session => Call                 =
+  ): Session => Call =
     if (from == "IES") {
       _.forType match {
         case ForTypes.for6076 => ies6076SpecificRoute
@@ -70,7 +70,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     } else {
       super.nextPage(id, session)
     }
-  private def iesSpecificRoute: Call =
+  private def iesSpecificRoute: Call            =
     routes.IncomeExpenditureSummaryController.show()
 
   private def ies6076SpecificRoute: Call =
@@ -108,7 +108,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     }
   }
 
-  private def bunkeredFuelQuestionRouting: Session => Call = answers => {
+  private def bunkeredFuelQuestionRouting: Session => Call = answers =>
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.BunkeredFuelSoldController.show()
       case Some(AnswerNo)  => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()
@@ -118,7 +118,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for bunkered fuel question")
     }
-  }
 
   private def financialYearEndDatesRouting: Session => Call =
     _.forType match {
@@ -260,7 +259,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     GrossReceiptsHolidayUnitsId                 -> (_ =>
       controllers.routes.TaskListController.show()
-    ), //TODO Letting units owned by site operator
+    ), // TODO Letting units owned by site operator
     TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
     TentingPitchesAllYearId                     -> (_ => aboutthetradinghistory.routes.PitchesForCaravansController.show()),
     PitchesForCaravansId                        -> (_ =>

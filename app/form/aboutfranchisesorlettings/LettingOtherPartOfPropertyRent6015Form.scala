@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,9 +35,7 @@ object LettingOtherPartOfPropertyRent6015Form {
         "dateInput"   -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true),
         "declaration" -> of[Boolean]
           .verifying(messages("rent.received.from.confirm.error"), value => value)
-      )(LettingOtherPartOfPropertyRent6015Details.apply)(
-        LettingOtherPartOfPropertyRent6015Details.unapply
-      )
+      )(LettingOtherPartOfPropertyRent6015Details.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 
 }

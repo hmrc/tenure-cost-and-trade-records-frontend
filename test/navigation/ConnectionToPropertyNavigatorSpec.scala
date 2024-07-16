@@ -18,7 +18,6 @@ package navigation
 
 import connectors.Audit
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -41,88 +40,88 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.LoginController.show
+        .apply(stillConnectedDetailsYesSession) shouldBe controllers.routes.LoginController.show
     }
 
     "cyaPageDependsOnSession() returns CYA page depending on session data" in {
       navigator.cyaPageDependsOnSession(
         stillConnectedDetailsYesToAllSession
-      ) mustBe Some(routes.CheckYourAnswersConnectionToVacantPropertyController.show())
+      ) shouldBe Some(routes.CheckYourAnswersConnectionToVacantPropertyController.show())
 
       navigator.cyaPageDependsOnSession(
         stillConnectedDetailsYesSession
-      ) mustBe Some(routes.CheckYourAnswersConnectionToPropertyController.show())
+      ) shouldBe Some(routes.CheckYourAnswersConnectionToPropertyController.show())
 
       navigator.cyaPageDependsOnSession(
         stillConnectedDetailsNoSession
-      ) mustBe Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
+      ) shouldBe Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
     }
 
     "return a function that goes to the type of connection to the property page when still connected has been selected and the selection is yes" in {
       navigator
         .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) mustBe routes.VacantPropertiesController
+        .apply(stillConnectedDetailsYesSession) shouldBe routes.VacantPropertiesController
         .show()
     }
 
     "return a function that goes to the edit address page when still connected has been selected and the selection is edit address" in {
       navigator
         .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsEditSession)
-        .apply(stillConnectedDetailsEditSession) mustBe routes.EditAddressController.show()
+        .apply(stillConnectedDetailsEditSession) shouldBe routes.EditAddressController.show()
     }
 
     "return a function that goes to the not connected page when still connected has been selected and the selection is no" in {
       navigator
         .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsNoSession)
-        .apply(stillConnectedDetailsNoSession) mustBe controllers.notconnected.routes.PastConnectionController
+        .apply(stillConnectedDetailsNoSession) shouldBe controllers.notconnected.routes.PastConnectionController
         .show()
     }
 
     "return a function that goes to the vacancy status page when edit address has been completed" in {
       navigator
         .nextPage(EditAddressPageId, stillConnectedDetailsEditSession)
-        .apply(stillConnectedDetailsEditSession) mustBe routes.VacantPropertiesController.show()
+        .apply(stillConnectedDetailsEditSession) shouldBe routes.VacantPropertiesController.show()
     }
 
     "return a function that goes to the vacant properties start date page when the property currently vacant has been answered with 'yes'" in {
       val nextPage = navigator
         .nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsYesToAllSession)
         .apply(stillConnectedDetailsYesToAllSession)
-      nextPage mustBe controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
+      nextPage shouldBe controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
     }
 
     "return a function that goes to the trading name operating from property page when PropertyBecomeVacantPageId has been answered with 'no'" in {
       val nextPage = navigator
         .nextPage(PropertyBecomeVacantPageId, stillConnectedDetailsNoToAllSession)
         .apply(stillConnectedDetailsNoToAllSession)
-      nextPage mustBe controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
+      nextPage shouldBe controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
     }
 
     "return a function that goes to the are you third party page when TradingNameOwnThePropertyPageId has been answered with 'yes'" in {
       val nextPage = navigator
         .nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsYesToAllSession)
         .apply(stillConnectedDetailsYesToAllSession)
-      nextPage mustBe controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
+      nextPage shouldBe controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
     }
 
     "return a function that goes to the trading name paying rent page when TradingNameOwnThePropertyPageId has been answered with 'no'" in {
       val nextPage = navigator
         .nextPage(TradingNameOwnThePropertyPageId, stillConnectedDetailsNoToAllSession)
         .apply(stillConnectedDetailsNoToAllSession)
-      nextPage mustBe controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
+      nextPage shouldBe controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
     }
 
     "return a function that goes to the check your answers page when AreYouThirdPartyPageId has been answered" in {
       val nextPage = navigator
         .nextPage(AreYouThirdPartyPageId, stillConnectedDetailsYesSession)
         .apply(stillConnectedDetailsYesSession)
-      nextPage mustBe controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
+      nextPage shouldBe controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
     }
 
     "return a function that goes to the task list page when connection to the property has been selected" in {
       navigator
         .nextPage(ConnectionToPropertyPageId, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) mustBe controllers.routes.TaskListController
+        .apply(stillConnectedDetailsYesSession) shouldBe controllers.routes.TaskListController
         .show()
     }
 
@@ -133,7 +132,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(VacantPropertiesPageId, stillConnectedDetailsYesToAllSession)
       .apply(
         stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
+      ) shouldBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
   }
 
   "return a function that goes from the vacant property page to Vacent property Start Date page if answer no" in {
@@ -141,7 +140,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(VacantPropertiesPageId, stillConnectedDetailsNoToAllSession)
       .apply(
         stillConnectedDetailsNoToAllSession
-      ) mustBe controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+      ) shouldBe controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
   }
 
   "return a function that goes from Letting Income page to vacant properties start date page if there is an income" in {
@@ -149,7 +148,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(LettingIncomePageId, stillConnectedDetailsYesToAllSession)
       .apply(
         stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0)
+      ) shouldBe controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0)
   }
 
   "return a function that goes from trading name page to trading name own the property page" in {
@@ -157,7 +156,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(TradingNameOperatingFromPropertyPageId, stillConnectedDetailsYesSession)
       .apply(
         stillConnectedDetailsYesSession
-      ) mustBe controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
+      ) shouldBe controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
   }
 
   "return a function that goes from provide your details page to check your answers - vacant property page" in {
@@ -165,7 +164,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(ProvideYourContactDetailsPageId, stillConnectedDetailsYesToAllSession)
       .apply(
         stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show()
+      ) shouldBe controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show()
   }
 
   "return a function that goes from trading name paying rent page to are you third party page" in {
@@ -173,7 +172,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(TradingNamePayingRentPageId, stillConnectedDetailsYesSession)
       .apply(
         stillConnectedDetailsYesSession
-      ) mustBe controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
+      ) shouldBe controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
   }
 
   "return a function that goes from letting part of the property details page to annual rent page" in {
@@ -181,7 +180,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(LettingPartOfPropertyDetailsPageId, stillConnectedDetailsYesSession)
       .apply(
         stillConnectedDetailsYesSession
-      ) mustBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0)
+      ) shouldBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0)
   }
 
   "return a function that goes from annual rent page to items included in rent page" in {
@@ -189,7 +188,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(LettingPartOfPropertyRentDetailsPageId, stillConnectedDetailsYesSession)
       .apply(
         stillConnectedDetailsYesSession
-      ) mustBe controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(0)
+      ) shouldBe controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(0)
   }
 
   "return a function that goes from items included in rent page to add another letting page" in {
@@ -197,7 +196,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(LettingPartOfPropertyItemsIncludedInRentPageId, stillConnectedDetailsYesSession)
       .apply(
         stillConnectedDetailsYesSession
-      ) mustBe controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0)
+      ) shouldBe controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0)
   }
 
   "return a function that goes from add another letting page to letting part of property details page" in {
@@ -205,7 +204,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(AddAnotherLettingPartOfPropertyPageId, stillConnectedDetailsYesToAllSession)
       .apply(
         stillConnectedDetailsYesToAllSession
-      ) mustBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(1))
+      ) shouldBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(1))
   }
 
   "return a function that goes from CYA page to tasklist" in {
@@ -213,21 +212,21 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(CheckYourAnswersAboutThePropertyPageId, stillConnectedDetailsYesSession)
       .apply(
         stillConnectedDetailsYesSession
-      ) mustBe controllers.routes.LoginController.show
+      ) shouldBe controllers.routes.LoginController.show
   }
 // 6076
 
   "return a function that goes to the trading name page when still connected has been selected and the selection is yes" in {
     navigator
       .nextPage(AreYouStillConnectedPageId, stillConnectedDetails6076YesSession)
-      .apply(stillConnectedDetails6076YesSession) mustBe routes.TradingNameOperatingFromPropertyController
+      .apply(stillConnectedDetails6076YesSession) shouldBe routes.TradingNameOperatingFromPropertyController
       .show()
   }
 
   "return a function that goes from edit the address to the trading name page " in {
     navigator
       .nextPage(EditAddressPageId, stillConnectedDetails6076YesSession)
-      .apply(stillConnectedDetails6076YesSession) mustBe routes.TradingNameOperatingFromPropertyController
+      .apply(stillConnectedDetails6076YesSession) shouldBe routes.TradingNameOperatingFromPropertyController
       .show()
   }
 

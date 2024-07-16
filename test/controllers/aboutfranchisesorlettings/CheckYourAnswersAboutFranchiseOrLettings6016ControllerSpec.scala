@@ -86,14 +86,14 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = checkYourAnswersAboutFranchiseOrLettingsController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "throw a BAD_REQUEST if an empty form is submitted 6016" in {
       val res = checkYourAnswersAboutFranchiseOrLettingsControllerNo().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -109,9 +109,9 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
   }
 
   object TestData {
-    val errorKey: Object {
-      val checkYourAnswersAboutFranchiseOrLettings: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val checkYourAnswersAboutFranchiseOrLettings: String =
         "checkYourAnswersAboutFranchiseOrLettings"
     }

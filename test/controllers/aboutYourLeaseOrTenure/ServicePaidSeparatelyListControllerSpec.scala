@@ -126,9 +126,9 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val addService: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val addService: String =
         "servicePaidSeparatelyList"
     }

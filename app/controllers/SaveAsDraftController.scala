@@ -83,11 +83,11 @@ class SaveAsDraftController @Inject() (
         )
   }
 
-  private def expiryDate(implicit messages: Messages): String = dateUtil formatDate LocalDate.now.plusDays(saveForDays)
+  private def expiryDate(implicit messages: Messages): String = dateUtil.formatDate(LocalDate.now.plusDays(saveForDays))
 
   private def saveSubmissionDraft(session: Session, exitPath: String)(implicit
     hc: HeaderCarrier,
-    request: Request[_]
+    request: Request[?]
   ): Future[Result] = {
     val forType         = session.forType
     val submissionDraft = SubmissionDraft(forType, session, exitPath)

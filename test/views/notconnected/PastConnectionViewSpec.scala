@@ -52,9 +52,9 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] 
     "has a link marked with back.link.label leading to the are you still connected Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
     }
 
     "Section heading is visible" in {

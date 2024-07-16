@@ -95,7 +95,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
   private def getBackLink(
     answers: Session
-  ): String                                            = //TODO Look at the back link logic. Got it loading but I'll come back to it! - Pete
+  ): String = // TODO Look at the back link logic. Got it loading but I'll come back to it! - Pete
     answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 =>
         getBackUrlFor6010and6011(answers)

@@ -25,7 +25,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(form: Form[AnswersYesNo], backLinkUrl: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[AnswersYesNo], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("acceptLowMarginFuelCard.heading"),

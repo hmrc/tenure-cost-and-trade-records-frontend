@@ -27,7 +27,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(form: Form[_], backLink: String, source: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[?], backLink: String, source: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @sectionName = @{

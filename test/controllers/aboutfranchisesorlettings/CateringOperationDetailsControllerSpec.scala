@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec {
         }
       }
     }
-    //TODO - figure out why this is not rendering with appropriate details from session in test environment - works on future test specs?
+    // TODO - figure out why this is not rendering with appropriate details from session in test environment - works on future test specs?
 //    "render a page with a pre-filled form" when {
 //      "given an index" which {
 //        "already exists in the session" in {
@@ -125,7 +125,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = cateringOperationOrLettingAccommodationDetailsController().submit(None)(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

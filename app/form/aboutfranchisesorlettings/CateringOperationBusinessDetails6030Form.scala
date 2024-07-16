@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,6 @@ object CateringOperationBusinessDetails6030Form {
         nonEmpty(errorMessage = "error.howBusinessPropertyIsUsed.required"),
         maxLength(50, "error.howBusinessPropertyIsUsed.maxLength")
       )
-    )(CateringOperationBusinessDetails.apply)(CateringOperationBusinessDetails.unapply)
+    )(CateringOperationBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

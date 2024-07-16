@@ -52,7 +52,7 @@
 @(
         pageTitle: Option[String] = None,
         pageHeading: String,
-        theForm: Form[_] = null,
+        theForm: Form[?] = null,
         showBanner: Boolean = false,
         showFeedback: Boolean = true,
         showH1: Boolean = true,
@@ -64,7 +64,7 @@
         beforeContentBlock: Option[Html] = None,
         withTimeoutDialog: Boolean = true,
         fullWidth: Boolean = false
-)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+)(contentBlock: Html)(implicit request: Request[?], messages: Messages)
 
 @headerBlock ={
   @hmrcStandardHeader(

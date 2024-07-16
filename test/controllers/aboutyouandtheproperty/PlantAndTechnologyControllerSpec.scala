@@ -120,7 +120,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
   "SUBMIT / plant and technology" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = plantAndTechnologyController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(result) shouldBe BAD_REQUEST
     }
@@ -136,7 +136,9 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey = new {
+    val errorKey = new ErrorKey
+
+    class ErrorKey {
       val plantAndTechnology = "plantAndTechnology"
     }
 

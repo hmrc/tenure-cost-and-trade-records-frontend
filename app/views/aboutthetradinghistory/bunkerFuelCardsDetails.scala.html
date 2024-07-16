@@ -27,7 +27,7 @@
 )
 
 
-@(theForm: Form[BunkerFuelCardDetails],index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[BunkerFuelCardDetails],index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("bunkerFuelCardDetails.heading"),

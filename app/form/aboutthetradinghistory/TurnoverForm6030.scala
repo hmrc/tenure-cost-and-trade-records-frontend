@@ -42,7 +42,7 @@ object TurnoverForm6030 {
           _.flatMap(str => Try(str.toInt).toOption),
           _.map(_.toString)
         )
-    )(TurnoverSection6030.apply)(TurnoverSection6030.unapply)
+    )(TurnoverSection6030.apply)(o => Some(Tuple.fromProductTyped(o)))
 
     val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 
@@ -81,7 +81,7 @@ object TurnoverForm6030 {
   }
 
   private def nonNegativeNumberConstraint(year: String): Constraint[Option[String]] =
-    Constraint("constraints.nonNegative")({
+    Constraint("constraints.nonNegative") {
       case Some(text) =>
         Try(text.toDouble).toOption match {
           case Some(num) if num >= 0 => Valid
@@ -89,5 +89,5 @@ object TurnoverForm6030 {
           case None                  => Invalid(ValidationError("error.totalVisitorNumber.nonNumeric", year))
         }
       case None       => Invalid(ValidationError("error.totalVisitorNumber.required", year))
-    })
+    }
 }

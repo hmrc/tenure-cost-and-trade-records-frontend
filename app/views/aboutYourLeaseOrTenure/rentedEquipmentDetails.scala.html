@@ -29,7 +29,7 @@
 )
 
 
-@(form: Form[String], backLinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(form: Form[String], backLinkUrl: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("rentedEquipmentDetails.heading"),

@@ -36,7 +36,7 @@ case class AboutFranchisesOrLettings(
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
   checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
   fromCYA: Option[Boolean] = None,
-  cateringOrFranchiseFee: Option[AnswersYesNo] = None, //added for 6030 journey - Feb 2024
+  cateringOrFranchiseFee: Option[AnswersYesNo] = None, // added for 6030 journey - Feb 2024
   lettings: Option[IndexedSeq[LettingPartOfProperty]] = None // 6020 lettings
 )
 
@@ -57,14 +57,14 @@ object AboutFranchisesOrLettings {
       (__ \ "fromCYA").readNullable[Boolean] and
       (__ \ "cateringOrFranchiseFee").readNullable[AnswersYesNo] and
       (__ \ "lettings").readNullable[IndexedSeq[LettingPartOfProperty]]
-  )(AboutFranchisesOrLettings.apply _)
+  )(AboutFranchisesOrLettings.apply)
 
   implicit val format: Format[AboutFranchisesOrLettings] =
     Format(aboutFranchisesOrLettingsReads, Json.writes[AboutFranchisesOrLettings])
 
   def updateAboutFranchisesOrLettings(
     copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings
-  )(implicit sessionRequest: SessionRequest[_]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session = {
 
     val currentAboutFranchisesOrLettings = sessionRequest.sessionData.aboutFranchisesOrLettings
 

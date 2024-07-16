@@ -56,7 +56,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
   ).map(_.url)
 
-  private def aboutYourLandlordRouting: Session => Call = answers => {
+  private def aboutYourLandlordRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 |
           ForTypes.for6076 =>
@@ -64,9 +64,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _ =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
-  }
 
-  def connectedToLandlordRouting: Session => Call = answers => {
+  def connectedToLandlordRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
       case Some("no")  =>
@@ -82,9 +81,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for connected to landlord routing")
     }
-  }
 
-  private def connectedToLandlordDetailsRouting: Session => Call = answers => {
+  private def connectedToLandlordDetailsRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6011                    =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
@@ -93,7 +91,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
-  }
 
   private def currentAnnualRentRouting: Session => Call =
     _.forType match {
@@ -105,7 +102,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 
-  private def leaseOrAgreementDetailsRouting: Session => Call = answers => {
+  private def leaseOrAgreementDetailsRouting: Session => Call = answers =>
     (
       answers.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name)),
       answers.aboutLeaseOrAgreementPartOne.flatMap(
@@ -117,14 +114,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
       case _                                    => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
     }
-  }
 
-  private def currentRentFirstPaidRouting: Session => Call = answers => {
+  private def currentRentFirstPaidRouting: Session => Call = answers =>
     if (answers.forType == ForTypes.for6011)
       controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
     else
       controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
-  }
 
   private def includedInYourRentRouting: Session => Call = answers =>
     answers.forType match {
@@ -141,7 +136,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _                => aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
     }
 
-  private def rentIncludeTradeServicesRouting: Session => Call = answers => {
+  private def rentIncludeTradeServicesRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(
       _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
     ) match {
@@ -163,7 +158,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for rent include trade services routing")
     }
-  }
 
   private def rentFixtureAndFittingsRouting: Session => Call = answers =>
     if (
@@ -183,7 +177,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       }
     }
 
-  private def rentRentOpenMarketRouting: Session => Call = answers => {
+  private def rentRentOpenMarketRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
       case Some("yes") =>
         answers.forType match {
@@ -197,9 +191,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for open market reached routing")
     }
-  }
 
-  private def payableGrossOrNetRouting: Session => Call = answers => {
+  private def payableGrossOrNetRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
     ) match {
@@ -217,18 +210,16 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for rent payable by gross or net turnover routing")
     }
-  }
 
-  private def payableGrossOrNetDetailsRouting: Session => Call = answers => {
+  private def payableGrossOrNetDetailsRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
       case _                                                      =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
     }
-  }
 
-  private def rentVaryQuantityOfBeersRouting: Session => Call = answers => {
+  private def rentVaryQuantityOfBeersRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)
     ) match {
@@ -241,7 +232,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for rent payable vary quantity of beer routing")
     }
-  }
 
   private def intervalsOfRentReviewRouting: Session => Call = answers =>
     answers.forType match {
@@ -258,14 +248,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _                => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
     }
 
-  private def canRentBeReducedRouting: Session => Call = answers => {
+  private def canRentBeReducedRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
       case _                => aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()
     }
-  }
 
-  private def propertyUpdatesRouting: Session => Call = answers => {
+  private def propertyUpdatesRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartThree.flatMap(
       _.propertyUpdates.map(_.updates)
     ) match {
@@ -277,9 +266,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for property updates routing")
     }
-  }
 
-  private def tenantsAdditionsDisregardedRouting: Session => Call = answers => {
+  private def tenantsAdditionsDisregardedRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
     ) match {
@@ -294,16 +282,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for tenants additions disregarded routing")
     }
-  }
 
-  private def tenantsAdditionsDisregardedDetailsRouting: Session => Call = answers => {
+  private def tenantsAdditionsDisregardedDetailsRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
       case _                => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     }
-  }
 
-  private def benefitsGivenRouting: Session => Call = answers => {
+  private def benefitsGivenRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartThree.flatMap(
       _.benefitsGiven.map(_.benefitsGiven)
     ) match {
@@ -316,9 +302,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for legal or benefits given routing")
     }
-  }
 
-  private def legalOrPlanningRestrictionRouting: Session => Call = answers => {
+  private def legalOrPlanningRestrictionRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
     ) match {
@@ -331,9 +316,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for legal or planning restriction routing")
     }
-  }
 
-  private def payCapitalSumRouting: Session => Call = answers => {
+  private def payCapitalSumRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
       _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
     ) match {
@@ -350,9 +334,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case _                => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
     }
-  }
 
-  private def RPIRouting: Session => Call = answers => {
+  private def RPIRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6030 =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
@@ -360,20 +343,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
     }
 
-  }
-
-  private def tradeServicesDescriptionRouting: Session => Call = answers => {
+  private def tradeServicesDescriptionRouting: Session => Call = answers =>
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
-  }
 
-  private def servicePaidSeparatelyRouting: Session => Call = answers => {
+  private def servicePaidSeparatelyRouting: Session => Call = answers =>
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController
       .show(getIndexOfPaidServices(answers))
-  }
 
-  private def servicePaidSeparatelyChargeRouting: Session => Call = answers => {
+  private def servicePaidSeparatelyChargeRouting: Session => Call = answers =>
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(getIndexOfPaidServices(answers))
-  }
 
   private def servicePaidSeparatelyListRouting: Session => Call = answers => {
     val existingSection =
@@ -453,17 +431,16 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _               => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
     }
 
-  //Form 6076 only
-  private def provideDetailsOfYourLeaseRouting: Session => Call = answers => {
+  // Form 6076 only
+  private def provideDetailsOfYourLeaseRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6076 =>
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
       case _                =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
-  }
 
-  private def propertyUseLeasebackAgreementRouting: Session => Call = answers => {
+  private def propertyUseLeasebackAgreementRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(
       _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name)
     ) match {
@@ -483,7 +460,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for property use leaseback agreement routing")
     }
-  }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,

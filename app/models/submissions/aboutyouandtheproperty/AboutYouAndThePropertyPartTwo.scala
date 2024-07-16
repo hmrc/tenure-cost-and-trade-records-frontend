@@ -32,7 +32,7 @@ object AboutYouAndThePropertyPartTwo {
 
   def updateAboutYouAndThePropertyPartTwo(
     copy: AboutYouAndThePropertyPartTwo => AboutYouAndThePropertyPartTwo
-  )(implicit sessionRequest: SessionRequest[_]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session = {
 
     val currentAboutThePropertyPartTwo = sessionRequest.sessionData.aboutYouAndThePropertyPartTwo
 

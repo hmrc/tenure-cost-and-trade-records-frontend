@@ -91,7 +91,7 @@ object MappingSupport {
 
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
 
-  //Lease or Agreement Details - Three Radio buttons on one page
+  // Lease or Agreement Details - Three Radio buttons on one page
   val tenancy3Years: Mapping[TenancyThreeYears] = Forms.of[TenancyThreeYears]
   val rent3Years: Mapping[RentThreeYears]       = Forms.of[RentThreeYears]
   val underReview: Mapping[UnderReview]         = Forms.of[UnderReview]
@@ -108,17 +108,17 @@ object MappingSupport {
 
   lazy val annualRent: Mapping[AnnualRent] = mapping(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
-  )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
 
   lazy val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
 
   lazy val rentIncludeFixturesAndFittingsDetails: Mapping[AnnualRent] = mapping(
     "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
-  )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
 
   lazy val rentIncludeTradeServiceDetails: Mapping[AnnualRent] = mapping(
     "sumIncludedInRent" -> currencyMapping(".sumIncludedInRent")
-  )(AnnualRent.apply)(AnnualRent.unapply).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
 
   val currency: Mapping[BigDecimal] = currencyMapping()
 
@@ -138,13 +138,13 @@ object MappingSupport {
     mapping(
       "phone" -> validatePhoneNumber,
       "email" -> validateEmail
-    )(ContactDetails.apply)(ContactDetails.unapply)
+    )(ContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   val contactDetailsAboutYouMapping: Mapping[ContactDetails] =
     mapping(
       "phone" -> validateAboutYouPhoneNumber,
       "email" -> validateAboutYouEmail
-    )(ContactDetails.apply)(ContactDetails.unapply)
+    )(ContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def addressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -152,7 +152,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(Address.apply)(Address.unapply)
+  )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def requestReferenceNumberAddressMapping: Mapping[RequestReferenceNumberAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -160,7 +160,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("requestReferenceNumberAddress.postcode", postcode, "error.postcode.required")
-  )(RequestReferenceNumberAddress.apply)(RequestReferenceNumberAddress.unapply)
+  )(RequestReferenceNumberAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def landlordAddressMapping: Mapping[LandlordAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -168,7 +168,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(LandlordAddress.apply)(LandlordAddress.unapply)
+  )(LandlordAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def alternativeAddressMapping: Mapping[AlternativeAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -176,7 +176,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcodeAlternativeContact
-  )(AlternativeAddress.apply)(AlternativeAddress.unapply)
+  )(AlternativeAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def cateringAddressMapping: Mapping[CateringAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -184,7 +184,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(CateringAddress.apply)(CateringAddress.unapply)
+  )(CateringAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def lettingOtherPartAddressMapping: Mapping[LettingAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -192,7 +192,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
-  )(LettingAddress.apply)(LettingAddress.unapply)
+  )(LettingAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def lettingPartOfPropertyAddressMapping: Mapping[LettingAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -200,7 +200,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("correspondenceAddress.postcode", postcode, "error.postcode.required")
-  )(LettingAddress.apply)(LettingAddress.unapply)
+  )(LettingAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def editAddressMapping: Mapping[EditAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -208,7 +208,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(EditAddress.apply)(EditAddress.unapply)
+  )(EditAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def yourContactDetailsMapping: Mapping[YourContactDetails] = mapping(
     "fullName"                                   -> default(text, "").verifying(
@@ -219,7 +219,7 @@ object MappingSupport {
     "provideContactDetailsAdditionalInformation" -> optional(
       default(text, "").verifying(maxLength(1000, "error.char.count.maxLength"))
     )
-  )(YourContactDetails.apply)(YourContactDetails.unapply)
+  )(YourContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def correspondenceAddressMapping: Mapping[CorrespondenceAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
@@ -227,7 +227,7 @@ object MappingSupport {
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(CorrespondenceAddress.apply)(CorrespondenceAddress.unapply)
+  )(CorrespondenceAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def mandatoryBooleanWithError(message: String) =
     optional(boolean)

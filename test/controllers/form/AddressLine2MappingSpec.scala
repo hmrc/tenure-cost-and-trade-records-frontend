@@ -34,7 +34,7 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
     "catch invalid length error" in new Setup {
       val lengths = Table(
         ("address", "validity"),
-        ("TooLongAddressLineTwoThatExceedsMaximumLengthOf50Characters1", false), //51
+        ("TooLongAddressLineTwoThatExceedsMaximumLengthOf50Characters1", false), // 51
         ("Valid Address Line Two", true),
         ("Apt 45, Building XYZ", true)
       )

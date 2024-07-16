@@ -25,6 +25,6 @@ object PaymentForTradeServicesForm {
   val paymentForTradeServicesForm = Form(
     mapping(
       "paymentForTradeServices" -> createYesNoType("error.paymentForTradeServices.missing")
-    )(PaymentForTradeServices.apply)(PaymentForTradeServices.unapply)
+    )(PaymentForTradeServices.apply)(o => Some(o.paymentForTradeService))
   )
 }

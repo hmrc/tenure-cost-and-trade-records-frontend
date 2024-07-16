@@ -18,13 +18,12 @@ package config
 
 import models.Done
 import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
-import org.scalatest.matchers.must.Matchers.be
+import org.scalatest.matchers.should
 
 import scala.concurrent.Await
 import scala.concurrent.duration.DurationInt
 
-class NoOpInternalAuthTokenInitialiserSpec extends AnyFreeSpec {
+class NoOpInternalAuthTokenInitialiserSpec extends AnyFreeSpec with should.Matchers {
 
   "NoOpInternalAuthTokenInitialiser" - {
     "initialised method" - {
@@ -32,7 +31,7 @@ class NoOpInternalAuthTokenInitialiserSpec extends AnyFreeSpec {
         val initialiser = new NoOpInternalAuthTokenInitialiser()
         val result      = Await.result(initialiser.initialised, 2.seconds)
 
-        result must be(Done)
+        result shouldBe Done
       }
     }
   }

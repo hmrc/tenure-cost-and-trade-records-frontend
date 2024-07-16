@@ -69,7 +69,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
   "PropertyUpdatesController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = propertyUpdateController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -85,9 +85,9 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val propertyUpdates: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val propertyUpdates: String = "propertyUpdates"
     }
 

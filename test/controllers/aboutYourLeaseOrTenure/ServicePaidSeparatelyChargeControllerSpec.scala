@@ -70,7 +70,7 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val result = servicePaidSeparatelyChargeController().submit(0)(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(result) shouldBe BAD_REQUEST
       }

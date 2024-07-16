@@ -37,7 +37,7 @@ object GrossReceiptsForBaseLoadForm {
       "byProductSales"                   -> costOfSalesMapping("grossReceiptsForBaseLoad.byProductSales", year),
       "hotWaterHeatOrSteamSales"         -> costOfSalesMapping("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales", year),
       "gateIncomeFromWaste"              -> costOfSalesMapping("grossReceiptsForBaseLoad.gateIncomeFromWaste", year)
-    )(GrossReceiptsForBaseLoad.apply)(GrossReceiptsForBaseLoad.unapply)
+    )(GrossReceiptsForBaseLoad.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def grossReceiptsForBaseLoadForm(
     years: Seq[String]

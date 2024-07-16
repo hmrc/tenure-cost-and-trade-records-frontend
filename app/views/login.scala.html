@@ -28,7 +28,7 @@
         formWithCSRF: FormWithCSRF)
 
 
-@(theForm: Form[LoginDetails])(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LoginDetails])(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("login.heading"),

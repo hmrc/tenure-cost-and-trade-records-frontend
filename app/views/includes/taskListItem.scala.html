@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompletedRadioValue: Option[String], pageAnswer: Option[_], cannotStartYet: Boolean = false)(implicit messages: Messages)
+@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompletedRadioValue: Option[String], pageAnswer: Option[?], cannotStartYet: Boolean = false)(implicit messages: Messages)
 
 @statusText = @{
     if (sectionCompletedRadioValue.contains("yes")) {

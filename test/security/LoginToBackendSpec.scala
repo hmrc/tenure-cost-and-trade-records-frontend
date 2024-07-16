@@ -18,10 +18,12 @@ package security
 
 import models.FORLoginResponse
 import models.submissions.common.Address
+import security.LoginToBackend.{Postcode, RefNumber, StartTime}
 import utils.UnitTest
 
 import java.time.{ZoneOffset, ZonedDateTime}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class LoginToBackendSpec extends UnitTest {
   import TestData._
@@ -31,14 +33,14 @@ class LoginToBackendSpec extends UnitTest {
   "Login to HOD with valid credentials" when {
 
     "there is no previously stored document" should {
-      val l = LoginToBackend(
+      val l: (RefNumber, Postcode, StartTime) => Future[LoginResult] = LoginToBackend(
         respondWith(refNum, postcode)(loginResponse)
-      ) _
-      val r = await(l(refNum, postcode, now))
+      )
+      val r                                                          = await(l(refNum, postcode, now))
 
       "indicate there is no saved document" in {
         assert(
-          r.leftSideValue === NoExistingDocument(
+          r === NoExistingDocument(
             loginResponse.forAuthToken,
             loginResponse.forType,
             loginResponse.address

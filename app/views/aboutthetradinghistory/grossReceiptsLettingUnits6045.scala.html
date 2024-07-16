@@ -32,7 +32,7 @@
 )
 
 
-@(form: Form[Seq[GrossReceiptsLettingUnits]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[GrossReceiptsLettingUnits]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @rowLabel(labelKey: String) = {
     <p class="govuk-body govuk-!-font-weight-bold">

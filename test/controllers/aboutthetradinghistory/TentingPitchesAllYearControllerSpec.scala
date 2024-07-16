@@ -80,10 +80,10 @@ class TentingPitchesAllYearControllerSpec extends TestBaseSpec {
 
   "TentingPitchesAllYearController" should {
     "error if TentingPitchesAllYearController answer is missing" in {
-      val formData = baseFormData - errorKey.tentingPitchesAllYear
+      val formData = baseFormData - tentingPitchesAllYearErrorKey
       val form     = tentingPitchesAllYearForm.bind(formData)
 
-      mustContainError(errorKey.tentingPitchesAllYear, "error.areYourPitchesOpen.missing", form)
+      mustContainError(tentingPitchesAllYearErrorKey, "error.areYourPitchesOpen.missing", form)
     }
   }
 
@@ -107,11 +107,7 @@ class TentingPitchesAllYearControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val tentingPitchesAllYear: String
-    } = new {
-      val tentingPitchesAllYear: String = "tentingPitchesAllYear"
-    }
+    val tentingPitchesAllYearErrorKey: String = "tentingPitchesAllYear"
 
     val baseFormData: Map[String, String] = Map("tentingPitchesAllYear" -> "yes")
   }

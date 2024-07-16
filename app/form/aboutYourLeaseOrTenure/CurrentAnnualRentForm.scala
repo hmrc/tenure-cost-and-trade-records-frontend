@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ object CurrentAnnualRentForm {
     mapping(
       "currentAnnualRent" -> currencyMapping()
         .verifying(
-          Constraint[BigDecimal] { rent: BigDecimal =>
+          Constraint[BigDecimal] { (rent: BigDecimal) =>
             if (rent < includedPartsSum)
               Invalid(
                 ValidationError("error.currentAnnualRent.lessThanIncludedPartsSum", includedPartsSum.asMoney)
@@ -39,7 +39,7 @@ object CurrentAnnualRentForm {
             else Valid
           }
         )
-    )(AnnualRent.apply)(AnnualRent.unapply)
+    )(AnnualRent.apply)(o => Some(o.amount))
   )
 
 }

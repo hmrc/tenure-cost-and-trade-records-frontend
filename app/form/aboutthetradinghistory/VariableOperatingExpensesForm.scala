@@ -43,11 +43,11 @@ object VariableOperatingExpensesForm {
     "administration-and-sundries"      -> turnoverSalesMappingWithYear("variableExpenses.administrationAndSundries", year),
     "entertainment"                    -> turnoverSalesMappingWithYear("variableExpenses.entertainment", year),
     "other"                            -> turnoverSalesMappingWithYear("variableExpenses.other", year)
-  )(VariableOperatingExpenses.apply)(VariableOperatingExpenses.unapply)
+  )(VariableOperatingExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   private def variableOperatingExpensesSeq(
     years: Seq[String]
-  )(implicit messages: Messages): Mapping[Seq[VariableOperatingExpenses]]                 =
+  )(implicit messages: Messages): Mapping[Seq[VariableOperatingExpenses]] =
     mappingPerYear(years, (year, idx) => s"year[$idx]" -> columnMapping(year))
 
   private def otherExpensesDetailsRequired: Constraint[VariableOperatingExpensesSections] =
@@ -66,7 +66,7 @@ object VariableOperatingExpensesForm {
       mapping(
         "variableOperatingExpenses" -> variableOperatingExpensesSeq(years),
         "otherExpensesDetails"      -> optional(text(maxLength = 2000))
-      )(VariableOperatingExpensesSections.apply)(VariableOperatingExpensesSections.unapply)
+      )(VariableOperatingExpensesSections.apply)(o => Some(Tuple.fromProductTyped(o)))
         .verifying(otherExpensesDetailsRequired)
     }
 

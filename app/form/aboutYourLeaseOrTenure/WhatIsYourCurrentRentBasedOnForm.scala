@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,6 @@ object WhatIsYourCurrentRentBasedOnForm {
           maxLength(500, "error.currentRentBasedOn.maxLength")
         )
       )
-    )(WhatIsYourCurrentRentBasedOnDetails.apply)(WhatIsYourCurrentRentBasedOnDetails.unapply)
+    )(WhatIsYourCurrentRentBasedOnDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

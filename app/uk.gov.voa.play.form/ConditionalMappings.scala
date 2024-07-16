@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,5 +109,5 @@ object ConditionalMappings {
   }
 
   def mandatory[T](mapping: Mapping[T], prefix: Option[String] = None, showNestedErrors: Boolean = true) =
-    ConditionalMapping(x => true, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
+    ConditionalMapping(_ => true, MandatoryOptionalMapping(mapping, Nil), None, Seq.empty)
 }

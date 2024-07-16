@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,6 @@ object RentIncludeFixtureAndFittingsForm {
   val rentIncludeFixturesAndFittingsForm = Form(
     mapping(
       "rentIncludeFixturesAndFittings" -> createYesNoType("error.rentIncludeFixturesAndFittings.missing")
-    )(RentIncludeFixturesAndFittingsDetails.apply)(RentIncludeFixturesAndFittingsDetails.unapply)
+    )(RentIncludeFixturesAndFittingsDetails.apply)(o => Some(o.rentIncludeFixturesAndFittingsDetails))
   )
 }

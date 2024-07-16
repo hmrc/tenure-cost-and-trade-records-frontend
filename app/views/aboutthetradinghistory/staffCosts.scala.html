@@ -38,7 +38,7 @@
 )
 
 
-@(form: Form[Seq[StaffCosts]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[StaffCosts]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @totalContent(idx: Int) = {
     <span data-total-prefix="staffCosts.[@idx]." data-total-items="wages,NI,pension,remunerations">

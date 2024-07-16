@@ -84,7 +84,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = threeYearsConstructedController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST
       }
@@ -101,9 +101,9 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val threeYearsConstructed: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val threeYearsConstructed: String = "threeYearsConstructed"
     }
 

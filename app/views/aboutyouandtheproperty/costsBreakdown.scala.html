@@ -30,7 +30,7 @@
         govukCharacterCount: GovukCharacterCount,
 )
 
-@(theForm: Form[String], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("costsBreakdown.heading"),

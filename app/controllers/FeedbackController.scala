@@ -46,15 +46,15 @@ class FeedbackController @Inject() (
 
   import FeedbackFormMapper.feedbackForm
 
-  def feedback(): Action[AnyContent] = Action { implicit request =>
+  def feedback: Action[AnyContent] = Action { implicit request =>
     Ok(feedbackView(feedbackForm))
   }
 
-  def feedbackThx(): Action[AnyContent] = Action { implicit request =>
+  def feedbackThx: Action[AnyContent] = Action { implicit request =>
     Ok(feedbackThxView())
   }
 
-  def feedbackSubmitWithoutSession(): Action[AnyContent] = Action.async { implicit request =>
+  def feedbackSubmitWithoutSession: Action[AnyContent] = Action.async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -69,9 +69,9 @@ class FeedbackController @Inject() (
       )
   }
 
-  def feedbackSubmit(): Action[AnyContent] = Action.async { implicit request =>
+  def feedbackSubmit: Action[AnyContent] = Action.async { implicit request =>
     if (request.session.get("session").isEmpty) {
-      feedbackSubmitWithoutSession().apply(request) // need that if user is not logged in
+      feedbackSubmitWithoutSession.apply(request) // need that if user is not logged in
     } else {
       (Action andThen withSessionRefiner)
         .async { implicit request =>
@@ -137,7 +137,7 @@ class FeedbackController @Inject() (
       )
   }
 
-  def feedbackRequestReferenceNumber(): Action[AnyContent] = Action.async { implicit request =>
+  def feedbackRequestReferenceNumber: Action[AnyContent] = Action.async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -152,10 +152,10 @@ class FeedbackController @Inject() (
       )
   }
 
-  private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[_])                   =
+  private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[?]) =
     audit(eventName, Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
 
-  private def sendFeedback(eventName: String, f: Feedback, session: Session)(implicit request: Request[_]) =
+  private def sendFeedback(eventName: String, f: Feedback, session: Session)(implicit request: Request[?]) =
     audit(
       eventName,
       Map(
@@ -173,6 +173,6 @@ object FeedbackFormMapper {
     mapping(
       "feedback-rating"   -> optional(text).verifying("feedback.rating.required", _.isDefined),
       "feedback-comments" -> optional(text).verifying("feedback.comments.maxLength", it => it.forall(_.length <= 1200))
-    )(Feedback.apply)(Feedback.unapply)
+    )(Feedback.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

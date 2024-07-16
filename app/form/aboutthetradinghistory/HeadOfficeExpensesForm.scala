@@ -33,7 +33,7 @@ object HeadOfficeExpensesForm {
 
   private def headOfficeExpensesSeq(
     years: Seq[String]
-  )(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]]                =
+  )(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
   def headOfficeExpensesForm(

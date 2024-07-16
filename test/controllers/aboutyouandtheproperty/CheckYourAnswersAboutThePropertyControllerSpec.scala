@@ -26,7 +26,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6010Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  )                                                        = new CheckYourAnswersAboutThePropertyController(
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -35,7 +35,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
   def checkYourAnswersAboutThePropertyController6010No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  )                                                        = new CheckYourAnswersAboutThePropertyController(
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -52,7 +52,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6015Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  )                                                        = new CheckYourAnswersAboutThePropertyController(
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -61,7 +61,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
   def checkYourAnswersAboutThePropertyController6015No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  )                                                        = new CheckYourAnswersAboutThePropertyController(
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -78,7 +78,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6030Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  )                                                        = new CheckYourAnswersAboutThePropertyController(
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -87,7 +87,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
   def checkYourAnswersAboutThePropertyController6030No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  )                                                        = new CheckYourAnswersAboutThePropertyController(
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -282,7 +282,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = checkYourAnswersAboutThePropertyController6010Yes().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

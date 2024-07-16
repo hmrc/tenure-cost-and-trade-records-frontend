@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
           connector.submitNotConnected(refNumber, notConnectedSubmission)
         } map { exception =>
           exception shouldBe a[BadRequestException]
-        //exception.getMessage should include("Bad Request")
+          // exception.getMessage should include("Bad Request")
         }
       }
 

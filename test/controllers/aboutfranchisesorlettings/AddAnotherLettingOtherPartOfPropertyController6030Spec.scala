@@ -108,9 +108,9 @@ class AddAnotherLettingOtherPartOfPropertyController6030Spec extends TestBaseSpe
 
   }
   object TestData {
-    val errorKey: Object {
-      val addAnotherLettingOtherPartOfProperty: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val addAnotherLettingOtherPartOfProperty: String =
         "addAnotherLettingOtherPartOfProperty"
     }

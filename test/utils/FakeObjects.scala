@@ -155,7 +155,7 @@ trait FakeObjects {
     Some(AnswerNo),
     Some(AnswerNo),
     Some(AnswerNo),
-    Some(StartDateOfVacantProperty((LocalDate.now()))),
+    Some(StartDateOfVacantProperty(LocalDate.now())),
     Some(AnswerYes)
   )
 
@@ -197,7 +197,7 @@ trait FakeObjects {
     Some(AnswerNo),
     Some(AnswerNo),
     Some(AnswerNo),
-    Some(StartDateOfVacantProperty((LocalDate.now()))),
+    Some(StartDateOfVacantProperty(LocalDate.now())),
     Some(AnswerNo),
     Some(prefilledProvideContactDetails)
   )

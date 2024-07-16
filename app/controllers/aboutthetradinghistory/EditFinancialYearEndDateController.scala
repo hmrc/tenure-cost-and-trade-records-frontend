@@ -48,7 +48,7 @@ class EditFinancialYearEndDateController @Inject() (
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
-        val financialYearEnd: Seq[LocalDate] = {
+        val financialYearEnd: Seq[LocalDate] =
           request.sessionData.forType match {
             case ForTypes.for6020                    =>
               aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
@@ -63,8 +63,7 @@ class EditFinancialYearEndDateController @Inject() (
                 .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case _                                   => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
           }
-        }
-        val prefilledForm = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
+        val prefilledForm                    = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
         Ok(
           editFinancialYearEndDateView(
             prefilledForm,
@@ -88,7 +87,7 @@ class EditFinancialYearEndDateController @Inject() (
     }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val financialYearEnd: Seq[LocalDate] = {
+    val financialYearEnd: Seq[LocalDate] =
       request.sessionData.forType match {
         case ForTypes.for6020                    =>
           request.sessionData.aboutTheTradingHistory.get.turnoverSections6020
@@ -105,8 +104,7 @@ class EditFinancialYearEndDateController @Inject() (
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case _                                   => request.sessionData.aboutTheTradingHistory.get.turnoverSections.map(_.financialYearEnd)
       }
-    }
-    val prefilledForm = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
+    val prefilledForm                    = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))

@@ -34,7 +34,7 @@
 )
 
 
-@(form: Form[_], idx: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[?], idx: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("feeReceived.heading", operatorName),

@@ -33,7 +33,7 @@ object IncludedInRent6020Form {
       ).verifying(
         maxLength(2000, "error.rentPayableDetails.maxLength")
       )
-    )(DoesTheRentPayable.apply)(DoesTheRentPayable.unapply)
+    )(DoesTheRentPayable.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
 }

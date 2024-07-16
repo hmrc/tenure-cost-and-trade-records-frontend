@@ -41,7 +41,7 @@ class OtherHolidayAccommodationDetailsControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  )                    = new OtherHolidayAccommodationDetailsController(
+  ) = new OtherHolidayAccommodationDetailsController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     otherHolidayAccommodationDetailsView,
@@ -123,9 +123,9 @@ class OtherHolidayAccommodationDetailsControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val otherHolidayAccommodationOpenAllYear: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val otherHolidayAccommodationOpenAllYear: String = "otherHolidayAccommodationOpenAllYear"
     }
 

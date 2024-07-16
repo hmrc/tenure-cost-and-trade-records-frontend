@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,12 +22,14 @@ import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TradingNameOperatingFromPropertyForm {
-  val tradingNameOperatingFromProperty: Form[TradingNameOperatingFromProperty] = Form(
+
+  val tradingNameOperatingFromPropertyForm: Form[TradingNameOperatingFromProperty] = Form(
     mapping(
       "tradingNameFromProperty" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tradingNameFromProperty.required"),
         maxLength(50, "error.tradingNameFromProperty.maxLength")
       )
-    )(TradingNameOperatingFromProperty.apply)(TradingNameOperatingFromProperty.unapply)
+    )(TradingNameOperatingFromProperty.apply)(o => Some(o.tradingName))
   )
+
 }

@@ -69,7 +69,7 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = charityQuestionController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST
       }
@@ -86,9 +86,9 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val charityQuestion: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val charityQuestion: String = "charityQuestion"
     }
 

@@ -21,7 +21,6 @@ import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
 import utils.{TestBaseSpec, WireMockHelper}
 import com.github.tomakehurst.wiremock.client.WireMock._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.{JsValue, Json}
 
 import scala.concurrent.duration.DurationInt
@@ -61,7 +60,7 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
       )
 
       val result: Option[String] = Await.result(connector.initialise(call), 500.millisecond)
-      result mustBe Some("/api/v2/location")
+      result shouldBe Some("/api/v2/location")
     }
 
     "return error when there is no Location" in {
@@ -76,7 +75,7 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
       )
 
       val result: Option[String] = Await.result(connector.initialise(call), 500.millisecond)
-      result mustBe Some(
+      result shouldBe Some(
         s"[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:${server.port}/api/v2/init"
       )
     }
@@ -91,7 +90,7 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
       )
 
       val result: Option[String] = Await.result(connector.initialise(call), 500.millisecond)
-      result mustBe None
+      result shouldBe None
     }
 
     "get None when there is an error" in {
@@ -104,7 +103,7 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
 
       val result: Future[Option[String]] = connector.initialise(call)
       whenReady(result) { res =>
-        res mustBe None
+        res shouldBe None
       }
 
     }
@@ -120,7 +119,7 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
 
       val result: Future[Option[String]] = connector.initialise(call)
       whenReady(result) { res =>
-        res mustBe None
+        res shouldBe None
       }
     }
 
@@ -135,7 +134,7 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
       )
 
       val result = Await.result(connector.getAddress(id = "123456789"), 5.second)
-      result.auditRef.map(_ mustBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
+      result.auditRef.map(_ shouldBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
     }
   }
 }

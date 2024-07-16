@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,9 +30,7 @@ object RentPayableVaryOnQuantityOfBeersDetailsForm {
           nonEmpty(errorMessage = "error.rentPayableVaryOnQuantityOfBeersDetails.required"),
           maxLength(500, "error.rentPayableVaryOnQuantityOfBeersDetails.maxLength")
         )
-    )(RentPayableVaryOnQuantityOfBeersInformationDetails.apply)(
-      RentPayableVaryOnQuantityOfBeersInformationDetails.unapply
-    )
+    )(RentPayableVaryOnQuantityOfBeersInformationDetails.apply)(o => Some(o.rentPayableVaryOnQuantityOfBeersDetails))
   )
 
 }

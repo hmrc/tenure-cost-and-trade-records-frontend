@@ -31,7 +31,7 @@
         dateUtil: DateUtilLocalised
 )
 
-@(form: Form[Seq[TurnoverSection6020]], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TurnoverSection6020]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @rowLabel(labelKey: String, hintKey: String) = {

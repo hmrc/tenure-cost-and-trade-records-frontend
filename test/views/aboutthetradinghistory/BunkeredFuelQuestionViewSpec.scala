@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import form.aboutthetradinghistory.BunkeredFuelQuestionForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.BunkeredFuelQuestion
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -43,9 +42,9 @@ class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[BunkeredFuelQu
     "has a link marked as backLink leading total fuel sold Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
     }
 
     "Section heading is visible" in {

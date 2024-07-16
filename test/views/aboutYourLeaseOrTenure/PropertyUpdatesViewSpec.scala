@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.PropertyUpdatesForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PropertyUpdates
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -42,9 +41,9 @@ class PropertyUpdatesViewSpec extends QuestionViewBehaviours[PropertyUpdates] {
     "has a link marked with back.link.label leading to interval of review Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
     }
 
     "Section heading is visible" in {

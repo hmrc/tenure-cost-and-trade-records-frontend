@@ -45,7 +45,7 @@ class MandatoryIfNot extends AnyFlatSpec with should.Matchers {
     mapping(
       "source" -> nonEmptyText,
       "target" -> mandatoryIfNot("source", "magicValue", nonEmptyText)
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   case class Model(source: String, target: Option[String])

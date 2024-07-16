@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@
         dateUtil: DateUtilLocalised
 )
 
-@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 @totalHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.total")</span></p>

@@ -61,7 +61,7 @@ class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
   "CapitalSumDescriptionController SUBMIT /" should {
     "accept an empty form when submitted" in {
       val res = capitalSumDescriptionController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe SEE_OTHER
     }

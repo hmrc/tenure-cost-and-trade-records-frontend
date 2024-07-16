@@ -34,7 +34,7 @@
 )
 
 
-@(theForm: Form[Feedback], session: Session)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[Feedback], session: Session)(implicit request: Request[?], messages: Messages)
 
     @layout(
         pageHeading = messages("confirmation.heading"),

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@ class NumberUtilSpec extends AnyFlatSpec with should.Matchers {
 
   import NumberUtil._
 
-  "NumberUtil.asMoney"     should "format numbers in UK money format" in {
+  "NumberUtil.asMoney" should "format numbers in UK money format" in {
     BigDecimal(1222000).asMoney shouldBe "£1,222,000"
     BigDecimal(333).asMoney     shouldBe "£333"
     BigDecimal(4444).asMoney    shouldBe "£4,444"
   }
 
-  it                       should "show 2 digits after decimal point for money" in {
+  it should "show 2 digits after decimal point for money" in {
     BigDecimal(2777000.22).asMoney shouldBe "£2,777,000.22"
     BigDecimal(2777000.10).asMoney shouldBe "£2,777,000.10"
   }

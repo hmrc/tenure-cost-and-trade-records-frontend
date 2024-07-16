@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.TotalFuelSoldForm
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TotalFuelSold
 import play.api.data.{Form, FormError}
@@ -45,9 +44,9 @@ class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
     "has a link marked with back.link.label leading to your financial year end Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
     }
 
     "Section heading is visible" in {

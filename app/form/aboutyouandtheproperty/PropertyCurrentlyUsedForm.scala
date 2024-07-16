@@ -39,7 +39,7 @@ object PropertyCurrentlyUsedForm {
     ),
     "anotherUseDetails"     -> optional(text)
       .verifying("error.anotherUseDetails.maxLength", it => it.forall(_.length <= 200))
-  )(PropertyCurrentlyUsed.apply)(PropertyCurrentlyUsed.unapply)
+  )(PropertyCurrentlyUsed.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   val propertyCurrentlyUsedForm: Form[PropertyCurrentlyUsed] = Form(
     propertyCurrentlyUsedMapping.verifying(anotherUseDetailsRequired)

@@ -28,7 +28,7 @@
 )
 
 
-@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[_], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @answers = @{
@@ -53,7 +53,6 @@
                 "cYa.touringAndTentingPitches.pitches.label",
                 _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => messages(s"label.${x.name}"))).orElse(""),
                 controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(), "touringAndTentingPitches") ++
-
             answers.conditionRow(
                         _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.map(_.name)).contains("yes"),
                         "cYa.touringAndTentingPitches.pitchesAllYear.label",
@@ -63,7 +62,6 @@
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                 controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(), "",
                         ("valueAsHtml", _ => None))
-
         ))
 
 

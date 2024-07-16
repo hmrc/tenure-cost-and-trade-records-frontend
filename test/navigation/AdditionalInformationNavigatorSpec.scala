@@ -18,7 +18,6 @@ package navigation
 
 import connectors.Audit
 import navigation.identifiers._
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -38,7 +37,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, additionalInformationSession)
-        .apply(additionalInformationSession) mustBe controllers.routes.LoginController.show
+        .apply(additionalInformationSession) shouldBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to  CYA page when further information has been completed" in {
@@ -46,7 +45,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .nextPage(FurtherInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
-        ) mustBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
+        ) shouldBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
         .show()
     }
 
@@ -55,7 +54,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersAdditionalInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
-        ) mustBe controllers.routes.TaskListController
+        ) shouldBe controllers.routes.TaskListController
         .show()
     }
 

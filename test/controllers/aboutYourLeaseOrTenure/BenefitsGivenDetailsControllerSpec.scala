@@ -63,7 +63,7 @@ class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
   "BenefitsGivenDetailsController SUBMIT /" should {
     "accept an empty form when submitted" in {
       val res = benefitsGivenDetailsController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe SEE_OTHER
     }

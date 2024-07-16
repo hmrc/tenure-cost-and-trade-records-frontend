@@ -45,9 +45,9 @@ class CheckYourAnswersRequestReferenceNumberViewSpec
     "has a link marked with back.link.label leading to the request reference number contact details page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
         .show()
         .url
     }

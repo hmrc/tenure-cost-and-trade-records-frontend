@@ -28,6 +28,6 @@ object OtherHolidayAccommodationDetailsForm {
     mapping(
       "otherHolidayAccommodationOpenAllYear" -> createYesNoType("error.otherHolidayAccommodationOpenAllYear.required"),
       "weeksOpen"                            -> mandatoryIfEqual("otherHolidayAccommodationOpenAllYear", "no", weeksInYearMapping)
-    )(OtherHolidayAccommodationDetails.apply)(OtherHolidayAccommodationDetails.unapply)
+    )(OtherHolidayAccommodationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

@@ -14,8 +14,8 @@ object AppDependencies {
   val scalaTestPlusScalaCheckVersion = "3.2.19.0"
   val scalaTestPlusMockitoVersion    = "3.2.19.0"
   val flexMarkVersion                = "0.64.8"
-  val wiremockVersion                = "2.21.0" // 3.8.0
-  val jsoupVersion                   = "1.17.2"
+  val wiremockVersion                = "3.8.0"
+  val jsoupVersion                   = "1.18.1"
 
   private val compile = Seq(
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30" % bootstrapVersion,
@@ -33,8 +33,7 @@ object AppDependencies {
     "org.scalatestplus"      %% "scalacheck-1-18"         % scalaTestPlusScalaCheckVersion % Test,
     "org.scalatestplus"      %% "mockito-5-12"            % scalaTestPlusMockitoVersion    % Test,
     "com.vladsch.flexmark"    % "flexmark-all"            % flexMarkVersion                % Test, // for scalatest 3.2.x
-    // "org.wiremock" % "wiremock" % wiremockVersion % Test
-    "com.github.tomakehurst"  % "wiremock"                % wiremockVersion                % Test,
+    // "org.wiremock"            % "wiremock"                % wiremockVersion                % Test,
     "org.jsoup"               % "jsoup"                   % jsoupVersion                   % Test
   )
 

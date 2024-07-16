@@ -111,9 +111,9 @@ class AddAnotherCateringOperationController6030Spec extends TestBaseSpec {
 
   }
   object TestData {
-    val errorKey: Object {
-      val addAnotherCateringOperationOrLettingAccommodation: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val addAnotherCateringOperationOrLettingAccommodation: String =
         "addAnotherCateringOperation"
     }

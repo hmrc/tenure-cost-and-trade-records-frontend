@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromProperty
+import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 import models.ForTypes
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, TradingNameOperatingFromProperty}
@@ -50,8 +50,8 @@ class TradingNameOperatingFromPropertyController @Inject() (
       Ok(
         nameOfBusinessOperatingFromPropertyView(
           request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-            case Some(vacantProperties) => tradingNameOperatingFromProperty.fill(vacantProperties)
-            case _                      => tradingNameOperatingFromProperty
+            case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
+            case _                      => tradingNameOperatingFromPropertyForm
           },
           calculateBackLink,
           request.sessionData.toSummary,
@@ -63,7 +63,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TradingNameOperatingFromProperty](
-      tradingNameOperatingFromProperty,
+      tradingNameOperatingFromPropertyForm,
       formWithErrors =>
         BadRequest(
           nameOfBusinessOperatingFromPropertyView(

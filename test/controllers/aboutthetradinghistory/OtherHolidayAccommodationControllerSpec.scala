@@ -82,9 +82,9 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val otherHolidayAccommodation: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val otherHolidayAccommodation: String = "otherHolidayAccommodation"
     }
 

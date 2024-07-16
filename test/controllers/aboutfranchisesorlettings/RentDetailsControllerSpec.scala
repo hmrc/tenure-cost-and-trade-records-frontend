@@ -89,7 +89,7 @@ class RentDetailsControllerSpec extends TestBaseSpec {
       "dateInput.month" -> "5",
       "dateInput.year"  -> "2020"
     )
-    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq: _*)
+    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val controller     = rentDetailsController()
     val result         = controller.submit(0)(sessionRequest)
@@ -107,7 +107,7 @@ class RentDetailsControllerSpec extends TestBaseSpec {
       "dateInput.month" -> "5",
       "dateInput.year"  -> "2020"
     )
-    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq: _*)
+    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val controller     = rentDetailsController()
     val result         = controller.submit(2)(sessionRequest)
@@ -125,7 +125,7 @@ class RentDetailsControllerSpec extends TestBaseSpec {
       "dateInput.month" -> "5",
       "dateInput.year"  -> "2020"
     )
-    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq: _*)
+    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val controller     = rentDetailsController()
     val result         = controller.submit(2)(sessionRequest)
@@ -143,7 +143,7 @@ class RentDetailsControllerSpec extends TestBaseSpec {
       "dateInput.month" -> "5",
       "dateInput.year"  -> "2020"
     )
-    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq: _*)
+    val request        = FakeRequest(POST, "/rent-details-submit").withFormUrlEncodedBody(validData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val controller     = rentDetailsController()
     val result         = controller.submit(2)(sessionRequest)

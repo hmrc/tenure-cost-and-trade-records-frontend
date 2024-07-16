@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,6 @@ object ConnectedToLandlordDetailsForm {
         nonEmpty(errorMessage = "error.connectedToLandlordDetails.required"),
         maxLength(1000, "error.connectedToLandlordDetails.maxLength")
       )
-    )(ConnectedToLandlordInformationDetails.apply)(ConnectedToLandlordInformationDetails.unapply)
+    )(ConnectedToLandlordInformationDetails.apply)(o => Some(o.connectedToLandlordInformationDetails))
   )
 }

@@ -29,7 +29,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(forType: String)(implicit request: SessionRequest[_], messages: Messages)
+@(forType: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
 

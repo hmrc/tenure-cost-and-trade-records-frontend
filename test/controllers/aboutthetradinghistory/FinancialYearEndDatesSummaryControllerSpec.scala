@@ -63,7 +63,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "return redirect 400 for empty request" in {
-        val res = financialYearEndDatesSummaryController().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = financialYearEndDatesSummaryController().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -75,7 +75,10 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
             "isFinancialYearEndDatesCorrect" -> "true"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6010YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6010YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.TurnoverController.show().url)
@@ -88,7 +91,10 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
             "from"                           -> "CYA"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6010YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6010YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -102,7 +108,10 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
             "isFinancialYearEndDatesCorrect" -> "true"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6020YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6020YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController(forType = "FOR6020").submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -117,7 +126,10 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
             "from"                           -> "CYA"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6020YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6020YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController(forType = "FOR6020").submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -131,7 +143,10 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
             "isFinancialYearEndDatesCorrect" -> "true"
           )
         val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6030YesSession, requestWithForm) //aboutYourTradingHistory6010YesSession
+          SessionRequest(
+            aboutYourTradingHistory6030YesSession,
+            requestWithForm
+          ) // aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController(forType = "FOR6030").submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(

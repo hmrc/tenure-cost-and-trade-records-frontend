@@ -47,5 +47,5 @@ object CustomerCreditAccountsForm {
           .verifying(messages("error.customerCreditAcc.range", year), _ >= 0)
           .verifying(messages("error.percentage", year), _ <= 100)
       ).verifying(messages("error.customerCreditAcc.required", year), _.isDefined)
-    )(CustomerCreditAccounts.apply)(CustomerCreditAccounts.unapply)
+    )(CustomerCreditAccounts.apply)(o => Some(Tuple.fromProductTyped(o)))
 }

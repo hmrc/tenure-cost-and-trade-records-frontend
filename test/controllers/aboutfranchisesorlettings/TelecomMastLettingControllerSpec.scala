@@ -72,7 +72,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.town"               -> "Townville",
       "correspondenceAddress.postcode"           -> "AB12 3CD"
     )
-    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq: _*)
+    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val result         = telecomMastLettingController().submit(Some(1))(sessionRequest)
     status(result)           shouldBe SEE_OTHER
@@ -88,7 +88,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.town"               -> "Townville",
       "correspondenceAddress.postcode"           -> "AB12 3CD"
     )
-    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq: _*)
+    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq*)
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
     val result         = telecomMastLettingController().submit(Some(4))(sessionRequest)
     status(result)           shouldBe SEE_OTHER

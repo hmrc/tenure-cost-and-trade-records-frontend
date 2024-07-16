@@ -35,7 +35,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[WorkCarriedOutDetails], summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[WorkCarriedOutDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
 
     @layout(
         pageHeading = messages("workCarriedOutDetails.heading"),

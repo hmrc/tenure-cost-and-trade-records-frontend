@@ -39,7 +39,7 @@
 )
 
 
-@(form: Form[(Seq[CostOfSales6076Sum], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[(Seq[CostOfSales6076Sum], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @totalContent(idx: Int) = {
  <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="fuelOrFeedstock,importedPower,TNuoS,BSuoS,otherSales">

@@ -74,7 +74,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "save the form data and redirect to the next page on answer Yes" in {
       val res = staticCaravansController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData(AnswerYes): _*)
+        fakePostRequest.withFormUrlEncodedBody(validFormData(AnswerYes)*)
       )
       status(res)           shouldBe Status.SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageOnYes)
@@ -82,14 +82,14 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page on answer No" in {
       val res = staticCaravansController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData(AnswerNo): _*)
+        fakePostRequest.withFormUrlEncodedBody(validFormData(AnswerNo)*)
       )
       status(res)           shouldBe Status.SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageOnNo)
     }
 
     "return 400 for empty form data" in {
-      val res = staticCaravansController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = staticCaravansController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

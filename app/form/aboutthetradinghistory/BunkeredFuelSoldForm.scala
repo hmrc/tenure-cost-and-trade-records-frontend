@@ -44,6 +44,6 @@ object BunkeredFuelSoldForm {
           )
           .verifying(messages("error.bunkeredFuelSold.range", year), _ >= 0)
       ).verifying(messages("error.bunkeredFuelSold.required", year), _.isDefined)
-    )(BunkeredFuelSold.apply)(BunkeredFuelSold.unapply)
+    )(BunkeredFuelSold.apply)(o => Some(Tuple.fromProductTyped(o)))
 
 }

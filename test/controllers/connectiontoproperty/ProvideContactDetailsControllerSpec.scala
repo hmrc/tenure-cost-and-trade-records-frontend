@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,7 +87,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = provideContactDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+        val res = provideContactDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -137,12 +137,9 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val fullName: String
-      val phone: String
-      val email: String
-      val email1TooLong: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val fullName: String = "yourContactDetails.fullName"
       val phone            = "yourContactDetails.contactDetails.phone"
       val email            = "yourContactDetails.contactDetails.email"

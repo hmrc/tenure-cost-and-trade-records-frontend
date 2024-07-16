@@ -29,6 +29,6 @@ object MaxOfLettingsForm {
       mapping(
         "maxOfLettings" -> of[Boolean]
           .verifying(messages("maxOf5Lettings.error"), value => value)
-      )(MaxOfLettings.apply)(MaxOfLettings.unapply)
+      )(MaxOfLettings.apply)(o => Some(o.maxOfLettings))
     )
 }

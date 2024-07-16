@@ -29,7 +29,7 @@ object PitchesForCaravansForm {
       "weeks"           -> tradingPeriodWeeks(year),
       "grossReceipts"   -> turnoverSalesMappingWithYear("tentingPitches.grossReceipts", year),
       "numberOfPitches" -> numberOfPitches(year)
-    )(PitchesForCaravans.apply)(PitchesForCaravans.unapply)
+    )(PitchesForCaravans.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def pitchesForCaravansForm(
     years: Seq[String]

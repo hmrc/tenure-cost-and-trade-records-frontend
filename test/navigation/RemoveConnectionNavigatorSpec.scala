@@ -24,7 +24,6 @@ import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import navigation.identifiers.{Identifier, PastConnectionId, RemoveConnectionId}
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -77,7 +76,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
       case object UnknownIdentifier extends Identifier
       navigator
         .nextPage(UnknownIdentifier, sessionAdditionalInformation)
-        .apply(sessionAdditionalInformation) mustBe controllers.routes.LoginController.show
+        .apply(sessionAdditionalInformation) shouldBe controllers.routes.LoginController.show
     }
 
     "return a function that goes to remove connection page when past connection has been completed" in {
@@ -85,7 +84,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
         .nextPage(PastConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
-        ) mustBe controllers.notconnected.routes.RemoveConnectionController
+        ) shouldBe controllers.notconnected.routes.RemoveConnectionController
         .show()
     }
 
@@ -94,7 +93,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
         .nextPage(RemoveConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
-        ) mustBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController
+        ) shouldBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController
         .show()
     }
 

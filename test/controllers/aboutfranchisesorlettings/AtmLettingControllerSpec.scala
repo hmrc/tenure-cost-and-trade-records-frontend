@@ -72,7 +72,7 @@ class AtmLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.county"             -> "Countyshire",
       "correspondenceAddress.postcode"           -> "DD11 DD"
     )
-    val request       = FakeRequest(POST, "/atm-letting-submit").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/atm-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = atmLettingController()
 
     val result = controller.submit(Some(0))(request)
@@ -89,7 +89,7 @@ class AtmLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.county"             -> "Countyshire",
       "correspondenceAddress.postcode"           -> "DD11 DD"
     )
-    val request       = FakeRequest(POST, "/atm-letting-submit").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/atm-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = atmLettingController()
 
     val result = controller.submit(Some(4))(request)

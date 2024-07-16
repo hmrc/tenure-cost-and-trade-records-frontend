@@ -20,7 +20,6 @@ import form.aboutyouandtheproperty.ContactDetailsQuestionForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -45,9 +44,9 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetai
     "has a link marked with back.link.label leading to website Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
     }
 
     "Section heading is visible" in {

@@ -30,7 +30,7 @@ object TradeServiceDescriptionForm {
             nonEmpty(errorMessage = "tradeServiceDescription.describe.error"),
             maxLength(500, "error.tradeServiceDescription.maxLength")
           )
-      )(TradeServicesDetails.apply)(TradeServicesDetails.unapply)
+      )(TradeServicesDetails.apply)(o => Some(o.description))
     )
 
 }

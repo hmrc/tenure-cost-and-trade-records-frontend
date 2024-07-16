@@ -25,6 +25,6 @@ object WorkCarriedOutConditionForm {
   val workCarriedOutConditionForm = Form(
     mapping(
       "workCarriedOutCondition" -> createYesNoType("error.workCarriedOutCondition.required")
-    )(WorkCarriedOutCondition.apply)(WorkCarriedOutCondition.unapply)
+    )(WorkCarriedOutCondition.apply)(o => Some(o.workCarriedOutCondition))
   )
 }

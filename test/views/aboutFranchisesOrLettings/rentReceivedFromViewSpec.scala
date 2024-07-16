@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.RentReceivedFromForm
 import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.RentReceivedFrom
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -53,9 +52,9 @@ class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
         .show(idx = Some(0))
         .url
     }

@@ -36,6 +36,6 @@ object TradingActivityForm {
           .verifying("error.tradingActivity.details.missing", details => details.nonEmpty)
           .verifying(maxLength(500, "error.tradingActivity.maxLength"))
       )
-    )(TradingActivity.apply)(TradingActivity.unapply)
+    )(TradingActivity.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

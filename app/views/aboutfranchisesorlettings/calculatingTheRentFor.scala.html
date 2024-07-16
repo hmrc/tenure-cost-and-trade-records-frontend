@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@
 )
 
 
-@(theForm: Form[_], index: Int,  operatorName: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[?], index: Int,  operatorName: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("calculating.the.rent.for.heading", operatorName),

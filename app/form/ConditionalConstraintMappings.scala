@@ -35,7 +35,7 @@ object ConditionalConstraintMappings {
     mapping: Mapping[T],
     conditionalConstraints: Constraint[T]*
   ): Mapping[T] =
-    ConditionalConstraintMapping(condition, mapping.verifying(conditionalConstraints: _*), mapping)
+    ConditionalConstraintMapping(condition, mapping.verifying(conditionalConstraints*), mapping)
 
   def mandatoryStringOnCondition(condition: Condition, errorRequired: String): Mapping[String] =
     applyConstraintsOnCondition[String](

@@ -33,7 +33,7 @@ object GrossReceiptsExcludingVATForm {
     "capacityMarket"        -> turnoverSalesMappingWithYear("grossReceipts.capacityMarket.sales", year),
     "balancingServices"     -> turnoverSalesMappingWithYear("grossReceipts.balancingServices.sales", year),
     "embeddedBenefits"      -> turnoverSalesMappingWithYear("grossReceipts.embeddedBenefits.sales", year)
-  )(GrossReceiptsExcludingVAT.apply)(GrossReceiptsExcludingVAT.unapply)
+  )(GrossReceiptsExcludingVAT.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def grossReceiptsExcludingVATForm(
     years: Seq[String]

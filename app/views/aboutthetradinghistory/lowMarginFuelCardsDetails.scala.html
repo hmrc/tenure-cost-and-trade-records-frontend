@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LowMarginFuelCardDetail],index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[LowMarginFuelCardDetail],index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("lowMarginFuelCardDetails.heading"),

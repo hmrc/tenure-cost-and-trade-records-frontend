@@ -19,7 +19,6 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.CharityQuestionForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -44,9 +43,9 @@ class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
     "has a link marked with back.link.label leading to website Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
     }
 
     "Section heading is visible" in {

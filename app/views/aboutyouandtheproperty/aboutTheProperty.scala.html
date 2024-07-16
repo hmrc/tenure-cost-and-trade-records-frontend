@@ -45,7 +45,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyDetails], forType: String, summary: Summary, backLink: String)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[PropertyDetails], forType: String, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @content = {
 @if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {

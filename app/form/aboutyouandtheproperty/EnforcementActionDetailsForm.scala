@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,6 @@ object EnforcementActionDetailsForm {
         nonEmpty(errorMessage = "error.enforcementActionHasBeenTakenDetails.required"),
         maxLength(200, "error.enforcementActionHasBeenTakenDetails.maxLength")
       )
-    )(EnforcementActionHasBeenTakenInformationDetails.apply)(EnforcementActionHasBeenTakenInformationDetails.unapply)
+    )(EnforcementActionHasBeenTakenInformationDetails.apply)(o => Some(o.enforcementActionHasBeenTakenDetails))
   )
 }

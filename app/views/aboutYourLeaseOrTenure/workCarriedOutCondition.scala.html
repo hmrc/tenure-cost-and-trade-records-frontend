@@ -27,7 +27,7 @@
 )
 
 
-@(theForm: Form[WorkCarriedOutCondition], backlink: String, summary: Summary)(implicit request: Request[_], messages: Messages)
+@(theForm: Form[WorkCarriedOutCondition], backlink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("workCarriedOutCondition.heading"),

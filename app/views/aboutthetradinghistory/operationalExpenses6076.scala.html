@@ -36,7 +36,7 @@
         dateUtil: DateUtilLocalised
 )
 
-@(form: Form[(Seq[OperationalExpenses], String)], backLink: String)(implicit request: SessionRequest[_], messages: Messages)
+@(form: Form[(Seq[OperationalExpenses], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @rowLabel(labelKey: String, hintKey: String = "") = {

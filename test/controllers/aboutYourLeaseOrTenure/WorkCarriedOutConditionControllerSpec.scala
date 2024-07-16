@@ -81,7 +81,7 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
   "WorkCarriedOutConditionController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = workCarriedOutConditionController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -99,9 +99,9 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val workCarriedOutCondition: String
-    } = new {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
       val workCarriedOutCondition: String = "workCarriedOutCondition"
     }
 

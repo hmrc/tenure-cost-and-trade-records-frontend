@@ -86,7 +86,7 @@ class OperationalExpensesControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = operationalExpensesController.submit(
-        fakePostRequest.withFormUrlEncodedBody(operationalExpensesFormData: _*)
+        fakePostRequest.withFormUrlEncodedBody(operationalExpensesFormData*)
       )
 
       status(res)           shouldBe Status.SEE_OTHER
@@ -94,7 +94,7 @@ class OperationalExpensesControllerSpec extends TestBaseSpec {
     }
 
     "return 400 for empty turnoverSections" in {
-      val res = operationalExpensesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty: _*))
+      val res = operationalExpensesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

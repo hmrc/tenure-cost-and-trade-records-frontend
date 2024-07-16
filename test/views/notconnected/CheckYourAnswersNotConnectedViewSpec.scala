@@ -49,9 +49,9 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
     "has a link marked with back.link.label leading to the further information Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe controllers.notconnected.routes.RemoveConnectionController.show().url
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.notconnected.routes.RemoveConnectionController.show().url
     }
 
     "contain are you still connected field" in {

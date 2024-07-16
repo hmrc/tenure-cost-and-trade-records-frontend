@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.TradeServicesListForm
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
-import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -44,9 +43,9 @@ class TradeServicesListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
     "has a link marked with back.link.label leading to the list of Describe the trade service provided by the landlord Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText mustBe messages("back.link.label")
-      val backlinkUrl  = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl mustBe backLink
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe backLink
     }
 
     "Section heading is visible" in {

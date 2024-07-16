@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import play.api.{Configuration, Environment}
 
 class Module extends play.api.inject.Module {
 
-  override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[_]] = {
+  override def bindings(environment: Environment, configuration: Configuration): Seq[Binding[?]] = {
 
     val isCreateInternalAuthTokenOnStart = configuration.get[Boolean]("create-internal-auth-token-on-start")
 
@@ -35,6 +35,6 @@ class Module extends play.api.inject.Module {
     val appConfigBinding = bind[AppConfig].toSelf.eagerly()
 
     Seq(authTokenInitialiserBinding, appConfigBinding)
-    //Seq(appConfigBinding)
+    // Seq(appConfigBinding)
   }
 }

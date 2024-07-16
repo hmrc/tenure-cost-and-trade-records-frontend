@@ -29,7 +29,7 @@ object TotalPayrollCostForm {
     "financial-year-end"     -> ignored(LocalDate.EPOCH),
     "managers-and-staff"     -> turnoverSalesMappingWithYear("managers-and-staff", year),
     "directors-remuneration" -> turnoverSalesMappingWithYear("directors-remuneration", year)
-  )(TotalPayrollCost.apply)(TotalPayrollCost.unapply)
+  )(TotalPayrollCost.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def totalPayrollCostForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalPayrollCost]] =
     Form {

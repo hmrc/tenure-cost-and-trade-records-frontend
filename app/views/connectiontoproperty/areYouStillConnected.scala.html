@@ -29,7 +29,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[_], summary: Summary,maybeFromTL: String="")(implicit request: Request[_], messages: Messages)
+@(theForm: Form[?], summary: Summary,maybeFromTL: String="")(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("areYouConnected.heading"),

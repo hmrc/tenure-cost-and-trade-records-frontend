@@ -51,7 +51,7 @@ class ChainedConditions extends AnyFlatSpec with should.Matchers {
         isEqual("name", "Francoise") and isEqual("age", "21"),
         nonEmptyText
       )
-    )(Model.apply)(Model.unapply)
+    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
   case class Model(name: String, age: Int, favouriteColour: Option[String])

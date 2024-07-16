@@ -95,7 +95,7 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = propertyCurrentlyUsedController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty: _*)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -111,9 +111,9 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: Object {
-      val propertyCurrentlyUsed: String
-    } = new {
+    val errorKey = new ErrorKey
+
+    class ErrorKey {
       val propertyCurrentlyUsed: String = "propertyCurrentlyUsed"
     }
 

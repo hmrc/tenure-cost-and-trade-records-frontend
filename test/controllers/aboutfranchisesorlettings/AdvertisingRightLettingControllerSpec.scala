@@ -74,7 +74,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.county"             -> "Countyshire",
       "correspondenceAddress.postcode"           -> "DD11 DD"
     )
-    val request       = FakeRequest(POST, "/advertising-right-letting").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/advertising-right-letting").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = advertisingRightLettingController()
 
     val result = controller.submit(Some(2))(request)
@@ -92,7 +92,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec {
       "correspondenceAddress.county"             -> "Countyshire",
       "correspondenceAddress.postcode"           -> "DD11 DD"
     )
-    val request       = FakeRequest(POST, "/advertising-right-letting").withFormUrlEncodedBody(validFormData.toSeq: _*)
+    val request       = FakeRequest(POST, "/advertising-right-letting").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = advertisingRightLettingController()
 
     val result = controller.submit(Some(4))(request)
