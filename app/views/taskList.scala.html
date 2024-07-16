@@ -136,12 +136,15 @@
      session.stillConnectedDetails.flatMap(_.addressConnectionType)
     )
 
-    @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
-     controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
-     section1Completed,
-     session.stillConnectedDetails.flatMap(_.vacantProperties),
-     session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty
-    )
+    @if(forType != ForTypes.for6076) {
+
+     @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
+      controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
+      section1Completed,
+      session.stillConnectedDetails.flatMap(_.vacantProperties),
+      session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty
+     )
+    }
 
     @includes.taskListItem("name-of-operator-from-property", "checkYourAnswersConnectionToProperty.occupierDetails.heading",
      controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
