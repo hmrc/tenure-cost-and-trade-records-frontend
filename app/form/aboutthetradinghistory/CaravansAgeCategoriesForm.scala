@@ -17,29 +17,36 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport.nonNegativeNumber
+import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.{CaravanHireType, FleetHire, PrivateSublet}
+import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.CaravanUnitType
 import models.submissions.aboutthetradinghistory.{CaravansAge, CaravansPerAgeCategory}
+import play.api.data.Form
 import play.api.data.Forms.mapping
-import play.api.data.{Form, Mapping}
 
 /**
   * @author Yuriy Tumakha
   */
 object CaravansAgeCategoriesForm {
 
-  val caravansAgeCategoriesForm: Form[CaravansAge] =
+  def caravansAgeCategoriesForm(caravanUnitType: CaravanUnitType): Form[CaravansAge] =
     Form {
       mapping(
-        "fleetHire"     -> caravansPerAgeCategoryMapping("fleetHire"),
-        "privateSublet" -> caravansPerAgeCategoryMapping("privateSublet")
+        caravansPerAgeCategoryMapping(caravanUnitType, FleetHire),
+        caravansPerAgeCategoryMapping(caravanUnitType, PrivateSublet)
       )(CaravansAge.apply)(CaravansAge.unapply)
     }
 
-  private def caravansPerAgeCategoryMapping(hireType: String): Mapping[CaravansPerAgeCategory] =
-    mapping(
-      "years0_5"    -> nonNegativeNumber(s"$hireType.years0_5"),
-      "years6_10"   -> nonNegativeNumber(s"$hireType.years6_10"),
-      "years11_15"  -> nonNegativeNumber(s"$hireType.years11_15"),
-      "years15plus" -> nonNegativeNumber(s"$hireType.years15plus")
+  private def caravansPerAgeCategoryMapping(unitType: CaravanUnitType, hireType: CaravanHireType) = {
+
+    def caravansAmountMapping(ageCategory: String) =
+      ageCategory -> nonNegativeNumber(s"caravans.$unitType.$hireType.$ageCategory")
+
+    hireType.toString -> mapping(
+      caravansAmountMapping("years0_5"),
+      caravansAmountMapping("years6_10"),
+      caravansAmountMapping("years11_15"),
+      caravansAmountMapping("years15plus")
     )(CaravansPerAgeCategory.apply)(CaravansPerAgeCategory.unapply)
+  }
 
 }

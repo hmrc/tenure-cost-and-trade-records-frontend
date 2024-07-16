@@ -35,12 +35,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   def cyaPageForTentingPitches: Call = aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
 
-  def cyaPageForOtherHolidayAccommodation =
+  def cyaPageForOtherHolidayAccommodation: Call =
     aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
+
   def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
-  ): Session => Call                      =
+  ): Session => Call =
     if (from == "CYA") { _ =>
       cyaPageForTentingPitches
     } else {
@@ -246,8 +247,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     StaticCaravansId                            -> staticCaravansRouting,
     CaravansOpenAllYearId                       -> (_ => aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()),
     GrossReceiptsCaravanFleetHireId             -> (_ =>
-      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+      aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController
         .show() // TODO: Single caravans owned by the operator
+    ),
+    SingleCaravansAgeCategoriesId               -> (_ =>
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+        .show() // TODO: Twin-unit caravans owned by the operator and used for fleet hire
     ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
     OtherHolidayAccommodationDetailsId          -> (_ =>
