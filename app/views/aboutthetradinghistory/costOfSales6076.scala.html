@@ -112,9 +112,7 @@
   theForm = form
  ) {
 
-  <p class="govuk-body govuk-!-width-three-quarters">@messages("costOfSales6076.p")</p>
-
-  @govukInsetText(InsetText(content = Text(messages("costOfSales6076.inset")), classes = "govuk-!-width-three-quarters" ))
+  <p class="govuk-body govuk-!-width-three-quarters">@messages("costOfSales6076.inset")</p>
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.submit()) {
    <table class="hmrc-responsive-table">

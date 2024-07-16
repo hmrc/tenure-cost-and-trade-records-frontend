@@ -174,8 +174,6 @@ POST        /batteries-capacity                                     controllers.
 GET         /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.show()
 POST        /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.submit()
 
-
-
 # About the trading history
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
 POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
