@@ -41,19 +41,18 @@
     backLinkUrl = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url,
     theForm = theForm
 ) {
-  <div class="govuk-!-font-weight-regular"></div>
+
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CostsBreakdownController.submit()) {
+
         @govukCharacterCount(
             CharacterCount(
                 id = "costsBreakdown",
                 name = "costsBreakdown",
-                rows = 4,
                 maxLength = 2000,
                 label = Label(content = Text(messages("costsBreakdown.hint")),
                 classes = "govuk-!-font-weight-regular"
                 ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("costsBreakdown"),
-                classes = "govuk-!-width-two-thirds"
+                errorMessage = theForm.errors.asTextErrorMessageForField("costsBreakdown")
             ).withFormField(theForm("costsBreakdown"))
         )
 
