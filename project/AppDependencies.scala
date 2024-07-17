@@ -33,6 +33,7 @@ object AppDependencies {
     "org.scalatestplus"      %% "scalacheck-1-18"         % scalaTestPlusScalaCheckVersion % Test,
     "org.scalatestplus"      %% "mockito-5-12"            % scalaTestPlusMockitoVersion    % Test,
     "com.vladsch.flexmark"    % "flexmark-all"            % flexMarkVersion                % Test, // for scalatest 3.2.x
+    // TODO: Upgrade wiremock when jackson-databind become compatible with Play and bootstrap-test-play-30
     // "org.wiremock"            % "wiremock"                % wiremockVersion                % Test,
     "org.jsoup"               % "jsoup"                   % jsoupVersion                   % Test
   )
