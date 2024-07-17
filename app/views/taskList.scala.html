@@ -52,7 +52,7 @@
    4
   }
  }
- 
+
 @section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.checkYourAnswersConnectionToProperty)) }
 @section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)) }
 @section3Completed       = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory.map(_.checkYourAnswersAboutTheTradingHistory)) }
@@ -595,7 +595,7 @@
      section6Completed,
      session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
      if(isLeaseHolder) section5Completed.isEmpty
-     else section4Completed.isEmpty
+     else section3Completed.isEmpty
     )
     </ul>
    </li>
