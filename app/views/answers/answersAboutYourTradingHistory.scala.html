@@ -74,7 +74,7 @@
 }
 
 @optionalParagraph(textOpt: Option[String]) = {
-@textOpt.filter(_.trim.nonEmpty).map { text =>
+@textOpt.filterNot(_.trim.isEmpty).map { text =>
     <p class="govuk-body">@text</p>
 }
 }
