@@ -16,17 +16,17 @@
 
 package utils
 
-import models.submissions.Form6010._
-import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings._
-import models.submissions.aboutthetradinghistory._
-import models.submissions.aboutyouandtheproperty._
-import models.submissions.additionalinformation._
-import models.submissions.common._
-import models.submissions.connectiontoproperty._
+import models.submissions.Form6010.*
+import models.submissions.aboutYourLeaseOrTenure.*
+import models.submissions.aboutfranchisesorlettings.*
+import models.submissions.aboutthetradinghistory.*
+import models.submissions.aboutyouandtheproperty.*
+import models.submissions.additionalinformation.*
+import models.submissions.common.*
+import models.submissions.connectiontoproperty.*
 import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, DownloadPDFReferenceNumber}
 import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
-import models.submissions.requestReferenceNumber._
+import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
 import models.{AnnualRent, ForTypes, Session, SubmissionDraft}
 
@@ -575,7 +575,11 @@ trait FakeObjects {
     turnoverSections6045 = Seq(
       TurnoverSection6045(
         today,
-        grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire()
+        grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire(),
+        singleCaravansOwnedByOperator = CaravansTrading6045(52, 3000, 30),
+        singleCaravansSublet = CaravansTrading6045(52, 1000, 10),
+        twinUnitCaravansOwnedByOperator = CaravansTrading6045(26, 2000, 20),
+        twinUnitCaravansSublet = CaravansTrading6045()
       ),
       TurnoverSection6045(
         today.minusYears(1),

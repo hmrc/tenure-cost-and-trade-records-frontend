@@ -29,6 +29,10 @@ case class TurnoverSection6045(
   financialYearEnd: LocalDate,
   // 3. Caravans
   grossReceiptsCaravanFleetHire: Option[GrossReceiptsCaravanFleetHire] = None,
+  singleCaravansOwnedByOperator: Option[CaravansTrading6045] = None,
+  singleCaravansSublet: Option[CaravansTrading6045] = None, // sub-let by operator on behalf of private owners
+  twinUnitCaravansOwnedByOperator: Option[CaravansTrading6045] = None,
+  twinUnitCaravansSublet: Option[CaravansTrading6045] = None, // sub-let by operator on behalf of private owners
   // 3.1.0 Other holiday accommodation
   grossReceiptsLettingUnits: Option[GrossReceiptsLettingUnits] = None,
   // 3.2.0 Touring and tenting pitches
