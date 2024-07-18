@@ -16,7 +16,6 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
@@ -33,7 +32,6 @@
         hmrcCharacterCount: HmrcCharacterCount,
         dateUtil: DateUtilLocalised
 )
-
 
 @(form: Form[(Seq[Option[BigDecimal]], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 

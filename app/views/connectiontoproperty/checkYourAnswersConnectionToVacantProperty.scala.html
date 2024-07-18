@@ -22,16 +22,12 @@
 @this(
         layout: Layout,
         govukButton: GovukButton,
-        govukSummaryList: GovukSummaryList,
-        govukRadios: GovukRadios,
         govukWarningText: GovukWarningText,
         vacantPropertyAnswers: vacantPropertyAnswersTable,
         formWithCSRF: FormWithCSRF
 )
 
-
 @(backLink: String)(implicit request: SessionRequest[?], messages: Messages)
-
 
     @layout(
         pageHeading = messages("checkYourAnswersConnectionToVacantProperty.heading"),

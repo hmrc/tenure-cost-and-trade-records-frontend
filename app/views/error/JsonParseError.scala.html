@@ -14,15 +14,9 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukButton, GovukPanel, GovukWarningText}
 @import actions.SessionRequest
 
-@this(
-        layout: Layout,
-        govukButton: GovukButton,
-        govukPanel: GovukPanel,
-        govukWarningText: GovukWarningText
-)
+@this(layout: Layout)
 
 @(backLinkUrl: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 

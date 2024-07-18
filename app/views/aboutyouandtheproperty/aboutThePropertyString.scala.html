@@ -16,20 +16,14 @@
 
 @import models.submissions.aboutyouandtheproperty.PropertyDetailsString
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukRadios: GovukRadios,
         govukInput: GovukInput,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[PropertyDetailsString], forType: String, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 

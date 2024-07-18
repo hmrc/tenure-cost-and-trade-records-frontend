@@ -15,13 +15,9 @@
  *@
 
 @import models.submissions.notconnected.RemoveConnectionsDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukTextarea
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
@@ -30,7 +26,6 @@
 @this(layout: Layout,
   govukButton: GovukButton,
   govukInput: GovukInput,
-  govukTextarea: GovukTextarea,
   govukCharacterCount: GovukCharacterCount,
   formWithCSRF: FormWithCSRF
 )
