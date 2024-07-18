@@ -286,6 +286,16 @@ object MappingSupport {
       )
       .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
+  def nonNegativeNumberWithYear(field: String, year: String)(implicit
+    messages: Messages
+  ): Mapping[Option[Int]] =
+    optional(
+      text
+        .verifying(messages(s"error.$field.nonNumeric", year), numberRegex.matches)
+        .transform[Int](_.toInt, _.toString)
+        .verifying(messages(s"error.$field.negative", year), _ >= 0)
+    ).verifying(messages(s"error.$field.required", year), _.isDefined)
+
   def numberOfPitches(year: String)(implicit messages: Messages) = {
     val numberOfPitchesMax = 1000000000
     default(text, "")

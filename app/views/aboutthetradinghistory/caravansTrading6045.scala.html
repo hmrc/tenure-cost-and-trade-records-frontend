@@ -15,7 +15,9 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.aboutthetradinghistory.TurnoverSection6020
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
+@import models.submissions.aboutthetradinghistory.CaravansTrading6045
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
@@ -28,15 +30,16 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
         dateUtil: DateUtilLocalised
 )
 
-@(form: Form[Seq[TurnoverSection6020]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@(form: Form[Seq[CaravansTrading6045]], messageKeyPrefix: String, showHelpText: Option[CaravanUnitType], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
-        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span> @messages("turnover.6020.excludingVAT")
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
     @hintKey.map { msgKey =>
         <span class="govuk-caption-m">@messages(msgKey)</span>
@@ -55,6 +58,7 @@
                         prefix = Some(PrefixOrSuffix(
                             content = Text("£")
                         )),
+                        classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> messages(labelKey)
@@ -66,8 +70,47 @@
     )
 }
 
+@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    classes = s"govuk-input--width-$styleWidth",
+                    attributes = Map(
+                        "maxlength" -> maxLength.toString,
+                        "aria-label" -> messages(labelKey)
+                    ),
+                    suffix = Some(PrefixOrSuffix(
+                        content = Text(messages(suffixKey))
+                    ))
+                ).withFormField(form(formField)))
+            )
+        )
+    )
+}
+
+@paragraph(messageKey: String) = {
+    <p class="govuk-body">@messages(messageKey)</p>
+}
+
+@twoParagraphs(messageKeyP1: String, messageKeyP2: String) = @{
+    paragraph(messageKeyP1)
+    paragraph(messageKeyP2)
+}
+
+@helpContent = @{
+    showHelpText.map {
+        case Single => paragraph(s"$messageKeyPrefix.help.p1")
+        case Twin => twoParagraphs(s"$messageKeyPrefix.help.p1", s"$messageKeyPrefix.help.p2")
+    }
+}
+
+
 @layout(
-    pageHeading = messages("turnover.6020.heading"),
+    pageHeading = messages(s"$messageKeyPrefix.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -76,16 +119,24 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6020.p1")</p>
+    @paragraph(s"$messageKeyPrefix.p1")
+
     @govukInsetText(InsetText(
-        content = Text(messages("turnover.6020.inset"))
+        content = Text(messages(s"$messageKeyPrefix.inset"))
     ))
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.submit()) {
+    @helpContent.map { help =>
+        @govukDetails(Details(
+            summary = Text(messages(s"$messageKeyPrefix.help.link")),
+            content = HtmlContent(help)
+        ))
+    }
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.submit()) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
-                @request.sessionData.financialYearEndDates6020.map { case (finYearEnd, idx) =>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
                 <td>
                     @govukTable(Table(
                         head = Seq(
@@ -94,12 +145,9 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].shop", "turnover.6020.shop", "turnover.6020.shop.hint"),
-                            turnoverRow(s"turnover[$idx].carWash", "turnover.6020.carWash"),
-                            turnoverRow(s"turnover[$idx].jetWash", "turnover.6020.jetWash"),
-                            turnoverRow(s"turnover[$idx].lottery", "turnover.6020.lottery", "turnover.6020.lottery.hint"),
-                            turnoverRow(s"turnover[$idx].payPointOrZone", "turnover.6020.payPointOrZone"),
-                            turnoverRow(s"turnover[$idx].otherIncome", "turnover.6020.otherIncome")
+                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2),
+                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravans.grossReceipts", "turnover.6045.caravans.grossReceipts.hint"),
+                            numericRow(s"turnover[$idx].vans", "turnover.6045.caravans.vans", "turnover.6045.vans.suffix", 4, 6)
                         )
                     ))
                 </td>

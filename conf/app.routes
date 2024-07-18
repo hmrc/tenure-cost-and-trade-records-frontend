@@ -224,6 +224,9 @@ POST        /are-caravans-open-all-year                             controllers.
 GET         /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.show()
 POST        /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.submit()
 
+GET         /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.show()
+POST        /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.submit()
+
 GET         /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.show()
 POST        /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.submit()
 
