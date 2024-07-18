@@ -18,7 +18,6 @@
 @import controllers.aboutYourLeaseOrTenure
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import util.DateUtil._
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswerYes
@@ -30,7 +29,6 @@
         navigator: AboutYourLeaseOrTenureNavigator,
         dateUtil: DateUtilLocalised
 )
-
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 

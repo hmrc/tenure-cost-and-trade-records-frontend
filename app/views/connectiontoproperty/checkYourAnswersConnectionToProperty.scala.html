@@ -22,12 +22,10 @@
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukSummaryList: GovukSummaryList,
         govukRadios: GovukRadios,
         answersSectionConnectionToTheProperty: answersConnectionToTheProperty,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[CheckYourAnswersConnectionToProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
