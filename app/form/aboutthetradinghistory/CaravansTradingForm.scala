@@ -44,8 +44,8 @@ object CaravansTradingForm {
   ): Mapping[CaravansTrading6045] =
     mapping(
       "weeks"         -> tradingPeriodWeeks(year),
-      "grossReceipts" -> turnoverSalesMappingWithYear(s"turnover.6045.$combinedKey", year),
-      "vans"          -> nonNegativeNumberWithYear(combinedKey, year)
+      "grossReceipts" -> turnoverSalesMappingWithYear(s"turnover.6045.$combinedKey.grossReceipts", year),
+      "vans"          -> nonNegativeNumberWithYear(s"$combinedKey.vans", year)
     )(CaravansTrading6045.apply)(o => Some(Tuple.fromProductTyped(o)))
 
 }
