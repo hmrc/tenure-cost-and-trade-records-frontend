@@ -15,28 +15,20 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.answers.vacantPropertyAnswersTable
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases._
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import form.Feedback
 
 @this(
         layout: Layout,
-        vacantPropertyAnswers: vacantPropertyAnswersTable,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukCharacterCount: GovukCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
-
 @(theForm: Form[Feedback])(implicit request: SessionRequest[?], messages: Messages)
-
 
 @layout(
     pageHeading = messages("label.connectionToProperty.confirm.heading"),

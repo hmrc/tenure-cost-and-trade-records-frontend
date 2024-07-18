@@ -18,18 +18,14 @@
 @import controllers.connectiontoproperty
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
-@import models.submissions.connectiontoproperty.VacantPropertiesDetailsYes
-@import models.submissions.common.AnswerYes
 
 @this(govukSummaryList: GovukSummaryList)
-
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
 @forType = @{
     request.sessionData.forType
 }
-
 
     @sectionAnswers = @{
         SectionAnswersRowBuilder(request.sessionData.stillConnectedDetails)

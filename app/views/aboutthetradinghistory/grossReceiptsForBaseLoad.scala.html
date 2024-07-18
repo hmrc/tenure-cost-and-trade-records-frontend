@@ -15,26 +15,18 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.GrossReceiptsForBaseLoad
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        govukInsetText: GovukInsetText,
-        govukDetails: GovukDetails,
-        hmrcCharacterCount: HmrcCharacterCount,
         dateUtil: DateUtilLocalised
 )
-
 
 @(form: Form[Seq[GrossReceiptsForBaseLoad]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 

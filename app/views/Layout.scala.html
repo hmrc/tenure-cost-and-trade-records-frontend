@@ -22,12 +22,11 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.tag.Tag
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
 @import play.api.Configuration
-@import views.html.govuk.{head, scripts}
+@import views.html.govuk.head
 @import views.html.govuk.FullWidthMainContent
 @import models.pages.Summary
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcFooter
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.footer.{Footer, FooterItem, Meta}
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.language.{Cy, En}
 
 @this(
         appConfig: AppConfig,
@@ -36,7 +35,6 @@
         hmrcFooter: HmrcFooter,
         hmrcStandardHeader: HmrcStandardHeader,
         headTemplate: head,
-        scriptsTemplate: scripts,
         hmrcScripts: HmrcScripts,
         govukPhaseBanner: GovukPhaseBanner,
         hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,

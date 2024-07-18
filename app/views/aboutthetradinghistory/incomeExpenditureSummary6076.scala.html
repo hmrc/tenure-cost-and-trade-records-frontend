@@ -22,10 +22,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import util.DateUtilLocalised
 @import java.time.LocalDate
-@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
 @import util.NumberUtil.bigDecimalHelpers
-
 
 @this(
         layout: Layout,
@@ -35,7 +33,6 @@
         formWithCSRF: FormWithCSRF,
         dateUtil: DateUtilLocalised
 )
-
 
 @(form: Form[String], summary: Summary, entries: Seq[IncomeExpenditure6076Entry])(implicit request: Request[?], messages: Messages)
 

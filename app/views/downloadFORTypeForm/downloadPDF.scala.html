@@ -14,16 +14,9 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
-@this(layout: Layout,
-        govukButton: GovukButton,
-        govukInput: GovukInput,
-        formWithCSRF: FormWithCSRF
-)
+@this(layout: Layout)
 
 
 @(forType: String, referenceNumber: String)(implicit request: Request[?], messages: Messages)

@@ -17,10 +17,9 @@
 @import controllers.routes
 @import form.Feedback
 
-@import play.api.data._
 @import play.api.i18n.Messages
 @import play.api.mvc.Request
-@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, Text}
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Text}
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
@@ -33,10 +32,7 @@
 
 @this(
         layout: Layout,
-        govukInput: GovukInput,
-        govukWarningText: GovukWarningText,
         govukRadios: GovukRadios,
-        govukErrorSummary:GovukErrorSummary,
         govukButton:GovukButton,
         hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF

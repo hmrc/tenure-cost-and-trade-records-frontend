@@ -14,17 +14,7 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukButton, GovukPanel, GovukWarningText}
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
-
-
-@this(
-        layout: Layout,
-        govukButton: GovukButton,
-        govukPanel: GovukPanel,
-        govukWarningText: GovukWarningText
-)
+@this(layout: Layout)
 
 @(password: String, expiryDate: String, exitPath: String)(implicit request: Request[?], messages: Messages)
 

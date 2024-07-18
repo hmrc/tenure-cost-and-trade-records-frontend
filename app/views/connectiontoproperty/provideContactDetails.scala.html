@@ -15,11 +15,7 @@
  *@
 
 @import models.submissions.connectiontoproperty.ProvideContactDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -28,7 +24,6 @@
   govukCharacterCount: GovukCharacterCount,
   formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[ProvideContactDetails],backLink:String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
