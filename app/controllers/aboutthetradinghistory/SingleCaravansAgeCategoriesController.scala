@@ -92,7 +92,7 @@ class SingleCaravansAgeCategoriesController @Inject() (
     navigator.cyaPage
       .filter(_ => navigator.from == "CYA")
       .getOrElse( // TODO: Single caravans sub-let by operator to holidaymakers on behalf of private owners as fleet hire
-        routes.GrossReceiptsCaravanFleetHireController.show()
+        routes.SingleCaravansOwnedByOperatorController.show()
       )
       .url
 
