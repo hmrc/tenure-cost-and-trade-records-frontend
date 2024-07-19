@@ -17,7 +17,6 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions += "-Wconf:src=routes/.*:s",
     scalacOptions += "-Wconf:cat=unused-imports&src=html/.*:s"
   )
-  .settings(CodeCoverageSettings.settings)
   .settings(
     SassKeys.cssStyle := Minified,
     SassKeys.generateSourceMaps := false,
