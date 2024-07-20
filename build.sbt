@@ -30,4 +30,4 @@ lazy val it =
     .dependsOn(microservice % "test->test")
     .settings(itSettings())
 
-addCommandAlias("precommit", ";scalafmtSbt;scalafmtAll;it/Test/scalafmt;coverage;test;it/test;coverageReport")
+addCommandAlias("precommit", "scalafmtSbt;scalafmtAll;it/Test/scalafmt;coverage;test;it/test;coverageReport")
