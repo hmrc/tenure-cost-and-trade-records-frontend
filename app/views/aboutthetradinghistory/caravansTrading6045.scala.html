@@ -15,26 +15,27 @@
  *@
 
 @import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
+@import models.submissions.aboutthetradinghistory.CaravansTrading6045
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 
+
 @this(
         layout: Layout,
-        formWithCSRF: FormWithCSRF,
         govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        hmrcCharacterCount: HmrcCharacterCount,
+        govukDetails: GovukDetails,
         dateUtil: DateUtilLocalised
 )
 
-@(form: Form[(Seq[Option[BigDecimal]], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@(form: Form[Seq[CaravansTrading6045]], messageKeyPrefix: String, showHelpText: Option[CaravanUnitType], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
@@ -45,7 +46,7 @@
     }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String) = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -57,6 +58,7 @@
                         prefix = Some(PrefixOrSuffix(
                             content = Text("£")
                         )),
+                        classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> messages(labelKey)
@@ -68,8 +70,47 @@
     )
 }
 
+@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    classes = s"govuk-input--width-$styleWidth",
+                    attributes = Map(
+                        "maxlength" -> maxLength.toString,
+                        "aria-label" -> messages(labelKey)
+                    ),
+                    suffix = Some(PrefixOrSuffix(
+                        content = Text(messages(suffixKey))
+                    ))
+                ).withFormField(form(formField)))
+            )
+        )
+    )
+}
+
+@paragraph(messageKey: String) = {
+    <p class="govuk-body">@messages(messageKey)</p>
+}
+
+@twoParagraphs(messageKeyP1: String, messageKeyP2: String) = @{
+    paragraph(messageKeyP1)
+    paragraph(messageKeyP2)
+}
+
+@helpContent = @{
+    showHelpText.map {
+        case Single => paragraph(s"$messageKeyPrefix.help.p1")
+        case Twin => twoParagraphs(s"$messageKeyPrefix.help.p1", s"$messageKeyPrefix.help.p2")
+    }
+}
+
+
 @layout(
-    pageHeading = messages("turnover.6076.otherIncome.heading"),
+    pageHeading = messages(s"$messageKeyPrefix.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -78,16 +119,24 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.otherIncome.p1")</p>
+    @paragraph(s"$messageKeyPrefix.p1")
+
     @govukInsetText(InsetText(
-        content = Text(messages("turnover.6076.otherIncome.inset"))
+        content = Text(messages(s"$messageKeyPrefix.inset"))
     ))
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherIncomeController.submit()) {
+    @helpContent.map { help =>
+        @govukDetails(Details(
+            summary = Text(messages(s"$messageKeyPrefix.help.link")),
+            content = HtmlContent(help)
+        ))
+    }
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.submit()) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
-                @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
                 <td>
                     @govukTable(Table(
                         head = Seq(
@@ -96,7 +145,9 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"otherIncomeSeq.turnover[$idx].otherIncome", "turnover.6076.otherIncome", "turnover.6076.otherIncome.hint")
+                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2),
+                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravans.grossReceipts", "turnover.6045.caravans.grossReceipts.hint"),
+                            numericRow(s"turnover[$idx].vans", "turnover.6045.caravans.vans", "turnover.6045.vans.suffix", 4, 6)
                         )
                     ))
                 </td>
@@ -104,18 +155,6 @@
                 </tr>
             </tbody>
         </table>
-
-        @hmrcCharacterCount(
-            CharacterCount(
-                rows = 3,
-                maxLength = 2000,
-                classes = "govuk-!-width-two-thirds",
-                label = Label(
-                    content = Text(messages("turnover.6076.otherIncomeDetails")),
-                    classes = "govuk-!-font-weight-bold"
-                )
-            ).withFormField(form("otherIncomeDetails"))
-        )
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

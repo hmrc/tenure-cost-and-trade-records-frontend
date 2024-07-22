@@ -24,9 +24,9 @@ import utils.TestBaseSpec
 class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
   // TODO: Single caravans sub-let by operator to holidaymakers on behalf of private owners as fleet hire
-  private val previousPage = aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
+  private val previousPage = aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show().url
 
-  def staticCaravansController =
+  def singleCaravansAgeCategoriesController =
     new SingleCaravansAgeCategoriesController(
       caravansAgeCategoriesView,
       aboutYourTradingHistoryNavigator,
@@ -40,12 +40,12 @@ class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = staticCaravansController.show(fakeRequest)
+      val result = singleCaravansAgeCategoriesController.show(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = staticCaravansController.show(fakeRequest)
+      val result = singleCaravansAgeCategoriesController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -56,7 +56,7 @@ class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = staticCaravansController.show(fakeRequestFromCYA)
+      val result  = singleCaravansAgeCategoriesController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
@@ -65,7 +65,7 @@ class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "return 400 for empty form data" in {
-      val res = staticCaravansController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = singleCaravansAgeCategoriesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

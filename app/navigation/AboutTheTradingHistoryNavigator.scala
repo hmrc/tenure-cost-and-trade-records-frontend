@@ -246,8 +246,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     StaticCaravansId                            -> staticCaravansRouting,
     CaravansOpenAllYearId                       -> (_ => aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()),
     GrossReceiptsCaravanFleetHireId             -> (_ =>
+      aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show()
+    ),
+    SingleCaravansOwnedByOperatorId             -> (_ =>
       aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController
-        .show() // TODO: Single caravans owned by the operator
+        .show() // TODO: Single caravans sub-let by the operator
     ),
     SingleCaravansAgeCategoriesId               -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController

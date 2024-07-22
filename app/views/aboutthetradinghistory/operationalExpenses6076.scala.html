@@ -38,7 +38,7 @@
 @(form: Form[(Seq[OperationalExpenses], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@rowLabel(labelKey: String, hintKey: String = "") = {
+@rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
@@ -50,7 +50,7 @@
 @turnoverRow(formField: String, labelKey: String, hintKey: String = "", rowStyle: String = "") = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, hintKey)),
+            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty))),
             classes = rowStyle
         ),
         TableRow(

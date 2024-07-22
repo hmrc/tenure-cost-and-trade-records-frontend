@@ -33,19 +33,19 @@
 @(form: Form[Seq[(Int, String)]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@rowLabel(labelKey: String, hintKey: String) = {
+@rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
-    @if(hintKey.nonEmpty) {
-        <span class="govuk-caption-m">@messages(hintKey)</span>
+    @hintKey.map { msgKey =>
+        <span class="govuk-caption-m">@messages(msgKey)</span>
     }
 }
 
 @turnoverRow(formField: String, labelKey: String, hintKey: String) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, hintKey))
+            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
