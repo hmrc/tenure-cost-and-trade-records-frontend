@@ -19,20 +19,21 @@ package controllers.aboutthetradinghistory
 import controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
+class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show().url
+  private val previousPage = aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show().url
 
-  private val nextPage = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
+  private val nextPage = // TODO:
+    controllers.routes.TaskListController.show().url
 
-  def grossReceiptsLettingUnitsController =
-    new GrossReceiptsLettingUnitsController(
+  def grossReceiptsSubLetUnitsController =
+    new GrossReceiptsSubLetUnitsController(
       stubMessagesControllerComponents(),
       aboutYourTradingHistoryNavigator,
-      grossReceiptsLettingUnitsView,
+      grossReceiptsSubLetUnitsView,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
@@ -42,12 +43,12 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = grossReceiptsLettingUnitsController.show(fakeRequest)
+      val result = grossReceiptsSubLetUnitsController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = grossReceiptsLettingUnitsController.show(fakeRequest)
+      val result = grossReceiptsSubLetUnitsController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -58,7 +59,7 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = grossReceiptsLettingUnitsController.show(fakeRequestFromCYA)
+      val result  = grossReceiptsSubLetUnitsController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-other-holiday-accommodation")
       content should not include previousPage
@@ -84,7 +85,7 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
-      val res = grossReceiptsLettingUnitsController.submit(
+      val res = grossReceiptsSubLetUnitsController.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe Status.SEE_OTHER
@@ -92,7 +93,7 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid weeks" in {
-      val res = grossReceiptsLettingUnitsController.submit(
+      val res = grossReceiptsSubLetUnitsController.submit(
         fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
@@ -100,7 +101,7 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
     }
 
     "return 400 for empty turnoverSections" in {
-      val res = grossReceiptsLettingUnitsController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = grossReceiptsSubLetUnitsController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }
