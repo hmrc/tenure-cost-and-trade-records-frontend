@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ object TownMapping {
 
     text
       .verifying(Errors.addressTownCityRequired, town => town.nonEmpty)
-      .verifying(Errors.addressTownLength, town => if (town.nonEmpty) validTownLength(town) else true)
+      .verifying(Errors.addressTownLength, town => if town.nonEmpty then validTownLength(town) else true)
       .verifying(
         Errors.invalidCharAddressTownCity,
-        town => if (town.nonEmpty && validTownLength(town)) town.matches(invalidCharRegex) else true
+        town => if town.nonEmpty && validTownLength(town) then town.matches(invalidCharRegex) else true
       )
   }
 

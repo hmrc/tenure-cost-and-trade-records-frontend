@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ object BuildingNameNumberMapping {
 
     text
       .verifying(Errors.addressBuildingNameNumberRequired, bNN => bNN.nonEmpty)
-      .verifying(Errors.buildingMaxLength, bNN => if (bNN.nonEmpty) validBuildingNameNumberLength(bNN) else true)
+      .verifying(Errors.buildingMaxLength, bNN => if bNN.nonEmpty then validBuildingNameNumberLength(bNN) else true)
       .verifying(
         Errors.invalidCharAddress1,
-        bNN => if (bNN.nonEmpty && validBuildingNameNumberLength(bNN)) bNN.matches(invalidCharRegex) else true
+        bNN => if bNN.nonEmpty && validBuildingNameNumberLength(bNN) then bNN.matches(invalidCharRegex) else true
       )
   }
 

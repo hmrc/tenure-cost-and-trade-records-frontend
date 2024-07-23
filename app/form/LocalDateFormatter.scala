@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,15 +128,10 @@ class LocalDateFormatter(
       .flatMap { date =>
         val todayUKDate = nowInUK.toLocalDate
 
-        if (date.isBefore(nineteenHundred)) {
-          Left("error.date.before1900")
-        } else if (!allowPastDates && date.isBefore(todayUKDate)) {
-          Left("error.date.beforeToday")
-        } else if (!allowFutureDates && date.isAfter(todayUKDate)) {
-          Left("error.date.mustBeInPast")
-        } else {
-          Right(date)
-        }
+        if date.isBefore(nineteenHundred) then Left("error.date.before1900")
+        else if !allowPastDates && date.isBefore(todayUKDate) then Left("error.date.beforeToday")
+        else if !allowFutureDates && date.isAfter(todayUKDate) then Left("error.date.mustBeInPast")
+        else Right(date)
       }
 
 }

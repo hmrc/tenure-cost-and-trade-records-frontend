@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ object AboutYouPhoneNumberMapping {
 
     text
       .verifying(Errors.contactPhoneAboutYouRequired, pN => pN.nonEmpty)
-      .verifying(Errors.contactPhoneLength, pN => if (pN.nonEmpty) validPNLength(pN) else true)
+      .verifying(Errors.contactPhoneLength, pN => if pN.nonEmpty then validPNLength(pN) else true)
       .verifying(
         Errors.invalidPhone,
-        pN => if (pN.nonEmpty && validPNLength(pN)) pN.matches(phoneNumberRegex) else true
+        pN => if pN.nonEmpty && validPNLength(pN) then pN.matches(phoneNumberRegex) else true
       )
   }
 

@@ -32,10 +32,8 @@ object CurrentAnnualRentForm {
       "currentAnnualRent" -> currencyMapping()
         .verifying(
           Constraint[BigDecimal] { (rent: BigDecimal) =>
-            if (rent < includedPartsSum)
-              Invalid(
-                ValidationError("error.currentAnnualRent.lessThanIncludedPartsSum", includedPartsSum.asMoney)
-              )
+            if rent < includedPartsSum then
+              Invalid(ValidationError("error.currentAnnualRent.lessThanIncludedPartsSum", includedPartsSum.asMoney))
             else Valid
           }
         )

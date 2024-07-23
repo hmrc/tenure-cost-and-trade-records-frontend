@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ object WebsiteMapping {
       .verifying(Errors.webAddressBlank, wA => wA.nonEmpty)
       .verifying(
         Errors.webaddressFormat,
-        wA => if (wA.nonEmpty) wA.matches(validWebAddressRegex) else true
+        wA => if wA.nonEmpty then wA.matches(validWebAddressRegex) else true
       )
 
 }
