@@ -227,6 +227,9 @@ POST        /gross-receipts-fleet-caravans                          controllers.
 GET         /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.show()
 POST        /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.submit()
 
+GET         /single-caravans-sublet                                 controllers.aboutthetradinghistory.SingleCaravansSubletController.show()
+POST        /single-caravans-sublet                                 controllers.aboutthetradinghistory.SingleCaravansSubletController.submit()
+
 GET         /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.show()
 POST        /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.submit()
 

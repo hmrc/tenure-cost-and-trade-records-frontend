@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 class SingleCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
 
   private val previousPage = aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
-  private val nextPage     = aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.SingleCaravansSubletController.show().url
 
   def singleCaravansOwnedByOperatorController =
     new SingleCaravansOwnedByOperatorController(

@@ -35,7 +35,7 @@
 )
 
 
-@(form: Form[Seq[CaravansTrading6045]], messageKeyPrefix: String, showHelpText: Option[CaravanUnitType], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[CaravansTrading6045]], formAction: Call, messageKeyPrefix: String, showHelpText: Option[CaravanUnitType], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
@@ -132,7 +132,7 @@
         ))
     }
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.submit()) {
+    @formWithCSRF(action = formAction) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
