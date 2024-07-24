@@ -1746,6 +1746,16 @@ error.turnover.6045.lettingUnits.grossReceipts.negative =  Gross receipts in the
 error.numberOfUnits.required = Enter the number of letting units
 error.numberOfUnits.negative = Number of letting units cannot be a negative number
 error.numberOfUnits.nonNumeric = The number of letting units must be a number between 1 and 999
+turnover.6045.subLetUnits.grossReceipts.heading = Units sub-let by site operator to holidaymakers on behalf of private owners as fleet hire
+turnover.6045.subLetUnits.p1.beginning = Enter your gross receipts from any of these units which are
+turnover.6045.subLetUnits.p1.bold = sub-let be the site operator.
+turnover.6045.subLetUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+error.turnover.6045.subLetUnits.grossReceipts.required = Enter 0 if you did not have any gross receipts from sub-let units  the year ending {0}
+error.turnover.6045.subLetUnits.grossReceipts.ranged =  Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.subLetUnits.grossReceipts.negative =  Gross receipts in the year ending {0} cannot be a negative number
+error.subLetUnits.numberOfUnits.required = Enter the number of sub-let units
+error.subLetUnits.numberOfUnits.negative = Number of sub-let units cannot be a negative number
+error.subLetUnits.numberOfUnits.nonNumeric = The number of sub-let units must be a number between 1 and 999
 
 # TURNOVER 6076
 turnover.6076.heading = How much electricity did you generate?
