@@ -258,9 +258,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OtherHolidayAccommodationDetailsId          -> (_ =>
       aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show()
     ),
-    GrossReceiptsHolidayUnitsId                 -> (_ =>
+    GrossReceiptsHolidayUnitsId                 -> (_ => aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show()),
+    GrossReceiptsSubLetUnitsId                  -> (_ =>
       controllers.routes.TaskListController.show()
-    ), // TODO Letting units owned by site operator
+    ), // TODO: total site capacity page routing
     TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
     TentingPitchesAllYearId                     -> (_ => aboutthetradinghistory.routes.PitchesForCaravansController.show()),
     PitchesForCaravansId                        -> (_ =>

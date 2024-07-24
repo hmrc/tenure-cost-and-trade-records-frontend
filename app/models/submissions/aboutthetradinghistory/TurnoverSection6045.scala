@@ -35,6 +35,7 @@ case class TurnoverSection6045(
   twinUnitCaravansSublet: Option[CaravansTrading6045] = None, // sub-let by operator on behalf of private owners
   // 3.1.0 Other holiday accommodation
   grossReceiptsLettingUnits: Option[GrossReceiptsLettingUnits] = None,
+  grossReceiptsSubLetUnits: Option[GrossReceiptsSubLetUnits] = None,
   // 3.2.0 Touring and tenting pitches
   pitchesForCaravans: Option[PitchesForCaravans] = None
   // 3.3.0 Additional activities
