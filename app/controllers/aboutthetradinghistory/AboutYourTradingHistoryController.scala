@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.submissions.Form6010.MonthsYearDuration
@@ -30,6 +30,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import util.AccountingInformationUtil._
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
+import models.{ForTypes, Session}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -53,7 +54,8 @@ class AboutYourTradingHistoryController @Inject() (
           case Some(occupationAccounting) =>
             occupationalInformationForm.fill(occupationAccounting.firstOccupy)
           case _                          => occupationalInformationForm
-        }
+        },
+        getBackLink(request.sessionData)
       )
     )
   }
@@ -61,7 +63,7 @@ class AboutYourTradingHistoryController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[MonthsYearDuration](
       occupationalInformationForm,
-      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors)),
+      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors, getBackLink(request.sessionData))),
       data => {
         val occupationAndAccounting = request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)
@@ -91,4 +93,13 @@ class AboutYourTradingHistoryController @Inject() (
     )
   }
 
+  private def getBackLink(answers: Session): String =
+    answers.forType match {
+      case ForTypes.for6076 => controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
+      case _ => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
+    }
+
+
+
 }
+
