@@ -34,13 +34,13 @@ import scala.concurrent.ExecutionContext
 
 @Singleton
 class WhatYouWillNeedController @Inject() (
-                                                 mcc: MessagesControllerComponents,
-                                                 navigator: AboutTheTradingHistoryNavigator,
-                                                 whatYouWillNeedView: whatYouWillNeed,
-                                                 withSessionRefiner: WithSessionRefiner,
-                                                 @Named("session") val session: SessionRepo
-                                               )(implicit ec: ExecutionContext)
-  extends FORDataCaptureController(mcc)
+  mcc: MessagesControllerComponents,
+  navigator: AboutTheTradingHistoryNavigator,
+  whatYouWillNeedView: whatYouWillNeed,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -48,7 +48,7 @@ class WhatYouWillNeedController @Inject() (
       whatYouWillNeedView(
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.whatYouWillNeed) match {
           case Some(whatYouWillNeed) => whatYouWillNeedForm.fill(whatYouWillNeed)
-          case _                          => whatYouWillNeedForm
+          case _                     => whatYouWillNeedForm
         },
         request.sessionData.toSummary
       )

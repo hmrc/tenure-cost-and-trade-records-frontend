@@ -25,9 +25,7 @@ object WhatYouWillNeedForm {
   val whatYouWillNeedForm: Form[String] =
     Form(
       single(
-        "whatYouWillNeed" -> default(text, "").verifying(
-          nonEmpty(errorMessage = "error.whatYouWillNeed.required"),
-        )
+        "whatYouWillNeed" -> default(text, "")
       )
     )
 }

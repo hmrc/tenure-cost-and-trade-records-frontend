@@ -28,15 +28,17 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
 
   val messageKeyPrefix = "firstOccupy"
 
+  val backLink = controllers.routes.TaskListController.show().url
+
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   override val form: Form[MonthsYearDuration] =
     OccupationalInformationForm.occupationalInformationForm(messages)
 
-  def createView: () => Html = () => aboutYourTradingHistoryView(form)(sessionRequest, messages)
+  def createView: () => Html = () => aboutYourTradingHistoryView(form, backLink)(sessionRequest, messages)
 
   def createViewUsingForm: Form[MonthsYearDuration] => Html =
-    (form: Form[MonthsYearDuration]) => aboutYourTradingHistoryView(form)(sessionRequest, messages)
+    (form: Form[MonthsYearDuration]) => aboutYourTradingHistoryView(form, backLink)(sessionRequest, messages)
 
   "About the trading history view" must {
 
