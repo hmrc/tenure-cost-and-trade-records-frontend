@@ -2421,6 +2421,30 @@ rentPayableDetails.hint = Er enghraifft, hefyd yn cynnwys y safle drws nesaf.
 error.rentPayableDetails.required = Please give details of selected items included in rent payable
 error.rentPayableDetails.maxLength = Description of selected items included in rent payable must be {0} characters or fewer
 
+# WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
+whatYouWillNeed.heading = What you‘ll need to complete this section
+whatYouWillNeed.subheading = To complete this section, you’ll need figures relating to the categories listed here. If any of the information we need does not apply to your property, enter the number 0 where requested.
+whatYouWillNeed.l1 = Occupation and accounting information
+whatYouWillNeed.p1 = When you built or took over the property, and your financial year end
+whatYouWillNeed.l2 = How much power you generated
+whatYouWillNeed.l3 = Gross receipts
+whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives
+whatYouWillNeed.l4 = Other income
+whatYouWillNeed.p4 = Any other income not listed in your gross receipts
+whatYouWillNeed.l5 = Cost of sales
+whatYouWillNeed.p5 = Details of any costs incurred
+whatYouWillNeed.l6 = Staff costs
+whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration
+whatYouWillNeed.l7 = Premises costs
+whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
+whatYouWillNeed.l8 = Operational and administrative expenses
+whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees
+whatYouWillNeed.l9 = Head office expenses
+whatYouWillNeed.p9 = If applicable
+whatYouWillNeed.subheading2 = If you do not have this information to hand
+whatYouWillNeed.p10 = Select the ‘Save as draft’ button and complete the declaration when you’re ready.
+
+
 # CHECK YOUR ANSWERS
 ####################
 

@@ -49,7 +49,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url + "#about-your-trading-history"
+      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
     }
 
     "Section heading is visible" in {
