@@ -16,12 +16,10 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.WhatYouWillNeedForm.whatYouWillNeedForm
-import models.ForTypes
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.WhatYouWillNeedPageId
 import play.api.i18n.I18nSupport
@@ -55,7 +53,7 @@ class WhatYouWillNeedController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       whatYouWillNeedForm,
       formWithErrors =>

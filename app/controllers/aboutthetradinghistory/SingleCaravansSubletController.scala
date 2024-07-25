@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage
-import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage.SingleCaravansOwnedByOperator
+import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage.SingleCaravansSublet
 import models.submissions.aboutthetradinghistory.{Caravans, CaravansTrading6045, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.MessagesControllerComponents
@@ -29,25 +29,25 @@ import views.html.aboutthetradinghistory.caravansTrading6045
 import javax.inject.{Inject, Named, Singleton}
 
 /**
-  * 6045/46 Trading history - single caravans owned by operator.
+  * 6045/46 Trading history - single caravans sublet by operator.
   *
   * @author Yuriy Tumakha
   */
 @Singleton
-class SingleCaravansOwnedByOperatorController @Inject() (
+class SingleCaravansSubletController @Inject() (
   val caravansTrading6045View: caravansTrading6045,
   val navigator: AboutTheTradingHistoryNavigator,
   val withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-) extends CaravansTrading6045Controller(SingleCaravansOwnedByOperator, mcc) {
+) extends CaravansTrading6045Controller(SingleCaravansSublet, mcc) {
 
   def getSavedAnswer: TurnoverSection6045 => Option[CaravansTrading6045] =
-    _.singleCaravansOwnedByOperator
+    _.singleCaravansSublet
 
   def updateAnswer(
     caravansTrading6045: CaravansTrading6045
   ): TurnoverSection6045 => TurnoverSection6045 =
-    _.copy(singleCaravansOwnedByOperator = Some(caravansTrading6045))
+    _.copy(singleCaravansSublet = Some(caravansTrading6045))
 
 }

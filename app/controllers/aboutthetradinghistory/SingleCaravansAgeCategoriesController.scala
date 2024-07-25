@@ -91,9 +91,7 @@ class SingleCaravansAgeCategoriesController @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.cyaPage
       .filter(_ => navigator.from == "CYA")
-      .getOrElse( // TODO: Single caravans sub-let by operator to holidaymakers on behalf of private owners as fleet hire
-        routes.SingleCaravansOwnedByOperatorController.show()
-      )
+      .getOrElse(routes.SingleCaravansSubletController.show())
       .url
 
 }

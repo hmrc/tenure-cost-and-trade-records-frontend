@@ -36,10 +36,10 @@ object Formats {
       override val format = Some((missingCode, Nil))
 
       def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
-        val resOpt = for {
+        val resOpt = for
           keyVal        <- data.get(key)
           enumTypeValue <- named.fromName(keyVal)
-        } yield Right(enumTypeValue)
+        yield Right(enumTypeValue)
         resOpt.getOrElse(Left(Seq(FormError(key, missingCode, Nil))))
       }
 
@@ -54,10 +54,10 @@ object Formats {
     override val format: Option[(String, Nil.type)] = Some((Errors.required, Nil))
 
     def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
-      val resOpt      = for {
+      val resOpt      = for
         keyVal        <- data.get(key)
         enumTypeValue <- named.fromName(keyVal)
-      } yield Right(enumTypeValue)
+      yield Right(enumTypeValue)
       val maybeString = missingCodes.get(key)
       resOpt.getOrElse(Left(Seq(FormError(key, maybeString.getOrElse(Errors.required), Nil))))
     }

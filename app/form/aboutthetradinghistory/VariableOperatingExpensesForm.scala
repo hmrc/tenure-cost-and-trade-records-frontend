@@ -52,11 +52,9 @@ object VariableOperatingExpensesForm {
 
   private def otherExpensesDetailsRequired: Constraint[VariableOperatingExpensesSections] =
     Constraint("constraints.otherExpensesDetailsRequired") { sections =>
-      if (sections.variableOperatingExpenses.exists(_.other.exists(_ > 0)) && sections.otherExpensesDetails.isEmpty) {
+      if sections.variableOperatingExpenses.exists(_.other.exists(_ > 0)) && sections.otherExpensesDetails.isEmpty then
         Invalid(Seq(ValidationError("error.variableExpenses.otherExpensesDetails.required")))
-      } else {
-        Valid
-      }
+      else Valid
     }
 
   def variableOperatingExpensesForm(

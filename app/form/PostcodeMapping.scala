@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,13 +53,9 @@ object PostcodeMapping {
         case None              => Left(Seq(FormError(key, requiredError)))
         case Some(rawPostcode) =>
           val cleanedPostcode = rawPostcode.replaceAll("[^A-Za-z0-9]", "").toUpperCase
-          if (cleanedPostcode.length > 8) {
-            Left(Seq(FormError(key, maxLengthError)))
-          } else if (!isValid(cleanedPostcode)) {
-            Left(Seq(FormError(key, formatError)))
-          } else {
-            Right(cleanedPostcode.substring(0, cleanedPostcode.length - 3) + " " + cleanedPostcode.takeRight(3))
-          }
+          if cleanedPostcode.length > 8 then Left(Seq(FormError(key, maxLengthError)))
+          else if !isValid(cleanedPostcode) then Left(Seq(FormError(key, formatError)))
+          else Right(cleanedPostcode.substring(0, cleanedPostcode.length - 3) + " " + cleanedPostcode.takeRight(3))
       }
 
     override def unbind(key: String, value: String): Map[String, String] = Map(key -> value)

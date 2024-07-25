@@ -49,7 +49,7 @@
  }
 }
 
-@headingService= @{if (services.size == 0) messages("servicePaidSeparatelyListZero.heading") else if (services.size > 1) messages("servicePaidSeparatelyListPlural.heading", services.length, service) else messages("servicePaidSeparatelyList.heading", services.length, service) }
+@headingService= @{if (services.isEmpty) messages("servicePaidSeparatelyListZero.heading") else if (services.size > 1) messages("servicePaidSeparatelyListPlural.heading", services.length, service) else messages("servicePaidSeparatelyList.heading", services.length, service) }
 
 @service = @{ if (services.size > 1) messages("servicePaidSeparatelyList.services") else messages("servicePaidSeparatelyList.service") }
 

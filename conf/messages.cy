@@ -1645,6 +1645,16 @@ error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.negative = Gro
 error.caravans.single.ownedByOperator.vans.required = Enter 0 if you do not have any single caravan vans owned by the operator in the year ending {0}
 error.caravans.single.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
+turnover.6045.caravans.single.subletByOperator.heading = Single caravans sub-let by the operator to holidaymakers on behalf of private owners as fleet hire
+turnover.6045.caravans.single.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.single.subletByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+error.turnover.6045.caravans.single.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans sub-let by the operator in the year ending {0}
+error.turnover.6045.caravans.single.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.caravans.single.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.caravans.single.subletByOperator.vans.required = Enter 0 if you do not have any single caravan vans sub-let by the operator in the year ending {0}
+error.caravans.single.subletByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
+error.caravans.single.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
+
 
 turnover.6045.singleCaravansAgeCategories.heading = How old are the single static caravans on site?
 turnover.6045.singleCaravansAgeCategories.p1 = You must state the total number of single static caravans in each age category.

@@ -28,11 +28,9 @@ object OtherCostsForm {
 
   val otherCostDetailsRequired: Constraint[OtherCosts] = Constraint("constraints.otherCostDetailsRequired") {
     otherCosts =>
-      if (!otherCosts.otherCostDetails.isDefined && otherCosts.otherCosts.exists(_.otherCosts.exists(_ > 0))) {
+      if otherCosts.otherCostDetails.isEmpty && otherCosts.otherCosts.exists(_.otherCosts.exists(_ > 0)) then
         Invalid(Seq(ValidationError("error.otherCostDetails.required")))
-      } else {
-        Valid
-      }
+      else Valid
   }
 
   val otherCostMapping: Mapping[OtherCost] = mapping(

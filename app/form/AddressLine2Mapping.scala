@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ object AddressLine2Mapping {
 
     text
       .verifying(Errors.addressBuildingNameNumberRequired, aLT => aLT.nonEmpty)
-      .verifying(Errors.addressLine2Length, aLT => if (aLT.nonEmpty) validddressLineTwo(aLT) else true)
+      .verifying(Errors.addressLine2Length, aLT => if aLT.nonEmpty then validddressLineTwo(aLT) else true)
       .verifying(
         Errors.invalidCharAddress2,
-        aLT => if (aLT.nonEmpty && validddressLineTwo(aLT)) aLT.matches(invalidCharRegex) else true
+        aLT => if aLT.nonEmpty && validddressLineTwo(aLT) then aLT.matches(invalidCharRegex) else true
       )
   }
 

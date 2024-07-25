@@ -26,11 +26,9 @@ object TypeOfTenureForm {
 
   val typeOfTenureDetailsRequired: Constraint[TypeOfTenure] = Constraint("constraint.typeOfTenureDetailsRequired") {
     tot =>
-      if (!tot.typeOfTenureDetails.isDefined && tot.typeOfTenure.length > 1) {
+      if tot.typeOfTenureDetails.isEmpty && tot.typeOfTenure.length > 1 then
         Invalid(Seq(ValidationError("error.typeOfTenureDetails.required")))
-      } else {
-        Valid
-      }
+      else Valid
   }
   val typeOfTenureMapping: Mapping[TypeOfTenure]            = mapping(
     "typeOfTenure"        -> list(text).verifying(

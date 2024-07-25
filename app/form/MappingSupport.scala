@@ -249,16 +249,14 @@ object MappingSupport {
     errorMessage: String = "error.range"
   )(implicit ordering: scala.math.Ordering[T]): Constraint[T] =
     Constraint[T]("constraint.between", minValue, maxValue) { v =>
-      if (ordering.compare(v, minValue) < 0 || ordering.compare(v, maxValue) > 0) {
+      if ordering.compare(v, minValue) < 0 || ordering.compare(v, maxValue) > 0 then
         Invalid(ValidationError(errorMessage, minValue, maxValue))
-      } else {
-        Valid
-      }
+      else Valid
     }
 
   def nonEmptyList[T](errorMessage: String = "error.required"): Constraint[List[T]] =
     Constraint[List[T]]("constraint.nonEmptyList") { l =>
-      if (l.nonEmpty) Valid
+      if l.nonEmpty then Valid
       else Invalid(ValidationError(errorMessage))
     }
 
@@ -267,7 +265,7 @@ object MappingSupport {
     errorMessage: String
   ): Constraint[List[T]] =
     Constraint[List[T]]("constraint.noneCantBeSelectedWithOther") { l =>
-      if (l.size > 1 && l.contains(noneOfTheseValue)) Invalid(ValidationError(errorMessage))
+      if l.size > 1 && l.contains(noneOfTheseValue) then Invalid(ValidationError(errorMessage))
       else Valid
     }
 

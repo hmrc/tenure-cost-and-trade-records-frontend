@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,18 +75,17 @@ class MonthYearFormatter(
       case (Some(m), Some(y)) =>
         val month = parseNumber(m, 1 to 12)
         val year  = parseNumber(y, 1 to 9999)
-        if (month > 0 && year >= 0) {
+        if month > 0 && year >= 0 then
           validateDate(month, year).left.map { errorKey =>
             Seq(FormError(monthKey, errorKey, Seq(fieldCapitalized, monthYearFields)))
           }
-        } else {
+        else
           Left(
             Seq(
               Option.when(month == 0 || month == -1)(FormError(monthKey, "error.date.month.invalid")),
               Option.when(year == 0 || year == -1)(FormError(yearKey, "error.date.year.invalid"))
             ).flatten
           )
-        }
     }
   }
 
@@ -107,26 +106,18 @@ class MonthYearFormatter(
     Left(Seq(FormError(key, message, args)))
 
   private def validateDate(month: Int, year: Int): Either[String, MonthsYearDuration] =
-    if (year == -1) {
-      Left("error.date.year.invalid")
-    } else if (year == 0) {
-      Left("error.date.year.invalid")
-    } else if (year < 1900) {
-      Left("error.date.before1900")
-    } else {
+    if year == -1 then Left("error.date.year.invalid")
+    else if year == 0 then Left("error.date.year.invalid")
+    else if year < 1900 then Left("error.date.before1900")
+    else
       Try(LocalDate.of(year, month, 1)).toEither.left
         .map(_ => "error.date.invalid")
         .flatMap { date =>
           val today        = nowInUK.toLocalDate
           val startOfMonth = LocalDate.of(today.getYear, today.getMonthValue, 1)
 
-          if (!allowPastDates && date.isBefore(startOfMonth)) {
-            Left("error.date.beforeToday")
-          } else if (!allowFutureDates && date.isAfter(startOfMonth)) {
-            Left("error.date.mustBeInPast")
-          } else {
-            Right(MonthsYearDuration(date.getMonthValue, date.getYear))
-          }
+          if !allowPastDates && date.isBefore(startOfMonth) then Left("error.date.beforeToday")
+          else if !allowFutureDates && date.isAfter(startOfMonth) then Left("error.date.mustBeInPast")
+          else Right(MonthsYearDuration(date.getMonthValue, date.getYear))
         }
-    }
 }

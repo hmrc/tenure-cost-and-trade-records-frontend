@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ object EmailMapping {
       .verifying(Errors.contactEmailRequired, eA => eA.nonEmpty)
       .verifying(
         Errors.emailFormat,
-        eA => if (eA.nonEmpty) eA.matches(invalidEmailRegex) else true
+        eA => if eA.nonEmpty then eA.matches(invalidEmailRegex) else true
       )
 
 }

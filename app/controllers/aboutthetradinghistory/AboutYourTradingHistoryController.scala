@@ -16,21 +16,21 @@
 
 package controllers.aboutthetradinghistory
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
+import models.{ForTypes, Session}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil._
+import util.AccountingInformationUtil.*
 import views.html.aboutthetradinghistory.aboutYourTradingHistory
-import models.{ForTypes, Session}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -60,7 +60,7 @@ class AboutYourTradingHistoryController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[MonthsYearDuration](
       occupationalInformationForm,
       formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors, getBackLink(request.sessionData))),
