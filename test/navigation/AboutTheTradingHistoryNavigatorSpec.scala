@@ -78,6 +78,13 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutYou) shouldBe controllers.routes.LoginController.show
     }
 
+    "return a function that goes financial-year-end page when what you will need has been completed" in {
+      navigator
+        .nextPage(WhatYouWillNeedPageId, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .show()
+    }
+
     "return a function that goes financial-year-end page when about your trading history has been completed" in {
       navigator
         .nextPage(AboutYourTradingHistoryPageId, sessionAboutYou)
