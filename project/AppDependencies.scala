@@ -3,9 +3,9 @@ import sbt.*
 
 object AppDependencies {
 
-  val bootstrapVersion    = "9.0.0"
+  val bootstrapVersion    = "9.1.0"
   val playFrontendVersion = "10.5.0"
-  val mongoVersion        = "2.1.0"
+  val mongoVersion        = "2.2.0"
   val cryptoJsonVersion   = "8.0.0"
 
   // Test dependencies
@@ -14,7 +14,7 @@ object AppDependencies {
   val scalaTestPlusScalaCheckVersion = "3.2.19.0"
   val scalaTestPlusMockitoVersion    = "3.2.19.0"
   val flexMarkVersion                = "0.64.8"
-  val wiremockVersion                = "3.9.0"
+  val wiremockVersion                = "3.9.1"
   val jsoupVersion                   = "1.18.1"
 
   private val compile = Seq(

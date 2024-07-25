@@ -50,26 +50,26 @@
 @formLabel =@{messages("label.aboutTheLettings")}
 
 @pageHeading = @{messages(
- if(lettingDetails.size == 0) messages("aboutTheLettings.zeroLetting.heading")
+ if(lettingDetails.isEmpty) messages("aboutTheLettings.zeroLetting.heading")
  else "aboutTheLettings.heading" , lettingDetails.size) + pluralSuffix}
 
 
 @formAction = @{controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.submitLetting(index)}
 
 @lettingDetails = @{
-    val lettings = session.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty)
-    lettings.zipWithIndex.map { case (letting, index) =>
-        letting match {
-            case atm: ATMLetting =>
-                (atm.bankOrCompany.getOrElse("No bank/company specified") + ", " + messages("lettings.typeOfLetting.automatedTellerMachine"), controllers.aboutfranchisesorlettings.routes.AtmLettingController.show(index).url)
-            case telecom: TelecomMastLetting =>
-                (telecom.operatingCompanyName.getOrElse("No company name specified") + ", " + messages("lettings.typeOfLetting.telecomMast"), controllers.aboutfranchisesorlettings.routes.TelecomMastLettingController.show(index).url)
-            case advert: AdvertisingRightLetting =>
-                (advert.advertisingCompanyName.getOrElse("No advertising company specified") + ", " + messages("lettings.typeOfLetting.advertisingRight"), controllers.aboutfranchisesorlettings.routes.AdvertisingRightLettingController.show(index).url)
-            case other: OtherLetting =>
-                (other.tenantName.getOrElse("No tenant name specified") + ", " + messages("lettings.typeOfLetting.other.label"), controllers.aboutfranchisesorlettings.routes.OtherLettingController.show(index).url)
-        }
-    }
+  val lettings = session.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty)
+  lettings.zipWithIndex.map { case (letting, index) =>
+   letting match {
+    case atm: ATMLetting =>
+     (atm.bankOrCompany.getOrElse("No bank/company specified") + ", " + messages("lettings.typeOfLetting.automatedTellerMachine"), controllers.aboutfranchisesorlettings.routes.AtmLettingController.show(index).url)
+    case telecom: TelecomMastLetting =>
+     (telecom.operatingCompanyName.getOrElse("No company name specified")+ ", " + messages("lettings.typeOfLetting.telecomMast"), controllers.aboutfranchisesorlettings.routes.TelecomMastLettingController.show(index).url)
+    case advert: AdvertisingRightLetting =>
+     (advert.advertisingCompanyName.getOrElse("No advertising company specified")+ ", " + messages("lettings.typeOfLetting.advertisingRight"), controllers.aboutfranchisesorlettings.routes.AdvertisingRightLettingController.show(index).url)
+    case other: OtherLetting =>
+     (other.tenantName.getOrElse("No tenant name specified")+ ", " + messages("lettings.typeOfLetting.other.label"), controllers.aboutfranchisesorlettings.routes.OtherLettingController.show(index).url)
+   }
+  }
 }
 
 
