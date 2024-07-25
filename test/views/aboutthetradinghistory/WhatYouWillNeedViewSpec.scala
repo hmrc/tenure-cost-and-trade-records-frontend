@@ -17,9 +17,8 @@
 package views.aboutthetradinghistory
 
 import actions.SessionRequest
-import form.aboutthetradinghistory.{UnusualCircumstancesForm, WhatYouWillNeedForm}
+import form.aboutthetradinghistory.WhatYouWillNeedForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

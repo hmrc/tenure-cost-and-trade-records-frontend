@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import form.aboutYourLeaseOrTenure.BenefitsGivenForm.benefitsGivenForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
@@ -24,6 +25,9 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, status, stu
 import utils.TestBaseSpec
 
 class BenefitsGivenControllerSpec extends TestBaseSpec {
+
+  import TestData._
+  import utils.FormBindingTestAssertions._
 
   def benefitsGivenController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
@@ -67,5 +71,24 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+  }
+
+  "Benefit given form" should {
+    "error if Benefit given is missing" in {
+      val formData = baseFormData - errorKey.benefitsGiven
+      val form     = benefitsGivenForm.bind(formData)
+
+      mustContainError(errorKey.benefitsGiven, "error.benefitsGiven.required", form)
+    }
+  }
+
+  object TestData {
+    val errorKey: ErrorKey = new ErrorKey
+
+    class ErrorKey {
+      val benefitsGiven: String = "benefitsGiven"
+    }
+
+    val baseFormData: Map[String, String] = Map("benefitsGiven" -> "yes")
   }
 }
