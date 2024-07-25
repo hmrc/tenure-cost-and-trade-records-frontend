@@ -115,19 +115,26 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assertContainsText(doc, messages("hint.areYouThirdParty.no", "Wombles Inc"))
     }
 
-//    "contain radio buttons for the value yes with hint 6076" in {
-//      val doc = asDocument(createViewUsingForm6076(form))
-//      assertContainsRadioButton(doc, "areYouThirdParty", "areYouThirdParty", AnswerYes.name, false)
-//      assertContainsText(doc, messages("label.yes"))
-//      assertContainsText(doc, messages("hint.areYouThirdParty.yes", "Wombles Inc"))
-//    }
-//
-//    "contain radio buttons for the value no with hint 6076" in {
-//      val doc = asDocument(createViewUsingForm6076(form))
-//      assertContainsRadioButton(doc, "areYouThirdParty-2", "areYouThirdParty", AnswerNo.name, false)
-//      assertContainsText(doc, messages("label.no"))
-//      assertContainsText(doc, messages("hint.areYouThirdParty.no", "Wombles Inc"))
-//    }
+    "contain radio buttons for the value yes with hint 6076" in {
+      val doc = asDocument(createViewUsingForm6076(form))
+      assertContainsRadioButton(doc, "areYouThirdParty", "areYouThirdParty", AnswerYes.name, false)
+      assertContainsText(doc, messages("label.yes"))
+    }
+
+    "contain radio buttons for the value no with hint 6076" in {
+      val doc = asDocument(createViewUsingForm6076(form))
+      assertContainsRadioButton(doc, "areYouThirdParty-2", "areYouThirdParty", AnswerNo.name, false)
+      assertContainsText(doc, messages("label.no"))
+    }
+
+    "contain list" in {
+      val doc = asDocument(createViewUsingForm6076(form))
+      assert(doc.toString.contains(messages("areYouThirdParty6076.l1")))
+      assert(doc.toString.contains(messages("areYouThirdParty6076.l2")))
+      assert(doc.toString.contains(messages("areYouThirdParty6076.l3")))
+      assert(doc.toString.contains(messages("areYouThirdParty6076.l4")))
+
+    }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
