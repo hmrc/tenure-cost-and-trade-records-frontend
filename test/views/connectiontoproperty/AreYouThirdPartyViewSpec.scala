@@ -16,9 +16,10 @@
 
 package views.connectiontoproperty
 
+import actions.SessionRequest
 import form.connectiontoproperty.AreYouThirdPartyForm
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
+import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,15 +29,36 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   override val form = AreYouThirdPartyForm.areYouThirdPartyForm
 
+  val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
+  val sessionRequest     = SessionRequest(baseFilled6010Session, fakeRequest)
+
   val backLink = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
 
   def createView = () =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(fakeRequest, messages)
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(
+      sessionRequest,
+      messages
+    )
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(fakeRequest, messages)
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(
+      sessionRequest,
+      messages
+    )
 
-  "Are you a thrid party view" must {
+  def createView6076 = () =>
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary)(
+      sessionRequest6076,
+      messages
+    )
+
+  def createViewUsingForm6076 = (form: Form[AnswersYesNo]) =>
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary)(
+      sessionRequest6076,
+      messages
+    )
+
+  "Are you a third party view" must {
 
     "behave like a normal page" when {
       "rendered" must {
@@ -92,6 +114,20 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assertContainsText(doc, messages("label.no"))
       assertContainsText(doc, messages("hint.areYouThirdParty.no", "Wombles Inc"))
     }
+
+//    "contain radio buttons for the value yes with hint 6076" in {
+//      val doc = asDocument(createViewUsingForm6076(form))
+//      assertContainsRadioButton(doc, "areYouThirdParty", "areYouThirdParty", AnswerYes.name, false)
+//      assertContainsText(doc, messages("label.yes"))
+//      assertContainsText(doc, messages("hint.areYouThirdParty.yes", "Wombles Inc"))
+//    }
+//
+//    "contain radio buttons for the value no with hint 6076" in {
+//      val doc = asDocument(createViewUsingForm6076(form))
+//      assertContainsRadioButton(doc, "areYouThirdParty-2", "areYouThirdParty", AnswerNo.name, false)
+//      assertContainsText(doc, messages("label.no"))
+//      assertContainsText(doc, messages("hint.areYouThirdParty.no", "Wombles Inc"))
+//    }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
