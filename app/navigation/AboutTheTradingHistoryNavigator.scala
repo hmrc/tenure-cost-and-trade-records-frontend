@@ -270,6 +270,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       controllers.routes.TaskListController.show()
       // TODO: Pitches For Glamping
     ),
+    WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())

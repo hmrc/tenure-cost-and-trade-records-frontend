@@ -26,14 +26,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[MonthsYearDuration])(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[MonthsYearDuration], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("firstOccupy.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = controllers.routes.TaskListController.show().url + "#about-your-trading-history",
+    backLinkUrl = backLink,
     theForm = theForm
 ) {
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.submit()) {

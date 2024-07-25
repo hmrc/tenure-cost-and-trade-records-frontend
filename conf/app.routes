@@ -178,6 +178,9 @@ POST        /costs-breakdown                                        controllers.
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
 POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
 
+GET         /what-you-will-need                                     controllers.aboutthetradinghistory.WhatYouWillNeedController.show()
+POST        /what-you-will-need                                     controllers.aboutthetradinghistory.WhatYouWillNeedController.submit()
+
 GET         /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.show()
 POST        /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.submit()
 

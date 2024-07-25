@@ -26,6 +26,10 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(AboutYourTradingHistoryPageId.toString.equals("aboutYourTradingHistoryPage"))
     }
 
+    "Identifier for what will you need page" in {
+      assert(WhatYouWillNeedPageId.toString.equals("whatYouWillNeedPage"))
+    }
+
     "Identifier for financial year end page" in {
       assert(FinancialYearEndPageId.toString.equals("financialYearEndPage"))
     }
