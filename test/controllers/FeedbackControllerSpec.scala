@@ -20,11 +20,9 @@ import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
 import org.scalatest.BeforeAndAfter
-import play.api.http.Status
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status}
-import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
+import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.{HtmlAssertionHelper, TestBaseSpec}
 
 class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlAssertionHelper {
@@ -56,14 +54,14 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
   "Feedback controller" should {
     "return HTML and 200 status for feedback form page" in {
       val result = feedbackController().feedback(fakeRequest)
-      status(result)      shouldBe Status.OK
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML and 200 status for thank you page" in {
       val result = feedbackController().feedbackThx(fakeRequest)
-      status(result)      shouldBe Status.OK
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -78,7 +76,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
             "feedback-rating"   -> rating
           )
         )
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
       }
     }
@@ -91,7 +89,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
             "feedback-rating"   -> rating
           )
         )
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
       }
     }
@@ -104,7 +102,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
             "feedback-rating"   -> rating
           )
         )
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
       }
     }
@@ -124,7 +122,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
             "feedback-rating"   -> rating
           )
         )
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
       }
     }
@@ -144,7 +142,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
             "feedback-rating"   -> rating
           )
         )
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
       }
     }
@@ -164,7 +162,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
           "feedback-rating" -> ""
         )
       )
-      status(result) shouldBe Status.BAD_REQUEST
+      status(result) shouldBe BAD_REQUEST
       contentType(result) shouldBe Some("text/html")
     }
 
@@ -175,7 +173,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
           "feedback-rating"   -> "5"
         )
       )
-      status(result) shouldBe Status.SEE_OTHER
+      status(result) shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
     }
   }
@@ -188,7 +186,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
             "feedback-comments" -> comments
           )
         )
-        status(result) shouldBe Status.BAD_REQUEST
+        status(result) shouldBe BAD_REQUEST
         val html   = Jsoup.parse(contentAsString(result))
         assertPageContainsElement(html, "feedback-rating-error")
       }
@@ -203,7 +201,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
             "feedback-rating"   -> rating
           )
         )
-        status(result) shouldBe Status.BAD_REQUEST
+        status(result) shouldBe BAD_REQUEST
         val html           = Jsoup.parse(contentAsString(result))
         assertPageContainsElement(html, "feedback-comments-error")
       }

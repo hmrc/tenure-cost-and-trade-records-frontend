@@ -22,11 +22,7 @@
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
-        govukInput: GovukInput,
-        govukDateInput: GovukDateInput,
-        govukTable: GovukTable,
-        govukInsetText: GovukInsetText,
-        govukDetails: GovukDetails
+        govukDateInput: GovukDateInput
 )
 
 @(form: Form[Seq[LocalDate]], finYears: Seq[Int])(implicit request: SessionRequest[?], messages: Messages)

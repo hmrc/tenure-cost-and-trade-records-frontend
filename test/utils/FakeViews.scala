@@ -155,11 +155,13 @@ trait FakeViews { this: Injecting =>
   lazy val incomeExpenditureSummaryView: incomeExpenditureSummary                                   = inject[incomeExpenditureSummary]
   lazy val incomeExpenditureSummary6076View: incomeExpenditureSummary6076                           = inject[incomeExpenditureSummary6076]
   lazy val unusualCircumstancesView: unusualCircumstances                                           = inject[unusualCircumstances]
+  lazy val whatYouWillNeedView: whatYouWillNeed                                                     = inject[whatYouWillNeed]
   lazy val electricVehicleChargingPointsView: electricVehicleChargingPoints                         = inject[electricVehicleChargingPoints]
   lazy val grossReceiptsCaravanFleetHireView: grossReceiptsCaravanFleetHire6045                     =
     inject[grossReceiptsCaravanFleetHire6045]
   lazy val staticCaravansView: staticCaravans                                                       = inject[staticCaravans]
   lazy val caravansOpenAllYearView: caravansOpenAllYear                                             = inject[caravansOpenAllYear]
+  lazy val caravansTrading6045View: caravansTrading6045                                             = inject[caravansTrading6045]
   lazy val caravansAgeCategoriesView: caravansAgeCategories                                         = inject[caravansAgeCategories]
   lazy val otherHolidayAccommodationView: otherHolidayAccommodation                                 = inject[otherHolidayAccommodation]
   lazy val checkYourAnswersTentingPitchesView: checkYourAnswersTentingPitches                       = inject[checkYourAnswersTentingPitches]
@@ -169,6 +171,7 @@ trait FakeViews { this: Injecting =>
   lazy val otherHolidayAccommodationDetailsView: otherHolidayAccommodationDetails                   =
     inject[otherHolidayAccommodationDetails]
   lazy val grossReceiptsLettingUnitsView: grossReceiptsLettingUnits6045                             = inject[grossReceiptsLettingUnits6045]
+  lazy val grossReceiptsSubLetUnitsView: grossReceiptsSubLetUnits6045                               = inject[grossReceiptsSubLetUnits6045]
   lazy val checkYourAnswersOtherHolidayAccommodationView: checkYourAnswersOtherHolidayAccommodation =
     inject[checkYourAnswersOtherHolidayAccommodation]
   lazy val checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory       =

@@ -17,17 +17,10 @@
 @import actions.SessionRequest
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import util.DateUtilLocalised
-@import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
-@import models.submissions.common.{AnswerNo,AnswerYes}
-@import java.time.LocalDate
+@import models.submissions.common.AnswerNo
 
-@this(
-        govukSummaryList: GovukSummaryList,
-        dateUtil: DateUtilLocalised
-)
-
+@this(govukSummaryList: GovukSummaryList)
 
 @()(implicit request: SessionRequest[?], messages: Messages)
     @sectionAnswersPartOne = @{

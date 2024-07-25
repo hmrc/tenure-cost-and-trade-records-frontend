@@ -18,16 +18,13 @@
 @import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswerYes
-@import navigation.AboutFranchisesOrLettingsNavigator
-@import navigation.identifiers._
 @import util.DateUtilLocalised
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
-@import models.submissions.aboutfranchisesorlettings.CateringOperationSection
-@import models.submissions.aboutfranchisesorlettings.{ATMLetting,TelecomMastLetting,AdvertisingRightLetting,OtherLetting,LettingPartOfProperty}
+@import models.submissions.aboutfranchisesorlettings._
+
 @this(
         govukSummaryList: GovukSummaryList,
-        navigator: AboutFranchisesOrLettingsNavigator,
         dateUtil: DateUtilLocalised
 )
 

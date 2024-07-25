@@ -1630,6 +1630,22 @@ error.turnover.6045.caravanFleetHire.grossReceipts.required = Enter 0 if you did
 error.turnover.6045.caravanFleetHire.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravanFleetHire.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 
+turnover.6045.caravans.single.ownedByOperator.heading = Single caravans owned by the operator and used for fleet hire
+turnover.6045.caravans.single.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.single.ownedByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.caravans.single.ownedByOperator.help.link = Help with single caravans
+turnover.6045.caravans.single.ownedByOperator.help.p1 = A single caravan is transported onto the site in one piece and mounted on a pitch.
+turnover.6045.caravans.grossReceipts = Gross receipts
+turnover.6045.caravans.grossReceipts.hint = Inclusive of electricity charges and gas supplied if any.
+turnover.6045.caravans.vans = Number of vans
+turnover.6045.vans.suffix = vans
+error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans owned by the operator in the year ending {0}
+error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.caravans.single.ownedByOperator.vans.required = Enter 0 if you do not have any single caravan vans owned by the operator in the year ending {0}
+error.caravans.single.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
+error.caravans.single.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
+
 turnover.6045.singleCaravansAgeCategories.heading = How old are the single static caravans on site?
 turnover.6045.singleCaravansAgeCategories.p1 = You must state the total number of single static caravans in each age category.
 turnover.6045.twinCaravansAgeCategories.heading = How old are the twin-unit static caravans on site?
@@ -2404,6 +2420,30 @@ rentPayableDetails.label = Rhowch fanylion, os ydych wedi dewis unrhyw un o’r 
 rentPayableDetails.hint = Er enghraifft, hefyd yn cynnwys y safle drws nesaf.
 error.rentPayableDetails.required = Please give details of selected items included in rent payable
 error.rentPayableDetails.maxLength = Description of selected items included in rent payable must be {0} characters or fewer
+
+# WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
+whatYouWillNeed.heading = What you‘ll need to complete this section
+whatYouWillNeed.subheading = To complete this section, you’ll need figures relating to the categories listed here. If any of the information we need does not apply to your property, enter the number 0 where requested.
+whatYouWillNeed.l1 = Occupation and accounting information
+whatYouWillNeed.p1 = When you built or took over the property, and your financial year end
+whatYouWillNeed.l2 = How much power you generated
+whatYouWillNeed.l3 = Gross receipts
+whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives
+whatYouWillNeed.l4 = Other income
+whatYouWillNeed.p4 = Any other income not listed in your gross receipts
+whatYouWillNeed.l5 = Cost of sales
+whatYouWillNeed.p5 = Details of any costs incurred
+whatYouWillNeed.l6 = Staff costs
+whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration
+whatYouWillNeed.l7 = Premises costs
+whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
+whatYouWillNeed.l8 = Operational and administrative expenses
+whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees
+whatYouWillNeed.l9 = Head office expenses
+whatYouWillNeed.p9 = If applicable
+whatYouWillNeed.subheading2 = If you do not have this information to hand
+whatYouWillNeed.p10 = Select the ‘Save as draft’ button and complete the declaration when you’re ready.
+
 
 # CHECK YOUR ANSWERS
 ####################

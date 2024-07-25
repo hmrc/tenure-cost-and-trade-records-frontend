@@ -14,13 +14,9 @@
  * limitations under the License.
  *@
 
-@import play.api.Environment
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcTimeoutDialogHelper
 
-@this(
-        environment: Environment,
-        hmrcTimeoutDialogHelper: HmrcTimeoutDialogHelper
-)
+@this(hmrcTimeoutDialogHelper: HmrcTimeoutDialogHelper)
 
 @(enableTimeoutDialog: Boolean)(implicit request: RequestHeader, messages: Messages)
 

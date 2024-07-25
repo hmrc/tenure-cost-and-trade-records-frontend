@@ -42,6 +42,13 @@ object Caravans {
     case Twin extends CaravanUnitType("twin")
   end CaravanUnitType
 
+  enum CaravanLettingType(lettingType: String):
+    override def toString: String = lettingType
+
+    case OwnedByOperator extends CaravanLettingType("ownedByOperator")
+    case SubletByOperator extends CaravanLettingType("subletByOperator")
+  end CaravanLettingType
+
   enum CaravanHireType(hireType: String):
     override def toString: String = hireType
 

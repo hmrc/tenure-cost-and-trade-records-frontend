@@ -26,8 +26,7 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
 
   private val previousPage = aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show().url
 
-  private val nextPage = // TODO:
-    controllers.routes.TaskListController.show().url
+  private val nextPage = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
 
   def grossReceiptsLettingUnitsController =
     new GrossReceiptsLettingUnitsController(

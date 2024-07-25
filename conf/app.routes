@@ -178,6 +178,9 @@ POST        /costs-breakdown                                        controllers.
 GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
 POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
 
+GET         /what-you-will-need                                     controllers.aboutthetradinghistory.WhatYouWillNeedController.show()
+POST        /what-you-will-need                                     controllers.aboutthetradinghistory.WhatYouWillNeedController.submit()
+
 GET         /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.show()
 POST        /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.submit()
 
@@ -224,6 +227,9 @@ POST        /are-caravans-open-all-year                             controllers.
 GET         /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.show()
 POST        /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.submit()
 
+GET         /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.show()
+POST        /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.submit()
+
 GET         /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.show()
 POST        /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.submit()
 
@@ -244,6 +250,9 @@ POST        /other-holiday-accommodation-open-all-year              controllers.
 
 GET         /gross-receipts-letting-units                           controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.show()
 POST        /gross-receipts-letting-units                           controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.submit()
+
+GET         /gross-receipts-sub-let-units                           controllers.aboutthetradinghistory.GrossReceiptsSubLetUnitsController.show()
+POST        /gross-receipts-sub-let-units                           controllers.aboutthetradinghistory.GrossReceiptsSubLetUnitsController.submit()
 
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()

@@ -546,6 +546,10 @@ trait FakeObjects {
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))
   )
 
+  val prefilledAboutYourTradingHistory60761: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
+    whatYouWillNeed = "test"
+  )
+
   val staffCostsTestData = StaffCosts(
     wagesAndSalaries = Some(BigDecimal(50000.00)),
     nationalInsurance = Some(BigDecimal(5000.00)),

@@ -16,7 +16,6 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
@@ -34,23 +33,22 @@
         dateUtil: DateUtilLocalised
 )
 
-
 @(form: Form[(Seq[Option[BigDecimal]], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@rowLabel(labelKey: String, hintKey: String) = {
+@rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
-    @if(hintKey.nonEmpty) {
-        <span class="govuk-caption-m">@messages(hintKey)</span>
+    @hintKey.map { msgKey =>
+        <span class="govuk-caption-m">@messages(msgKey)</span>
     }
 }
 
 @turnoverRow(formField: String, labelKey: String, hintKey: String) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, hintKey))
+            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(

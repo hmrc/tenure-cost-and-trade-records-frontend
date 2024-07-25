@@ -243,7 +243,9 @@
    </h2>
    <ul class="app-task-list__items">
     @includes.taskListItem("about-your-trading-history", "aboutYourTradingHistory.heading",
-     controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(),
+     if(forType == ForTypes.for6076) {
+      controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show()
+     } else { controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show() },
      section3Completed,
      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation),
      section2Completed.isEmpty

@@ -20,6 +20,10 @@ case object AboutYourTradingHistoryPageId extends Identifier {
   override def toString: String = "aboutYourTradingHistoryPage"
 }
 
+case object WhatYouWillNeedPageId extends Identifier {
+  override def toString: String = "whatYouWillNeedPage"
+}
+
 case object FinancialYearEndPageId extends Identifier {
   override def toString: String = "financialYearEndPage"
 }
@@ -156,12 +160,19 @@ case object GrossReceiptsCaravanFleetHireId extends Identifier {
   override def toString: String = "grossReceiptsCaravanFleetHirePage"
 }
 
+case object SingleCaravansOwnedByOperatorId extends Identifier {
+  override def toString: String = "singleCaravansOwnedByOperatorPage"
+}
+
 case object SingleCaravansAgeCategoriesId extends Identifier {
   override def toString: String = "singleCaravansAgeCategoriesPage"
 }
 
 case object GrossReceiptsHolidayUnitsId extends Identifier {
   override def toString: String = "grossReceiptsHolidayUnitsPage"
+}
+case object GrossReceiptsSubLetUnitsId extends Identifier {
+  override def toString: String = "grossReceiptsSubLetUnitsPage"
 }
 case object OtherHolidayAccommodationId extends Identifier {
   override def toString: String = "otherHolidayAccommodationPage"

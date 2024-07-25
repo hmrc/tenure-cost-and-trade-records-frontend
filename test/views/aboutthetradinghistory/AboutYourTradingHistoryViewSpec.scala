@@ -28,15 +28,17 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
 
   val messageKeyPrefix = "firstOccupy"
 
+  val backLink = controllers.routes.TaskListController.show().url
+
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   override val form: Form[MonthsYearDuration] =
     OccupationalInformationForm.occupationalInformationForm(messages)
 
-  def createView: () => Html = () => aboutYourTradingHistoryView(form)(sessionRequest, messages)
+  def createView: () => Html = () => aboutYourTradingHistoryView(form, backLink)(sessionRequest, messages)
 
   def createViewUsingForm: Form[MonthsYearDuration] => Html =
-    (form: Form[MonthsYearDuration]) => aboutYourTradingHistoryView(form)(sessionRequest, messages)
+    (form: Form[MonthsYearDuration]) => aboutYourTradingHistoryView(form, backLink)(sessionRequest, messages)
 
   "About the trading history view" must {
 
@@ -47,7 +49,7 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url + "#about-your-trading-history"
+      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
     }
 
     "Section heading is visible" in {

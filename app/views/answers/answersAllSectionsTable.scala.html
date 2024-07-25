@@ -16,11 +16,8 @@
 
 @import actions.SessionRequest
 @import models.submissions.common.AnswerYes
-@import views.html.answers._
-@import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(
-        govukSummaryList: GovukSummaryList,
         answersSectionConnectionToTheProperty: answersConnectionToTheProperty,
         answersSectionAboutTheProperty: answersAboutTheProperty,
         answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory,
@@ -29,9 +26,7 @@
         answersSectionAdditionalInformation: answersAdditionalInformation
 )
 
-
 @()(implicit request: SessionRequest[?], messages: Messages)
-
 
 @isLeaseHolder = @{
     !request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty).contains(AnswerYes)

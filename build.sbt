@@ -17,7 +17,6 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions += "-Wconf:src=routes/.*:s",
     scalacOptions += "-Wconf:cat=unused-imports&src=html/.*:s"
   )
-  .settings(CodeCoverageSettings.settings)
   .settings(
     SassKeys.cssStyle := Minified,
     SassKeys.generateSourceMaps := false,
@@ -31,4 +30,4 @@ lazy val it =
     .dependsOn(microservice % "test->test")
     .settings(itSettings())
 
-addCommandAlias("precommit", ";scalafmtSbt;scalafmtAll;it/Test/scalafmt;coverage;test;it/test;coverageReport")
+addCommandAlias("precommit", "scalafmtSbt;scalafmtAll;it/Test/scalafmt;coverage;test;it/test;coverageReport")

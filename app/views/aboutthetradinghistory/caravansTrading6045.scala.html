@@ -1,0 +1,164 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
+@import models.submissions.aboutthetradinghistory.CaravansTrading6045
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtilLocalised
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        govukDetails: GovukDetails,
+        dateUtil: DateUtilLocalised
+)
+
+
+@(form: Form[Seq[CaravansTrading6045]], messageKeyPrefix: String, showHelpText: Option[CaravanUnitType], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@rowLabel(labelKey: String, hintKey: Option[String] = None) = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+    </p>
+    @hintKey.map { msgKey =>
+        <span class="govuk-caption-m">@messages(msgKey)</span>
+    }
+}
+
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        prefix = Some(PrefixOrSuffix(
+                            content = Text("£")
+                        )),
+                        classes = "govuk-input--width-10",
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))
+                )
+            )
+        )
+    )
+}
+
+@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    classes = s"govuk-input--width-$styleWidth",
+                    attributes = Map(
+                        "maxlength" -> maxLength.toString,
+                        "aria-label" -> messages(labelKey)
+                    ),
+                    suffix = Some(PrefixOrSuffix(
+                        content = Text(messages(suffixKey))
+                    ))
+                ).withFormField(form(formField)))
+            )
+        )
+    )
+}
+
+@paragraph(messageKey: String) = {
+    <p class="govuk-body">@messages(messageKey)</p>
+}
+
+@twoParagraphs(messageKeyP1: String, messageKeyP2: String) = @{
+    paragraph(messageKeyP1)
+    paragraph(messageKeyP2)
+}
+
+@helpContent = @{
+    showHelpText.map {
+        case Single => paragraph(s"$messageKeyPrefix.help.p1")
+        case Twin => twoParagraphs(s"$messageKeyPrefix.help.p1", s"$messageKeyPrefix.help.p2")
+    }
+}
+
+
+@layout(
+    pageHeading = messages(s"$messageKeyPrefix.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    @paragraph(s"$messageKeyPrefix.p1")
+
+    @govukInsetText(InsetText(
+        content = Text(messages(s"$messageKeyPrefix.inset"))
+    ))
+
+    @helpContent.map { help =>
+        @govukDetails(Details(
+            summary = Text(messages(s"$messageKeyPrefix.help.link")),
+            content = HtmlContent(help)
+        ))
+    }
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.submit()) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2),
+                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravans.grossReceipts", "turnover.6045.caravans.grossReceipts.hint"),
+                            numericRow(s"turnover[$idx].vans", "turnover.6045.caravans.vans", "turnover.6045.vans.suffix", 4, 6)
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}
