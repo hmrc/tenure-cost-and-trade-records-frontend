@@ -251,8 +251,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     SingleCaravansOwnedByOperatorId             -> (_ => aboutthetradinghistory.routes.SingleCaravansSubletController.show()),
     SingleCaravansSubletId                      -> (_ => aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show()),
     SingleCaravansAgeCategoriesId               -> (_ =>
+      aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show()
+    ),
+    TwinCaravansOwnedByOperatorId               -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
-        .show() // TODO: Twin-unit caravans owned by the operator and used for fleet hire
+        .show() // TODO: Twin-unit caravans sublet
     ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
     OtherHolidayAccommodationDetailsId          -> (_ =>
