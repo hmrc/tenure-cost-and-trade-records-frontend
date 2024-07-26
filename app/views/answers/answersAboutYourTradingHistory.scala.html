@@ -525,7 +525,7 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite",
             _.caravans.flatMap(_.anyStaticLeisureCaravansOnSite).map(yesNo => messages(s"label.${yesNo.name}")),
-            aboutthetradinghistory.routes.StaticCaravansController.show(), "anyStaticLeisureCaravansOnSite")
+            aboutthetradinghistory.routes.StaticCaravansController.show(), "staticCaravans")
     ))
 
     @if(sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).contains(AnswerYes)) {
@@ -533,7 +533,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear",
                 _.caravans.map(_.openAllYear.map(yesNo => messages(s"label.${yesNo.name}"))),
-                aboutthetradinghistory.routes.CaravansOpenAllYearController.show(), "openAllYear",
+                aboutthetradinghistory.routes.CaravansOpenAllYearController.show(), "areCaravansOpenAllYear",
                 (messages("label.no"), _.caravans.flatMap(_.weeksPerYear).map(messages("checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks", _)))
             )
         ))
