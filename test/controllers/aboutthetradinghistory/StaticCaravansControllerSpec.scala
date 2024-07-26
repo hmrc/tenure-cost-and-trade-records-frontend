@@ -69,7 +69,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
   }
 
   private def validFormData(answer: AnswersYesNo): Seq[(String, String)] =
-    Seq("anyStaticLeisureCaravansOnSite" -> answer.name)
+    Seq("staticCaravans" -> answer.name)
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page on answer Yes" in {

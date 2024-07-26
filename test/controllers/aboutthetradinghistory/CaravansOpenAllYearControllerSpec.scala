@@ -68,7 +68,7 @@ class CaravansOpenAllYearControllerSpec extends TestBaseSpec {
   "SUBMIT /" should {
     "save the form data and redirect to the next page on answer Yes" in {
       val res = caravansOpenAllYearController.submit(
-        fakePostRequest.withFormUrlEncodedBody("openAllYear" -> AnswerYes.name)
+        fakePostRequest.withFormUrlEncodedBody("areCaravansOpenAllYear" -> AnswerYes.name)
       )
       status(res) shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
@@ -76,7 +76,7 @@ class CaravansOpenAllYearControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page on answer No with weeks field filled" in {
       val res = caravansOpenAllYearController.submit(
-        fakePostRequest.withFormUrlEncodedBody("openAllYear" -> AnswerNo.name, "weeksPerYear" -> "33")
+        fakePostRequest.withFormUrlEncodedBody("areCaravansOpenAllYear" -> AnswerNo.name, "weeksPerYear" -> "33")
       )
       status(res) shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
@@ -84,7 +84,7 @@ class CaravansOpenAllYearControllerSpec extends TestBaseSpec {
 
     "return 400 on answer No and empty weeks field" in {
       val res = caravansOpenAllYearController.submit(
-        fakePostRequest.withFormUrlEncodedBody("openAllYear" -> AnswerNo.name)
+        fakePostRequest.withFormUrlEncodedBody("areCaravansOpenAllYear" -> AnswerNo.name)
       )
       status(res) shouldBe BAD_REQUEST
     }
