@@ -18,6 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -95,9 +96,7 @@
             }</p>
         </ul>
         <h2 class="govuk-heading-m">@messages("whatYouWillNeed.subheading2")</h2>
-        <p class="govuk-body">@{
-            messages("whatYouWillNeed.p10")
-        }</p>
+        <p class="govuk-body">@{HtmlContent(messages("whatYouWillNeed.p10")).asHtml}</p>
 
         @includes.continueSaveAsDraftButtons(govukButton)
 

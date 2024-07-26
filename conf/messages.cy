@@ -2452,7 +2452,7 @@ whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal
 whatYouWillNeed.l9 = Head office expenses
 whatYouWillNeed.p9 = If applicable
 whatYouWillNeed.subheading2 = If you do not have this information to hand
-whatYouWillNeed.p10 = Select the ‘Save as draft’ button and complete the declaration when you’re ready.
+whatYouWillNeed.p10 = Select <b>Save as draft</b> button and complete the declaration when you’re ready.
 
 
 # CHECK YOUR ANSWERS
