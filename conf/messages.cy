@@ -1664,6 +1664,18 @@ error.turnover.6045.caravans.single.subletByOperator.grossReceipts.negative = Gr
 error.caravans.single.subletByOperator.vans.required = Enter 0 if you do not have any single caravan vans sub-let by the operator in the year ending {0}
 error.caravans.single.subletByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
+turnover.6045.caravans.twin.ownedByOperator.heading = Twin-unit caravans owned by the operator and used for fleet hire
+turnover.6045.caravans.twin.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.twin.ownedByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.caravans.twin.ownedByOperator.help.link = Help with twin-unit caravans
+turnover.6045.caravans.twin.ownedByOperator.help.p1 = A twin-unit caravan is transported onto the site in no more than two parts which are then assembled by the means of bolts, clamps or other devices.
+turnover.6045.caravans.twin.ownedByOperator.help.p2 = A twin-unit caravan should be no longer than 20m, no wider than 6.8m, and no taller than 3.05m. It should also be capable of being moved by road.
+error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans owned by the operator in the year ending {0}
+error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.caravans.twin.ownedByOperator.vans.required = Enter 0 if you do not have any twin-unit caravan vans owned by the operator in the year ending {0}
+error.caravans.twin.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
+error.caravans.twin.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 
 
 turnover.6045.singleCaravansAgeCategories.heading = How old are the single static caravans on site?
