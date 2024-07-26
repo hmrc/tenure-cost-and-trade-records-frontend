@@ -14,10 +14,12 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 
 @import models.pages.Summary
 
@@ -27,11 +29,23 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+
+@forType = @{
+    request.sessionData.forType
+}
+
+    @heading = @{
+        if(forType == ForTypes.for6076) messages("areYouThirdParty6076.heading") else messages("areYouThirdParty.heading")
+    }
+
+    @showH1 = @{
+        if(forType == ForTypes.for6076) true else false
+    }
 
 @layout(
-  pageHeading = messages("areYouThirdParty.heading"),
-  showH1 = false,
+  pageHeading = heading,
+  showH1 = showH1,
   showSection = true,
   summary = Some(summary),
   sectionName = messages("label.section.connectionToTheProperty"),
@@ -41,6 +55,33 @@
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
 
+      @if(forType == ForTypes.for6076) {
+
+          <p class="govuk-body">@{
+              messages("areYouThirdParty6076.p1", tradingName)
+          }</p>
+
+          <p class="govuk-body">@{HtmlContent(messages("areYouThirdParty6076.yes", tradingName)).asHtml}</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+              <li>@{messages("areYouThirdParty6076.l1")}</li>
+              <li>@{messages("areYouThirdParty6076.l2")}</li>
+              <li>@{messages("areYouThirdParty6076.l3")}</li>
+              <li>@{messages("areYouThirdParty6076.l4")}</li>
+          </ul>
+
+              <p class="govuk-body">@{HtmlContent(messages("areYouThirdParty6076.no", tradingName)).asHtml}</p>
+
+
+          @includes.radioButtonsYesNo(
+              govukRadios,
+              theForm,
+              "areYouThirdParty",
+              messages("areYouThirdParty.label", tradingName),
+              classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
+          )
+
+      } else {
       @govukRadios(
           Radios(
               name = "areYouThirdParty",
@@ -56,7 +97,7 @@
                       value = Some("no"),
                       hint = Some(Hint(content = Text(messages("hint.areYouThirdParty.no", tradingName)))),
                   )),
-              errorMessage =  theForm.errors.asTextErrorMessageForField("areYouThirdParty"),
+              errorMessage = theForm.errors.asTextErrorMessageForField("areYouThirdParty"),
               fieldset = Option(Fieldset(
                   legend = Option(Legend(
                       content = Text(messages("areYouThirdParty.title", tradingName)),
@@ -66,6 +107,8 @@
               ))
           ).withFormField(theForm("areYouThirdParty"))
       )
+      }
+
 
       @includes.continueSaveAsDraftButtons(govukButton)
   }
