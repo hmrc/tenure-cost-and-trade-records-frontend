@@ -66,5 +66,15 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data rentPayable and detailsToQuestions submitted" in {
+      val res = doesTheRentPayableController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "rentPayable[]"      -> "otherProperty",
+          "detailsToQuestions" -> "Test content"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

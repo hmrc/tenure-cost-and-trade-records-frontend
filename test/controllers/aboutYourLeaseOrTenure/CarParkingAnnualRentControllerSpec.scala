@@ -17,9 +17,9 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -68,13 +68,24 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT /" should {
+  "CarParkingAnnualRentController SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = carParkingAnnualRentController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
-  }
 
+    "Redirect when form data annualRent and fixedRentFrom submitted" in {
+      val res = carParkingAnnualRentController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "annualRent"          -> "2200",
+          "fixedRentFrom.day"   -> "27",
+          "fixedRentFrom.month" -> "09",
+          "fixedRentFrom.year"  -> "2017"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+  }
 }

@@ -17,10 +17,11 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+import play.api.test.Helpers.POST
 
 /**
   * @author Yuriy Tumakha
@@ -73,6 +74,13 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = doesRentIncludeParkingController().submit(FakeRequest().withFormUrlEncodedBody())
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data doesRentIncludeParking submitted" in {
+      val res = doesRentIncludeParkingController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("doesRentIncludeParking" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

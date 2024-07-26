@@ -120,5 +120,16 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data currentRentFirstPaid submitted" in {
+      val res = currentRentFirstPaidController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "currentRentFirstPaid.day"   -> "27",
+          "currentRentFirstPaid.month" -> "09",
+          "currentRentFirstPaid.year"  -> "2017"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

@@ -77,5 +77,17 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data rentPayable and dateReview submitted" in {
+      val res = currentRentPayableWithin12MonthsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "rentPayable"      -> "yes",
+          "dateReview.day"   -> "27",
+          "dateReview.month" -> "09",
+          "dateReview.year"  -> "2027"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }
