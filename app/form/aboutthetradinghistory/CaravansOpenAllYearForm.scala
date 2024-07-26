@@ -32,9 +32,9 @@ object CaravansOpenAllYearForm {
   val caravansOpenAllYearForm: Form[(AnswersYesNo, Option[Int])] =
     Form(
       tuple(
-        "openAllYear"  -> createYesNoType("error.caravans.openAllYear.required"),
-        "weeksPerYear" -> mandatoryIfEqual(
-          "openAllYear",
+        "areCaravansOpenAllYear" -> createYesNoType("error.caravans.openAllYear.required"),
+        "weeksPerYear"           -> mandatoryIfEqual(
+          "areCaravansOpenAllYear",
           AnswerNo.name,
           weeksMapping(
             "error.caravans.weeksPerYear.required",

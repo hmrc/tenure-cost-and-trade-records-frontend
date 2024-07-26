@@ -41,11 +41,8 @@ object AccountingInformationUtil {
     val financialYearEndMonth = financialYear.months
 
     val currentFinancialYear =
-      if (now.isBefore(LocalDate.of(yearNow, financialYearEndMonth, financialYearEndDay))) {
-        yearNow
-      } else {
-        yearNow + 1
-      }
+      if now.isBefore(LocalDate.of(yearNow, financialYearEndMonth, financialYearEndDay)) then yearNow
+      else yearNow + 1
 
     val yearDifference = currentFinancialYear - firstOccupyYear
 
@@ -89,17 +86,15 @@ object AccountingInformationUtil {
     val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6045
 
     val turnoverSections6045 =
-      if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        originalTurnoverSections6045
-      } else if (isFinancialYearsListUnchanged) {
+      if isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged then originalTurnoverSections6045
+      else if isFinancialYearsListUnchanged then
         (originalTurnoverSections6045 zip financialYearsRequired(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
         }
-      } else {
+      else
         financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection6045(financialYearEnd = finYearEnd)
         }
-      }
 
     val updatedData = updateAboutTheTradingHistory(
       _.copy(
@@ -131,17 +126,15 @@ object AccountingInformationUtil {
     val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6076
 
     val turnoverSections6076 =
-      if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        originalTurnoverSections6076
-      } else if (isFinancialYearsListUnchanged) {
+      if isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged then originalTurnoverSections6076
+      else if isFinancialYearsListUnchanged then
         (originalTurnoverSections6076 zip financialYearsRequired(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
         }
-      } else {
+      else
         financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection6076(financialYearEnd = finYearEnd, tradingPeriod = 52)
         }
-      }
 
     val updatedData = updateAboutTheTradingHistory(
       _.copy(
@@ -164,11 +157,8 @@ object AccountingInformationUtil {
     isFinancialYearsListUnchanged: Boolean,
     aboutTheTradingHistory: AboutTheTradingHistory
   ): Option[CheckYourAnswersAboutTheTradingHistory] =
-    if (isFinancialYearsListUnchanged) {
-      aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
-    } else {
-      None
-    }
+    if isFinancialYearsListUnchanged then aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
+    else None
 
   def backLinkToFinancialYearEndDates(
     navigator: AboutTheTradingHistoryNavigator

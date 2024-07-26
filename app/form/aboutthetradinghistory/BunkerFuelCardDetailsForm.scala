@@ -26,7 +26,7 @@ import scala.util.Try
 object BunkerFuelCardDetailsForm {
 
   private val positiveBigDecimal: Constraint[BigDecimal] = Constraint("constraint.positive") { value =>
-    if (value >= 0) Valid else Invalid("error.handlingFee.mustBeNonNegative")
+    if value >= 0 then Valid else Invalid("error.handlingFee.mustBeNonNegative")
   }
 
   private def bigDecimalWithCustomError(errorMessage: String): Mapping[BigDecimal] =

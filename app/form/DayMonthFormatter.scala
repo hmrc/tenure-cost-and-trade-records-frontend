@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ class DayMonthFormatter(
     extends Formatter[DayMonthsDuration] {
 
   private val dayMonthFields = Seq("day", "month")
-  private val validationYear = if (allow29February) 2020 else 2021
+  private val validationYear = if allow29February then 2020 else 2021
 
   override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] = {
 
@@ -69,18 +69,17 @@ class DayMonthFormatter(
       case (Some(d), Some(m)) =>
         val day   = parseNumber(d, 1 to 31)
         val month = parseNumber(m, 1 to 12)
-        if (Seq(day, month).forall(_ > 0)) {
+        if Seq(day, month).forall(_ > 0) then
           validateDayMonth(day, month).left.map { errorKey =>
             Seq(FormError(dayKey, errorKey, Seq(fieldCapitalized, dayMonthFields)))
           }
-        } else {
+        else
           Left(
             Seq(
               Option.when(day == 0)(FormError(dayKey, "error.date.day.invalid")),
               Option.when(month == 0)(FormError(monthKey, "error.date.month.invalid"))
             ).flatten
           )
-        }
     }
   }
 

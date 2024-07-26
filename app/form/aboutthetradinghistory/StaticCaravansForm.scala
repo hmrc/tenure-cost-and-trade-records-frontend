@@ -31,7 +31,7 @@ object StaticCaravansForm {
   val staticCaravansForm: Form[AnswersYesNo] =
     Form(
       single(
-        "anyStaticLeisureCaravansOnSite" -> createYesNoType(
+        "staticCaravans" -> createYesNoType(
           "error.turnover.6045.anyStaticLeisureCaravansOnSite.required"
         )
       )

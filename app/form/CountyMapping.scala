@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ object CountyMapping {
 
     text
       .verifying(Errors.addressCountyRequired, county => county.nonEmpty)
-      .verifying(Errors.addressCountyLength, county => if (county.nonEmpty) validCountyLength(county) else true)
+      .verifying(Errors.addressCountyLength, county => if county.nonEmpty then validCountyLength(county) else true)
       .verifying(
         Errors.invalidCharAddressCounty,
-        county => if (county.nonEmpty && validCountyLength(county)) county.matches(invalidCharRegex) else true
+        county => if county.nonEmpty && validCountyLength(county) then county.matches(invalidCharRegex) else true
       )
   }
 

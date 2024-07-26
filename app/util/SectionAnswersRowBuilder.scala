@@ -44,11 +44,10 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
       SummaryListRow(
         key = Key(Text(messages(messageKey))),
         value = Value(
-          if (conditionalTextMapping.isEmpty) {
-            Text(answers.flatMap(getAnswerValue).getOrElse(""))
-          } else if (conditionalTextMapping.head._1 == "valueAsHtml") {
+          if conditionalTextMapping.isEmpty then Text(answers.flatMap(getAnswerValue).getOrElse(""))
+          else if conditionalTextMapping.head._1 == "valueAsHtml" then
             HtmlContent(answers.flatMap(getAnswerValue).getOrElse(""))
-          } else {
+          else
             val answerMsgKey       = answers.flatMap(getAnswerValue).getOrElse("")
             val conditionalTextMap = conditionalTextMapping.toMap
             HtmlContent(
@@ -57,7 +56,6 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
                 .flatMap(answers.flatMap)
                 .fold(messages(answerMsgKey))(text => s"${messages(answerMsgKey)}<br/>${Text(text).asHtml}")
             )
-          }
         ),
         actions = Some(
           Actions(items =
@@ -87,11 +85,8 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     editField: String,
     conditionalTextMapping: (String, T => Option[String])*
   ): Seq[SummaryListRow] =
-    if (answers.exists(condition)) {
-      row(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping*)
-    } else {
-      Seq.empty[SummaryListRow]
-    }
+    if answers.exists(condition) then row(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping*)
+    else Seq.empty[SummaryListRow]
 
   /**
     * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} if answer value is defined.
@@ -120,10 +115,9 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     editField: String,
     conditionalTextMapping: (String, T => Option[String])*
   ): Seq[SummaryListRow] =
-    if (answers.exists(condition))
+    if answers.exists(condition) then
       optionalRow(messageKey, getAnswerValue, editPage, editField, conditionalTextMapping*)
-    else
-      Seq.empty[SummaryListRow]
+    else Seq.empty[SummaryListRow]
 
   def nonCYArow(
     messageKey: String,
@@ -136,11 +130,10 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
       SummaryListRow(
         key = Key(Text(messages(messageKey))),
         value = Value(
-          if (conditionalTextMapping.isEmpty) {
-            Text(answers.flatMap(getAnswerValue).getOrElse(""))
-          } else if (conditionalTextMapping.head._1 == "valueAsHtml") {
+          if conditionalTextMapping.isEmpty then Text(answers.flatMap(getAnswerValue).getOrElse(""))
+          else if conditionalTextMapping.head._1 == "valueAsHtml" then
             HtmlContent(answers.flatMap(getAnswerValue).getOrElse(""))
-          } else {
+          else
             val answerMsgKey       = answers.flatMap(getAnswerValue).getOrElse("")
             val conditionalTextMap = conditionalTextMapping.toMap
             HtmlContent(
@@ -149,7 +142,6 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
                 .flatMap(answers.flatMap)
                 .fold(messages(answerMsgKey))(text => s"${messages(answerMsgKey)}<br/>${Text(text).asHtml}")
             )
-          }
         ),
         actions = Some(
           Actions(items =

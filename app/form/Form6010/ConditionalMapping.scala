@@ -47,7 +47,7 @@ case class IfElseMapping[T](
     this.copy(constraints = constraints ++ addConstraints.toSeq)
 
   def bind(data: Map[String, String]): Either[Seq[FormError], T] =
-    if (condition(data)) trueMapping.bind(data) else falseMapping.bind(data)
+    if condition(data) then trueMapping.bind(data) else falseMapping.bind(data)
 
   def unbind(value: T): Map[String, String] =
     trueMapping.unbind(value)
@@ -79,11 +79,8 @@ case class NonEmptyTextOrMapping(
     this.copy(constraints = constraints ++ addConstraints.toSeq)
 
   def bind(data: Map[String, String]): Either[Seq[FormError], String] =
-    if (data.get(fieldName).exists(_ != "")) {
-      wrapped.bind(data)
-    } else {
-      Left(Seq(FormError(wrapped.key, Seq(errorRequiredKey))))
-    }
+    if data.get(fieldName).exists(_ != "") then wrapped.bind(data)
+    else Left(Seq(FormError(wrapped.key, Seq(errorRequiredKey))))
 
   def unbind(value: String): Map[String, String] =
     wrapped.unbind(value)

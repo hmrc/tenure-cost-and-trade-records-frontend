@@ -16,7 +16,10 @@
 
 package models.submissions.aboutthetradinghistory
 
+import models.submissions.aboutthetradinghistory.Caravans.CaravanLettingType.{OwnedByOperator, SubletByOperator}
+import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
 import models.submissions.common.AnswersYesNo
+import navigation.identifiers.*
 import play.api.libs.json.{Json, OFormat}
 
 /**
@@ -55,5 +58,13 @@ object Caravans {
     case FleetHire extends CaravanHireType("fleetHire")
     case PrivateSublet extends CaravanHireType("privateSublet")
   end CaravanHireType
+
+  enum CaravansTradingPage(val pageId: Identifier, val unitType: CaravanUnitType, val lettingType: CaravanLettingType):
+    case SingleCaravansOwnedByOperator
+        extends CaravansTradingPage(SingleCaravansOwnedByOperatorId, Single, OwnedByOperator)
+    case SingleCaravansSublet extends CaravansTradingPage(SingleCaravansSubletId, Single, SubletByOperator)
+    case TwinCaravansOwnedByOperator extends CaravansTradingPage(TwinCaravansOwnedByOperatorId, Twin, OwnedByOperator)
+    case TwinCaravansSublet extends CaravansTradingPage(TwinCaravansSubletId, Twin, SubletByOperator)
+  end CaravansTradingPage
 
 }

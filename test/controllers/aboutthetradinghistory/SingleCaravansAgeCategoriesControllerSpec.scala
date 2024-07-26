@@ -23,8 +23,7 @@ import utils.TestBaseSpec
 
 class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
-  // TODO: Single caravans sub-let by operator to holidaymakers on behalf of private owners as fleet hire
-  private val previousPage = aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show().url
+  private val previousPage = aboutthetradinghistory.routes.SingleCaravansSubletController.show().url
 
   def singleCaravansAgeCategoriesController =
     new SingleCaravansAgeCategoriesController(

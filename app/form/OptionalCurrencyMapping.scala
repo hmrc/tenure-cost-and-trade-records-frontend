@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,17 +55,12 @@ object OptionalCurrencyMapping {
     val includedPartsSum = partOfRent + otherIncludedPartsSum
     val rent             = annualRent.getOrElse(BigDecimal(Long.MaxValue))
 
-    if (partOfRent < 0) {
-      Invalid(ValidationError("error.optCurrency.negative", errorTitle))
-    } else if (partOfRent > rent) {
+    if partOfRent < 0 then Invalid(ValidationError("error.optCurrency.negative", errorTitle))
+    else if partOfRent > rent then
       Invalid(ValidationError("error.optCurrency.graterThanAnnualRent", errorTitle, rent.asMoney))
-    } else if (includedPartsSum > rent) {
-      Invalid(
-        ValidationError("error.includedPartsSum.graterThanAnnualRent", includedPartsSum.asMoney, rent.asMoney)
-      )
-    } else {
-      Valid
-    }
+    else if includedPartsSum > rent then
+      Invalid(ValidationError("error.includedPartsSum.graterThanAnnualRent", includedPartsSum.asMoney, rent.asMoney))
+    else Valid
   }
 
 }

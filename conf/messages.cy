@@ -318,6 +318,16 @@ hint.areYouThirdParty.yes = Dewiswch ‘ydw’ os yw {0} wedi’ch contractio i 
 hint.areYouThirdParty.no = Dewiswch ‘nac ydw’ os ydych yn berchennog, cyfarwyddwr neu gyflogai uniongyrchol o {0}, neu os ydych yn llenwi’r datganiad hwn ar eu rhan mewn capasiti answyddogol.
 error.areYouThirdParty.missing = Dewiswch ‘ydw’ os ydych yn gweithredu ar ran y sefydliad
 
+areYouThirdParty.label = Are you a third party completing this declaration on behalf of {0}?
+areYouThirdParty6076.heading = Third Parties
+areYouThirdParty6076.p1 = We need to know if you are completing this declaration on behalf of {0} in an official capacity.
+areYouThirdParty6076.yes = Choose <b>Yes</b> if you have been contracted by {0} to complete this declaration. Examples of third parties include, but are not limited to:
+areYouThirdParty6076.l1 = agents
+areYouThirdParty6076.l2 = external accountants
+areYouThirdParty6076.l3 = solicitors
+areYouThirdParty6076.l4 = lawyers
+areYouThirdParty6076.no = Choose <b>No</b> if you are an owner, director, or direct employee of {0}. You should also choose <b>No</b> if you are completing this declaration on behalf of {0} in an unofficial capacity, as a favour for example.
+
 # VACANT PROPERTIES
 ############################
 vacantProperties.heading = Eiddo gwag
@@ -1645,6 +1655,16 @@ error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.negative = Gro
 error.caravans.single.ownedByOperator.vans.required = Enter 0 if you do not have any single caravan vans owned by the operator in the year ending {0}
 error.caravans.single.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
+turnover.6045.caravans.single.subletByOperator.heading = Single caravans sub-let by the operator to holidaymakers on behalf of private owners as fleet hire
+turnover.6045.caravans.single.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.single.subletByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+error.turnover.6045.caravans.single.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans sub-let by the operator in the year ending {0}
+error.turnover.6045.caravans.single.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.caravans.single.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.caravans.single.subletByOperator.vans.required = Enter 0 if you do not have any single caravan vans sub-let by the operator in the year ending {0}
+error.caravans.single.subletByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
+error.caravans.single.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
+
 
 turnover.6045.singleCaravansAgeCategories.heading = How old are the single static caravans on site?
 turnover.6045.singleCaravansAgeCategories.p1 = You must state the total number of single static caravans in each age category.
@@ -2442,7 +2462,7 @@ whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal
 whatYouWillNeed.l9 = Head office expenses
 whatYouWillNeed.p9 = If applicable
 whatYouWillNeed.subheading2 = If you do not have this information to hand
-whatYouWillNeed.p10 = Select the ‘Save as draft’ button and complete the declaration when you’re ready.
+whatYouWillNeed.p10 = Select <b>Save as draft</b> button and complete the declaration when you’re ready.
 
 
 # CHECK YOUR ANSWERS
