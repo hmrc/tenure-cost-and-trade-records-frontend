@@ -2321,6 +2321,8 @@ pitchesForGlamping.heading = Glamping pitches for bell tents, yurts, tipis, shep
 ############
 
 rallyAreas.heading = Rally areas not included previously
+error.rallyAreas.areaInHectares.required = Enter 0 if you did not have any rally areas in the year ending {0}
+error.rallyAreas.areaInHectares.range = Areas in hectares in the year ending {0} must be a number, for example 100 or 100.00
 
 #TENTING PITCHES TRADING COMMON LABELS
 ######################################

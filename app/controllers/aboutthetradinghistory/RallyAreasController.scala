@@ -18,9 +18,9 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesTradingDataForm
+import form.aboutthetradinghistory.RallyAreasTradingDataForm.rallyAreasTradingDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{RallyAreasTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.RallyAreasId
 import play.api.i18n.I18nSupport
@@ -47,8 +47,8 @@ class RallyAreasController @Inject() (
 
       Ok(
         view(
-          tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(_.rallyAreas getOrElse TentingPitchesTradingData())
+          rallyAreasTradingDataForm(years).fill(
+            turnoverSections6045.map(_.rallyAreas getOrElse RallyAreasTradingData())
           ),
           getBackLink
         )
@@ -60,8 +60,8 @@ class RallyAreasController @Inject() (
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[Seq[TentingPitchesTradingData]](
-        tentingPitchesTradingDataForm(years),
+      continueOrSaveAsDraft[Seq[RallyAreasTradingData]](
+        rallyAreasTradingDataForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =

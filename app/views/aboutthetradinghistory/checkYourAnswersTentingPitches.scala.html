@@ -152,7 +152,7 @@
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.rallyAreas.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.rallyAreas.flatMap(_.grossReceipts)),
-            answer("tentingPitches.common.areaInHectares", _.rallyAreas.flatMap(_.numberOfPitches).map(_.toString).getOrElse("")),
+            answer("tentingPitches.common.areaInHectares", _.rallyAreas.flatMap(_.areaInHectares).map(_.toString).getOrElse("")),
         )
     }
 

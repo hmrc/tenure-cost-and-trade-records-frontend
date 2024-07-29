@@ -318,6 +318,16 @@ object MappingSupport {
       )
   }
 
+  def rallyAreasMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
+    text
+      .verifying(messages(s"error.rallyAreas.areaInHectares.range", year), s => Try(BigDecimal(s)).isSuccess)
+      .transform[BigDecimal](
+        s => BigDecimal(s),
+        _.toString
+      )
+      .verifying(messages(s"error.rallyAreas.areaInHectares.range", year), _ >= 0)
+  ).verifying(messages(s"error.rallyAreas.areaInHectares.required", year), _.isDefined)
+
   private val salesMax = BigDecimal(1000000000000L)
 
   def turnoverSalesMappingWithYear(field: String, year: String)(implicit
