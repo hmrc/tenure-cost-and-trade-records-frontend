@@ -25,6 +25,7 @@ import navigation.identifiers._
 import play.api.Logging
 import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
+import controllers.toOpt
 
 import javax.inject.Inject
 
@@ -204,6 +205,18 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for tenting pitches all year")
     }
 
+  private def grossReceiptsRouting: Session => Call = answers =>
+    val intermittent  = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+    intermittent match {
+      case Some("intermittent") => aboutthetradinghistory.routes.OtherIncomeController.show()
+      case Some("baseload") => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()
+      case _ =>
+        logger.warn(
+          s"Navigation for tenting pitches on site reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for tenting pitches all year")
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId               -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                      -> financialYearEndRouting,
@@ -235,7 +248,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
     ElectricityGeneratedId                      -> (_ => aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
-    GrossReceiptsExcludingVatId                 -> (_ => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()),
+    GrossReceiptsExcludingVatId                 -> grossReceiptsRouting,
     OtherIncomeId                               -> (_ => aboutthetradinghistory.routes.CostOfSales6076Controller.show()),
     CostOfSales6076Id                           -> (_ => aboutthetradinghistory.routes.StaffCostsController.show()),
     StaffCostsId                                -> (_ => aboutthetradinghistory.routes.PremisesCostsController.show()),

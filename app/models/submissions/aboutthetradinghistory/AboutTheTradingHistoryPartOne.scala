@@ -25,6 +25,7 @@ case class AboutTheTradingHistoryPartOne(
   // 6076
   whatYouWillNeed: Option[String] = None, // Added July 2024
   turnoverSections6076: Option[Seq[TurnoverSection6076]] = None,
+  turnoverSectionsIntermittent6076: Option[Seq[TurnoverSectionIntermittent6076]] = None,
   otherIncomeDetails: Option[String] = None,
   otherOperationalExpensesDetails: Option[String] = None,
   otherSalesDetails: Option[String] = None,
