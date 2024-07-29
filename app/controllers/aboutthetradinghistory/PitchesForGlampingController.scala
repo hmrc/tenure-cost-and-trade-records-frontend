@@ -22,19 +22,19 @@ import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesT
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{TentingPitchesTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.PitchesForCaravansId
+import navigation.identifiers.PitchesForGlampingId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.pitchesForCaravans
+import views.html.aboutthetradinghistory.pitchesForGlamping
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
-class PitchesForCaravansController @Inject() (
+class PitchesForGlampingController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: pitchesForCaravans,
+  view: pitchesForGlamping,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -48,7 +48,7 @@ class PitchesForCaravansController @Inject() (
       Ok(
         view(
           tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(_.pitchesForCaravans getOrElse TentingPitchesTradingData())
+            turnoverSections6045.map(_.pitchesForGlamping getOrElse TentingPitchesTradingData())
           ),
           getBackLink
         )
@@ -66,7 +66,7 @@ class PitchesForCaravansController @Inject() (
         success => {
           val updatedSections =
             (success zip turnoverSections6045).map { case (data, previousSection) =>
-              previousSection.copy(pitchesForCaravans = Some(data))
+              previousSection.copy(pitchesForGlamping = Some(data))
             }
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
@@ -76,7 +76,7 @@ class PitchesForCaravansController @Inject() (
           )
 
           session.saveOrUpdate(updatedData).map { _ =>
-            Redirect(navigator.nextPageForTentingPitches(PitchesForCaravansId, updatedData).apply(updatedData))
+            Redirect(navigator.nextPageForTentingPitches(PitchesForGlampingId, updatedData).apply(updatedData))
           }
         }
       )
@@ -95,7 +95,7 @@ class PitchesForCaravansController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
-      case _     => controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show().url
+      case _     => controllers.aboutthetradinghistory.routes.PitchesForCaravansController.show().url
     }
 
 }

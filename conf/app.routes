@@ -248,6 +248,12 @@ POST        /tenting-pitches-all-year                               controllers.
 GET         /pitches-for-caravans                                   controllers.aboutthetradinghistory.PitchesForCaravansController.show()
 POST        /pitches-for-caravans                                   controllers.aboutthetradinghistory.PitchesForCaravansController.submit()
 
+GET         /pitches-for-glamping                                   controllers.aboutthetradinghistory.PitchesForGlampingController.show()
+POST        /pitches-for-glamping                                   controllers.aboutthetradinghistory.PitchesForGlampingController.submit()
+
+GET         /rally-areas                                            controllers.aboutthetradinghistory.RallyAreasController.show()
+POST        /rally-areas                                            controllers.aboutthetradinghistory.RallyAreasController.submit()
+
 GET         /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.show()
 POST        /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.submit()
 

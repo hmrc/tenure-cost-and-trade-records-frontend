@@ -15,11 +15,10 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import views.html.aboutthetradinghistory.tentingPitchesTradingDataTable
+@import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
 
 
 @this(
@@ -36,30 +35,8 @@
 
 @(form: Form[Seq[TentingPitchesTradingData]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-
-@rowLabel(labelKey: String) = {
-    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
-}
-
-@turnoverRow(formField: String, labelKey: String, prefix: Option[PrefixOrSuffix]) = @{
-    Seq(
-        TableRow(
-            content = HtmlContent(rowLabel(labelKey))
-        ),
-        TableRow(
-            content = HtmlContent(
-                govukInput(
-                    Input(
-                        prefix = prefix,
-                        attributes = Map(
-                            "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
-                        )
-                    ).withFormField(form(formField))))))
-}
-
 @layout(
-    pageHeading = messages("pitchesForCaravans.heading"),
+    pageHeading = messages("pitchesForGlamping.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -68,15 +45,15 @@
     theForm = form
 ) {
 
-  <p class="govuk-body">
-      @messages("tentingPitches.common.VAT")&nbsp<span>
-      @messages("tentingPitches.common.stateTheNumber")
-  </span>
-  </p>
+    <p class="govuk-body">
+        @messages("tentingPitches.common.VAT")&nbsp<span>
+    @messages("tentingPitches.common.stateTheNumber")
+    </span>
+    </p>
 
-  @govukInsetText(InsetText(content = Text(messages("tentingPitches.common.inset"))))
+    @govukInsetText(InsetText(content = Text(messages("tentingPitches.common.inset"))))
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.PitchesForCaravansController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.PitchesForGlampingController.submit()) {
 
         @dataTable(form)
         @includes.continueSaveAsDraftButtons(govukButton)
