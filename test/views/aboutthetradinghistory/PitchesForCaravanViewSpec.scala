@@ -17,22 +17,22 @@
 package views.aboutthetradinghistory
 
 import actions.SessionRequest
-import form.aboutthetradinghistory.PitchesForCaravansForm
-import models.submissions.aboutthetradinghistory.PitchesForCaravans
+import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesTradingDataForm
+import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[PitchesForCaravans]] {
+class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[TentingPitchesTradingData]] {
 
   val messageKeyPrefix = "pitchesForCaravans"
   val sessionRequest   = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val form: Form[Seq[PitchesForCaravans]] =
-    PitchesForCaravansForm.pitchesForCaravansForm(Seq("2026", "2025", "2024"))(messages)
+  val form: Form[Seq[TentingPitchesTradingData]] =
+    tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(messages)
 
   def createView = () => pitchesForCaravansView(form, "")(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[PitchesForCaravans]]) =>
+  def createViewUsingForm = (form: Form[Seq[TentingPitchesTradingData]]) =>
     pitchesForCaravansView(form, "")(sessionRequest, messages)
 
   "pitches for caravans view" should {

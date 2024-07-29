@@ -37,7 +37,9 @@ case class TurnoverSection6045(
   grossReceiptsLettingUnits: Option[GrossReceiptsLettingUnits] = None,
   grossReceiptsSubLetUnits: Option[GrossReceiptsSubLetUnits] = None,
   // 3.2.0 Touring and tenting pitches
-  pitchesForCaravans: Option[PitchesForCaravans] = None
+  pitchesForCaravans: Option[TentingPitchesTradingData] = None,
+  pitchesForGlamping: Option[TentingPitchesTradingData] = None,
+  rallyAreas: Option[TentingPitchesTradingData] = None
   // 3.3.0 Additional activities
 )
 

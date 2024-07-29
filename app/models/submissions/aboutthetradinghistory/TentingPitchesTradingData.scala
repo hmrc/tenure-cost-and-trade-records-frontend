@@ -18,13 +18,13 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
 
-case class PitchesForCaravans(
+case class TentingPitchesTradingData(
   tradingPeriod: Int = 52,
   grossReceipts: Option[BigDecimal] = None,
   numberOfPitches: Option[Int] = None
 )
 
-object PitchesForCaravans {
-  implicit val format: OFormat[PitchesForCaravans] = Json.format
+object TentingPitchesTradingData {
+  implicit val format: OFormat[TentingPitchesTradingData] = Json.format
 
 }
