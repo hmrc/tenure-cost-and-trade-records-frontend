@@ -70,6 +70,13 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data connectedToLandlordDetails submitted" in {
+      val res = connectedToLandlordDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("connectedToLandlordDetails" -> "Test content")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "Connected to landlord details form" should {

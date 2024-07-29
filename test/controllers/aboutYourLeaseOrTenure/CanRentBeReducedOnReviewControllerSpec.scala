@@ -92,6 +92,13 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data canRentBeReducedOnReview submitted" in {
+      val res = canRentBeReducedOnReviewController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("canRentBeReducedOnReview" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "Can rent be reduced on review form" should {
@@ -104,12 +111,10 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: ErrorKey = new ErrorKey
-
+    val errorKey: ErrorKey                = new ErrorKey
     class ErrorKey {
       val canRentBeReducedOnReview: String = "canRentBeReducedOnReview"
     }
-
     val baseFormData: Map[String, String] = Map("canRentBeReducedOnReview" -> "yes")
   }
 }

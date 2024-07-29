@@ -167,4 +167,16 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
+
+  "Redirect when form data doesRentIncludeParking submitted" in {
+    val res = howIsCurrentRentFixedController().submit(
+      FakeRequest(POST, "/").withFormUrlEncodedBody(
+        "howIsCurrentRentFixed"    -> "newLeaseAgreement",
+        "rentActuallyAgreed.day"   -> "27",
+        "rentActuallyAgreed.month" -> "09",
+        "rentActuallyAgreed.year"  -> "2017"
+      )
+    )
+    status(res) shouldBe SEE_OTHER
+  }
 }
