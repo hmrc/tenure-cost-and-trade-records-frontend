@@ -17,22 +17,46 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import views.html.aboutthetradinghistory.tentingPitchesTradingDataTable
-@import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
+@import models.submissions.aboutthetradinghistory.RallyAreasTradingData
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 
 @this(
+
         layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
         dateUtil: DateUtilLocalised,
-        govukInsetText: GovukInsetText,
-        dataTable: tentingPitchesTradingDataTable
+        govukInsetText: GovukInsetText
+
 )
 
 
-@(form: Form[Seq[TentingPitchesTradingData]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[RallyAreasTradingData]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@rowLabel(labelKey: String) = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
+}
+
+@turnoverRow(formField: String, labelKey: String, prefix: Option[PrefixOrSuffix]) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        prefix = prefix,
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))))))
+}
+
+
 
 @layout(
     pageHeading = messages("rallyAreas.heading"),
@@ -54,7 +78,55 @@
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.RallyAreasController.submit()) {
 
-        @dataTable(form)
+
+
+
+
+        <table class="hmrc-responsive-table govuk-!-width-full">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("tentingPitches.common.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("tentingPitches.common.tradingPeriod"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "2",
+                                                "aria-label" -> messages("tentingPitches.common.tradingPeriod")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("label.weeks"))
+                                            ))
+                                        ).withFormField(form(s"rallyAreas[$idx].weeks")))
+                                    )
+                                )
+                            ),
+                            turnoverRow(
+                                s"rallyAreas[$idx].grossReceipts",
+                                "tentingPitches.common.grossReceipts",
+                                PrefixOrSuffix(content = Text(messages("label.pound")))),
+                            turnoverRow(
+                                s"rallyAreas[$idx].areasInHectares",
+                                "tentingPitches.common.areaInHectares",
+                                None))))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 

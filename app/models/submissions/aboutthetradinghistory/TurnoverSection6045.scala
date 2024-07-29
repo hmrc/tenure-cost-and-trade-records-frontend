@@ -39,7 +39,7 @@ case class TurnoverSection6045(
   // 3.2.0 Touring and tenting pitches
   pitchesForCaravans: Option[TentingPitchesTradingData] = None,
   pitchesForGlamping: Option[TentingPitchesTradingData] = None,
-  rallyAreas: Option[TentingPitchesTradingData] = None
+  rallyAreas: Option[RallyAreasTradingData] = None
   // 3.3.0 Additional activities
 )
 
