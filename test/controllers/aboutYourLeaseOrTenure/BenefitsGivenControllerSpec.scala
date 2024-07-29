@@ -24,6 +24,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
+import play.api.test.*
+import play.api.test.Helpers.*
+
 class BenefitsGivenControllerSpec extends TestBaseSpec {
 
   import TestData._
@@ -67,9 +70,16 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
   "BenefitsGivenController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = benefitsGivenController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+        FakeRequest(POST, "/").withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = benefitsGivenController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("benefitsGiven" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

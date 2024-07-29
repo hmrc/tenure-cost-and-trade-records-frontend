@@ -17,23 +17,23 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport.{mappingPerYear, numberOfPitches, tradingPeriodWeeks, turnoverSalesMappingWithYear}
-import models.submissions.aboutthetradinghistory.PitchesForCaravans
+import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
 import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object PitchesForCaravansForm {
+object TentingPitchesTradingDataForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[PitchesForCaravans] =
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[TentingPitchesTradingData] =
     mapping(
       "weeks"           -> tradingPeriodWeeks(year),
       "grossReceipts"   -> turnoverSalesMappingWithYear("tentingPitches.grossReceipts", year),
       "numberOfPitches" -> numberOfPitches(year)
-    )(PitchesForCaravans.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )(TentingPitchesTradingData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def pitchesForCaravansForm(
+  def tentingPitchesTradingDataForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[PitchesForCaravans]] =
+  )(implicit messages: Messages): Form[Seq[TentingPitchesTradingData]] =
     Form {
       mappingPerYear(years, (year, idx) => s"tentingPitches[$idx]" -> columnMapping(year))
     }

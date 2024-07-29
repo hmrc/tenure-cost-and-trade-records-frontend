@@ -95,16 +95,22 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for PremisesCosts page" in {
       assert(PremisesCostsId.toString.equals("premisesCostsPage"))
     }
-    "Identifier for tentingPitchesOnSiteId page" in {
+    "Identifier for tenting Pitches On Site page" in {
       assert(TentingPitchesOnSiteId.toString.equals("tentingPitchesOnSitePage"))
     }
-    "Identifier for tentingPitchesAllYearId page" in {
+    "Identifier for tenting Pitches All Year page" in {
       assert(TentingPitchesAllYearId.toString.equals("tentingPitchesAllYearPage"))
     }
-    "Identifier for pitches for caravansId page" in {
+    "Identifier for pitches for caravans page" in {
       assert(PitchesForCaravansId.toString.equals("pitchesForCaravansPage"))
     }
-    "Identifier for CheckYourAnswersTentingPitchesId page" in {
+    "Identifier for pitches for glamping  page" in {
+      assert(PitchesForGlampingId.toString.equals("pitchesForGlampingPage"))
+    }
+    "Identifier for rally areas  page" in {
+      assert(RallyAreasId.toString.equals("rallyAreasPage"))
+    }
+    "Identifier for Check Your Answers Tenting Pitches page" in {
       assert(CheckYourAnswersTentingPitchesId.toString.equals("checkYourAnswersTentingPitchesPage"))
     }
     "Identifier for check your answers about the trading history page" in {

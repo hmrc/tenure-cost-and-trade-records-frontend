@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
-  def connectionToThePropertyController(
+  def currentAnnualRentController(
     forType: String = ForTypes.for6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new CurrentAnnualRentController(
@@ -38,7 +38,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
   "CurrentAnnualRentController GET /" should {
     "return 200 and HTML with Current Annual Rent in the session" in {
-      val result = connectionToThePropertyController().show(fakeRequest)
+      val result = currentAnnualRentController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -48,7 +48,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Connected To Landlord Yes in the session for 6011" in {
-      val controller = connectionToThePropertyController(ForTypes.for6011)
+      val controller = currentAnnualRentController(ForTypes.for6011)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -59,8 +59,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Connected To Landlord No in the session for 6011" in {
-      val controller =
-        connectionToThePropertyController(ForTypes.for6011, Some(prefilledAboutLeaseOrAgreementPartOneNo))
+      val controller = currentAnnualRentController(ForTypes.for6011, Some(prefilledAboutLeaseOrAgreementPartOneNo))
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -71,7 +70,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Connected To Landlord in the session for 6011" in {
-      val controller = connectionToThePropertyController(ForTypes.for6011, None)
+      val controller = currentAnnualRentController(ForTypes.for6011, None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -84,10 +83,17 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
   "CurrentAnnualRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = connectionToThePropertyController().submit(
+      val res = currentAnnualRentController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data currentAnnualRent submitted" in {
+      val res = currentAnnualRentController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("currentAnnualRent" -> "1234")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }

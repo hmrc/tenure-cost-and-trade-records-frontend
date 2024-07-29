@@ -70,6 +70,17 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data leaseBegin and grantedFor submitted" in {
+      val res = currentLeaseOrAgreementBeginController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "leaseBegin.month" -> "09",
+          "leaseBegin.year"  -> "2017",
+          "grantedFor"       -> "1 year"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "About your trading history form" should {
@@ -93,21 +104,28 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
 
       mustContainError(errorKey.occupyYear, "error.date.mustInclude", form)
     }
+
+    "error if grantedFor given is missing" in {
+      val formData = baseFormData - errorKey.grantedFor
+      val form     = currentLeaseOrAgreementBeginForm(messages).bind(formData)
+
+      mustContainError(errorKey.grantedFor, "error.grantedFor.required", form)
+    }
   }
 
   object TestData {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
-      val occupyMonth        = "leaseBegin.month"
-      val occupyYear         = "leaseBegin.year"
-      val financialYearDay   = "financialYear.day"
-      val financialYearMonth = "financialYear.month"
+      val occupyMonth = "leaseBegin.month"
+      val occupyYear  = "leaseBegin.year"
+      val grantedFor  = "grantedFor"
     }
 
     val baseFormData: Map[String, String] = Map(
       "leaseBegin.month" -> "9",
-      "leaseBegin.year"  -> "2017"
+      "leaseBegin.year"  -> "2017",
+      "grantedFor"       -> "1 year"
     )
   }
 }
