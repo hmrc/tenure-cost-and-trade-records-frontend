@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
 
 package models.submissions.aboutthetradinghistory
 
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
-case class OtherHolidayAccommodation(
-  otherHolidayAccommodation: Option[AnswersYesNo] = None,
-  otherHolidayAccommodationDetails: Option[OtherHolidayAccommodationDetails] = None,
-  totalSiteCapacity: Option[TotalSiteCapacity] = None,
-  checkYourAnswersOtherHolidayAccommodation: Option[CheckYourAnswersOtherHolidayAccommodation] = None
-)
+case class TotalSiteCapacity(
+  availableForLetting: Int = 0,
+  occupiedBySeasonalStuff: Int = 0,
+  privatelyOwned: Int = 0
+) {
+  def total: Int = Seq(availableForLetting, occupiedBySeasonalStuff, privatelyOwned).sum
+}
 
-object OtherHolidayAccommodation {
-  implicit val format: OFormat[OtherHolidayAccommodation] = Json.format
+object TotalSiteCapacity {
+  implicit val format: OFormat[TotalSiteCapacity] = Json.format
 }

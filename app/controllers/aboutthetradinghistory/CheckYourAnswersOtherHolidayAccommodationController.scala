@@ -85,5 +85,9 @@ class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
+    answers.aboutTheTradingHistoryPartOne.flatMap(
+      _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation.map(_.name))
+    ) match
+      case Some(s) if s == "yes" => controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
+      case _                     => controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
 }
