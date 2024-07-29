@@ -28,7 +28,7 @@ object RallyAreasTradingDataForm {
     mapping(
       "weeks"           -> tradingPeriodWeeks(year),
       "grossReceipts"   -> turnoverSalesMappingWithYear("tentingPitches.grossReceipts", year),
-      "numberOfPitches" -> rallyAreasMapping(year)
+      "areasInHectares" -> rallyAreasMapping(year)
     )(RallyAreasTradingData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def rallyAreasTradingDataForm(
