@@ -122,10 +122,9 @@ abstract class CaravansTrading6045Controller(
     tradingPage match {
       case SingleCaravansOwnedByOperator => routes.SingleCaravansOwnedByOperatorController.submit()
       case SingleCaravansSublet          => routes.SingleCaravansSubletController.submit()
-      case TwinCaravansOwnedByOperator   =>
-        routes.SingleCaravansOwnedByOperatorController.submit() // TODO: TwinCaravansOwnedByOperatorController
+      case TwinCaravansOwnedByOperator   => routes.TwinUnitCaravansOwnedByOperatorController.submit()
       case TwinCaravansSublet            =>
-        routes.SingleCaravansOwnedByOperatorController.submit() // TODO: TwinCaravansSubletController
+        routes.CheckYourAnswersAboutTheTradingHistoryController.submit() // TODO: TwinCaravansSubletController
     }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
@@ -137,8 +136,7 @@ abstract class CaravansTrading6045Controller(
           case SingleCaravansOwnedByOperator => routes.GrossReceiptsCaravanFleetHireController.show()
           case SingleCaravansSublet          => routes.SingleCaravansOwnedByOperatorController.show()
           case TwinCaravansOwnedByOperator   => routes.SingleCaravansSubletController.show()
-          case TwinCaravansSublet            =>
-            routes.GrossReceiptsCaravanFleetHireController.show() // TODO: TwinCaravansOwnedByOperatorController
+          case TwinCaravansSublet            => routes.TwinUnitCaravansOwnedByOperatorController.show()
         }
     }).url
 

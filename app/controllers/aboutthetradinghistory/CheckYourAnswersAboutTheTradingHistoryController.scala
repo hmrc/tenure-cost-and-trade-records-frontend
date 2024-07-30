@@ -62,7 +62,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CheckYourAnswersAboutTheTradingHistory](
       checkYourAnswersAboutTheTradingHistoryForm,
       formWithErrors =>
@@ -101,7 +101,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
             .contains(AnswerYes)
         )
           // TODO: What is the current annual pitch fee for a single-unit static caravan
-          controllers.aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show().url
+          controllers.aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show().url
         else
           controllers.aboutthetradinghistory.routes.StaticCaravansController.show().url
       case ForTypes.for6076                                       =>

@@ -96,9 +96,9 @@
     <p class="govuk-body">@messages(messageKey)</p>
 }
 
-@twoParagraphs(messageKeyP1: String, messageKeyP2: String) = @{
-    paragraph(messageKeyP1)
-    paragraph(messageKeyP2)
+@twoParagraphs(messageKeyP1: String, messageKeyP2: String) = {
+    @paragraph(messageKeyP1)
+    @paragraph(messageKeyP2)
 }
 
 @helpContent = @{
