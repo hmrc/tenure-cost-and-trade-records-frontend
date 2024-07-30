@@ -1,0 +1,145 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.TotalSiteCapacity
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtilLocalised
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        dateUtil: DateUtilLocalised
+)
+
+
+@(form: Form[TotalSiteCapacity], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@totalHeading = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalSiteCapacity.total")</span></p>
+}
+
+@totalContent = {
+    <span
+    data-total-is-money="false"
+    data-total-prefix=""
+    data-total-items="availableForLetting,occupiedBySeasonalStuff,privatelyOwned">
+        @form.value.fold("")(_.total)
+    </span>
+}
+
+@layout(
+    pageHeading = messages("totalSiteCapacity.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("totalSiteCapacity.p1")</p>
+    @govukInsetText(InsetText(
+        content = Text(messages("totalSiteCapacity.inset"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.submit()) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("totalSiteCapacity.category"))),
+                            HeadCell(content = Text(messages("totalSiteCapacity.numberOfUnits")))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("totalSiteCapacity.availableForLetting"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "5",
+                                                "aria-label" -> messages("totalSiteCapacity.availableForLetting")
+                                            )
+                                            ).withFormField(form(s"availableForLetting")))
+                                    )
+                                )
+                            ),
+                            Seq(
+                                    TableRow(
+                                        content = Text(messages("totalSiteCapacity.occupiedBySeasonalStuff"))
+                                    ),
+                                    TableRow(
+                                        content = HtmlContent(
+                                            govukInput(Input(
+                                                classes = "govuk-input--width-2",
+                                                attributes = Map(
+                                                    "maxlength" -> "5",
+                                                    "aria-label" -> messages("totalSiteCapacity.occupiedBySeasonalStuff")
+                                                )
+                                            ).withFormField(form(s"occupiedBySeasonalStuff")))
+                                    )
+                                )
+                            ),
+                            Seq(
+                                    TableRow(
+                                        content = Text(messages("totalSiteCapacity.privatelyOwned"))
+                                    ),
+                                    TableRow(
+                                        content = HtmlContent(
+                                            govukInput(Input(
+                                                classes = "govuk-input--width-2",
+                                                attributes = Map(
+                                                    "maxlength" -> "5",
+                                                    "aria-label" -> messages("totalSiteCapacity.privatelyOwned")
+                                                )
+                                            ).withFormField(form(s"privatelyOwned")))
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content =  HtmlContent(totalHeading)
+                                ),
+                                TableRow(
+                                    content = HtmlContent(totalContent)
+                                )
+                            )
+                        )
+                    ))
+                </td>
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}
