@@ -33,13 +33,13 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CostOfSales6076Controller @Inject() (
-                                            mcc: MessagesControllerComponents,
-                                            navigator: AboutTheTradingHistoryNavigator,
-                                            view: costOfSales6076,
-                                            withSessionRefiner: WithSessionRefiner,
-                                            @Named("session") val session: SessionRepo
-                                          )(implicit ec: ExecutionContext)
-  extends FORDataCaptureController(mcc)
+  mcc: MessagesControllerComponents,
+  navigator: AboutTheTradingHistoryNavigator,
+  view: costOfSales6076,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -91,8 +91,8 @@ class CostOfSales6076Controller @Inject() (
   }
 
   private def runWithSessionCheck(
-                                   action: Seq[TurnoverSection6076] => Future[Result]
-                                 )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+    action: Seq[TurnoverSection6076] => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)

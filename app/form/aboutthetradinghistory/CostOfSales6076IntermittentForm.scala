@@ -26,21 +26,27 @@ import play.api.i18n.Messages
 
 object CostOfSales6076IntermittentForm {
 
-  private def sumIntermittentMapping(year: String)(implicit messages: Messages): Mapping[CostOfSales6076IntermittentSum] =
+  private def sumIntermittentMapping(year: String)(implicit
+    messages: Messages
+  ): Mapping[CostOfSales6076IntermittentSum] =
     mapping(
-      "importedPower"   -> costOfSalesMapping("costOfSales6076.importedPower", year),
-      "TNuoS"           -> costOfSalesMapping("costOfSales6076.TNuoS", year),
-      "BSuoS"           -> costOfSalesMapping("costOfSales6076.BSuoS", year),
-      "otherSales"      -> costOfSalesMapping("costOfSales6076.otherSales", year)
+      "importedPower" -> costOfSalesMapping("costOfSales6076.importedPower", year),
+      "TNuoS"         -> costOfSalesMapping("costOfSales6076.TNuoS", year),
+      "BSuoS"         -> costOfSalesMapping("costOfSales6076.BSuoS", year),
+      "otherSales"    -> costOfSalesMapping("costOfSales6076.otherSales", year)
     )(CostOfSales6076IntermittentSum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def costOfSales6076IntermittentMapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[CostOfSales6076IntermittentSum]] =
-    mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
+  def costOfSales6076IntermittentMapping(years: Seq[String])(implicit
+    messages: Messages
+  ): Mapping[Seq[CostOfSales6076IntermittentSum]] =
+    mappingPerYear(years, (year, idx) => s"[$idx]" -> sumIntermittentMapping(year))
 
-  def costOfSales6076IntermittentForm(years: Seq[String])(implicit messages: Messages): Form[(Seq[CostOfSales6076IntermittentSum], String)] =
+  def costOfSales6076IntermittentForm(
+    years: Seq[String]
+  )(implicit messages: Messages): Form[(Seq[CostOfSales6076IntermittentSum], String)] =
     Form {
       tuple(
-        "costOfSales6076Intermittent"   -> costOfSales6076IntermittentMapping(years),
+        "costOfSales6076"   -> costOfSales6076IntermittentMapping(years),
         "otherSalesDetails" -> mandatoryStringIfNonZeroSum(
           ".otherSales",
           "error.costOfSales6076Intermittent.details.required"

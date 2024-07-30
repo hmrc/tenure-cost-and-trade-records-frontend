@@ -27,6 +27,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.otherIncome6076
+import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -106,13 +107,29 @@ class OtherIncomeController @Inject() (
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "IES" =>
-        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-      case _     =>
-        aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
+    val intermittentCheck =
+      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+
+    intermittentCheck match {
+      case Some("intermittent") =>
+        navigator.from match {
+          case "CYA" =>
+            controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          case "IES" =>
+            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+          case _     =>
+            aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show().url
+        }
+      case Some("baseload")     =>
+        navigator.from match {
+          case "CYA" =>
+            controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          case "IES" =>
+            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+          case _     =>
+            aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
+        }
+      case _                    => controllers.routes.TaskListController.show().url
     }
 
 }

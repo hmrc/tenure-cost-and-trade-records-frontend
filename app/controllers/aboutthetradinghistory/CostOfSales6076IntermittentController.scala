@@ -20,9 +20,9 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.CostOfSales6076IntermittentForm.costOfSales6076IntermittentForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{CostOfSales6076IntermittentSum, TurnoverSectionIntermittent6076}
+import models.submissions.aboutthetradinghistory.{CostOfSales6076IntermittentSum, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.CostOfSales6076Id
+import navigation.identifiers.{CostOfSales6076Id, CostOfSales6076IntermittentId}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
@@ -32,20 +32,20 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CostOfSales6076IntermittentController @Inject()(
-                                            mcc: MessagesControllerComponents,
-                                            navigator: AboutTheTradingHistoryNavigator,
-                                            view: costOfSales6076Intermittent,
-                                            withSessionRefiner: WithSessionRefiner,
-                                            @Named("session") val session: SessionRepo
-                                          )(implicit ec: ExecutionContext)
-  extends FORDataCaptureController(mcc)
+class CostOfSales6076IntermittentController @Inject() (
+  mcc: MessagesControllerComponents,
+  navigator: AboutTheTradingHistoryNavigator,
+  view: costOfSales6076Intermittent,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck { turnoverSectionsIntemittent6076 =>
-      val years                      = turnoverSectionsIntemittent6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val costOfSales6076            = turnoverSectionsIntemittent6076.flatMap(_.costOfSales6076IntermittentSum)
+    runWithSessionCheck { turnoverSections6076 =>
+      val years                          = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
+      val costOfSales6076                = turnoverSections6076.flatMap(_.costOfSales6076IntermittentSum)
       val costOfSales6076Details: String =
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherSalesDetails).getOrElse("")
       Ok(
@@ -58,22 +58,22 @@ class CostOfSales6076IntermittentController @Inject()(
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck { turnoverSectionsIntermitten6076 =>
-      val years = turnoverSectionsIntermitten6076.map(_.financialYearEnd).map(_.getYear.toString)
+    runWithSessionCheck { turnoverSections6076 =>
+      val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 
       continueOrSaveAsDraft[(Seq[CostOfSales6076IntermittentSum], String)](
         costOfSales6076IntermittentForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
-            (success._1 zip turnoverSectionsIntermitten6076).map { case (costOfSales, turnoverSection) =>
-              turnoverSection.copy(costOfSales6076IntermittentSum = Some(costOfSales))
+            (success._1 zip turnoverSections6076).map { case (costOfSales6076, turnoverSection) =>
+              turnoverSection.copy(costOfSales6076IntermittentSum = Some(costOfSales6076))
             }
           val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
-              turnoverSectionsIntermittent6076 = Some(updatedSections),
+              turnoverSections6076 = Some(updatedSections),
               otherSalesDetails = Option(details).filter(_.nonEmpty)
             )
           )
@@ -82,7 +82,7 @@ class CostOfSales6076IntermittentController @Inject()(
             .map { _ =>
               navigator.cyaPage
                 .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(CostOfSales6076Id, updatedData).apply(updatedData))
+                .getOrElse(navigator.nextPage(CostOfSales6076IntermittentId, updatedData).apply(updatedData))
             }
             .map(Redirect)
         }
@@ -91,10 +91,10 @@ class CostOfSales6076IntermittentController @Inject()(
   }
 
   private def runWithSessionCheck(
-                                   action: Seq[TurnoverSectionIntermittent6076] => Future[Result]
-                                 )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+    action: Seq[TurnoverSection6076] => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
-      .flatMap(_.turnoverSectionsIntermittent6076)
+      .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 

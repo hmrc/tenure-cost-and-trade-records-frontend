@@ -293,6 +293,10 @@ POST        /unusual-circumstances                                  controllers.
 GET         /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.show()
 POST        /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.submit()
 
+GET         /cost-of-sales-intermittent-6076                        controllers.aboutthetradinghistory.CostOfSales6076IntermittentController.show()
+POST        /cost-of-sales-intermittent-6076                        controllers.aboutthetradinghistory.CostOfSales6076IntermittentController.submit()
+
+
 GET         /staff-costs                                            controllers.aboutthetradinghistory.StaffCostsController.show()
 POST        /staff-costs                                            controllers.aboutthetradinghistory.StaffCostsController.submit()
 

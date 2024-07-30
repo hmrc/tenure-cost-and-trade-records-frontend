@@ -37,20 +37,10 @@
 @(form: Form[(Seq[CostOfSales6076Sum], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@intermittent = @{
- request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
-}
-
 @totalContent(idx: Int) = {
- @if(intermittent) {
-  <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="importedPower,TNuoS,BSuoS,otherSales">
-   form.value.fold("")(_.costOfSales6076Sum(idx).total.asMoney)
-  </span>
- } else {
   <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="fuelOrFeedstock,importedPower,TNuoS,BSuoS,otherSales">
    form.value.fold("")(_.costOfSales6076Sum(idx).total.asMoney)
   </span>
- }
 }
 
 @headingContent(key: String, hint: Boolean) = {
@@ -122,37 +112,6 @@
   <p class="govuk-body govuk-!-width-three-quarters">@messages("costOfSales6076.inset")</p>
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.submit()) {
-   @if(intermittent.contains("intermittent")) {
-    <table class="hmrc-responsive-table">
-     <tbody>
-      <tr>
-      @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
-      <td>
-       @govukTable(Table(
-        head = Seq(
-         HeadCell(content = Text(messages("turnover.financialYearEnd"))),
-         HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
-        ),
-        firstCellIsHeader = true,
-        rows = Seq(
-         costRow("importedPower", idx),
-         costRow("TNuoS", idx),
-         costRow("BSuoS", idx),
-         costRow("otherSales", idx, "no-border-bottom", true),
-         Seq(
-          TableRow(),
-          TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))),
-
-         Seq(
-          TableRow(content = Text(messages("costOfSales6076.total"))),
-          TableRow(content = HtmlContent(totalContent(idx))))
-
-        )))
-      </td>
-      }</tr>
-     </tbody>
-    </table>
-   } else {
     <table class="hmrc-responsive-table">
      <tbody>
       <tr>
@@ -183,7 +142,6 @@
       }</tr>
      </tbody>
     </table>
-   }
 
    @includes.continueSaveAsDraftButtons(govukButton)
 

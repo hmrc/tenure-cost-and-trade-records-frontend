@@ -27,6 +27,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.staffCosts
+import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -94,13 +95,29 @@ class StaffCostsController @Inject() (
       }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "IES" =>
-        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-      case _     =>
-        aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
+    val intermittentCheck =
+      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+
+    intermittentCheck match {
+      case Some("intermittent") =>
+        navigator.from match {
+          case "CYA" =>
+            aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          case "IES" =>
+            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+          case _     =>
+            aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show().url
+        }
+      case Some("baseload")     =>
+        navigator.from match {
+          case "CYA" =>
+            aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          case "IES" =>
+            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+          case _     =>
+            aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
+        }
+      case _                    => controllers.routes.TaskListController.show().url
     }
 
 }

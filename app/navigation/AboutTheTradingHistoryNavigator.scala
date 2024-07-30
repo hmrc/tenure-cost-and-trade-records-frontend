@@ -205,16 +205,28 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for tenting pitches all year")
     }
 
+  private def intermittentRouting: Session => Call = answers =>
+    val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+    intermittent match {
+      case Some("intermittent") => aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show()
+      case Some("baseload")     => aboutthetradinghistory.routes.CostOfSales6076Controller.show()
+      case _                    =>
+        logger.warn(
+          s"Navigation for intermittent routing reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for intermittent routing")
+    }
+
   private def grossReceiptsRouting: Session => Call = answers =>
-    val intermittent  = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+    val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
     intermittent match {
       case Some("intermittent") => aboutthetradinghistory.routes.OtherIncomeController.show()
-      case Some("baseload") => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()
-      case _ =>
+      case Some("baseload")     => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()
+      case _                    =>
         logger.warn(
-          s"Navigation for tenting pitches on site reached without correct selection of conditions by controller"
+          s"Navigation for gross receipts reached without correct selection of conditions by controller"
         )
-        throw new RuntimeException("Invalid option exception for tenting pitches all year")
+        throw new RuntimeException("Invalid option exception for gross receipts all year")
     }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
@@ -249,7 +261,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     ElectricityGeneratedId                      -> (_ => aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show()),
     GrossReceiptsExcludingVatId                 -> grossReceiptsRouting,
-    OtherIncomeId                               -> (_ => aboutthetradinghistory.routes.CostOfSales6076Controller.show()),
+    OtherIncomeId                               -> intermittentRouting,
+    CostOfSales6076IntermittentId               -> (_ => aboutthetradinghistory.routes.StaffCostsController.show()),
     CostOfSales6076Id                           -> (_ => aboutthetradinghistory.routes.StaffCostsController.show()),
     StaffCostsId                                -> (_ => aboutthetradinghistory.routes.PremisesCostsController.show()),
     PremisesCostsId                             -> (_ => aboutthetradinghistory.routes.OperationalExpensesController.show()),
