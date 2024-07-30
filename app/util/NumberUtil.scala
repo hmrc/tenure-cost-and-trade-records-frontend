@@ -34,6 +34,12 @@ object NumberUtil {
   implicit def bigDecimalOptToString(bigDecimalOpt: Option[BigDecimal]): String =
     bigDecimalOpt.getOrElse(zeroBigDecimal).asMoney
 
+  implicit def intToString(number: Int): String =
+    number.toString
+
+  implicit def intOptToString(numberOpt: Option[Int]): String =
+    numberOpt.getOrElse(0)
+
   implicit def stringOptToString(stringOpt: Option[String]): String =
     stringOpt.getOrElse("")
 
