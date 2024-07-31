@@ -21,14 +21,15 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
+class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.SingleCaravansSubletController.show().url
+  private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show().url
 
-  private val nextPage = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
+  // TODO: How old twin-unit caravans
+  private val nextPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def twinUnitCaravansOwnedByOperatorController =
-    new TwinUnitCaravansOwnedByOperatorController(
+  def twinUnitCaravansSubletController =
+    new TwinUnitCaravansSubletController(
       caravansTrading6045View,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
@@ -41,12 +42,12 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = twinUnitCaravansOwnedByOperatorController.show(fakeRequest)
+      val result = twinUnitCaravansSubletController.show(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = twinUnitCaravansOwnedByOperatorController.show(fakeRequest)
+      val result = twinUnitCaravansSubletController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -57,7 +58,7 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = twinUnitCaravansOwnedByOperatorController.show(fakeRequestFromCYA)
+      val result  = twinUnitCaravansSubletController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
@@ -83,7 +84,7 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
-      val res = twinUnitCaravansOwnedByOperatorController.submit(
+      val res = twinUnitCaravansSubletController.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
@@ -91,7 +92,7 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid weeks" in {
-      val res = twinUnitCaravansOwnedByOperatorController.submit(
+      val res = twinUnitCaravansSubletController.submit(
         fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
@@ -99,7 +100,7 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
     }
 
     "return 400 for empty turnoverSections" in {
-      val res = twinUnitCaravansOwnedByOperatorController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = twinUnitCaravansSubletController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }
