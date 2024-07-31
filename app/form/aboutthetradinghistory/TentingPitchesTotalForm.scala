@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form.aboutthetradinghistory
 
-import models.submissions.common.AnswersYesNo
-import play.api.libs.json.{Json, OFormat}
+import play.api.data.Form
+import play.api.data.Forms.single
+import play.api.data.Forms._
 
-case class TouringAndTentingPitches(
-  tentingPitchesOnSite: Option[AnswersYesNo] = None,
-  tentingPitchesAllYear: Option[TentingPitchesAllYear] = None,
-  tentingPitchesTotal: Option[Int] = None,
-  tentingPitchesCertificated: Option[AnswersYesNo] = None,
-  checkYourAnswersTentingPitches: Option[AnswersYesNo] = None
-)
+object TentingPitchesTotalForm {
 
-object TouringAndTentingPitches {
-  implicit val format: OFormat[TouringAndTentingPitches] = Json.format
+  val tentingPitchesTotalForm: Form[Int] = Form(
+    single(
+      "tentingPitchesTotal" -> text
+        .verifying("error.tentingPitchesTotal.missing", _.nonEmpty)
+        .verifying("error.tentingPitchesTotal.range", s => s.isEmpty || s.matches("""\d+"""))
+        .transform[Int](_.toInt, _.toString)
+        .verifying("error.tentingPitchesTotal.range", n => n >= 0)
+    )
+  )
 }

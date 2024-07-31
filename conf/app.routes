@@ -257,6 +257,12 @@ POST        /pitches-for-glamping                                   controllers.
 GET         /rally-areas                                            controllers.aboutthetradinghistory.RallyAreasController.show()
 POST        /rally-areas                                            controllers.aboutthetradinghistory.RallyAreasController.submit()
 
+GET         /tenting-pitches-total                                  controllers.aboutthetradinghistory.TentingPitchesTotalController.show()
+POST        /tenting-pitches-total                                  controllers.aboutthetradinghistory.TentingPitchesTotalController.submit()
+
+GET         /tenting-piches-certificated                            controllers.aboutthetradinghistory.TentingPitchesCertificatedController.show()
+POST        /tenting-piches-certificated                            controllers.aboutthetradinghistory.TentingPitchesCertificatedController.submit()
+
 GET         /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.show()
 POST        /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.submit()
 

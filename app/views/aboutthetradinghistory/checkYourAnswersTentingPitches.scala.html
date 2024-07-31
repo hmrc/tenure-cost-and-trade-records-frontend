@@ -21,10 +21,9 @@
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.{AnswerYes, AnswersYesNo}
 @import models.pages.Summary
-@import java.time.LocalDate
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
-@import util.NumberUtil.bigDecimalOptToString
+@import util.NumberUtil._
 
 @this(
         layout: Layout,
@@ -53,7 +52,7 @@
                 </div>
                       }
 }
-@answer(valueLabelKey: String, getAnswer: TurnoverSection6045 => String, additionalParagraph: Option[String] = None) = @{
+@answer(valueLabelKey: String, getAnswer: TurnoverSection6045 => String) = @{
 
     SummaryListRow(
         key = Key(Text(messages(valueLabelKey))),
@@ -118,15 +117,18 @@
             tradingHistoryOne.row(
                 "cYa.touringAndTentingPitches.pitches.label",
                 _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => messages(s"label.${x.name}"))).orElse(""),
-                controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(), "touringAndTentingPitches") ++
+                controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
+                "tentingPitchesOnSite") ++
             tradingHistoryOne.conditionRow(
                         _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.map(_.name)).contains("yes"),
                         "cYa.touringAndTentingPitches.pitchesAllYear.label",
-                        _.touringAndTentingPitches.flatMap(_.tentingPitchesAllYear).map(pitch =>
-                            Seq(pitch.tentingPitchesAllYear.name).map(item => messages(s"label.$item"))
-                                    ++ pitch.weekOfPitchesUse.fold(Seq.empty[String])(d => Seq(Text(d.toString).asHtml.body))
-                        ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(), "",
+                        _.touringAndTentingPitches.flatMap(_.tentingPitchesAllYear).map(
+                            pitch =>
+                            Seq(pitch.tentingPitchesAllYear.name).map(item => messages(s"label.$item")) ++
+                            pitch.weekOfPitchesUse.fold(Seq.empty[String])(d => Seq(Text(d.toString).asHtml.body)))
+                            .map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                        controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(),
+                        "tentingPitchesAllYear",
                         ("valueAsHtml", _ => None))
         ))
 
@@ -138,22 +140,36 @@
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.pitchesForCaravans.flatMap(_.grossReceipts)),
-            answer("tentingPitches.common.numberOfPitches", _.pitchesForCaravans.flatMap(_.numberOfPitches).map(_.toString).getOrElse("")),
+            answer("tentingPitches.common.numberOfPitches", _.pitchesForCaravans.flatMap(_.numberOfPitches)),
         )
         @pageAnswers("cya.pitchesForGlamping.heading",
             aboutthetradinghistory.routes.PitchesForGlampingController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForGlamping.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.pitchesForGlamping.flatMap(_.grossReceipts)),
-            answer("tentingPitches.common.numberOfPitches", _.pitchesForGlamping.flatMap(_.numberOfPitches).map(_.toString).getOrElse("")),
+            answer("tentingPitches.common.numberOfPitches", _.pitchesForGlamping.flatMap(_.numberOfPitches)),
         )
-        @pageAnswers("rallyAreas.heading",
+        @pageAnswers("cya.rallyAreas.heading",
             aboutthetradinghistory.routes.RallyAreasController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.rallyAreas.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.rallyAreas.flatMap(_.grossReceipts)),
-            answer("tentingPitches.common.areaInHectares", _.rallyAreas.flatMap(_.areaInHectares).map(_.toString).getOrElse("")),
+            answer("tentingPitches.common.areaInHectares", _.rallyAreas.flatMap(_.areaInHectares).map(_.toString())),
         )
+        @govukSummaryList(SummaryList(rows =
+
+        tradingHistoryOne.row(
+            "cya.touringAndTentingPitches.total.label",
+            _.touringAndTentingPitches.flatMap(_.tentingPitchesTotal).map(_.toString).getOrElse(""),
+            controllers.aboutthetradinghistory.routes.TentingPitchesTotalController.show(),
+            "tentingPitchesTotal") ++
+        tradingHistoryOne.row(
+            "cya.touringAndTentingPitches.certificated.label",
+            _.touringAndTentingPitches.flatMap(_.tentingPitchesCertificated).flatMap(x => messages(s"label.${x.name}")).orElse(""),
+            controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show(),
+            "tentingPitchesCertificated")
+        ))
+
     }
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.submit()) {
