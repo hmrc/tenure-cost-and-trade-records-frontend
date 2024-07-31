@@ -18,19 +18,16 @@ package models.submissions.aboutthetradinghistory
 
 import play.api.libs.json.{Json, OFormat}
 
-case class IncomeAndExpenditureSummary6076(
-  totalGrossReceipts: BigDecimal,
-  totalBaseLoadReceipts: BigDecimal,
-  totalOtherIncome: BigDecimal,
-  totalCostOfSales: BigDecimal,
-  totalCostOfSalesIntermittent: BigDecimal,
-  totalStaffCosts: BigDecimal,
-  totalPremisesCosts: BigDecimal,
-  totalOperationalExpenses: BigDecimal,
-  headOfficeExpenses: BigDecimal,
-  netProfitOrLoss: BigDecimal
-)
+case class CostOfSales6076IntermittentSum(
+  importedPower: Option[BigDecimal],
+  TNuoS: Option[BigDecimal],
+  BSuoS: Option[BigDecimal],
+  other: Option[BigDecimal]
+) {
 
-object IncomeAndExpenditureSummary6076 {
-  implicit val format: OFormat[IncomeAndExpenditureSummary6076] = Json.format
+  def total: BigDecimal = Seq(importedPower, TNuoS, BSuoS, other).flatten.sum
+}
+
+object CostOfSales6076IntermittentSum {
+  implicit val format: OFormat[CostOfSales6076IntermittentSum] = Json.format
 }

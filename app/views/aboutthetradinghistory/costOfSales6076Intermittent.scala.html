@@ -22,7 +22,8 @@
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
-@import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
+@import models.submissions.aboutthetradinghistory.CostOfSales6076IntermittentSum
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -33,12 +34,10 @@
         dateUtil: DateUtilLocalised
 )
 
-
-@(form: Form[(Seq[CostOfSales6076Sum], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
-
+@(form: Form[(Seq[CostOfSales6076IntermittentSum], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @totalContent(idx: Int) = {
-  <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="fuelOrFeedstock,importedPower,TNuoS,BSuoS,otherSales">
+  <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="importedPower,TNuoS,BSuoS,otherSales">
    form.value.fold("")(_.costOfSales6076Sum(idx).total.asMoney)
   </span>
 }
@@ -111,7 +110,7 @@
 
   <p class="govuk-body govuk-!-width-three-quarters">@messages("costOfSales6076.inset")</p>
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.submit()) {
+  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSales6076IntermittentController.submit()) {
     <table class="hmrc-responsive-table">
      <tbody>
       <tr>
@@ -124,7 +123,6 @@
         ),
         firstCellIsHeader = true,
         rows = Seq(
-         costRow("fuelOrFeedstock", idx),
          costRow("importedPower", idx),
          costRow("TNuoS", idx),
          costRow("BSuoS", idx),

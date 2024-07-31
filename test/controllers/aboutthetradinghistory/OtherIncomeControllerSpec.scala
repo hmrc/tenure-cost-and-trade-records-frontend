@@ -29,6 +29,7 @@ class OtherIncomeControllerSpec extends TestBaseSpec {
       aboutYourTradingHistoryNavigator,
       otherIncome6076View,
       preEnrichedActionRefiner(
+        aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes),
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
@@ -47,7 +48,7 @@ class OtherIncomeControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
 
       val content = contentAsString(result)
-      content should include("/gross-receipts-for-base-load")
+      content should include("/gross-receipts-excluding-vat")
       content should not include "/check-your-answers-about-the-trading-history"
     }
 
@@ -55,7 +56,7 @@ class OtherIncomeControllerSpec extends TestBaseSpec {
       val result  = otherIncomeController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
-      content should not include "/gross-receipts-for-base-load"
+      content should not include "/gross-receipts-excluding-vat"
     }
 
     "return correct backLink when 'from=IES' query param is present" in {

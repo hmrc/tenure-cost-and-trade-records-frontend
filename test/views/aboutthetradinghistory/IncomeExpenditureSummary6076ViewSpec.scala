@@ -21,6 +21,7 @@ import models.pages.Summary
 import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
+import actions.SessionRequest
 
 class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String] {
 
@@ -47,14 +48,18 @@ class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String
       "Url7",
       1,
       "Url8",
+      1,
+      "Url9",
       8
     )
   )
 
-  def createView = () => incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(fakeRequest, messages)
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+
+  def createView = () => incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(fakeRequest, messages)
+    incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(sessionRequest, messages)
 
   "income and expenditure summary view" should {
 

@@ -22,15 +22,14 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class StaffCostsControllerSpec extends TestBaseSpec {
+class CostOfSales6076IntermittentControllerSpec extends TestBaseSpec {
 
-  def staffCostsController =
-    new StaffCostsController(
+  def costOfSales6076IntermittentController =
+    new CostOfSales6076IntermittentController(
       stubMessagesControllerComponents(),
       aboutYourTradingHistoryNavigator,
-      staffCostsView,
+      costOfSales6076IntermittentView,
       preEnrichedActionRefiner(
-        aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes),
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
@@ -39,25 +38,25 @@ class StaffCostsControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = staffCostsController.show(fakeRequest)
+      val result = costOfSales6076IntermittentController.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = staffCostsController.show(fakeRequest)
+      val result = costOfSales6076IntermittentController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = staffCostsController.show(fakeRequestFromCYA)
+      val result  = costOfSales6076IntermittentController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
     }
 
     "return correct backLink when 'from=IES' query param is present" in {
-      val result = staffCostsController.show()(FakeRequest(GET, "/path?from=IES"))
+      val result = costOfSales6076IntermittentController.show()(FakeRequest(GET, "/path?from=IES"))
       val html   = contentAsString(result)
 
       html should include(
@@ -68,8 +67,8 @@ class StaffCostsControllerSpec extends TestBaseSpec {
   }
 
   "SUBMIT /" should {
-    "return 400 for form with errors" in {
-      val res = staffCostsController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+    "return 400 for empty turnoverSections" in {
+      val res = costOfSales6076IntermittentController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

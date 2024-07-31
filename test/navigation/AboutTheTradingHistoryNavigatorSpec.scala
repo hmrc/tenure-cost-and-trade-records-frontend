@@ -19,13 +19,15 @@ package navigation
 import connectors.Audit
 import models.Session
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, TouringAndTentingPitches}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, Intermittent, RenewablesPlant}
 import models.submissions.common.{AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
+import utils.toOpt
 
 import scala.concurrent.ExecutionContext
 
@@ -61,11 +63,26 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       removeConnection
     )
 
-  val sessionAboutYou6015 = sessionAboutYou.copy(referenceNumber = "99996015004", forType = "FOR6015")
-  val sessionAboutYou6020 = sessionAboutYou.copy(referenceNumber = "99996020004", forType = "FOR6020")
-  val sessionAboutYou6030 = sessionAboutYou.copy(referenceNumber = "99996030004", forType = "FOR6030")
-  val sessionAboutYou6045 = sessionAboutYou.copy(referenceNumber = "99996045004", forType = "FOR6045")
-  val sessionAboutYou6076 = sessionAboutYou.copy(referenceNumber = "99996076004", forType = "FOR6076")
+  val sessionAboutYouIntermittent: Session =
+    Session(
+      "99996076004",
+      "FOR6010",
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+      stillConnectedDetailsYes,
+      removeConnection,
+      aboutYouAndTheProperty = AboutYouAndTheProperty(
+        renewablesPlant = Some(RenewablesPlant(Intermittent))
+      )
+    )
+
+  val sessionAboutYou6015             = sessionAboutYou.copy(referenceNumber = "99996015004", forType = "FOR6015")
+  val sessionAboutYou6020             = sessionAboutYou.copy(referenceNumber = "99996020004", forType = "FOR6020")
+  val sessionAboutYou6030             = sessionAboutYou.copy(referenceNumber = "99996030004", forType = "FOR6030")
+  val sessionAboutYou6045             = sessionAboutYou.copy(referenceNumber = "99996045004", forType = "FOR6045")
+  val sessionAboutYou6076             = sessionAboutYou.copy(referenceNumber = "99996076004", forType = "FOR6076")
+  val sessionAboutYouIntermittent6076 =
+    sessionAboutYouIntermittent.copy(referenceNumber = "99996076004", forType = "FOR6076")
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -302,23 +319,33 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to gross receipts for base load page when  gross receipts excluding vat completed" in {
       navigator
-        .nextPage(GrossReceiptsExcludingVatId, sessionAboutYou6076)
+        .nextPage(GrossReceiptsExcludingVatId, sessionAboutYouIntermittent6076)
         .apply(
-          sessionAboutYou6076
-        ) shouldBe controllers.aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController
+          sessionAboutYouIntermittent6076
+        ) shouldBe controllers.aboutthetradinghistory.routes.OtherIncomeController
         .show()
     }
 
     "return a function that goes to cost of sales 6076 page when  other income completed" in {
       navigator
-        .nextPage(OtherIncomeId, sessionAboutYou6076)
-        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show()
+        .nextPage(OtherIncomeId, sessionAboutYouIntermittent6076)
+        .apply(
+          sessionAboutYouIntermittent6076
+        ) shouldBe controllers.aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show()
     }
+
     "return a function that goes to staff costs page when  cost of sales 6076 completed" in {
       navigator
         .nextPage(CostOfSales6076Id, sessionAboutYou6076)
         .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.StaffCostsController.show()
     }
+
+    "return a function that goes to staff costs page when 123 cost of sales 6076 completed" in {
+      navigator
+        .nextPage(CostOfSales6076IntermittentId, sessionAboutYou6076)
+        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.StaffCostsController.show()
+    }
+
     "return a function that goes to premises  costs page when  staff costs completed" in {
       navigator
         .nextPage(StaffCostsId, sessionAboutYou6076)

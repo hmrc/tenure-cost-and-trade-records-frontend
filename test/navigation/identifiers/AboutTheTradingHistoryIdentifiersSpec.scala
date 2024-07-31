@@ -80,8 +80,13 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for Electricity Generated  page" in {
       assert(ElectricityGeneratedId.toString.equals("electricityGeneratedPage"))
     }
+
     "Identifier for CostOfSales6076 page" in {
       assert(CostOfSales6076Id.toString.equals("costOfSales6076Page"))
+    }
+
+    "Identifier for CostOfSalesIntermittent6076 page" in {
+      assert(CostOfSales6076IntermittentId.toString.equals("costOfSales6076IntermittentPage"))
     }
 
     "Identifier for StaffCosts page" in {

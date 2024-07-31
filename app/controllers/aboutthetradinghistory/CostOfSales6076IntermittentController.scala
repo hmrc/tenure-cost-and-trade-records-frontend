@@ -18,30 +18,24 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
-import form.aboutthetradinghistory.OtherIncomeForm.otherIncomeForm
+import form.aboutthetradinghistory.CostOfSales6076IntermittentForm.costOfSales6076IntermittentForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.TurnoverSection6076
+import models.submissions.aboutthetradinghistory.{CostOfSales6076IntermittentSum, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.OtherIncomeId
+import navigation.identifiers.{CostOfSales6076Id, CostOfSales6076IntermittentId}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.otherIncome6076
-import controllers.toOpt
+import views.html.aboutthetradinghistory.costOfSales6076Intermittent
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * Other income - 6076.
-  *
-  * @author Yuriy Tumakha
-  */
 @Singleton
-class OtherIncomeController @Inject() (
+class CostOfSales6076IntermittentController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  otherIncomeView: otherIncome6076,
+  view: costOfSales6076Intermittent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -50,14 +44,13 @@ class OtherIncomeController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
-      val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val details = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherIncomeDetails).getOrElse("")
-
+      val years                          = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
+      val costOfSales6076                = turnoverSections6076.flatMap(_.costOfSales6076IntermittentSum)
+      val costOfSales6076Details: String =
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherSalesDetails).getOrElse("")
       Ok(
-        otherIncomeView(
-          otherIncomeForm(years).fill(
-            (turnoverSections6076.map(_.otherIncome), details)
-          ),
+        view(
+          costOfSales6076IntermittentForm(years).fill((costOfSales6076, costOfSales6076Details)),
           getBackLink
         )
       )
@@ -68,29 +61,28 @@ class OtherIncomeController @Inject() (
     runWithSessionCheck { turnoverSections6076 =>
       val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[(Seq[Option[BigDecimal]], String)](
-        otherIncomeForm(years),
-        formWithErrors => BadRequest(otherIncomeView(formWithErrors, getBackLink)),
+      continueOrSaveAsDraft[(Seq[CostOfSales6076IntermittentSum], String)](
+        costOfSales6076IntermittentForm(years),
+        formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
-            (success._1 zip turnoverSections6076).map { case (otherIncome, previousSection) =>
-              previousSection.copy(otherIncome = otherIncome)
+            (success._1 zip turnoverSections6076).map { case (costOfSales6076, turnoverSection) =>
+              turnoverSection.copy(costOfSales6076IntermittentSum = Some(costOfSales6076))
             }
           val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
               turnoverSections6076 = Some(updatedSections),
-              otherIncomeDetails = Option(details).filter(_.nonEmpty)
+              otherSalesDetails = Option(details).filter(_.nonEmpty)
             )
           )
-
           session
             .saveOrUpdate(updatedData)
             .map { _ =>
               navigator.cyaPage
                 .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(OtherIncomeId, updatedData).apply(updatedData))
+                .getOrElse(navigator.nextPage(CostOfSales6076IntermittentId, updatedData).apply(updatedData))
             }
             .map(Redirect)
         }
@@ -107,29 +99,13 @@ class OtherIncomeController @Inject() (
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    val intermittentCheck =
-      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
-
-    intermittentCheck match {
-      case Some("intermittent") =>
-        navigator.from match {
-          case "CYA" =>
-            controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-          case "IES" =>
-            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-          case _     =>
-            aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show().url
-        }
-      case Some("baseload")     =>
-        navigator.from match {
-          case "CYA" =>
-            controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-          case "IES" =>
-            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-          case _     =>
-            aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
-        }
-      case _                    => controllers.routes.TaskListController.show().url
+    navigator.from match {
+      case "CYA" =>
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "IES" =>
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      case _     =>
+        aboutthetradinghistory.routes.OtherIncomeController.show().url
     }
 
 }
