@@ -17,12 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
-import utils.TestBaseSpec
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
-import scala.language.reflectiveCalls
+
 class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec {
   def totalSiteCapacity6045Controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
