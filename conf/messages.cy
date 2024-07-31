@@ -2239,21 +2239,19 @@ error.otherHolidayAccommodation.required =  Select yes if there are other holida
 ##########################
 
 #TOURING AND TENTING PITCHES QUESTION
-#####################################
 
 touringAndTentingPitches.heading = Touring and tenting pitches
 
 touringAndTentingPitches.question.heading = Do you have any touring and tenting pitches on your site?
-error.touringAndTentingPitches.question.missing = Select yes if you have any touring and tenting pitches on your site
-help.touringAndTentingPitches.question.title = Help with defining touring and tenting pitches
-help.touringAndTentingPitches.question.p = For the purposes of this declaration, touring and tenting pitches are defined as:
-help.touringAndTentingPitches.question.pitches = pitches for caravans, motor homes, or tents
-help.touringAndTentingPitches.question.glamping = glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
-help.touringAndTentingPitches.question.rally = rally areas
+error.touringAndTentingPitches.missing = Select yes if you have any touring and tenting pitches on your site
+help.touringAndTentingPitches.title = Help with defining touring and tenting pitches
+help.touringAndTentingPitches.p = For the purposes of this declaration, touring and tenting pitches are defined as:
+help.touringAndTentingPitches.pitches = pitches for caravans, motor homes, or tents
+help.touringAndTentingPitches.glamping = glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
+help.touringAndTentingPitches.rally = rally areas
 
 
 # ARE YOUR TOURING AND TENTING PITCHES OPEN ALL YEAR
-#####################################################
 
 areYourPitchesOpen.heading = Are your touring and tenting pitches open all year?
 error.areYourPitchesOpen.missing = Select yes if your touring and tenting pitches open all year
@@ -2270,6 +2268,8 @@ cYa.touringAndTentingPitches.pitchesAllYear.label = Touring and tenting pitches 
 cYa.pitchesForCaravans.heading = Pitches for caravans, motor homes or tenting units, including any 28-day rights
 cya.pitchesForGlamping.heading = Glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
 cya.rallyAreas.heading = Rally areas not included previously
+cya.touringAndTentingPitches.total.label = Touring and tenting pitches currently on site
+cya.touringAndTentingPitches.certificated.label = Certified location for use as a caravan site?
 
 #PITCHES FOR CARAVANS
 #####################
@@ -2287,6 +2287,25 @@ pitchesForGlamping.heading = Glamping pitches for bell tents, yurts, tipis, shep
 rallyAreas.heading = Rally areas not included previously
 error.rallyAreas.areaInHectares.required = Enter 0 if you did not have any rally areas in the year ending {0}
 error.rallyAreas.areaInHectares.range = Areas in hectares in the year ending {0} must be a number, for example 100 or 100.00
+
+#TENTING PITCHES TOTAL
+#####################
+
+tentingPitchesTotal.heading = Total site capacity – touring and tenting pitches
+tentingPitchesTotal.declare = You must declare how many touring and tenting pitches you have. This must be the pitches that are on site today, or will be on site when you submit this declaration.
+tentingPitchesTotal.must.include = You must include:
+tentingPitchesTotal.list.one = pitches for caravans, motor homes, or tents
+tentingPitchesTotal.list.two = glamping pitches for bell tents, yurts, tipis, shepherds huts, or other pre-erected or mobile structures
+tentingPitchesTotal.list.three = rally areas
+tentingPitchesTotal.label = Total number of touring and tenting pitches
+error.tentingPitchesTotal.missing = Declare the number of touring and tenting pitches
+error.tentingPitchesTotal.range = Touring and tenting pitches figure must be a positive number
+
+#TENTING PITCHES CERTIFICATED
+############################
+
+tentingPitchesCertificated.heading = Is the site a certificated location for use as a touring caravan site under Paragraph 5 Schedule 1 of the Caravan Sites and Control of Development Act 1960?
+error.tentingPitchesCertificated.missing = Select yes, if the site is a certificated location for use as a touring caravan site under Paragraph 5 Schedule 1 of the Caravan Sites and Control of Development Act 1960
 
 #TENTING PITCHES TRADING COMMON LABELS
 ######################################

@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form.aboutthetradinghistory
 
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.{Json, OFormat}
+import play.api.data.Form
+import play.api.data.Forms.single
 
-case class TouringAndTentingPitches(
-  tentingPitchesOnSite: Option[AnswersYesNo] = None,
-  tentingPitchesAllYear: Option[TentingPitchesAllYear] = None,
-  tentingPitchesTotal: Option[Int] = None,
-  tentingPitchesCertificated: Option[AnswersYesNo] = None,
-  checkYourAnswersTentingPitches: Option[AnswersYesNo] = None
-)
+object TentingPitchesCertificatedForm {
 
-object TouringAndTentingPitches {
-  implicit val format: OFormat[TouringAndTentingPitches] = Json.format
+  val tentingPitchesCertificatedForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "tentingPitchesCertificated" -> createYesNoType("error.tentingPitchesCertificated.missing")
+      )
+    )
 }

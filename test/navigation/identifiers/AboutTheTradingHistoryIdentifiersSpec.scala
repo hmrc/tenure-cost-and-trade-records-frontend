@@ -115,6 +115,13 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for rally areas  page" in {
       assert(RallyAreasId.toString.equals("rallyAreasPage"))
     }
+    "Identifier for tenting Pitches  total" in {
+      assert(TentingPitchesTotalId.toString.equals("tentingPitchesTotalPage"))
+    }
+    "Identifier for tenting Pitches  certificated" in {
+      assert(TentingPitchesCertificatedId.toString.equals("tentingPitchesCertificatedPage"))
+    }
+
     "Identifier for Check Your Answers Tenting Pitches page" in {
       assert(CheckYourAnswersTentingPitchesId.toString.equals("checkYourAnswersTentingPitchesPage"))
     }

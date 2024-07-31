@@ -296,10 +296,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     TentingPitchesAllYearId                     -> (_ => aboutthetradinghistory.routes.PitchesForCaravansController.show()),
     PitchesForCaravansId                        -> (_ => aboutthetradinghistory.routes.PitchesForGlampingController.show()),
     PitchesForGlampingId                        -> (_ => aboutthetradinghistory.routes.RallyAreasController.show()),
-    RallyAreasId                                -> (_ =>
-      aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
-    ), // TODO: Total site capacity page
+    RallyAreasId                                -> (_ => aboutthetradinghistory.routes.TentingPitchesTotalController.show()),
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
+    TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
+    TentingPitchesCertificatedId                -> (_ =>
+      aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+    ),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
