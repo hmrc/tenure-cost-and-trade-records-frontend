@@ -26,6 +26,8 @@ case class IncomeExpenditure6076Entry(
   otherIncomeUrl: String,
   totalCostOfSales: BigDecimal,
   costOfSalesUrl: String,
+  totalCostOfSalesIntermittent: BigDecimal,
+  costOfSalesIntermittentUrl: String,
   totalStaffCosts: BigDecimal,
   staffCostsUrl: String,
   totalPremisesCosts: BigDecimal,

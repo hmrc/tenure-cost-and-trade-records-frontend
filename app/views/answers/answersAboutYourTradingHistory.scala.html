@@ -441,6 +441,10 @@
     )
 }
 
+@intermittentAnswer = @{
+    request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name.contains("intermittent")))
+}
+
 @pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
     <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
 
@@ -570,21 +574,35 @@
         answer6076("grossReceipts.total", _.grossReceiptsExcludingVAT.map(_.total))
     )
 
-    @pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
-        aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
-        answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),
-        answer6076("checkYourAnswersAboutTheTradingHistory.bioMass", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMass)),
-        answer6076("grossReceiptsForBaseLoad.byProductSales", _.grossReceiptsForBaseLoad.flatMap(_.byProductSales)),
-        answer6076("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales", _.grossReceiptsForBaseLoad.flatMap(_.hotWaterHeatOrSteamSales)),
-        answer6076("grossReceiptsForBaseLoad.gateIncomeFromWaste", _.grossReceiptsForBaseLoad.flatMap(_.gateIncomeFromWaste)),
-        answer6076("grossReceiptsForBaseLoad.total", _.grossReceiptsForBaseLoad.map(_.total))
-    )
+    @if(!intermittentAnswer) {
+        @pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
+            aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
+            answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),
+            answer6076("checkYourAnswersAboutTheTradingHistory.bioMass", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMass)),
+            answer6076("grossReceiptsForBaseLoad.byProductSales", _.grossReceiptsForBaseLoad.flatMap(_.byProductSales)),
+            answer6076("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales", _.grossReceiptsForBaseLoad.flatMap(_.hotWaterHeatOrSteamSales)),
+            answer6076("grossReceiptsForBaseLoad.gateIncomeFromWaste", _.grossReceiptsForBaseLoad.flatMap(_.gateIncomeFromWaste)),
+            answer6076("grossReceiptsForBaseLoad.total", _.grossReceiptsForBaseLoad.map(_.total))
+        )
+    }
 
     @pageAnswers("turnover.6076.otherIncome",
         aboutthetradinghistory.routes.OtherIncomeController.show(),
         answer6076("turnover.6076.otherIncome", _.otherIncome, sectionAnswers1.answers.flatMap(_.otherIncomeDetails))
     )
 
+    @if(intermittentAnswer) {
+
+        @pageAnswers("costOfSales6076.heading",
+            aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show(),
+            answer6076("costOfSales6076.importedPower", _.costOfSales6076IntermittentSum.flatMap(_.importedPower)),
+            answer6076("checkYourAnswersAboutTheTradingHistory.TNuoS", _.costOfSales6076IntermittentSum.flatMap(_.TNuoS)),
+            answer6076("checkYourAnswersAboutTheTradingHistory.BSuoS", _.costOfSales6076IntermittentSum.flatMap(_.BSuoS)),
+            answer6076("checkYourAnswersAboutTheTradingHistory.extraCost",
+                _.costOfSales6076IntermittentSum.flatMap(_.other),
+                sectionAnswers1.answers.flatMap(_.otherSalesDetails)),
+            answer6076("checkYourAnswersAboutTheTradingHistory.totalCosts", _.costOfSales6076IntermittentSum.map(_.total))
+        )} else {
     @pageAnswers("costOfSales6076.heading",
         aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
         answer6076("costOfSales6076.fuelOrFeedstock", _.costOfSales6076Sum.flatMap(_.fuelOrFeedstock)),
@@ -596,6 +614,7 @@
             sectionAnswers1.answers.flatMap(_.otherSalesDetails)),
         answer6076("checkYourAnswersAboutTheTradingHistory.totalCosts", _.costOfSales6076Sum.map(_.total))
     )
+    }
 
     @pageAnswers("staffCosts.heading",
         aboutthetradinghistory.routes.StaffCostsController.show(),

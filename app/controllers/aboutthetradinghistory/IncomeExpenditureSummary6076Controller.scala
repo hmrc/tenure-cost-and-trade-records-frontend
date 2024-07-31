@@ -80,6 +80,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
                     totalBaseLoadReceipts = entry.totalBaseLoadReceipts,
                     totalOtherIncome = entry.totalOtherIncome,
                     totalCostOfSales = entry.totalCostOfSales,
+                    totalCostOfSalesIntermittent = entry.totalCostOfSalesIntermittent,
                     totalStaffCosts = entry.totalStaffCosts,
                     totalPremisesCosts = entry.totalPremisesCosts,
                     totalOperationalExpenses = entry.totalOperationalExpenses,
@@ -117,14 +118,15 @@ class IncomeExpenditureSummary6076Controller @Inject() (
     turnoverSections6076: Seq[TurnoverSection6076]
   ): Seq[IncomeExpenditure6076Entry] =
     turnoverSections6076.map { section =>
-      val grossReceipts       = section.grossReceiptsExcludingVAT.map(_.total).getOrElse(zeroBigDecimal)
-      val baseLoadReceipts    = section.grossReceiptsForBaseLoad.map(_.total).getOrElse(zeroBigDecimal)
-      val otherIncome         = section.otherIncome.getOrElse(zeroBigDecimal)
-      val costOfSales         = section.costOfSales6076Sum.map(_.total).getOrElse(zeroBigDecimal)
-      val staffCosts          = section.staffCosts.map(_.total).getOrElse(zeroBigDecimal)
-      val premisesCosts       = section.premisesCosts.map(_.total).getOrElse(zeroBigDecimal)
-      val operationalExpenses = section.operationalExpenses.map(_.total).getOrElse(zeroBigDecimal)
-      val headOfficeExpenses  = section.headOfficeExpenses.getOrElse(zeroBigDecimal)
+      val grossReceipts           = section.grossReceiptsExcludingVAT.map(_.total).getOrElse(zeroBigDecimal)
+      val baseLoadReceipts        = section.grossReceiptsForBaseLoad.map(_.total).getOrElse(zeroBigDecimal)
+      val otherIncome             = section.otherIncome.getOrElse(zeroBigDecimal)
+      val costOfSales             = section.costOfSales6076Sum.map(_.total).getOrElse(zeroBigDecimal)
+      val costOfSalesIntermittent = section.costOfSales6076IntermittentSum.map(_.total).getOrElse(zeroBigDecimal)
+      val staffCosts              = section.staffCosts.map(_.total).getOrElse(zeroBigDecimal)
+      val premisesCosts           = section.premisesCosts.map(_.total).getOrElse(zeroBigDecimal)
+      val operationalExpenses     = section.operationalExpenses.map(_.total).getOrElse(zeroBigDecimal)
+      val headOfficeExpenses      = section.headOfficeExpenses.getOrElse(zeroBigDecimal)
 
       val netProfitOrLoss =
         (grossReceipts + baseLoadReceipts + otherIncome) - (costOfSales + staffCosts + premisesCosts + operationalExpenses + headOfficeExpenses)
@@ -139,6 +141,8 @@ class IncomeExpenditureSummary6076Controller @Inject() (
         otherIncomeUrl = routes.OtherIncomeController.show().url + "?from=IES",
         totalCostOfSales = costOfSales,
         costOfSalesUrl = routes.CostOfSales6076Controller.show().url + "?from=IES",
+        totalCostOfSalesIntermittent = costOfSalesIntermittent,
+        costOfSalesIntermittentUrl = routes.CostOfSales6076IntermittentController.show().url + "?from=IES",
         totalStaffCosts = staffCosts,
         staffCostsUrl = routes.StaffCostsController.show().url + "?from=IES",
         totalPremisesCosts = premisesCosts,

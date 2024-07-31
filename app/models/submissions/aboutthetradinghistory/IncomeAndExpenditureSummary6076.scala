@@ -23,6 +23,7 @@ case class IncomeAndExpenditureSummary6076(
   totalBaseLoadReceipts: BigDecimal,
   totalOtherIncome: BigDecimal,
   totalCostOfSales: BigDecimal,
+  totalCostOfSalesIntermittent: BigDecimal,
   totalStaffCosts: BigDecimal,
   totalPremisesCosts: BigDecimal,
   totalOperationalExpenses: BigDecimal,

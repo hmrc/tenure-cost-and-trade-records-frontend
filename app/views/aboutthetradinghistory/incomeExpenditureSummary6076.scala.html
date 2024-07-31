@@ -24,6 +24,7 @@
 @import java.time.LocalDate
 @import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
 @import util.NumberUtil.bigDecimalHelpers
+@import actions.SessionRequest
 
 @this(
         layout: Layout,
@@ -34,9 +35,14 @@
         dateUtil: DateUtilLocalised
 )
 
-@(form: Form[String], summary: Summary, entries: Seq[IncomeExpenditure6076Entry])(implicit request: Request[?], messages: Messages)
+
+@(form: Form[String], summary: Summary, entries: Seq[IncomeExpenditure6076Entry])(implicit request: SessionRequest[?], messages: Messages)
 
 @classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
+
+    @intermittentChoice = @{
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+    }
 
 @rowWithLink(msgkey: String, entryValue: IncomeExpenditure6076Entry => BigDecimal, url: IncomeExpenditure6076Entry => String) = @{
     val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary6076.$msgkey")), classes = classes)
@@ -76,7 +82,11 @@
                     rowWithLink("totalGross", _.totalGrossReceipts, _.grossReceiptsUrl),
                     rowWithLink("totalBaseload", _.totalBaseLoadReceipts, _.baseLoadReceiptsUrl),
                     rowWithLink("totalOther", _.totalOtherIncome, _.otherIncomeUrl),
-                    rowWithLink("totalCoS", _.totalCostOfSales, _.costOfSalesUrl),
+                    if(intermittentChoice.contains("intermittent")){
+                        rowWithLink("totalCoS", _.totalCostOfSalesIntermittent, _.costOfSalesIntermittentUrl)
+                    } else {
+                        rowWithLink("totalCoS", _.totalCostOfSales, _.costOfSalesUrl)
+                    },
                     rowWithLink("totalStaff", _.totalStaffCosts, _.staffCostsUrl),
                     rowWithLink("totalPremises", _.totalPremisesCosts, _.premisesCostsUrl),
                     rowWithLink("totalOperational", _.totalOperationalExpenses, _.operationalExpensesUrl),
