@@ -43,9 +43,6 @@ object NumberUtil {
   implicit def stringOptToString(stringOpt: Option[String]): String =
     stringOpt.getOrElse("")
 
-  implicit def intOptToString(intOpt: Option[Int]): String =
-    intOpt.map(_.toString).getOrElse("")
-
   implicit def seqBigDecimalToSeqString(values: Seq[BigDecimal]): Seq[String] =
     values.map(bigDecimalToString)
 
