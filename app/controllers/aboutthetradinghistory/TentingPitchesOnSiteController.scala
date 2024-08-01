@@ -52,8 +52,7 @@ class TentingPitchesOnSiteController @Inject() (
             case Some(answers) => tentingPitchesOnSiteForm.fill(answers)
             case None          => tentingPitchesOnSiteForm
           },
-          calculateBackLink,
-          request.sessionData.toSummary
+          calculateBackLink
         )
       )
     )
@@ -66,8 +65,7 @@ class TentingPitchesOnSiteController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
+            calculateBackLink
           )
         ),
       data => {
@@ -86,8 +84,8 @@ class TentingPitchesOnSiteController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#" // TODO with TaskList ticket for 6045
-      case _     => controllers.routes.TaskListController.show().url // TODO with ticket for other holiday CYA page
+      case "TL"  => controllers.routes.TaskListController.show().url + "#tenting-pitches-on-site"
+      case _     => controllers.routes.TaskListController.show().url
 
     }
 }

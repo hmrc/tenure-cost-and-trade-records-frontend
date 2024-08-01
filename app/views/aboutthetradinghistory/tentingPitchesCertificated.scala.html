@@ -17,7 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswersYesNo
-@import models.pages.Summary
+@import actions.SessionRequest
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,11 +28,12 @@
 )
 
 
-@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("tentingPitchesCertificated.heading"),
     showSection = true,
+    summary = Some(request.sessionData.toSummary),
     backLinkUrl = backLink,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm,

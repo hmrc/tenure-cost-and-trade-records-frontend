@@ -52,8 +52,7 @@ class TentingPitchesCertificatedController @Inject() (
             case Some(answers) => tentingPitchesCertificatedForm.fill(answers)
             case None          => tentingPitchesCertificatedForm
           },
-          calculateBackLink,
-          request.sessionData.toSummary
+          calculateBackLink
         )
       )
     )
@@ -66,8 +65,7 @@ class TentingPitchesCertificatedController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
+            calculateBackLink
           )
         ),
       data => {
