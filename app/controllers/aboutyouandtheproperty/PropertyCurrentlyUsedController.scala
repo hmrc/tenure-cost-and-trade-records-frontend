@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.propertyCurrentlyUsed
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PropertyCurrentlyUsedController @Inject() (
@@ -40,7 +40,8 @@ class PropertyCurrentlyUsedController @Inject() (
   view: propertyCurrentlyUsed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -72,8 +73,9 @@ class PropertyCurrentlyUsedController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(propertyCurrentlyUsed = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PropertyCurrentlyUsedPageId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(PropertyCurrentlyUsedPageId, updatedData).apply(updatedData))
+        }
       }
     )
   }
