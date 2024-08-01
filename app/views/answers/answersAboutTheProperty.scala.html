@@ -184,28 +184,53 @@
             )))
 
     } else if (forType == ForTypes.for6045 || forType == ForTypes.for6046) {
-            @govukSummaryList(SummaryList(rows =
-    sectionAnswersPartTwo.optionalRow(
-        "checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyCurrentlyUsed.map(r =>
-            r.propertyCurrentlyUsed.map(item => messages(s"label.propertyCurrentlyUsed.$item"))
-        ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>"
-        +
-                sectionAnswersPartTwo.answers.filter(_.propertyCurrentlyUsed.flatMap(_.anotherUseDetails).flatMap(_.contains("other"))).flatMap(
-            _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>"))),
 
-        aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
-        ("valueAsHtml", _ => None)) ++
-            sectionAnswers.optionalRow(
-                "checkYourAnswersAboutTheProperty.hasWebsite",
-                _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
-                    """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
-                            + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
-                        _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
-                "buildingOperatingHaveAWebsite",
+@if(sectionAnswersPartTwo.answers.flatMap(_.propertyCurrentlyUsed).flatMap(_.anotherUseDetails.contains("other"))){
+
+
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswersPartTwo.optionalRow("checkYourAnswersAboutTheProperty.propertyUsage",
+            _.propertyCurrentlyUsed.map(r =>
+                r.propertyCurrentlyUsed.map(item => messages(s"label.propertyCurrentlyUsed.$item"))).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>"
+                    +
+                    sectionAnswersPartTwo.answers.filter(_.propertyCurrentlyUsed.flatMap(_.anotherUseDetails).flatMap(_.contains("other"))).flatMap(
+                        _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+            aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
                 ("valueAsHtml", _ => None)
-            )))
+
+    ))
+                ++
+                sectionAnswers.optionalRow(
+                    "checkYourAnswersAboutTheProperty.hasWebsite",
+                    _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
+                        """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
+                                + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
+                            _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                    aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+                    "buildingOperatingHaveAWebsite",
+                    ("valueAsHtml", _ => None)
+                )))
+} else {
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswersPartTwo.optionalRow(
+            "checkYourAnswersAboutTheProperty.propertyUsage",
+            _.propertyCurrentlyUsed.map(r =>
+                r.propertyCurrentlyUsed.map(item => messages(s"label.propertyCurrentlyUsed.$item"))
+            ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+            aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
+            ("valueAsHtml", _ => None))
+                ++
+                sectionAnswers.optionalRow(
+                    "checkYourAnswersAboutTheProperty.hasWebsite",
+                    _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
+                        """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
+                                + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
+                            _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                    aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+                    "buildingOperatingHaveAWebsite",
+                    ("valueAsHtml", _ => None)
+                )))
+}
     } else {
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",

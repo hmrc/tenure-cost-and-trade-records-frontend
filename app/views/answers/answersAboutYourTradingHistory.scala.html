@@ -55,7 +55,7 @@
     request.sessionData.forType
 }
 
-@tableRow(values: Seq[String]) = {
+@tableRow(valuetableRows: Seq[String]) = {
 @values.map { value =>
     <div class="hmrc-turnover-table-column">
         @value
@@ -435,7 +435,7 @@
     SummaryListRow(
         key = Key(Text(messages(valueLabelKey))),
         value = Value(HtmlContent(
-            tableRow(values).body + optionalParagraph(additionalParagraph).body
+            (values).body + optionalParagraph(additionalParagraph).body
         )),
         classes = "no-border-bottom"
     )
