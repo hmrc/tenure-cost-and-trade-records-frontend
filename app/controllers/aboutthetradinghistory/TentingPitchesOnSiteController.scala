@@ -52,8 +52,7 @@ class TentingPitchesOnSiteController @Inject() (
             case Some(answers) => tentingPitchesOnSiteForm.fill(answers)
             case None          => tentingPitchesOnSiteForm
           },
-          calculateBackLink,
-          request.sessionData.toSummary
+          calculateBackLink
         )
       )
     )
@@ -66,8 +65,7 @@ class TentingPitchesOnSiteController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
+            calculateBackLink
           )
         ),
       data => {

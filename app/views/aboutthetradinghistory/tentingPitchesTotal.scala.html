@@ -32,12 +32,12 @@
 )
 
 
-@(form: Form[Int], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Int], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("tentingPitchesTotal.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,

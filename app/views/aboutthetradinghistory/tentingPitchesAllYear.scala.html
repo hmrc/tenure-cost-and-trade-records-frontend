@@ -26,6 +26,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
+@import actions.SessionRequest
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -35,13 +36,13 @@
 
 )
 
-@(theForm: Form[TentingPitchesAllYear], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[TentingPitchesAllYear], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
  pageHeading = messages("areYourPitchesOpen.heading"),
  showH1 = false,
  showSection = true,
- summary = Some(summary),
+ summary= Some(request.sessionData.toSummary),
  sectionName = messages("label.section.aboutYourTradingHistory"),
  backLinkUrl = backLink,
  theForm = theForm

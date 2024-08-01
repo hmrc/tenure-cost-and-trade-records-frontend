@@ -51,8 +51,7 @@ class TentingPitchesAllYearController @Inject() (
             case Some(answers) => tentingPitchesAllYearForm.fill(answers)
             case None          => tentingPitchesAllYearForm
           },
-          calculateBackLink,
-          request.sessionData.toSummary
+          calculateBackLink
         )
       )
     )
@@ -65,8 +64,7 @@ class TentingPitchesAllYearController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
+            calculateBackLink
           )
         ),
       data => {
