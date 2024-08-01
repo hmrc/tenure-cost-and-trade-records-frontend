@@ -16,6 +16,7 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.TentingPitchesOnSiteForm
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
@@ -24,16 +25,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class TentingPitchesOnSiteViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
+  private val sessionRequest = SessionRequest(baseFilled6045Session, fakeRequest)
+
   val messageKeyPrefix = "touringAndTentingPitches"
 
   override val form = TentingPitchesOnSiteForm.tentingPitchesOnSiteForm
 
   val backLink = controllers.routes.TaskListController.show().url
 
-  def createView = () => tentingPitchesOnSiteView(form, backLink, Summary("99996045001"))(fakeRequest, messages)
+  def createView = () => tentingPitchesOnSiteView(form, backLink)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    tentingPitchesOnSiteView(form, backLink, Summary("99996045001"))(fakeRequest, messages)
+    tentingPitchesOnSiteView(form, backLink)(sessionRequest, messages)
 
   "Tenting Pitches On Site view" should {
 

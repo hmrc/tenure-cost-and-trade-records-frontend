@@ -16,6 +16,7 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.TentingPitchesAllYearForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TentingPitchesAllYear
@@ -24,16 +25,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class TentingPitchesAllYearViewSpec extends QuestionViewBehaviours[TentingPitchesAllYear] {
 
-  val messageKeyPrefix = "areYourPitchesOpen"
+  private val sessionRequest = SessionRequest(baseFilled6045Session, fakeRequest)
+  val messageKeyPrefix       = "areYourPitchesOpen"
 
   override val form = TentingPitchesAllYearForm.tentingPitchesAllYearForm
 
   val backLink = controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
 
-  def createView = () => tentingPitchesAllYearView(form, backLink, Summary("99996045001"))(fakeRequest, messages)
+  def createView = () => tentingPitchesAllYearView(form, backLink)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[TentingPitchesAllYear]) =>
-    tentingPitchesAllYearView(form, backLink, Summary("99996045001"))(fakeRequest, messages)
+    tentingPitchesAllYearView(form, backLink)(sessionRequest, messages)
 
   "Tenting Pitches All Year view" should {
 
