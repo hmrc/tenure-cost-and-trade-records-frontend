@@ -57,6 +57,7 @@
 @section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)) }
 @section3Completed       = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory.map(_.checkYourAnswersAboutTheTradingHistory)) }
 @section3point1Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation.map(_.checkYourAnswersOtherHolidayAccommodation))}
+@section3point2Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches.map(_.name))}
 @section4Completed       = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings.map(_.checkYourAnswersAboutFranchiseOrLettings)) }
 @section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure.map(_.checkYourAnswersAboutYourLeaseOrTenure)) }
 @section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
@@ -409,6 +410,13 @@
       section3point1Completed,
       session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)),
       session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).isEmpty)
+
+     @includes.taskListItem("tenting-pitches-on-site", "taskList.touringAndTentingPitches",
+      controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
+      section3point2Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.checkYourAnswersOtherHolidayAccommodation)).isEmpty)
+
     }
    </ul>
   </li>

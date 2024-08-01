@@ -1488,6 +1488,7 @@ taskList.howIsUsed = How the property is used
 taskList.6076.powerGenerated = Power generated
 taskList.6076.grossReceipts = Gross receipts
 taskList.6076.operationalExpenses = Operating expenses
+taskList.touringAndTentingPitches = Touring and tenting pitches
 
 # COST OF SALES OR GROSS PROFIT
 #########
