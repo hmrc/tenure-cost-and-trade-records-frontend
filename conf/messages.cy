@@ -21,7 +21,7 @@ label.underReview=(under review)
 label.yes = Yes
 label.no = No
 label.pound = £
-label.weeks = weeks
+label.weeks = wythnos
 
 # OTHER FOOTER LINKS:
 ########
@@ -92,7 +92,7 @@ label.email = Cyfeiriad e-bost
 label.submitAnotherForm = Submit another form
 label.change = Newid
 label.liter = liter
-label.litres = litres
+label.litres = litr
 label.percent = %
 
 # COMMON HINTS
@@ -533,11 +533,11 @@ error.propertyCurrentlyUsedString.maxLength = The property’s use must be descr
 
 #ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
 ############################
-electricVehicleChargingPoints.heading = Electric Vehicle (EV) charging points
-electricVehicleChargingPoints.p1 = If you operate EV charging point spaces or bays which are not rented out to third parties, these must be included in your declaration.
-electricVehicleChargingPoints.p2 = Any EV charging points operated by third-party companies must be declared in the 'lettings' section of this declaration.
-label.electricVehicleChargingPoints = Do you operate any EV charging point spaces or bays?
-spacesOrBays.textbox = How many spaces or bays do you operate?
+electricVehicleChargingPoints.heading = Pwyntiau gwefru cerbydau trydan (EV)
+electricVehicleChargingPoints.p1 = Os ydych yn gweithredu man gwefru cerbyd trydan nad yw’n cael ei logi i drydydd parti, mae’n rhaid ei gynnwys yn eich datganiad.
+electricVehicleChargingPoints.p2 = Mae’n rhaid i unrhyw fan gwefru cerbyd trydan a weithredir gan gwmnïau trydydd parti gael ei ddatgan yn yr adran ‘gosodiadau’.
+label.electricVehicleChargingPoints = A ydych yn gweithredu unrhyw fan gwefru cerbyd trydan?
+spacesOrBays.textbox =  Sawl man gwefru ydych chi’n eu gweithredu?
 error.spacesOrBays.required = Enter how many spaces or bays you operate
 error.electricVehicleChargingPoints.required = Select yes if you operate any EV charging point spaces or bays
 error.spacesOrBaysNumber.nonNumeric=The number of spaces or bays you operate must be a number between 1 and 999
@@ -1524,7 +1524,7 @@ turnover.accommodationCaption = Heb gynnwys prydau o fwyd.
 turnover.averageOccupancyRate = Cyfraddau’r deiliadaeth, ar gyfartaledd
 turnover.averageOccupancyRateCaption = Tai llety a gwestai yn unig.
 turnover.mustInclude.p1 = Mae’n rhaid i chi gynnwys unrhyw incwm rhent a gafwyd o gonsesiynau neu osodiadau, neu incwm a gynhyrchir gan unrhyw fasnachfreintiau a weithredwyd gan {0}.
-turnover.weeks = weeks
+turnover.weeks = wythnos
 turnover.details = Help gyda chwblhau trosiant
 turnover.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.
 turnover.details.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
@@ -1536,11 +1536,11 @@ turnover.details.6015.p4 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deill
 turnover.details.6015.h4 = Incwm o fasnachfreintiau, consesiynau a gosodiadau
 turnover.details.6015.p5 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deillio o unrhyw fasnachfreintiau, consesiynau neu osodiadau sydd ynghlwm wrth yr eiddo. Dylid cofnodi hyn yn y categori incwm priodol.
 turnover.details.6015.p6 = Er enghraifft, dylid datgan incwm rhent o gonsesiwn bwyty o dan ’bwyd’.
-turnover.grossIncome = Gross income
-turnover.grossIncomeCaption.p1 = (excluding VAT)
-turnover.grossIncomeCaption.p2 = Excluding any payments received for concessions, franchises, licences or lettings.
-turnover.totalVisitorNumbers = Total visitor numbers
-turnover.totalVisitorNumbersCaption = Including concessions and free entries - enter 0 if the property is a car park.
+turnover.grossIncome = Incwm gros
+turnover.grossIncomeCaption.p1 = (heb gynnwys TAW)
+turnover.grossIncomeCaption.p2 = Gan eithrio unrhyw daliadau a gafwyd am gonsesiynau, masnachfreintiau, trwyddedau neu osodiadau.
+turnover.totalVisitorNumbers = Cyfanswm nifer yr ymwelwyr
+turnover.totalVisitorNumbersCaption = Gan gynnwys consesiynau a mynediadau am ddim – nodwch ‘0’ os yw’r eiddo yn faes parcio.
 error.financialYearEnd.day.required = The financial year-end date must include a day
 error.financialYearEnd.month.required = The financial year-end date must include a month
 error.financialYearEnd.year.required = The financial year-end date must include a year
@@ -1586,18 +1586,18 @@ turnover.totalSales.6016 = Cyfanswm refeniw y gwerthiannau
 turnover.totalSalesCaption.6016 = (heb gynnwys TAW)
 
 # TURNOVER 6020
-turnover.6020.heading = Non-fuel turnover
-turnover.6020.p1 = Provide details of any non-fuel income you may receive, excluding any letting income. You will be asked about letting income in later sections of this declaration.
-turnover.6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
-turnover.6020.shop = Shop turnover
-turnover.6020.shop.hint = Excluding fuel receipts.
-turnover.6020.carWash = Car wash turnover
-turnover.6020.jetWash = Jet wash turnover
-turnover.6020.lottery = Lottery turnover
-turnover.6020.lottery.hint = Excluding fuel receipts.
-turnover.6020.payPointOrZone = Paypoint or payzone turnover
-turnover.6020.otherIncome = Other income
-turnover.6020.excludingVAT = (excluding VAT)
+turnover.6020.heading = Trosiant nad yw’n danwydd
+turnover.6020.p1 = Rhowch fanylion unrhyw incwm y gallech ei gael o werthiannau and ydynt yn danwydd, ac eithrio unrhyw incwm o osodiadau. Gofynnir i chi ynglŷn ag incwm o osodiadau nes ymlaen yn y datganiad hwn.
+turnover.6020.inset = Mae pob maes ar y dudalen hon yn orfodol. Os nad yw hyn yn berthnasol, nodwch y rhif 0.
+turnover.6020.shop = Trosiant y siop (heb gynnwys TAW)
+turnover.6020.shop.hint = Heb gynnwys derbynebau tanwydd.
+turnover.6020.carWash = Trosiant golchi ceir
+turnover.6020.jetWash = Trosiant golchi gyda chwistrelliad
+turnover.6020.lottery = Trosiant y Loteri
+turnover.6020.lottery.hint = Heb gynnwys derbynebau tanwydd.
+turnover.6020.payPointOrZone = Trosiant Paypoint neu Payzone
+turnover.6020.otherIncome = Incwm arall
+turnover.6020.excludingVAT = (heb gynnwys TAW)
 error.turnover.6020.shop.required = Enter 0 if you did not have any shop turnover in the year ending {0}
 error.turnover.6020.shop.range = Shop turnover in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6020.shop.negative = Shop turnover in the year ending {0} cannot be a negative number
@@ -2034,7 +2034,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################
 unusualCircumstances.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y ffigurau trosiant ar y dudalen flaenorol
-unusualCircumstancesReceipts.heading = Describe any unusual circumstances that may have affected the receipts or visitor numbers on the previous page
+unusualCircumstancesReceipts.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y derbyniadau neu nifer yr ymwelwyr ar y dudalen flaenorol
 unusualCircumstances.explain = Esboniwch unrhyw ffigurau anarferol o uchel neu isel yn eich cyfrifon - gadewch hyn yn wag os nad yw’n berthnasol
 
 # NET PROFITS (FORM 6015)
@@ -2044,38 +2044,38 @@ netProfit.heading = This is a holding page for the net profits page
 #FORM 6020 COMMON
 #################
 
-common6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+common6020.inset = Mae pob maes ar y dudalen hon yn orfodol. Os nad yw hyn yn berthnasol, nodwch y rhif 0.
 common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
 
 #TOTAL FUEL SOLD (FORM 6020)
 ############################
 
-totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
-totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
-totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
+totalFuelSold.heading = Beth yw cyfanswm yr holl danwydd a werthwyd yn ystod y blynyddoedd ariannol a ddangosir?
+totalFuelSold.bunkered = Peidiwch â chynnwys tanwydd byncer yn y ffigurau hyn. Os ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno’n unig, gofynnir cwestiynau i chi ynghylch hyn ar wahân.
+totalFuelSold.fuel.label = Cyfanswm gwerthiannau petrol, diesel, LPG a thanwyddau eraill
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKERED FUEL QUESTION (FORM 6020)
 ###################################
 
-bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
+bunkeredFuelQuestion.heading = A ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno’n unig?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
 
 #BUNKERED FUEL SOLD (FORM6020)
 ###############################
 
-bunkeredFuelSold.heading = How much bunkered fuel did you sell in the financial years shown?
-bunkeredFuelSold.bunkeredFuel.label = Bunkered fuel
-bunkeredFuelSold.bunkeredFuel.hint = Where only a handling fee is charged
+bunkeredFuelSold.heading = Faint o danwydd byncer a werthoch yn y blynyddoedd ariannol a ddangosir?
+bunkeredFuelSold.bunkeredFuel.label = Tanwydd byncer
+bunkeredFuelSold.bunkeredFuel.hint = Lle codir ffi trin yn unig.
 error.bunkeredFuelSold.required = Enter 0 if you did not sell any bunkered fuel in the year ending {0}
 error.bunkeredFuelSold.range = Total volume of all bunkered fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKER FUEL CARDS DETAILS (FORM 6020)
-bunkerFuelCardDetails.heading = Provide details of the bunker fuel cards you accept
-label.bunkerFuelCardName = Bunker fuel card name
-bunkerFuelCardDetails.handlingFee = Handling fee
-bunkerFuelCardDetails.handlingFee.unit = pence/litre
+bunkerFuelCardDetails.heading = Rhowch fanylion y cardiau tanwydd byncer rydych yn eu derbyn
+label.bunkerFuelCardName = Enw’r cerdyn tanwydd byncer
+bunkerFuelCardDetails.handlingFee = Ffi trin
+bunkerFuelCardDetails.handlingFee.unit = ceiniogau/litr
 error.bunkerFuelCard.name.required = Please provide name of bunker fuel card
 error.bunkerFuelCardName.maxLength = Bunker fuel card name cannot be more than 100 characters
 error.bunkerFuelCard.handlingFee.invalidFormat = Handling fee must be a number, for example 100
@@ -2088,11 +2088,11 @@ error.addAnotherBunkerFuelCardsDetails.required = Select yes if you would like t
 
 # CUSTOMER CREDIT ACCOUNTS (FROM 6020)
 ##########################
-customerCreditAcc.heading = Customer credit accounts
+customerCreditAcc.heading = Cyfrifon credyd cwsmeriaid
 customerCreditAcc.declare = You must declare how much fuel you sell through customer credit accounts. These are agreements where customers do not pay for their fuel at the point of sale. Instead, they pay for their total fuel use at set intervals, normally monthly.
-customerCreditAcc.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
-customerCreditAcc.percentage = What percentage of your total sales comes from customer credit accounts?
-customerCreditAcc.label = Percentage of fuel sales on customer credit accounts
+customerCreditAcc.notInclude = Nid yw hyn yn cynnwys tanwydd byncer na gwerthiannau tanwydd a delir trwy gardiau credyd, debyd neu gardiau tanwydd lled isel.
+customerCreditAcc.percentage = Pa ganran o gyfanswm eich gwerthiannau sy’n dod o gyfrifon credyd cwsmeriaid?
+customerCreditAcc.label = Canran y gwerthiannau tanwydd ar gyfrifon credyd cwsmeriaid
 error.customerCreditAcc.required = Enter 0 if none of your total sales comes from customer credit account in the year ending {0}
 error.customerCreditAcc.range = The percentage of your total sales comes from customer credit account in the year ending {0} must be a number
 
@@ -2102,11 +2102,11 @@ acceptLowMarginFuelCard.hint = This does not include bunker fuel cards, or credi
 error.acceptLowMarginFuelCard.required = Select yes if you accept low-margin fuel cards
 
 #LOW MARGIN FUEL CARDS DETAILS (FORM 6020)
-lowMarginFuelCardDetails.heading = Provide details of the low-margin fuel cards you accept
+lowMarginFuelCardDetails.heading = Rhowch fanylion y cardiau tanwydd lled isel rydych yn eu derbyn
 hint.lowMarginFuelCardDetails = You will have the opportunity to add more low-margin fuel cards if required.
-label.lowMarginFuelCardName = Low margin fuel card name
-lowMarginFuelCardDetails.handlingFee = Handling fee
-lowMarginFuelCardDetails.handlingFee.unit = pence/litre
+label.lowMarginFuelCardName = Enw’r cerdyn tanwydd lled isel
+lowMarginFuelCardDetails.handlingFee = Ffi trin
+lowMarginFuelCardDetails.handlingFee.unit = ceiniogau/litr
 error.lowMarginFuelCardDetails.name.required = Please provide name of low-margin fuel card
 error.lowMarginFuelCardDetails.name.maxLength = Low margin fuel card name cannot be more than 100 characters
 error.lowMarginFuelCardDetails.handlingFee.invalidFormat = Handling fee must be a number, for example 100
@@ -2119,9 +2119,9 @@ error.addAnotherLowMarginFuelCardsDetails.required = Select yes if you would lik
 
 # PERCENTAGE FROM LOW MARGIN FUEL CARDS (FROM 6020)
 ###################################################
-percentageFromFuelCards.heading = What percentage of the total fuel sales comes from the low-margin fuel cards?
-percentageFromFuelCards.bunkered = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
-percentageFromFuelCards.label = Percentage of fuel sales on low-margin fuel cards
+percentageFromFuelCards.heading = Pa ganran o gyfanswm y gwerthiannau tanwydd sy’n deillio o gardiau tanwydd lled isel?
+percentageFromFuelCards.bunkered = Nid yw hyn yn cynnwys tanwydd byncer, neu werthiannau tanwydd a dalwyd amdanynt drwy gardiau debyd neu gredyd.
+percentageFromFuelCards.label = Canran y gwerthiannau tanwydd ar gardiau tanwydd lled isel
 error.percentageFromFuelCards.required = Enter 0 if none of your total fuel sales comes from low-margin credit cards in the year ending {0}
 error.percentageFromFuelCards.range = The percentage of your total fuel sales comes from low-margin credit cards in the year ending {0} must be a number
 
@@ -2696,25 +2696,26 @@ checkYourAnswersRequestReferenceNumber.heading = Gwirio eich atebion - os nad oe
 checkYourAnswersRequestReferenceNumber.subheading1 = Manylion yr eiddo
 checkYourAnswersRequestReferenceNumber.subheading2 = Eich manylion
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Amgylchiadau anarferol sy’n effeithio ar y trisiant
-checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
-checkYourAnswersAboutTheTradingHistory.grossIncome = Gross receipts
-checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Total visitor numbers
-checkYourAnswersAboutTheTradingHistory.payPointOrZone = Paypoint or payzone
-checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = EV Charging Points
-checkYourAnswersAboutTheTradingHistory.operateEV = Do you operate any EV charging points?
-checkYourAnswersAboutTheTradingHistory.fuelSales = Fuel sales
+checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Ffactorau sy’n dylanwadu ar dderbyniadau
+checkYourAnswersAboutTheTradingHistory.grossReceipts = Gross receipts
+checkYourAnswersAboutTheTradingHistory.grossIncome = Incwm gros
+checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Cyfanswm nifer yr ymwelwyr
+checkYourAnswersAboutTheTradingHistory.payPointOrZone = Trosiant Paypoint neu Payzone
+checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = Pwyntiau gwefru cerbydau trydan
+checkYourAnswersAboutTheTradingHistory.operateEV = Ydych chi’n gweithredu unrhyw bwyntiau gwefru cerbydau trydan?
+checkYourAnswersAboutTheTradingHistory.fuelSales = Gwerthiannau tanwydd
 checkYourAnswersAboutTheTradingHistory.totalFuelSales = Total fuel sales
-checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Bunkered fuel
-checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question = Do you sell bunkered fuel?
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Tanwydd byncer
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question = A ydych yn gwerthu tanwydd byncer?
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading = Total volume of bunkered fuel sold
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard = Bunker fuel card {0}
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails = Bunker fuel card details
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded = You have added {0} bunker fuel {1}
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove = Add or remove bunker fuel card
-checkYourAnswersAboutTheTradingHistory.customerCreditAcc = Customer credit accounts
-checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading = Percentage of fuel sales on account
-checkYourAnswersAboutTheTradingHistory.lowMarginCards = Low-margin fuel cards
-checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading = Percentage of fuel sales on low-margin cards
+checkYourAnswersAboutTheTradingHistory.customerCreditAcc = Cyfrifon credyd cwsmeriaid
+checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading = Canran y gwerthiant tanwydd ar gyfrif
+checkYourAnswersAboutTheTradingHistory.lowMarginCards = Cerdyn tanwydd lled isel
+checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading = Canran y gwerthiant tanwydd ar gardiau lled isel
 checkYourAnswersAboutTheTradingHistory.lowMarginCard = Low-margin fuel card {0}
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.details = Low-margin fuel card details
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded = You have added {0} low-margin fuel {1}
