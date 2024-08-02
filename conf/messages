@@ -1692,6 +1692,15 @@ error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.negative = Gross
 error.caravans.twin.ownedByOperator.vans.required = Enter 0 if you do not have any twin-unit caravan vans owned by the operator in the year ending {0}
 error.caravans.twin.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.twin.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
+turnover.6045.caravans.twin.subletByOperator.heading = Twin-unit caravans sub-let to holidaymakers by the operator on behalf of private owners as fleet hire
+turnover.6045.caravans.twin.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.twin.subletByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans sub-let in the year ending {0}
+error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.caravans.twin.subletByOperator.vans.required = Enter 0 if you do not have any twin-unit caravan vans sub-let in the year ending {0}
+error.caravans.twin.subletByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
+error.caravans.twin.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 
 
 turnover.6045.singleCaravansAgeCategories.heading = How old are the single static caravans on site?

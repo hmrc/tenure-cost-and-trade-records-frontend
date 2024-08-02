@@ -123,8 +123,7 @@ abstract class CaravansTrading6045Controller(
       case SingleCaravansOwnedByOperator => routes.SingleCaravansOwnedByOperatorController.submit()
       case SingleCaravansSublet          => routes.SingleCaravansSubletController.submit()
       case TwinCaravansOwnedByOperator   => routes.TwinUnitCaravansOwnedByOperatorController.submit()
-      case TwinCaravansSublet            =>
-        routes.CheckYourAnswersAboutTheTradingHistoryController.submit() // TODO: TwinCaravansSubletController
+      case TwinCaravansSublet            => routes.TwinUnitCaravansSubletController.submit()
     }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =

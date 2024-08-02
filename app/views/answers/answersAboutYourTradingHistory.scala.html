@@ -570,7 +570,7 @@
             answer6045("turnover.6045.caravans.vans", _.twinUnitCaravansOwnedByOperator.flatMap(_.vans))
         )
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator",
-            aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), // TODO: TwinUnitCaravansSubletController
+            aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.twinUnitCaravansSublet.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.twinUnitCaravansSublet.flatMap(_.grossReceipts)),
