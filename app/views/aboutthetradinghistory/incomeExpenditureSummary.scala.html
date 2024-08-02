@@ -45,7 +45,7 @@
     backLinkUrl = controllers.aboutthetradinghistory.routes.OtherCostsController.show().url,
     summary = Some(summary)
 ) {
-    <p class="govuk-body">Check the figures you've entered and confirm if they're correct.</p>
+   <p class="govuk-body">@messages("incomeExpenditureSummary.p1")</p>
     @defining(entries.map(_.financialYearEnd).distinct) { financialYears =>
         @govukTable(Table(
             rows = Seq(
