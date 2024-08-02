@@ -70,7 +70,7 @@ class TentingPitchesOnSiteController @Inject() (
           )
         ),
       data => {
-        val currentAnswer = request.sessionData.aboutTheTradingHistoryPartOne
+        val previousAnswer = request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.touringAndTentingPitches)
           .flatMap(_.tentingPitchesOnSite)
 
@@ -79,7 +79,7 @@ class TentingPitchesOnSiteController @Inject() (
         }
 
         session.saveOrUpdate(updatedSession).map { _ =>
-          val nextPage = (currentAnswer, data) match {
+          val nextPage = (previousAnswer, data) match {
             case (Some(AnswerYes), AnswerYes) =>
               controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
             case (Some(AnswerNo), AnswerYes)  =>
