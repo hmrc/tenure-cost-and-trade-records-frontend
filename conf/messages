@@ -1792,6 +1792,7 @@ turnover.6045.subLetUnits.grossReceipts.heading = Units sub-let by site operator
 turnover.6045.subLetUnits.p1.beginning = Enter your gross receipts from any of these units which are
 turnover.6045.subLetUnits.p1.bold = sub-let be the site operator.
 turnover.6045.subLetUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.subLetUnits.numberOfUnits = Number of units
 error.turnover.6045.subLetUnits.grossReceipts.required = Enter 0 if you did not have any gross receipts from sub-let units  the year ending {0}
 error.turnover.6045.subLetUnits.grossReceipts.ranged =  Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.subLetUnits.grossReceipts.negative =  Gross receipts in the year ending {0} cannot be a negative number
@@ -2871,6 +2872,14 @@ checkYourAnswersAboutTheTradingHistory.otherExpenses = Other expenses
 checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.onSite = Other holiday accommodation on site?
+checkYourAnswersOtherHolidayAccommodation.openAllYear = Other holiday accommodation open all year?
+checkYourAnswersOtherHolidayAccommodation.grossReceipts = Gross receipts
+checkYourAnswersOtherHolidayAccommodation.numberOfUnits = Number of units
+checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading = Number of units onsite by category
+checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting = Owned by operator and available for letting
+checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff = Owned by operator for seasonal staff use
+checkYourAnswersOtherHolidayAccommodation.privatelyOwned = Privately owned
+checkYourAnswersOtherHolidayAccommodation.totalLettingUnits = Total letting units on site
 # Confirmation Page
 ###################
 confirmation.heading = Declaration sent successfully

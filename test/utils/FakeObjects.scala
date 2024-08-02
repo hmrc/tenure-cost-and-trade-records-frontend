@@ -623,6 +623,21 @@ trait FakeObjects {
     prefilledTurnoverSections6045.copy(otherHolidayAccommodation =
       Some(OtherHolidayAccommodation(Some(AnswerNo), None))
     )
+  val prefilledAboutTheTradingHistoryPartOneCYA6045All                             = prefilledAboutTheTradingHistoryPartOneCYA6045.copy(
+    otherHolidayAccommodation = Some(
+      OtherHolidayAccommodation(
+        Some(AnswerYes),
+        OtherHolidayAccommodationDetails(AnswerYes),
+        TotalSiteCapacity(20, 5, 15),
+        None
+      )
+    )
+  )
+  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes: Session   =
+    aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
+      prefilledAboutTheTradingHistoryPartOneCYA6045All
+    )
+
   val prefilledAboutTheTradingHistoryPartOneTentYes: AboutTheTradingHistoryPartOne =
     prefilledTurnoverSections6045.copy(
       otherHolidayAccommodation = Some(OtherHolidayAccommodation(Some(AnswerNo), None)),
