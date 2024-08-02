@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesOnSiteForm.tentingPitchesOnSiteForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TentingPitchesOnSiteId
 import play.api.Logging
@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesOnSite
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class TentingPitchesOnSiteController @Inject() (
   mcc: MessagesControllerComponents,
@@ -38,7 +38,8 @@ class TentingPitchesOnSiteController @Inject() (
   view: tentingPitchesOnSite,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -69,13 +70,26 @@ class TentingPitchesOnSiteController @Inject() (
           )
         ),
       data => {
+        val currentAnswer = request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.touringAndTentingPitches)
+          .flatMap(_.tentingPitchesOnSite)
 
         val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
           touringAndTentingPitches.copy(tentingPitchesOnSite = Some(data))
         }
 
-        session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPageForTentingPitches(TentingPitchesOnSiteId, updatedSession).apply(updatedSession))
+        session.saveOrUpdate(updatedSession).map { _ =>
+          val nextPage = (currentAnswer, data) match {
+            case (Some(AnswerYes), AnswerYes) =>
+              controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+            case (Some(AnswerNo), AnswerYes)  =>
+              controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
+            case _                            =>
+              navigator.nextPageForTentingPitches(TentingPitchesOnSiteId, updatedSession).apply(updatedSession)
+          }
+
+          Redirect(nextPage)
+        }
       }
     )
   }
