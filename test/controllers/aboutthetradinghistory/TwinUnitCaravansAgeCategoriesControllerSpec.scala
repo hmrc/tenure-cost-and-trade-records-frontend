@@ -17,19 +17,22 @@
 package controllers.aboutthetradinghistory
 
 import controllers.aboutthetradinghistory
+import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType
+import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.{FleetHire, PrivateSublet}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec {
+class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show().url
+  private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
 
-  private val nextPage = aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show().url
+  // TODO: Total site capacity - static caravans
+  private val nextPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def twinUnitCaravansSubletController =
-    new TwinUnitCaravansSubletController(
-      caravansTrading6045View,
+  def twinUnitCaravansAgeCategoriesController =
+    new TwinUnitCaravansAgeCategoriesController(
+      caravansAgeCategoriesView,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
@@ -41,12 +44,12 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = twinUnitCaravansSubletController.show(fakeRequest)
+      val result = twinUnitCaravansAgeCategoriesController.show(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = twinUnitCaravansSubletController.show(fakeRequest)
+      val result = twinUnitCaravansAgeCategoriesController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -57,49 +60,48 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec {
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = twinUnitCaravansSubletController.show(fakeRequestFromCYA)
+      val result  = twinUnitCaravansAgeCategoriesController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
     }
   }
 
-  private def validFormDataPerYear(idx: Int, weeks: Int = 52): Seq[(String, String)] =
+  private def validDataPerHireType(hireType: CaravanHireType, valuePrefix: String = ""): Seq[(String, String)] =
     Seq(
-      s"turnover[$idx].weeks"         -> weeks.toString,
-      s"turnover[$idx].grossReceipts" -> (idx * 1000).toString,
-      s"turnover[$idx].vans"          -> "333"
+      s"$hireType.years0_5"         -> s"${valuePrefix}111",
+      s"$hireType.years6_10"         -> s"${valuePrefix}222",
+      s"$hireType.years11_15"         -> s"${valuePrefix}333",
+      s"$hireType.years15plus"         -> s"${valuePrefix}444"
     )
 
   private def validFormData: Seq[(String, String)] =
-    validFormDataPerYear(0) ++
-      validFormDataPerYear(1) ++
-      validFormDataPerYear(2)
+    validDataPerHireType(FleetHire, "10") ++
+      validDataPerHireType(PrivateSublet, "20")
 
-  private def invalidWeeksFormData: Seq[(String, String)] =
-    validFormDataPerYear(0, 53) ++
-      validFormDataPerYear(1) ++
-      validFormDataPerYear(2)
+  private def invalidNumberFormData: Seq[(String, String)] =
+    validDataPerHireType(FleetHire) ++
+      validDataPerHireType(PrivateSublet, "abc")
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
-      val res = twinUnitCaravansSubletController.submit(
+      val res = twinUnitCaravansAgeCategoriesController.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
     }
 
-    "return 400 and error message for invalid weeks" in {
-      val res = twinUnitCaravansSubletController.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
+    "return 400 and error message for invalid number" in {
+      val res = twinUnitCaravansAgeCategoriesController.submit(
+        fakePostRequest.withFormUrlEncodedBody(invalidNumberFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
-      contentAsString(res) should include("""<a href="#turnover[0].weeks">error.weeksMapping.invalid</a>""")
+      contentAsString(res) should include("""<a href="#privateSublet.years0_5">error.caravans.twin.privateSublet.years0_5.nonNumeric</a>""")
     }
 
     "return 400 for empty turnoverSections" in {
-      val res = twinUnitCaravansSubletController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = twinUnitCaravansAgeCategoriesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }
