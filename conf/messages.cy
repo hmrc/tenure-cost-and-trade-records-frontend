@@ -22,6 +22,7 @@ label.yes = Yes
 label.no = No
 label.pound = £
 label.weeks = wythnos
+fieldsAreMandatory.label = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 
 # OTHER FOOTER LINKS:
 ########
@@ -99,8 +100,8 @@ label.percent = %
 ##############
 hint.select.all = Dewiswch bob un sy’n berthnasol.
 hint.date.example = Er enghraifft, 27 9 2017.
-hint.month.year.example = For example, 9 2017.
-hint.day.month.example = For example, 04 05.
+hint.month.year.example = Er enghraifft, 9 2017.
+hint.day.month.example = Er enghraifft, 04 05.
 hint.select.applicable = Select any that apply – leave blank if not applicable.
 hint.all.apply = Dewiswch bob un sy’n berthnasol.
 
@@ -1350,17 +1351,16 @@ error.legalOrPlanningRestrictionsDetails.maxLength = Mae’n rhaid i’r disgrif
 # ABOUT YOUR TRADING HISTORY
 ##############################
 aboutYourTradingHistory.heading = Gwybodaeth am ddeiliadaeth a chyfrifyddu
-firstOccupy.heading = When did you first occupy the property?
-
+firstOccupy.heading = Pryd y gwnaethoch feddiannu’r eiddo am y tro cyntaf?
 fieldName.firstOccupy = the {0} when you first occupied the property
 
 # FINANCIAL YEAR-END
 ##############################
-financialYearEnd.heading = Your financial year end
-label.financialYear = When does your current financial year end?
-financialYearEnd.yearEndChanged.legend = If your financial year end has changed
-financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
-financialYearEnd.yearEndChanged = My financial year end has changed in the last 3 years.
+financialYearEnd.heading = Diwedd eich blwyddyn ariannol
+label.financialYear = Pryd fydd eich blwyddyn ariannol bresennol yn dod i ben?
+financialYearEnd.yearEndChanged.legend = Os yw’ch blwyddyn ariannol wedi newid
+financialYearEnd.yearEndChanged.hint = Defnyddiwch y blwch dewis os yw diwedd eich blwyddyn ariannol wedi newid yn y 3 blynedd diwethaf. Byddwch yn mynd i dudalen ar wahân i ddatgan y manylion diwedd blwyddyn blaenorol.
+financialYearEnd.yearEndChanged = Mae diwedd fy mlwyddyn ariannol wedi newid yn y 3 blynedd diwethaf.
 fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
@@ -1758,13 +1758,11 @@ turnover.6076.electricityGenerated = Trydan a gynhyrchir
 turnover.6076.electricityGenerated.hint = (mewn kWh neu MWh)
 turnover.6076.otherIncome.heading = Incwm arall
 turnover.6076.otherIncome.p1 = Provide us with details of any other income not listed previously.
-turnover.6076.otherIncome.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6076.otherIncome = Cyfanswm incwm arall
 turnover.6076.otherIncome.hint = Dylech gynnwys incwm o unrhyw ffynhonnell na restrir hyd yn hyn.
 turnover.6076.otherIncomeDetails = Rhowch fanylion ffynonellau eich incwm arall
 turnover.6076.operationalExpenses.heading = Treuliau gweithredu a gweinyddol
 turnover.6076.operationalExpenses.p1 = Provide us with details of your operational and administrative expenses.
-turnover.6076.operationalExpenses.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6076.expenses.advertising = Hysbysebu, marchnata a hyrwyddo
 turnover.6076.expenses.administration = Gwaith gweinyddu ac eitemau amrywiol
 turnover.6076.expenses.insurance = Yswiriant arall
@@ -1776,7 +1774,6 @@ turnover.6076.expenses.other.details = Rhowch fanylion yr eitemau sydd wedi’u 
 turnover.6076.expenses.total = Cyfanswm y treuliau
 turnover.6076.headOfficeExpenses.heading = Treuliau’r brif swyddfa
 turnover.6076.headOfficeExpenses.p1 = Provide us with details of any head office expenses.
-turnover.6076.headOfficeExpenses.inset = Mae pob maes ar y dudalen hon yn orfodol. Os nad yw hyn yn berthnasol, nodwch y rhif 0.
 turnover.6076.headOfficeExpenses = Cyfraniadau tuag at dreuliau’r brif swyddfa (os yw’n berthnasol)
 turnover.6076.furtherInformationOrRemarks = Rhagor o wybodaeth neu sylwadau, os hoffech eu nodi
 turnover.6076.furtherInformationOrRemarks.hint = Dylech gynnwys unrhyw wybodaeth a allai fod yn berthnasol yn eich barn chi, ond sydd heb ei chynnwys hyd yma.
@@ -1867,8 +1864,6 @@ error.costOfSales6076.otherSalesDetails.maxLength = Description of a other costs
 #STAFF COSTS 6076
 
 staffCosts.heading = Costau staff
-staffCosts.p = Provide us with details of your staff costs.
-staffCosts.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 staffCosts.financialYearEnd = Diwedd y flwyddyn ariannol
 staffCosts.wages = Cyflogau
 staffCosts.wages.hint = Gan eithrio cyfraniadau pensiwn ac Yswiriant Gwladol.
@@ -2197,8 +2192,6 @@ error.grossReceiptsForBaseLoad.gateIncomeFromWaste.negative = Gate income from w
 # PREMISES COSTS (FROM 6076)
 ###################################################
 premisesCosts.heading = Costau’r safle
-premisesCosts.p = Provide us with details of your premises costs.
-premisesCosts.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 premisesCosts.energyAndUtilities = Ynni a chyfleustodau
 premisesCosts.energyAndUtilities.hint = Gwres, golau, pŵer, dŵr.
 premisesCosts.buildingRepairAndMaintenance = Cynnal a chadw’r adeilad a gwaith atgyweirio
@@ -2704,7 +2697,7 @@ checkYourAnswersAboutTheTradingHistory.payPointOrZone = Trosiant Paypoint neu Pa
 checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = Pwyntiau gwefru cerbydau trydan
 checkYourAnswersAboutTheTradingHistory.operateEV = Ydych chi’n gweithredu unrhyw bwyntiau gwefru cerbydau trydan?
 checkYourAnswersAboutTheTradingHistory.fuelSales = Gwerthiannau tanwydd
-checkYourAnswersAboutTheTradingHistory.totalFuelSales = Total fuel sales
+checkYourAnswersAboutTheTradingHistory.totalFuelSales = Cyfanswm y gwerthiannau tanwydd
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Tanwydd byncer
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question = A ydych yn gwerthu tanwydd byncer?
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading = Total volume of bunkered fuel sold
@@ -2730,7 +2723,7 @@ checkYourAnswersAboutTheTradingHistory.bioMethane = Bio-methane tariff
 checkYourAnswersAboutTheTradingHistory.bioMass = Biomass or biogas tariff
 checkYourAnswersAboutTheTradingHistory.TNuoS = TNuoS
 checkYourAnswersAboutTheTradingHistory.BSuoS = BSuoS
-checkYourAnswersAboutTheTradingHistory.extraCost = Extra cost
+checkYourAnswersAboutTheTradingHistory.extraCost = Costau eraill
 checkYourAnswersAboutTheTradingHistory.totalCosts = Cyfanswm y costau
 checkYourAnswersAboutTheTradingHistory.rent = Rhent
 checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing

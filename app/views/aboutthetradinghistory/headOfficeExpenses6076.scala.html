@@ -76,7 +76,7 @@
 
     <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.headOfficeExpenses.p1")</p>
     @govukInsetText(InsetText(
-        content = Text(messages("turnover.6076.headOfficeExpenses.inset"))
+        content = Text(messages("fieldsAreMandatory.label"))
     ))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.submit()) {

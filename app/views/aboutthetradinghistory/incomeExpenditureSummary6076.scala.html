@@ -91,7 +91,9 @@
                     rowWithLink("totalPremises", _.totalPremisesCosts, _.premisesCostsUrl),
                     rowWithLink("totalOperational", _.totalOperationalExpenses, _.operationalExpensesUrl),
                     rowWithLink("headOffice", _.headOfficeExpenses, _.headOfficeExpensesUrl),
-                    rowWithLink("profitOrLoss", _.netProfitOrLoss, _ => "")
+                    Seq(TableRow(content = Text(messages("incomeExpenditureSummary6076.profitOrLoss")))) ++
+                            entries.map(entry => TableRow(content = Text(entry.netProfitOrLoss.asMoney)))++
+                            Seq(TableRow(content = Empty))
             ),
             firstCellIsHeader = true,
             classes = "govuk-table"

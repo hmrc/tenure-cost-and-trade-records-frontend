@@ -883,7 +883,7 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.operateEV",
             _.electricVehicleChargingPoints.map(_.electricVehicleChargingPoint).map(hasEVPoint =>
-                """<p class="govuk-body">""" + messages(s"label.${hasEVPoint.name}") + "</p>"
+                """<p class="govuk-body">""" + messages(if(hasEVPoint.name.contains("yes")) {"label.yes.ydw"} else {"label.no.nac.ydw"}) + "</p>"
                         + sectionAnswers.answers.filter(_ => hasEVPoint.name == "yes").flatMap(
                     _.electricVehicleChargingPoints.flatMap(_.spacesOrBays)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
             aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(), "electricVehicleChargingPoints", ("valueAsHtml", _ => None))
