@@ -69,10 +69,10 @@ class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
   private def validDataPerHireType(hireType: CaravanHireType, valuePrefix: String = ""): Seq[(String, String)] =
     Seq(
-      s"$hireType.years0_5"         -> s"${valuePrefix}111",
-      s"$hireType.years6_10"         -> s"${valuePrefix}222",
-      s"$hireType.years11_15"         -> s"${valuePrefix}333",
-      s"$hireType.years15plus"         -> s"${valuePrefix}444"
+      s"$hireType.years0_5"    -> s"${valuePrefix}111",
+      s"$hireType.years6_10"   -> s"${valuePrefix}222",
+      s"$hireType.years11_15"  -> s"${valuePrefix}333",
+      s"$hireType.years15plus" -> s"${valuePrefix}444"
     )
 
   private def validFormData: Seq[(String, String)] =
@@ -97,7 +97,9 @@ class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
         fakePostRequest.withFormUrlEncodedBody(invalidNumberFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
-      contentAsString(res) should include("""<a href="#privateSublet.years0_5">error.caravans.twin.privateSublet.years0_5.nonNumeric</a>""")
+      contentAsString(res) should include(
+        """<a href="#privateSublet.years0_5">error.caravans.twin.privateSublet.years0_5.nonNumeric</a>"""
+      )
     }
 
     "return 400 for empty turnoverSections" in {
