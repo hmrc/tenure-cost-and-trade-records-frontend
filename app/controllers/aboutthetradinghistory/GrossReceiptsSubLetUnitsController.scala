@@ -27,7 +27,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.grossReceiptsSubLetUnits6045
-
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -79,15 +78,13 @@ class GrossReceiptsSubLetUnitsController @Inject() (
           session
             .saveOrUpdate(updatedData)
             .map { _ =>
-              navigator.cyaPage
-                .filter(_ => navigator.from == "CYA")
-                .getOrElse(
-                  navigator
-                    .nextPageForOtherHolidayAccommodation(GrossReceiptsSubLetUnitsId, updatedData)
-                    .apply(updatedData)
-                )
+              Redirect(
+                navigator
+                  .nextPageForOtherHolidayAccommodation(GrossReceiptsSubLetUnitsId, updatedData)
+                  .apply(updatedData)
+              )
+
             }
-            .map(Redirect)
         }
       )
     }

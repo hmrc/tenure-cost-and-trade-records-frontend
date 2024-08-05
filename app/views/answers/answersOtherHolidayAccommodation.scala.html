@@ -19,19 +19,167 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswerNo
+@import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+@import models.submissions.aboutthetradinghistory.TurnoverSection6045
+@import models.submissions.aboutthetradinghistory.OtherHolidayAccommodation
+@import models.submissions.aboutthetradinghistory.TotalSiteCapacity
+@import util.DateUtilLocalised
+@import util.NumberUtil._
 
-@this(govukSummaryList: GovukSummaryList)
+@this(govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
+
 
 @()(implicit request: SessionRequest[?], messages: Messages)
-    @sectionAnswersPartOne = @{
-        SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+    @tableRow(values: Seq[String]) = {
+        @values.map { value =>
+            <div class="hmrc-turnover-table-column">
+            @value
+            </div>
+        }
+    }
+    @singleTableRow(value: String) = {
+        <div class="hmrc-turnover-table-column">
+            @value
+        </div>
+    }
+    @action(pageHeadingKey:String, editPage:Call) = @{
+        Some(
+            Actions(items =
+                Seq(
+                    ActionItem(
+                        href = s"$editPage?from=CYA",
+                        content = Text(messages("label.change")),
+                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        attributes = Map(
+                            "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
+                        )
+                    )
+                )
+            )
+        )
     }
 
-    @if(sectionAnswersPartOne.answers.flatMap(_.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)).contains(AnswerNo)){
+    @pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
+        <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
+    ))
+    }
+    @pageAnswersTotalSiteCapacity(pageHeadingKey: String, answerRows: SummaryListRow*) = {
+        <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+    @govukSummaryList(SummaryList(rows =
+         answerRows.init :+ answerRows.last.copy(classes = "")
+    ))
+    }
+
+    @answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None) = @{
+        SummaryListRow(
+            key = Key(Text(messages(valueLabelKey))),
+            value = Value(HtmlContent(
+                tableRow(values).body
+            )),
+            classes = "no-border-bottom",
+        )
+    }
+    @singleAnswer(valueLabelKey: String, values: String, additionalParagraph: Option[String] = None, givenActions: Option[Actions] = None, canAction:Boolean = false) = @{
+        SummaryListRow(
+            key = Key(Text(messages(valueLabelKey))),
+            value = Value(HtmlContent(
+                singleTableRow(values).body
+            )),
+            classes = "no-border-bottom",
+            actions = if (canAction) givenActions else None
+        )
+    }
+    @answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String, additionalParagraph: Option[String] = None) = @{
+        answer(valueLabelKey,
+            sectionAnswers1.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer),
+            additionalParagraph)
+    }
+
+    @answerTotalSiteCapacity(valueLabelKey: String, getAnswer: TotalSiteCapacity => String, additionalParagraph: Option[String] = None, action: Option[Actions] = None, canAction:Boolean = false) = @{
+        singleAnswer(valueLabelKey,
+            sectionOtherHolidayAccommodation.answers.flatMap(s => s.totalSiteCapacity).map(getAnswer),
+            additionalParagraph,action,canAction)
+    }
+
+    @financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
+        SummaryListRow(
+            key = Key(Text(messages("turnover.financialYearEnd"))),
+            value = Value(HtmlContent(
+                tableRow(
+                    sectionAnswers.answers.map(financialYearEndDates).fold(Seq(""))(_.map(dateUtil.formatDayMonthAbbrYear))
+                ).body
+            )),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"$editPage?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages(pageHeadingKey)),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
+                            )
+                        )
+                    )
+                )
+            ),
+            classes = "no-border-bottom"
+        )
+    }
+
+    @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
+            request.sessionData.financialYearEndDates6076.map(_._1)
+    }
+    @sectionAnswers = @{
+        SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
+    }
+    @sectionAnswers1 = @{
+        SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+    }
+    @sectionOtherHolidayAccommodation = @{
+      SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation))
+    }
+
+    @if(sectionOtherHolidayAccommodation.answers.flatMap(_.otherHolidayAccommodation).contains(AnswerNo)){
     <h2 class="govuk-heading-m">@messages("checkYourAnswersOtherHolidayAccommodation.h2")</h2>
     @govukSummaryList(SummaryList(rows =
-        sectionAnswersPartOne.row("checkYourAnswersOtherHolidayAccommodation.onSite",
-            _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation.flatMap(yesNo => messages(s"label.${yesNo.name}"))).orElse(Some(messages(s"label.no"))),
+        sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
+            _.otherHolidayAccommodation.map(yesNo => messages(s"label.${yesNo.name}")),
             controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
     ))
+    }else{
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersOtherHolidayAccommodation.h2")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
+                _.otherHolidayAccommodation.map(yesNo => messages(s"label.${yesNo.name}")),
+                controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation") ++
+                sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.openAllYear",
+                _.otherHolidayAccommodationDetails.map(otherHolidayAccommodationDetails => "<p class=\"govuk-body\">" + messages(s"label.${otherHolidayAccommodationDetails.otherHolidayAccommodationOpenAllYear.name}") + "</p>"
+                        + sectionOtherHolidayAccommodation.answers.filter(_ => otherHolidayAccommodationDetails.otherHolidayAccommodationOpenAllYear.name == "no").flatMap(
+                    _.otherHolidayAccommodationDetails.flatMap(_.weeksOpen)).fold("")(v => s"<p class=\"govuk-body\">${messages("checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks",v)}</p>")),
+                controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show(),"otherHolidayAccommodation", ("valueAsHtml", _ => None))
+
+        ))
+    @pageAnswers("turnover.6045.lettingUnits.grossReceipts.heading",
+        aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show(),
+        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsLettingUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
+        answer6045("checkYourAnswersOtherHolidayAccommodation.grossReceipts", _.grossReceiptsLettingUnits.flatMap(_.grossReceipts)),
+        answer6045("checkYourAnswersOtherHolidayAccommodation.numberOfUnits", _.grossReceiptsLettingUnits.flatMap(_.numberOfUnits))
+    )
+
+    @pageAnswers("turnover.6045.subLetUnits.grossReceipts.heading",
+        aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show(),
+        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsSubLetUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
+        answer6045("checkYourAnswersOtherHolidayAccommodation.grossReceipts", _.grossReceiptsSubLetUnits.flatMap(_.grossReceipts)),
+        answer6045("checkYourAnswersOtherHolidayAccommodation.numberOfUnits", _.grossReceiptsSubLetUnits.flatMap(_.numberOfUnits))
+    )
+    @pageAnswersTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading",
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting", t => s"${t.availableForLetting}",None,action("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading", aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show()),true),
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff",t=>  s"${t.occupiedBySeasonalStuff}"),
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.privatelyOwned", t=>  s"${t.privatelyOwned}"),
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalLettingUnits", t=>  s"${t.total}")
+    )
     }

@@ -79,15 +79,12 @@ class GrossReceiptsLettingUnitsController @Inject() (
           session
             .saveOrUpdate(updatedData)
             .map { _ =>
-              navigator.cyaPage
-                .filter(_ => navigator.from == "CYA")
-                .getOrElse(
-                  navigator
-                    .nextPageForOtherHolidayAccommodation(GrossReceiptsHolidayUnitsId, updatedData)
-                    .apply(updatedData)
-                )
+              Redirect(
+                navigator
+                  .nextPageForOtherHolidayAccommodation(GrossReceiptsHolidayUnitsId, updatedData)
+                  .apply(updatedData)
+              )
             }
-            .map(Redirect)
         }
       )
     }
