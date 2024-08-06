@@ -404,7 +404,7 @@
       session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty
      )
     }
-    @if(forType == ForTypes.for6045) {
+    @if(forType == ForTypes.for6045  || forType == ForTypes.for6046) {
      @includes.taskListItem("other-holiday-accommodation", "taskList.otherHolidayAccommodation",
       controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(),
       section3point1Completed,
