@@ -2405,6 +2405,13 @@ error.tentingPitches.grossReceipts.range = Wages and salaries in the year ending
 error.tentingPitches.numberOfPitches.required = Enter 0 if you did not have any pitches in the year ending {0}
 error.tentingPitches.numberOfPitches.range = Number of pitches in the year ending {0} must be a positive number, for example 1 or 100
 
+#ADDITIONAL ACTIVITIES 6045
+########################
+additionalActivitiesOnSite.heading = Additional activities
+additionalActivitiesOnSite.subheading = Are there any additional income-generating activities on the site?
+additionalActivitiesOnSite.hint = This could include, but is not limited to, shops, bars, leisure activities ar caravan storage
+error.additionalActivitiesOnSite.missing = Select yes if there are additional income-generating activities on the site
+
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
 concessionOrFranchise.heading = Rent from concessions

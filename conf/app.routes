@@ -281,6 +281,9 @@ POST        /gross-receipts-sub-let-units                           controllers.
 GET         /total-site-capacity                                    controllers.aboutthetradinghistory.TotalSiteCapacity6045Controller.show()
 POST        /total-site-capacity                                    controllers.aboutthetradinghistory.TotalSiteCapacity6045Controller.submit()
 
+GET         /additional-activities-on-site                          controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.show()
+POST        /additional-activities-on-site                          controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.submit()
+
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
 
