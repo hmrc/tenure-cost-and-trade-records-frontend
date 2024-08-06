@@ -73,13 +73,9 @@ class AdditionalActivitiesOnSiteController @Inject() (
         val updatedSession = AboutTheTradingHistoryPartOne.updateAdditionalActivities { additionalActivities =>
           additionalActivities.copy(additionalActivitiesOnSite = Some(data))
         }
-        session.saveOrUpdate(updatedSession).map { _ =>
-          Redirect(
-            navigator
-              .nextPageForAdditionalActivities(AdditionalActivitiesOnSiteId, updatedSession)
-              .apply(updatedSession)
-          )
-        }
+        session.saveOrUpdate(updatedSession)
+          .map(_ => navigator.nextPage(AdditionalActivitiesOnSiteId, updatedSession).apply(updatedSession))
+          .map(Redirect)
       }
     )
   }
