@@ -134,7 +134,7 @@ abstract class CaravansTrading6045Controller(
         tradingPage match {
           case SingleCaravansOwnedByOperator => routes.GrossReceiptsCaravanFleetHireController.show()
           case SingleCaravansSublet          => routes.SingleCaravansOwnedByOperatorController.show()
-          case TwinCaravansOwnedByOperator   => routes.SingleCaravansSubletController.show()
+          case TwinCaravansOwnedByOperator   => routes.SingleCaravansAgeCategoriesController.show()
           case TwinCaravansSublet            => routes.TwinUnitCaravansOwnedByOperatorController.show()
         }
     }).url

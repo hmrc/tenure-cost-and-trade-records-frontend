@@ -17,10 +17,10 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
-import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.Single
+import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.Twin
 import models.submissions.aboutthetradinghistory.{Caravans, CaravansAge}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.SingleCaravansAgeCategoriesId
+import navigation.identifiers.TwinCaravansAgeCategoriesId
 import play.api.mvc.{AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.caravansAgeCategories
@@ -28,26 +28,26 @@ import views.html.aboutthetradinghistory.caravansAgeCategories
 import javax.inject.{Inject, Named, Singleton}
 
 /**
-  * 6045/6046 Trading history - How old are the single static caravans on site.
+  * 6045/6046 Trading history - How old are the twin-unit static caravans on site.
   *
   * @author Yuriy Tumakha
   */
 @Singleton
-class SingleCaravansAgeCategoriesController @Inject() (
+class TwinUnitCaravansAgeCategoriesController @Inject() (
   val caravansAgeCategoriesView: caravansAgeCategories,
   val navigator: AboutTheTradingHistoryNavigator,
   val withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-) extends CaravansAgeCategoriesController(SingleCaravansAgeCategoriesId, Single, mcc) {
+) extends CaravansAgeCategoriesController(TwinCaravansAgeCategoriesId, Twin, mcc) {
 
   def savedAnswer(implicit
     request: SessionRequest[AnyContent]
   ): Option[CaravansAge] = request.sessionData.aboutTheTradingHistoryPartOne
     .flatMap(_.caravans)
-    .flatMap(_.singleCaravansAge)
+    .flatMap(_.twinUnitCaravansAge)
 
   def updateAnswer(caravansAge: CaravansAge): Caravans => Caravans =
-    _.copy(singleCaravansAge = Some(caravansAge))
+    _.copy(twinUnitCaravansAge = Some(caravansAge))
 
 }

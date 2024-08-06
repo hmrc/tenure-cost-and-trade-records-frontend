@@ -280,9 +280,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show()
     ),
     TwinCaravansOwnedByOperatorId               -> (_ => aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show()),
-    TwinCaravansSubletId                        -> (_ =>
+    TwinCaravansSubletId                        -> (_ => aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show()),
+    TwinCaravansAgeCategoriesId                 -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
-        .show() // TODO: How old twin-unit caravans
+        .show() // TODO: Total site capacity - static caravans
     ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
     OtherHolidayAccommodationDetailsId          -> (_ =>

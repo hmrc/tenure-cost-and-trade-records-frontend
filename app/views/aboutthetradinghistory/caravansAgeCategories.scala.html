@@ -17,9 +17,9 @@
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.CaravansAge
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType
-@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.FleetHire
-@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.PrivateSublet
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.*
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
+@import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 
@@ -35,6 +35,12 @@
 
 @(form: Form[CaravansAge], caravansUnitType: CaravanUnitType, backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@formAction = @{
+    caravansUnitType match {
+        case Single => controllers.aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.submit()
+        case Twin => controllers.aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.submit()
+    }
+}
 
 @caravansHireTypeWithLabel = @{
     Seq[(CaravanHireType, String)](
@@ -113,7 +119,7 @@
         content = Text(messages("turnover.6045.caravans.age.inset"))
     ))
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.submit()) {
+    @formWithCSRF(action = formAction) {
 
         <table class="hmrc-responsive-table">
             <tbody>
@@ -123,7 +129,7 @@
                     @govukTable(Table(
                         head = Seq(
                             HeadCell(content = Text(messages("turnover.6045.caravans.age"))),
-                            HeadCell(content = Text(label))
+                            HeadCell(content = HtmlContent(label))
                         ),
                         firstCellIsHeader = true,
                         rows =

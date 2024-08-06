@@ -242,6 +242,9 @@ POST        /twin-unit-caravans-owned-by-operator                   controllers.
 GET         /twin-unit-caravans-sublet                              controllers.aboutthetradinghistory.TwinUnitCaravansSubletController.show()
 POST        /twin-unit-caravans-sublet                              controllers.aboutthetradinghistory.TwinUnitCaravansSubletController.submit()
 
+GET         /twin-unit-caravans-age-categories                      controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.show()
+POST        /twin-unit-caravans-age-categories                      controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.submit()
+
 GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
 POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
 
