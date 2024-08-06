@@ -35,6 +35,7 @@ case class AboutTheTradingHistoryPartOne(
   caravans: Option[Caravans] = None,
   otherHolidayAccommodation: Option[OtherHolidayAccommodation] = None,
   touringAndTentingPitches: Option[TouringAndTentingPitches] = None,
+  additionalActivities: Option[AdditionalActivities] = None,
   fromCYA: Option[Boolean] = None
 )
 
@@ -79,5 +80,14 @@ object AboutTheTradingHistoryPartOne {
       val touringAndTentingPitches =
         update(aboutTheTradingHistoryPartOne.touringAndTentingPitches.getOrElse(TouringAndTentingPitches()))
       aboutTheTradingHistoryPartOne.copy(touringAndTentingPitches = Some(touringAndTentingPitches))
+    }
+
+  def updateAdditionalActivities(
+    update: AdditionalActivities => AdditionalActivities
+  )(implicit sessionRequest: SessionRequest[?]): Session =
+    updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
+      val additionalActivities =
+        update(aboutTheTradingHistoryPartOne.additionalActivities.getOrElse(AdditionalActivities()))
+      aboutTheTradingHistoryPartOne.copy(additionalActivities = Some(additionalActivities))
     }
 }

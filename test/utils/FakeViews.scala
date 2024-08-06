@@ -20,7 +20,7 @@ import play.api.test.Injecting
 import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
-import views.html.aboutthetradinghistory._
+import views.html.aboutthetradinghistory.{whatYouWillNeed, _}
 import views.html.aboutyouandtheproperty._
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
 import views.html.connectiontoproperty._
@@ -176,6 +176,7 @@ trait FakeViews { this: Injecting =>
   lazy val tentingPitchesCertificatedView: tentingPitchesCertificated                               = inject[tentingPitchesCertificated]
   lazy val otherHolidayAccommodationDetailsView: otherHolidayAccommodationDetails                   =
     inject[otherHolidayAccommodationDetails]
+  lazy val additionalActivitiesOnSiteView: additionalActivitiesOnSite                               = inject[additionalActivitiesOnSite]
   lazy val grossReceiptsLettingUnitsView: grossReceiptsLettingUnits6045                             = inject[grossReceiptsLettingUnits6045]
   lazy val grossReceiptsSubLetUnitsView: grossReceiptsSubLetUnits6045                               = inject[grossReceiptsSubLetUnits6045]
   lazy val checkYourAnswersOtherHolidayAccommodationView: checkYourAnswersOtherHolidayAccommodation =

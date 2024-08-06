@@ -122,6 +122,43 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(TentingPitchesCertificatedId.toString.equals("tentingPitchesCertificatedPage"))
     }
 
+    "Identifier for additional activities on site" in {
+      assert(AdditionalActivitiesOnSiteId.toString.equals("additionalActivitiesOnSitePage"))
+    }
+
+    "Identifier for caravans open all year" in {
+      assert(CaravansOpenAllYearId.toString.equals("caravansOpenAllYearPage"))
+    }
+
+    "Identifier for gross receipts holiday unit page" in {
+      assert(GrossReceiptsHolidayUnitsId.toString.equals("grossReceiptsHolidayUnitsPage"))
+    }
+
+    "Identifier for gross receipts sub let units page " in {
+      assert(GrossReceiptsSubLetUnitsId.toString.equals("grossReceiptsSubLetUnitsPage"))
+    }
+
+    "Identifier for single caravan age categories page  " in {
+      assert(SingleCaravansAgeCategoriesId.toString.equals("singleCaravansAgeCategoriesPage"))
+    }
+
+    "Identifier for single caravan owned by operator page  " in {
+      assert(SingleCaravansOwnedByOperatorId.toString.equals("singleCaravansOwnedByOperatorPage"))
+    }
+
+    "Identifier for single caravan sublet page  " in {
+      assert(SingleCaravansSubletId.toString.equals("singleCaravansSubletPage"))
+    }
+    "Identifier for total site capacity page  " in {
+      assert(TotalSiteCapacityId.toString.equals("TotalSiteCapacityPage"))
+    }
+    "Identifier for twin caravan owned by operator page  " in {
+      assert(TwinCaravansOwnedByOperatorId.toString.equals("twinCaravansOwnedByOperatorPage"))
+    }
+    "Identifier for twin caravan sublet page  " in {
+      assert(TwinCaravansSubletId.toString.equals("twinCaravansSubletPage"))
+    }
+
     "Identifier for Check Your Answers Tenting Pitches page" in {
       assert(CheckYourAnswersTentingPitchesId.toString.equals("checkYourAnswersTentingPitchesPage"))
     }

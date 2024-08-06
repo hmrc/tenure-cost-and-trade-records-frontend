@@ -39,12 +39,24 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   def cyaPageForOtherHolidayAccommodation: Call =
     aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
 
+  def cyaPageForAdditionalActivities: Call = controllers.routes.TaskListController.show() // TODO BST-97971
+
   def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
     if (from == "CYA") { _ =>
       cyaPageForTentingPitches
+    } else {
+      nextWithoutRedirectToCYA(id, session)
+    }
+
+  def nextPageForAdditionalActivities(id: Identifier, session: Session)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call =
+    if (from == "CYA") { _ =>
+      cyaPageForAdditionalActivities
     } else {
       nextWithoutRedirectToCYA(id, session)
     }
@@ -71,7 +83,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     } else {
       super.nextPage(id, session)
     }
-  private def iesSpecificRoute: Call            =
+  private def iesSpecificRoute: Call =
     routes.IncomeExpenditureSummaryController.show()
 
   private def ies6076SpecificRoute: Call =
@@ -299,6 +311,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     PitchesForCaravansId                        -> (_ => aboutthetradinghistory.routes.PitchesForGlampingController.show()),
     PitchesForGlampingId                        -> (_ => aboutthetradinghistory.routes.RallyAreasController.show()),
     RallyAreasId                                -> (_ => aboutthetradinghistory.routes.TentingPitchesTotalController.show()),
+    AdditionalActivitiesOnSiteId                -> (_ => controllers.routes.TaskListController.show()), //  TODO BST-97971
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>
