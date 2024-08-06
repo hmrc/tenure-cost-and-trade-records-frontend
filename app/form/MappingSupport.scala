@@ -326,37 +326,6 @@ object MappingSupport {
       .transform[Int](_.toInt, _.toString)
       .verifying(s"error.$field.negative", _ >= 0)
 
-  def nonNegativeNumberOptionWithYear(field: String, year: String)(implicit messages: Messages) = {
-    val max = 1000000000
-
-    default(text, "")
-      .verifying(messages(s"error.$field.required", year), _.trim.nonEmpty)
-      .transform[Option[Int]](
-        {
-          case str if str.trim.isEmpty => None
-          case str                     => Try(str.toInt).toOption
-        },
-        {
-          case Some(value) => value.toString
-          case None        => ""
-        }
-      )
-      .verifying(
-        messages(s"error.$field.negative", year),
-        {
-          case Some(n) => n >= 0
-          case None    => true
-        }
-      )
-      .verifying(
-        messages(s"error.$field.nonNumeric", year),
-        {
-          case Some(n) => n <= max
-          case None    => false
-        }
-      )
-  }
-
   def otherCostValueMapping(field: String): Mapping[Option[BigDecimal]] = optional(
     text
       .transform[BigDecimal](s => Try(BigDecimal(s)).getOrElse(-1), _.toString)
