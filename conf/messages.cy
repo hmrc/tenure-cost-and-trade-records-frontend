@@ -1758,6 +1758,31 @@ error.caravans.twin.privateSublet.years15plus.required = Enter 0 if you do not h
 error.caravans.twin.privateSublet.years15plus.nonNumeric = The amount of twin-unit private caravans over 15 years must be a number
 error.caravans.twin.privateSublet.years15plus.negative = The amount of twin-unit private caravans over 15 years cannot be a negative number
 
+turnover.6045.lettingUnits.grossReceipts.heading = Letting units owned by site operator
+turnover.6045.lettingUnits.p1.beginning = Enter your gross receipts from any of these units which are
+turnover.6045.lettingUnits.p1.bold = owned by the site operator.
+turnover.6045.lettingUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.lettingUnits.grossReceipts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.lettingUnits.grossReceipts = Gross receipts
+turnover.6045.lettingUnits.grossReceipts.hint = Inclusive of electricity changes and gas supplied if any.
+turnover.6045.lettingUnits.numberOfUnits = Number of units
+error.turnover.6045.lettingUnits.grossReceipts.required = Enter 0 if you did not have any gross receipts from letting units  the year ending {0}
+error.turnover.6045.lettingUnits.grossReceipts.ranged =  Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.lettingUnits.grossReceipts.negative =  Gross receipts in the year ending {0} cannot be a negative number
+error.numberOfUnits.required = Enter the number of letting units in the year ending {0}
+error.numberOfUnits.negative = Number of letting in the year ending {0} units cannot be a negative number
+error.numberOfUnits.nonNumeric = The number of letting units in the year ending {0} must be a number
+turnover.6045.subLetUnits.grossReceipts.heading = Units sub-let by site operator to holidaymakers on behalf of private owners as fleet hire
+turnover.6045.subLetUnits.p1.beginning = Enter your gross receipts from any of these units which are
+turnover.6045.subLetUnits.p1.bold = sub-let by the site operator.
+turnover.6045.subLetUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.subLetUnits.numberOfUnits = Number of units
+error.turnover.6045.subLetUnits.grossReceipts.required = Enter 0 if you did not have any gross receipts from sub-let units  the year ending {0}
+error.turnover.6045.subLetUnits.grossReceipts.ranged =  Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6045.subLetUnits.grossReceipts.negative =  Gross receipts in the year ending {0} cannot be a negative number
+error.subLetUnits.numberOfUnits.required = Enter the number of sub-let units
+error.subLetUnits.numberOfUnits.negative = Number of sub-let units cannot be a negative number
+error.subLetUnits.numberOfUnits.nonNumeric = The number of sub-let units must be a number
 
 # TURNOVER 6076
 turnover.6076.heading = How much electricity did you generate?
@@ -2246,6 +2271,26 @@ help.otherHolidayAccommodation.list1.p3 = assembled on site
 help.otherHolidayAccommodation.list1.p4 = cannot be transported by road once assembled
 error.otherHolidayAccommodation.required =  Select yes if there are other holiday letting units located on your site.
 
+# TOTAL SITE CAPACITY(FORM 6045/46)
+####################################
+totalSiteCapacity.heading = Total site capacity - other holiday accommodation
+totalSiteCapacity.p1 = You must declare how many units of other holiday accommodation you have in each of the listed categories. This must be the units that are on site today, or will be on site when you submit this declaration.
+totalSiteCapacity.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+totalSiteCapacity.category = Category
+totalSiteCapacity.numberOfUnits = Number of units
+totalSiteCapacity.availableForLetting = Owned by the site operator and available for letting
+totalSiteCapacity.occupiedBySeasonalStuff = Owned by the site operator and occupied by seasonal staff
+totalSiteCapacity.privatelyOwned = Privately owned
+totalSiteCapacity.total = Total number of units on site
+error.availableForLetting.required = Enter 0 if you have no unit owned by the site operator and available for letting
+error.occupiedBySeasonalStuff.required = Enter 0 if you have no unit owned by the site operator and occupied by the seasonal staff
+error.privatelyOwned.required = Enter 0 if you have no unit privately owned
+error.availableForLetting.nonNumeric = The number of units owned by the site operator and available for letting must be between 0 to 999
+error.occupiedBySeasonalStuff.nonNumeric = The number of units owned by the site operator and occupied by the seasonal staff must be between 0 and 999
+error.privatelyOwned.nonNumeric = The number of units privately owned must be between 0 and 999
+error.availableForLetting.negative = The number of units owned by the site operator and available for letting must be between 0 to 999
+error.occupiedBySeasonalStuff.negative = The number of units owned by the site operator and occupied by the seasonal staff must be between 0 and 999
+error.privatelyOwned.negative = The number of units privately owned must be between 0 and 999
 ##########################
 
 #TOURING AND TENTING PITCHES QUESTION
@@ -2331,8 +2376,8 @@ tentingPitches.common.areaInHectares = Area in hectares
 error.tentingPitches.grossReceipts.required = Enter 0 if you did not have any gross receipts in the year ending {0}
 error.tentingPitches.grossReceipts.range = Wages and salaries in the year ending {0} must be a positive number, for example 100 or 100.00
 error.tentingPitches.numberOfPitches.required = Enter 0 if you did not have any pitches in the year ending {0}
-error.tentingPitches.numberOfPitches.range = Number of pitches in the year ending {0} must be a positive number, for example 1 or 100
-
+error.tentingPitches.numberOfPitches.nonNumeric = Number of pitches in the year ending {0} must be a number, for example 1 or 100
+error.tentingPitches.numberOfPitches.negative = Number of pitches in the year ending {0} cannot be a negative number
 #ADDITIONAL ACTIVITIES 6045
 ########################
 additionalActivitiesOnSite.heading = Additional activities

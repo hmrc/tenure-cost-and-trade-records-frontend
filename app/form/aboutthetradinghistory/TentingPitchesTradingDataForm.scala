@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{mappingPerYear, numberOfPitches, tradingPeriodWeeks, turnoverSalesMappingWithYear}
+import form.MappingSupport.{mappingPerYear, nonNegativeNumberWithYear, tradingPeriodWeeks, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
 import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
@@ -28,7 +28,7 @@ object TentingPitchesTradingDataForm {
     mapping(
       "weeks"           -> tradingPeriodWeeks(year),
       "grossReceipts"   -> turnoverSalesMappingWithYear("tentingPitches.grossReceipts", year),
-      "numberOfPitches" -> numberOfPitches(year)
+      "numberOfPitches" -> nonNegativeNumberWithYear("tentingPitches.numberOfPitches", year)
     )(TentingPitchesTradingData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def tentingPitchesTradingDataForm(

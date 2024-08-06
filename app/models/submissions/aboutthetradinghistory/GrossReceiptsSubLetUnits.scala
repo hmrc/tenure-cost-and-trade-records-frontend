@@ -21,7 +21,7 @@ import play.api.libs.json.{Json, OFormat}
 case class GrossReceiptsSubLetUnits(
   tradingPeriod: Int = 52,
   grossReceipts: Option[BigDecimal] = None,
-  numberOfUnits: Int = 0
+  numberOfUnits: Option[Int] = None
 )
 
 object GrossReceiptsSubLetUnits {

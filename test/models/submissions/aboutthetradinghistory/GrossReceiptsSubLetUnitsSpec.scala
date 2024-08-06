@@ -26,7 +26,7 @@ class GrossReceiptsSubLetUnitsSpec extends PlaySpec {
       val grossReceiptsSubLetUnits = GrossReceiptsSubLetUnits(
         52,
         Some(100.00),
-        1
+        Some(1)
       )
       val json                     = Json.toJson(grossReceiptsSubLetUnits)
       json.as[GrossReceiptsSubLetUnits] mustBe grossReceiptsSubLetUnits

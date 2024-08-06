@@ -294,30 +294,6 @@ object MappingSupport {
         .verifying(messages(s"error.$field.negative", year), _ >= 0)
     ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
-  def numberOfPitches(year: String)(implicit messages: Messages) = {
-    val numberOfPitchesMax = 1000000000
-    default(text, "")
-      .verifying(messages("error.tentingPitches.numberOfPitches.required", year), _.trim.nonEmpty)
-      .transform[Option[Int]](
-        {
-          case str if str.trim.isEmpty => None
-          case str                     =>
-            Try(str.toInt).toOption
-        },
-        {
-          case Some(value) => value.toString
-          case None        => ""
-        }
-      )
-      .verifying(
-        messages("error.tentingPitches.numberOfPitches.range", year),
-        {
-          case Some(n) => (0 to numberOfPitchesMax).contains(n)
-          case None    => false
-        }
-      )
-  }
-
   def rallyAreasMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
     text
       .verifying(messages(s"error.rallyAreas.areaInHectares.range", year), s => Try(BigDecimal(s)).isSuccess)

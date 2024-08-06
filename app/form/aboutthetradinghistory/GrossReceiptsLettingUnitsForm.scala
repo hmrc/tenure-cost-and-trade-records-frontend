@@ -28,7 +28,7 @@ object GrossReceiptsLettingUnitsForm {
     mapping(
       "weeks"         -> tradingPeriodWeeks(year),
       "grossReceipts" -> turnoverSalesMappingWithYear("turnover.6045.lettingUnits.grossReceipts", year),
-      "numberOfUnits" -> nonNegativeNumber("numberOfUnits")
+      "numberOfUnits" -> nonNegativeNumberWithYear("numberOfUnits", year)
     )(GrossReceiptsLettingUnits.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def grossReceiptsLettingUnitsForm(
