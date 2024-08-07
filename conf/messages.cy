@@ -21,7 +21,8 @@ label.underReview=(under review)
 label.yes = Yes
 label.no = No
 label.pound = £
-label.weeks = weeks
+label.weeks = wythnos
+fieldsAreMandatory.label = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 
 # OTHER FOOTER LINKS:
 ########
@@ -92,15 +93,15 @@ label.email = Cyfeiriad e-bost
 label.submitAnotherForm = Submit another form
 label.change = Newid
 label.liter = liter
-label.litres = litres
+label.litres = litr
 label.percent = %
 
 # COMMON HINTS
 ##############
 hint.select.all = Dewiswch bob un sy’n berthnasol.
 hint.date.example = Er enghraifft, 27 9 2017.
-hint.month.year.example = For example, 9 2017.
-hint.day.month.example = For example, 04 05.
+hint.month.year.example = Er enghraifft, 9 2017.
+hint.day.month.example = Er enghraifft, 04 05.
 hint.select.applicable = Select any that apply – leave blank if not applicable.
 hint.all.apply = Dewiswch bob un sy’n berthnasol.
 
@@ -108,7 +109,7 @@ hint.all.apply = Dewiswch bob un sy’n berthnasol.
 ###############
 label.section.connectionToTheProperty = Cysylltiad â’r eiddo
 label.section.aboutTheProperty = Amdanoch chi a’r eiddo
-label.section.aboutYourTradingHistory = Trading history
+label.section.aboutYourTradingHistory = Hanes masnachu
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
 label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises and lettings
@@ -533,11 +534,11 @@ error.propertyCurrentlyUsedString.maxLength = The property’s use must be descr
 
 #ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
 ############################
-electricVehicleChargingPoints.heading = Electric Vehicle (EV) charging points
-electricVehicleChargingPoints.p1 = If you operate EV charging point spaces or bays which are not rented out to third parties, these must be included in your declaration.
-electricVehicleChargingPoints.p2 = Any EV charging points operated by third-party companies must be declared in the 'lettings' section of this declaration.
-label.electricVehicleChargingPoints = Do you operate any EV charging point spaces or bays?
-spacesOrBays.textbox = How many spaces or bays do you operate?
+electricVehicleChargingPoints.heading = Pwyntiau gwefru cerbydau trydan (EV)
+electricVehicleChargingPoints.p1 = Os ydych yn gweithredu man gwefru cerbyd trydan nad yw’n cael ei logi i drydydd parti, mae’n rhaid ei gynnwys yn eich datganiad.
+electricVehicleChargingPoints.p2 = Mae’n rhaid i unrhyw fan gwefru cerbyd trydan a weithredir gan gwmnïau trydydd parti gael ei ddatgan yn yr adran ‘gosodiadau’.
+label.electricVehicleChargingPoints = A ydych yn gweithredu unrhyw fan gwefru cerbyd trydan?
+spacesOrBays.textbox =  Sawl man gwefru ydych chi’n eu gweithredu?
 error.spacesOrBays.required = Enter how many spaces or bays you operate
 error.electricVehicleChargingPoints.required = Select yes if you operate any EV charging point spaces or bays
 error.spacesOrBaysNumber.nonNumeric=The number of spaces or bays you operate must be a number between 1 and 999
@@ -1349,18 +1350,17 @@ error.legalOrPlanningRestrictionsDetails.maxLength = Mae’n rhaid i’r disgrif
 
 # ABOUT YOUR TRADING HISTORY
 ##############################
-aboutYourTradingHistory.heading = Occupation and accounting information
-firstOccupy.heading = When did you first occupy the property?
-
+aboutYourTradingHistory.heading = Gwybodaeth am ddeiliadaeth a chyfrifyddu
+firstOccupy.heading = Pryd y gwnaethoch feddiannu’r eiddo am y tro cyntaf?
 fieldName.firstOccupy = the {0} when you first occupied the property
 
 # FINANCIAL YEAR-END
 ##############################
-financialYearEnd.heading = Your financial year end
-label.financialYear = When does your current financial year end?
-financialYearEnd.yearEndChanged.legend = If your financial year end has changed
-financialYearEnd.yearEndChanged.hint = Use the checkbox if your financial year end has changed in the last 3 years. You will be taken to a separate page to declare the former year-end dates.
-financialYearEnd.yearEndChanged = My financial year end has changed in the last 3 years.
+financialYearEnd.heading = Diwedd eich blwyddyn ariannol
+label.financialYear = Pryd fydd eich blwyddyn ariannol bresennol yn dod i ben?
+financialYearEnd.yearEndChanged.legend = Os yw’ch blwyddyn ariannol wedi newid
+financialYearEnd.yearEndChanged.hint = Defnyddiwch y blwch dewis os yw diwedd eich blwyddyn ariannol wedi newid yn y 3 blynedd diwethaf. Byddwch yn mynd i dudalen ar wahân i ddatgan y manylion diwedd blwyddyn blaenorol.
+financialYearEnd.yearEndChanged = Mae diwedd fy mlwyddyn ariannol wedi newid yn y 3 blynedd diwethaf.
 fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
@@ -1485,9 +1485,9 @@ taskList.EVChargingPoints = EV charging points
 taskList.technologyType = Technology type
 taskList.siteConstructionDetails = Site construction details
 taskList.howIsUsed = How the property is used
-taskList.6076.powerGenerated = Power generated
-taskList.6076.grossReceipts = Gross receipts
-taskList.6076.operationalExpenses = Operating expenses
+taskList.6076.powerGenerated = Pŵer a gynhyrchwyd
+taskList.6076.grossReceipts = Derbyniadau gros
+taskList.6076.operationalExpenses = Treuliau gweithredu a gweinyddol
 taskList.touringAndTentingPitches = Touring and tenting pitches
 
 # COST OF SALES OR GROSS PROFIT
@@ -1500,47 +1500,47 @@ error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 
 # TURNOVER
 ##########
-turnover.heading = Turnover
-turnover.6015.heading = Total Turnover
-turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if were are not trading continuously, state the relevant number of weeks.
-turnover.6015.p1 = You must provide details of your total turnover. Include all forms of income from accommodation, food and drink sales, and income from franchises such as coffee kiosks. You must also include income from any leisure activities, and any rental income form concessions or lettings.
-turnover.6015.p2 = If the accounts do no relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
+turnover.heading = Trosiant
+turnover.6015.heading = Cyfanswm trosiant
+turnover.p1 = Rhowch fanylion eich trosiant i ni. Os nad yw’r cyfrifon yn ymwneud â blwyddyn gyfan, neu os nad oeddech yn masnachu’n barhaus, nodwch y nifer berthnasol o wythnosau.
+turnover.6015.p1 = Mae’n rhaid i chi roi manylion cyfanswm eich trosiant. Rhaid cynnwys pob math o incwm o lety, gwerthiannauu bwyd a diod, ac incwm o fasnachfreintiau fel ciosgau coffi. Rhaid i chi hefyd gynnwys incwm o unrhyw weithgareddau hamdden, ac unrhyw incwm rhent o gonsesiynau neu osodiadau.
+turnover.6015.p2 = Os nad yw’r cyfrifon yn ymwneud â blwyddyn gyfan, neu os nad oeddech yn masnachu’n barhaus, nodwch y nifer berthnasol o wythnosau.
 turnover.6015.p3 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this page. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
 turnover.p2 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
-turnover.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-turnover.financialYearEnd = Financial year end
-turnover.tradingPeriod = Trading period
-turnover.alcoholicDrinks = Drinks (excluding VAT)
-turnover.alcoholicDrinksCaption = Including alcoholic and soft drinks, crisps, nuts.
-turnover.food = Food (excluding VAT)
-turnover.foodCaption = Excluding drinks.
-turnover.otherReceipts = Other receipts (excluding VAT)
-turnover.otherReceiptsCaption = Including hire of function rooms, conference rooms and telephones.
-turnover.otherReceiptsCaption.60106011 = For example admission charges or camping pitches.
-turnover.totalSalesRevenue = Total sales revenue
-turnover.totalSalesRevenueCaption = (excluding VAT)
-turnover.accommodation = Accommodation (excluding VAT)
-turnover.accommodationCaption = Excluding meals.
-turnover.averageOccupancyRate = Average occupancy rate
-turnover.averageOccupancyRateCaption = Lodges and hotels only.
-turnover.mustInclude.p1 = You must include any rental income received from concessions or lettings, or income generated by any franchises operated by {0}.
-turnover.weeks = weeks
-turnover.details = Help with completing turnover
-turnover.details.p1 = Do not include VAT in any of the figures you declare on this page.
-turnover.details.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
-turnover.details.6015.p1 = Do not include VAT in any of the figures you declare on this page. If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
-turnover.details.6015.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
-turnover.details.6015.h1 = General guidance
-turnover.details.6015.h3 = Leisure Activities
-turnover.details.6015.p4 = You must declare any income received from leisure activities such as golf, fitness, or spa activities. Declare these in the ‘other’ category.
-turnover.details.6015.h4 = Income from franchises, concessions and lettings
-turnover.details.6015.p5 = You must declare any income received from any franchise, concessions, or lettings attached to the property. This should be recorded in the appropriate turnover category.
-turnover.details.6015.p6 = For example, rental income from a restaurant concession should be declared under ‘food’.
-turnover.grossIncome = Gross income
-turnover.grossIncomeCaption.p1 = (excluding VAT)
-turnover.grossIncomeCaption.p2 = Excluding any payments received for concessions, franchises, licences or lettings.
-turnover.totalVisitorNumbers = Total visitor numbers
-turnover.totalVisitorNumbersCaption = Including concessions and free entries - enter 0 if the property is a car park.
+turnover.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.financialYearEnd = Diwedd y flwyddyn ariannol
+turnover.tradingPeriod = Cyfnod masnachu
+turnover.alcoholicDrinks = <b>Diodydd</b> (heb gynnwys TAW)
+turnover.alcoholicDrinksCaption = Gan gynnwys diodydd alcoholaidd a diodydd ysgafn, creision, cnau
+turnover.food = <b>Bwyd</b> (heb gynnwys TAW)
+turnover.foodCaption = Heb gynnwys diodydd
+turnover.otherReceipts = <b>Derbynebau eraill</b> (heb gynnwys TAW)
+turnover.otherReceiptsCaption = Gan gynnwys llogi ystafelloedd digwyddiadau, ystafelloedd cynadledda a theleffonau.
+turnover.otherReceiptsCaption.60106011 = Er enghraifft, pris mynediad neu leiniau gwersylla.
+turnover.totalSalesRevenue = <b>Cyfanswm refeniw y gwerthiannau</b>
+turnover.totalSalesRevenueCaption = (heb gynnwys TAW)
+turnover.accommodation = <b>Llety</b> (heb gynnwys TAW)
+turnover.accommodationCaption = Heb gynnwys prydau o fwyd.
+turnover.averageOccupancyRate = Cyfraddau’r feddiannaeth, ar gyfartaledd
+turnover.averageOccupancyRateCaption = Tai llety a gwestai yn unig.
+turnover.mustInclude.p1 = Mae’n rhaid i chi gynnwys unrhyw incwm rhent a gafwyd o gonsesiynau neu osodiadau, neu incwm a gynhyrchir gan unrhyw fasnachfreintiau a weithredwyd gan {0}.
+turnover.weeks = wythnos
+turnover.details = Help gyda chwblhau trosiant
+turnover.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.
+turnover.details.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
+turnover.details.6015.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon. Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
+turnover.details.6015.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
+turnover.details.6015.h1 = Arweiniad cyffredinol
+turnover.details.6015.h3 = Gweithgareddau hamdden
+turnover.details.6015.p4 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deillio o weithgareddau hamdden, fel gweithgareddau golff, ffitrwydd neu sba. Rhaid i chi ddatgan y rhain yn y categori ‘arall’.
+turnover.details.6015.h4 = Incwm o fasnachfreintiau, consesiynau a gosodiadau
+turnover.details.6015.p5 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deillio o unrhyw fasnachfreintiau, consesiynau neu osodiadau sydd ynghlwm wrth yr eiddo. Dylid cofnodi hyn yn y categori incwm priodol.
+turnover.details.6015.p6 = Er enghraifft, dylid datgan incwm rhent o gonsesiwn bwyty o dan ’bwyd’.
+turnover.grossIncome = Incwm gros
+turnover.grossIncomeCaption.p1 = (heb gynnwys TAW)
+turnover.grossIncomeCaption.p2 = Gan eithrio unrhyw daliadau a gafwyd am gonsesiynau, masnachfreintiau, trwyddedau neu osodiadau.
+turnover.totalVisitorNumbers = Cyfanswm nifer yr ymwelwyr
+turnover.totalVisitorNumbersCaption = Gan gynnwys consesiynau a mynediadau am ddim – nodwch ‘0’ os yw’r eiddo yn faes parcio.
 error.financialYearEnd.day.required = The financial year-end date must include a day
 error.financialYearEnd.month.required = The financial year-end date must include a month
 error.financialYearEnd.year.required = The financial year-end date must include a year
@@ -1571,8 +1571,8 @@ error.totalVisitorNumber.negative = Total visitor numbers in the year ending {0}
 turnover.p1.6016 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
 turnover.p2.6016 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
 turnover.details.6016 = Help with completing this page
-turnover.details.h1.6016 = General guidance
-turnover.details.p1.6016 = Do not include VAT in any of the figures you declare on this page. If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
+turnover.details.h1.6016 = Arweiniad cyffredinol
+turnover.details.p1.6016 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon. Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
 turnover.details.h2.6016 = Financial year end
 turnover.details.p2.6016 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can declare them together in a single field.
 turnover.details.h3.6016 = Franchises and concessions
@@ -1582,22 +1582,22 @@ turnover.drinks.6016 = Drinks (exc VAT)
 turnover.drinksCaption.6016 = Including alcoholic and soft drinks, crisps, nuts
 turnover.other.6016 = Other (exc VAT)
 turnover.otherCaption.6016 = Including hire of function rooms, conference rooms and telephones
-turnover.totalSales.6016 = Total sales revenue
-turnover.totalSalesCaption.6016 = Excluding VAT
+turnover.totalSales.6016 = Cyfanswm refeniw y gwerthiannau
+turnover.totalSalesCaption.6016 = (heb gynnwys TAW)
 
 # TURNOVER 6020
-turnover.6020.heading = Non-fuel turnover
-turnover.6020.p1 = Provide details of any non-fuel income you may receive, excluding any letting income. You will be asked about letting income in later sections of this declaration.
-turnover.6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
-turnover.6020.shop = Shop turnover
-turnover.6020.shop.hint = Excluding fuel receipts.
-turnover.6020.carWash = Car wash turnover
-turnover.6020.jetWash = Jet wash turnover
-turnover.6020.lottery = Lottery turnover
-turnover.6020.lottery.hint = Excluding fuel receipts.
-turnover.6020.payPointOrZone = Paypoint or payzone turnover
-turnover.6020.otherIncome = Other income
-turnover.6020.excludingVAT = (excluding VAT)
+turnover.6020.heading = Trosiant nad yw’n danwydd
+turnover.6020.p1 = Rhowch fanylion unrhyw incwm y gallech ei gael o werthiannau and ydynt yn danwydd, ac eithrio unrhyw incwm o osodiadau. Gofynnir i chi ynglŷn ag incwm o osodiadau nes ymlaen yn y datganiad hwn.
+turnover.6020.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6020.shop = Trosiant y siop
+turnover.6020.shop.hint = Heb gynnwys derbynebau tanwydd.
+turnover.6020.carWash = Trosiant golchi ceir
+turnover.6020.jetWash = Trosiant golchi gyda chwistrelliad
+turnover.6020.lottery = Trosiant y Loteri
+turnover.6020.lottery.hint = Heb gynnwys derbynebau tanwydd.
+turnover.6020.payPointOrZone = Trosiant Paypoint neu Payzone
+turnover.6020.otherIncome = Incwm arall
+turnover.6020.excludingVAT = (heb gynnwys TAW)
 error.turnover.6020.shop.required = Enter 0 if you did not have any shop turnover in the year ending {0}
 error.turnover.6020.shop.range = Shop turnover in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6020.shop.negative = Shop turnover in the year ending {0} cannot be a negative number
@@ -1643,7 +1643,7 @@ error.turnover.6045.caravanFleetHire.grossReceipts.negative = Gross receipts in 
 
 turnover.6045.caravans.single.ownedByOperator.heading = Single caravans owned by the operator and used for fleet hire
 turnover.6045.caravans.single.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.caravans.single.ownedByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.caravans.single.ownedByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.caravans.single.ownedByOperator.help.link = Help with single caravans
 turnover.6045.caravans.single.ownedByOperator.help.p1 = A single caravan is transported onto the site in one piece and mounted on a pitch.
 turnover.6045.caravans.grossReceipts = Gross receipts
@@ -1658,7 +1658,7 @@ error.caravans.single.ownedByOperator.vans.nonNumeric = The number of vans in th
 error.caravans.single.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 turnover.6045.caravans.single.subletByOperator.heading = Single caravans sub-let by the operator to holidaymakers on behalf of private owners as fleet hire
 turnover.6045.caravans.single.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.caravans.single.subletByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.caravans.single.subletByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans sub-let by the operator in the year ending {0}
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
@@ -1667,7 +1667,7 @@ error.caravans.single.subletByOperator.vans.nonNumeric = The number of vans in t
 error.caravans.single.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 turnover.6045.caravans.twin.ownedByOperator.heading = Twin-unit caravans owned by the operator and used for fleet hire
 turnover.6045.caravans.twin.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.caravans.twin.ownedByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.caravans.twin.ownedByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.caravans.twin.ownedByOperator.help.link = Help with twin-unit caravans
 turnover.6045.caravans.twin.ownedByOperator.help.p1 = A twin-unit caravan is transported onto the site in no more than two parts which are then assembled by the means of bolts, clamps or other devices.
 turnover.6045.caravans.twin.ownedByOperator.help.p2 = A twin-unit caravan should be no longer than 20m, no wider than 6.8m, and no taller than 3.05m. It should also be capable of being moved by road.
@@ -1702,7 +1702,7 @@ turnover.6045.caravans.age.private.p1 = For the purposes of this declaration, pr
 turnover.6045.caravans.age.private.item1 = privately owned and used only by owner and family
 turnover.6045.caravans.age.private.item2 = sub-let by operator to holidaymakers on behalf of private owners as fleet hire
 turnover.6045.caravans.age.private.item3 = sub-let by private owners to holidaymakers other than family and friends
-turnover.6045.caravans.age.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.caravans.age.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.caravans.age.years0_5 = 0-5 years
 turnover.6045.caravans.age.years6_10 = 6-10 years
 turnover.6045.caravans.age.years11_15 = 11-15 years
@@ -1785,35 +1785,32 @@ error.subLetUnits.numberOfUnits.negative = Number of sub-let units cannot be a n
 error.subLetUnits.numberOfUnits.nonNumeric = The number of sub-let units must be a number
 
 # TURNOVER 6076
-turnover.6076.heading = How much electricity did you generate?
-turnover.6076.p1 = State whether your electricity generated figures are in kilowatt hours (kWh) or megawatt hours (MWh). If any of the financial years cover a period that is not 52 weeks, state the relevant number of weeks.
-turnover.6076.weeks = Number of weeks
-turnover.6076.electricityGenerated = Electricity generated
-turnover.6076.electricityGenerated.hint = (in kWh or MWh)
-turnover.6076.otherIncome.heading = Other income
+turnover.6076.heading = Faint o drydan a gynhyrchoch?
+turnover.6076.p1 = Os yw diwedd eich blwyddyn ariannol wedi newid yn ystod y cyfnod a ddangosir, gallwch olygu’r dyddiadau yn unol â hynny. Os gwnaeth unrhyw un o’ch blynyddoedd ariannol gwmpasu cyfnod nad oedd yn 52 wythnos, nodwch y nifer berthnasol o wythnosau.
+turnover.6076.weeks = Nifer yr wythnosau
+turnover.6076.electricityGenerated = Trydan a gynhyrchir
+turnover.6076.electricityGenerated.hint = (mewn kWh neu MWh)
+turnover.6076.otherIncome.heading = Incwm arall
 turnover.6076.otherIncome.p1 = Provide us with details of any other income not listed previously.
-turnover.6076.otherIncome.inset = All fields on this page are mandatory. If you have no other income, enter the number 0.
-turnover.6076.otherIncome = Other income
-turnover.6076.otherIncome.hint = Include income from any source not listed previously
-turnover.6076.otherIncomeDetails = Give details of the sources of your other income
-turnover.6076.operationalExpenses.heading = Operational and administrative expenses
+turnover.6076.otherIncome = Cyfanswm incwm arall
+turnover.6076.otherIncome.hint = Dylech gynnwys incwm o unrhyw ffynhonnell na restrir hyd yn hyn.
+turnover.6076.otherIncomeDetails = Rhowch fanylion ffynonellau eich incwm arall
+turnover.6076.operationalExpenses.heading = Treuliau gweithredu a gweinyddol
 turnover.6076.operationalExpenses.p1 = Provide us with details of your operational and administrative expenses.
-turnover.6076.operationalExpenses.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-turnover.6076.expenses.advertising = Advertising, marketing and promotions
-turnover.6076.expenses.administration = Administration and sundries
-turnover.6076.expenses.insurance = Other insurance
-turnover.6076.expenses.legalFees = Legal and professional fees
-turnover.6076.expenses.interest = Interest paid
-turnover.6076.expenses.other = Other expenses (specify)
-turnover.6076.expenses.other.hint = Include any expenses not already declared
-turnover.6076.expenses.other.details = Give details of the sources of your other expenses
-turnover.6076.expenses.total = Total expenses
-turnover.6076.headOfficeExpenses.heading = Head office expenses
+turnover.6076.expenses.advertising = Hysbysebu, marchnata a hyrwyddo
+turnover.6076.expenses.administration = Gwaith gweinyddu ac eitemau amrywiol
+turnover.6076.expenses.insurance = Yswiriant arall
+turnover.6076.expenses.legalFees = Ffioedd cyfreithiol a phroffesiynol
+turnover.6076.expenses.interest = Llog wedi’i dalu
+turnover.6076.expenses.other = Treuliau eraill
+turnover.6076.expenses.other.hint = Dylech gynnwys unrhyw dreuliadau sydd heb gael eu datgan eisoes
+turnover.6076.expenses.other.details = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich treuliau eraill.
+turnover.6076.expenses.total = Cyfanswm y treuliau
+turnover.6076.headOfficeExpenses.heading = Treuliau’r brif swyddfa
 turnover.6076.headOfficeExpenses.p1 = Provide us with details of any head office expenses.
-turnover.6076.headOfficeExpenses.inset = The contribution towards head office expenses fields are mandatory. If this is not applicable, enter the number 0.
-turnover.6076.headOfficeExpenses = Contribution towards head office expenses (if applicable)
-turnover.6076.furtherInformationOrRemarks = Further information or remarks (optional)
-turnover.6076.furtherInformationOrRemarks.hint = Include any information you think may be relevant but has not been covered.
+turnover.6076.headOfficeExpenses = Cyfraniadau tuag at dreuliau’r brif swyddfa (os yw’n berthnasol)
+turnover.6076.furtherInformationOrRemarks = Rhagor o wybodaeth neu sylwadau, os hoffech eu nodi
+turnover.6076.furtherInformationOrRemarks.hint = Dylech gynnwys unrhyw wybodaeth a allai fod yn berthnasol yn eich barn chi, ond sydd heb ei chynnwys hyd yma.
 error.turnover.6076.electricityGenerated.required = Enter 0 if you did not have any electricity generated in the year ending {0}
 error.turnover.6076.otherIncome.required = Enter 0 if you did not have any other income in the year ending {0}
 error.turnover.6076.otherIncome.range = Other income in the year ending {0} must be a number, for example 100 or 100.00
@@ -1846,39 +1843,39 @@ error.turnover.6076.headOfficeExpenses.negative = The contributions towards head
 error.turnover.6076.furtherInformationOrRemarks.maxLength = Further information must be {0} characters or fewer
 
 # COST OF SALES
-costOfSales.heading = Cost of sales
-costOfSales.p1 = Provide details of your departmental cost of sales excluding:
-costOfSales.excluding.item1 = payroll costs
-costOfSales.excluding.item2 = variable operating expenses
-costOfSales.excluding.item3 = fixed operating expenses
-costOfSales.excluding.item4 = other costs
-costOfSales.details.link = Help with completing this page
-costOfSales.details.h1 = General guidance
-costOfSales.details.p1 = Do not include VAT in any of the figures you declare on this page.
-costOfSales.details.p2 = If you have not broken down your cost of sales into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
-costOfSales.financialYearEnd = Financial year end
-costOfSales.excludingVAT = (excluding VAT)
-costOfSales.accommodation = Accommodation
-costOfSales.food = Food
-costOfSales.drinks = Drinks
-costOfSales.otherSales = Other
-costOfSales.otherSales.hint = Including hire of function rooms, conference rooms and telephones.
-costOfSales.total = Total cost of sales
+costOfSales.heading = Cost y gwerthiannau
+costOfSales.p1 = Rhowch fanylion eich costau gwerthiannau adrannol, gan eithrio’r canlynol:
+costOfSales.excluding.item1 = costau y gyflogres
+costOfSales.excluding.item2 = treuliau gweithredu newidiol
+costOfSales.excluding.item3 = treuliau gweithredu penodol
+costOfSales.excluding.item4 = costau eraill
+costOfSales.details.link = Help gyda llenwi’r dudalen hon
+costOfSales.details.h1 = Arweiniad cyffredinol
+costOfSales.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.
+costOfSales.details.p2 = Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
+costOfSales.financialYearEnd = Diwedd y flwyddyn ariannol
+costOfSales.excludingVAT = (heb gynnwys TAW)
+costOfSales.accommodation = Llety
+costOfSales.food = Bwyd
+costOfSales.drinks = Diodydd
+costOfSales.otherSales = Arall
+costOfSales.otherSales.hint = Gan gynnwys llogi ystafelloedd digwyddiadau, ystafelloedd cynadledda a theleffonau.
+costOfSales.total = Cyfanswm cost y gwerthiannau
 
 # COST OF SALES 6076
 
-costOfSales6076.heading = Cost of sales
+costOfSales6076.heading = Cost y gwerthiannau
 costOfSales6076.p = Provide us with details of your cost of sales.
-costOfSales6076.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
-costOfSales6076.financialYearEnd = Financial year end
-costOfSales6076.fuelOrFeedstock = Fuel or feedstock
-costOfSales6076.importedPower = Imported power
-costOfSales6076.TNuoS = Transmission network use of systems (TNuoS)
-costOfSales6076.BSuoS = Balancing service use of system (BSuoS)
-costOfSales6076.otherSales = Other costs (specify)
-costOfSales6076.otherSales.hint = Include any other costs of sales not listed previously
-costOfSales6076.otherSales.label = Give details of the sources of your other income
-costOfSales6076.total = Total cost
+costOfSales6076.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+costOfSales6076.financialYearEnd = Diwedd y flwyddyn ariannol
+costOfSales6076.fuelOrFeedstock = Tanwydd neu ddefnydd crai
+costOfSales6076.importedPower = Pŵer wedi’i fewnforio
+costOfSales6076.TNuoS = Defnydd o’r system rhwydwaith trawsyrru (TNuOS)
+costOfSales6076.BSuoS = Gwasanaethau cydbwyso yn defnyddio’r rhwydwaith (BSuoS)
+costOfSales6076.otherSales = Costau eraill
+costOfSales6076.otherSales.hint = Dylech gynnwys unrhyw gostau o werthiannau eraill na restrir hyd yn hyn.
+costOfSales6076.otherSales.label = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich costau eraill.
+costOfSales6076.total = Cyfanswm y costau
 error.costOfSales6076.details.required = Please provide details of the sources of your other income
 error.costOfSales6076.details.maxlength = Details of the sources of your other income must be 2,000 characters or fewer
 error.costOfSales6076.fuelOrFeedstock.required = Enter 0 if you did not have any fuel costs in the year ending {0}
@@ -1900,16 +1897,14 @@ error.costOfSales6076.otherSalesDetails.maxLength = Description of a other costs
 
 #STAFF COSTS 6076
 
-staffCosts.heading = Staff costs
-staffCosts.p = Provide us with details of your staff costs.
-staffCosts.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
-staffCosts.financialYearEnd = Financial year end
-staffCosts.wages = Wages and salaries
-staffCosts.wages.hint = Excluding National Insurance and pension contributions
-staffCosts.NI = National Insurance
-staffCosts.pension = Pension contributions
-staffCosts.remunerations = Director’s remuneration
-staffCosts.total = Total staff costs
+staffCosts.heading = Costau staff
+staffCosts.financialYearEnd = Diwedd y flwyddyn ariannol
+staffCosts.wages = Cyflogau
+staffCosts.wages.hint = Gan eithrio cyfraniadau pensiwn ac Yswiriant Gwladol.
+staffCosts.NI = Yswiriant Gwladol
+staffCosts.pension = Cyfraniadau pensiwn
+staffCosts.remunerations = Tâl y cyfarwyddwr
+staffCosts.total = Cyfanswm costau’r staff
 error.staffCosts.wages.required = Enter 0 if you did not have any wages or salaries in the year ending {0}
 error.staffCosts.wages.range = Wages and salaries in the year ending {0} must be a number, for example 100 or 100.00
 error.staffCosts.wages.negative = Wages and salaries in the year ending {0} cannot be a negative number
@@ -1925,18 +1920,18 @@ error.staffCosts.remunerations.negative = Director’s remunerations in the year
 
 #INCOME EXPENDITURE SUMMARY 6076
 
-incomeExpenditureSummary6076.heading = Income and expenditure summary
-incomeExpenditureSummary6076.label = I confirm that these figures are correct
-incomeExpenditureSummary6076.financialYearEnd = Financial year end
-incomeExpenditureSummary6076.totalGross = Total gross receipts
-incomeExpenditureSummary6076.totalBaseload = Total baseload receipts
-incomeExpenditureSummary6076.totalOther = Total other income
-incomeExpenditureSummary6076.totalCoS = Total cost of sales
-incomeExpenditureSummary6076.totalStaff = Total staff costs
-incomeExpenditureSummary6076.totalPremises = Total premises costs
-incomeExpenditureSummary6076.totalOperational = Total operational expenses
-incomeExpenditureSummary6076.headOffice = Head office expenses
-incomeExpenditureSummary6076.profitOrLoss = Net profit or loss
+incomeExpenditureSummary6076.heading = Crynodeb incwm a gwariant
+incomeExpenditureSummary6076.label = Rwy’n cadarnhau bod y ffigyrau hyn yn gywir
+incomeExpenditureSummary6076.financialYearEnd = Diwedd y flwyddyn ariannol
+incomeExpenditureSummary6076.totalGross = Cyfanswm y derbyniadau gros
+incomeExpenditureSummary6076.totalBaseload = Cyfanswm y derbyniadau gros o ran llwythi sylfaenol
+incomeExpenditureSummary6076.totalOther = Cyfanswm incwm arall
+incomeExpenditureSummary6076.totalCoS = Cyfanswm cost y gwerthiannau
+incomeExpenditureSummary6076.totalStaff = Cyfanswm costau’r staff
+incomeExpenditureSummary6076.totalPremises = Cyfanswm costau’r safle
+incomeExpenditureSummary6076.totalOperational = Cyfanswm y treuliau gweithredu
+incomeExpenditureSummary6076.headOffice = Treuliau’r brif swyddfa
+incomeExpenditureSummary6076.profitOrLoss = Elw neu golled net
 error.incomeExpenditureSummary6076.required = Confirm that these figures are correct
 
 # GROSS PROFIT
@@ -1946,14 +1941,14 @@ grossProfit.totalGrossProfits = Total gross profits
 
 # TOTAL PAYROLL COSTS (FORM 6015)
 #########
-totalPayrollCosts.heading = Total payroll costs
-totalPayrollCosts.p1 = Provide details of your wages, salaries, National Insurance, and pension contributions, excluding head office staff costs.
-totalPayrollCosts.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-totalPayrollCosts.financialYearEnd = Financial year end
-totalPayrollCosts.managersAndStaff = Managers and staff
-totalPayrollCosts.directorsRemuneration = Director's remuneration
-totalPayrollCosts.directorsRemuneration.add = (if applicable)
-totalPayrollCosts.total = Total payroll costs
+totalPayrollCosts.heading = Costau y gyflogres
+totalPayrollCosts.p1 = Rhowch fanylion eich cyflogau, Yswiriant Gwladol, a chyfraniadau pensiwn, gan eithrio costau staff y brif swyddfa.
+totalPayrollCosts.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+totalPayrollCosts.financialYearEnd = Diwedd y flwyddyn ariannol
+totalPayrollCosts.managersAndStaff = Rheolwyr a staff
+totalPayrollCosts.directorsRemuneration = Tâl y cyfarwyddwr
+totalPayrollCosts.directorsRemuneration.add = (Os yw’n berthnasol.)
+totalPayrollCosts.total = Cyfanswm costau y gyflogres
 error.managers-and-staff.required = Enter 0 if you did not have any payroll costs for managers and staff in the year ending {0}
 error.managers-and-staff.range = The payroll costs for managers and staff in the year ending {0} must be a number, for example 100 or 100.00
 error.managers-and-staff.negative = The payroll costs for managers and staff in the year ending {0} cannot be a negative number
@@ -1963,21 +1958,21 @@ error.directors-remuneration.negative = The directors remuneration in the year e
 
 # VARIABLE OPERATING EXPENSES (FORM 6015)
 #########
-variableOperatingExpenses.heading = Variable operating expenses
-variableOperatingExpenses.p1 = Provide details of your expenses excluding mortgage or loan interest, rent, insurance or any contribution to head office expenses.
-variableOperatingExpenses.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-variableOperatingExpenses.energyAndUtilities = Energy and utilities
-variableOperatingExpenses.cleaningAndLaundry = Cleaning and laundry
-variableOperatingExpenses.buildingMaintenanceAndRepairs = Building maintenance and repairs
-variableOperatingExpenses.fixturesFittingsAndEquipment = Repairs and renewal of fixtures, fittings and other equipment
-variableOperatingExpenses.advertisingAndPromotions = Advertising, marketing and promotions
-variableOperatingExpenses.administrationAndSundries = Administration and sundries
-variableOperatingExpenses.entertainment = Entertainment
-variableOperatingExpenses.entertainment.p1 = Artiste fees, for example.
-variableOperatingExpenses.other = Other expenses
-variableOperatingExpenses.other.p1 = Include all other expenses not listed previously.
-variableOperatingExpenses.otherExpensesDetails = Give details of the items included in your other expenses.
-variableOperatingExpenses.total = Total variable operating expenses
+variableOperatingExpenses.heading = Treuliau gweithredu newidiol
+variableOperatingExpenses.p1 = Rhowch fanylion eich treuliau, gan eithrio llog ar fenthyciadau neu forgeisi, rhent, yswiriant, neu unrhyw gyfraniadau tuag at dreuliau’r brif swyddfa.
+variableOperatingExpenses.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+variableOperatingExpenses.energyAndUtilities = Ynni a chyfleustodau
+variableOperatingExpenses.cleaningAndLaundry = Glanhau a golchi dillad
+variableOperatingExpenses.buildingMaintenanceAndRepairs = Cynnal a chadw’r adeilad a gwaith atgyweirio
+variableOperatingExpenses.fixturesFittingsAndEquipment = Atgyweirio ac adnewyddu gosodiadau, ffitiadau, offer a pheiriannau
+variableOperatingExpenses.advertisingAndPromotions = Hysbysebu, marchnata a hyrwyddo
+variableOperatingExpenses.administrationAndSundries = Gwaith gweinyddu ac eitemau amrywiol
+variableOperatingExpenses.entertainment = Adloniant
+variableOperatingExpenses.entertainment.p1 = Er enghraifft, ffioedd perfformwyr.
+variableOperatingExpenses.other = Treuliau eraill
+variableOperatingExpenses.other.p1 = Dylech gynnwys unrhyw dreuliad na restrir hyd yn hyn.
+variableOperatingExpenses.otherExpensesDetails = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich treuliau eraill.
+variableOperatingExpenses.total = Cyfanswm y treuliau gweithredu newidiol
 error.variableExpenses.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities expenses in the year ending {0}
 error.variableExpenses.energyAndUtilities.range = The energy and utilities expenses in the year ending {0} must be a number, for example 100 or 100.00
 error.variableExpenses.energyAndUtilities.negative = The energy and utilities expenses in the year ending {0} cannot be a negative number
@@ -2005,15 +2000,15 @@ error.variableExpenses.other.negative = The other expenses in the year ending {0
 
 # FIXED OPERATING EXPENSES (FORM 6015)
 #########
-fixedOperatingExpenses.heading = Fixed operating expenses
-fixedOperatingExpenses.p1 = Provide details of your fixed operating expenses.
-fixedOperatingExpenses.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-fixedOperatingExpenses.rent = Rent
-fixedOperatingExpenses.businessRates = Business rates
-fixedOperatingExpenses.insurance = Insurance
-fixedOperatingExpenses.loanInterest = Loan interest
-fixedOperatingExpenses.depreciation = Depreciation
-fixedOperatingExpenses.total = Total fixed operating expenses
+fixedOperatingExpenses.heading = Treuliau gweithredu penodol
+fixedOperatingExpenses.p1 = Rhowch fanylion eich treuliau gweithredu penodol.
+fixedOperatingExpenses.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+fixedOperatingExpenses.rent = Rhent
+fixedOperatingExpenses.businessRates = Ardrethi busnes
+fixedOperatingExpenses.insurance = Yswiriant
+fixedOperatingExpenses.loanInterest = Llog ar fenthyciadau
+fixedOperatingExpenses.depreciation = Dibrisiad
+fixedOperatingExpenses.total = Cyfanswm y treuliau gweithredu penodol
 error.fixedExpenses.rent.required = Enter 0 if you did not have any rent expenses in the year ending {0}
 error.fixedExpenses.rent.range = The rent expenses in the year ending {0} must be a number, for example 100 or 100.00
 error.fixedExpenses.rent.negative = The rent expenses in the year ending {0} cannot be a negative number
@@ -2032,15 +2027,15 @@ error.fixedExpenses.depreciation.negative = The depreciation expenses in the yea
 
 # OTHER COSTS (FORM 6015)
 #########################
-otherCosts.heading = Other costs
-otherCosts.details.p1 = Provide details of all other costs that were deducted before calculating the net profit, but have not been previously declared.
-otherCosts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-otherCosts.financialYearEnd = Financial year end
-otherCosts.contributionToHeadOffice = Contributions to head office
-otherCosts.otherCosts = Other costs
-otherCosts.otherCosts.p1 = Include all other costs not listed previously.
-otherCostDetails.hint = Give details of the items included in your other costs.
-otherCosts.total = Total other costs
+otherCosts.heading = Costau eraill
+otherCosts.details.p1 = Rhowch fanylion yr holl gostau eraill a ddidynnwyd cyn cyfrifo’r elw net, ond sydd heb gael eu datgan hyd yn hyn.
+otherCosts.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+otherCosts.financialYearEnd = Diwedd y flwyddyn ariannol
+otherCosts.contributionToHeadOffice = Cyfraniadau i’r brif swyddfa
+otherCosts.otherCosts = Costau eraill
+otherCosts.otherCosts.p1 = Dylech gynnwys unrhyw gostau na restrir hyd yn hyn.
+otherCostDetails.hint = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich costau eraill.
+otherCosts.total = Cyfanswm y costau eraill
 error.otherCosts.contributionsToHeadOffice.required = Enter 0 if you had no contributions to head office in the year ending {0}
 error.otherCosts.contributionsToHeadOffice.range = The contributions to head office for the year ending {0} must be a number like 100 or 100.00 and cannot be less than 0
 error.otherCosts.otherCosts.required = Enter 0 if you had no no other costs in the year ending {0}
@@ -2050,25 +2045,26 @@ error.otherCostDetails.required = Enter a description of the items included in y
 # INCOME EXPENDITURE SUMMARY (FORM 6015)
 
 ########################################
-incomeExpenditureSummary.heading = Income and expenditure summary
-incomeExpenditureSummary.financialYearEndLabel = Financial year end
-incomeExpenditureSummary.totalTurnoverLabel = Total turnover
-incomeExpenditureSummary.totalCostOfSalesLabel = Total cost of sales
-incomeExpenditureSummary.totalGrossProfitsLabel = Total gross profits based on your figures
-incomeExpenditureSummary.totalPayrollCostLabel = Total payroll costs
-incomeExpenditureSummary.variableExpenses = Variable expenses
-incomeExpenditureSummary.fixedExpensesLabel = Fixed Expenses
-incomeExpenditureSummary.otherCostsLabel = Other costs
-incomeExpenditureSummary.totalNetProfitLabel = Total net profits based on your figures
-incomeExpenditureSummary.profitMargin = Profit margin based on your figures
-incomeExpenditureSummary.confirmation = I confirm that these figures are correct
+incomeExpenditureSummary.heading = Crynodeb incwm a gwariant
+incomeExpenditureSummary.p1 = Gwiriwch y ffigurau a nodoch a chadarnhau eu bod yn gywir.
+incomeExpenditureSummary.financialYearEndLabel = Diwedd y flwyddyn ariannol
+incomeExpenditureSummary.totalTurnoverLabel = Cyfanswm trosiant
+incomeExpenditureSummary.totalCostOfSalesLabel = Cyfanswm cost y gwerthiannau
+incomeExpenditureSummary.totalGrossProfitsLabel = Cyfanswm yr elw gros yn seiliedig ar eich ffigurau
+incomeExpenditureSummary.totalPayrollCostLabel = Cyfanswm costau y gyflogres
+incomeExpenditureSummary.variableExpenses = Cyfanswm y treuliau gweithredu newidiol
+incomeExpenditureSummary.fixedExpensesLabel = Cyfanswm y treuliau gweithredu sefydlog
+incomeExpenditureSummary.otherCostsLabel = Cyfanswm y costau eraill
+incomeExpenditureSummary.totalNetProfitLabel = Cyfanswm yr elw net yn seiliedig ar eich ffigurau
+incomeExpenditureSummary.profitMargin = Maint yr elw yn seiliedig ar eich ffigurau
+incomeExpenditureSummary.confirmation = Rwy’n cadarnhau bod y ffigyrau hyn yn gywir
 error.incomeExpenditureSummary.required = Select if these figures are correct
 
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################
-unusualCircumstances.heading = Describe any unusual circumstances that may have affected the turnover figures on the previous page
-unusualCircumstancesReceipts.heading = Describe any unusual circumstances that may have affected the receipts or visitor numbers on the previous page
-unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts – leave blank if not applicable.
+unusualCircumstances.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y ffigurau trosiant ar y dudalen flaenorol
+unusualCircumstancesReceipts.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y derbyniadau neu nifer yr ymwelwyr ar y dudalen flaenorol
+unusualCircumstances.explain = Esboniwch unrhyw ffigurau anarferol o uchel neu isel yn eich cyfrifon - gadewch hyn yn wag os nad yw’n berthnasol
 
 # NET PROFITS (FORM 6015)
 #########
@@ -2077,38 +2073,38 @@ netProfit.heading = This is a holding page for the net profits page
 #FORM 6020 COMMON
 #################
 
-common6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
+common6020.inset = Mae pob maes ar y dudalen hon yn orfodol. Os nad yw hyn yn berthnasol, nodwch y rhif 0.
 common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
 
 #TOTAL FUEL SOLD (FORM 6020)
 ############################
 
-totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
-totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
-totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
+totalFuelSold.heading = Beth yw cyfanswm yr holl danwydd a werthwyd yn ystod y blynyddoedd ariannol a ddangosir?
+totalFuelSold.bunkered = Peidiwch â chynnwys tanwydd byncer yn y ffigurau hyn. Os ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno’n unig, gofynnir cwestiynau i chi ynghylch hyn ar wahân.
+totalFuelSold.fuel.label = Cyfanswm gwerthiannau petrol, diesel, LPG a thanwyddau eraill
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKERED FUEL QUESTION (FORM 6020)
 ###################################
 
-bunkeredFuelQuestion.heading = Do you sell bunkered fuel, where you only charge a handling fee?
+bunkeredFuelQuestion.heading = A ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno’n unig?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
 
 #BUNKERED FUEL SOLD (FORM6020)
 ###############################
 
-bunkeredFuelSold.heading = How much bunkered fuel did you sell in the financial years shown?
-bunkeredFuelSold.bunkeredFuel.label = Bunkered fuel
-bunkeredFuelSold.bunkeredFuel.hint = Where only a handling fee is charged
+bunkeredFuelSold.heading = Faint o danwydd byncer a werthoch yn y blynyddoedd ariannol a ddangosir?
+bunkeredFuelSold.bunkeredFuel.label = Tanwydd byncer
+bunkeredFuelSold.bunkeredFuel.hint = Lle codir ffi trin yn unig.
 error.bunkeredFuelSold.required = Enter 0 if you did not sell any bunkered fuel in the year ending {0}
 error.bunkeredFuelSold.range = Total volume of all bunkered fuel sold in the year ending {0} must be a number, for example 100 or 100.00
 
 #BUNKER FUEL CARDS DETAILS (FORM 6020)
-bunkerFuelCardDetails.heading = Provide details of the bunker fuel cards you accept
-label.bunkerFuelCardName = Bunker fuel card name
-bunkerFuelCardDetails.handlingFee = Handling fee
-bunkerFuelCardDetails.handlingFee.unit = pence/litre
+bunkerFuelCardDetails.heading = Rhowch fanylion y cardiau tanwydd byncer rydych yn eu derbyn
+label.bunkerFuelCardName = Enw’r cerdyn tanwydd byncer
+bunkerFuelCardDetails.handlingFee = Ffi trin
+bunkerFuelCardDetails.handlingFee.unit = ceiniogau/litr
 error.bunkerFuelCard.name.required = Please provide name of bunker fuel card
 error.bunkerFuelCardName.maxLength = Bunker fuel card name cannot be more than 100 characters
 error.bunkerFuelCard.handlingFee.invalidFormat = Handling fee must be a number, for example 100
@@ -2121,11 +2117,11 @@ error.addAnotherBunkerFuelCardsDetails.required = Select yes if you would like t
 
 # CUSTOMER CREDIT ACCOUNTS (FROM 6020)
 ##########################
-customerCreditAcc.heading = Customer credit accounts
-customerCreditAcc.declare = You must declare how much fuel you sell through customer credit accounts. These are agreements where customers do not pay for their fuel at the point of sale. Instead, they pay for their total fuel use at set intervals, normally monthly.
-customerCreditAcc.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
-customerCreditAcc.percentage = What percentage of your total sales comes from customer credit accounts?
-customerCreditAcc.label = Percentage of fuel sales on customer credit accounts
+customerCreditAcc.heading = Cyfrifon credyd cwsmeriaid
+customerCreditAcc.declare = Mae’n rhaid i chi ddatgan faint o danwydd rydych yn ei werthu drwy gyfrifon credyd cwsmeriaid. Cytundebau yw’r rhain lle nad yw cwsmeriaid yn talu am eu tanwydd ar yr un adeg â’i werthu. Yn lle hynny, maent yn talu am gyfanswm eu defnydd o danwydd fesul tipyn, fel arfer bob mis.
+customerCreditAcc.notInclude = Nid yw hyn yn cynnwys tanwydd byncer na gwerthiannau tanwydd a delir trwy gardiau credyd, debyd neu gardiau tanwydd lled isel.
+customerCreditAcc.percentage = Pa ganran o gyfanswm eich gwerthiannau sy’n dod o gyfrifon credyd cwsmeriaid?
+customerCreditAcc.label = Canran y gwerthiannau tanwydd ar gyfrifon credyd cwsmeriaid
 error.customerCreditAcc.required = Enter 0 if none of your total sales comes from customer credit account in the year ending {0}
 error.customerCreditAcc.range = The percentage of your total sales comes from customer credit account in the year ending {0} must be a number
 
@@ -2135,11 +2131,11 @@ acceptLowMarginFuelCard.hint = This does not include bunker fuel cards, or credi
 error.acceptLowMarginFuelCard.required = Select yes if you accept low-margin fuel cards
 
 #LOW MARGIN FUEL CARDS DETAILS (FORM 6020)
-lowMarginFuelCardDetails.heading = Provide details of the low-margin fuel cards you accept
+lowMarginFuelCardDetails.heading = Rhowch fanylion y cardiau tanwydd lled isel rydych yn eu derbyn
 hint.lowMarginFuelCardDetails = You will have the opportunity to add more low-margin fuel cards if required.
-label.lowMarginFuelCardName = Low margin fuel card name
-lowMarginFuelCardDetails.handlingFee = Handling fee
-lowMarginFuelCardDetails.handlingFee.unit = pence/litre
+label.lowMarginFuelCardName = Enw’r cerdyn tanwydd lled isel
+lowMarginFuelCardDetails.handlingFee = Ffi trin
+lowMarginFuelCardDetails.handlingFee.unit = ceiniogau/litr
 error.lowMarginFuelCardDetails.name.required = Please provide name of low-margin fuel card
 error.lowMarginFuelCardDetails.name.maxLength = Low margin fuel card name cannot be more than 100 characters
 error.lowMarginFuelCardDetails.handlingFee.invalidFormat = Handling fee must be a number, for example 100
@@ -2152,25 +2148,25 @@ error.addAnotherLowMarginFuelCardsDetails.required = Select yes if you would lik
 
 # PERCENTAGE FROM LOW MARGIN FUEL CARDS (FROM 6020)
 ###################################################
-percentageFromFuelCards.heading = What percentage of the total fuel sales comes from the low-margin fuel cards?
-percentageFromFuelCards.bunkered = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
-percentageFromFuelCards.label = Percentage of fuel sales on low-margin fuel cards
+percentageFromFuelCards.heading = Pa ganran o gyfanswm y gwerthiannau tanwydd sy’n deillio o gardiau tanwydd lled isel?
+percentageFromFuelCards.bunkered = Nid yw hyn yn cynnwys tanwydd byncer, neu werthiannau tanwydd a dalwyd amdanynt drwy gardiau debyd neu gredyd.
+percentageFromFuelCards.label = Canran y gwerthiannau tanwydd ar gardiau tanwydd lled isel
 error.percentageFromFuelCards.required = Enter 0 if none of your total fuel sales comes from low-margin credit cards in the year ending {0}
 error.percentageFromFuelCards.range = The percentage of your total fuel sales comes from low-margin credit cards in the year ending {0} must be a number
 
 # GROSS RECEIPTS EXCLUDING VAT (FROM 6076)
 ###################################################
-grossReceipts.electricitySales = Electricity sales
-grossReceipts.feedInTariff = Feed-in tariff
-grossReceipts.rocBuyout = Renewable obligation certificate (ROC) buyout
-grossReceipts.rocRecycle = ROC recycle
-grossReceipts.contractForDifference = Contract for difference
-grossReceipts.capacityMarket = Capacity market
-grossReceipts.balancingServices = Balancing services
-grossReceipts.embeddedBenefits = Embedded benefits
-grossReceipts.total = Total gross receipts
-grossReceipts.heading = Gross receipts excluding VAT
-grossReceipts.financialYearEnd = Financial year end
+grossReceipts.electricitySales = Gwerthiannau trydan
+grossReceipts.feedInTariff = Tariff Cyflenwi Trydan
+grossReceipts.rocBuyout = Pryniant i adael y Dystysgrif Rhwymo i Ynni Adnewyddadwy (ROC)
+grossReceipts.rocRecycle = Ailgylchu ROC
+grossReceipts.contractForDifference = Contract ar gyfer gwahaniaeth
+grossReceipts.capacityMarket = Marchnad capasiti
+grossReceipts.balancingServices = Gwasanaethau cydbwyso
+grossReceipts.embeddedBenefits = Buddiannau ymgorfforedig
+grossReceipts.total = Cyfanswm y derbyniadau gros
+grossReceipts.heading = Derbynebau gros, heb gynnwys TAW
+grossReceipts.financialYearEnd = Diwedd y flwyddyn ariannol
 grossReceipts.p1 = Provide us with details of your gross receipts.
 error.grossReceipts.electricitySales.sales.required = Enter 0 if you did not have any electricity sales receipts in the year ending {0}
 error.grossReceipts.electricitySales.sales.range = Electricity sales receipts in the year ending {0}  must be a number, for example  100 or 100.00
@@ -2199,18 +2195,18 @@ error.grossReceipts.embeddedBenefits.sales.negative = Turnover from embedded ben
 
 # GROSS RECEIPTS FOR BASELOAD (FROM 6076)
 ###################################################
-grossReceiptsForBaseLoad.heading = Gross receipts for baseload generation excluding VAT
+grossReceiptsForBaseLoad.heading = Derbyniadau gros ar gyfer cynhyrchu llwythi sylfaenol, heb gynnwys TAW
 grossReceiptsForBaseLoad.p = Provide us with details of your gorss receipts for baseload electricity generation.
-grossReceiptsForBaseLoad.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane = Renewable heat incentive
-grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.hint = Bio-methane tariff
-grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass = Renewable heat incentive
-grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.hint = Biomass or biogas tariff
-grossReceiptsForBaseLoad.byProductSales = By-product sales
-grossReceiptsForBaseLoad.byProductSales.hint = Compost or ash, for example
-grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales = Hot water, heat or steam sales
-grossReceiptsForBaseLoad.gateIncomeFromWaste = Gate income from waste
-grossReceiptsForBaseLoad.total = Total baseload gross receipts
+grossReceiptsForBaseLoad.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane = Cymhelliad gwres adnewyddadwy
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.hint = Tariff bio-methan.
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass = Cymhelliad gwres adnewyddadwy
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.hint = Tariff biomas neu dariff ‘bio-gass’.
+grossReceiptsForBaseLoad.byProductSales = Gwerthiannau sgil-gynhyrchion
+grossReceiptsForBaseLoad.byProductSales.hint = Er enghraifft, compost neu ludw.
+grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales = Gwerthiannau dŵr poeth, gwres neu ager
+grossReceiptsForBaseLoad.gateIncomeFromWaste = Incwm gât o wastraff
+grossReceiptsForBaseLoad.total = Cyfanswm y derbyniaddau gros o ran llwythi sylfaenol
 error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.required = Enter 0 if you did not have any renewable heat incentive in the year ending {0}
 error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.range = Renewable heat incentive in the year ending {0} must be a number, for example 100 or 100.00
 error.grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.negative = Renewable heat incentive in the year ending {0} cannot be a negative number
@@ -2229,17 +2225,15 @@ error.grossReceiptsForBaseLoad.gateIncomeFromWaste.negative = Gate income from w
 
 # PREMISES COSTS (FROM 6076)
 ###################################################
-premisesCosts.heading = Premises costs
-premisesCosts.p = Provide us with details of your premises costs.
-premisesCosts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
-premisesCosts.energyAndUtilities = Energy and utilities
-premisesCosts.energyAndUtilities.hint = Heating, lighting, power, water
-premisesCosts.buildingRepairAndMaintenance = Building repairs and maintenance
-premisesCosts.repairsAndRenewalsOfFixtures = Repairs and renewals of fixtures, fittings, equipment and plant
-premisesCosts.rent = Rent (if applicable)
-premisesCosts.businessRates = Business rates
-premisesCosts.buildingInsurance = Building insurance
-premisesCosts.total = Total premises costs
+premisesCosts.heading = Costau’r safle
+premisesCosts.energyAndUtilities = Ynni a chyfleustodau
+premisesCosts.energyAndUtilities.hint = Gwres, golau, pŵer, dŵr.
+premisesCosts.buildingRepairAndMaintenance = Cynnal a chadw’r adeilad a gwaith atgyweirio
+premisesCosts.repairsAndRenewalsOfFixtures = Atgyweirio ac adnewyddu gosodiadau, ffitiadau, offer a pheiriannau
+premisesCosts.rent = Rhent (os yw’n berthnasol)
+premisesCosts.businessRates = Ardrethi busnes
+premisesCosts.buildingInsurance = Yswiriant adeiladu
+premisesCosts.total = Cyfanswm costau’r safle
 error.premisesCosts.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities costs in the year ending {0}
 error.premisesCosts.energyAndUtilities.range = Energy and utilities costs in the year ending {0} must be a number, for example 100 or 100.00
 error.premisesCosts.energyAndUtilities.negative = Energy and utilities costs in the year ending {0} cannot be a negative number
@@ -2365,11 +2359,11 @@ error.tentingPitchesCertificated.missing = Select yes, if the site is a certific
 #TENTING PITCHES TRADING COMMON LABELS
 ######################################
 
-tentingPitches.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+tentingPitches.common.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 tentingPitches.common.VAT = Enter your gross receipts from these pitches excluding VAT and electricity costs.
 tentingPitches.common.stateTheNumber = Where accounts do not relate to the whole of your season, state the number of relevant weeks.
-tentingPitches.common.financialYearEnd = Financial year end
-tentingPitches.common.tradingPeriod = Trading period
+tentingPitches.common.financialYearEnd = Diwedd y flwyddyn ariannol
+tentingPitches.common.tradingPeriod = Cyfnod masnachu
 tentingPitches.common.grossReceipts = Gross receipts
 tentingPitches.common.numberOfPitches = Number of pitches
 tentingPitches.common.areaInHectares = Area in hectares
@@ -2550,12 +2544,12 @@ error.rentPayableDetails.maxLength = Description of selected items included in r
 # WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
 whatYouWillNeed.heading = What you‘ll need to complete this section
 whatYouWillNeed.subheading = To complete this section, you’ll need figures relating to the categories listed here. If any of the information we need does not apply to your property, enter the number 0 where requested.
-whatYouWillNeed.l1 = Occupation and accounting information
+whatYouWillNeed.l1 = Gwybodaeth am ddeiliadaeth a chyfrifyddu
 whatYouWillNeed.p1 = When you built or took over the property, and your financial year end
 whatYouWillNeed.l2 = How much power you generated
 whatYouWillNeed.l3 = Gross receipts
 whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives
-whatYouWillNeed.l4 = Other income
+whatYouWillNeed.l4 = Incwm arall
 whatYouWillNeed.p4 = Any other income not listed in your gross receipts
 whatYouWillNeed.l5 = Cost of sales
 whatYouWillNeed.p5 = Details of any costs incurred
@@ -2563,7 +2557,7 @@ whatYouWillNeed.l6 = Staff costs
 whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration
 whatYouWillNeed.l7 = Premises costs
 whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
-whatYouWillNeed.l8 = Operational and administrative expenses
+whatYouWillNeed.l8 = Treuliau gweithredu a gweinyddol
 whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees
 whatYouWillNeed.l9 = Head office expenses
 whatYouWillNeed.p9 = If applicable
@@ -2725,7 +2719,7 @@ checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action?
 checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
-checkYourAnswersAboutTheTradingHistory.heading = Check your answers – trading history
+checkYourAnswersAboutTheTradingHistory.heading = Gwiriwch eich atebion – hanes masnachu
 checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers – static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Static caravans on site?
@@ -2735,65 +2729,66 @@ checkYourAnswersAboutTheTradingHistory.6045.caravans.single.ownedByOperator = Si
 checkYourAnswersAboutTheTradingHistory.6045.caravans.single.subletByOperator = Single caravans sub-let by operator on behalf of private owners used for fleet hire
 checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator = Twin-unit caravans owned by the operator and used for fleet hire
 checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator = Twin-unit caravans sub-let by operator on behalf of private owners used for fleet hire
-checkYourAnswersAboutTheTradingHistory.occupationDate = Occupation date
-checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
-checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
-checkYourAnswersAboutTheTradingHistory.drinks = Drinks
-checkYourAnswersAboutTheTradingHistory.food = Food
-checkYourAnswersAboutTheTradingHistory.otherReceipts = Other receipts
-checkYourAnswersAboutTheTradingHistory.accommodation = Accommodation
-checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Average occupancy rate
-checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Total sales revenue
-checkYourAnswersAboutTheTradingHistory.totalPayrollCosts = Payroll costs
-checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other = Other
+checkYourAnswersAboutTheTradingHistory.occupationDate = Dyddiad meddiannu
+checkYourAnswersAboutTheTradingHistory.financialYearEnd = Diwedd y flwyddyn ariannol
+checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu
+checkYourAnswersAboutTheTradingHistory.drinks = Diodydd
+checkYourAnswersAboutTheTradingHistory.food = Bwyd
+checkYourAnswersAboutTheTradingHistory.otherReceipts = Derbyniadau eraill
+checkYourAnswersAboutTheTradingHistory.accommodation = Llety
+checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Cyfraddau’r feddiannaeth, ar gyfartaledd
+checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Cyfanswm refeniw y gwerthiannau
+checkYourAnswersAboutTheTradingHistory.totalPayrollCosts = Costau y gyflogres
+checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other = Arall
 checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.otherDetails = Other expenses details
-checkYourAnswersAboutTheTradingHistory.profitSummary = Profit summary
-checkYourAnswersAboutTheTradingHistory.totalGrossProfits = Total gross profits
-checkYourAnswersAboutTheTradingHistory.totalNetProfits = Total net profits
-checkYourAnswersAboutTheTradingHistory.netProfitPercentage = Total net profit as percentage of total sales revenue
-checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = I confirm that these figures are correct
+checkYourAnswersAboutTheTradingHistory.profitSummary = Crynodeb elw
+checkYourAnswersAboutTheTradingHistory.totalGrossProfits = Cyfanswm yr elw gros
+checkYourAnswersAboutTheTradingHistory.totalNetProfits = Cyfanswm yr elw net
+checkYourAnswersAboutTheTradingHistory.netProfitPercentage = Cyfanswm yr elw net fel canran o gyfanswm refeniw y gwerthiannau
+checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = Rwy’n cadarnhau bod y ffigyrau hyn yn gywir
 checkYourAnswersRequestReferenceNumber.heading = Gwirio eich atebion - os nad oes gennych rif cyfeirnod
 checkYourAnswersRequestReferenceNumber.subheading1 = Manylion yr eiddo
 checkYourAnswersRequestReferenceNumber.subheading2 = Eich manylion
-checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstances affecting the turnover
-checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
-checkYourAnswersAboutTheTradingHistory.grossIncome = Gross receipts
-checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Total visitor numbers
-checkYourAnswersAboutTheTradingHistory.payPointOrZone = Paypoint or payzone
-checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = EV Charging Points
-checkYourAnswersAboutTheTradingHistory.operateEV = Do you operate any EV charging points?
-checkYourAnswersAboutTheTradingHistory.fuelSales = Fuel sales
-checkYourAnswersAboutTheTradingHistory.totalFuelSales = Total fuel sales
-checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Bunkered fuel
-checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question = Do you sell bunkered fuel?
+checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Amgylchiadau anarferol sy’n effeithio ar y trisiant
+checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Ffactorau sy’n dylanwadu ar dderbyniadau
+checkYourAnswersAboutTheTradingHistory.grossReceipts = Gross receipts
+checkYourAnswersAboutTheTradingHistory.grossIncome = Incwm gros
+checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Cyfanswm nifer yr ymwelwyr
+checkYourAnswersAboutTheTradingHistory.payPointOrZone = Trosiant Paypoint neu Payzone
+checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = Pwyntiau gwefru cerbydau trydan
+checkYourAnswersAboutTheTradingHistory.operateEV = Ydych chi’n gweithredu unrhyw bwyntiau gwefru cerbydau trydan?
+checkYourAnswersAboutTheTradingHistory.fuelSales = Gwerthiannau tanwydd
+checkYourAnswersAboutTheTradingHistory.totalFuelSales = Cyfanswm y gwerthiannau tanwydd
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Tanwydd byncer
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question = A ydych yn gwerthu tanwydd byncer?
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading = Total volume of bunkered fuel sold
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard = Bunker fuel card {0}
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails = Bunker fuel card details
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded = You have added {0} bunker fuel {1}
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove = Add or remove bunker fuel card
-checkYourAnswersAboutTheTradingHistory.customerCreditAcc = Customer credit accounts
-checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading = Percentage of fuel sales on account
-checkYourAnswersAboutTheTradingHistory.lowMarginCards = Low-margin fuel cards
-checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading = Percentage of fuel sales on low-margin cards
+checkYourAnswersAboutTheTradingHistory.customerCreditAcc = Cyfrifon credyd cwsmeriaid
+checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading = Canran y gwerthiant tanwydd ar gyfrif
+checkYourAnswersAboutTheTradingHistory.lowMarginCards = Cerdyn tanwydd lled isel
+checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading = Canran y gwerthiant tanwydd ar gardiau lled isel
 checkYourAnswersAboutTheTradingHistory.lowMarginCard = Low-margin fuel card {0}
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.details = Low-margin fuel card details
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded = You have added {0} low-margin fuel {1}
 checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove = Add or remove low-margin fuel card
 checkYourAnswersAboutTheTradingHistory.card = card
 checkYourAnswersAboutTheTradingHistory.cards = cards
-checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates = Financial year-end updates
-checkYourAnswersAboutTheTradingHistory.electricityGenerated = Electricity generated (kWh or MWh)
+checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates = Diweddariaudau i ddiwedd y flwyddyn ariannol
+checkYourAnswersAboutTheTradingHistory.electricityGenerated = Trydan a gynhyrchir (mewn MWh neu kWh)
 checkYourAnswersAboutTheTradingHistory.rocBuyout = ROC buyout
 checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad = Gross receipts for baseload generation
 checkYourAnswersAboutTheTradingHistory.bioMethane = Bio-methane tariff
 checkYourAnswersAboutTheTradingHistory.bioMass = Biomass or biogas tariff
 checkYourAnswersAboutTheTradingHistory.TNuoS = TNuoS
 checkYourAnswersAboutTheTradingHistory.BSuoS = BSuoS
-checkYourAnswersAboutTheTradingHistory.extraCost = Extra cost
-checkYourAnswersAboutTheTradingHistory.totalCosts = Total costs
-checkYourAnswersAboutTheTradingHistory.rent = Rent
+checkYourAnswersAboutTheTradingHistory.extraCost = Costau eraill
+checkYourAnswersAboutTheTradingHistory.totalCosts = Cyfanswm y costau
+checkYourAnswersAboutTheTradingHistory.rent = Rhent
 checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
-checkYourAnswersAboutTheTradingHistory.otherExpenses = Other expenses
+checkYourAnswersAboutTheTradingHistory.otherExpenses = Treuliau eraill
 #CYA OTHER HOLIDAY ACCOMMODATION 6045/46
 checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation

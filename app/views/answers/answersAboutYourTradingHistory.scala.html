@@ -685,7 +685,9 @@
         aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
         answer6076("incomeExpenditureSummary6076.profitOrLoss", _.incomeAndExpenditureSummary.map(_.netProfitOrLoss)),
         answer("incomeExpenditureSummary6076.label", Seq.empty,
-            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureConfirmation6076).contains("confirmed")) "Yes" else "No")
+            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureConfirmation6076).contains("confirmed")) { messages("label.yes.iawn") } else {
+                 messages("label.no.na")
+            })
     )
 
 }
@@ -883,7 +885,7 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.operateEV",
             _.electricVehicleChargingPoints.map(_.electricVehicleChargingPoint).map(hasEVPoint =>
-                """<p class="govuk-body">""" + messages(s"label.${hasEVPoint.name}") + "</p>"
+                """<p class="govuk-body">""" + messages(if(hasEVPoint.name.contains("yes")) {"label.yes.ydw"} else {"label.no.nac.ydw"}) + "</p>"
                         + sectionAnswers.answers.filter(_ => hasEVPoint.name == "yes").flatMap(
                     _.electricVehicleChargingPoints.flatMap(_.spacesOrBays)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
             aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(), "electricVehicleChargingPoints", ("valueAsHtml", _ => None))

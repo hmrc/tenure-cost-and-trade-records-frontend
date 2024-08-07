@@ -78,10 +78,7 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.otherIncome.p1")</p>
-    @govukInsetText(InsetText(
-        content = Text(messages("turnover.6076.otherIncome.inset"))
-    ))
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("fieldsAreMandatory.label")</p>
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherIncomeController.submit()) {
         <table class="hmrc-responsive-table">

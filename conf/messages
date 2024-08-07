@@ -24,6 +24,7 @@ label.no = No
 label.pound = £
 label.weeks = weeks
 label.units = units
+fieldsAreMandatory.label = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 
 # OTHER FOOTER LINKS:
 ########
@@ -1516,7 +1517,7 @@ error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 # TURNOVER
 ##########
 turnover.heading = Turnover
-turnover.6015.heading = Total Turnover
+turnover.6015.heading = Total turnover
 turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if were are not trading continuously, state the relevant number of weeks.
 turnover.6015.p1 = You must provide details of your total turnover. Include all forms of income from accommodation, food and drink sales, and income from franchises such as coffee kiosks. You must also include income from any leisure activities, and any rental income form concessions or lettings.
 turnover.6015.p2 = If the accounts do no relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
@@ -1525,16 +1526,16 @@ turnover.p2 = If your accounts are held in a spreadsheet that mirrors this form,
 turnover.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 turnover.financialYearEnd = Financial year end
 turnover.tradingPeriod = Trading period
-turnover.alcoholicDrinks = Drinks (excluding VAT)
+turnover.alcoholicDrinks = <b>Drinks</b> (excluding VAT)
 turnover.alcoholicDrinksCaption = Including alcoholic and soft drinks, crisps, nuts.
-turnover.food = Food (excluding VAT)
+turnover.food = <b>Food</b> (excluding VAT)
 turnover.foodCaption = Excluding drinks.
-turnover.otherReceipts = Other receipts (excluding VAT)
+turnover.otherReceipts = <b>Other receipts</b> (excluding VAT)
 turnover.otherReceiptsCaption = Including hire of function rooms, conference rooms and telephones.
 turnover.otherReceiptsCaption.60106011 = For example admission charges or camping pitches.
-turnover.totalSalesRevenue = Total sales revenue
+turnover.totalSalesRevenue = <b>Total sales revenue</b>
 turnover.totalSalesRevenueCaption = (excluding VAT)
-turnover.accommodation = Accommodation (excluding VAT)
+turnover.accommodation = <b>Accommodation</b> (excluding VAT)
 turnover.accommodationCaption = Excluding meals.
 turnover.averageOccupancyRate = Average occupancy rate
 turnover.averageOccupancyRateCaption = Lodges and hotels only.
@@ -1808,13 +1809,11 @@ turnover.6076.electricityGenerated = Electricity generated
 turnover.6076.electricityGenerated.hint = (in kWh or MWh)
 turnover.6076.otherIncome.heading = Other income
 turnover.6076.otherIncome.p1 = Provide us with details of any other income not listed previously.
-turnover.6076.otherIncome.inset = All fields on this page are mandatory. If you have no other income, enter the number 0.
 turnover.6076.otherIncome = Other income
 turnover.6076.otherIncome.hint = Include income from any source not listed previously
 turnover.6076.otherIncomeDetails = Give details of the sources of your other income
 turnover.6076.operationalExpenses.heading = Operational and administrative expenses
 turnover.6076.operationalExpenses.p1 = Provide us with details of your operational and administrative expenses.
-turnover.6076.operationalExpenses.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 turnover.6076.expenses.advertising = Advertising, marketing and promotions
 turnover.6076.expenses.administration = Administration and sundries
 turnover.6076.expenses.insurance = Other insurance
@@ -1826,7 +1825,6 @@ turnover.6076.expenses.other.details = Give details of the sources of your other
 turnover.6076.expenses.total = Total expenses
 turnover.6076.headOfficeExpenses.heading = Head office expenses
 turnover.6076.headOfficeExpenses.p1 = Provide us with details of any head office expenses.
-turnover.6076.headOfficeExpenses.inset = The contribution towards head office expenses fields are mandatory. If this is not applicable, enter the number 0.
 turnover.6076.headOfficeExpenses = Contribution towards head office expenses (if applicable)
 turnover.6076.furtherInformationOrRemarks = Further information or remarks (optional)
 turnover.6076.furtherInformationOrRemarks.hint = Include any information you think may be relevant but has not been covered.
@@ -1917,8 +1915,6 @@ error.costOfSales6076.otherSalesDetails.maxLength = Description of a other costs
 #STAFF COSTS 6076
 
 staffCosts.heading = Staff costs
-staffCosts.p = Provide us with details of your staff costs.
-staffCosts.inset = All field on this page are mandatory. If none of the categories are applicable, enter the number 0.
 staffCosts.financialYearEnd = Financial year end
 staffCosts.wages = Wages and salaries
 staffCosts.wages.hint = Excluding National Insurance and pension contributions
@@ -2069,14 +2065,15 @@ error.otherCostDetails.required = Enter a description of the items included in y
 # INCOME EXPENDITURE SUMMARY (FORM 6015)
 ########################################
 incomeExpenditureSummary.heading = Income and expenditure summary
+incomeExpenditureSummary.p1 = Check the figures you've entered and confirm if they're correct.
 incomeExpenditureSummary.financialYearEndLabel = Financial year end
 incomeExpenditureSummary.totalTurnoverLabel = Total turnover
 incomeExpenditureSummary.totalCostOfSalesLabel = Total cost of sales
 incomeExpenditureSummary.totalGrossProfitsLabel = Total gross profits based on your figures
 incomeExpenditureSummary.totalPayrollCostLabel = Total payroll costs
-incomeExpenditureSummary.variableExpenses = Variable expenses
-incomeExpenditureSummary.fixedExpensesLabel = Fixed Expenses
-incomeExpenditureSummary.otherCostsLabel = Other costs
+incomeExpenditureSummary.variableExpenses = Total variable operating expenses
+incomeExpenditureSummary.fixedExpensesLabel = Total fixed operating expenses
+incomeExpenditureSummary.otherCostsLabel = Total other costs
 incomeExpenditureSummary.totalNetProfitLabel = Total net profits based on your figures
 incomeExpenditureSummary.profitMargin = Profit margin based on your figures
 incomeExpenditureSummary.confirmation = I confirm that these figures are correct
@@ -2250,8 +2247,6 @@ error.grossReceiptsForBaseLoad.gateIncomeFromWaste.negative = Gate income from w
 # PREMISES COSTS (FROM 6076)
 ###################################################
 premisesCosts.heading = Premises costs
-premisesCosts.p = Provide us with details of your premises costs.
-premisesCosts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 premisesCosts.energyAndUtilities = Energy and utilities
 premisesCosts.energyAndUtilities.hint = Heating, lighting, power, water
 premisesCosts.buildingRepairAndMaintenance = Building repairs and maintenance
@@ -2839,7 +2834,8 @@ checkYourAnswersRequestReferenceNumber.subheading1 = Property details
 checkYourAnswersRequestReferenceNumber.subheading2 = Your details
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstances affecting the turnover
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
-checkYourAnswersAboutTheTradingHistory.grossIncome = Gross receipts
+checkYourAnswersAboutTheTradingHistory.grossReceipts = Gross receipts
+checkYourAnswersAboutTheTradingHistory.grossIncome = Gross income
 checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Total visitor numbers
 checkYourAnswersAboutTheTradingHistory.payPointOrZone = Paypoint or payzone
 checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = EV Charging Points
