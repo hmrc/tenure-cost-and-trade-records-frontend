@@ -90,12 +90,12 @@ class PropertyUseLeasebackArrangementController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#leaseback-arrangement"
       case _    =>
         answers.forType match {
-          case ForTypes.for6020 | ForTypes.for6076 =>
+          case ForTypes.for6020 | ForTypes.for6076 | ForTypes.for6045 | ForTypes.for6046 =>
             answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
               case Some("yes") => aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
               case _           => aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
             }
-          case _                                   => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+          case _                                                                         => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
         }
     }
 
