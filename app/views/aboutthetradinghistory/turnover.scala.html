@@ -53,38 +53,38 @@
 }
 
 @alcoholicDrinksHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.alcoholicDrinks")
+    <p class="govuk-body">
+        @{HtmlContent(messages("turnover.alcoholicDrinks")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.alcoholicDrinksCaption")</span>
     </p>
 }
 
 @foodHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.food")
+    <p class="govuk-body">
+        @{HtmlContent(messages("turnover.food")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.foodCaption")</span>
     </p>
 }
 
 @otherReceiptsHeading = {
 @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.otherReceipts")
+    <p class="govuk-body">
+    @{HtmlContent(messages("turnover.otherReceipts")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption.60106011")</span>
     </p>
 }
 
 @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.otherReceipts")
+    <p class="govuk-body">
+        @{HtmlContent(messages("turnover.otherReceipts")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
     </p>
 }
 }
 
 @totalSalesRevenueHeading = {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.totalSalesRevenue") <br>
+    <p class="govuk-body">
+        @{HtmlContent(messages("turnover.totalSalesRevenue")).asHtml} <br>
         <span>@messages("turnover.totalSalesRevenueCaption")</span>
     </p>
 }
@@ -99,15 +99,15 @@
 
 @accommodationHeading = {
 @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.accommodation")
+    <p class="govuk-body">
+    @{HtmlContent(messages("turnover.accommodation")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
     </p>
 }
 
 @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
-    <p class="govuk-body govuk-!-font-weight-bold">
-        @messages("turnover.accommodation")
+    <p class="govuk-body">
+        @{HtmlContent(messages("turnover.accommodation")).asHtml}
     </p>
 }
 }

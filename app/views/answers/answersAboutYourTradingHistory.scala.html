@@ -685,7 +685,9 @@
         aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
         answer6076("incomeExpenditureSummary6076.profitOrLoss", _.incomeAndExpenditureSummary.map(_.netProfitOrLoss)),
         answer("incomeExpenditureSummary6076.label", Seq.empty,
-            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureConfirmation6076).contains("confirmed")) "Yes" else "No")
+            if (sectionAnswers1.answers.flatMap(_.incomeExpenditureConfirmation6076).contains("confirmed")) { messages("label.yes.iawn") } else {
+                 messages("label.no.na")
+            })
     )
 
 }
