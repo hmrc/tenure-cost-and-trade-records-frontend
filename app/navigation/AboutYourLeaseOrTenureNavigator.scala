@@ -70,10 +70,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6011                    => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-          case ForTypes.for6020 | ForTypes.for6076 =>
+          case ForTypes.for6011                                                          =>
+            controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+          case ForTypes.for6020 | ForTypes.for6076 | ForTypes.for6045 | ForTypes.for6046 =>
             controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-          case _                                   => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+          case _                                                                         => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
         }
       case _           =>
         logger.warn(
@@ -84,11 +85,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def connectedToLandlordDetailsRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6011                    =>
+      case ForTypes.for6011                                                          =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-      case ForTypes.for6020 | ForTypes.for6076 =>
+      case ForTypes.for6020 | ForTypes.for6076 | ForTypes.for6045 | ForTypes.for6046 =>
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-      case _                                   =>
+      case _                                                                         =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
