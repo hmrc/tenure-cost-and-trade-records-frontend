@@ -1,0 +1,113 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.CaravansTotalSiteCapacity
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        formWithCSRF: FormWithCSRF
+)
+
+@(form: Form[CaravansTotalSiteCapacity], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@formFields = @{
+    "ownedByOperatorForFleetHire,privatelyOwnedForOwnerAndFamily,subletByOperator,subletByPrivateOwners,charitablePurposes,seasonalStaff"
+}
+
+@inputRow(formField: String, labelKey: String) = @{
+    Seq(
+        TableRow(
+            content = Text(messages(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        classes = "govuk-input--width-4",
+                        attributes = Map(
+                            "maxlength" -> "6",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))
+                )
+            )
+        )
+    )
+}
+
+@totalValue = @{
+    form.value.fold(0)(_.total)
+}
+
+@totalContent = {
+    <span
+    data-total-is-money="false"
+    data-total-prefix=""
+    data-total-items="@formFields">
+    @totalValue
+    </span>
+}
+
+
+@layout(
+    pageHeading = messages(s"turnover.6045.caravansTotalSiteCapacity.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLinkUrl,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages(s"turnover.6045.caravansTotalSiteCapacity.p1")</p>
+
+    @govukInsetText(InsetText(
+        content = Text(messages("fieldsAreMandatory.label"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.submit()) {
+
+        @govukTable(Table(
+            head = Seq(
+                HeadCell(content = Text(messages("turnover.6045.caravansTotalSiteCapacity.category"))),
+                HeadCell(content = Text(messages("turnover.6045.caravansTotalSiteCapacity.numberOfVans")))
+            ),
+            firstCellIsHeader = true,
+            rows =
+                formFields.split(",").toSeq
+                .map(formField => inputRow(formField, s"turnover.6045.caravansTotalSiteCapacity.$formField")) ++
+                        Seq(
+                            Seq(
+                                TableRow(content = Text(messages("turnover.6045.caravansTotalSiteCapacity.total"))),
+                                TableRow(content = HtmlContent(totalContent))
+                            )
+                        )
+        ))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}
