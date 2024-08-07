@@ -1488,6 +1488,8 @@ taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
 taskList.otherHolidayAccommodation = Other holiday accommodation
 taskList.touringAndTentingPitches = Touring and tenting pitches
+taskList.additionalActivities = Additional activities
+
 taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid = Lease start date and rent paid
 declaration.heading = Now send your declaration
 request.heading = Now send your request

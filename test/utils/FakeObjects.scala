@@ -33,15 +33,17 @@ import models.{AnnualRent, ForTypes, Session, SubmissionDraft}
 import java.time.{Instant, LocalDate}
 
 trait FakeObjects {
-  val referenceNumber: String   = "99996010004"
-  val forType6010: String       = "FOR6010"
-  val forType6011: String       = "FOR6011"
-  val forType6015: String       = "FOR6015"
-  val forType6016: String       = "FOR6016"
-  val forType6030: String       = "FOR6030"
-  val forType6020: String       = "FOR6020"
-  val forType6076: String       = "FOR6076"
-  val forType6045: String       = "FOR6045"
+  val referenceNumber: String = "99996010004"
+  val forType6010: String     = "FOR6010"
+  val forType6011: String     = "FOR6011"
+  val forType6015: String     = "FOR6015"
+  val forType6016: String     = "FOR6016"
+  val forType6030: String     = "FOR6030"
+  val forType6020: String     = "FOR6020"
+  val forType6076: String     = "FOR6076"
+  val forType6045: String     = "FOR6045"
+  val forType6046: String     = "FOR6046"
+
   val prefilledAddress: Address =
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
@@ -114,8 +116,10 @@ trait FakeObjects {
   val baseFilled6020Session: Session = Session(referenceNumber, forType6020, prefilledAddress, token)
   val baseFilled6076Session: Session = Session(referenceNumber, forType6076, prefilledAddress, token)
   val baseFilled6045Session: Session = Session(referenceNumber, forType6045, prefilledAddress, token)
+  val baseFilled6046Session: Session = Session(referenceNumber, forType6046, prefilledAddress, token)
+
   // Request reference number
-  val prefilledRequestRefNumCYA      = RequestReferenceNumberDetails(
+  val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
     Some(RequestReferenceNumber(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
     Some(
       RequestReferenceNumberContactDetails(
@@ -126,7 +130,7 @@ trait FakeObjects {
     ),
     Some(CheckYourAnswersRequestReferenceNumber("CYARequestRefNum"))
   )
-  val prefilledRequestRefNumBlank    = RequestReferenceNumberDetails()
+  val prefilledRequestRefNumBlank = RequestReferenceNumberDetails()
 
   // Are your still connected sessions
   val prefilledStillConnectedDetailsYes: StillConnectedDetails                       = StillConnectedDetails(
