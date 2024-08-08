@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.otherHolidayAccommodationDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class OtherHolidayAccommodationDetailsController @Inject() (
@@ -39,7 +39,8 @@ class OtherHolidayAccommodationDetailsController @Inject() (
   view: otherHolidayAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -75,12 +76,19 @@ class OtherHolidayAccommodationDetailsController @Inject() (
         ),
       data => {
         val updatedData = updateOtherHolidayAccommodation(_.copy(otherHolidayAccommodationDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(
-          navigator
-            .nextPageForOtherHolidayAccommodation(OtherHolidayAccommodationDetailsId, updatedData)
-            .apply(updatedData)
-        )
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(
+              navigator
+                .nextPage6045(
+                  OtherHolidayAccommodationDetailsId,
+                  updatedData,
+                  navigator.cyaPageForOtherHolidayAccommodation
+                )
+                .apply(updatedData)
+            )
+          )
       }
     )
   }

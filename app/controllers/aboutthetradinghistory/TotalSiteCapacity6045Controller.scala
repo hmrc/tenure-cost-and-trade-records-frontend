@@ -66,7 +66,13 @@ class TotalSiteCapacity6045Controller @Inject() (
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(
-            navigator.nextPageForOtherHolidayAccommodation(TotalSiteCapacityId, updatedData).apply(updatedData)
+            navigator
+              .nextPage6045(
+                TotalSiteCapacityId,
+                updatedData,
+                navigator.cyaPageForOtherHolidayAccommodation
+              )
+              .apply(updatedData)
           )
         }
       }

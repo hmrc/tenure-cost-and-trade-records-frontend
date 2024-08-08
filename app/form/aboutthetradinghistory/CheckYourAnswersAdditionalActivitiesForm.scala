@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package form.aboutthetradinghistory
 
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json.{Json, OFormat}
+import play.api.data.Form
+import play.api.data.Forms.single
 
-case class AdditionalActivities(
-  additionalActivitiesOnSite: Option[AnswersYesNo] = None,
-  checkYourAnswersAdditionalActivities: Option[AnswersYesNo] = None
-)
-object AdditionalActivities {
-  implicit val format: OFormat[AdditionalActivities] = Json.format
+object CheckYourAnswersAdditionalActivitiesForm {
+
+  val checkYourAnswersAdditionalActivitiesForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "checkYourAnswersAdditionalActivities" -> createYesNoType("error.checkYourAnswersRadio.required")
+      )
+    )
+
 }

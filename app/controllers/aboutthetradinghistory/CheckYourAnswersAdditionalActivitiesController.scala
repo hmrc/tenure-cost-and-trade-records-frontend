@@ -18,26 +18,27 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.TentingPitchesAllYearForm.tentingPitchesAllYearForm
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, TentingPitchesAllYear}
+import form.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesForm.checkYourAnswersAdditionalActivitiesForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.TentingPitchesAllYearId
+import navigation.identifiers.CheckYourAnswersAdditionalActivitiesId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.tentingPitchesAllYear
+import views.html.aboutthetradinghistory.checkYourAnswersAdditionalActivities
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
-class TentingPitchesAllYearController @Inject() (
+class CheckYourAnswersAdditionalActivitiesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: tentingPitchesAllYear,
+  view: checkYourAnswersAdditionalActivities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+)(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
@@ -47,10 +48,10 @@ class TentingPitchesAllYearController @Inject() (
       Ok(
         view(
           request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches)
-            .flatMap(_.tentingPitchesAllYear) match {
-            case Some(answers) => tentingPitchesAllYearForm.fill(answers)
-            case None          => tentingPitchesAllYearForm
+            .flatMap(_.additionalActivities.flatMap(_.checkYourAnswersAdditionalActivities)) match {
+            case Some(cYaAnswer) =>
+              checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
+            case _               => checkYourAnswersAdditionalActivitiesForm
           },
           calculateBackLink
         )
@@ -58,9 +59,9 @@ class TentingPitchesAllYearController @Inject() (
     )
   }
 
-  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[TentingPitchesAllYear](
-      tentingPitchesAllYearForm,
+  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
+      checkYourAnswersAdditionalActivitiesForm,
       formWithErrors =>
         BadRequest(
           view(
@@ -70,27 +71,33 @@ class TentingPitchesAllYearController @Inject() (
         ),
       data => {
 
-        val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
-          touringAndTentingPitches.copy(tentingPitchesAllYear = Some(data))
+        val updatedSession = AboutTheTradingHistoryPartOne.updateAdditionalActivities { additionalActivities =>
+          additionalActivities.copy(checkYourAnswersAdditionalActivities = Some(data))
         }
         session
           .saveOrUpdate(updatedSession)
-          .map(_ =>
+          .map { _ =>
             Redirect(
               navigator
-                .nextPage6045(TentingPitchesAllYearId, updatedSession, navigator.cyaPageForTentingPitches)
+                .nextPage6045(
+                  CheckYourAnswersAdditionalActivitiesId,
+                  updatedSession,
+                  navigator.cyaPageForAdditionalActivities
+                )
                 .apply(updatedSession)
             )
-          )
+          }
       }
     )
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" => navigator.cyaPageForTentingPitches.url
-      case _     => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
-
+    request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
+      _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
+    ) match {
+      case Some(AnswerYes) => controllers.routes.TaskListController.show().url // TODO !!!
+      case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
+      case _               => controllers.routes.TaskListController.show().url
     }
 
 }

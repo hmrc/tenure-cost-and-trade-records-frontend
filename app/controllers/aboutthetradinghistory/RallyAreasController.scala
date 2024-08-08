@@ -76,7 +76,15 @@ class RallyAreasController @Inject() (
           )
 
           session.saveOrUpdate(updatedData).map { _ =>
-            Redirect(navigator.nextPageForTentingPitches(RallyAreasId, updatedData).apply(updatedData))
+            Redirect(
+              navigator
+                .nextPage6045(
+                  RallyAreasId,
+                  updatedData,
+                  navigator.cyaPageForTentingPitches
+                )
+                .apply(updatedData)
+            )
           }
         }
       )
@@ -93,8 +101,7 @@ class RallyAreasController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
+      case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.PitchesForGlampingController.show().url
     }
 

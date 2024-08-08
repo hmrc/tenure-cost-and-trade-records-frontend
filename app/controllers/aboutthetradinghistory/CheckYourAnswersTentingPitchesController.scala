@@ -53,8 +53,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
               checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
             case _                                            => checkYourAnswersTentingPitchesForm
           },
-          calculateBackLink,
-          request.sessionData.toSummary
+          calculateBackLink
         )
       )
     )
@@ -67,8 +66,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
+            calculateBackLink
           )
         ),
       data => {

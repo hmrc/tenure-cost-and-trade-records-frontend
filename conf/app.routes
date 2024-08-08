@@ -292,6 +292,9 @@ POST        /check-your-answers-other-holiday-accommodation         controllers.
 
 GET         /check-your-answers-tenting-pitches                     controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.show()
 POST        /check-your-answers-tenting-pitches                     controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.submit()
+
+GET         /check-your-answers-additional-activities               controllers.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesController.show()
+POST        /check-your-answers-additional-activities               controllers.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesController.submit()
 # FORM 6045/46 routing end
 
 # Form 6015 routing start
