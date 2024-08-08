@@ -76,15 +76,16 @@ class AdditionalActivitiesOnSiteController @Inject() (
         session
           .saveOrUpdate(updatedSession)
           .map(_ =>
-            navigator
-              .nextPage6045(
-                AdditionalActivitiesOnSiteId,
-                updatedSession,
-                navigator.cyaPageForAdditionalActivities
-              )
-              .apply(updatedSession)
+            Redirect(
+              navigator
+                .nextPage6045(
+                  AdditionalActivitiesOnSiteId,
+                  updatedSession,
+                  navigator.cyaPageForAdditionalActivities
+                )
+                .apply(updatedSession)
+            )
           )
-          .map(Redirect)
       }
     )
   }

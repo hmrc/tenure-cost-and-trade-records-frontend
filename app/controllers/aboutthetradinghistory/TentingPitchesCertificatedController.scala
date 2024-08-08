@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesCertificated
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class TentingPitchesCertificatedController @Inject() (
   mcc: MessagesControllerComponents,
@@ -38,7 +38,8 @@ class TentingPitchesCertificatedController @Inject() (
   view: tentingPitchesCertificated,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -74,16 +75,19 @@ class TentingPitchesCertificatedController @Inject() (
           touringAndTentingPitches.copy(tentingPitchesCertificated = Some(data))
         }
 
-        session.saveOrUpdate(updatedSession)
-        Redirect(
-          navigator
-            .nextPage6045(
-              TentingPitchesCertificatedId,
-              updatedSession,
-              navigator.cyaPageForTentingPitches
+        session
+          .saveOrUpdate(updatedSession)
+          .map(_ =>
+            Redirect(
+              navigator
+                .nextPage6045(
+                  TentingPitchesCertificatedId,
+                  updatedSession,
+                  navigator.cyaPageForTentingPitches
+                )
+                .apply(updatedSession)
             )
-            .apply(updatedSession)
-        )
+          )
       }
     )
   }

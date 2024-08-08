@@ -42,6 +42,16 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   def cyaPageForAdditionalActivities: Call =
     aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
 
+  def nextPage6045(id: Identifier, session: Session, call: Call)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call =
+    if (from == "CYA") { _ =>
+      call
+    } else {
+      nextWithoutRedirectToCYA(id, session)
+    }
+
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
@@ -55,16 +65,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       super.nextPage(id, session)
     }
 
-  def nextPage6045(id: Identifier, session: Session, call: Call)(implicit
-    hc: HeaderCarrier,
-    request: Request[AnyContent]
-  ): Session => Call =
-    if (from == "CYA") { _ =>
-      call
-    } else {
-      nextWithoutRedirectToCYA(id, session)
-    }
-  private def iesSpecificRoute: Call       =
+  private def iesSpecificRoute: Call =
     routes.IncomeExpenditureSummaryController.show()
 
   private def ies6076SpecificRoute: Call =

@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesTotal
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class TentingPitchesTotalController @Inject() (
   mcc: MessagesControllerComponents,
@@ -37,7 +37,8 @@ class TentingPitchesTotalController @Inject() (
   view: tentingPitchesTotal,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -72,13 +73,15 @@ class TentingPitchesTotalController @Inject() (
         val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
           touringAndTentingPitches.copy(tentingPitchesTotal = Some(data))
         }
-
-        session.saveOrUpdate(updatedSession)
-        Redirect(
-          navigator
-            .nextPage6045(TentingPitchesTotalId, updatedSession, navigator.cyaPageForTentingPitches)
-            .apply(updatedSession)
-        )
+        session
+          .saveOrUpdate(updatedSession)
+          .map(_ =>
+            Redirect(
+              navigator
+                .nextPage6045(TentingPitchesTotalId, updatedSession, navigator.cyaPageForTentingPitches)
+                .apply(updatedSession)
+            )
+          )
       }
     )
   }

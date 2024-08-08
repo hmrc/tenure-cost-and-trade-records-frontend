@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesAllYear
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class TentingPitchesAllYearController @Inject() (
   mcc: MessagesControllerComponents,
@@ -37,7 +37,8 @@ class TentingPitchesAllYearController @Inject() (
   view: tentingPitchesAllYear,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -72,12 +73,15 @@ class TentingPitchesAllYearController @Inject() (
         val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
           touringAndTentingPitches.copy(tentingPitchesAllYear = Some(data))
         }
-        session.saveOrUpdate(updatedSession)
-        Redirect(
-          navigator
-            .nextPage6045(TentingPitchesAllYearId, updatedSession, navigator.cyaPageForTentingPitches)
-            .apply(updatedSession)
-        )
+        session
+          .saveOrUpdate(updatedSession)
+          .map(_ =>
+            Redirect(
+              navigator
+                .nextPage6045(TentingPitchesAllYearId, updatedSession, navigator.cyaPageForTentingPitches)
+                .apply(updatedSession)
+            )
+          )
       }
     )
   }
