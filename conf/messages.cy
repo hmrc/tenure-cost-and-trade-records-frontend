@@ -1758,6 +1758,37 @@ error.caravans.twin.privateSublet.years15plus.required = Enter 0 if you do not h
 error.caravans.twin.privateSublet.years15plus.nonNumeric = The amount of twin-unit private caravans over 15 years must be a number
 error.caravans.twin.privateSublet.years15plus.negative = The amount of twin-unit private caravans over 15 years cannot be a negative number
 
+turnover.6045.caravansTotalSiteCapacity.heading = Total site capacity - static caravans
+turnover.6045.caravansTotalSiteCapacity.p1 = You must declare how many static caravans you have in each of the listed categories. This must be the static caravans that are on site today, or will be on site when you submit this declaration.
+turnover.6045.caravansTotalSiteCapacity.category = Category
+turnover.6045.caravansTotalSiteCapacity.numberOfVans = Number of vans
+turnover.6045.caravansTotalSiteCapacity.ownedByOperatorForFleetHire = Owned by the operator and used for fleet hire
+turnover.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily = Privately owned and used only by owner and family
+turnover.6045.caravansTotalSiteCapacity.subletByOperator = Sub-let by operator to holidaymakers on behalf of private owners as fleet hire
+turnover.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Sub-let by private owners to holidaymakers other than family and friends
+turnover.6045.caravansTotalSiteCapacity.charitablePurposes = Used for charitable purposes
+turnover.6045.caravansTotalSiteCapacity.seasonalStaff = Used for seasonal staff
+turnover.6045.caravansTotalSiteCapacity.total = Total number of static caravans on site
+error.caravans.ownedByOperatorForFleetHire.required = Enter 0 if you do not have on site any caravans owned by the operator and used for fleet hire
+error.caravans.ownedByOperatorForFleetHire.nonNumeric = The amount of caravans owned by the operator must be a number
+error.caravans.ownedByOperatorForFleetHire.negative = The amount of caravans owned by the operator cannot be a negative number
+error.caravans.privatelyOwnedForOwnerAndFamily.required = Enter 0 if you do not have on site any caravans privately owned and used only by owner and family
+error.caravans.privatelyOwnedForOwnerAndFamily.nonNumeric = The amount of caravans privately owned must be a number
+error.caravans.privatelyOwnedForOwnerAndFamily.negative = The amount of caravans privately owned cannot be a negative number
+error.caravans.subletByOperator.required = Enter 0 if you do not have on site any caravans sub-let by operator to holidaymakers on behalf of private owners
+error.caravans.subletByOperator.nonNumeric = The amount of caravans sub-let by operator must be a number
+error.caravans.subletByOperator.negative = The amount of caravans sub-let by operator cannot be a negative number
+error.caravans.subletByPrivateOwners.required = Enter 0 if you do not have on site any caravans sub-let by private owners to holidaymakers other than family and friends
+error.caravans.subletByPrivateOwners.nonNumeric = The amount of caravans sub-let by private owners must be a number
+error.caravans.subletByPrivateOwners.negative = The amount of caravans sub-let by private owners cannot be a negative number
+error.caravans.charitablePurposes.required = Enter 0 if you do not have on site any caravans used for charitable purposes
+error.caravans.charitablePurposes.nonNumeric = The amount of caravans used for charitable purposes must be a number
+error.caravans.charitablePurposes.negative = The amount of caravans used for charitable purposes cannot be a negative number
+error.caravans.seasonalStaff.required = Enter 0 if you do not have on site any caravans used for seasonal staff
+error.caravans.seasonalStaff.nonNumeric = The amount of caravans used for seasonal staff must be a number
+error.caravans.seasonalStaff.negative = The amount of caravans used for seasonal staff cannot be a negative number
+
+
 turnover.6045.lettingUnits.grossReceipts.heading = Letting units owned by site operator
 turnover.6045.lettingUnits.p1.beginning = Enter your gross receipts from any of these units which are
 turnover.6045.lettingUnits.p1.bold = owned by the site operator.

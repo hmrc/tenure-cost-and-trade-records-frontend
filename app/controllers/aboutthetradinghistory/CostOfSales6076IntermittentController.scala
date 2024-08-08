@@ -22,7 +22,7 @@ import form.aboutthetradinghistory.CostOfSales6076IntermittentForm.costOfSales60
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{CostOfSales6076IntermittentSum, TurnoverSection6076}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.{CostOfSales6076Id, CostOfSales6076IntermittentId}
+import navigation.identifiers.CostOfSales6076IntermittentId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo

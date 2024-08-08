@@ -22,7 +22,7 @@ import form.aboutthetradinghistory.CaravansTotalSiteCapacityForm.caravansTotalSi
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
 import models.submissions.aboutthetradinghistory.{Caravans, CaravansTotalSiteCapacity}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.{CaravansTotalSiteCapacityId, Identifier}
+import navigation.identifiers.CaravansTotalSiteCapacityId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
