@@ -245,6 +245,9 @@ POST        /twin-unit-caravans-sublet                              controllers.
 GET         /twin-unit-caravans-age-categories                      controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.show()
 POST        /twin-unit-caravans-age-categories                      controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.submit()
 
+GET         /caravans-site-capacity                                 controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.show()
+POST        /caravans-site-capacity                                 controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.submit()
+
 GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
 POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
 

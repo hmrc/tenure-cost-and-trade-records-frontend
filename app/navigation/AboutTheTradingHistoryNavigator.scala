@@ -293,7 +293,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     TwinCaravansOwnedByOperatorId               -> (_ => aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show()),
     TwinCaravansSubletId                        -> (_ => aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show()),
-    TwinCaravansAgeCategoriesId                 -> (_ =>
+    TwinCaravansAgeCategoriesId                 -> (_ => aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show()),
+    CaravansTotalSiteCapacityId                 -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
         .show() // TODO: Total site capacity - static caravans
     ),
