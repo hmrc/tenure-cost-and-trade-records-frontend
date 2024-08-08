@@ -36,7 +36,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[DoesTheRentPayable], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[DoesTheRentPayable], forType: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("rentPayable.heading"),
@@ -49,6 +49,48 @@
 ) {
 
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.submit()) {
+
+        @if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+
+            @govukCheckboxes(
+                Checkboxes(
+                    name = "rentPayable[]",
+                    fieldset = Fieldset(
+                        legend = Legend(
+                            content = Text(messages("hint.select.all")),
+                            classes = "govuk-fieldset__legend--s"
+                        )
+                    ),
+                    items = Seq(
+                        CheckboxItem(
+                            id = "otherProperty",
+                            content = Text(messages("checkbox.rentPayable.otherProperty")),
+                            value = "otherProperty"
+                        ),
+                        CheckboxItem(
+                            id = "onlyPart",
+                            content = Text(messages("checkbox.rentPayable.onlyPart")),
+                            value = "onlyPart"
+                        ),
+                        CheckboxItem(
+                            id = "onlyLand",
+                            content = Text(messages("checkbox.rentPayable.onlyLand")),
+                            value = "onlyLand"
+                        ),
+                        CheckboxItem(
+                            divider = Some(messages("checkbox.divider"))
+                        ),
+                        CheckboxItem(
+                            id = "none",
+                            content = Text(messages("checkbox.rentPayable.noneOfThese")),
+                            value = "none",
+                            behaviour = ExclusiveCheckbox
+                        )
+                    )
+                ).withFormField(theForm("rentPayable"))
+            )
+        } else {
+
 
         @govukCheckboxes(
             Checkboxes(
@@ -97,6 +139,7 @@
                 )
             ).withFormField(theForm("rentPayable"))
         )
+        }
 
         @includes.textInputCharCount(govukCharacterCount, theForm, "detailsToQuestions", "label.detailsToQuestions",
             "govuk-!-font-weight-bold", 500, hint = "hint.detailsToQuestions")
