@@ -248,6 +248,9 @@ POST        /twin-unit-caravans-age-categories                      controllers.
 GET         /caravans-site-capacity                                 controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.show()
 POST        /caravans-site-capacity                                 controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.submit()
 
+GET         /caravans-per-service                                   controllers.aboutthetradinghistory.CaravansPerServiceController.show()
+POST        /caravans-per-service                                   controllers.aboutthetradinghistory.CaravansPerServiceController.submit()
+
 GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
 POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
 

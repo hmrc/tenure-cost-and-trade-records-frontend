@@ -33,7 +33,8 @@ case class Caravans(
   weeksPerYear: Option[Int] = None,
   singleCaravansAge: Option[CaravansAge] = None,
   twinUnitCaravansAge: Option[CaravansAge] = None,
-  totalSiteCapacity: Option[CaravansTotalSiteCapacity] = None
+  totalSiteCapacity: Option[CaravansTotalSiteCapacity] = None,
+  caravansPerService: Option[CaravansPerService] = None
 )
 
 object Caravans {
