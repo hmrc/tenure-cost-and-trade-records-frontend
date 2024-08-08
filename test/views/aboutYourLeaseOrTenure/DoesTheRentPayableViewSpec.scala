@@ -29,10 +29,10 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
 
   override val form = DoesTheRentPayableForm.doesTheRentPayableForm
 
-  def createView = () => doesTheRentPayableView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => doesTheRentPayableView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, Summary("99996010001"))(fakeRequest, messages)
+    doesTheRentPayableView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
 
   "Rent payable view" must {
 
