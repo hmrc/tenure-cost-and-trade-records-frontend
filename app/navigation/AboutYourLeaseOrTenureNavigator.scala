@@ -182,8 +182,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-          case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+          case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 =>
+            controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+          case _                                                      => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
         }
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
       case _           =>
@@ -338,10 +339,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def RPIRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6030 =>
+      case ForTypes.for6030                                       =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
-      case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-      case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+      case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 =>
+        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+      case _                                                      => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
     }
 
   private def tradeServicesDescriptionRouting: Session => Call = answers =>

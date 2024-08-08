@@ -77,7 +77,7 @@ class HowIsCurrentRentFixedController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6010 =>
+      case ForTypes.for6010                                       =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
           _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)
         ) match {
@@ -89,7 +89,7 @@ class HowIsCurrentRentFixedController @Inject() (
             logger.warn(s"Back link for 6010 rent payable vary beer page reached with unknown value")
             controllers.routes.TaskListController.show().url
         }
-      case ForTypes.for6020 =>
+      case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
           case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
@@ -97,7 +97,7 @@ class HowIsCurrentRentFixedController @Inject() (
             logger.warn(s"Back link for 6020 rent open market value page reached with unknown value")
             controllers.routes.TaskListController.show().url
         }
-      case _                =>
+      case _                                                      =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
           _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
         ) match {
