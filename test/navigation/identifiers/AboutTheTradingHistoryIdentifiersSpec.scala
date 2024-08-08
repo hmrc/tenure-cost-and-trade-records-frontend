@@ -162,6 +162,11 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for Check Your Answers Tenting Pitches page" in {
       assert(CheckYourAnswersTentingPitchesId.toString.equals("checkYourAnswersTentingPitchesPage"))
     }
+
+    "Identifier for Check Your Answers Additional Activities page" in {
+      assert(CheckYourAnswersAdditionalActivitiesId.toString.equals("checkYourAnswersAdditionalActivitiesPage"))
+    }
+
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
     }

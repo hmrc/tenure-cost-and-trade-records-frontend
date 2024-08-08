@@ -73,14 +73,18 @@ class TentingPitchesAllYearController @Inject() (
           touringAndTentingPitches.copy(tentingPitchesAllYear = Some(data))
         }
         session.saveOrUpdate(updatedSession)
-        Redirect(navigator.nextPageForTentingPitches(TentingPitchesAllYearId, updatedSession).apply(updatedSession))
+        Redirect(
+          navigator
+            .nextPage6045(TentingPitchesAllYearId, updatedSession, navigator.cyaPageForTentingPitches)
+            .apply(updatedSession)
+        )
       }
     )
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
+      case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
 
     }

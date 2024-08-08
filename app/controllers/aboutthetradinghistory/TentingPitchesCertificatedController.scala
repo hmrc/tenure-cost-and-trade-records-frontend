@@ -76,7 +76,13 @@ class TentingPitchesCertificatedController @Inject() (
 
         session.saveOrUpdate(updatedSession)
         Redirect(
-          navigator.nextPageForTentingPitches(TentingPitchesCertificatedId, updatedSession).apply(updatedSession)
+          navigator
+            .nextPage6045(
+              TentingPitchesCertificatedId,
+              updatedSession,
+              navigator.cyaPageForTentingPitches
+            )
+            .apply(updatedSession)
         )
       }
     )
@@ -84,8 +90,7 @@ class TentingPitchesCertificatedController @Inject() (
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
+      case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.TentingPitchesTotalController.show().url
 
     }

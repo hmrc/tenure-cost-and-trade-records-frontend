@@ -85,7 +85,13 @@ class TentingPitchesOnSiteController @Inject() (
             case (Some(AnswerNo), AnswerYes)  =>
               controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
             case _                            =>
-              navigator.nextPageForTentingPitches(TentingPitchesOnSiteId, updatedSession).apply(updatedSession)
+              navigator
+                .nextPage6045(
+                  TentingPitchesOnSiteId,
+                  updatedSession,
+                  navigator.cyaPageForTentingPitches
+                )
+                .apply(updatedSession)
           }
 
           Redirect(nextPage)
@@ -96,8 +102,7 @@ class TentingPitchesOnSiteController @Inject() (
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
+      case "CYA" => navigator.cyaPageForTentingPitches.url
       case "TL"  => controllers.routes.TaskListController.show().url + "#tenting-pitches-on-site"
       case _     => controllers.routes.TaskListController.show().url
 

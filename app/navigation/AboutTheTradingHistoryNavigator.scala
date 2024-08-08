@@ -39,37 +39,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   def cyaPageForOtherHolidayAccommodation: Call =
     aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
 
-  def cyaPageForAdditionalActivities: Call = controllers.routes.TaskListController.show() // TODO BST-97971
-
-  def nextPageForTentingPitches(id: Identifier, session: Session)(implicit
-    hc: HeaderCarrier,
-    request: Request[AnyContent]
-  ): Session => Call =
-    if (from == "CYA") { _ =>
-      cyaPageForTentingPitches
-    } else {
-      nextWithoutRedirectToCYA(id, session)
-    }
-
-  def nextPageForAdditionalActivities(id: Identifier, session: Session)(implicit
-    hc: HeaderCarrier,
-    request: Request[AnyContent]
-  ): Session => Call =
-    if (from == "CYA") { _ =>
-      cyaPageForAdditionalActivities
-    } else {
-      nextWithoutRedirectToCYA(id, session)
-    }
-
-  def nextPageForOtherHolidayAccommodation(id: Identifier, session: Session)(implicit
-    hc: HeaderCarrier,
-    request: Request[AnyContent]
-  ): Session => Call =
-    if (from == "CYA") { _ =>
-      cyaPageForOtherHolidayAccommodation
-    } else {
-      nextWithoutRedirectToCYA(id, session)
-    }
+  def cyaPageForAdditionalActivities: Call =
+    aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
 
   override def nextPage(id: Identifier, session: Session)(implicit
     hc: HeaderCarrier,
@@ -83,7 +54,17 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     } else {
       super.nextPage(id, session)
     }
-  private def iesSpecificRoute: Call =
+
+  def nextPage6045(id: Identifier, session: Session, call: Call)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Session => Call =
+    if (from == "CYA") { _ =>
+      call
+    } else {
+      nextWithoutRedirectToCYA(id, session)
+    }
+  private def iesSpecificRoute: Call       =
     routes.IncomeExpenditureSummaryController.show()
 
   private def ies6076SpecificRoute: Call =
@@ -217,6 +198,19 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for tenting pitches all year")
     }
 
+  private def additionalActivitiesOnSiteRouting(answers: Session): Call =
+    answers.aboutTheTradingHistoryPartOne.flatMap(
+      _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
+    ) match {
+      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO BST-97975
+      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
+      case _               =>
+        logger.warn(
+          s"Navigation for additional activities on site reached without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for additional activities all year")
+    }
+
   private def intermittentRouting: Session => Call = answers =>
     val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
     intermittent match {
@@ -311,7 +305,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     PitchesForCaravansId                        -> (_ => aboutthetradinghistory.routes.PitchesForGlampingController.show()),
     PitchesForGlampingId                        -> (_ => aboutthetradinghistory.routes.RallyAreasController.show()),
     RallyAreasId                                -> (_ => aboutthetradinghistory.routes.TentingPitchesTotalController.show()),
-    AdditionalActivitiesOnSiteId                -> (_ => controllers.routes.TaskListController.show()), //  TODO BST-97971
+    AdditionalActivitiesOnSiteId                -> additionalActivitiesOnSiteRouting,
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>
@@ -319,6 +313,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
+    CheckYourAnswersAdditionalActivitiesId      -> (_ => controllers.routes.TaskListController.show()),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
   )
 }

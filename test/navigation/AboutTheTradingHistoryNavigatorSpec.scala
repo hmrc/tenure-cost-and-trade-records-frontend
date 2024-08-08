@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, TouringAndTentingPitches}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, AdditionalActivities, TouringAndTentingPitches}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, Intermittent, RenewablesPlant}
 import models.submissions.common.{AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
@@ -283,7 +283,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
 
       navigator
-        .nextPageForTentingPitches(TentingPitchesOnSiteId, sessionWithNoTentingPitchesOnSite)
+        .nextPage6045(TentingPitchesOnSiteId, sessionWithNoTentingPitchesOnSite, navigator.cyaPageForTentingPitches)
         .apply(
           sessionWithNoTentingPitchesOnSite
         ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController
@@ -303,19 +303,74 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
 
       navigator
-        .nextPageForTentingPitches(TentingPitchesOnSiteId, sessionWithYesTentingPitchesOnSite)
+        .nextPage6045(TentingPitchesOnSiteId, sessionWithYesTentingPitchesOnSite, navigator.cyaPageForTentingPitches)
         .apply(
           sessionWithYesTentingPitchesOnSite
         ) shouldBe controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController
         .show()
     }
 
-    "return a function that goes to lettings  page when tenting pitches all year completed" in {
+    "return a function that goes pitches for caravan  page when tenting pitches all year completed" in {
       navigator
         .nextPage(TentingPitchesAllYearId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe controllers.aboutthetradinghistory.routes.PitchesForCaravansController
         .show()
     }
+
+    "return a function that goes the cya additional activities page when additional activities on site completed with no" in {
+      val sessionWithNoAdditionalActivitiesOnSite = sessionAboutYou6045.copy(
+        aboutTheTradingHistoryPartOne = Some(
+          AboutTheTradingHistoryPartOne(
+            additionalActivities = Some(
+              AdditionalActivities(
+                additionalActivitiesOnSite = Some(AnswerNo)
+              )
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage6045(
+          AdditionalActivitiesOnSiteId,
+          sessionWithNoAdditionalActivitiesOnSite,
+          navigator.cyaPageForAdditionalActivities
+        )
+        .apply(
+          sessionWithNoAdditionalActivitiesOnSite
+        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController
+        .show()
+    }
+
+    "return a function that goes the additional activities all year page when additional activities on site completed with yes" in {
+      val sessionWithYesAdditionalActivitiesOnSite = sessionAboutYou6045.copy(
+        aboutTheTradingHistoryPartOne = Some(
+          AboutTheTradingHistoryPartOne(
+            additionalActivities = Some(
+              AdditionalActivities(
+                additionalActivitiesOnSite = Some(AnswerYes)
+              )
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage6045(
+          AdditionalActivitiesOnSiteId,
+          sessionWithYesAdditionalActivitiesOnSite,
+          navigator.cyaPageForAdditionalActivities
+        )
+        .apply(sessionWithYesAdditionalActivitiesOnSite) shouldBe controllers.routes.TaskListController
+        .show() // TODO BST-97975
+    }
+
+    "return a function that goes to task list  page when additional activities cya completed" in {
+      navigator
+        .nextPage(CheckYourAnswersAdditionalActivitiesId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController
+        .show()
+    }
+
+    // end of 6045
 
     "return a function that goes to gross receipts for base load page when  gross receipts excluding vat completed" in {
       navigator

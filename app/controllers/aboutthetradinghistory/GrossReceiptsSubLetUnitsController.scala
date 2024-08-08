@@ -80,7 +80,7 @@ class GrossReceiptsSubLetUnitsController @Inject() (
             .map { _ =>
               Redirect(
                 navigator
-                  .nextPageForOtherHolidayAccommodation(GrossReceiptsSubLetUnitsId, updatedData)
+                  .nextPage6045(GrossReceiptsSubLetUnitsId, updatedData, navigator.cyaPageForOtherHolidayAccommodation)
                   .apply(updatedData)
               )
 

@@ -78,7 +78,11 @@ class OtherHolidayAccommodationDetailsController @Inject() (
         session.saveOrUpdate(updatedData)
         Redirect(
           navigator
-            .nextPageForOtherHolidayAccommodation(OtherHolidayAccommodationDetailsId, updatedData)
+            .nextPage6045(
+              OtherHolidayAccommodationDetailsId,
+              updatedData,
+              navigator.cyaPageForOtherHolidayAccommodation
+            )
             .apply(updatedData)
         )
       }

@@ -18,24 +18,24 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.CheckYourAnswersTentingPitchesForm.checkYourAnswersTentingPitchesForm
+import form.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesForm.checkYourAnswersAdditionalActivitiesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.CheckYourAnswersTentingPitchesId
+import navigation.identifiers.CheckYourAnswersAdditionalActivitiesId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.checkYourAnswersTentingPitches
+import views.html.aboutthetradinghistory.checkYourAnswersAdditionalActivities
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
-class CheckYourAnswersTentingPitchesController @Inject() (
+class CheckYourAnswersAdditionalActivitiesController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: checkYourAnswersTentingPitches,
+  view: checkYourAnswersAdditionalActivities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -48,10 +48,10 @@ class CheckYourAnswersTentingPitchesController @Inject() (
       Ok(
         view(
           request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)) match {
-            case Some(checkYourAnswersAboutTheTradingHistory) =>
-              checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
-            case _                                            => checkYourAnswersTentingPitchesForm
+            .flatMap(_.additionalActivities.flatMap(_.checkYourAnswersAdditionalActivities)) match {
+            case Some(cYaAnswer) =>
+              checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
+            case _               => checkYourAnswersAdditionalActivitiesForm
           },
           calculateBackLink
         )
@@ -61,7 +61,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      checkYourAnswersTentingPitchesForm,
+      checkYourAnswersAdditionalActivitiesForm,
       formWithErrors =>
         BadRequest(
           view(
@@ -71,22 +71,32 @@ class CheckYourAnswersTentingPitchesController @Inject() (
         ),
       data => {
 
-        val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
-          touringAndTentingPitches.copy(checkYourAnswersTentingPitches = Some(data))
+        val updatedSession = AboutTheTradingHistoryPartOne.updateAdditionalActivities { additionalActivities =>
+          additionalActivities.copy(checkYourAnswersAdditionalActivities = Some(data))
         }
-        session.saveOrUpdate(updatedSession).map { _ =>
-          Redirect(navigator.nextPage(CheckYourAnswersTentingPitchesId, updatedSession).apply(updatedSession))
-        }
+        session
+          .saveOrUpdate(updatedSession)
+          .map { _ =>
+            Redirect(
+              navigator
+                .nextPage6045(
+                  CheckYourAnswersAdditionalActivitiesId,
+                  updatedSession,
+                  navigator.cyaPageForAdditionalActivities
+                )
+                .apply(updatedSession)
+            )
+          }
       }
     )
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
-      _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
+      _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
     ) match {
-      case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
-      case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
+      case Some(AnswerYes) => controllers.routes.TaskListController.show().url // TODO !!!
+      case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
       case _               => controllers.routes.TaskListController.show().url
     }
 

@@ -35,7 +35,7 @@
 )
 
 
-@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @tradingHistory = @{
@@ -104,8 +104,8 @@
     pageHeading = messages("cYa.touringAndTentingPitches.heading"),
     backLinkUrl = backLink,
     showSection = true,
-    fullWidth = true,
-    summary = Some(summary),
+    fullWidth   = true,
+    summary     = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm
 ) {

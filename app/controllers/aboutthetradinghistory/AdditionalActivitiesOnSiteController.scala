@@ -75,7 +75,15 @@ class AdditionalActivitiesOnSiteController @Inject() (
         }
         session
           .saveOrUpdate(updatedSession)
-          .map(_ => navigator.nextPage(AdditionalActivitiesOnSiteId, updatedSession).apply(updatedSession))
+          .map(_ =>
+            navigator
+              .nextPage6045(
+                AdditionalActivitiesOnSiteId,
+                updatedSession,
+                navigator.cyaPageForAdditionalActivities
+              )
+              .apply(updatedSession)
+          )
           .map(Redirect)
       }
     )
@@ -83,7 +91,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "CYA" => controllers.routes.TaskListController.show().url // TODO BST-97971
+      case "CYA" => navigator.cyaPageForAdditionalActivities.url
       case "TL"  => controllers.routes.TaskListController.show().url + "#additional-activities-on-site"
       case _     => controllers.routes.TaskListController.show().url
 

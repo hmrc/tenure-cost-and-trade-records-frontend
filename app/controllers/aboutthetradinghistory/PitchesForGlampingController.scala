@@ -76,7 +76,15 @@ class PitchesForGlampingController @Inject() (
           )
 
           session.saveOrUpdate(updatedData).map { _ =>
-            Redirect(navigator.nextPageForTentingPitches(PitchesForGlampingId, updatedData).apply(updatedData))
+            Redirect(
+              navigator
+                .nextPage6045(
+                  PitchesForGlampingId,
+                  updatedData,
+                  navigator.cyaPageForTentingPitches
+                )
+                .apply(updatedData)
+            )
           }
         }
       )

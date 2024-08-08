@@ -64,7 +64,7 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
     "return correct backLink when 'from=CYA' query param is present" in {
       val result = additionalActivitiesOnSiteController().show()(FakeRequest(GET, "/path?from=CYA"))
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url // TODO BST-97971
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show().url
       )
     }
 
