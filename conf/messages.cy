@@ -1489,6 +1489,7 @@ taskList.6076.powerGenerated = Pŵer a gynhyrchwyd
 taskList.6076.grossReceipts = Derbyniadau gros
 taskList.6076.operationalExpenses = Treuliau gweithredu a gweinyddol
 taskList.touringAndTentingPitches = Touring and tenting pitches
+taskList.additionalActivities = Additional activities
 
 # COST OF SALES OR GROSS PROFIT
 #########
