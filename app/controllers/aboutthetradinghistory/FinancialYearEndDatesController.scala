@@ -128,8 +128,8 @@ class FinancialYearEndDatesController @Inject() (
     request.sessionData.forType match {
       case ForTypes.for6020 =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
-      case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
-      case _                => aboutTheTradingHistory.turnoverSections.head.alcoholicDrinks.isDefined
+      case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
+      case _                => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
     }
 
   private def buildUpdateData(

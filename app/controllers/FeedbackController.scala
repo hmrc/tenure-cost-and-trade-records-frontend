@@ -23,7 +23,7 @@ import models.Session
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.I18nSupport
-import play.api.mvc.{MessagesControllerComponents, _}
+import play.api.mvc.*
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected}
 import views.html.feedback.{feedback, feedbackThx}
