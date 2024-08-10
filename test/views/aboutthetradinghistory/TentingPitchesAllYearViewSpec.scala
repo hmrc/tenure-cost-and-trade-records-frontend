@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.TentingPitchesAllYearForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TentingPitchesAllYear
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
