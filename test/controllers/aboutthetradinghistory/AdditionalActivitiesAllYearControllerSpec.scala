@@ -16,7 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
-import form.aboutthetradinghistory.TentingPitchesAllYearForm.tentingPitchesAllYearForm
+import form.aboutthetradinghistory.AdditionalActivitiesAllYearForm.additionalActivitiesAllYearForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import models.submissions.common.AnswerNo
 import play.api.http.Status.{BAD_REQUEST, OK}
@@ -24,31 +24,31 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TentingPitchesAllYearControllerSpec extends TestBaseSpec {
+class AdditionalActivitiesAllYearControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
 
-  def tentingPitchesAllYearController(
+  def additionalActivitiesAllYearController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
-  ) = new TentingPitchesAllYearController(
+  ) = new AdditionalActivitiesAllYearController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
-    tentingPitchesAllYearView,
+    additionalActivitiesAllYearView,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
     mockSessionRepo
   )
 
   "TentingPitchesAllYearController GET /" should {
     "return 200 and HTML when data present in session" in {
-      val result = tentingPitchesAllYearController().show(fakeRequest)
+      val result = additionalActivitiesAllYearController().show(fakeRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 and HTML when data is none in session" in {
-      val controller = tentingPitchesAllYearController(aboutTheTradingHistoryPartOne = None)
+      val controller = additionalActivitiesAllYearController(aboutTheTradingHistoryPartOne = None)
       val result     = controller.show(fakeRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
@@ -56,55 +56,62 @@ class TentingPitchesAllYearControllerSpec extends TestBaseSpec {
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = tentingPitchesAllYearController().show()(FakeRequest(GET, "/path?from=CYA"))
+      val result = additionalActivitiesAllYearController().show()(FakeRequest(GET, "/path?from=CYA"))
       contentAsString(result) should include(
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show().url
+      )
+    }
+
+    "return correct backLink when no query param in url" in {
+      val result = additionalActivitiesAllYearController().show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
       )
     }
 
   }
 
-  "TentingPitchesAllYearController SUBMIT /" should {
+  "AdditionalActivitiesAllYearController SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = tentingPitchesAllYearController().submit(
+      val res = additionalActivitiesAllYearController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
   }
 
-  "TentingPitchesAllYearController" should {
-    "error if TentingPitchesAllYearController answer is missing" in {
-      val formData = baseFormData - tentingPitchesAllYearErrorKey
-      val form     = tentingPitchesAllYearForm.bind(formData)
+  "AdditionalActivitiesAllYearController" should {
+    "error if form answer is missing" in {
+      val formData = baseFormData - additionalActivitiesAllYearErrorKey
+      val form     = additionalActivitiesAllYearForm.bind(formData)
 
-      mustContainError(tentingPitchesAllYearErrorKey, "error.areYourPitchesOpen.missing", form)
+      mustContainError(additionalActivitiesAllYearErrorKey, "error.additionalActivitiesAllYear.missing", form)
     }
   }
 
   "Form validation" should {
 
     val baseData: Map[String, String] = Map(
-      "tentingPitchesAllYear" -> AnswerNo.name
+      "additionalActivitiesAllYear" -> AnswerNo.name
     )
 
     "error if weekOfPitchesUse is invalid" in {
-      val formData = baseData + ("weekOfPitchesUse" -> "xxx")
-      val form     = tentingPitchesAllYearForm.bind(formData)
-      mustContainError("weekOfPitchesUse", "error.areYourPitchesOpen.conditional.value.invalid", form)
+      val formData = baseData + ("weekOfActivitiesUse" -> "xxx")
+      val form     = additionalActivitiesAllYearForm.bind(formData)
+      mustContainError("weekOfActivitiesUse", "error.additionalActivitiesAllYear.conditional.value.invalid", form)
     }
 
     "error if weekOfPitchesUse is missing" in {
-      val formData = baseData + ("weekOfPitchesUse" -> "")
-      val form     = tentingPitchesAllYearForm.bind(formData)
-      mustContainError("weekOfPitchesUse", "error.areYourPitchesOpen.conditional.value.missing", form)
+      val formData = baseData + ("weekOfActivitiesUse" -> "")
+      val form     = additionalActivitiesAllYearForm.bind(formData)
+      mustContainError("weekOfActivitiesUse", "error.additionalActivitiesAllYear.conditional.value.missing", form)
     }
   }
 
   object TestData {
-    val tentingPitchesAllYearErrorKey: String = "tentingPitchesAllYear"
+    val additionalActivitiesAllYearErrorKey: String = "additionalActivitiesAllYear"
 
-    val baseFormData: Map[String, String] = Map("tentingPitchesAllYear" -> "yes")
+    val baseFormData: Map[String, String] = Map("additionalActivitiesAllYear" -> "yes")
   }
 
 }

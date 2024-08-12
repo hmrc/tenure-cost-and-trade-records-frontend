@@ -359,8 +359,15 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           sessionWithYesAdditionalActivitiesOnSite,
           navigator.cyaPageForAdditionalActivities
         )
-        .apply(sessionWithYesAdditionalActivitiesOnSite) shouldBe controllers.routes.TaskListController
-        .show() // TODO BST-97975
+        .apply(sessionWithYesAdditionalActivitiesOnSite) shouldBe
+        controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show()
+    }
+
+    "return a function that goes to shops  page when tenting pitches all year completed" in {
+      navigator
+        .nextPage(AdditionalActivitiesAllYearId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController
+        .show() // TODO BST-97978
     }
 
     "return a function that goes to task list  page when additional activities cya completed" in {
