@@ -96,8 +96,9 @@ class RentIncludeTradeServicesDetailsController @Inject() (
         data => {
           val updatedData =
             updateAboutLeaseOrAgreementPartThree(_.copy(rentIncludeTradeServicesDetailsTextArea = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
+          session.saveOrUpdate(updatedData).map {_ =>
+            Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
+          }
         }
       )
     } else {
@@ -107,8 +108,10 @@ class RentIncludeTradeServicesDetailsController @Inject() (
           BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors, request.sessionData.toSummary)),
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
+          session.saveOrUpdate(updatedData).map{_ =>
+            Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
+          }
+
         }
       )
     }
