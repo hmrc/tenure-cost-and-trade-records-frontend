@@ -2469,6 +2469,16 @@ additionalActivitiesOnSite.subheading = Are there any additional income-generati
 additionalActivitiesOnSite.hint = This could include, but is not limited to, shops, bars, leisure activities ar caravan storage
 error.additionalActivitiesOnSite.missing = Select yes if there are additional income-generating activities on the site
 
+#ADDITIONAL ACTIVITIES ALL YEAR 6045
+###########################
+
+additionalActivitiesAllYear.heading = Are your additional activities available all year round?
+error.additionalActivitiesAllYear.missing = Select yes if your additional activities are available all year round
+additionalActivitiesAllYear.conditional.label = Enter a number of weeks the site remains open in a year
+error.additionalActivitiesAllYear.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
+error.additionalActivitiesAllYear.conditional.value.missing = Provide a number of weeks the site remains open in a year
+
+
 # CYA ADDITIONAL ACTIVITIES 6045
 
 cYa.additionalActivities.heading = Check your answers - additional activities

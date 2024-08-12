@@ -203,7 +203,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutTheTradingHistoryPartOne.flatMap(
       _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
     ) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO BST-97975
+      case Some(AnswerYes) => aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show()
       case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
       case _               =>
         logger.warn(
@@ -309,6 +309,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     PitchesForGlampingId                        -> (_ => aboutthetradinghistory.routes.RallyAreasController.show()),
     RallyAreasId                                -> (_ => aboutthetradinghistory.routes.TentingPitchesTotalController.show()),
     AdditionalActivitiesOnSiteId                -> additionalActivitiesOnSiteRouting,
+    AdditionalActivitiesAllYearId               -> (_ => controllers.routes.TaskListController.show()), // TODO shops BST-97978
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>
