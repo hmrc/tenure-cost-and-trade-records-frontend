@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 class RentIncludeTradeServicesDetails6045ControllerSpec extends TestBaseSpec {
 
   def rentIncludeTradeServicesDetails6045Controller(
-    forType: String = forType6045 ,
+    forType: String = forType6045,
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )

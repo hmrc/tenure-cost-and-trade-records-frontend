@@ -35,7 +35,7 @@ import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
 import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetailsTextArea
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RentIncludeTradeServicesDetailsController @Inject() (
@@ -45,7 +45,8 @@ class RentIncludeTradeServicesDetailsController @Inject() (
   rentIncludeTradeServicesDetailsTextAreaView: rentIncludeTradeServicesDetailsTextArea,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   private def forType(implicit request: SessionRequest[?]): String = request.sessionData.forType
@@ -96,7 +97,7 @@ class RentIncludeTradeServicesDetailsController @Inject() (
         data => {
           val updatedData =
             updateAboutLeaseOrAgreementPartThree(_.copy(rentIncludeTradeServicesDetailsTextArea = Some(data)))
-          session.saveOrUpdate(updatedData).map {_ =>
+          session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
           }
         }
@@ -108,10 +109,9 @@ class RentIncludeTradeServicesDetailsController @Inject() (
           BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors, request.sessionData.toSummary)),
         data => {
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))
-          session.saveOrUpdate(updatedData).map{_ =>
+          session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
           }
-
         }
       )
     }
