@@ -63,7 +63,7 @@ class EditFinancialYearEndDateController @Inject() (
                 .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case _                                   => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
           }
-        val prefilledForm                    = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
+        val prefilledForm                    = financialYearEnd.lift(index).fold(financialYearEndDateForm)(financialYearEndDateForm.fill)
         Ok(
           editFinancialYearEndDateView(
             prefilledForm,
@@ -104,7 +104,7 @@ class EditFinancialYearEndDateController @Inject() (
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case _                                   => request.sessionData.aboutTheTradingHistory.get.turnoverSections.map(_.financialYearEnd)
       }
-    val prefilledForm                    = financialYearEndDateForm.fill(financialYearEnd.lift(index).get)
+    val prefilledForm                    = financialYearEnd.lift(index).fold(financialYearEndDateForm)(financialYearEndDateForm.fill)
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))
@@ -159,7 +159,7 @@ class EditFinancialYearEndDateController @Inject() (
     request.sessionData.forType match {
       case ForTypes.for6020                    =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
-      case ForTypes.for6030                    => aboutTheTradingHistory.turnoverSections6030.head.grossIncome.isDefined
+      case ForTypes.for6030                    => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
       case ForTypes.for6045 | ForTypes.for6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6045)
@@ -170,7 +170,7 @@ class EditFinancialYearEndDateController @Inject() (
           .flatMap(_.turnoverSections6076)
           .flatMap(_.headOption)
           .exists(_.electricityGenerated.isDefined)
-      case _                                   => aboutTheTradingHistory.turnoverSections.head.alcoholicDrinks.isDefined
+      case _                                   => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
     }
 
   private def buildUpdateData(

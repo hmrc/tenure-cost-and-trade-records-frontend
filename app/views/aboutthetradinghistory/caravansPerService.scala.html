@@ -1,0 +1,102 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.CaravansPerService
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        formWithCSRF: FormWithCSRF
+)
+
+@(form: Form[CaravansPerService], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@inputRow(formField: String, labelKey: String) = @{
+    Seq(
+        TableRow(
+            content = Text(messages(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        classes = "govuk-input--width-4",
+                        attributes = Map(
+                            "maxlength" -> "6",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))
+                )
+            )
+        )
+    )
+}
+
+@table(formFields: String*) = @{
+    govukTable(Table(
+        head = Seq(
+            HeadCell(content = Text(messages("turnover.6045.caravansPerService.services"))),
+            HeadCell(content = Text(messages("turnover.6045.caravansPerService.numberOfCaravans")))
+        ),
+        firstCellIsHeader = false,
+        rows = formFields.map(formField => inputRow(formField, s"turnover.6045.caravansPerService.$formField"))
+    ))
+}
+
+@layout(
+    pageHeading = messages(s"turnover.6045.caravansPerService.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLinkUrl,
+    theForm = form
+) {
+
+    @govukInsetText(InsetText(
+        content = Text(messages("fieldsAreMandatory.label"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CaravansPerServiceController.submit()) {
+
+        <h2 class="govuk-heading-m">@messages("turnover.6045.caravansPerService.fleet")</h2>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@messages("turnover.6045.caravansPerService.fleet.item1")</li>
+        </ul>
+
+        @table("fleetWaterElectricityDrainage", "fleetElectricityOnly")
+
+        <h2 class="govuk-heading-m">@messages("turnover.6045.caravansPerService.private")</h2>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@messages("turnover.6045.caravansPerService.private.item1")</li>
+            <li>@messages("turnover.6045.caravansPerService.private.item2")</li>
+            <li>@messages("turnover.6045.caravansPerService.private.item3")</li>
+        </ul>
+
+        @table("privateWaterElectricityDrainage", "privateElectricityOnly")
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+}

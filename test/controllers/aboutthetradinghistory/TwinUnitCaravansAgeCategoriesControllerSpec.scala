@@ -101,7 +101,7 @@ class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 400 for empty turnoverSections" in {
+    "return 400 for empty form data" in {
       val res = twinUnitCaravansAgeCategoriesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }

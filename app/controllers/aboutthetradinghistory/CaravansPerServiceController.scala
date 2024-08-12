@@ -18,16 +18,16 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.CaravansTotalSiteCapacityForm.caravansTotalSiteCapacityForm
+import form.aboutthetradinghistory.CaravansPerServiceForm.caravansPerServiceForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
-import models.submissions.aboutthetradinghistory.{Caravans, CaravansTotalSiteCapacity}
+import models.submissions.aboutthetradinghistory.{Caravans, CaravansPerService}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.CaravansTotalSiteCapacityId
+import navigation.identifiers.CaravansPerServiceId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.caravansTotalSiteCapacity
+import views.html.aboutthetradinghistory.caravansPerService
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -38,8 +38,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class CaravansTotalSiteCapacityController @Inject() (
-  caravansTotalSiteCapacityView: caravansTotalSiteCapacity,
+class CaravansPerServiceController @Inject() (
+  caravansPerServiceView: caravansPerService,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -50,33 +50,33 @@ class CaravansTotalSiteCapacityController @Inject() (
 
   implicit val ec: ExecutionContext = mcc.executionContext
 
-  def savedAnswer(implicit request: SessionRequest[AnyContent]): Option[CaravansTotalSiteCapacity] =
+  def savedAnswer(implicit request: SessionRequest[AnyContent]): Option[CaravansPerService] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.caravans)
-      .flatMap(_.totalSiteCapacity)
+      .flatMap(_.caravansPerService)
 
-  def updateAnswer(totalSiteCapacity: CaravansTotalSiteCapacity): Caravans => Caravans =
-    _.copy(totalSiteCapacity = Some(totalSiteCapacity))
+  def updateAnswer(caravansPerService: CaravansPerService): Caravans => Caravans =
+    _.copy(caravansPerService = Some(caravansPerService))
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      caravansTotalSiteCapacityView(
-        savedAnswer.fold(caravansTotalSiteCapacityForm)(caravansTotalSiteCapacityForm.fill),
+      caravansPerServiceView(
+        savedAnswer.fold(caravansPerServiceForm)(caravansPerServiceForm.fill),
         getBackLink
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CaravansTotalSiteCapacity](
-      caravansTotalSiteCapacityForm,
-      formWithErrors => BadRequest(caravansTotalSiteCapacityView(formWithErrors, getBackLink)),
+    continueOrSaveAsDraft[CaravansPerService](
+      caravansPerServiceForm,
+      formWithErrors => BadRequest(caravansPerServiceView(formWithErrors, getBackLink)),
       data => {
         val updatedData = updateCaravans(updateAnswer(data))
 
         session
           .saveOrUpdate(updatedData)
-          .map(_ => navigator.nextPage(CaravansTotalSiteCapacityId, updatedData).apply(updatedData))
+          .map(_ => navigator.nextPage(CaravansPerServiceId, updatedData).apply(updatedData))
           .map(Redirect)
       }
     )
@@ -85,7 +85,7 @@ class CaravansTotalSiteCapacityController @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.cyaPage
       .filter(_ => navigator.from == "CYA")
-      .getOrElse(routes.TwinUnitCaravansAgeCategoriesController.show())
+      .getOrElse(routes.CaravansTotalSiteCapacityController.show())
       .url
 
 }
