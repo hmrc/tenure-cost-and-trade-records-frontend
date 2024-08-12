@@ -1270,6 +1270,26 @@ trait FakeObjects {
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
   )
 
+  val prefilledAboutLeaseOrAgreement6045: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    Some(AnswerYes),
+    Some(prefilledConnectedToLandlordDetails),
+    Some(prefilledLeaseOrAgreementYearsDetails),
+    Some(prefilledCurrentRentPayableWithin12Months),
+    Some(prefilledPropertyUseLeasebackArrangement),
+    Some(prefilledAnnualRent),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+    rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+    rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
+  )
+
+  val prefilledAboutLeaseOrAgreement6045TextArea: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
+    Some(prefilledAboutTheLandlord),
+    Some(AnswerYes),
+    Some(prefilledConnectedToLandlordDetails),
+    rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes))
+  )
+
   val prefilledAboutLeaseOrAgreement6030Route: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     Some(AnswerYes),
@@ -1358,6 +1378,12 @@ trait FakeObjects {
     rentIncreasedAnnuallyWithRPIDetails = Some(RentIncreasedAnnuallyWithRPIDetails(AnswerNo))
   )
 
+  val prefilledAboutLeaseOrAgreementPartOneNoConnection6045: AboutLeaseOrAgreementPartOne =
+    AboutLeaseOrAgreementPartOne(
+      Some(prefilledAboutTheLandlord),
+      Some(AnswerNo)
+    )
+
   val prefilledAboutLeaseOrAgreementPartTwo: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryAccordingToGrossOrNetInformationDetails =
@@ -1440,8 +1466,38 @@ trait FakeObjects {
     benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
-    provideDetailsOfYourLease = Some("These are details of a lease")
+    provideDetailsOfYourLease = Some("These are details of a lease"),
+    rentIncludeTradeServicesDetailsTextArea = Some("test")
   )
+
+  val prefilledAboutLeaseOrAgreementPartThree6045: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
+    tradeServicesIndex = 1,
+    servicesPaidIndex = 1,
+    tradeServices = IndexedSeq(TradeServices(TradeServicesDetails("service-1"), Some(AnswerYes))),
+    servicesPaid = IndexedSeq(
+      ServicesPaid(ServicePaidSeparately("service-paid-1"), ServicePaidSeparatelyCharge(BigDecimal(1000)), AnswerYes)
+    ),
+    throughputAffectsRent = ThroughputAffectsRent(AnswerYes, "Throughput affects rent details"),
+    isVATPayableForWholeProperty = AnswerYes,
+    isRentUnderReview = AnswerNo,
+    carParking = CarParking(AnswerYes, CarParkingSpaces(1, 2, 3), AnswerYes, CarParkingSpaces(10), hundred, today),
+    rentedEquipmentDetails = "Rented equipment details",
+    paymentForTradeServices = Some(PaymentForTradeServices(AnswerYes)),
+    typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
+    propertyUpdates = Some(PropertyUpdates(AnswerYes)),
+    leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes)),
+    benefitsGiven = Some(BenefitsGiven(AnswerYes)),
+    benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
+    workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
+    workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
+    provideDetailsOfYourLease = Some("These are details of a lease"),
+    rentIncludeTradeServicesDetailsTextArea = Some("test")
+  )
+
+  val prefilledAboutLeaseOrAgreementPartThree6045TextArea: AboutLeaseOrAgreementPartThree =
+    AboutLeaseOrAgreementPartThree(
+      rentIncludeTradeServicesDetailsTextArea = Some("test")
+    )
 
   val prefilledAboutLeaseOrAgreementPartThreeNo: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,

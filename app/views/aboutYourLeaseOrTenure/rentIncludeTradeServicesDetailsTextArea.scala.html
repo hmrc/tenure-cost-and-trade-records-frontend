@@ -1,0 +1,68 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukCharacterCount: GovukCharacterCount,
+        hmrcCurrencyInput : HmrcCurrencyInput,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
+
+@layout(
+ pageHeading = messages("describeServicesTextArea.heading"),
+ showH1 = false,
+ showSection = true,
+ summary = Some(summary),
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+ backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
+
+  @govukCharacterCount(
+   CharacterCount(
+    id = "describeServicesTextArea",
+    name = "describeServicesTextArea",
+    maxLength = 500,
+    label = Label(
+     content = Text(messages("label.describeServicesTextArea")),
+     classes = "govuk-label--l",
+     isPageHeading = true
+    ),
+    errorMessage = theForm.errors.asTextErrorMessageForField("describeServicesTextArea"),
+    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
+   ).withFormField(theForm("describeServicesTextArea"))
+  )
+
+  @includes.continueSaveAsDraftButtons(govukButton)
+ }
+}

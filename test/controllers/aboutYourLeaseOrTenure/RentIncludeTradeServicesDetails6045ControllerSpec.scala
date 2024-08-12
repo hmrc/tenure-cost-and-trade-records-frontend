@@ -16,29 +16,32 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
+class RentIncludeTradeServicesDetails6045ControllerSpec extends TestBaseSpec {
 
-  def rentIncludeTradeServicesDetailsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+  def rentIncludeTradeServicesDetails6045Controller(
+    forType: String = forType6045,
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    )
   ) = new RentIncludeTradeServicesDetailsController(
     stubMessagesControllerComponents(),
     inject[AboutYourLeaseOrTenureNavigator],
     rentIncludeTradeServicesDetailsView,
     rentIncludeTradeServicesDetailsTextAreaView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo
   )
 
   "RentIncludeTradeServicesDetailsController GET /" should {
     "return 200 and HTML with Rent Include Trade Services Details in the session" in {
-      val result = rentIncludeTradeServicesDetailsController().show(fakeRequest)
+      val result = rentIncludeTradeServicesDetails6045Controller().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -48,7 +51,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML Rent Include Trade Services Details with none in the session" in {
-      val controller = rentIncludeTradeServicesDetailsController(aboutLeaseOrAgreementPartOne = None)
+      val controller = rentIncludeTradeServicesDetails6045Controller(aboutLeaseOrAgreementPartThree = None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -61,7 +64,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
 
   "RentIncludeTradeServicesDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = rentIncludeTradeServicesDetailsController().submit(
+      val res = rentIncludeTradeServicesDetails6045Controller().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
