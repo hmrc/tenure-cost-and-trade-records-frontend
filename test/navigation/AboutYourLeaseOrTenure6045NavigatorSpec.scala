@@ -68,5 +68,12 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
+    "123return a function that goes to lease or agreement years page when about your landlord has been completed" in {
+      navigator
+        .nextPage(RentIncludeTradeServicesPageId, session6045)
+        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController
+        .show()
+    }
+
   }
 }
