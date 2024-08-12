@@ -31,6 +31,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     inject[AboutYourLeaseOrTenureNavigator],
     rentIncludeTradeServicesDetailsView,
+    rentIncludeTradeServicesDetailsTextAreaView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
   )

@@ -907,12 +907,12 @@ checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
 checkbox.rentPayable.shellUnit = A ‘shell’ unit you had to fit out yourself
 checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of these options
 checkbox.rentPayable.none = None
-label.detailsToQuestions = Additional information
+label.detailsToQuestions = Give details
 hint.detailsToQuestions = Examples of acceptable descriptions include "the rent includes residential accommodation", or "also includes the premises next door".
 error.doesTheRentPayable.required = Select items included in your rent, or select ’No, the rent does not include any of these options’
 error.doesTheRentPayable.noneSelectedWithOther = Select items included in your rent, or select ’No, the rent does not include any of these options’
 error.detailsToQuestions.required = Please provide further information
-error.detailsToQuestions.maxLength = Additional information must be {0} characters or fewer
+error.detailsToQuestions.maxLength = Details provided must be {0} characters or fewer
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
@@ -1065,7 +1065,11 @@ rentIncludeTradeServicesDetails.label = What sum is included in the rent to cove
 rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
 rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
 label.describeServices = Describe the services provided
+describeServicesTextArea.heading = Give details of the services provided by the landlord that are included in your rent
+label.describeServicesTextArea = Give details of the services provided by the landlord that are included in your rent
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
+rentIncludeTradeServicesDetailsTextBoxArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
+error.describeServicesTextArea.required = Please provide details of the services provided by the landlord that are included in your rent.
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Enter a description of the trade service which you pay for separately
