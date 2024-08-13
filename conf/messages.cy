@@ -1108,7 +1108,6 @@ error.canRentBeReducedOnReview.missing = Dewiswch ‘oes’ os gall adolygiad ar
 
 #PROPERTY UPDATES DURING THE CURRENT LEASE
 ##########################################
-
 propertyUpdates.heading = Diweddariadau i’r eiddo yn ystod y brydles bresennol
 propertyUpdates.declare = Mae’n rhaid i chi ddatgan unrhyw waith rydych wedi’i wneud ar yr eiddo yn ystod y brydles bresennol. Dim ond addasiadau, gwelliannau, adnewyddiadau, gosodiadau cychwynnol, neu atgyweiriadau cychwynnol a allai fod wedi effeithio ar werth yr eiddo y dylech eu cynnwys.
 propertyUpdates.assign  = Os neilltuwyd y brydles i chi gan barti arall, mae’n rhaid i chi ddatgan unrhyw waith a wnaeth y parti hwnnw o dan y brydles bresennol.

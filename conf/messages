@@ -1116,7 +1116,6 @@ error.canRentBeReducedOnReview.missing = Select yes if the rent can be reduced o
 
 #PROPERTY UPDATES DURING THE CURRENT LEASE
 ##########################################
-
 propertyUpdates.heading = Property updates during the current lease
 propertyUpdates.declare = You must declare any work you have done to the property during the current lease. Only include any alterations, improvements, refurbishment, initial fitting out or initial repairs that may have affected the property’s value.
 propertyUpdates.assign  = If the lease was assigned to you by another party, you must declare any works carried out by them under current lease.

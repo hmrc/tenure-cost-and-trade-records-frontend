@@ -27,14 +27,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyUpdates], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[PropertyUpdates], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("propertyUpdates.heading"),
     showSection = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url,
+    backLinkUrl = backLink,
     theForm = theForm
 ) {
 
