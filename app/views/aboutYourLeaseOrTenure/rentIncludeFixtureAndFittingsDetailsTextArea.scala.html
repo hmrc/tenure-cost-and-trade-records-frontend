@@ -36,30 +36,30 @@
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("describeServicesTextArea.heading"),
+ pageHeading = messages("describeFittingsTextArea.heading"),
  showH1 = false,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url,
+ backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url,
  theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.submit()) {
 
   @govukCharacterCount(
    CharacterCount(
-    id = "describeServicesTextArea",
-    name = "describeServicesTextArea",
+    id = "describeFittingsTextArea",
+    name = "describeFittingsTextArea",
     maxLength = 500,
     label = Label(
-     content = Text(messages("label.describeServicesTextArea")),
+     content = Text(messages("label.describeFittingsTextArea")),
      classes = "govuk-label--l",
      isPageHeading = true
     ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("describeServicesTextArea"),
-    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
-   ).withFormField(theForm("describeServicesTextArea"))
+    errorMessage = theForm.errors.asTextErrorMessageForField("describeFittingsTextArea"),
+    hint = Some(Hint(content = Text(messages("describeFittingsTextArea.hint"))))
+   ).withFormField(theForm("describeFittingsTextArea"))
   )
 
   @includes.continueSaveAsDraftButtons(govukButton)

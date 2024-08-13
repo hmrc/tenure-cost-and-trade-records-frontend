@@ -30,6 +30,7 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     rentIncludeFixtureAndFittingsDetailsView,
+    rentIncludeFixtureAndFittingsDetailsTextAreaView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
   )
