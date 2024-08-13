@@ -25,22 +25,6 @@ import play.api.i18n.Messages
 
 object RentIncludeFixtureAndFittingDetailsTextAreaForm {
 
-  def rentIncludeFixtureAndFittingsDetailsForm(
-    annualRent: Option[BigDecimal] = None,
-    otherIncludedPartsSum: BigDecimal = 0
-  )(implicit
-    messages: Messages
-  ): Form[RentIncludeFixturesOrFittingsInformationDetails] = Form(
-    mapping(
-      "rentIncludeFixturesAndFittingsDetails" ->
-        partOfAnnualRent(
-          messages("error.rentIncludeFixturesAndFittingsDetails.title"),
-          annualRent,
-          otherIncludedPartsSum
-        )
-    )(RentIncludeFixturesOrFittingsInformationDetails.apply)(o => Some(o.sumIncludedInRent))
-  )
-
   val rentIncludeFixtureAndFittingsDetailsTextAreaForm: Form[String] =
     Form(
       single(
@@ -50,5 +34,4 @@ object RentIncludeFixtureAndFittingDetailsTextAreaForm {
         )
       )
     )
-
 }
