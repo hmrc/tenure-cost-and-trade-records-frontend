@@ -1098,6 +1098,10 @@ rentIncludesVat.error = Select yes if the rent includes VAT
 ###########################################
 rentIncludeFixturesAndFittingsDetails.heading = What sum is included in the rent to cover the equipment provided by the landlord, excluding VAT?
 rentIncludeFixturesAndFittingsDetails.hint = Leave blank if this is not specifically itemised.
+label.rentIncludeFixturesAndFittingsDetailsTextArea = Give details of the equipment you can use as part of your rent
+describeFittingsTextArea.heading = Give details of the equipment you can use as part of your rent
+label.describeFittingsTextArea = Give details of the equipment you can use as part of your rent
+describeFittingsTextArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
 error.rentIncludeFixturesAndFittingsDetails.title = Sum included to cover equipment
 
 # INCENTIVES, PAYMENTS AND CONDITIONS

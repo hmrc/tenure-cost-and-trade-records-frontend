@@ -1091,6 +1091,9 @@ rentIncludesVat.error = Select yes if the rent includes VAT
 ###########################################
 rentIncludeFixturesAndFittingsDetails.heading = Os yw wedi’i restru’n benodol, pa swm sydd wedi’i gynnwys yn y rhent i dalu am offer a ddarperir gan y landlord, heb gynnwys TAW?
 rentIncludeFixturesAndFittingsDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
+describeFittingsTextArea.heading = Give details of the equipment you can use as part of your rent
+label.describeFittingsTextArea = Give details of the equipment you can use as part of your rent
+describeFittingsTextArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
 error.rentIncludeFixturesAndFittingsDetails.title = Sum included to cover equipment
 
 # INCENTIVES, PAYMENTS AND CONDITIONS
