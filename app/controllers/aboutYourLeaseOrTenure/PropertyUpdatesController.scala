@@ -26,10 +26,13 @@ import navigation.identifiers.PropertyUpdatesId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import play.api.Logging
 import views.html.aboutYourLeaseOrTenure.propertyUpdates
+import models.{ForTypes, Session}
+import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PropertyUpdatesController @Inject() (
@@ -38,8 +41,10 @@ class PropertyUpdatesController @Inject() (
   view: propertyUpdates,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
+    with I18nSupport
+    with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -49,7 +54,8 @@ class PropertyUpdatesController @Inject() (
             case Some(data) => propertyUpdatesForm.fill(data)
             case _          => propertyUpdatesForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          backLink(request.sessionData)
         )
       )
     )
@@ -58,13 +64,30 @@ class PropertyUpdatesController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PropertyUpdates](
       propertyUpdatesForm,
-      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, backLink(request.sessionData))),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(propertyUpdates = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PropertyUpdatesId, updatedData).apply(updatedData))
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(PropertyUpdatesId, updatedData).apply(updatedData))
+        }
       }
     )
   }
+
+  private def backLink(answers: Session): String =
+    answers.forType match {
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(
+          _.tenantAdditionsDisregardedDetails.flatMap(_.tenantAdditionalDisregarded.name)
+        ) match {
+          case Some("yes") =>
+            controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+          case _           =>
+            logger.warn(s"Back link for property updates page reached with unknown value")
+            controllers.routes.TaskListController.show().url
+        }
+      case _                                   => controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+    }
 
 }
