@@ -2448,6 +2448,26 @@ additionalActivitiesAllYear.conditional.label = Enter a number of weeks the site
 error.additionalActivitiesAllYear.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
 error.additionalActivitiesAllYear.conditional.value.missing = Provide a number of weeks the site remains open in a year
 
+#SHOPS ADDITIONAL ACTIVITIES 6045
+#################################
+shops.additionalActivitiesOnSite.heading = Shops
+shops.additionalActivitiesOnSite.p = If you run any on-site shops, enter the receipts and cost of purchases excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+
+error.additionalShops.grossReceipts.required = Enter 0 if you did not have any gross receipts from shops in the year ending {0}
+error.additionalShops.grossReceipts.range    = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalShops.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.additionalShops.costOfPurchase.required = Enter 0 if you did not have any cost of purchase in the year ending {0}
+error.additionalShops.costOfPurchase.range    = Cost of purchase in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalShops.costOfPurchase.negative = Cost of purchase in the year ending {0} cannot be a negative number
+
+
+# COMMON ADDITIONAL ACTIVITIES 6045
+additionalActivities.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter he number O.
+additionalActivities.common.tradingPeriod = Trading period
+additionalActivities.common.financialYear = Financial year
+additionalActivities.common.grossReceipts = Gross receipts
+additionalActivities.common.costOfPurchase = Cost of purchase
+
 # CYA ADDITIONAL ACTIVITIES 6045
 ################################
 

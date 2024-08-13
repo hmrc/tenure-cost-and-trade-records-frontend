@@ -28,7 +28,7 @@ object AdditionalActivitiesAllYearForm {
   val additionalActivitiesAllYearForm: Form[AdditionalActivitiesAllYear] = Form(
     mapping(
       "additionalActivitiesAllYear" -> createYesNoType("error.additionalActivitiesAllYear.missing"),
-      "weekOfActivitiesUse"            -> mandatoryIfEqual(
+      "weekOfActivitiesUse"         -> mandatoryIfEqual(
         "additionalActivitiesAllYear",
         AnswerNo.name,
         weeksMapping(

@@ -180,6 +180,7 @@ trait FakeViews { this: Injecting =>
     inject[otherHolidayAccommodationDetails]
   lazy val additionalActivitiesOnSiteView: additionalActivitiesOnSite                               = inject[additionalActivitiesOnSite]
   lazy val additionalActivitiesAllYearView: additionalActivitiesAllYear                             = inject[additionalActivitiesAllYear]
+  lazy val additionalShopsView: additionalShops                                                     = inject[additionalShops]
   lazy val grossReceiptsLettingUnitsView: grossReceiptsLettingUnits6045                             = inject[grossReceiptsLettingUnits6045]
   lazy val grossReceiptsSubLetUnitsView: grossReceiptsSubLetUnits6045                               = inject[grossReceiptsSubLetUnits6045]
   lazy val checkYourAnswersAdditionalActivitiesView: checkYourAnswersAdditionalActivities           =
