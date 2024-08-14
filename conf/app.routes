@@ -448,6 +448,11 @@ POST        /current-rent-first-paid                                controllers.
 GET         /rent-open-market-value                                 controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.show()
 POST        /rent-open-market-value                                 controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.submit()
 
+# Form 6045/46 only
+
+GET         /rent-developed-land                                    controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.show()
+POST        /rent-developed-land                                    controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.submit()
+
 # Form 6011 routing
 GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
 POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()

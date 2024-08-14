@@ -914,6 +914,12 @@ error.doesTheRentPayable.noneSelectedWithOther = Select items included in your r
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = Details provided must be {0} characters or fewer
 
+# RENT DEVELOPED LAND (FORM 6045/46)
+######################
+rentDevelopedLand.heading = Does the rent payable relate to developed land?
+hint.rentDevelopedLand = For example, access roadways, hardstandings, or services.
+error.rentDevelopedLand.missing = Select yes if the rent payable relates to developed land
+
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
 rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?

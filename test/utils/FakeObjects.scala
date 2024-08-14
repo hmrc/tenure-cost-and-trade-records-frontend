@@ -1278,6 +1278,7 @@ trait FakeObjects {
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
+    doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes))
@@ -1468,7 +1469,8 @@ trait FakeObjects {
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
     provideDetailsOfYourLease = Some("These are details of a lease"),
     rentIncludeTradeServicesDetailsTextArea = Some("test"),
-    rentIncludeFixtureAndFittingsDetailsTextArea = Some("test")
+    rentIncludeFixtureAndFittingsDetailsTextArea = Some("test"),
+    rentDevelopedLand = AnswerYes
   )
 
   val prefilledAboutLeaseOrAgreementPartThree6045: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
@@ -1492,7 +1494,8 @@ trait FakeObjects {
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
     provideDetailsOfYourLease = Some("These are details of a lease"),
-    rentIncludeTradeServicesDetailsTextArea = Some("test")
+    rentIncludeTradeServicesDetailsTextArea = Some("test"),
+    rentDevelopedLand = AnswerYes
   )
 
   val prefilledAboutLeaseOrAgreementPartThree6045TextArea: AboutLeaseOrAgreementPartThree =

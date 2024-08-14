@@ -278,5 +278,8 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     "Identifier for throughput affects rent details" in {
       assert(ThroughputAffectsRentDetailsId.toString.equals("throughputAffectsRentDetailsPage"))
     }
+    "Identifier for rent developed land" in {
+      assert(RentDevelopedLandId.toString.equals("rentDevelopedLandPage"))
+    }
   }
 }
