@@ -309,7 +309,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     PitchesForGlampingId                        -> (_ => aboutthetradinghistory.routes.RallyAreasController.show()),
     RallyAreasId                                -> (_ => aboutthetradinghistory.routes.TentingPitchesTotalController.show()),
     AdditionalActivitiesOnSiteId                -> additionalActivitiesOnSiteRouting,
-    AdditionalActivitiesAllYearId               -> (_ => controllers.routes.TaskListController.show()), // TODO shops BST-97978
+    AdditionalActivitiesAllYearId               -> (_ => aboutthetradinghistory.routes.AdditionalShopsController.show()),
+    AdditionalShopsId                           -> (_ => controllers.routes.TaskListController.show()), // TODO BST-97995
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>

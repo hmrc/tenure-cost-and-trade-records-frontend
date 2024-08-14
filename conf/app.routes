@@ -293,6 +293,9 @@ POST        /additional-activities-on-site                          controllers.
 GET         /additional-activities-all-year                         controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.show()
 POST        /additional-activities-all-year                         controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.submit()
 
+GET         /additional-shops                                       controllers.aboutthetradinghistory.AdditionalShopsController.show()
+POST        /additional-shops                                       controllers.aboutthetradinghistory.AdditionalShopsController.submit()
+
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
 
