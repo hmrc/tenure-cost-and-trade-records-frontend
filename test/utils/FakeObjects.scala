@@ -611,7 +611,14 @@ trait FakeObjects {
         privateSublet = CaravansPerAgeCategory(1, 2, 3, 4)
       ),
       totalSiteCapacity = CaravansTotalSiteCapacity(1, 2, 3, 4, 5, 6),
-      caravansPerService = CaravansPerService(10, 20, 30, 40)
+      caravansPerService = CaravansPerService(10, 20, 30, 40),
+      annualPitchFee = CaravansAnnualPitchFee(
+        9000,
+        Seq(WaterAndDrainage, Electricity, Other),
+        waterAndDrainage = Some(1000),
+        electricity = Some(3000),
+        otherPitchFeeDetails = Some("food - 1000, cleaning - 500")
+      )
     )
   )
 

@@ -18,8 +18,8 @@ package form
 
 import play.api.data.Forms.{default, text}
 import play.api.data.Mapping
-import play.api.data.validation.Constraint
 import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.validation.{Constraint, Invalid, Valid}
 import uk.gov.voa.play.form.Condition
 import util.NumberUtil.zeroBigDecimal
 
@@ -63,6 +63,50 @@ object ConditionalConstraintMappings {
     mandatoryStringOnCondition(
       _.filter(_._1.endsWith(fieldSuffix)).values.map(s => Try(BigDecimal(s)).getOrElse(zeroBigDecimal)).sum > 0,
       errorRequired
+    )
+
+  /**
+    * Makes field mandatory if other field value equals param 'value'.
+    *
+    * @param fieldName other field name
+    * @param value other field value
+    * @param mapping the field mapping
+    * @param errorRequired error message key
+    */
+  def mandatoryIfEquals[T](
+    fieldName: String,
+    value: String,
+    mapping: Mapping[Option[T]],
+    errorRequired: String
+  ): Mapping[Option[T]] =
+    applyConstraintsOnCondition[Option[T]](
+      _.get(fieldName).contains(value),
+      mapping,
+      Constraint[Option[T]] {
+        _.fold(Invalid(errorRequired))(_ => Valid)
+      }
+    )
+
+  /**
+    * Makes field mandatory if other multi value field contains 'oneOfValues'.
+    *
+    * @param fieldName other multi value field name
+    * @param oneOfValues other field value
+    * @param mapping the field mapping
+    * @param errorRequired error message key
+    */
+  def mandatoryIfOneOfValuesIs[T](
+    fieldName: String,
+    oneOfValues: String,
+    mapping: Mapping[Option[T]],
+    errorRequired: String
+  ): Mapping[Option[T]] =
+    applyConstraintsOnCondition[Option[T]](
+      _.filter(_._1.startsWith(fieldName)).values.toSet.contains(oneOfValues),
+      mapping,
+      Constraint[Option[T]] {
+        _.fold(Invalid(errorRequired))(_ => Valid)
+      }
     )
 
 }

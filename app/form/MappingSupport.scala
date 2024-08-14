@@ -319,6 +319,22 @@ object MappingSupport {
       .verifying(messages(s"error.$field.range", year), _ <= salesMax)
   ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
+  def moneyMappingOptional(field: String): Mapping[Option[BigDecimal]] =
+    optional(
+      text
+        .verifying(s"error.$field.nonNumeric", s => Try(BigDecimal(s)).isSuccess)
+        .transform[BigDecimal](
+          s => BigDecimal(s),
+          _.toString
+        )
+        .verifying(s"error.$field.negative", _ >= 0)
+    )
+
+  def moneyMappingRequired(field: String): Mapping[BigDecimal] =
+    moneyMappingOptional(field)
+      .verifying(s"error.$field.required", _.isDefined)
+      .transform[BigDecimal](_.getOrElse(zeroBigDecimal), Option(_))
+
   def nonNegativeNumber(field: String, defaultValue: String = ""): Mapping[Int] =
     default(text, defaultValue)
       .verifying(s"error.$field.required", _.nonEmpty)
