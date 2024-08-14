@@ -448,6 +448,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
+  private def doesRentPayableRouting: Session => Call = answers =>
+    answers.forType match {
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show()
+      case _                                   =>
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+    }
+
   private def propertyUseLeasebackAgreementRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(
       _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name)
@@ -486,7 +494,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ),
     CurrentLeaseBeginPageId                       -> (_ => aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId                      -> includedInYourRentRouting,
-    DoesRentPayablePageId                         -> (_ => aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()),
+    DoesRentPayablePageId                         -> doesRentPayableRouting,
     UltimatelyResponsibleInsideRepairsPageId      -> (_ =>
       aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
     ),
@@ -553,6 +561,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     CarParkingAnnualRentId                        -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()),
     RentedEquipmentDetailsId                      -> (_ => aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show()),
     IncludedInRent6020Id                          -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
+    RentDevelopedLandId                           -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

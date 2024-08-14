@@ -41,7 +41,8 @@ case class AboutLeaseOrAgreementPartThree(
   workCarriedOutCondition: Option[WorkCarriedOutCondition] = None,
   provideDetailsOfYourLease: Option[String] = None, // Added June 2024
   rentIncludeTradeServicesDetailsTextArea: Option[String] = None, // Added Aug 2024 for 6045/46
-  rentIncludeFixtureAndFittingsDetailsTextArea: Option[String] = None // Added Aug 2024 for 6045/46
+  rentIncludeFixtureAndFittingsDetailsTextArea: Option[String] = None, // Added Aug 2024 for 6045/46
+  rentDevelopedLand: Option[AnswersYesNo] = None // Added Aug 2024 for 6045/46
 )
 
 object AboutLeaseOrAgreementPartThree {

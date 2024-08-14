@@ -910,6 +910,12 @@ error.doesTheRentPayable.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi�
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = Mae’n rhaid i’r wybodaeth ychwanegol fod yn {0} o gymeriadau neu lai
 
+# RENT DEVELOPED LAND (FORM 6045/46)
+######################
+rentDevelopedLand.heading = Does the rent payable relate to developed land?
+hint.rentDevelopedLand = For example, access roadways, hardstandings, or services.
+error.rentDevelopedLand.missing = Select yes if the rent payable relates to developed land
+
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
 rentPayableVaryOnQuantityOfBeers.heading = A yw’r rhent sy’n daladwy yn amrywio yn ôl faint o gwrw, gwinoedd neu wirodydd a gyflenwir i’r eiddo?
