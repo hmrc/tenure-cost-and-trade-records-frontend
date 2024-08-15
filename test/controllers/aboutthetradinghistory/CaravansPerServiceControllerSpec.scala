@@ -25,8 +25,7 @@ class CaravansPerServiceControllerSpec extends TestBaseSpec {
 
   private val previousPage = aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show().url
 
-  // TODO: current annual pitch
-  private val nextPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+  private val nextPage = aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show().url
 
   def caravansPerServiceController =
     new CaravansPerServiceController(

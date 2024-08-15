@@ -1,0 +1,111 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.CaravansAnnualPitchFee
+@import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.includes.multiCheckbox
+
+
+@this(
+        layout: Layout,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
+        formWithCSRF: FormWithCSRF,
+        multiCheckboxes: multiCheckbox
+)
+
+@(form: Form[CaravansAnnualPitchFee], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
+
+
+@conditionalHtmlOnFeeValue(value: String) = {
+@if(value == "other") {
+    @govukInput(
+        Input(
+            hint = Hint(
+                content = Text(messages(s"turnover.6045.caravans.fee.$value.hint")),
+            ),
+            classes = "govuk-!-width-full",
+            attributes = Map(
+                "maxlength" -> "1000",
+                "aria-label" -> messages(s"turnover.6045.caravans.fee.$value")
+            )
+        ).withFormField(form("otherPitchFeeDetails"))
+    )
+} else {
+    @govukInput(
+        Input(
+            label = Label(
+                content = Text(messages(s"turnover.6045.caravans.fee.$value.label")),
+            ),
+            prefix = PrefixOrSuffix(
+                content = Text("£")
+            ),
+            classes = "govuk-input--width-10",
+            attributes = Map(
+                "maxlength" -> "8",
+                "aria-label" -> messages(s"turnover.6045.caravans.fee.$value")
+            ),
+            autocomplete = "off"
+        ).withFormField(form(value))
+    )
+}
+}
+
+@layout(
+    pageHeading = messages(s"turnover.6045.caravansAnnualPitchFee.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLinkUrl,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages(s"turnover.6045.caravansAnnualPitchFee.p1")</p>
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.submit()) {
+
+        @govukInput(
+            Input(
+                prefix = PrefixOrSuffix(
+                    content = Text("£")
+                ),
+                classes = "govuk-input--width-10",
+                attributes = Map(
+                    "maxlength" -> "8",
+                    "aria-label" -> messages("turnover.6045.caravans.annualPitchFee")
+                ),
+                autocomplete = "off"
+            ).withFormField(form("totalPitchFee"))
+        )
+
+        @multiCheckboxes(
+            form,
+            "servicesIncludedInPitchFee",
+            CaravansPitchFeeServices.stringValues,
+            "turnover.6045.caravans.fee.",
+            "turnover.6045.caravans.servicesIncludedInPitchFee",
+            legendClasses = "govuk-fieldset__legend--m",
+            hintKey = "turnover.6045.caravans.servicesIncludedInPitchFee.hint",
+            conditionalHtmlPerValue = CaravansPitchFeeServices.stringValues.map(v => v -> conditionalHtmlOnFeeValue(v)).toMap
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+}

@@ -87,4 +87,7 @@ object Caravans {
     def fromName(name: String): Option[CaravansPitchFeeServices] =
       CaravansPitchFeeServices.values.find(_.toString == name)
 
+    def stringValues: Seq[String] =
+      CaravansPitchFeeServices.values.map(_.toString)
+
 }

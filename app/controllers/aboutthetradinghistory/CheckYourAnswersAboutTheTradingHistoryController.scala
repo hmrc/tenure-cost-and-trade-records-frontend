@@ -100,8 +100,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
             .flatMap(_.anyStaticLeisureCaravansOnSite)
             .contains(AnswerYes)
         )
-          // TODO: What is the current annual pitch fee for a single-unit static caravan
-          controllers.aboutthetradinghistory.routes.CaravansPerServiceController.show().url
+          controllers.aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show().url
         else
           controllers.aboutthetradinghistory.routes.StaticCaravansController.show().url
       case ForTypes.for6076                                       =>
