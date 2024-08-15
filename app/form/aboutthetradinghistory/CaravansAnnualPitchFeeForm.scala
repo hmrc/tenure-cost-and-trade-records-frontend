@@ -35,8 +35,7 @@ object CaravansAnnualPitchFeeForm {
     Form(
       mapping(
         "totalPitchFee"              -> moneyMappingRequired("caravans.totalPitchFee"),
-        "servicesIncludedInPitchFee" -> seq(text)
-          .transform(_.flatMap(CaravansPitchFeeServices.fromName), _.map(_.toString)),
+        "servicesIncludedInPitchFee" -> enumMappingSeq(CaravansPitchFeeServices.fromName, _.toString),
         "rates"                      -> mandatoryIfOneOfValuesIs(
           "servicesIncludedInPitchFee",
           "rates",

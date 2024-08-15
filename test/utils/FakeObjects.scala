@@ -20,6 +20,7 @@ import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutthetradinghistory.*
+import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 import models.submissions.aboutyouandtheproperty.*
 import models.submissions.additionalinformation.*
 import models.submissions.common.*
