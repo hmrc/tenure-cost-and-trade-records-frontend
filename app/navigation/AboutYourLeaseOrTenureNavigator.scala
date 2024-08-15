@@ -477,6 +477,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for property use leaseback agreement routing")
     }
 
+  private def rentDevelopedLandRouting: Session => Call =
+    _.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
+      case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show()
+      case _               => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
@@ -561,7 +567,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     CarParkingAnnualRentId                        -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()),
     RentedEquipmentDetailsId                      -> (_ => aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show()),
     IncludedInRent6020Id                          -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
-    RentDevelopedLandId                           -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
+    RentDevelopedLandId                           -> rentDevelopedLandRouting,
+    RentDevelopedLandDetailsId                    -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

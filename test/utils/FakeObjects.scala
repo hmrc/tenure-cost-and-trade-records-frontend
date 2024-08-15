@@ -1468,9 +1468,10 @@ trait FakeObjects {
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
     provideDetailsOfYourLease = Some("These are details of a lease"),
-    rentIncludeTradeServicesDetailsTextArea = Some("test"),
-    rentIncludeFixtureAndFittingsDetailsTextArea = Some("test"),
-    rentDevelopedLand = AnswerYes
+    rentIncludeTradeServicesDetailsTextArea = Some("trade services text area"),
+    rentIncludeFixtureAndFittingsDetailsTextArea = Some("fixture and fittings text area"),
+    rentDevelopedLand = AnswerYes,
+    rentDevelopedLandDetails = Some("rent developed land details")
   )
 
   val prefilledAboutLeaseOrAgreementPartThree6045: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
