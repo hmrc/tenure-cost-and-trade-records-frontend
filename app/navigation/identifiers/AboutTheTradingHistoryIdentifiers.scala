@@ -245,6 +245,10 @@ case object AdditionalShopsId extends Identifier {
   override def toString: String = "additionalShopsPage"
 }
 
+case object AdditionalCateringId extends Identifier {
+  override def toString: String = "additionalCateringPage"
+}
+
 case object CheckYourAnswersTentingPitchesId extends Identifier {
   override def toString: String = "checkYourAnswersTentingPitchesPage"
 }

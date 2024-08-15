@@ -371,11 +371,18 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           .show()
     }
 
-    "return a function that goes to catering  page when additional activities shops are completed" in {
+    "return a function that goes to catering  page when additional activities shops is completed" in {
       navigator
         .nextPage(AdditionalShopsId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController.show() // TODO BST-97978
+        controllers.aboutthetradinghistory.routes.AdditionalCateringController.show()
+    }
+
+    "return a function that goes to bars and club  page when additional activities catering is completed" in {
+      navigator
+        .nextPage(AdditionalCateringId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.routes.TaskListController.show() // TODO bars and clubs
     }
 
     "return a function that goes to task list  page when additional activities cya completed" in {
