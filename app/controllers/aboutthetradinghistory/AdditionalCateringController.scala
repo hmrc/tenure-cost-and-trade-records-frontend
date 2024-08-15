@@ -18,23 +18,23 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.AdditionalShopsForm.additionalShopsForm
+import form.aboutthetradinghistory.AdditionalCateringForm.additionalCateringForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalShops, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AdditionalCatering, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.AdditionalShopsId
+import navigation.identifiers.AdditionalCateringId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.additionalShops
+import views.html.aboutthetradinghistory.additionalCatering
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdditionalShopsController @Inject() (
+class AdditionalCateringController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
-  view: additionalShops,
+  view: additionalCatering,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -47,8 +47,8 @@ class AdditionalShopsController @Inject() (
 
       Ok(
         view(
-          additionalShopsForm(years).fill(
-            turnoverSections6045.map(_.additionalShops getOrElse AdditionalShops())
+          additionalCateringForm(years).fill(
+            turnoverSections6045.map(_.additionalCatering getOrElse AdditionalCatering())
           ),
           getBackLink
         )
@@ -60,13 +60,13 @@ class AdditionalShopsController @Inject() (
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[Seq[AdditionalShops]](
-        additionalShopsForm(years),
+      continueOrSaveAsDraft[Seq[AdditionalCatering]](
+        additionalCateringForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
             (success zip turnoverSections6045).map { case (data, previousSection) =>
-              previousSection.copy(additionalShops = Some(data))
+              previousSection.copy(additionalCatering = Some(data))
             }
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
@@ -79,7 +79,7 @@ class AdditionalShopsController @Inject() (
             Redirect(
               navigator
                 .nextPage6045(
-                  AdditionalShopsId,
+                  AdditionalCateringId,
                   updatedData,
                   navigator.cyaPageForAdditionalActivities
                 )
@@ -102,7 +102,7 @@ class AdditionalShopsController @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => navigator.cyaPageForAdditionalActivities.url
-      case _     => controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show().url
+      case _     => controllers.aboutthetradinghistory.routes.AdditionalShopsController.show().url
     }
 
 }

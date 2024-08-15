@@ -2501,6 +2501,20 @@ error.additionalShops.costOfPurchase.range    = Cost of purchase in the year end
 error.additionalShops.costOfPurchase.negative = Cost of purchase in the year ending {0} cannot be a negative number
 
 
+#CATERING ADDITIONAL ACTIVITIES 6045
+#################################
+catering.additionalActivitiesOnSite.heading = Catering
+catering.additionalActivitiesOnSite.p1 = If you run any on-site catering facilities, enter the receipts and cost of purchases excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+catering.additionalActivitiesOnSite.p2 = Do not include any receipts from franchises or concession. You will be asked about these on later page.
+
+error.additionalCatering.grossReceipts.required = Enter 0 if you did not have any gross receipts from catering in the year ending {0}
+error.additionalCatering.grossReceipts.range    = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalCatering.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.additionalCatering.costOfPurchase.required = Enter 0 if you did not have any cost of purchase from catering in the year ending {0}
+error.additionalCatering.costOfPurchase.range    = Cost of purchase in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year ending {0} cannot be a negative number
+
+
 # COMMON ADDITIONAL ACTIVITIES 6045
 additionalActivities.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter he number O.
 additionalActivities.common.tradingPeriod = Trading period

@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import models.submissions.aboutthetradinghistory.AdditionalShops
+@import models.submissions.aboutthetradinghistory.AdditionalCatering
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 
 @this(
@@ -33,7 +33,7 @@
 )
 
 
-@(form: Form[Seq[AdditionalShops]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[AdditionalCatering]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @rowLabel(labelKey: String) = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
@@ -59,7 +59,7 @@
 
 
 @layout(
-    pageHeading = messages("shops.additionalActivitiesOnSite.heading"),
+    pageHeading = messages("catering.additionalActivitiesOnSite.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -67,11 +67,13 @@
     fullWidth = true,
     theForm = form
 ) {
-    <p class="govuk-body">@messages("shops.additionalActivitiesOnSite.p")</p>
 
-    @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
+        <p class="govuk-body">@messages("catering.additionalActivitiesOnSite.p1")</p>
+        <p class="govuk-body ">@messages("catering.additionalActivitiesOnSite.p2")</p>
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalShopsController.submit()) {
+        @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalCateringController.submit()) {
 
 
 
@@ -104,15 +106,15 @@
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.weeks"))
                                             ))
-                                        ).withFormField(form(s"additionalShops[$idx].weeks")))
+                                        ).withFormField(form(s"additionalCatering[$idx].weeks")))
                                     )
                                 )
                             ),
                             turnoverRow(
-                                s"additionalShops[$idx].grossReceipts",
+                                s"additionalCatering[$idx].grossReceipts",
                                 "additionalActivities.common.grossReceipts"),
                             turnoverRow(
-                                s"additionalShops[$idx].costOfPurchase",
+                                s"additionalCatering[$idx].costOfPurchase",
                                 "additionalActivities.common.costOfPurchase"))))
                 </td>
                 }

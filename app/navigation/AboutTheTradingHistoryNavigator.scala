@@ -310,7 +310,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     RallyAreasId                                -> (_ => aboutthetradinghistory.routes.TentingPitchesTotalController.show()),
     AdditionalActivitiesOnSiteId                -> additionalActivitiesOnSiteRouting,
     AdditionalActivitiesAllYearId               -> (_ => aboutthetradinghistory.routes.AdditionalShopsController.show()),
-    AdditionalShopsId                           -> (_ => controllers.routes.TaskListController.show()), // TODO BST-97995
+    AdditionalShopsId                           -> (_ => controllers.aboutthetradinghistory.routes.AdditionalCateringController.show()),
+    AdditionalCateringId                        -> (_ => controllers.routes.TaskListController.show()), // TODO additional bars page
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>
