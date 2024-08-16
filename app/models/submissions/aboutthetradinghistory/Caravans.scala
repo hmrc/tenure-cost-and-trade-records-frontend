@@ -84,10 +84,9 @@ object Caravans {
   object CaravansPitchFeeServices:
     implicit val format: Format[CaravansPitchFeeServices] = Scala3EnumFormat.format
 
+    val stringValues: Seq[String] = CaravansPitchFeeServices.values.toSeq.map(_.toString)
+
     def fromName(name: String): Option[CaravansPitchFeeServices] =
       CaravansPitchFeeServices.values.find(_.toString == name)
-
-    def stringValues: Seq[String] =
-      CaravansPitchFeeServices.values.map(_.toString)
 
 }

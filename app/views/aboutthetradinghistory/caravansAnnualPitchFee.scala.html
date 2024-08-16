@@ -43,7 +43,7 @@
             classes = "govuk-!-width-full",
             attributes = Map(
                 "maxlength" -> "1000",
-                "aria-label" -> messages(s"turnover.6045.caravans.fee.$value")
+                "aria-label" -> messages(s"turnover.6045.caravans.fee.$value.ariaLabel")
             )
         ).withFormField(form("otherPitchFeeDetails"))
     )
@@ -59,7 +59,7 @@
             classes = "govuk-input--width-10",
             attributes = Map(
                 "maxlength" -> "8",
-                "aria-label" -> messages(s"turnover.6045.caravans.fee.$value")
+                "aria-label" -> messages(s"turnover.6045.caravans.fee.$value.ariaLabel")
             ),
             autocomplete = "off"
         ).withFormField(form(value))
