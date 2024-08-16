@@ -296,6 +296,9 @@ POST        /additional-activities-all-year                         controllers.
 GET         /additional-shops                                       controllers.aboutthetradinghistory.AdditionalShopsController.show()
 POST        /additional-shops                                       controllers.aboutthetradinghistory.AdditionalShopsController.submit()
 
+GET         /additional-catering                                    controllers.aboutthetradinghistory.AdditionalCateringController.show()
+POST        /additional-catering                                    controllers.aboutthetradinghistory.AdditionalCateringController.submit()
+
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
 
@@ -452,6 +455,9 @@ POST        /rent-open-market-value                                 controllers.
 
 GET         /rent-developed-land                                    controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.show()
 POST        /rent-developed-land                                    controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.submit()
+
+GET         /rent-developed-land-details                            controllers.aboutYourLeaseOrTenure.RentDevelopedLandDetailsController.show()
+POST        /rent-developed-land-details                            controllers.aboutYourLeaseOrTenure.RentDevelopedLandDetailsController.submit()
 
 # Form 6011 routing
 GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()

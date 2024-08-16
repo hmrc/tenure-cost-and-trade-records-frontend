@@ -920,6 +920,12 @@ rentDevelopedLand.heading = Does the rent payable relate to developed land?
 hint.rentDevelopedLand = For example, access roadways, hardstandings, or services.
 error.rentDevelopedLand.missing = Select yes if the rent payable relates to developed land
 
+# RENT DEVELOPED LAND DETAILS (FORM 6045/46)
+######################
+rentDevelopedLandDetails.heading = Describe the developments included in the rent
+error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
+error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
+
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
 rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
@@ -2499,6 +2505,20 @@ error.additionalShops.grossReceipts.negative = Gross receipts in the year ending
 error.additionalShops.costOfPurchase.required = Enter 0 if you did not have any cost of purchase in the year ending {0}
 error.additionalShops.costOfPurchase.range    = Cost of purchase in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalShops.costOfPurchase.negative = Cost of purchase in the year ending {0} cannot be a negative number
+
+
+#CATERING ADDITIONAL ACTIVITIES 6045
+#################################
+catering.additionalActivitiesOnSite.heading = Catering
+catering.additionalActivitiesOnSite.p1 = If you run any on-site catering facilities, enter the receipts and cost of purchases excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+catering.additionalActivitiesOnSite.p2 = Do not include any receipts from franchises or concession. You will be asked about these on later page.
+
+error.additionalCatering.grossReceipts.required = Enter 0 if you did not have any gross receipts from catering in the year ending {0}
+error.additionalCatering.grossReceipts.range    = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalCatering.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
+error.additionalCatering.costOfPurchase.required = Enter 0 if you did not have any cost of purchase from catering in the year ending {0}
+error.additionalCatering.costOfPurchase.range    = Cost of purchase in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year ending {0} cannot be a negative number
 
 
 # COMMON ADDITIONAL ACTIVITIES 6045
