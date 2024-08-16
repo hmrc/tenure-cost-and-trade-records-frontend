@@ -18,7 +18,7 @@ package models
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Format, JsError, Json}
 
 /**
   * @author Yuriy Tumakha
@@ -42,6 +42,16 @@ class Scala3EnumFormatSpec extends AnyFlatSpec with should.Matchers {
   it should "deserialize Scala 3 enum from json" in {
     val obj = Json.parse("\"Red\"").as[Color]
     obj shouldBe Red
+  }
+
+  it should "return JsError for wrong enum value" in {
+    Json.parse("\"Cyan\"").validate[Color] shouldBe JsError(
+      "Enum value 'Cyan' is not in allowed list - Red, Green, Blue"
+    )
+  }
+
+  it should "return JsError for number" in {
+    Json.parse("123").validate[Color] shouldBe JsError("Invalid Json: expected string, got: 123")
   }
 
 }
