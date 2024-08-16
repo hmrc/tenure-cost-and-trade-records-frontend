@@ -16,11 +16,12 @@
 
 package models.submissions.aboutthetradinghistory
 
+import models.Scala3EnumFormat
 import models.submissions.aboutthetradinghistory.Caravans.CaravanLettingType.{OwnedByOperator, SubletByOperator}
 import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
 import models.submissions.common.AnswersYesNo
 import navigation.identifiers.*
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Format, Json, OFormat}
 
 /**
   * 6045/6046 Trading history - Static holiday or leisure caravans pages.
@@ -34,7 +35,8 @@ case class Caravans(
   singleCaravansAge: Option[CaravansAge] = None,
   twinUnitCaravansAge: Option[CaravansAge] = None,
   totalSiteCapacity: Option[CaravansTotalSiteCapacity] = None,
-  caravansPerService: Option[CaravansPerService] = None
+  caravansPerService: Option[CaravansPerService] = None,
+  annualPitchFee: Option[CaravansAnnualPitchFee] = None
 )
 
 object Caravans {
@@ -68,5 +70,23 @@ object Caravans {
     case TwinCaravansOwnedByOperator extends CaravansTradingPage(TwinCaravansOwnedByOperatorId, Twin, OwnedByOperator)
     case TwinCaravansSublet extends CaravansTradingPage(TwinCaravansSubletId, Twin, SubletByOperator)
   end CaravansTradingPage
+
+  enum CaravansPitchFeeServices(siteService: String):
+    override def toString: String = siteService
+
+    case Rates extends CaravansPitchFeeServices("rates")
+    case WaterAndDrainage extends CaravansPitchFeeServices("waterAndDrainage")
+    case Gas extends CaravansPitchFeeServices("gas")
+    case Electricity extends CaravansPitchFeeServices("electricity")
+    case Other extends CaravansPitchFeeServices("other")
+  end CaravansPitchFeeServices
+
+  object CaravansPitchFeeServices:
+    implicit val format: Format[CaravansPitchFeeServices] = Scala3EnumFormat.format
+
+    val stringValues: Seq[String] = CaravansPitchFeeServices.values.toSeq.map(_.toString)
+
+    def fromName(name: String): Option[CaravansPitchFeeServices] =
+      CaravansPitchFeeServices.values.find(_.toString == name)
 
 }

@@ -21,15 +21,15 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CaravansPerServiceControllerSpec extends TestBaseSpec {
+class CaravansAnnualPitchFeeControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show().url
+  private val previousPage = aboutthetradinghistory.routes.CaravansPerServiceController.show().url
 
-  private val nextPage = aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show().url
+  private val nextPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def caravansPerServiceController =
-    new CaravansPerServiceController(
-      caravansPerServiceView,
+  def caravansAnnualPitchFeeController =
+    new CaravansAnnualPitchFeeController(
+      caravansAnnualPitchFeeView,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
@@ -41,12 +41,12 @@ class CaravansPerServiceControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = caravansPerServiceController.show(fakeRequest)
+      val result = caravansAnnualPitchFeeController.show(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = caravansPerServiceController.show(fakeRequest)
+      val result = caravansAnnualPitchFeeController.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -57,7 +57,7 @@ class CaravansPerServiceControllerSpec extends TestBaseSpec {
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = caravansPerServiceController.show(fakeRequestFromCYA)
+      val result  = caravansAnnualPitchFeeController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
@@ -66,23 +66,33 @@ class CaravansPerServiceControllerSpec extends TestBaseSpec {
 
   private def validFormData: Seq[(String, String)] =
     Seq(
-      "fleetWaterElectricityDrainage"   -> "111",
-      "fleetElectricityOnly"            -> "222",
-      "privateWaterElectricityDrainage" -> "333",
-      "privateElectricityOnly"          -> "444"
+      "totalPitchFee"                 -> "11000",
+      "servicesIncludedInPitchFee[0]" -> "electricity",
+      "servicesIncludedInPitchFee[1]" -> "other",
+      "electricity"                   -> "1000",
+      "otherPitchFeeDetails"          -> "food - 2000, cleaning - 500"
     )
 
   private def invalidNumberFormData: Seq[(String, String)] =
     Seq(
-      "fleetWaterElectricityDrainage"   -> "abcdef",
-      "fleetElectricityOnly"            -> "222",
-      "privateWaterElectricityDrainage" -> "333",
-      "privateElectricityOnly"          -> "444"
+      "totalPitchFee"                 -> "abcdef",
+      "servicesIncludedInPitchFee[0]" -> "electricity",
+      "servicesIncludedInPitchFee[1]" -> "other",
+      "electricity"                   -> "1000",
+      "otherPitchFeeDetails"          -> "food - 2000, cleaning - 500"
+    )
+
+  private def missedTotalPitchFee: Seq[(String, String)] =
+    Seq(
+      "servicesIncludedInPitchFee[0]" -> "electricity",
+      "servicesIncludedInPitchFee[1]" -> "other",
+      "electricity"                   -> "1000",
+      "otherPitchFeeDetails"          -> "food - 2000, cleaning - 500"
     )
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
-      val res = caravansPerServiceController.submit(
+      val res = caravansAnnualPitchFeeController.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
@@ -90,17 +100,27 @@ class CaravansPerServiceControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid number" in {
-      val res = caravansPerServiceController.submit(
+      val res = caravansAnnualPitchFeeController.submit(
         fakePostRequest.withFormUrlEncodedBody(invalidNumberFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(
-        """<a href="#fleetWaterElectricityDrainage">error.caravans.fleetWaterElectricityDrainage.nonNumeric</a>"""
+        """<a href="#totalPitchFee">error.caravans.totalPitchFee.nonNumeric</a>"""
+      )
+    }
+
+    "return 400 and error message for missed totalPitchFee" in {
+      val res = caravansAnnualPitchFeeController.submit(
+        fakePostRequest.withFormUrlEncodedBody(missedTotalPitchFee*)
+      )
+      status(res)        shouldBe BAD_REQUEST
+      contentAsString(res) should include(
+        """<a href="#totalPitchFee">error.caravans.totalPitchFee.required</a>"""
       )
     }
 
     "return 400 for empty form data" in {
-      val res = caravansPerServiceController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = caravansAnnualPitchFeeController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

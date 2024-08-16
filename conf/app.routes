@@ -251,6 +251,9 @@ POST        /caravans-site-capacity                                 controllers.
 GET         /caravans-per-service                                   controllers.aboutthetradinghistory.CaravansPerServiceController.show()
 POST        /caravans-per-service                                   controllers.aboutthetradinghistory.CaravansPerServiceController.submit()
 
+GET         /caravans-annual-pitch-fee                              controllers.aboutthetradinghistory.CaravansAnnualPitchFeeController.show()
+POST        /caravans-annual-pitch-fee                              controllers.aboutthetradinghistory.CaravansAnnualPitchFeeController.submit()
+
 GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
 POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
 
