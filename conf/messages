@@ -920,6 +920,12 @@ rentDevelopedLand.heading = Does the rent payable relate to developed land?
 hint.rentDevelopedLand = For example, access roadways, hardstandings, or services.
 error.rentDevelopedLand.missing = Select yes if the rent payable relates to developed land
 
+# RENT DEVELOPED LAND DETAILS (FORM 6045/46)
+######################
+rentDevelopedLandDetails.heading = Describe the developments included in the rent
+error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
+error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
+
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
 rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
