@@ -1505,6 +1505,7 @@ taskList.variableOperatingExpense = Variable operating expense
 taskList.fixedOperatingExpenses = Fixed operating expenses
 taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
+taskList.caravans = Static caravans
 taskList.otherHolidayAccommodation = Other holiday accommodation
 taskList.touringAndTentingPitches = Touring and tenting pitches
 taskList.additionalActivities = Additional activities

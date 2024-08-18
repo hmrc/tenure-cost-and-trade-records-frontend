@@ -1505,6 +1505,8 @@ taskList.howIsUsed = How the property is used
 taskList.6076.powerGenerated = Pŵer a gynhyrchwyd
 taskList.6076.grossReceipts = Derbyniadau gros
 taskList.6076.operationalExpenses = Treuliau gweithredu a gweinyddol
+taskList.caravans = Static caravans
+taskList.otherHolidayAccommodation = Other holiday accommodation
 taskList.touringAndTentingPitches = Touring and tenting pitches
 taskList.additionalActivities = Additional activities
 
