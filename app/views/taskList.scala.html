@@ -127,7 +127,7 @@
  <ol class="app-task-list">
 
   <li>
-   <h2 class="app-task-list__section">
+   <h2 id="connectionToTheProperty" class="app-task-list__section">
     <span class="app-task-list__section-number">1. </span> @messages("label.section.connectionToTheProperty")
    </h2>
 
@@ -158,7 +158,7 @@
   </li>
 
   <li>
-   <h2 class="app-task-list__section">
+   <h2 id="aboutTheProperty" class="app-task-list__section">
     <span class="app-task-list__section-number">2. </span> @messages("label.section.aboutTheProperty")
    </h2>
 
@@ -240,7 +240,7 @@
   </li>
 
   <li>
-   <h2 class="app-task-list__section">
+   <h2 id="tradingHistory" class="app-task-list__section">
     <span class="app-task-list__section-number">3. </span> @messages("label.section.aboutYourTradingHistory")
    </h2>
    <ul class="app-task-list__items">
@@ -253,7 +253,7 @@
      section2Completed.isEmpty
     )
 
-    @if(!(Seq(ForTypes.for6020, ForTypes.for6076, ForTypes.for6045) contains forType)) {
+    @if(!(Seq(ForTypes.for6020, ForTypes.for6076, ForTypes.for6045, ForTypes.for6046) contains forType)) {
 
      @includes.taskListItem("turnover", "turnover.heading",
       if(forType == ForTypes.for6030) {
@@ -406,11 +406,17 @@
      )
     }
     @if(forType == ForTypes.for6045  || forType == ForTypes.for6046) {
+     @includes.taskListItem("caravans", "taskList.caravans",
+      controllers.aboutthetradinghistory.routes.StaticCaravansController.show(),
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite),
+      !session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).exists(_.nonEmpty))
+
      @includes.taskListItem("other-holiday-accommodation", "taskList.otherHolidayAccommodation",
       controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(),
       section3point1Completed,
       session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)),
-      session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).isEmpty)
+      session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).isEmpty)
 
      @includes.taskListItem("tenting-pitches-on-site", "taskList.touringAndTentingPitches",
       controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
@@ -423,15 +429,13 @@
       section3point3Completed,
       session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities.flatMap(_.additionalActivitiesOnSite)),
       session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)).isEmpty)
-
-
     }
    </ul>
   </li>
 
   @if(forType != ForTypes.for6076) {
    <li>
-    <h2 class="app-task-list__section">
+    <h2 id="franchiseAndLettings" class="app-task-list__section">
      <span class="app-task-list__section-number">4.</span>
      @if(forType == ForTypes.for6010 || forType == ForTypes.for6011 || forType == ForTypes.for6030) {
       @messages("label.section.aboutTheFranchiseLettings")
@@ -498,7 +502,7 @@
 
   @if(isLeaseHolder) {
    <li>
-    <h2 class="app-task-list__section">
+    <h2 id="leaseOrAgreement" class="app-task-list__section">
       <span class="app-task-list__section-number">@leaseOrAgreementNumber. </span>
       @messages("label.section.aboutYourLeaseOrTenure")
     </h2>
@@ -603,7 +607,7 @@
 
   @if(forType == ForTypes.for6076) {
    <li>
-    <h2 class="app-task-list__section">
+    <h2 id="additionalInformation" class="app-task-list__section">
      <span class="app-task-list__section-number">@totalSections6076
       . </span> @messages("label.section.additionalInformation")
     </h2>
@@ -619,7 +623,7 @@
    </li>
   } else {
    <li>
-    <h2 class="app-task-list__section">
+    <h2 id="additionalInformation" class="app-task-list__section">
      <span class="app-task-list__section-number">@totalSections. </span> @messages("label.section.additionalInformation")
     </h2>
     <ul class="app-task-list__items">

@@ -35,7 +35,9 @@ object Scala3EnumFormat {
     Format[E](
       {
         case JsString(name) =>
-          enumMap.get(name).fold(JsError(s"Enum value '$name' is not in allowed list - ${enumMap.keys}"))(JsSuccess(_))
+          enumMap
+            .get(name)
+            .fold(JsError(s"Enum value '$name' is not in allowed list - ${enumMap.keys.mkString(", ")}"))(JsSuccess(_))
         case js             =>
           JsError(s"Invalid Json: expected string, got: $js")
       },

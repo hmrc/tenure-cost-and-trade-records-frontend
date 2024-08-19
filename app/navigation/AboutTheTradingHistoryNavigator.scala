@@ -317,9 +317,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     TentingPitchesCertificatedId                -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
     ),
-    CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show()),
-    CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show()),
-    CheckYourAnswersAdditionalActivitiesId      -> (_ => controllers.routes.TaskListController.show()),
-    CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersOtherHolidayAccommodationId -> (_ => controllers.routes.TaskListController.show().withFragment("tradingHistory")),
+    CheckYourAnswersTentingPitchesId            -> (_ => controllers.routes.TaskListController.show().withFragment("tradingHistory")),
+    CheckYourAnswersAdditionalActivitiesId      -> (_ => controllers.routes.TaskListController.show().withFragment("tradingHistory")),
+    CheckYourAnswersAboutTheTradingHistoryId    -> (_ => controllers.routes.TaskListController.show().withFragment("tradingHistory"))
   )
 }

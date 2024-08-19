@@ -26,8 +26,7 @@ import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectio
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
-import utils.toOpt
+import utils.{TestBaseSpec, toOpt}
 
 import scala.concurrent.ExecutionContext
 
@@ -153,7 +152,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the task lists page when total payroll cost has been completed" in {
       navigator
         .nextPage(CheckYourAnswersAboutTheTradingHistoryId, sessionAboutYou)
-        .apply(sessionAboutYou) shouldBe controllers.routes.TaskListController.show()
+        .apply(sessionAboutYou) shouldBe controllers.routes.TaskListController.show().withFragment("tradingHistory")
     }
 
     // 6020 specific
@@ -389,7 +388,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(CheckYourAnswersAdditionalActivitiesId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController
-        .show()
+        .show().withFragment("tradingHistory")
     }
 
     // end of 6045
@@ -451,7 +450,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that starts new section, when CYA for tenting pitches ready " in {
       navigator
         .nextPage(CheckYourAnswersTentingPitchesId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController.show()
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController.show().withFragment("tradingHistory")
 
       // TODO change when section tenting pitches ready
     }
