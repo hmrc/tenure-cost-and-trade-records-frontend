@@ -44,8 +44,8 @@ case class AboutLeaseOrAgreementPartThree(
   rentIncludeFixtureAndFittingsDetailsTextArea: Option[String] = None, // Added Aug 2024 for 6045/46
   rentDevelopedLand: Option[AnswersYesNo] = None, // Added Aug 2024 for 6045/46
   rentDevelopedLandDetails: Option[String] = None // Added Aug 2024 for 6045/46
-                                         
-  //22 case class limit has been reached. Part Four has been created
+
+  // 22 case class limit has been reached. Part Four has been created
 )
 
 object AboutLeaseOrAgreementPartThree {
