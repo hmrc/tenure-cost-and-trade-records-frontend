@@ -18,25 +18,25 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.RentDevelopedLandForm.rentDevelopedLandForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
+import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour.updateAboutLeaseOrAgreementPartFour
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.RentDevelopedLandId
+import navigation.identifiers.RentIncludeStructuresBuildingsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.rentDevelopedLand
+import views.html.aboutYourLeaseOrTenure.rentIncludeStructuresBuildings
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class RentInlcudeStructuresBuildingsController @Inject()(
+class RentIncludeStructuresBuildingsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYourLeaseOrTenureNavigator,
-  rentDevelopedLandView: rentDevelopedLand,
+  rentIncludeStructuresBuildingsView: rentIncludeStructuresBuildings,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -47,11 +47,11 @@ class RentInlcudeStructuresBuildingsController @Inject()(
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        rentDevelopedLandView(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
-            case Some(rentDevelopedLand) =>
-              rentDevelopedLandForm.fill(rentDevelopedLand)
-            case _                       => rentDevelopedLandForm
+        rentIncludeStructuresBuildingsView(
+          request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match {
+            case Some(rentIncludeStructuresBuildings) =>
+              rentIncludeStructuresBuildingsForm.fill(rentIncludeStructuresBuildings)
+            case _                                    => rentIncludeStructuresBuildingsForm
           },
           request.sessionData.toSummary
         )
@@ -61,12 +61,12 @@ class RentInlcudeStructuresBuildingsController @Inject()(
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      rentDevelopedLandForm,
-      formWithErrors => BadRequest(rentDevelopedLandView(formWithErrors, request.sessionData.toSummary)),
+      rentIncludeStructuresBuildingsForm,
+      formWithErrors => BadRequest(rentIncludeStructuresBuildingsView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentDevelopedLand = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartFour(_.copy(rentIncludeStructuresBuildings = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(RentDevelopedLandId, updatedData).apply(updatedData))
+          Redirect(navigator.nextPage(RentIncludeStructuresBuildingsId, updatedData).apply(updatedData))
         }
       }
     )

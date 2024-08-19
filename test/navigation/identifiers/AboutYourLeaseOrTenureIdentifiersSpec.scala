@@ -284,5 +284,8 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     "Identifier for rent developed land details" in {
       assert(RentDevelopedLandDetailsId.toString.equals("rentDevelopedLandDetailsPage"))
     }
+    "Identifier for rent include structures buildings" in {
+      assert(RentIncludeStructuresBuildingsId.toString.equals("rentIncludeStructuresBuildingsPage"))
+    }
   }
 }

@@ -18,7 +18,7 @@ package models
 
 import models.audit.UserData
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
@@ -49,6 +49,7 @@ case class Session(
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
   aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = None,
+  aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
@@ -99,6 +100,7 @@ case class Session(
     aboutLeaseOrAgreementPartOne,
     aboutLeaseOrAgreementPartTwo,
     aboutLeaseOrAgreementPartThree,
+    aboutLeaseOrAgreementPartFour,
     requestReferenceNumberDetails,
     downloadPDFDetails
   )

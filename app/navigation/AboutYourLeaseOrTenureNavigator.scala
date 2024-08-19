@@ -568,7 +568,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     RentedEquipmentDetailsId                      -> (_ => aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show()),
     IncludedInRent6020Id                          -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     RentDevelopedLandId                           -> rentDevelopedLandRouting,
-    RentDevelopedLandDetailsId                    -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
+    RentDevelopedLandDetailsId                    -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show()),
+    RentIncludeStructuresBuildingsId              -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }

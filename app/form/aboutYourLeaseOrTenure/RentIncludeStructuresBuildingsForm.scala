@@ -22,13 +22,13 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object RentIncludeStructuresBuildingsForm {
-  lazy val baseRentDevelopedLandForm: Form[AnswersYesNo] = Form(
-    baseRentDevelopedLandMapping
+  lazy val baseRentIncludeStructuresBuildingsForm: Form[AnswersYesNo] = Form(
+    baseRentIncludeStructuresBuildingsMapping
   )
 
-  val baseRentDevelopedLandMapping = mapping(
-    "rentDevelopedLand" -> createYesNoType("error.rentDevelopedLand.missing")
+  val baseRentIncludeStructuresBuildingsMapping = mapping(
+    "rentIncludeStructuresBuildings" -> createYesNoType("error.rentIncludeStructuresBuildings.missing")
   )(x => x)(b => Some(b))
 
-  val rentDevelopedLandForm = Form(baseRentDevelopedLandMapping)
+  val rentIncludeStructuresBuildingsForm = Form(baseRentIncludeStructuresBuildingsMapping)
 }

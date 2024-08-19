@@ -922,6 +922,11 @@ rentDevelopedLandDetails.heading = Describe the developments included in the ren
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
 error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
 
+# RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
+######################
+rentIncludeStructuresBuildings.heading = Does the rent payable include any structures or buildings?
+error.rentIncludeStructuresBuildings.missing = Select yes if the rent payable include any structures or buildings
+
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################

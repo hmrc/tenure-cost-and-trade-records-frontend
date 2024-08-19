@@ -246,3 +246,7 @@ case object RentDevelopedLandId extends Identifier {
 case object RentDevelopedLandDetailsId extends Identifier {
   override def toString: String = "rentDevelopedLandDetailsPage"
 }
+
+case object RentIncludeStructuresBuildingsId extends Identifier {
+  override def toString: String = "rentIncludeStructuresBuildingsPage"
+}
