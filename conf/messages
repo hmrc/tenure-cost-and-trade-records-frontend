@@ -323,7 +323,7 @@ hint.areYouThirdParty.no = Choose ‘no’ if you are an owner, director, or dir
 error.areYouThirdParty.missing = Select yes if you are working on behalf of the organisation
 areYouThirdParty.label = Are you a third party completing this declaration on behalf of {0}?
 
-areYouThirdParty6076.heading = Third Parties
+areYouThirdParty6076.heading = Third parties
 areYouThirdParty6076.p1 = We need to know if you are completing this declaration on behalf of {0} in an official capacity.
 areYouThirdParty6076.yes = Choose <b>Yes</b> if you have been contracted by {0} to complete this declaration. Examples of third parties include, but are not limited to:
 areYouThirdParty6076.l1 = agents
@@ -925,6 +925,11 @@ error.rentDevelopedLand.missing = Select yes if the rent payable relates to deve
 rentDevelopedLandDetails.heading = Describe the developments included in the rent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
 error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
+
+# RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
+######################
+rentIncludeStructuresBuildings.heading = Does the rent payable include any structures or buildings?
+error.rentIncludeStructuresBuildings.missing = Select yes if the rent payable include any structures or buildings
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
