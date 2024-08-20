@@ -59,6 +59,10 @@
     sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.twinUnitCaravansAge)
 }
 
+@caravansTotalSiteCapacity = @{
+    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.totalSiteCapacity)
+}
+
 @caravansWithSuffix(caravans: Int) = @{
     val suffix = if (caravans == 1) messages("turnover.6045.caravan.suffix") else messages("turnover.6045.caravans.suffix")
     s"$caravans $suffix"
@@ -635,6 +639,20 @@
                         answerOpt("turnover.6045.caravans.age.years6_10", twinUnitCaravansAge.map(_.privateSublet.years6_10).map(caravansWithSuffix)),
                         answerOpt("turnover.6045.caravans.age.years11_15", twinUnitCaravansAge.map(_.privateSublet.years11_15).map(caravansWithSuffix)),
                         answerOpt("turnover.6045.caravans.age.years15plus", twinUnitCaravansAge.map(_.privateSublet.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.heading")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravansTotalSiteCapacity.ownedByOperatorForFleetHire",
+                _ => caravansTotalSiteCapacity.map(_.ownedByOperatorForFleetHire).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show(), "ownedByOperatorForFleetHire").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily", caravansTotalSiteCapacity.map(_.privatelyOwnedForOwnerAndFamily).map(caravansWithSuffix)),
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator", caravansTotalSiteCapacity.map(_.subletByOperator).map(caravansWithSuffix)),
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners", caravansTotalSiteCapacity.map(_.subletByPrivateOwners).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravansTotalSiteCapacity.charitablePurposes", caravansTotalSiteCapacity.map(_.charitablePurposes).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravansTotalSiteCapacity.seasonalStaff", caravansTotalSiteCapacity.map(_.seasonalStaff).map(caravansWithSuffix)),
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total", caravansTotalSiteCapacity.map(_.total).map(caravansWithSuffix), classes = "")
                     )
         ))
     }
