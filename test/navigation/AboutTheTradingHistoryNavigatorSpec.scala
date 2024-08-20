@@ -388,7 +388,8 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(CheckYourAnswersAdditionalActivitiesId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController
-        .show().withFragment("tradingHistory")
+        .show()
+        .withFragment("tradingHistory")
     }
 
     // end of 6045
