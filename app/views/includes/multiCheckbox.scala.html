@@ -55,7 +55,7 @@
         hint = hintKey.map(msgKey => Hint(content = Text(messages(msgKey)))),
         items = values.map(value =>
             CheckboxItem(
-                id = value,
+                id = s"item_$value",
                 content = Text(messages(s"$valueKeyPrefix$value")),
                 value = value,
                 conditionalHtml = conditionalHtmlPerValue.get(value)
