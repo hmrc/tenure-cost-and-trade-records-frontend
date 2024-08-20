@@ -51,6 +51,19 @@
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
 }
 
+@singleCaravansAge = @{
+    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.singleCaravansAge)
+}
+
+@twinUnitCaravansAge = @{
+    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.twinUnitCaravansAge)
+}
+
+@caravansWithSuffix(caravans: Int) = @{
+    val suffix = if (caravans == 1) messages("turnover.6045.caravan.suffix") else messages("turnover.6045.caravans.suffix")
+    s"$caravans $suffix"
+}
+
 @forType = @{
     request.sessionData.forType
 }
@@ -431,13 +444,17 @@
     )
 }
 
-@answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None) = @{
+@answerOpt(valueLabelKey: String, valueOpt: Option[String], classes: String = "no-border-bottom") = @{
+    answer(valueLabelKey, Seq(valueOpt.getOrElse("")), classes = classes)
+}
+
+@answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None, classes: String = "no-border-bottom") = @{
     SummaryListRow(
         key = Key(Text(messages(valueLabelKey))),
         value = Value(HtmlContent(
             tableRow(values).body + optionalParagraph(additionalParagraph).body
         )),
-        classes = "no-border-bottom"
+        classes = classes
     )
 }
 
@@ -562,6 +579,28 @@
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.singleCaravansSublet.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.singleCaravansSublet.flatMap(_.vans))
         )
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.ownedByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => singleCaravansAge.map(_.fleetHire.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", singleCaravansAge.map(_.fleetHire.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", singleCaravansAge.map(_.fleetHire.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", singleCaravansAge.map(_.fleetHire.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.subletByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => singleCaravansAge.map(_.privateSublet.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", singleCaravansAge.map(_.privateSublet.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", singleCaravansAge.map(_.privateSublet.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", singleCaravansAge.map(_.privateSublet.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator",
             aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
@@ -576,6 +615,28 @@
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.twinUnitCaravansSublet.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.twinUnitCaravansSublet.flatMap(_.vans))
         )
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.ownedByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => twinUnitCaravansAge.map(_.fleetHire.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", twinUnitCaravansAge.map(_.fleetHire.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", twinUnitCaravansAge.map(_.fleetHire.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", twinUnitCaravansAge.map(_.fleetHire.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.subletByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => twinUnitCaravansAge.map(_.privateSublet.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", twinUnitCaravansAge.map(_.privateSublet.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", twinUnitCaravansAge.map(_.privateSublet.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", twinUnitCaravansAge.map(_.privateSublet.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
     }
 
 }
