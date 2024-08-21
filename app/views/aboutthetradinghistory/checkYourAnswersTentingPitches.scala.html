@@ -111,7 +111,7 @@
 ) {
 
 
-        <h2 class="govuk-heading-m">@messages("cYa.touringAndTentingPitches.heading")</h2>
+        <h2 class="govuk-heading-m">@messages("cYa.touringAndTentingPitches.pitches.heading")</h2>
         @govukSummaryList(SummaryList(rows =
 
             tradingHistoryOne.row(
@@ -122,15 +122,15 @@
                     tradingHistoryOne.conditionRow(
                         _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.map(_.name)).contains("yes"),
                         "cYa.touringAndTentingPitches.pitchesAllYear.label",
-                        _.touringAndTentingPitches.flatMap(_.tentingPitchesAllYear).flatMap(_.weekOfPitchesUse).map { weeksOfPitchesUse =>
-                          weeksOfPitchesUse match {
-                            case 1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek" , weeksOfPitchesUse)
-                            case _ => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOfPitchesUse)
-                        }
-                        },
+                        _.touringAndTentingPitches.map(_.tentingPitchesAllYear.map(yesNo => messages(s"label.${yesNo.tentingPitchesAllYear.name}"))),
                         controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(),
                         "tentingPitchesAllYear",
-                        ("valueAsHtml", _ => None)
+                        (messages("label.no"), _.touringAndTentingPitches.flatMap(_.tentingPitchesAllYear).flatMap(_.weekOfPitchesUse).map { weeksOfPitchesUse =>
+                            weeksOfPitchesUse match {
+                                case 1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek" , weeksOfPitchesUse)
+                                case _ => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOfPitchesUse)
+                            }
+                        })
                     )
         ))
 
