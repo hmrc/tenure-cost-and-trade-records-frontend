@@ -381,7 +381,14 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(AdditionalCateringId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController.show() // TODO bars and clubs
+        controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show()
+    }
+
+    "return a function that goes to misc  page when additional activities bars and clubs is completed" in {
+      navigator
+        .nextPage(AdditionalBarsClubsId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.routes.TaskListController.show()
     }
 
     "return a function that goes to task list  page when additional activities cya completed" in {
@@ -448,12 +455,12 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()
     }
 
-    "return a function that starts new section, when CYA for tenting pitches ready " in {
+    "return a function that goes to TaskList trading history, when CYA for tenting pitches ready " in {
       navigator
         .nextPage(CheckYourAnswersTentingPitchesId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController.show().withFragment("tradingHistory")
-
-      // TODO change when section tenting pitches ready
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController
+        .show()
+        .withFragment("tradingHistory")
     }
 
   }

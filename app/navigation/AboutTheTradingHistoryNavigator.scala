@@ -311,7 +311,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     AdditionalActivitiesOnSiteId                -> additionalActivitiesOnSiteRouting,
     AdditionalActivitiesAllYearId               -> (_ => aboutthetradinghistory.routes.AdditionalShopsController.show()),
     AdditionalShopsId                           -> (_ => controllers.aboutthetradinghistory.routes.AdditionalCateringController.show()),
-    AdditionalCateringId                        -> (_ => controllers.routes.TaskListController.show()), // TODO additional bars page
+    AdditionalCateringId                        -> (_ => controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show()),
+    AdditionalBarsClubsId                       -> (_ => controllers.routes.TaskListController.show()), // TODO Amusements
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>

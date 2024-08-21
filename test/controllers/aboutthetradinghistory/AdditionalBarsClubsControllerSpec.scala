@@ -16,20 +16,23 @@
 
 package controllers.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AdditionalCateringForm
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import form.aboutthetradinghistory.AdditionalBarsClubsForm
+import play.api.http.Status._
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class AdditionalCateringControllerSpec extends TestBaseSpec {
+class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
   val years                                                                     = Seq("2023", "2022", "2021")
   private def validFormDataPerYear(idx: Int, weeks: Int): Seq[(String, String)] =
     Seq(
-      s"additionalCatering[$idx].weeks"          -> weeks.toString,
-      s"additionalCatering[$idx].grossReceipts"  -> "10000",
-      s"additionalCatering[$idx].costOfPurchase" -> "10000"
+      s"additionalBarsClubs[$idx].weeks"               -> weeks.toString,
+      s"additionalBarsClubs[$idx].grossBar"            -> "10000",
+      s"additionalBarsClubs[$idx].costBar"             -> "10000",
+      s"additionalBarsClubs[$idx].grossClubMembership" -> "10000",
+      s"additionalBarsClubs[$idx].grossFromSeparate"   -> "10000",
+      s"additionalBarsClubs[$idx].costOfEntertainment" -> "10000"
     )
 
   private def formData(weeks: Int): Seq[(String, String)] =
@@ -38,10 +41,10 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
       validFormDataPerYear(2, weeks)
 
   def controller =
-    new AdditionalCateringController(
+    new AdditionalBarsClubsController(
       stubMessagesControllerComponents(),
       aboutYourTradingHistoryNavigator,
-      additionalCateringView,
+      additionalBarsClubsView,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
@@ -67,10 +70,10 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
       content should include("/check-your-answers-additional-activities")
     }
 
-    "render a correct back link to additional shops page if no query parameters in the url " in {
+    "render a correct back link to additional catering page if no query parameters in the url " in {
       val result  = controller.show(fakeRequest)
       val content = contentAsString(result)
-      content should include("/additional-shops")
+      content should include("/additional-catering")
     }
 
   }
@@ -87,8 +90,8 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
-        controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
-      )
+        controllers.routes.TaskListController.show().url
+      ) // TODO Additional MISC
     }
 
     "return 400 and error message for invalid weeks" in {
@@ -96,77 +99,77 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
         fakePostRequest.withFormUrlEncodedBody(formData(53)*)
       )
       status(res)        shouldBe BAD_REQUEST
-      contentAsString(res) should include("""<a href="#additionalCatering[0].weeks">error.weeksMapping.invalid</a>""")
+      contentAsString(res) should include("""<a href="#additionalBarsClubs[0].weeks">error.weeksMapping.invalid</a>""")
     }
 
     "return 400 and error message for invalid gross receipts" in {
 
-      val formData = Map("additionalCatering[0].grossReceipts" -> "xxx")
+      val formData = Map("additionalBarsClubs[0].grossBar" -> "xxx")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
       mustContainError(
-        "additionalCatering[0].grossReceipts",
-        messages("error.additionalCatering.grossReceipts.range", 2023.toString),
+        "additionalBarsClubs[0].grossBar",
+        messages("error.additionalBarsClubs.grossBar.range", 2023.toString),
         form
       )
     }
 
     "return 400 and error message for empty gross receipts" in {
 
-      val formData = Map("additionalCatering[1].grossReceipts" -> "")
+      val formData = Map("additionalBarsClubs[1].grossBar" -> "")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
       mustContainError(
-        "additionalCatering[1].grossReceipts",
-        messages("error.additionalCatering.grossReceipts.required", 2022.toString),
+        "additionalBarsClubs[1].grossBar",
+        messages("error.additionalBarsClubs.grossBar.required", 2022.toString),
         form
       )
     }
 
     "return 400 and error message for negative gross receipts" in {
 
-      val formData = Map("additionalCatering[2].grossReceipts" -> "-1")
+      val formData = Map("additionalBarsClubs[2].grossBar" -> "-1")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
       mustContainError(
-        "additionalCatering[2].grossReceipts",
-        messages("error.additionalCatering.grossReceipts.negative", 2021.toString),
+        "additionalBarsClubs[2].grossBar",
+        messages("error.additionalBarsClubs.grossBar.negative", 2021.toString),
         form
       )
     }
 
     "return 400 and error message for invalid cost of purchase" in {
 
-      val formData = Map("additionalCatering[0].costOfPurchase" -> "xxx")
+      val formData = Map("additionalBarsClubs[0].costBar" -> "xxx")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
       mustContainError(
-        "additionalCatering[0].costOfPurchase",
-        messages("error.additionalCatering.costOfPurchase.range", 2023.toString),
+        "additionalBarsClubs[0].costBar",
+        messages("error.additionalBarsClubs.costBar.range", 2023.toString),
         form
       )
     }
 
     "return 400 and error message for empty cost of purchase" in {
 
-      val formData = Map("additionalCatering[1].costOfPurchase" -> "")
+      val formData = Map("additionalBarsClubs[1].costBar" -> "")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
       mustContainError(
-        "additionalCatering[1].costOfPurchase",
-        messages("error.additionalCatering.costOfPurchase.required", 2022.toString),
+        "additionalBarsClubs[1].costBar",
+        messages("error.additionalBarsClubs.costBar.required", 2022.toString),
         form
       )
     }
 
     "return 400 and error message for negative cost of purchase" in {
 
-      val formData = Map("additionalCatering[2].costOfPurchase" -> "-1")
+      val formData = Map("additionalBarsClubs[2].costBar" -> "-1")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
       mustContainError(
-        "additionalCatering[2].costOfPurchase",
-        messages("error.additionalCatering.costOfPurchase.negative", 2021.toString),
+        "additionalBarsClubs[2].costBar",
+        messages("error.additionalBarsClubs.costBar.negative", 2021.toString),
         form
       )
     }
