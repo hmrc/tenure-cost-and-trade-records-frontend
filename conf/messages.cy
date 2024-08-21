@@ -1071,21 +1071,32 @@ servicePaidSeparatelyListZero.heading = You have removed all the services which 
 servicePaidSeparatelyList.label = Would you like to add another service?
 error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
+#SURRENDERED LEASE AGREEMENT DETAILS
+#########################
+surrenderedLeaseAgreement.heading = Details of the surrendered lease or agreement
+surrenderedLeaseAgreement.title = What was the annual rent under the surrendered lease or agreement excluding VAT?
+surrenderedLeaseAgreementMonths.heading = How long was the unexpired term at the time of surrender?
+error.required.annualRentExcludingVat.surrenderedLeaseAgreementAmount = Enter the annual rent under the surrendered lease or agreement excluding VAT
+error.surrenderedLeaseAgreementMonths.required = Enter how long the unexpired term was at the time of surrender
+surrenderedLeaseAgreementMonths.months = months
+
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Gwasanaethau masnach a ddarperir gan y landlord
-rentIncludeTradeServicesDetails.title = Pa swm sy’n cael ei gynnwys yn y rhent er mwyn talu am y gwasanaethau hyn, ac eithrio TAW?
+rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
+rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover the services, excluding VAT?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
-rentIncludeTradeServicesDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
-rentIncludeTradeServicesDetails.hint2 = Er enghraifft, cynnal a chadw tanau, gwiriadau nwy blynyddol a gwasanaethau seler.
-label.describeServices = Disgrifiwch y gwasanaethau a ddarperir
+rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
+rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
+label.describeServices = Describe the services provided
+describeServicesTextArea.heading = Give details of the services provided by the landlord that are included in your rent
+label.describeServicesTextArea = Give details of the services provided by the landlord that are included in your rent
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
 rentIncludeTradeServicesDetailsTextBoxArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
-label.describeServicesTextArea = Give details of the services provided by the landlord that are included in your rent
+error.describeServicesTextArea.required = Please provide details of the services provided by the landlord that are included in your rent.
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
-error.describeServices.required = Nodwch ddisgrifiad o’r gwasanaethau masnach a ddarperir gan y landlord
-error.describeServices.maxLength = Mae’n rhaid i’r disgrifiad o’r gwasanaethau masnach fod yn 500 o gymeriadau neu lai
+error.describeServices.required = Enter a description of the trade service which you pay for separately
+error.describeServices.maxLength = The description of the trade services must be 500 characters or fewer
 error.rentIncludeTradeServicesDetails.title = Sum included to cover trade services
 
 # RENT INCLUDE FIXTURES AND FITTINGS

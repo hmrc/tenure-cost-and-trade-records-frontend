@@ -28,6 +28,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.tenantsAdditionsDisregarded
+import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
 
@@ -69,8 +70,16 @@ class TenantsAdditionsDisregardedController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
-      case _                =>
+      case ForTypes.for6020                    => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(
+          _.incentivesPaymentsConditionsDetails.flatMap(_.formerLeaseSurrendered.name)
+        ) match {
+          case Some("yes") =>
+            controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
+          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+        }
+      case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
     }
 

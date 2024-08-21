@@ -483,6 +483,24 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _               => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
     }
 
+  private def incentivesPaymentsConditionsRouting: Session => Call = answers =>
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name)
+    ) match {
+      case Some("yes") =>
+        answers.forType match {
+          case ForTypes.for6045 | ForTypes.for6046 =>
+            controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show()
+          case _                                   => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+        }
+      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+      case _           =>
+        logger.warn(
+          s"Navigation for property use leaseback agreement without correct selection of conditions by controller"
+        )
+        throw new RuntimeException("Invalid option exception for property use leaseback agreement routing")
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
@@ -531,7 +549,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IntervalsOfRentReviewId                       -> intervalsOfRentReviewRouting,
     CanRentBeReducedOnReviewId                    -> canRentBeReducedRouting,
     PropertyUpdatesId                             -> propertyUpdatesRouting,
-    IncentivesPaymentsConditionsId                -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
+    IncentivesPaymentsConditionsId                -> incentivesPaymentsConditionsRouting,
     TenantsAdditionsDisregardedId                 -> tenantsAdditionsDisregardedRouting,
     TenantsAdditionsDisregardedDetailsId          -> tenantsAdditionsDisregardedDetailsRouting,
     LeaseSurrenderedEarlyId                       -> (_ => aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()),
@@ -539,7 +557,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     BenefitsGivenDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
     CapitalSumDescriptionId                       -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     WorkCarriedOutDetailsId                       -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
-    WorkCarriedOutConditionId                     -> (_ => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()),
+    WorkCarriedOutConditionId                     -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
     PayCapitalSumId                               -> payCapitalSumRouting,
     PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
@@ -570,6 +588,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     RentDevelopedLandId                           -> rentDevelopedLandRouting,
     RentDevelopedLandDetailsId                    -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show()),
     RentIncludeStructuresBuildingsId              -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
+    SurrenderedLeaseAgreementDetailsId            -> (_ =>
+      aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+    ),
     CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
   )
 }
