@@ -1071,6 +1071,15 @@ servicePaidSeparatelyListZero.heading = You have removed all the services which 
 servicePaidSeparatelyList.label = Would you like to add another service?
 error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
+#SURRENDERED LEASE AGREEMENT DETAILS
+#########################
+surrenderedLeaseAgreement.heading = Details of the surrendered lease or agreement
+surrenderedLeaseAgreement.title = What was the annual rent under the surrendered lease or agreement excluding VAT?
+surrenderedLeaseAgreementMonths.heading = How long was the unexpired term at the time of surrender?
+error.required.annualRentExcludingVat.surrenderedLeaseAgreementAmount = Enter the annual rent under the surrendered lease or agreement excluding VAT
+error.surrenderedLeaseAgreementMonths.required = Enter how long the unexpired term was at the time of surrender
+surrenderedLeaseAgreementMonths.months = months
+
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Gwasanaethau masnach a ddarperir gan y landlord

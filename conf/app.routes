@@ -465,6 +465,12 @@ POST        /rent-developed-land-details                            controllers.
 GET         /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
 POST        /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
 
+GET         /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
+POST        /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
+
+GET         /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.show()
+POST        /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.submit()
+
 # Form 6011 routing
 GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
 POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()

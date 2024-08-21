@@ -1,0 +1,97 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.submissions.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetails
+@import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
+        hmrcCurrencyInput : HmrcCurrencyInput,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[SurrenderedLeaseAgreementDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+
+@layout(
+ pageHeading = messages("surrenderedLeaseAgreement.heading"),
+ showSection = true,
+ summary = Some(summary),
+ sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+ backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url,
+ theForm = theForm
+) {
+
+ @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.submit()) {
+
+  <p class="govuk-heading-m">@messages("surrenderedLeaseAgreement.title")</p>
+
+  @hmrcCurrencyInput(
+   CurrencyInput(
+    id = "surrenderedLeaseAgreementAmount",
+    name = "surrenderedLeaseAgreementAmount",
+    value = theForm("surrenderedLeaseAgreementAmount").value,
+    classes = "govuk-input--width-10 total-annual-rent",
+    autocomplete = Some("off"),
+    attributes = Map(
+     "aria-label" -> messages("surrenderedLeaseAgreementAmount.title")
+    ),
+    errorMessage =  theForm.errors.asTextErrorMessageForField("surrenderedLeaseAgreementAmount")
+   )
+  )
+
+@*<div class="govuk-!-margin-top-8">*@
+@*  @govukCharacterCount(*@
+@*   CharacterCount(*@
+@*    id = "describeSurrenderedDetails",*@
+@*    name = "describeServices",*@
+@*    maxLength = 500,*@
+@*    label = Label(*@
+@*     content = Text(messages("label.describeServices")),*@
+@*     classes = "govuk-label--m"*@
+@*    ),*@
+@*    errorMessage = theForm.errors.asTextErrorMessageForField("describeServices"),*@
+@*    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))*@
+@*   ).withFormField(theForm("describeServices"))*@
+@*  )*@
+@*</div>*@
+
+  @govukInput(Input(
+   id = "surrenderedLeaseAgreementMonths",
+   name = "surrenderedLeaseAgreementMonths",
+   value = theForm("surrenderedLeaseAgreementMonths").value,
+   errorMessage = theForm.errors.asTextErrorMessageForField("surrenderedLeaseAgreementMonths"),
+   classes = "govuk-input--width-5",
+   label = Label(
+    content = Text(Messages("surrenderedLeaseAgreementMonths.heading")),
+    classes = "govuk-label--l govuk-fieldset__legend--m"
+   ),
+   suffix = Some(PrefixOrSuffix(
+    content = Text(messages("surrenderedLeaseAgreementMonths.months")),
+   ))
+  ))
+
+  @includes.continueSaveAsDraftButtons(govukButton)
+ }
+}
