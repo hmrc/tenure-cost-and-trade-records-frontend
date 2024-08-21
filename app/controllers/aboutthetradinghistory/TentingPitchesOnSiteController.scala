@@ -79,12 +79,12 @@ class TentingPitchesOnSiteController @Inject() (
         }
 
         session.saveOrUpdate(updatedSession).map { _ =>
-          val nextPage = (previousAnswer, data) match {
-            case (Some(AnswerYes), AnswerYes) =>
+          val nextPage = (previousAnswer, data, navigator.from) match {
+            case (Some(AnswerYes), AnswerYes, "CYA") =>
               controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
-            case (Some(AnswerNo), AnswerYes)  =>
+            case (Some(AnswerNo), AnswerYes, _)      =>
               controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
-            case _                            =>
+            case _                                   =>
               navigator
                 .nextPage6045(
                   TentingPitchesOnSiteId,
