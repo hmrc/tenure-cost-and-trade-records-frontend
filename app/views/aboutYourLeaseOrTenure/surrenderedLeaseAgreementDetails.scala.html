@@ -61,22 +61,6 @@
    )
   )
 
-@*<div class="govuk-!-margin-top-8">*@
-@*  @govukCharacterCount(*@
-@*   CharacterCount(*@
-@*    id = "describeSurrenderedDetails",*@
-@*    name = "describeServices",*@
-@*    maxLength = 500,*@
-@*    label = Label(*@
-@*     content = Text(messages("label.describeServices")),*@
-@*     classes = "govuk-label--m"*@
-@*    ),*@
-@*    errorMessage = theForm.errors.asTextErrorMessageForField("describeServices"),*@
-@*    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))*@
-@*   ).withFormField(theForm("describeServices"))*@
-@*  )*@
-@*</div>*@
-
   @govukInput(Input(
    id = "surrenderedLeaseAgreementMonths",
    name = "surrenderedLeaseAgreementMonths",
