@@ -34,7 +34,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RentIncludeTradeServicesInformationDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[RentIncludeTradeServicesInformationDetails], forType: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("rentIncludeTradeServicesDetails.heading"),

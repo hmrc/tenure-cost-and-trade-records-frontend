@@ -33,7 +33,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], forType: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("describeServicesTextArea.heading"),
@@ -58,7 +58,7 @@
      isPageHeading = true
     ),
     errorMessage = theForm.errors.asTextErrorMessageForField("describeServicesTextArea"),
-    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
+    hint = if(forType == ForTypes.for6045 || forType == ForTypes.for6046) Some(Hint(content = Text(messages("rentIncludeTradeServicesDetailsTextBoxArea.hint")))) else Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
    ).withFormField(theForm("describeServicesTextArea"))
   )
 
