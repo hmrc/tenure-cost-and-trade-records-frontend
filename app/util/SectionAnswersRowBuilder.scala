@@ -75,6 +75,20 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     )
 
   /**
+    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} without actions.
+    */
+  def rowWithoutActions(
+    messageKey: String,
+    getAnswerValue: T => Option[String]
+  ): Seq[SummaryListRow] =
+    Seq(
+      SummaryListRow(
+        key = Key(Text(messages(messageKey))),
+        value = Value(HtmlContent(answers.flatMap(getAnswerValue).getOrElse("")))
+      )
+    )
+
+  /**
     * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} if `condition` returns true.
     */
   def conditionRow(

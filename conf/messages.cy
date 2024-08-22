@@ -2916,6 +2916,7 @@ checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyO
 checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator = Sub-let by operator on behalf of private owners as fleet hire
 checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Sub-let by private owners to holidaymakers other than family and friends
 checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total = Total static caravans on site
+checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Services provided to static caravans
 checkYourAnswersAboutTheTradingHistory.occupationDate = Dyddiad meddiannu
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Diwedd y flwyddyn ariannol
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu

@@ -63,6 +63,10 @@
     sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.totalSiteCapacity)
 }
 
+@caravansPerService = @{
+    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.caravansPerService)
+}
+
 @caravansWithSuffix(caravans: Int) = @{
     val suffix = if (caravans == 1) messages("turnover.6045.caravan.suffix") else messages("turnover.6045.caravans.suffix")
     s"$caravans $suffix"
@@ -654,6 +658,21 @@
                         answerOpt("turnover.6045.caravansTotalSiteCapacity.seasonalStaff", caravansTotalSiteCapacity.map(_.seasonalStaff).map(caravansWithSuffix)),
                         answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total", caravansTotalSiteCapacity.map(_.total).map(caravansWithSuffix), classes = "")
                     )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravansPerService.fleet",
+                _ => table(Seq(
+                    Seq(messages("turnover.6045.caravansPerService.fleetWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.fleetElectricityOnly")),
+                    caravansPerService.fold(Seq.empty)(c => Seq(c.fleetWaterElectricityDrainage, c.fleetElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>"))
+                )).body,
+                aboutthetradinghistory.routes.CaravansPerServiceController.show(), "fleetWaterElectricityDrainage", ("valueAsHtml", _ => None))
+            .map(_.copy(classes = "no-border-bottom")) ++
+                    sectionAnswers1.rowWithoutActions("turnover.6045.caravansPerService.private",
+                        _ => table(Seq(
+                            Seq(messages("turnover.6045.caravansPerService.privateWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.privateElectricityOnly")),
+                            caravansPerService.fold(Seq.empty)(c => Seq(c.privateWaterElectricityDrainage, c.privateElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>"))
+                        )).body)
         ))
     }
 
