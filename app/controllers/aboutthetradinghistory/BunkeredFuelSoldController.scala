@@ -29,9 +29,9 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.bunkeredFuelSold
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
-
+@Singleton
 class BunkeredFuelSoldController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,

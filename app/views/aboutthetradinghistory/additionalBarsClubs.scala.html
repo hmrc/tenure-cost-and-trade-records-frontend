@@ -1,0 +1,145 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.DateUtilLocalised
+@import models.submissions.aboutthetradinghistory.AdditionalBarsClubs
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+
+@this(
+
+        layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        dateUtil: DateUtilLocalised,
+        govukInsetText: GovukInsetText
+
+)
+
+
+@(form: Form[Seq[AdditionalBarsClubs]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+    @rowLabel(labelKey: String, hint: Option[String] = None) = {
+        <p class="govuk-body">
+            <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+        </p>
+    @hint.map { hint => <p class="govuk-hint">@messages(hint)</p> }
+    }
+
+@turnoverRow(formField: String, labelKey: String, hint: String = "") = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey, Option(hint).filterNot(_.isEmpty)))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        prefix = PrefixOrSuffix(content = Text(messages("label.pound"))),
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))))))
+}
+
+
+
+@layout(
+    pageHeading = messages("additionalBarsClubs.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages("additionalBarsClubs.p")</p>
+
+
+    @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.submit()) {
+
+
+
+
+
+        <table class="hmrc-responsive-table govuk-!-width-full">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("additionalActivities.common.financialYear"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("additionalActivities.common.tradingPeriod"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "2",
+                                                "aria-label" -> messages("additionalActivities.common.tradingPeriod")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("label.weeks"))
+                                            ))
+                                        ).withFormField(form(s"additionalBarsClubs[$idx].weeks")))
+                                    )
+                                )
+                            ),
+                            turnoverRow(
+                                s"additionalBarsClubs[$idx].grossBar",
+                                "additionalBarsClubs.grossBar.label"),
+                            turnoverRow(
+                                s"additionalBarsClubs[$idx].costBar",
+                                "additionalBarsClubs.costBar.label"),
+                            turnoverRow(
+                                s"additionalBarsClubs[$idx].grossClubMembership",
+                                "additionalBarsClubs.grossClubMembership.label"),
+                            turnoverRow(
+                                s"additionalBarsClubs[$idx].grossFromSeparate",
+                                "additionalBarsClubs.grossFromSeparate.label"),
+                            turnoverRow(
+                                s"additionalBarsClubs[$idx].costOfEntertainment",
+                                "additionalBarsClubs.costOfEntertainment.label",
+                                "additionalBarsClubs.costOfEntertainment.hint"
+                            )
+                        )))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}
