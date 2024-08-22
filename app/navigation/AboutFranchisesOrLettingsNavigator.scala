@@ -404,6 +404,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     MaxOfLettingsReachedCurrentId              -> (_ =>
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     ),
-    CheckYourAnswersAboutFranchiseOrLettingsId -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersAboutFranchiseOrLettingsId -> (_ =>
+      controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
+    )
   )
 }

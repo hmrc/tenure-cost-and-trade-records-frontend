@@ -1855,6 +1855,7 @@ error.caravans.privateElectricityOnly.negative = The amount of private caravans 
 turnover.6045.caravansAnnualPitchFee.heading = What is the current annual pitch fee for a single-unit static caravan, excluding VAT?
 turnover.6045.caravansAnnualPitchFee.p1 = Enter the annual pitch fee for a single static caravan. If you only have twin-unit vans, enter the standard annual pitch fee for a twin-unit van.
 turnover.6045.caravans.annualPitchFee = Total annual pitch fee
+turnover.6045.perYear.suffix = a year
 turnover.6045.caravans.servicesIncludedInPitchFee = What services are included in this pitch fee, and what is the charge made?
 turnover.6045.caravans.servicesIncludedInPitchFee.hint = Dewiswch bob un sy’n berthnasol.
 turnover.6045.caravans.fee.rates = Rates
@@ -2957,6 +2958,8 @@ checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOp
 checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Sub-let by private owners to holidaymakers other than family and friends
 checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total = Total static caravans on site
 checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Services provided to static caravans
+checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Standard pitch fee and included services
+checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other = Other
 checkYourAnswersAboutTheTradingHistory.occupationDate = Dyddiad meddiannu
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Diwedd y flwyddyn ariannol
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu

@@ -18,6 +18,7 @@
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+@import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 @import models.submissions.aboutthetradinghistory.OtherCosts
@@ -61,10 +62,6 @@
 
 @caravansTotalSiteCapacity = @{
     sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.totalSiteCapacity)
-}
-
-@caravansPerService = @{
-    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.caravansPerService)
 }
 
 @caravansWithSuffix(caravans: Int) = @{
@@ -662,17 +659,39 @@
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading")</h2>
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("turnover.6045.caravansPerService.fleet",
-                _ => table(Seq(
+                _.caravans.flatMap(_.caravansPerService).fold("")(c => table(Seq(
                     Seq(messages("turnover.6045.caravansPerService.fleetWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.fleetElectricityOnly")),
-                    caravansPerService.fold(Seq.empty)(c => Seq(c.fleetWaterElectricityDrainage, c.fleetElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>"))
-                )).body,
+                    Seq(c.fleetWaterElectricityDrainage, c.fleetElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>")
+                )).body),
                 aboutthetradinghistory.routes.CaravansPerServiceController.show(), "fleetWaterElectricityDrainage", ("valueAsHtml", _ => None))
             .map(_.copy(classes = "no-border-bottom")) ++
                     sectionAnswers1.rowWithoutActions("turnover.6045.caravansPerService.private",
-                        _ => table(Seq(
+                        _.caravans.flatMap(_.caravansPerService).fold("")(c => table(Seq(
                             Seq(messages("turnover.6045.caravansPerService.privateWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.privateElectricityOnly")),
-                            caravansPerService.fold(Seq.empty)(c => Seq(c.privateWaterElectricityDrainage, c.privateElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>"))
-                        )).body)
+                            Seq(c.privateWaterElectricityDrainage, c.privateElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>")
+                        )).body))
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("",
+                _.caravans.flatMap(_.annualPitchFee).fold("")(fee => table(Seq(
+                    Seq(
+                        Some(s"${fee.totalPitchFee.asMoney} ${messages("turnover.6045.perYear.suffix")}"),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Rates))(messages("turnover.6045.caravans.fee.rates")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(WaterAndDrainage))(messages("turnover.6045.caravans.fee.waterAndDrainage")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Gas))(messages("turnover.6045.caravans.fee.gas")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Electricity))(messages("turnover.6045.caravans.fee.electricity")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Other))(messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other"))
+                    ).flatten,
+                    "<br/>" +: Seq(
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Rates))(fee.rates.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(WaterAndDrainage))(fee.waterAndDrainage.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Gas))(fee.gas.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Electricity))(fee.electricity.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Other))(fee.otherPitchFeeDetails.getOrElse("")),
+                    ).filter(_.nonEmpty).map(v => s"<div class=\"govuk-!-margin-left-9\">${v.getOrElse("")} ${messages("turnover.6045.perYear.suffix")}</div>")
+                )).body),
+                aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show(), "totalPitchFee", ("valueAsHtml", _ => None))
         ))
     }
 

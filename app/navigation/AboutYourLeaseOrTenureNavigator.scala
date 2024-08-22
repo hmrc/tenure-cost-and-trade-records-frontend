@@ -500,7 +500,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for incentive payments conditions routing")
     }
-  private def workCarriedOutConditionRouting: Session => Call = answers =>
+  private def workCarriedOutConditionRouting: Session => Call      = answers =>
     answers.forType match {
       case ForTypes.for6045 | ForTypes.for6046 =>
         controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()
@@ -598,6 +598,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     SurrenderedLeaseAgreementDetailsId            -> (_ =>
       aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     ),
-    CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ =>
+      controllers.routes.TaskListController.show().withFragment("leaseOrAgreement")
+    )
   )
 }
