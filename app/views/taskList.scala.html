@@ -456,7 +456,11 @@
        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
        section4Completed,
        session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-       section3Completed.isEmpty)
+       forType match {
+        case ForTypes.for6045 => section3point3Completed.isEmpty
+        case _                => section3Completed.isEmpty
+       }
+       )
      }
      @if(forType == ForTypes.for6030) {
       @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
