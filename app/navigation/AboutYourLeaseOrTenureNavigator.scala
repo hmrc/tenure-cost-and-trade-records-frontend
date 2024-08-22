@@ -496,9 +496,16 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
       case _           =>
         logger.warn(
-          s"Navigation for property use leaseback agreement without correct selection of conditions by controller"
+          s"Navigation for incentive payments conditions without correct selection of conditions by controller"
         )
-        throw new RuntimeException("Invalid option exception for property use leaseback agreement routing")
+        throw new RuntimeException("Invalid option exception for incentive payments conditions routing")
+    }
+  private def workCarriedOutConditionRouting: Session => Call = answers =>
+    answers.forType match {
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()
+      case _                                   =>
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
@@ -557,7 +564,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     BenefitsGivenDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
     CapitalSumDescriptionId                       -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     WorkCarriedOutDetailsId                       -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
-    WorkCarriedOutConditionId                     -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
+    WorkCarriedOutConditionId                     -> workCarriedOutConditionRouting,
     PayCapitalSumId                               -> payCapitalSumRouting,
     PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
