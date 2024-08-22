@@ -896,12 +896,14 @@ error.rentOpenMarketValue.missing = Dewiswch ‘oedd’ os cafodd y rhent ei ben
 # DOES THE RENT PAYABLE
 ######################
 rentPayable.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw un o’r opsiynau sydd wedi’u rhestru?
+rentPayable6045.heading = Does the rent payable include or relate to any of the following?
 checkbox.rentPayable.proprietor = Llety byw i’r perchennog neu’r staff
 checkbox.rentPayable.otherProperty = Eiddo arall
 checkbox.rentPayable.onlyPart = Dim ond rhan o’r eiddo
 checkbox.rentPayable.onlyLand = I dir yn unig (ac eithrio adeiladau)
 checkbox.rentPayable.shellUnit = Uned ‘gragen’ roedd yn rhaid i chi ei gosod eich hun
 checkbox.rentPayable.noneOfThese = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
+checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Rhowch fanylion
 hint.detailsToQuestions = Mae enghreifftiau o ddisgrifiadau derbyniol yn cynnwys, “mae’r rhent yn cynnwys llety preswyl”, neu “hefyd yn cynnwys y safle drws nesaf”.

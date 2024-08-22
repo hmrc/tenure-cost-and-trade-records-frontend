@@ -38,8 +38,10 @@
 
 @(theForm: Form[DoesTheRentPayable], forType: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
+@pageHeader = @{if(forType == ForTypes.for6045 || forType == ForTypes.for6046) messages("rentPayable6045.heading") else messages("rentPayable.heading")}
+
 @layout(
-    pageHeading = messages("rentPayable.heading"),
+    pageHeading = pageHeader,
     showH1 = true,
     showSection = true,
     summary = summary,
@@ -82,7 +84,7 @@
                         ),
                         CheckboxItem(
                             id = "none",
-                            content = Text(messages("checkbox.rentPayable.noneOfThese")),
+                            content = Text(messages("checkbox.rentPayable.noneOfThese6045")),
                             value = "none",
                             behaviour = ExclusiveCheckbox
                         )
