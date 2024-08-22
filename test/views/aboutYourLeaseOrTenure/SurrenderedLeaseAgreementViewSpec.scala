@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,44 +16,44 @@
 
 package views.aboutYourLeaseOrTenure
 
-import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm
+import form.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetailsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
-import org.scalatest.matchers.must.Matchers.*
+import models.submissions.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehaviours[String] {
+class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[SurrenderedLeaseAgreementDetails] {
 
-  val messageKeyPrefix = "describeServicesTextArea"
+  val messageKeyPrefix = "surrenderedLeaseAgreement"
 
-  override val form =
-    RentIncludeTradeServicesDetailsTextAreaForm.rentIncludeTradeServicesDetailsTextAreaForm
+  override val form = SurrenderedLeaseAgreementDetailsForm.surrenderedLeaseAgreementDetailsForm
 
-  def createView = () =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, "FOR6010", Summary("99996076001"))(fakeRequest, messages)
+  def createView = () => surrenderedLeaseAgreementView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, "FOR6010", Summary("99996076001"))(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[SurrenderedLeaseAgreementDetails]) =>
+    surrenderedLeaseAgreementView(form, Summary("99996010001"))(fakeRequest, messages)
 
-  "Rent include trade services details" must {
+  "SurrenderedLeaseAgreementDetails" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-//    behave like pageWithTextFields(createViewUsingForm, "describeServicesTextArea")
-
-    "has a link marked with back.link.label leading to the task list Page" in {
+    "has a link marked with back.link.label leading to SurrenderedLeaseAgreementDetails page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
+    "contain input for the SurrenderedLeaseAgreementDetails description" in {
+      val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "surrenderedLeaseAgreementMonths")
     }
 
     "contain continue button with the value Continue" in {

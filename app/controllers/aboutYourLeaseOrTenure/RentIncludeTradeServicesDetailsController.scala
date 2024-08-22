@@ -62,6 +62,7 @@ class RentIncludeTradeServicesDetailsController @Inject() (
                 rentIncludeTradeServicesDetailsTextAreaForm.fill(rentIncludeTradeServicesDetailsTextArea)
               case _                                             => rentIncludeTradeServicesDetailsTextAreaForm
             },
+            forType,
             request.sessionData.toSummary
           )
         )
@@ -93,7 +94,9 @@ class RentIncludeTradeServicesDetailsController @Inject() (
       continueOrSaveAsDraft[String](
         rentIncludeTradeServicesDetailsTextAreaForm,
         formWithErrors =>
-          BadRequest(rentIncludeTradeServicesDetailsTextAreaView(formWithErrors, request.sessionData.toSummary)),
+          BadRequest(
+            rentIncludeTradeServicesDetailsTextAreaView(formWithErrors, forType, request.sessionData.toSummary)
+          ),
         data => {
           val updatedData =
             updateAboutLeaseOrAgreementPartThree(_.copy(rentIncludeTradeServicesDetailsTextArea = Some(data)))

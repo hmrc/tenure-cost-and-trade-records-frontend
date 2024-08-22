@@ -588,7 +588,52 @@ trait FakeObjects {
         singleCaravansOwnedByOperator = CaravansTrading6045(52, 3000, 30),
         singleCaravansSublet = CaravansTrading6045(52, 1000, 10),
         twinUnitCaravansOwnedByOperator = CaravansTrading6045(26, 2000, 20),
-        twinUnitCaravansSublet = CaravansTrading6045()
+        twinUnitCaravansSublet = CaravansTrading6045(),
+        pitchesForCaravans = Some(
+          TentingPitchesTradingData(
+            tradingPeriod = 52,
+            grossReceipts = Some(BigDecimal(5000)),
+            numberOfPitches = Some(20)
+          )
+        ),
+        pitchesForGlamping = Some(
+          TentingPitchesTradingData(
+            tradingPeriod = 52,
+            grossReceipts = Some(BigDecimal(4000)),
+            numberOfPitches = Some(15)
+          )
+        ),
+        rallyAreas = Some(
+          RallyAreasTradingData(
+            tradingPeriod = 52,
+            grossReceipts = Some(BigDecimal(2000)),
+            areaInHectares = Some(BigDecimal(1.5))
+          )
+        ),
+        additionalShops = Some(
+          AdditionalShops(
+            tradingPeriod = 52,
+            grossReceipts = Some(BigDecimal(3000)),
+            costOfPurchase = Some(BigDecimal(1500))
+          )
+        ),
+        additionalCatering = Some(
+          AdditionalCatering(
+            tradingPeriod = 52,
+            grossReceipts = Some(BigDecimal(2500)),
+            costOfPurchase = Some(BigDecimal(1200))
+          )
+        ),
+        additionalBarsClubs = Some(
+          AdditionalBarsClubs(
+            tradingPeriod = 52,
+            grossReceiptsBars = Some(BigDecimal(3500)),
+            barPurchases = Some(BigDecimal(1800)),
+            grossClubMembership = Some(BigDecimal(2000)),
+            grossClubSeparate = Some(BigDecimal(1000)),
+            costOfEntertainment = Some(BigDecimal(500))
+          )
+        )
       ),
       TurnoverSection6045(
         today.minusYears(1),
@@ -619,6 +664,31 @@ trait FakeObjects {
         waterAndDrainage = Some(1000),
         electricity = Some(3000),
         otherPitchFeeDetails = Some("food - 1000, cleaning - 500")
+      )
+    ),
+    touringAndTentingPitches = Some(
+      TouringAndTentingPitches(
+        tentingPitchesOnSite = Some(AnswerYes),
+        tentingPitchesAllYear = Some(
+          TentingPitchesAllYear(
+            tentingPitchesAllYear = AnswerNo,
+            weekOfPitchesUse = Some(26)
+          )
+        ),
+        tentingPitchesTotal = Some(50),
+        tentingPitchesCertificated = Some(AnswerYes),
+        checkYourAnswersTentingPitches = Some(AnswerNo)
+      )
+    ),
+    additionalActivities = Some(
+      AdditionalActivities(
+        additionalActivitiesOnSite = Some(AnswerYes),
+        additionalActivitiesAllYear = Some(
+          AdditionalActivitiesAllYear(
+            tentingPitchesAllYear = AnswerNo,
+            weekOfPitchesUse = Some(30)
+          )
+        )
       )
     )
   )
@@ -1483,7 +1553,8 @@ trait FakeObjects {
   )
 
   val prefilledAboutLeaseOrAgreementPartFour: AboutLeaseOrAgreementPartFour = AboutLeaseOrAgreementPartFour(
-    rentIncludeStructuresBuildings = AnswerYes
+    rentIncludeStructuresBuildings = AnswerYes,
+    surrenderedLeaseAgreementDetails = Some(SurrenderedLeaseAgreementDetails(100.00, "surrenderedLeaseAgreement"))
   )
 
   val prefilledAboutLeaseOrAgreementPartThree6045: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(

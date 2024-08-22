@@ -896,12 +896,14 @@ error.rentOpenMarketValue.missing = Dewiswch ‘oedd’ os cafodd y rhent ei ben
 # DOES THE RENT PAYABLE
 ######################
 rentPayable.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw un o’r opsiynau sydd wedi’u rhestru?
+rentPayable6045.heading = Does the rent payable include or relate to any of the following?
 checkbox.rentPayable.proprietor = Llety byw i’r perchennog neu’r staff
 checkbox.rentPayable.otherProperty = Eiddo arall
 checkbox.rentPayable.onlyPart = Dim ond rhan o’r eiddo
 checkbox.rentPayable.onlyLand = I dir yn unig (ac eithrio adeiladau)
 checkbox.rentPayable.shellUnit = Uned ‘gragen’ roedd yn rhaid i chi ei gosod eich hun
 checkbox.rentPayable.noneOfThese = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
+checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Rhowch fanylion
 hint.detailsToQuestions = Mae enghreifftiau o ddisgrifiadau derbyniol yn cynnwys, “mae’r rhent yn cynnwys llety preswyl”, neu “hefyd yn cynnwys y safle drws nesaf”.
@@ -1071,21 +1073,32 @@ servicePaidSeparatelyListZero.heading = You have removed all the services which 
 servicePaidSeparatelyList.label = Would you like to add another service?
 error.servicePaidSeparatelyList.required = Select yes if you would like to add another service which is paid for separately
 
+#SURRENDERED LEASE AGREEMENT DETAILS
+#########################
+surrenderedLeaseAgreement.heading = Details of the surrendered lease or agreement
+surrenderedLeaseAgreement.title = What was the annual rent under the surrendered lease or agreement excluding VAT?
+surrenderedLeaseAgreementMonths.heading = How long was the unexpired term at the time of surrender?
+error.required.annualRentExcludingVat.surrenderedLeaseAgreementAmount = Enter the annual rent under the surrendered lease or agreement excluding VAT
+error.surrenderedLeaseAgreementMonths.required = Enter how long the unexpired term was at the time of surrender
+surrenderedLeaseAgreementMonths.months = months
+
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Gwasanaethau masnach a ddarperir gan y landlord
-rentIncludeTradeServicesDetails.title = Pa swm sy’n cael ei gynnwys yn y rhent er mwyn talu am y gwasanaethau hyn, ac eithrio TAW?
+rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
+rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover the services, excluding VAT?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
-rentIncludeTradeServicesDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
-rentIncludeTradeServicesDetails.hint2 = Er enghraifft, cynnal a chadw tanau, gwiriadau nwy blynyddol a gwasanaethau seler.
-label.describeServices = Disgrifiwch y gwasanaethau a ddarperir
+rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
+rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
+label.describeServices = Describe the services provided
+describeServicesTextArea.heading = Give details of the services provided by the landlord that are included in your rent
+label.describeServicesTextArea = Give details of the services provided by the landlord that are included in your rent
 rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
 rentIncludeTradeServicesDetailsTextBoxArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
-label.describeServicesTextArea = Give details of the services provided by the landlord that are included in your rent
+error.describeServicesTextArea.required = Please provide details of the services provided by the landlord that are included in your rent.
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
-error.describeServices.required = Nodwch ddisgrifiad o’r gwasanaethau masnach a ddarperir gan y landlord
-error.describeServices.maxLength = Mae’n rhaid i’r disgrifiad o’r gwasanaethau masnach fod yn 500 o gymeriadau neu lai
+error.describeServices.required = Enter a description of the trade service which you pay for separately
+error.describeServices.maxLength = The description of the trade services must be 500 characters or fewer
 error.rentIncludeTradeServicesDetails.title = Sum included to cover trade services
 
 # RENT INCLUDE FIXTURES AND FITTINGS
@@ -2536,9 +2549,36 @@ error.additionalCatering.costOfPurchase.required = Enter 0 if you did not have a
 error.additionalCatering.costOfPurchase.range    = Cost of purchase in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year ending {0} cannot be a negative number
 
+#BARS AND CLUBS ADDITIONAL ACTIVITIES 6045
 
-# COMMON ADDITIONAL ACTIVITIES 6045
-additionalActivities.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter he number O.
+additionalBarsClubs.heading = Bars and clubs
+additionalBarsClubs.p = If you run any on-site bars and clubs, enter the receipts and costs excluding VAT. Where accounts do not relate to the whole of your season, state te relevant number of weeks.
+additionalBarsClubs.grossBar.label = Gross receipts from bar sale
+additionalBarsClubs.costBar.label = Cost of bar purchases
+additionalBarsClubs.grossClubMembership.label = Gross receipts from club membership fees
+additionalBarsClubs.grossFromSeparate.label = Gross receipts from separate entry charges
+additionalBarsClubs.costOfEntertainment.label = Cost of entertainment
+additionalBarsClubs.costOfEntertainment.hint = For example, hiring artistes.
+
+error.additionalBarsClubs.grossBar.required = Enter 0 if you did not have any gross receipts from bar sale in the year ending {0}
+error.additionalBarsClubs.grossBar.range    = Gross receipts from bar sale in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.grossBar.negative = Gross receipts from bar sale in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.costBar.required = Enter 0 if you did not have any cost of bar purchases in the year ending {0}
+error.additionalBarsClubs.costBar.range    = Cost of bar purchases in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.costBar.negative = Cost of bar purchases in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.grossClubMembership.required = Enter 0 if you did not have any gross receipts from club membership in the year ending {0}
+error.additionalBarsClubs.grossClubMembership.range    = Gross receipts from club membership in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.grossClubMembership.negative = Gross receipts from club membership in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.grossFromSeparate.required = Enter 0 if you did not have any gross receipts from separate entry charges in the year ending {0}
+error.additionalBarsClubs.grossFromSeparate.range    = Gross receipts from separate entry charges in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.grossFromSeparate.negative = Gross receipts from separate entry charges in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.costOfEntertainment.required = Enter 0 if you did not have any cost of entertainment in the year ending {0}
+error.additionalBarsClubs.costOfEntertainment.range    = Cost of entertainment in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.costOfEntertainment.negative = Cost of entertainment in the year ending {0} cannot be a negative number
 additionalActivities.common.tradingPeriod = Trading period
 additionalActivities.common.financialYear = Financial year
 additionalActivities.common.grossReceipts = Gross receipts

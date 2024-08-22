@@ -29,9 +29,9 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesOnSite
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
-
+@Singleton
 class TentingPitchesOnSiteController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,
@@ -79,12 +79,12 @@ class TentingPitchesOnSiteController @Inject() (
         }
 
         session.saveOrUpdate(updatedSession).map { _ =>
-          val nextPage = (previousAnswer, data) match {
-            case (Some(AnswerYes), AnswerYes) =>
+          val nextPage = (previousAnswer, data, navigator.from) match {
+            case (Some(AnswerYes), AnswerYes, "CYA") =>
               controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
-            case (Some(AnswerNo), AnswerYes)  =>
+            case (Some(AnswerNo), AnswerYes, _)      =>
               controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
-            case _                            =>
+            case _                                   =>
               navigator
                 .nextPage6045(
                   TentingPitchesOnSiteId,
