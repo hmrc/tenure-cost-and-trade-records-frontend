@@ -500,15 +500,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for incentive payments conditions routing")
     }
-
-  private def workCarriedOutRouting: Session => Call = answers =>
-    answers.forType match {
-      case ForTypes.for6045 | ForTypes.for6046 =>
-        controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()
-      case _                                   =>
-        controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()
-    }
-
   private def workCarriedOutConditionRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6045 | ForTypes.for6046 =>
