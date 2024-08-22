@@ -900,12 +900,14 @@ error.rentOpenMarketValue.missing = Select yes if the rent was based on the open
 # DOES THE RENT PAYABLE
 ######################
 rentPayable.heading = Does the rent payable include any of the listed options?
+rentPayable6045.heading = Does the rent payable include or relate to any of the following?
 checkbox.rentPayable.proprietor = Living accommodation for proprietors or staff
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
 checkbox.rentPayable.shellUnit = A ‘shell’ unit you had to fit out yourself
 checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of these options
+checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Give details
 hint.detailsToQuestions = Examples of acceptable descriptions include "the rent includes residential accommodation", or "also includes the premises next door".
