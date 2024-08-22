@@ -31,10 +31,10 @@ class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehavi
     RentIncludeTradeServicesDetailsTextAreaForm.rentIncludeTradeServicesDetailsTextAreaForm
 
   def createView = () =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, Summary("99996076001"))(fakeRequest, messages)
+    rentIncludeTradeServicesDetailsTextAreaView(form, "FOR6010", Summary("99996076001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, Summary("99996076001"))(fakeRequest, messages)
+    rentIncludeTradeServicesDetailsTextAreaView(form, "FOR6010", Summary("99996076001"))(fakeRequest, messages)
 
   "Rent include trade services details" must {
 
