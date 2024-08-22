@@ -557,7 +557,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     BenefitsGivenDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
     CapitalSumDescriptionId                       -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     WorkCarriedOutDetailsId                       -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
-    WorkCarriedOutConditionId                     -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
+    WorkCarriedOutConditionId                     -> (_ => aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()),
     PayCapitalSumId                               -> payCapitalSumRouting,
     PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
