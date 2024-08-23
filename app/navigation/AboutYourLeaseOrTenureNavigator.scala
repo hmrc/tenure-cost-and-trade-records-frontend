@@ -603,6 +603,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     SurrenderedLeaseAgreementDetailsId            -> (_ =>
       aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     ),
-    CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ =>
+      controllers.routes.TaskListController.show().withFragment("leaseOrAgreement")
+    )
   )
 }

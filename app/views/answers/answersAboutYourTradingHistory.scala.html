@@ -18,6 +18,7 @@
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+@import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 @import models.submissions.aboutthetradinghistory.OtherCosts
@@ -49,6 +50,23 @@
 
 @sectionAnswers1 = @{
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+}
+
+@singleCaravansAge = @{
+    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.singleCaravansAge)
+}
+
+@twinUnitCaravansAge = @{
+    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.twinUnitCaravansAge)
+}
+
+@caravansTotalSiteCapacity = @{
+    sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.totalSiteCapacity)
+}
+
+@caravansWithSuffix(caravans: Int) = @{
+    val suffix = if (caravans == 1) messages("turnover.6045.caravan.suffix") else messages("turnover.6045.caravans.suffix")
+    s"$caravans $suffix"
 }
 
 @forType = @{
@@ -431,13 +449,17 @@
     )
 }
 
-@answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None) = @{
+@answerOpt(valueLabelKey: String, valueOpt: Option[String], classes: String = "no-border-bottom") = @{
+    answer(valueLabelKey, Seq(valueOpt.getOrElse("")), classes = classes)
+}
+
+@answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None, classes: String = "no-border-bottom") = @{
     SummaryListRow(
         key = Key(Text(messages(valueLabelKey))),
         value = Value(HtmlContent(
             tableRow(values).body + optionalParagraph(additionalParagraph).body
         )),
-        classes = "no-border-bottom"
+        classes = classes
     )
 }
 
@@ -562,6 +584,28 @@
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.singleCaravansSublet.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.singleCaravansSublet.flatMap(_.vans))
         )
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.ownedByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => singleCaravansAge.map(_.fleetHire.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", singleCaravansAge.map(_.fleetHire.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", singleCaravansAge.map(_.fleetHire.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", singleCaravansAge.map(_.fleetHire.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.subletByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => singleCaravansAge.map(_.privateSublet.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", singleCaravansAge.map(_.privateSublet.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", singleCaravansAge.map(_.privateSublet.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", singleCaravansAge.map(_.privateSublet.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator",
             aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
@@ -576,6 +620,79 @@
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.twinUnitCaravansSublet.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.twinUnitCaravansSublet.flatMap(_.vans))
         )
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.ownedByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => twinUnitCaravansAge.map(_.fleetHire.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", twinUnitCaravansAge.map(_.fleetHire.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", twinUnitCaravansAge.map(_.fleetHire.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", twinUnitCaravansAge.map(_.fleetHire.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.subletByOperator")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
+                _ => twinUnitCaravansAge.map(_.privateSublet.years0_5).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("turnover.6045.caravans.age.years6_10", twinUnitCaravansAge.map(_.privateSublet.years6_10).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years11_15", twinUnitCaravansAge.map(_.privateSublet.years11_15).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravans.age.years15plus", twinUnitCaravansAge.map(_.privateSublet.years15plus).map(caravansWithSuffix), classes = "")
+                    )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.heading")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravansTotalSiteCapacity.ownedByOperatorForFleetHire",
+                _ => caravansTotalSiteCapacity.map(_.ownedByOperatorForFleetHire).map(caravansWithSuffix),
+                aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show(), "ownedByOperatorForFleetHire").map(_.copy(classes = "no-border-bottom")) ++
+                    Seq(
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily", caravansTotalSiteCapacity.map(_.privatelyOwnedForOwnerAndFamily).map(caravansWithSuffix)),
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator", caravansTotalSiteCapacity.map(_.subletByOperator).map(caravansWithSuffix)),
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners", caravansTotalSiteCapacity.map(_.subletByPrivateOwners).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravansTotalSiteCapacity.charitablePurposes", caravansTotalSiteCapacity.map(_.charitablePurposes).map(caravansWithSuffix)),
+                        answerOpt("turnover.6045.caravansTotalSiteCapacity.seasonalStaff", caravansTotalSiteCapacity.map(_.seasonalStaff).map(caravansWithSuffix)),
+                        answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total", caravansTotalSiteCapacity.map(_.total).map(caravansWithSuffix), classes = "")
+                    )
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("turnover.6045.caravansPerService.fleet",
+                _.caravans.flatMap(_.caravansPerService).fold("")(c => table(Seq(
+                    Seq(messages("turnover.6045.caravansPerService.fleetWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.fleetElectricityOnly")),
+                    Seq(c.fleetWaterElectricityDrainage, c.fleetElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>")
+                )).body),
+                aboutthetradinghistory.routes.CaravansPerServiceController.show(), "fleetWaterElectricityDrainage", ("valueAsHtml", _ => None))
+            .map(_.copy(classes = "no-border-bottom")) ++
+                    sectionAnswers1.rowWithoutActions("turnover.6045.caravansPerService.private",
+                        _.caravans.flatMap(_.caravansPerService).fold("")(c => table(Seq(
+                            Seq(messages("turnover.6045.caravansPerService.privateWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.privateElectricityOnly")),
+                            Seq(c.privateWaterElectricityDrainage, c.privateElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>")
+                        )).body))
+        ))
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading")</h2>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers1.row("",
+                _.caravans.flatMap(_.annualPitchFee).fold("")(fee => table(Seq(
+                    Seq(
+                        Some(s"${fee.totalPitchFee.asMoney} ${messages("turnover.6045.perYear.suffix")}"),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Rates))(messages("turnover.6045.caravans.fee.rates")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(WaterAndDrainage))(messages("turnover.6045.caravans.fee.waterAndDrainage")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Gas))(messages("turnover.6045.caravans.fee.gas")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Electricity))(messages("turnover.6045.caravans.fee.electricity")),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Other))(messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other"))
+                    ).flatten,
+                    "<br/>" +: Seq(
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Rates))(fee.rates.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(WaterAndDrainage))(fee.waterAndDrainage.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Gas))(fee.gas.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Electricity))(fee.electricity.getOrElse(zeroBigDecimal).asMoney),
+                        Option.when(fee.servicesIncludedInPitchFee.contains(Other))(fee.otherPitchFeeDetails.getOrElse("")),
+                    ).filter(_.nonEmpty).map(v => s"<div class=\"govuk-!-margin-left-9\">${v.getOrElse("")} ${messages("turnover.6045.perYear.suffix")}</div>")
+                )).body),
+                aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show(), "totalPitchFee", ("valueAsHtml", _ => None))
+        ))
     }
 
 }
