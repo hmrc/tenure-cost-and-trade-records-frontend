@@ -42,7 +42,8 @@ case class TurnoverSection6045(
   rallyAreas: Option[RallyAreasTradingData] = None,
   // 3.3.0 Additional activities
   additionalShops: Option[AdditionalShops] = None,
-  additionalCatering: Option[AdditionalCatering] = None
+  additionalCatering: Option[AdditionalCatering] = None,
+  additionalBarsClubs: Option[AdditionalBarsClubs] = None
 )
 
 object TurnoverSection6045 {

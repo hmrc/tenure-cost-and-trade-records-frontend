@@ -29,9 +29,9 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.additionalActivitiesOnSite
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
-
+@Singleton
 class AdditionalActivitiesOnSiteController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutTheTradingHistoryNavigator,

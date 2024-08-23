@@ -183,6 +183,7 @@ trait FakeViews { this: Injecting =>
   lazy val additionalActivitiesAllYearView: additionalActivitiesAllYear                             = inject[additionalActivitiesAllYear]
   lazy val additionalShopsView: additionalShops                                                     = inject[additionalShops]
   lazy val additionalCateringView: additionalCatering                                               = inject[additionalCatering]
+  lazy val additionalBarsClubsView: additionalBarsClubs                                             = inject[additionalBarsClubs]
   lazy val grossReceiptsLettingUnitsView: grossReceiptsLettingUnits6045                             = inject[grossReceiptsLettingUnits6045]
   lazy val grossReceiptsSubLetUnitsView: grossReceiptsSubLetUnits6045                               = inject[grossReceiptsSubLetUnits6045]
   lazy val checkYourAnswersAdditionalActivitiesView: checkYourAnswersAdditionalActivities           =
@@ -293,6 +294,7 @@ trait FakeViews { this: Injecting =>
   lazy val rentDevelopedLandView                            = inject[rentDevelopedLand]
   lazy val rentDevelopedLandDetailsView                     = inject[rentDevelopedLandDetails]
   lazy val rentIncludeStructuresBuildingsView               = inject[rentIncludeStructuresBuildings]
+  lazy val rentIncludeStructuresBuildingsDetailsView        = inject[rentIncludeStructuresBuildingsDetails]
   lazy val surrenderedLeaseAgreementView                    = inject[surrenderedLeaseAgreementDetails]
 
   // Car parking lease

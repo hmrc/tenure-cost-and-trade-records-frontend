@@ -302,6 +302,9 @@ POST        /additional-shops                                       controllers.
 GET         /additional-catering                                    controllers.aboutthetradinghistory.AdditionalCateringController.show()
 POST        /additional-catering                                    controllers.aboutthetradinghistory.AdditionalCateringController.submit()
 
+GET         /additional-bars-clubs                                  controllers.aboutthetradinghistory.AdditionalBarsClubsController.show()
+POST        /additional-bars-clubs                                  controllers.aboutthetradinghistory.AdditionalBarsClubsController.submit()
+
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
 
@@ -465,8 +468,8 @@ POST        /rent-developed-land-details                            controllers.
 GET         /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
 POST        /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
 
-GET         /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
-POST        /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
+GET         /rent-include-structures-buildings-details              controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.show()
+POST        /rent-include-structures-buildings-details              controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.submit()
 
 GET         /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.show()
 POST        /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.submit()

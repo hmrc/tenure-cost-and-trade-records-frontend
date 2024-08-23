@@ -2547,9 +2547,36 @@ error.additionalCatering.costOfPurchase.required = Enter 0 if you did not have a
 error.additionalCatering.costOfPurchase.range    = Cost of purchase in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year ending {0} cannot be a negative number
 
+#BARS AND CLUBS ADDITIONAL ACTIVITIES 6045
 
-# COMMON ADDITIONAL ACTIVITIES 6045
-additionalActivities.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter he number O.
+additionalBarsClubs.heading = Bars and clubs
+additionalBarsClubs.p = If you run any on-site bars and clubs, enter the receipts and costs excluding VAT. Where accounts do not relate to the whole of your season, state te relevant number of weeks.
+additionalBarsClubs.grossBar.label = Gross receipts from bar sale
+additionalBarsClubs.costBar.label = Cost of bar purchases
+additionalBarsClubs.grossClubMembership.label = Gross receipts from club membership fees
+additionalBarsClubs.grossFromSeparate.label = Gross receipts from separate entry charges
+additionalBarsClubs.costOfEntertainment.label = Cost of entertainment
+additionalBarsClubs.costOfEntertainment.hint = For example, hiring artistes.
+
+error.additionalBarsClubs.grossBar.required = Enter 0 if you did not have any gross receipts from bar sale in the year ending {0}
+error.additionalBarsClubs.grossBar.range    = Gross receipts from bar sale in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.grossBar.negative = Gross receipts from bar sale in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.costBar.required = Enter 0 if you did not have any cost of bar purchases in the year ending {0}
+error.additionalBarsClubs.costBar.range    = Cost of bar purchases in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.costBar.negative = Cost of bar purchases in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.grossClubMembership.required = Enter 0 if you did not have any gross receipts from club membership in the year ending {0}
+error.additionalBarsClubs.grossClubMembership.range    = Gross receipts from club membership in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.grossClubMembership.negative = Gross receipts from club membership in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.grossFromSeparate.required = Enter 0 if you did not have any gross receipts from separate entry charges in the year ending {0}
+error.additionalBarsClubs.grossFromSeparate.range    = Gross receipts from separate entry charges in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.grossFromSeparate.negative = Gross receipts from separate entry charges in the year ending {0} cannot be a negative number
+
+error.additionalBarsClubs.costOfEntertainment.required = Enter 0 if you did not have any cost of entertainment in the year ending {0}
+error.additionalBarsClubs.costOfEntertainment.range    = Cost of entertainment in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalBarsClubs.costOfEntertainment.negative = Cost of entertainment in the year ending {0} cannot be a negative number
 additionalActivities.common.tradingPeriod = Trading period
 additionalActivities.common.financialYear = Financial year
 additionalActivities.common.grossReceipts = Gross receipts

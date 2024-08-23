@@ -500,6 +500,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         )
         throw new RuntimeException("Invalid option exception for incentive payments conditions routing")
     }
+
   private def workCarriedOutConditionRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6045 | ForTypes.for6046 =>
@@ -594,7 +595,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IncludedInRent6020Id                          -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     RentDevelopedLandId                           -> rentDevelopedLandRouting,
     RentDevelopedLandDetailsId                    -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show()),
-    RentIncludeStructuresBuildingsId              -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
+    RentIncludeStructuresBuildingsId              -> (_ =>
+      aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show()
+    ),
+    RentIncludeStructuresBuildingsDetailsId       -> (_ =>
+      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+    ),
     SurrenderedLeaseAgreementDetailsId            -> (_ =>
       aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     ),
