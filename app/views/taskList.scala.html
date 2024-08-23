@@ -554,7 +554,7 @@
       )
      }
 
-     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030 || forType == ForTypes.for6076) {
+     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6030 || forType == ForTypes.for6045 || forType == ForTypes.for6046 || forType == ForTypes.for6076) {
       @includes.taskListItem(
        "leaseback-arrangement", if(forType == ForTypes.for6076){"checkYourAnswersAboutYourLeaseOrTenure.yourLease.heading"} else {"checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading"},
        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(),
@@ -583,7 +583,7 @@
       )
      }
 
-     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6020 || forType == ForTypes.for6030) {
+     @if(forType == ForTypes.for6010 || forType == ForTypes.for6015 || forType == ForTypes.for6016 || forType == ForTypes.for6020 || forType == ForTypes.for6030 || forType == ForTypes.for6045 || forType == ForTypes.for6045) {
       @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
        section5Completed,
@@ -605,6 +605,7 @@
        session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
       )
      }
+     
     </ul>
    </li>
   }
