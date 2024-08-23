@@ -465,8 +465,8 @@ POST        /rent-developed-land-details                            controllers.
 GET         /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
 POST        /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
 
-GET         /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
-POST        /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
+GET         /rent-include-structures-buildings-details              controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.show()
+POST        /rent-include-structures-buildings-details              controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.submit()
 
 GET         /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.show()
 POST        /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.submit()

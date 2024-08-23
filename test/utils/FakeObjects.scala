@@ -1484,6 +1484,7 @@ trait FakeObjects {
 
   val prefilledAboutLeaseOrAgreementPartFour: AboutLeaseOrAgreementPartFour = AboutLeaseOrAgreementPartFour(
     rentIncludeStructuresBuildings = AnswerYes,
+    rentIncludeStructuresBuildingsDetails = Some("rentIncludeStructuresBuildingsDetails"),
     surrenderedLeaseAgreementDetails = Some(SurrenderedLeaseAgreementDetails(100.00, "surrenderedLeaseAgreement"))
   )
 

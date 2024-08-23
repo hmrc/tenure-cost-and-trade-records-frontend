@@ -933,6 +933,12 @@ error.rentDevelopedLandDetails.maxLength = The description of the developments i
 rentIncludeStructuresBuildings.heading = Does the rent payable include any structures or buildings?
 error.rentIncludeStructuresBuildings.missing = Select yes if the rent payable include any structures or buildings
 
+# RENT INCLUDES STRUCTURES BUILDINGS DETAILS (FORM 6045/46)
+######################
+rentIncludeStructuresBuildingsDetails.heading = Give details of the structures or buildings that are included in the rent
+error.rentIncludeStructuresBuildingsDetails.required = Enter details of the structures or buildings that are included in the rent
+error.rentIncludeStructuresBuildingsDetails.maxLength = Details of the structures or buildings that are included in the rent should be 2000 characters or fewer
+
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
 rentPayableVaryOnQuantityOfBeers.heading = Does the rent payable vary according to the quantity of beers, wines or spirits supplied to the property?
