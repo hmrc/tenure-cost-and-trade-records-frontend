@@ -250,5 +250,21 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for  Static Caravans  page" in {
       assert(StaticCaravansId.toString.equals("staticCaravansPage"))
     }
+
+    "Identifier for Twin Caravans  page" in {
+      assert(TwinCaravansAgeCategoriesId.toString.equals("twinCaravansAgeCategoriesPage"))
+    }
+
+    "Identifier for caravansTotalSiteCapacityPage" in {
+      assert(CaravansTotalSiteCapacityId.toString.equals("caravansTotalSiteCapacityPage"))
+    }
+
+    "Identifier for caravansPerServicePage" in {
+      assert(CaravansPerServiceId.toString.equals("caravansPerServicePage"))
+    }
+
+    "Identifier for caravansAnnualPitchFeePage" in {
+      assert(CaravansAnnualPitchFeeId.toString.equals("caravansAnnualPitchFeePage"))
+    }
   }
 }

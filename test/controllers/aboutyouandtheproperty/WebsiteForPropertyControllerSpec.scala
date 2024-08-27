@@ -100,6 +100,13 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
         val res = websiteForPropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
+
+      "Redirect when form data submitted" in {
+        val res = websiteForPropertyController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("buildingOperatingHaveAWebsite" -> "no")
+        )
+        status(res) shouldBe SEE_OTHER
+      }
     }
   }
 

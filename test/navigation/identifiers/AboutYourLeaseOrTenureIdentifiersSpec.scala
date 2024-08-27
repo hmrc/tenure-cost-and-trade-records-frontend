@@ -287,5 +287,12 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
     "Identifier for rent include structures buildings" in {
       assert(RentIncludeStructuresBuildingsId.toString.equals("rentIncludeStructuresBuildingsPage"))
     }
+    "Identifier for rent include structures buildings details" in {
+      assert(RentIncludeStructuresBuildingsDetailsId.toString.equals("rentIncludeStructuresBuildingsDetailsPage"))
+    }
+
+    "Identifier for surrendered lease agreement details" in {
+      assert(SurrenderedLeaseAgreementDetailsId.toString.equals("surrenderedLeaseAgreementDetailsPage"))
+    }
   }
 }

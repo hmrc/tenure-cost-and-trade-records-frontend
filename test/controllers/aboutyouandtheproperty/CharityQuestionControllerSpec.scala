@@ -18,10 +18,11 @@ package controllers.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.CharityQuestionForm.charityQuestionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status._
-import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
+import play.api.http.Status.*
+import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class CharityQuestionControllerSpec extends TestBaseSpec {
@@ -72,6 +73,13 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data submitted" in {
+        val res = charityQuestionController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("charityQuestion" -> "yes")
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
   }

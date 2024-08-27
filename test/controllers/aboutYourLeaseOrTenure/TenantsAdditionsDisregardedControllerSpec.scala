@@ -78,5 +78,12 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = tenantsAdditionsDisregardedController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("tenantsAdditionsDisregarded" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

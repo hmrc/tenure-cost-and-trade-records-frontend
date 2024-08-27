@@ -74,5 +74,12 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = typeOfTenureController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("typeOfTenureDetails" -> "test")
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 }

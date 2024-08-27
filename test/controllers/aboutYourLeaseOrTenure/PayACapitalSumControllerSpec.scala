@@ -131,6 +131,13 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = payACapitalSumController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "Pay a capital sum form" should {

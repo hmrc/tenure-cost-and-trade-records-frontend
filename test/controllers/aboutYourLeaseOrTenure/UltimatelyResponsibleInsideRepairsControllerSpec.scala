@@ -23,6 +23,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
+import play.api.test.*
+import play.api.test.Helpers.*
 
 class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
 
@@ -69,6 +71,13 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = ultimatelyResponsibleInsideRepairsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("insideRepairs" -> "landlord")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

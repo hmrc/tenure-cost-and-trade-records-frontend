@@ -18,8 +18,10 @@ package controllers.aboutyouandtheproperty
 
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
-import play.api.test.Helpers._
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class LicensableActivitiesControllerSpec extends TestBaseSpec {
@@ -71,6 +73,13 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
           fakeRequest.withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data submitted" in {
+        val res = licensableActivitiesController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("licensableActivities" -> "yes")
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
   }

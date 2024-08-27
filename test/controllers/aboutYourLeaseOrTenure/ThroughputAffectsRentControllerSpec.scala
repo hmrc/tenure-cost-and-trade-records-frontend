@@ -22,6 +22,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
+import play.api.test.*
+import play.api.test.Helpers.*
+
 /**
   * @author Yuriy Tumakha
   */
@@ -66,6 +69,13 @@ class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = throughputAffectsRentController().submit(
         FakeRequest().withFormUrlEncodedBody()
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = throughputAffectsRentController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("doesRentVaryToThroughput" -> "yes")
       )
       status(res) shouldBe BAD_REQUEST
     }
