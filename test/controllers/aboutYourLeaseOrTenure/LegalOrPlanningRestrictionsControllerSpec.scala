@@ -94,6 +94,13 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = legalOrPlanningRestrictionsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("legalOrPlanningRestrictions" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "Legal or planning restrictions form" should {

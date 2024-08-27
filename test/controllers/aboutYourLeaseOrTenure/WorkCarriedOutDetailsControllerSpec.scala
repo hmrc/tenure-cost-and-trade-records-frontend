@@ -26,6 +26,8 @@ import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
+import play.api.test.*
+import play.api.test.Helpers.*
 
 class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
 
@@ -84,6 +86,13 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
         "error.workCarriedOutDetails.required",
         form
       )
+    }
+
+    "Redirect when form data submitted" in {
+      val res = workCarriedOutDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("workCarriedOutDetails" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

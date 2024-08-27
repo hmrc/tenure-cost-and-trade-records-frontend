@@ -93,6 +93,14 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = rentPayableVaryAccordingToGrossOrNetController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("rentPayableVaryAccordingToGrossOrNet" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
   }
 
   "Rent payable vary according to gross or net form" should {

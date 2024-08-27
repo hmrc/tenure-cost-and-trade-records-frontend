@@ -65,5 +65,12 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = rentPayableVaryOnQuantityOfBeersController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("rentPayableVaryOnQuantityOfBeers" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

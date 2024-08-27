@@ -19,8 +19,9 @@ package controllers.aboutYourLeaseOrTenure
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
 import utils.TestBaseSpec
+import play.api.test.*
+import play.api.test.Helpers.*
 
 class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
@@ -62,6 +63,13 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = incentivesPaymentsConditionsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = incentivesPaymentsConditionsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("formerLeaseSurrendered" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }

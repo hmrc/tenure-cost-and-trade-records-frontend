@@ -97,6 +97,13 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
         val res = tiedForGoodsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
+
+      "Redirect when form data submitted" in {
+        val res = tiedForGoodsController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("tiedForGoods" -> "yes")
+        )
+        status(res) shouldBe SEE_OTHER
+      }
     }
   }
 
