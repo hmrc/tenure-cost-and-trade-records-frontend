@@ -2762,7 +2762,7 @@ error.rentPayableDetails.required = Please give details of selected items includ
 error.rentPayableDetails.maxLength = Description of selected items included in rent payable must be {0} characters or fewer
 
 # WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
-whatYouWillNeed.heading = What you'’'ll need to complete this section
+whatYouWillNeed.heading = What you’ll need to complete this section
 whatYouWillNeed.subheading = To complete this section, you’ll need figures relating to the categories listed here. If any of the information we need does not apply to your property, enter the number 0 where requested.
 whatYouWillNeed.l1 = Gwybodaeth am ddeiliadaeth a chyfrifyddu
 whatYouWillNeed.p1 = When you built or took over the property, and your financial year end
