@@ -14,10 +14,11 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
+@import models.ForTypes
 @import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,15 +27,18 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[IntervalsOfRentReview], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(form: Form[IntervalsOfRentReview])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
- pageHeading = messages("intervalsOfRentReview.heading"),
- showSection = true,
-    summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url,
- theForm = theForm
+    pageHeading = messages("intervalsOfRentReview.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = request.sessionData.forType match {
+        case ForTypes.for6045 | ForTypes.for6046 => controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
+        case _ => controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
+    },
+    theForm = form
 ) {
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.submit()) {
@@ -55,12 +59,12 @@
               content = Text(messages("intervalsOfRentReview.label")),
               classes = "govuk-label--m"
           ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("intervalsOfRentReview"),
-      ).withFormField(theForm("intervalsOfRentReview"))
+          errorMessage = form.errors.asTextErrorMessageForField("intervalsOfRentReview"),
+      ).withFormField(form("intervalsOfRentReview"))
     )
 
     @includes.dateFields(
-        form = theForm,
+        form = form,
         field = "nextReview",
         govukDate = govukDateInput,
         showDays = true,

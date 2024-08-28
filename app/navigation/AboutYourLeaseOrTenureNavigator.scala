@@ -235,6 +235,18 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for rent payable vary quantity of beer routing")
     }
 
+  private def methodToFixCurrentRentRouting: Session => Call =
+    _.forType match {
+      case ForTypes.for6045 | ForTypes.for6046 => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
+      case _ => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+    }
+
+  private def isRentUnderReviewRouting: Session => Call =
+    _.forType match {
+      case ForTypes.for6045 | ForTypes.for6046 => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+      case _ => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+    }
+
   private def intervalsOfRentReviewRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6020 =>
@@ -553,7 +565,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     rentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
     rentVaryQuantityOfBeersDetailsId              -> (_ => aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()),
     HowIsCurrentRentFixedId                       -> (_ => aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
-    MethodToFixCurrentRentsId                     -> (_ => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()),
+    MethodToFixCurrentRentsId                     -> methodToFixCurrentRentRouting,
     IntervalsOfRentReviewId                       -> intervalsOfRentReviewRouting,
     CanRentBeReducedOnReviewId                    -> canRentBeReducedRouting,
     PropertyUpdatesId                             -> propertyUpdatesRouting,
@@ -585,7 +597,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IsVATPayableForWholePropertyId                -> (_ =>
       aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     ),
-    IsRentUnderReviewId                           -> (_ => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()),
+    IsRentUnderReviewId                           -> isRentUnderReviewRouting,
     DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
     IncludedInRentParkingSpacesId                 -> (_ => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()),
     IsParkingRentPaidSeparatelyId                 -> isParkingRentPaidSeparatelyRouting,
