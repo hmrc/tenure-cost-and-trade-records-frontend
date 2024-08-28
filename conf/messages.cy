@@ -320,7 +320,7 @@ hint.areYouThirdParty.no = Dewiswch ‘nac ydw’ os ydych yn berchennog, cyfarw
 error.areYouThirdParty.missing = Dewiswch ‘ydw’ os ydych yn gweithredu ar ran y sefydliad
 
 areYouThirdParty.label = Are you a third party completing this declaration on behalf of {0}?
-areYouThirdParty6076.heading = Third Parties
+areYouThirdParty6076.heading = Third parties
 areYouThirdParty6076.p1 = We need to know if you are completing this declaration on behalf of {0} in an official capacity.
 areYouThirdParty6076.yes = Choose <b>Yes</b> if you have been contracted by {0} to complete this declaration. Examples of third parties include, but are not limited to:
 areYouThirdParty6076.l1 = agents
@@ -2028,6 +2028,7 @@ error.costOfSales6076.otherSales.required = Enter 0 if you did not have any othe
 error.costOfSales6076.otherSales.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
 error.costOfSales6076.otherSales.negative = Other costs in the year ending {0} cannot be a negative number
 error.costOfSales6076.otherSalesDetails.maxLength = Description of a other costs must be 2,000 characters or fewer
+error.costOfSales6076Intermittent.details.required = Enter details of any costs not listed
 
 #STAFF COSTS 6076
 
@@ -2761,7 +2762,7 @@ error.rentPayableDetails.required = Please give details of selected items includ
 error.rentPayableDetails.maxLength = Description of selected items included in rent payable must be {0} characters or fewer
 
 # WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
-whatYouWillNeed.heading = What you‘ll need to complete this section
+whatYouWillNeed.heading = What you'’'ll need to complete this section
 whatYouWillNeed.subheading = To complete this section, you’ll need figures relating to the categories listed here. If any of the information we need does not apply to your property, enter the number 0 where requested.
 whatYouWillNeed.l1 = Gwybodaeth am ddeiliadaeth a chyfrifyddu
 whatYouWillNeed.p1 = When you built or took over the property, and your financial year end
@@ -2781,8 +2782,7 @@ whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal
 whatYouWillNeed.l9 = Head office expenses
 whatYouWillNeed.p9 = If applicable
 whatYouWillNeed.subheading2 = If you do not have this information to hand
-whatYouWillNeed.p10 = Select <b>Save as draft</b> button and complete the declaration when you’re ready.
-
+whatYouWillNeed.p10 = Select <b>Save as draft</b> and complete the declaration when you’re ready.
 
 # CHECK YOUR ANSWERS
 ####################
