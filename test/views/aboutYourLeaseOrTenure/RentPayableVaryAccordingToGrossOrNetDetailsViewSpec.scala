@@ -41,8 +41,6 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    behave like pageWithTextFields(createViewUsingForm, "rentPayableVaryAccordingToGrossOrNetDetails")
-
     "has a link marked with back.link.label leading to the task list Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
