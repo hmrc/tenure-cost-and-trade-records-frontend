@@ -950,7 +950,7 @@ error.rentPayableVaryAccordingToGrossOrNet.missing = Dewiswch ‘ydy’ os yw’
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ####################################################
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Disgrifiwch sut mae’ch trosiant yn effeithio ar y rhent sy’n daladwy
-label.rentPayableVaryAccordingToGrossOrNetDetails = Er enghraifft, rhowch fanylion unrhyw gyfradd sylfaenol y gallech ei thalu, ynghyd ag unrhyw gynyddrannau canrannol ychwanegol pan fydd eich trosiant yn fwy na throthwyon penodol.
+rentPayableVaryAccordingToGrossOrNetDetails.hint = Er enghraifft, rhowch fanylion unrhyw gyfradd sylfaenol y gallech ei thalu, ynghyd ag unrhyw gynyddrannau canrannol ychwanegol pan fydd eich trosiant yn fwy na throthwyon penodol.
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Nodwch ddisgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = Mae’n rhaid i’r disgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent fod yn 500 o gymeriadau neu lai
 

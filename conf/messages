@@ -959,7 +959,7 @@ error.rentPayableVaryAccordingToGrossOrNet.missing = Select yes if the rent vari
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ####################################################
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Describe how your rent payable is affected by your turnover
-label.rentPayableVaryAccordingToGrossOrNetDetails = For example, provide details of any base rate you may pay, plus any additional percentage increments when your turnover exceeds certain thresholds.
+rentPayableVaryAccordingToGrossOrNetDetails.hint = For example, provide details of any base rate you may pay, plus any additional percentage increments when your turnover exceeds certain thresholds.
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Enter a description of how your turnover affects your rent
 error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = The description of how your turnover affects your rent should be 500 characters or fewer
 
