@@ -29,10 +29,10 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
 
   override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(messages)
 
-  def createView = () => intervalsOfRentReviewView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => intervalsOfRentReviewView(form)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IntervalsOfRentReview]) =>
-    intervalsOfRentReviewView(form, Summary("99996010001"))(fakeRequest, messages)
+    intervalsOfRentReviewView(form)(fakeRequest, messages)
 
   "Intervals of rent reviews view" must {
 
