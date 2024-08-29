@@ -305,6 +305,9 @@ POST        /additional-catering                                    controllers.
 GET         /additional-bars-clubs                                  controllers.aboutthetradinghistory.AdditionalBarsClubsController.show()
 POST        /additional-bars-clubs                                  controllers.aboutthetradinghistory.AdditionalBarsClubsController.submit()
 
+GET         /additional-amusements                                  controllers.aboutthetradinghistory.AdditionalAmusementsController.show()
+POST        /additional-amusements                                  controllers.aboutthetradinghistory.AdditionalAmusementsController.submit()
+
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
 

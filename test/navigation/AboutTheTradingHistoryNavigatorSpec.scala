@@ -384,11 +384,18 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show()
     }
 
-    "return a function that goes to misc  page when additional activities bars and clubs is completed" in {
+    "return a function that goes to amusements page when additional activities bars and clubs is completed" in {
       navigator
         .nextPage(AdditionalBarsClubsId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController.show()
+        controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show()
+    }
+
+    "return a function that goes to misc  page when additional activities amusements is completed" in {
+      navigator
+        .nextPage(AdditionalAmusementsId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.routes.TaskListController.show() // TODO Misc
     }
 
     "return a function that goes to task list  page when additional activities cya completed" in {

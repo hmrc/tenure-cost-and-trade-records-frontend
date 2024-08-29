@@ -141,6 +141,10 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(AdditionalBarsClubsId.toString.equals("additionalBarsClubsPage"))
     }
 
+    "Identifier for additional amusements" in {
+      assert(AdditionalAmusementsId.toString.equals("additionalAmusementsPage"))
+    }
+
     "Identifier for caravans open all year" in {
       assert(CaravansOpenAllYearId.toString.equals("caravansOpenAllYearPage"))
     }

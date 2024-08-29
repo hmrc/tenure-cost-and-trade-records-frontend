@@ -1,0 +1,114 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.DateUtilLocalised
+@import models.submissions.aboutthetradinghistory.AdditionalAmusements
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+
+@this(
+
+        layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        dateUtil: DateUtilLocalised,
+        govukInsetText: GovukInsetText
+
+)
+
+
+@(form: Form[Seq[AdditionalAmusements]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+
+@turnoverRow(formField: String,  labelKey: String, classes: String, suffix: Option[PrefixOrSuffix] = None) = @{
+    Seq(
+        TableRow(
+            content = Text(messages(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    classes = classes,
+                    attributes = Map(
+                        "maxlength" -> "2",
+                        "aria-label" -> messages(labelKey)
+                    ),
+                    suffix = suffix
+                ).withFormField(form(formField)))
+            )
+        )
+    )
+}
+
+
+
+@layout(
+    pageHeading = messages("additionalAmusements.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages("additionalAmusements.p")</p>
+
+
+    @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.submit()) {
+
+
+        <table class="hmrc-responsive-table govuk-!-width-full">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("additionalActivities.common.financialYear"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            turnoverRow(
+                                s"additionalAmusements[$idx].weeks",
+                                "additionalActivities.common.tradingPeriod",
+                                "govuk-input--width-2",
+                                Some(PrefixOrSuffix(
+                                    content = Text(messages("label.weeks"))
+                                ))),
+                            turnoverRow(
+                                s"additionalAmusements[$idx].receipts",
+                                "additionalAmusements.receipts.label",
+                                "govuk-input--width-5",
+                                PrefixOrSuffix(content = Text(messages("label.pound")))))))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}
