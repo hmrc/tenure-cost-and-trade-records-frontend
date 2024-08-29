@@ -244,7 +244,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .nextPage(WhatRentBasedOnPageId, session6030)
         .apply(
           session6030
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
         .show()
     }
 

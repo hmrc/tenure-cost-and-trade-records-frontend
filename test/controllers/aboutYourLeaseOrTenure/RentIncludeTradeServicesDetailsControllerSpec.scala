@@ -66,5 +66,12 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = rentIncludeTradeServicesDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("describeServices" -> "text")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }
