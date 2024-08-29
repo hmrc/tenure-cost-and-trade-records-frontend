@@ -1126,6 +1126,8 @@ describeFittingsTextArea.heading = Give details of the equipment you can use as 
 label.describeFittingsTextArea = Give details of the equipment you can use as part of your rent
 describeFittingsTextArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
 error.rentIncludeFixturesAndFittingsDetails.title = Sum included to cover equipment
+error.describeFittingsTextArea.required = Enter details of the equipment you can use as part of your rent
+error.describeFittingsTextArea.maxLength = Description of of the equipment you can use as part of your rent must be 2000 characters or less
 
 # INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################

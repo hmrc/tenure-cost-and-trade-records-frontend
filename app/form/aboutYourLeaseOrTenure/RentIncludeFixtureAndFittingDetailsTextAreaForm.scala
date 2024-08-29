@@ -30,7 +30,7 @@ object RentIncludeFixtureAndFittingDetailsTextAreaForm {
       single(
         "describeFittingsTextArea" -> default(text, "").verifying(
           nonEmpty(errorMessage = "error.describeFittingsTextArea.required"),
-          maxLength(500, "error.describeFittingsTextArea.maxLength")
+          maxLength(2000, "error.describeFittingsTextArea.maxLength")
         )
       )
     )

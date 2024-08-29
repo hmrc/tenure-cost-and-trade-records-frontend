@@ -48,7 +48,7 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
       )
     }
 
@@ -59,7 +59,7 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
       )
     }
 
@@ -81,7 +81,7 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
       )
     }
   }

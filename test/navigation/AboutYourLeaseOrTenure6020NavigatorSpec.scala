@@ -311,7 +311,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(WhatRentBasedOnPageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
         .show()
     }
 
