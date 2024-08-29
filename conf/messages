@@ -1129,6 +1129,7 @@ label.describeFittingsTextArea = Give details of the equipment you can use as pa
 describeFittingsTextArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
 error.rentIncludeFixturesAndFittingsDetails.title = Sum included to cover equipment
 error.describeFittingsTextArea.required = Enter details of the equipment you can use as part of your rent
+error.describeFittingsTextArea.maxLength = Description of of the equipment you can use as part of your rent must be 2000 characters or less
 
 # INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################
@@ -1146,7 +1147,7 @@ propertyUpdates.heading = Property updates during the current lease
 propertyUpdates.declare = You must declare any work you have done to the property during the current lease. Only include any alterations, improvements, refurbishment, initial fitting out or initial repairs that may have affected the property’s value.
 propertyUpdates.assign  = If the lease was assigned to you by another party, you must declare any works carried out by them under current lease.
 propertyUpdates.label   = Has the property been altered, improved or updated in any way during the current lease?
-error.propertyUpdates.missing    = Select yes if the property been altered, improved or updated in any way during the current lease
+error.propertyUpdates.missing = Select yes if the property been altered, improved or updated in any way during the current lease
 
 #WORK CARRIED OUT DETAILS
 #########################
