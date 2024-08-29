@@ -90,8 +90,8 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
-        controllers.routes.TaskListController.show().url
-      ) // TODO Additional MISC
+        controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show().url
+      )
     }
 
     "return 400 and error message for invalid weeks" in {

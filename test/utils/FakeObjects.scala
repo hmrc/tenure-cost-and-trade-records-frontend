@@ -633,6 +633,12 @@ trait FakeObjects {
             grossClubSeparate = Some(BigDecimal(1000)),
             costOfEntertainment = Some(BigDecimal(500))
           )
+        ),
+        additionalAmusements = Some(
+          AdditionalAmusements(
+            tradingPeriod = 52,
+            receipts = Some(BigDecimal(2500))
+          )
         )
       ),
       TurnoverSection6045(

@@ -43,7 +43,8 @@ case class TurnoverSection6045(
   // 3.3.0 Additional activities
   additionalShops: Option[AdditionalShops] = None,
   additionalCatering: Option[AdditionalCatering] = None,
-  additionalBarsClubs: Option[AdditionalBarsClubs] = None
+  additionalBarsClubs: Option[AdditionalBarsClubs] = None,
+  additionalAmusements: Option[AdditionalAmusements] = None
 )
 
 object TurnoverSection6045 {
