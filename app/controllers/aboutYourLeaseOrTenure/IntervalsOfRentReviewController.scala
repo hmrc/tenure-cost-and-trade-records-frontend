@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,8 +46,7 @@ class IntervalsOfRentReviewController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.intervalsOfRentReview) match {
           case Some(data) => intervalsOfRentReviewForm.fill(data)
           case _          => intervalsOfRentReviewForm
-        },
-        request.sessionData.toSummary
+        }
       )
     )
   }
@@ -55,7 +54,7 @@ class IntervalsOfRentReviewController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IntervalsOfRentReview](
       intervalsOfRentReviewForm,
-      formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
         session.saveOrUpdate(updatedData)

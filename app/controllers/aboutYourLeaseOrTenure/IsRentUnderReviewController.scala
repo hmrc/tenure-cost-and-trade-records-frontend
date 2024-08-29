@@ -17,8 +17,9 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.IsRentUnderReviewForm.isRentUnderReviewForm
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
@@ -77,7 +78,10 @@ class IsRentUnderReviewController @Inject() (
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
-  private def getBackLink: String =
-    controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.forType match {
+      case ForTypes.for6045 | ForTypes.for6046 => routes.MethodToFixCurrentRentController.show().url
+      case _ => routes.IntervalsOfRentReviewController.show().url
+    }
 
 }

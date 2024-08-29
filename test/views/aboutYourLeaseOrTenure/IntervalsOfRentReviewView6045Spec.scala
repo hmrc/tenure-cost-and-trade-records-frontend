@@ -24,13 +24,13 @@ import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRentReview] {
+class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[IntervalsOfRentReview] {
 
   val messageKeyPrefix = "intervalsOfRentReview"
 
   override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(messages)
 
-  val sessionRequest = SessionRequest(stillConnectedDetails6011YesSession, fakeRequest)
+  val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, fakeRequest)
 
   def createView = () => intervalsOfRentReviewView(form)(sessionRequest, messages)
 
@@ -46,7 +46,7 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
     }
 
     "Section heading is visible" in {

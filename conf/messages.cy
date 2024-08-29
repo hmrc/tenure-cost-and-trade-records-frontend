@@ -1321,7 +1321,7 @@ error.addAnotherLetting.required = Dewiswch ‘oes’ os ydych am ychwanegu goso
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Ychwanegiadau neu welliannau a ddiystyrwyd
+tenantsAdditionsDisregarded.heading = Ychwanegiadau neu welliannau
 tenantsAdditionsDisregarded.p1 = Os yw’r rhent yn seiliedig ar werth yr eiddo ar y farchnad cyn i’r tenant wneud unrhyw ychwanegiadau neu welliannau, rhaid i chi ddarparu manylion.
 tenantsAdditionsDisregarded.p2 = Gallai enghreifftiau o ychwanegiadau neu welliannau gynnwys, ond heb fod yn gyfyngedig i’r canlynol:
 tenantsAdditionsDisregarded.list1 = gosod cragen
