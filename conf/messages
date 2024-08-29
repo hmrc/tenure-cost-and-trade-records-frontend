@@ -1205,18 +1205,21 @@ error.methodToFixCurrentRents.required = Select how the current rent was agreed
 
 # HOW IS CURRENT RENT FIXED
 ##########################
-howIsCurrentRentFixed.heading = Setting the current rent
-howIsCurrentRentFixed.label = How is the current rent fixed?
+howIsCurrentRentFixed.heading = How was the current rent fixed?
 label.newLeaseAgreement = At the beginning of a new lease or agreement
 label.interimRent = As an interim rent under the Landlord and Tenant Act
 label.rentReview = At a rent review
 label.renewalLeaseTenancy = At a lease renewal
 label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
-label.rentActuallyAgreed.help = For example, 27 9 2017.
-help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
-help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed options happened. It may not necessarily be the date of occupation, or the date the rent was first paid.
-help.rentActuallyAgreed.p2 = If you are still unsure, refer to your lease or agreement.
+help.rentActuallyAgreed.title = If you’re not sure which date to use
+help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when:
+help.rentActuallyAgreed.list1.item1 = a new lease or agreement is signed
+help.rentActuallyAgreed.list1.item2 = an interim rent is established
+help.rentActuallyAgreed.list1.item3 = a new rent is established following a rent review
+help.rentActuallyAgreed.list1.item4 = a lease is renewed
+help.rentActuallyAgreed.list1.item5 = a sale and leaseback is agreed
+help.rentActuallyAgreed.p2 = It may not necessarily be the date of occupation or the date a rent is first paid.
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 
