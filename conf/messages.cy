@@ -1149,7 +1149,7 @@ error.propertyUpdates.missing   = Select yes if the property been altered, impro
 
 #WORK CARRIED OUT DETAILS
 #########################
-workCarriedOutDetails.heading = Give details of the work carried out by you, or a previous occupier, under the same lease
+workCarriedOutDetails.heading = Rhowch fanylion y gwaith a waned
 workCarriedOutDetails.hint = Rhowch ddisgrifiad byr o’r gwaith, faint a gostiodd, a’r dyddiad cwblhau.
 error.workCarriedOutDetails.required = Enter a description of the work carried out
 error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
