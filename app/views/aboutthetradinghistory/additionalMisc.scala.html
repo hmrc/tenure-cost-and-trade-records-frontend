@@ -1,0 +1,230 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.DateUtilLocalised
+@import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails}
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+
+@this(
+
+        layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        dateUtil: DateUtilLocalised,
+        govukInsetText: GovukInsetText,
+        hmrcCharacterCount: HmrcCharacterCount,
+
+)
+
+
+@(form: Form[(Seq[AdditionalMisc], AdditionalMiscDetails)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@columns = @{
+    request.sessionData.financialYearEndDates6045.size
+}
+
+@rowLabel(labelKey: String, hint: Option[String] = None, explanationMsg: Option[String] = None) = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold ">@messages(labelKey)</span>
+        <span>@explanationMsg.map {explanationMsg => @messages(explanationMsg)}</span>
+    </p>
+       @hint.map { hint =>
+    <p class="govuk-hint">@messages(hint)</p>
+       }
+}
+
+@rowLabelWithHint(labelKey: String) = {
+<p class="govuk-hint govuk-!-margin-top-0">@messages(labelKey)</p>
+}
+
+@poundPrefix = @{PrefixOrSuffix(content = Text(messages("label.pound")))}
+
+@vanSuffix=    @{PrefixOrSuffix(content = Text(messages("additionalMisc.numberOfVans.suffix")))}
+
+@turnoverRow(formField: String, labelKey: String, hint: String = "", classes: String = "", prefix: Option[PrefixOrSuffix] = poundPrefix, inputClasses: String = "", explanationMsg: String = "")  = @{
+
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey, Option(hint).filterNot(_.isEmpty), explanationMsg)),
+            classes = classes
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        prefix = prefix,
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages(labelKey)),
+                        classes = inputClasses
+                    ).withFormField(form(formField))
+                )
+            ),
+            classes = classes
+        )
+    )
+}
+
+@turnoverRowDetails(idx: Int, formField: String, labelKey: String) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabelWithHint(labelKey)),
+            classes = "govuk-!-padding-bottom-0"
+        ),
+        TableRow(
+            content = HtmlContent(
+                otherExpensesDetailsContent(idx,labelKey,formField)),
+            classes = "govuk-!-padding-bottom-0"
+        )
+    )
+}
+
+@otherExpensesDetailsTextarea(formField: String) = @{
+    hmrcCharacterCount(
+        CharacterCount(
+            rows = 3,
+            maxLength = 1000,
+            errorMessage = form.errors.asTextErrorMessageForField(formField),
+            label = Label(content = Text(messages("additionalMisc.giveDetails")))
+        ).withFormField(form(formField))
+    )
+}
+
+@otherExpensesDetailsContent(idx: Int, labelKey: String, formField: String) = {
+    @if(columns == 1) {
+        @otherExpensesDetailsTextarea(formField)
+    } else {
+        <div class="hmrc-overlap-columns-@columns-parent">
+            @if(idx == 0) {
+                <div class="hmrc-overlap-columns-@columns govuk-!-margin-bottom-0">
+                    @otherExpensesDetailsTextarea(formField)
+                </div>
+                }
+        </div>
+    }
+}
+
+@layout(
+    pageHeading = messages("additionalMisc.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body">@messages("additionalMisc.p")</p>
+
+
+    @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalMiscController.submit()) {
+
+
+
+
+
+        <table class="hmrc-responsive-table govuk-!-width-full">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("additionalActivities.common.financialYear"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("additionalActivities.common.tradingPeriod"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "2",
+                                                "aria-label" -> messages("additionalActivities.common.tradingPeriod")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("label.weeks"))
+                                            ))
+                                        ).withFormField(form(s"additionalMisc.[$idx].tradingPeriod")))
+                                    )
+                                )
+                            ),
+                            turnoverRow(
+                                s"additionalMisc.[$idx].leisureReceipts",
+                                "additionalMisc.leisureReceipts.label", "",
+                                "no-border-bottom"),
+                            turnoverRowDetails(
+                                idx,
+                                "details.leisureReceiptsDetails",
+                                "additionalMisc.leisureReceipts.hint"
+                                ),
+                            turnoverRow(
+                                s"additionalMisc.[$idx].winterStorageReceipts",
+                                "additionalMisc.winterStorageReceipts.label",
+                                classes = "no-border-bottom"),
+                            turnoverRow(
+                                s"additionalMisc.[$idx].numberOfVans",
+                                "additionalMisc.numberOfVans.label",
+                                prefix = None,
+                                inputClasses = "govuk-input--width-3"),
+                            turnoverRow(
+                                s"additionalMisc.[$idx].otherActivitiesReceipts",
+                                "additionalMisc.otherActivitiesReceipts.label",
+                                classes = "no-border-bottom"),
+                          turnoverRowDetails(
+                              idx,
+                              "details.otherActivitiesReceiptsDetails",
+                              "additionalMisc.otherActivitiesReceipts.hint"
+                              ),
+                            turnoverRow(
+                                s"additionalMisc.[$idx].otherServicesReceipts",
+                                "additionalMisc.otherServicesReceipts.label",
+                                "additionalMisc.otherServicesReceipts.hint",
+                                explanationMsg = "additionalMisc.otherServicesReceipts.label.explain"),
+                            turnoverRow(
+                                s"additionalMisc.[$idx].bottledGasReceipts",
+                                "additionalMisc.bottledGasReceipts.label",
+                                explanationMsg = "additionalMisc.bottledGasReceipts.explain")
+                        )))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

@@ -313,7 +313,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     AdditionalShopsId                           -> (_ => controllers.aboutthetradinghistory.routes.AdditionalCateringController.show()),
     AdditionalCateringId                        -> (_ => controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show()),
     AdditionalBarsClubsId                       -> (_ => controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show()),
-    AdditionalAmusementsId                      -> (_ => controllers.routes.TaskListController.show()), // TODO Misc
+    AdditionalAmusementsId                      -> (_ => controllers.aboutthetradinghistory.routes.AdditionalMiscController.show()),
+    AdditionalMiscId                            -> (_ =>
+      controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
+    ),
     WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>

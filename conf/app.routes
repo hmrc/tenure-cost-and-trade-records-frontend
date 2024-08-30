@@ -308,6 +308,9 @@ POST        /additional-bars-clubs                                  controllers.
 GET         /additional-amusements                                  controllers.aboutthetradinghistory.AdditionalAmusementsController.show()
 POST        /additional-amusements                                  controllers.aboutthetradinghistory.AdditionalAmusementsController.submit()
 
+GET         /additional-misc                                        controllers.aboutthetradinghistory.AdditionalMiscController.show()
+POST        /additional-misc                                        controllers.aboutthetradinghistory.AdditionalMiscController.submit()
+
 GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
 POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
 

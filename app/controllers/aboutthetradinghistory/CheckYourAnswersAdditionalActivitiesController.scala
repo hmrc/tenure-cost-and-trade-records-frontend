@@ -95,7 +95,7 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
     request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
       _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
     ) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show().url // TODO !!!
+      case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.AdditionalMiscController.show().url
       case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
       case _               => controllers.routes.TaskListController.show().url
     }

@@ -639,6 +639,9 @@ trait FakeObjects {
             tradingPeriod = 52,
             receipts = Some(BigDecimal(2500))
           )
+        ),
+        additionalMisc = Some(
+          AdditionalMisc(52, Some(100.00), Some(100.00), Some(10), Some(100.00), Some(100.00))
         )
       ),
       TurnoverSection6045(
@@ -696,6 +699,9 @@ trait FakeObjects {
           )
         )
       )
+    ),
+    additionalMiscDetails = Some(
+      AdditionalMiscDetails(Some("details"), Some("details"))
     )
   )
 

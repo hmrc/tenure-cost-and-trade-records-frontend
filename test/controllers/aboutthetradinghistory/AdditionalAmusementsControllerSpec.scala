@@ -87,7 +87,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
-        controllers.routes.TaskListController.show().url // TODO Misc
+        controllers.aboutthetradinghistory.routes.AdditionalMiscController.show().url
       )
     }
 
