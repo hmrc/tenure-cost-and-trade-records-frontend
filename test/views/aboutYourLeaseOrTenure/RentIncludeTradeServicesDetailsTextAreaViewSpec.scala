@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

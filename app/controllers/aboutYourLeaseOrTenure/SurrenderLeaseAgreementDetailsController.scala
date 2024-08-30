@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,9 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetailsForm.surrenderedLeaseAgreementDetailsForm
-import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour.updateAboutLeaseOrAgreementPartFour
 import models.submissions.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -27,7 +26,6 @@ import navigation.identifiers.SurrenderedLeaseAgreementDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.surrenderedLeaseAgreementDetails
 
 import javax.inject.{Inject, Named, Singleton}

@@ -77,7 +77,7 @@ class TenantsAdditionsDisregardedController @Inject() (
         ) match {
           case Some("yes") =>
             controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
-          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+          case _           => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
         }
       case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url

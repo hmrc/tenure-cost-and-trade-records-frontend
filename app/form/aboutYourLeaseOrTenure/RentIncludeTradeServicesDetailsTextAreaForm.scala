@@ -16,11 +16,9 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import play.api.i18n.Messages
 
 object RentIncludeTradeServicesDetailsTextAreaForm {
 
