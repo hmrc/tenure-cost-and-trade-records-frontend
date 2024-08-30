@@ -37,58 +37,66 @@
 
 @(theForm: Form[HowIsCurrentRentFixed], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
-@layout(
- pageHeading = messages("howIsCurrentRentFixed.heading"),
- showH1 = true,
- showSection = true,
-    summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
-) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.submit()) {
-
-
-    @includes.radioButtons(
-      govukRadios,
-      theForm,
-      "howIsCurrentRentFixed",
-      "howIsCurrentRentFixed.label",
-      "govuk-fieldset__legend--m",
-       items = Seq(
-         "newLeaseAgreement" -> messages("label.newLeaseAgreement"),
-         "interimRent" -> messages("label.interimRent"),
-         "rentReview" -> messages("label.rentReview"),
-         "renewalLeaseTenancy" -> messages("label.renewalLeaseTenancy"),
-         "saleLeaseback" -> messages("label.saleLeaseback")
-       ).map(radioItem => RadioItem(
-         content = Text(radioItem._2),
-         checked = radioItem._1.equals(theForm("howIsCurrentRentFixed").value.getOrElse("")),
-         value = Option(radioItem._1)
-       )),
-       inline = false
-    )
-
-    @includes.dateFields(
-        form = theForm,
-        field = "rentActuallyAgreed",
-        govukDate = govukDateInput,
-        helpText = messages("label.rentActuallyAgreed.help"),
-        showDays = true
-    )
-
-          @govukDetails(Details(
-              summary = Text(messages("help.rentActuallyAgreed.title")),
-              content = HtmlContent(
-              s"<p>${messages("help.rentActuallyAgreed.p1")}</p>" +
-              s"<p>${messages("help.rentActuallyAgreed.p2")}</p>"
-          )))
-
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+@rentActuallyAgreedHelp = {
+    <p>@messages("help.rentActuallyAgreed.p1")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("help.rentActuallyAgreed.list1.item1")</li>
+        <li>@messages("help.rentActuallyAgreed.list1.item2")</li>
+        <li>@messages("help.rentActuallyAgreed.list1.item3")</li>
+        <li>@messages("help.rentActuallyAgreed.list1.item4")</li>
+        <li>@messages("help.rentActuallyAgreed.list1.item5")</li>
+    </ul>
+    <p>@messages("help.rentActuallyAgreed.p2")</p>
 }
 
+@layout(
+    pageHeading = messages("howIsCurrentRentFixed.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
+) {
+
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.submit()) {
 
 
+        @includes.radioButtons(
+            govukRadios,
+            theForm,
+            "howIsCurrentRentFixed",
+            "howIsCurrentRentFixed.heading",
+            "govuk-fieldset__legend--l",
+            items = Seq(
+                "newLeaseAgreement" -> messages("label.newLeaseAgreement"),
+                "interimRent" -> messages("label.interimRent"),
+                "rentReview" -> messages("label.rentReview"),
+                "renewalLeaseTenancy" -> messages("label.renewalLeaseTenancy"),
+                "saleLeaseback" -> messages("label.saleLeaseback")
+            ).map(radioItem => RadioItem(
+                content = Text(radioItem._2),
+                checked = radioItem._1.equals(theForm("howIsCurrentRentFixed").value.getOrElse("")),
+                value = Option(radioItem._1)
+            )),
+            isHeading = true,
+            inline = false
+        )
 
+        @includes.dateFields(
+            form = theForm,
+            field = "rentActuallyAgreed",
+            govukDate = govukDateInput,
+            helpText = "",
+            showDays = true
+        )
+
+        @govukDetails(Details(
+            summary = Text(messages("help.rentActuallyAgreed.title")),
+            content = HtmlContent(rentActuallyAgreedHelp)
+        ))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}
