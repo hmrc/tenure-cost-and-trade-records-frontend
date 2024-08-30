@@ -645,8 +645,7 @@
 
  </ol>
 
-
- @if(completedSections == totalSections || completedSections6076 == totalSections6076) {
+ @if(completedSections == totalSections || forType == ForTypes.for6076 && completedSections6076 == totalSections6076) {
   @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
 
    <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
