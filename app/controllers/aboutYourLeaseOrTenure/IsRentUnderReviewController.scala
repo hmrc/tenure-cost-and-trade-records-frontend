@@ -81,7 +81,7 @@ class IsRentUnderReviewController @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
       case ForTypes.for6045 | ForTypes.for6046 => routes.MethodToFixCurrentRentController.show().url
-      case _ => routes.IntervalsOfRentReviewController.show().url
+      case _                                   => routes.IntervalsOfRentReviewController.show().url
     }
 
 }

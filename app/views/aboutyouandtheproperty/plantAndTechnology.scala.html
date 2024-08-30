@@ -44,11 +44,9 @@
             CharacterCount(
                 id = "plantAndTechnology",
                 name = "plantAndTechnology",
-                rows = 1,
                 maxLength = 1000,
                 hint = Hint(content = Text(messages("plantAndTechnology.hint"))),
-                errorMessage = theForm.errors.asTextErrorMessageForField("plantAndTechnology"),
-                classes = "govuk-!-width-two-thirds"
+                errorMessage = theForm.errors.asTextErrorMessageForField("plantAndTechnology")
             ).withFormField(theForm("plantAndTechnology"))
         )
 
