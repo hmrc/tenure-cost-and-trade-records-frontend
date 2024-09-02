@@ -18,7 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.{AnswerNo, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class AboutLeaseOrAgreementPartFour(

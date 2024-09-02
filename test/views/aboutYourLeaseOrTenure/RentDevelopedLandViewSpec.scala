@@ -17,7 +17,6 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentDevelopedLandForm
-import models.ForTypes
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import org.scalatest.matchers.must.Matchers.*

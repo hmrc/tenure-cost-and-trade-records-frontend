@@ -21,7 +21,6 @@ import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 import play.api.test.*

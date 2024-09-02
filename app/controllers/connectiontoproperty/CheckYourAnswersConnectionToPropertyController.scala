@@ -54,7 +54,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
               checkYourAnswersConnectionToPropertyForm.fill(checkYourAnswersAboutTheProperty)
             case _                                      => checkYourAnswersConnectionToPropertyForm
           },
-          getBackLink(request.sessionData),
+          getBackLink,
           request.sessionData.toSummary
         )
       )
@@ -68,7 +68,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
         BadRequest(
           checkYourAnswersConnectionToPropertyView(
             formWithErrors,
-            getBackLink(request.sessionData),
+            getBackLink,
             request.sessionData.toSummary
           )
         ),
@@ -86,6 +86,6 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
+  private def getBackLink: String =
     controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
 }

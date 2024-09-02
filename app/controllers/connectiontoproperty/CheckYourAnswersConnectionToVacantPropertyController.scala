@@ -18,7 +18,6 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import models.Session
 import navigation.ConnectionToPropertyNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -43,11 +42,11 @@ class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        checkYourAnswersConnectionToVacantPropertyView(getBackLink(request.sessionData))
+        checkYourAnswersConnectionToVacantPropertyView(getBackLink)
       )
     )
   }
 
-  private def getBackLink(answers: Session): String =
+  private def getBackLink: String =
     controllers.connectiontoproperty.routes.ProvideContactDetailsController.show().url
 }

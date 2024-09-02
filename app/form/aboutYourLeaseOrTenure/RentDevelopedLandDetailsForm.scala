@@ -16,7 +16,6 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}

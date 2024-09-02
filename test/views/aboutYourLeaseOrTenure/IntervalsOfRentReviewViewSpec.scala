@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.IntervalsOfRentReviewForm
-import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form

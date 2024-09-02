@@ -16,13 +16,11 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.OptionalCurrencyMapping.partOfAnnualRent
 import models.submissions.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetails
 import play.api.data.Form
 import form.MappingSupport.currencyMapping
 import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
-import play.api.i18n.Messages
+import play.api.data.validation.Constraints.nonEmpty
 
 object SurrenderedLeaseAgreementDetailsForm {
 
