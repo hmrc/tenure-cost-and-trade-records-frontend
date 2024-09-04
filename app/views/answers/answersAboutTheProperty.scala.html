@@ -97,7 +97,7 @@
                 sectionAnswers.conditionRow(
                     _.threeYearsConstructed.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails",
-                    _.costsBreakdown.map(Text(_).asHtml),
+                    _.costsBreakdown.map(Text(_).asHtml.toString),
                     aboutyouandtheproperty.routes.CostsBreakdownController.show(),
                     "costsBreakdown",
                     ("valueAsHtml", _ => None)

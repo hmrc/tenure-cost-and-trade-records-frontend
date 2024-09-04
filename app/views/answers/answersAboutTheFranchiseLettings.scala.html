@@ -106,7 +106,7 @@
                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operatorName",
                         _ => Seq(
                             businessSection.cateringOperationBusinessDetails.operatorName,
-                            Text(businessSection.cateringOperationBusinessDetails.typeOfBusiness).asHtml,
+                            Text(businessSection.cateringOperationBusinessDetails.typeOfBusiness).asHtml.toString,
                             businessSection.cateringOperationBusinessDetails.howBusinessPropertyIsUsed
                         ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
                         aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx)), "operatorName",

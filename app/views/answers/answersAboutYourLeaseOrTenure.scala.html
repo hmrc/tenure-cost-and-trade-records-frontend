@@ -680,7 +680,7 @@
                 _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
                 aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                     sectionAnswers2.conditionalOptionalRow(_.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
-                        _.capitalSumDescription.map( capitalSum => Text(capitalSum.capitalSumDescription).asHtml),
+                        _.capitalSumDescription.map( capitalSum => Text(capitalSum.capitalSumDescription).asHtml.toString),
                         aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",
