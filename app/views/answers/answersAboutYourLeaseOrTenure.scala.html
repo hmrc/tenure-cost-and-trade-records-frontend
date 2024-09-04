@@ -194,7 +194,7 @@
                     aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                     _.currentLeaseOrAgreementBegin
-                    .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor}"),
+                    .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${Text(lease.grantedFor).asHtml}"),
                     aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                     ("valueAsHtml", _ => None))
     ))
@@ -220,7 +220,7 @@
                     aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                     _.currentLeaseOrAgreementBegin
-                            .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor}"),
+                            .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${Text(lease.grantedFor).asHtml}"),
                     aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                     ("valueAsHtml", _ => None))
     ))
@@ -281,19 +281,19 @@
                     _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
                         """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
                                 + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
-                            _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                            _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                     aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR",
                     _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
                         """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
                                 + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
-                            _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                            _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                     aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                     _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
                         """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
                                 + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
-                            _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                            _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                     aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                     _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
@@ -337,19 +337,19 @@
                         _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
-                                _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                                _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                         aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR",
                         _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
-                                _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                                _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                         aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                         _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
                             """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
-                                _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                                _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                         aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                         _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
@@ -680,7 +680,7 @@
                 _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
                 aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                     sectionAnswers2.conditionalOptionalRow(_.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
-                        _.capitalSumDescription.map( capitalSum => capitalSum.capitalSumDescription),
+                        _.capitalSumDescription.map( capitalSum => Text(capitalSum.capitalSumDescription).asHtml),
                         aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",

@@ -97,7 +97,7 @@
                 sectionAnswers.conditionRow(
                     _.threeYearsConstructed.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails",
-                    _.costsBreakdown,
+                    _.costsBreakdown.map(Text(_).asHtml),
                     aboutyouandtheproperty.routes.CostsBreakdownController.show(),
                     "costsBreakdown",
                     ("valueAsHtml", _ => None)
@@ -154,7 +154,7 @@
                 _.tradingActivity.map(_.tradingActivityQuestion).map(x =>
                     """<p class="govuk-body">""" + x.name.capitalize + "</p>"
                             + sectionAnswers.answers.filter(_ => AnswerYes.name).flatMap(
-                        _.tradingActivity.flatMap(_.tradingActivityDetails)).fold("")(details => s"<p class=\"govuk-body\">$details</p>")),
+                        _.tradingActivity.flatMap(_.tradingActivityDetails)).map(Text(_).asHtml).fold("")(details => s"<p class=\"govuk-body\">$details</p>")),
                 aboutyouandtheproperty.routes.TradingActivityController.show(),
                 "buildingOperatingHaveAWebsite",
                 ("valueAsHtml", _ => None)
@@ -218,7 +218,7 @@
     sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyDetails.map(
             usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
-                    + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).fold("")(v => s"<p class=\"govuk-body\">$v")
+                    + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v")
         ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
         aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
         ("valueAsHtml", _ => None)) ++
