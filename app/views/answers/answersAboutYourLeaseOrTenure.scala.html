@@ -105,7 +105,7 @@
     sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.typeOfTenure",
         _.typeOfTenure.map(t =>
             t.typeOfTenure.map(item => messages(s"label.typeOfTenure.$item")) :+ t.typeOfTenureDetails.getOrElse("")
-        ).map(_.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+        ).map(_.map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
         aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(), "",
         ("valueAsHtml", _ => None))))
 }
@@ -119,7 +119,7 @@
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordDetails",
-        _.aboutTheLandlord.flatMap(l => l.landlordAddress.map( add => s"<p class=\"govuk-body\">${Text(l.landlordFullName).asHtml}</p>${add.escapedHtml}")),
+        _.aboutTheLandlord.flatMap(l => l.landlordAddress.map( add => s"<p class=\"govuk-body\">${l.landlordFullName.escapedHtml}</p>${add.escapedHtml}")),
         aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
         ("valueAsHtml", _ => None)) ++
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord",
@@ -194,7 +194,7 @@
                     aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                     _.currentLeaseOrAgreementBegin
-                    .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${Text(lease.grantedFor).asHtml}"),
+                    .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor.escapedHtml}"),
                     aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                     ("valueAsHtml", _ => None))
     ))
@@ -220,7 +220,7 @@
                     aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                     _.currentLeaseOrAgreementBegin
-                            .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${Text(lease.grantedFor).asHtml}"),
+                            .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor.escapedHtml}"),
                     aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                     ("valueAsHtml", _ => None))
     ))
@@ -274,26 +274,26 @@
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",
                     _.doesTheRentPayable.map(r =>
                         r.rentPayable.map(item => messages(s"checkbox.rentPayable.$item")) :+ r.detailsToQuestions.getOrElse("")
-                    ).map(_.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                    ).map(_.map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                     aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show(), "",
                     ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR",
                     _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
                         """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
                                 + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
-                            _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                            _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                     aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR",
                     _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
                         """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
                                 + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
-                            _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                            _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                     aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                     _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
                         """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
                                 + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
-                            _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                            _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                     aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                     _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
@@ -302,7 +302,7 @@
                     "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                     _.rentIncludeTradeServicesInformation.map(info =>
                         Seq(info.sumIncludedInRent.map(_.asMoney), Option(info.describeTheServices))
-                        .flatten[String].map(Text(_).asHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                        .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                     ),
                     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
                     ("valueAsHtml", _ => None)) ++
@@ -337,19 +337,19 @@
                         _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
-                                _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                                _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                         aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR",
                         _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
-                                _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                                _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                         aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                         _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
                             """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
-                                _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+                                _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                         aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                         _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
@@ -362,7 +362,7 @@
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.tradingServiceCount", idx + 1)</h2>
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeService",
-                    _ => Option(tradingService.details.description).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
+                    _ => Option(tradingService.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
                     aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(idx)), "tradeServiceDescription", ("valueAsHtml", _ => None))))
         }
         @govukSummaryList(SummaryList(rows =
@@ -384,7 +384,7 @@
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.paidServiceCount", idx + 1)</h2>
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfPaidService",
-                    _ => Option(servicePaid.details.description).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
+                    _ => Option(servicePaid.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
                     aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(idx)), "paidServiceDescription", ("valueAsHtml", _ => None)) ++
                         sectionAnswers3.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.costOfPaidService",
                             _ => servicePaid.annualCharge.map(_.annualCharge.asMoney),
@@ -440,7 +440,7 @@
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",
                     _.doesTheRentPayable.map(t =>
                         t.rentPayable.map(item => messages(s"checkbox.rentPayable.$item")) :+ t.detailsToQuestions.getOrElse("")
-                    ).map(_.map(Text(_).asHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                    ).map(_.map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                     aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show(), "",
                     ("valueAsHtml", _ => None))
     ))
@@ -458,7 +458,7 @@
                         "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
                         _.whatIsYourCurrentRentBasedOnDetails.map(r =>
                             Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
-                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(Text(d).asHtml.body))
+                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                         aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
@@ -495,7 +495,7 @@
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
-                            .flatten[String].map(Text(_).asHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                            .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
                         aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                         ("valueAsHtml", _ => None)) ++
@@ -525,7 +525,7 @@
                         "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
                         _.whatIsYourCurrentRentBasedOnDetails.map(r =>
                             Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
-                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(Text(d).asHtml.body))
+                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(_.escapedHtml))
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                         aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
@@ -554,7 +554,7 @@
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
-                            .flatten[String].map(Text(_).asHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                            .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
                         aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                         ("valueAsHtml", _ => None)) ++
@@ -586,7 +586,7 @@
                     "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
                     _.whatIsYourCurrentRentBasedOnDetails.map(r =>
                         Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
-                                ++ r.describe.fold(Seq.empty[String])(d => Seq(Text(d).asHtml.body))
+                                ++ r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                     ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                     aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                     ("valueAsHtml", _ => None)) ++
@@ -604,7 +604,7 @@
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                     _.intervalsOfRentReview.map(r =>
                         Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
-                        .flatten[String].map(Text(_).asHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                        .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                     ),
                     aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                     ("valueAsHtml", _ => None)) ++
@@ -680,7 +680,7 @@
                 _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
                 aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                     sectionAnswers2.conditionalOptionalRow(_.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
-                        _.capitalSumDescription.map( capitalSum => Text(capitalSum.capitalSumDescription).asHtml.toString),
+                        _.capitalSumDescription.map(_.capitalSumDescription.escapedHtml),
                         aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",

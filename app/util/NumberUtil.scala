@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 
 package util
+
+import uk.gov.hmrc.govukfrontend.views.html.components.Text
 
 import java.text.NumberFormat
 import java.util.Locale
@@ -61,6 +63,10 @@ object NumberUtil {
   implicit class stringHelpers(str: String) {
     def removeTrailingZeros: String =
       str.replace(".00", "")
+
+    def escapedHtml: String =
+      Text(str).asHtml.body
+
   }
 
   implicit class bigDecimalHelpers(bigDecimal: BigDecimal) {

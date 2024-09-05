@@ -19,6 +19,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
+@import util.NumberUtil._
 @import models.submissions.common.AnswerYes
 
 @this(govukSummaryList: GovukSummaryList)
@@ -48,7 +49,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.contact.details",
-        _.customerDetails.flatMap(x => s"<p class=\"govuk-body\">${Text(x.fullName).asHtml}</p><p class=\"govuk-body\">${x.contactDetails.email}</p><p class=\"govuk-body\">${x.contactDetails.phone}</p>"),
+        _.customerDetails.flatMap(x => s"<p class=\"govuk-body\">${x.fullName.escapedHtml}</p><p class=\"govuk-body\">${x.contactDetails.email}</p><p class=\"govuk-body\">${x.contactDetails.phone}</p>"),
         aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
         ("valueAsHtml", _ => None)) ++
@@ -97,7 +98,7 @@
                 sectionAnswers.conditionRow(
                     _.threeYearsConstructed.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails",
-                    _.costsBreakdown.map(Text(_).asHtml.toString),
+                    _.costsBreakdown.map(_.escapedHtml),
                     aboutyouandtheproperty.routes.CostsBreakdownController.show(),
                     "costsBreakdown",
                     ("valueAsHtml", _ => None)
@@ -114,7 +115,7 @@
 
         sectionAnswers.row(
             "checkYourAnswersAboutTheProperty.propertyUsage",
-            _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${Text(x.propertyDetailsString).asHtml}</p>"),
+            _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
             aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
             "propertyCurrentlyUsedString",
             ("valueAsHtml", _ => None)
@@ -126,7 +127,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${Text(x.propertyDetailsString).asHtml}</p>"),
+        _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
         aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
         "propertyCurrentlyUsedString",
         ("valueAsHtml", _ => None)
@@ -154,7 +155,7 @@
                 _.tradingActivity.map(_.tradingActivityQuestion).map(x =>
                     """<p class="govuk-body">""" + x.name.capitalize + "</p>"
                             + sectionAnswers.answers.filter(_ => AnswerYes.name).flatMap(
-                        _.tradingActivity.flatMap(_.tradingActivityDetails)).map(Text(_).asHtml).fold("")(details => s"<p class=\"govuk-body\">$details</p>")),
+                        _.tradingActivity.flatMap(_.tradingActivityDetails.map(_.escapedHtml))).fold("")(details => s"<p class=\"govuk-body\">$details</p>")),
                 aboutyouandtheproperty.routes.TradingActivityController.show(),
                 "buildingOperatingHaveAWebsite",
                 ("valueAsHtml", _ => None)
@@ -167,21 +168,21 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswersPartTwo.row(
         "checkYourAnswersAboutTheProperty.plantDescription",
-        _.plantAndTechnology.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
+        _.plantAndTechnology.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
         aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
         "plantAndTechnology",
         ("valueAsHtml", _ => None)
     ) ++
             sectionAnswersPartTwo.row(
                 "checkYourAnswersAboutTheProperty.generator",
-                _.generatorCapacity.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
+                _.generatorCapacity.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
                 aboutyouandtheproperty.routes.GeneratorCapacityController.show(),
                 "generatorCapacity",
                 ("valueAsHtml", _ => None)
             ) ++
             sectionAnswersPartTwo.row(
                 "checkYourAnswersAboutTheProperty.battery",
-                _.batteriesCapacity.map(dsc => s"<p class=\"govuk-body\">${Text(dsc).asHtml}</p>"),
+                _.batteriesCapacity.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
                 aboutyouandtheproperty.routes.BatteriesCapacityController.show(),
                 "batteriesCapacity",
                 ("valueAsHtml", _ => None)
@@ -218,7 +219,7 @@
     sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyDetails.map(
             usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
-                    + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField)).map(Text(_).asHtml).fold("")(v => s"<p class=\"govuk-body\">$v")
+                    + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField.map(_.escapedHtml))).fold("")(v => s"<p class=\"govuk-body\">$v")
         ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
         aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
         ("valueAsHtml", _ => None)) ++

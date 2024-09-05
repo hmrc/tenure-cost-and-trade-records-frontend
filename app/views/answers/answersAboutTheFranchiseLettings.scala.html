@@ -73,8 +73,8 @@
 
 @operatorNameRow(cateringOperation: CateringOperationSection, idx: Int) = @{
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operatorName",
-        _ => Option(cateringOperation.cateringOperationDetails.operatorName).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
-                Option(cateringOperation.cateringOperationDetails.typeOfBusiness).map(Text(_).asHtml.toString).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
+        _ => Option(cateringOperation.cateringOperationDetails.operatorName).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
+                Option(cateringOperation.cateringOperationDetails.typeOfBusiness.escapedHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
                 Option(cateringOperation.cateringOperationDetails.cateringAddress.escapedHtml).getOrElse(""),
         aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "operatorName",
         ("valueAsHtml", _ => None))
@@ -106,7 +106,7 @@
                     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operatorName",
                         _ => Seq(
                             businessSection.cateringOperationBusinessDetails.operatorName,
-                            Text(businessSection.cateringOperationBusinessDetails.typeOfBusiness).asHtml.toString,
+                            businessSection.cateringOperationBusinessDetails.typeOfBusiness.escapedHtml,
                             businessSection.cateringOperationBusinessDetails.howBusinessPropertyIsUsed
                         ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
                         aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx)), "operatorName",
@@ -191,7 +191,7 @@
                                 ) ++
                                 sectionAnswers.row(
                                     "checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated",
-                                    _ => cateringOperation.calculatingTheRent.map(_.description).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
+                                    _ => cateringOperation.calculatingTheRent.map(_.description.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
                                             cateringOperation.calculatingTheRent.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", dateUtil.formatDayMonthAbbrYear(x.dateInput)))
                                                     .getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
                                     aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx), "rentDetails",
@@ -282,8 +282,8 @@
                 @if(forType6015_6016) {
                     @govukSummaryList(SummaryList(rows =
                         sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
-                            _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
-                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness).map(Text(_).asHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
+                            _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
+                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness.escapedHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
                                     Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.escapedHtml).getOrElse(""),
                             aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingOperatorName",
                             ("valueAsHtml", _ => None)) ++
@@ -306,8 +306,8 @@
                 } else {
                     @govukSummaryList(SummaryList(rows =
                         sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
-                            _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
-                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness).map(Text(_).asHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
+                            _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
+                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness.escapedHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
                                     Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.escapedHtml).getOrElse(""),
                             aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingOperatorName",
                             ("valueAsHtml", _ => None)) ++
