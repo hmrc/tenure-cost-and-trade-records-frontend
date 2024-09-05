@@ -2519,7 +2519,7 @@ error.tentingPitches.numberOfPitches.negative = Number of pitches in the year en
 ########################
 additionalActivitiesOnSite.heading = Additional activities
 additionalActivitiesOnSite.subheading = Are there any additional income-generating activities on the site?
-additionalActivitiesOnSite.hint = This could include, but is not limited to, shops, bars, leisure activities ar caravan storage
+additionalActivitiesOnSite.hint = This could include, but is not limited to, shops, bars, leisure activities or caravan storage
 error.additionalActivitiesOnSite.missing = Select yes if there are additional income-generating activities on the site
 
 #ADDITIONAL ACTIVITIES ALL YEAR 6045
@@ -2559,7 +2559,7 @@ error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year 
 #BARS AND CLUBS ADDITIONAL ACTIVITIES 6045
 
 additionalBarsClubs.heading = Bars and clubs
-additionalBarsClubs.p = If you run any on-site bars and clubs, enter the receipts and costs excluding VAT. Where accounts do not relate to the whole of your season, state te relevant number of weeks.
+additionalBarsClubs.p = If you run any on-site bars and clubs, enter the receipts and costs excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 additionalBarsClubs.grossBar.label = Gross receipts from bar sale
 additionalBarsClubs.costBar.label = Cost of bar purchases
 additionalBarsClubs.grossClubMembership.label = Gross receipts from club membership fees
@@ -2594,12 +2594,66 @@ additionalActivities.common.costOfPurchase = Cost of purchase
 #ADDITIONAL AMUSEMENTS
 
 additionalAmusements.heading = Amusements
-additionalAmusements.p = If you run any on-site amusements such as gaming machines, juke boxes or pool tables, enter the receipts after the deduction of any prices and licence fee. Where accounts do not relate to the whole of your season, state te relevant number of weeks.
+additionalAmusements.p = If you run any on-site amusements such as gaming machines, juke boxes or pool tables, enter the receipts after the deduction of any prices and licence fee. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 additionalAmusements.receipts.label = Receipts (after deduction of prizes and licence fee)
 
 error.additionalAmusements.receipts.required = Enter 0 if you did not have any receipts from on-site amusements in the year ending {0}
 error.additionalAmusements.receipts.range    = Receipts from on-site amusements in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalAmusements.receipts.negative = Receipts from on-site amusements in the year ending {0} cannot be a negative number
+
+#ADDITIONAL MISC
+additionalMisc.heading = Miscellaneous activities
+additionalMisc.p = If you run any other activities for which a separate charge is made, enter the receipts excluding VAT
+additionalMisc.leisureReceipts.label = Gross receipts from other leisure facilities
+additionalMisc.leisureReceipts.hint = For example, golf, tennis, moorings, boat storage.
+additionalMisc.giveDetails = Give details
+additionalMisc.winterStorageReceipts.label = Receipts from the winter storage of touring caravans
+additionalMisc.numberOfVans.label =  Number of vans
+additionalMisc.numberOfVans.suffix = vans
+additionalMisc.otherActivitiesReceipts.label = Receipts from the other activities not covered previously
+additionalMisc.otherActivitiesReceipts.hint = For example, repairs to off-site caravans.
+additionalMisc.otherServicesReceipts.label = Receipts from sale of other services
+additionalMisc.otherServicesReceipts.label.explain = (in excess of costs)
+additionalMisc.otherServicesReceipts.hint = For example, laundry.
+additionalMisc.bottledGasReceipts.label = Receipts from sale of bottled gas
+additionalMisc.bottledGasReceipts.explain = (less costs of purchases)
+
+error.additionalMisc.leisureReceipts.required = Enter 0 if you did not have any receipts from other leisure facilities in the year ending {0}
+error.additionalMisc.leisureReceipts.range    = Receipts from other leisure facilities in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalMisc.leisureReceipts.negative = Receipts from other leisure facilities in the year ending {0} cannot be a negative number
+
+error.additionalMisc.leisureReceipts.details.maxLength = The description of the receipts from other leisure facilities should be 1000 characters or fewer
+error.additionalMisc.leisureReceipts.details.required = Describe the receipts from other leisure facilities
+
+error.additionalMisc.winterStorageReceipts.required = Enter 0 if you did not have any receipts from the winter storage of caravans in the year ending {0}
+error.additionalMisc.winterStorageReceipts.range    = Receipts from the winter storage of caravans in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalMisc.winterStorageReceipts.negative = Receipts from the winter storage of caravans in the year ending {0} cannot be a negative number
+
+error.additionalMisc.numberOfVans.required = Enter 0 if you did not have any vans in the year ending {0}
+error.additionalMisc.numberOfVans.nonNumeric    = Number of vans in the year ending {0} must be a number, for example 1 or 10
+error.additionalMisc.numberOfVans.negative = Number of vans in the year ending {0} cannot be a negative number
+
+error.additionalMisc.otherActivitiesReceipts.required = Enter 0 if you did not have any receipts from the other activities in the year ending {0}
+error.additionalMisc.otherActivitiesReceipts.range    = Receipts from the other activities in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalMisc.otherActivitiesReceipts.negative = Receipts from the other activities in the year ending {0} cannot be a negative number
+
+error.additionalMisc.otherActivitiesReceipts.details.maxLength = The description of the other activities not covered previously should be 1000 characters or fewer
+error.additionalMisc.otherActivitiesReceipts.details.required = Describe the other activities not covered previously
+
+error.additionalMisc.otherServicesReceipts.required = Enter 0 if you did not have any receipts from from sale of other services in the year ending {0}
+error.additionalMisc.otherServicesReceipts.range    = Receipts from sale of other services in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalMisc.otherServicesReceipts.negative = Receipts from sale of other services in the year ending {0} cannot be a negative number
+
+error.additionalMisc.bottledGasReceipts.required = Enter 0 if you did not have any receipts from sale of bottled gas in the year ending {0}
+error.additionalMisc.bottledGasReceipts.range    = Receipts from sale of bottled gas in the year ending {0} must be a number, for example 100 or 100.00
+error.additionalMisc.bottledGasReceipts.negative = Receipts from sale of bottled gas in the year ending {0} cannot be a negative number
+
+# COMMON ADDITIONAL ACTIVITIES 6045
+additionalActivities.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+additionalActivities.common.tradingPeriod = Trading period
+additionalActivities.common.financialYear = Financial year
+additionalActivities.common.grossReceipts = Gross receipts
+additionalActivities.common.costOfPurchase = Cost of purchase
 
 # CYA ADDITIONAL ACTIVITIES 6045
 ################################

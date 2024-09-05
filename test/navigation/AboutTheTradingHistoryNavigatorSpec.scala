@@ -395,7 +395,14 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(AdditionalAmusementsId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController.show() // TODO Misc
+        controllers.aboutthetradinghistory.routes.AdditionalMiscController.show()
+    }
+
+    "return a function that goes to CYA page when additional activities misc is completed" in {
+      navigator
+        .nextPage(AdditionalMiscId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
     }
 
     "return a function that goes to task list  page when additional activities cya completed" in {

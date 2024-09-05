@@ -36,6 +36,7 @@ case class AboutTheTradingHistoryPartOne(
   otherHolidayAccommodation: Option[OtherHolidayAccommodation] = None,
   touringAndTentingPitches: Option[TouringAndTentingPitches] = None,
   additionalActivities: Option[AdditionalActivities] = None,
+  additionalMiscDetails: Option[AdditionalMiscDetails] = None,
   fromCYA: Option[Boolean] = None
 )
 
