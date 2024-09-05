@@ -525,7 +525,7 @@
                         "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
                         _.whatIsYourCurrentRentBasedOnDetails.map(r =>
                             Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
-                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(_.escapedHtml))
+                                    ++ r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                         aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
