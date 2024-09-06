@@ -505,7 +505,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   private def rentDevelopedLandRouting: Session => Call =
     _.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
       case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show()
-      case _               => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
+      case _               => aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show()
+    }
+
+  private def rentIncludeStructuresBuildingsRouting: Session => Call =
+    _.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match {
+      case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show()
+      case _               => aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     }
 
   private def incentivesPaymentsConditionsRouting: Session => Call = answers =>
@@ -620,9 +626,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IncludedInRent6020Id                          -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     RentDevelopedLandId                           -> rentDevelopedLandRouting,
     RentDevelopedLandDetailsId                    -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show()),
-    RentIncludeStructuresBuildingsId              -> (_ =>
-      aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show()
-    ),
+    RentIncludeStructuresBuildingsId              -> rentIncludeStructuresBuildingsRouting,
     RentIncludeStructuresBuildingsDetailsId       -> (_ =>
       aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     ),
