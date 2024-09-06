@@ -16,11 +16,11 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour.updateAboutLeaseOrAgreementPartFour
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerYes, AnswersYesNo}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncludeStructuresBuildingsId
 import play.api.Logging
@@ -53,7 +53,7 @@ class RentIncludeStructuresBuildingsController @Inject() (
               rentIncludeStructuresBuildingsForm.fill(rentIncludeStructuresBuildings)
             case _                                    => rentIncludeStructuresBuildingsForm
           },
-          request.sessionData.toSummary
+          getBackLink
         )
       )
     )
@@ -62,7 +62,7 @@ class RentIncludeStructuresBuildingsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncludeStructuresBuildingsForm,
-      formWithErrors => BadRequest(rentIncludeStructuresBuildingsView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(rentIncludeStructuresBuildingsView(formWithErrors, getBackLink)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartFour(_.copy(rentIncludeStructuresBuildings = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
@@ -71,5 +71,11 @@ class RentIncludeStructuresBuildingsController @Inject() (
       }
     )
   }
+
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show().url
+      case _               => controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show().url
+    }
 
 }

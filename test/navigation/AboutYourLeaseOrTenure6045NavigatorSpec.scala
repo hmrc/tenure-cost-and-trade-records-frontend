@@ -17,8 +17,10 @@
 package navigation
 
 import connectors.Audit
+import controllers.aboutYourLeaseOrTenure
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
+import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -70,6 +72,68 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(RentIncludeTradeServicesPageId, session6045)
         .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController
+        .show()
+    }
+
+    "return a function that goes to describe the developments included in the rent page when rentDevelopedLand is completed with Yes" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+      )
+      navigator
+        .nextPage(RentDevelopedLandId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show()
+    }
+
+    "return a function that goes to does the rent payable include any structures when rentDevelopedLand is completed with No" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartThree =
+          Some(prefilledAboutLeaseOrAgreementPartThree.copy(rentDevelopedLand = Some(AnswerNo)))
+      )
+      navigator
+        .nextPage(RentDevelopedLandId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController
+        .show()
+    }
+
+    "return a function that goes to does the rent payable include any structures when rentDevelopedLandDetails is completed" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+      )
+      navigator
+        .nextPage(RentDevelopedLandDetailsId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController
+        .show()
+    }
+
+    "return a function that goes to structures details page when does the rent payable include any structures is completed with  Yes" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartFour = Some(prefilledAboutLeaseOrAgreementPartFour)
+      )
+      navigator
+        .nextPage(RentIncludeStructuresBuildingsId, answers)
+        .apply(
+          answers
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show()
+    }
+
+    "return a function that goes to Ultimately Responsible Outside Repairs page when does the rent payable include any structures is completed with  No" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartFour =
+          Some(prefilledAboutLeaseOrAgreementPartFour.copy(rentIncludeStructuresBuildings = Some(AnswerNo)))
+      )
+      navigator
+        .nextPage(RentIncludeStructuresBuildingsId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+        .show()
+    }
+
+    "return a function that goes to Ultimately Responsible Outside Repairs page when rent payable include any structures details is completed" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartFour = Some(prefilledAboutLeaseOrAgreementPartFour)
+      )
+      navigator
+        .nextPage(RentIncludeStructuresBuildingsDetailsId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
         .show()
     }
 

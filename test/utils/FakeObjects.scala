@@ -1560,12 +1560,12 @@ trait FakeObjects {
     provideDetailsOfYourLease = Some("These are details of a lease"),
     rentIncludeTradeServicesDetailsTextArea = Some("trade services text area"),
     rentIncludeFixtureAndFittingsDetailsTextArea = Some("fixture and fittings text area"),
-    rentDevelopedLand = AnswerYes,
+    rentDevelopedLand = Some(AnswerYes),
     rentDevelopedLandDetails = Some("rent developed land details")
   )
 
   val prefilledAboutLeaseOrAgreementPartFour: AboutLeaseOrAgreementPartFour = AboutLeaseOrAgreementPartFour(
-    rentIncludeStructuresBuildings = AnswerYes,
+    rentIncludeStructuresBuildings = Some(AnswerYes),
     rentIncludeStructuresBuildingsDetails = Some("rentIncludeStructuresBuildingsDetails"),
     surrenderedLeaseAgreementDetails = Some(SurrenderedLeaseAgreementDetails(100.00, "surrenderedLeaseAgreement"))
   )

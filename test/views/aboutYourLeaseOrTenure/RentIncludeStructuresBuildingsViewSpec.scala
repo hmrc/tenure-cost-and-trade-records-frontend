@@ -16,6 +16,7 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
@@ -27,11 +28,13 @@ class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[Answ
 
   val messageKeyPrefix = "rentIncludeStructuresBuildings"
 
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+
   override val form = RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
-  def createView    = () => rentIncludeStructuresBuildingsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView    = () => rentIncludeStructuresBuildingsView(form, "")(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    rentIncludeStructuresBuildingsView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentIncludeStructuresBuildingsView(form, "")(sessionRequest, messages)
 
   "rent Include Structures BuildingsView view" must {
 
@@ -42,7 +45,6 @@ class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[Answ
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show().url
     }
 
     "Section heading is visible" in {

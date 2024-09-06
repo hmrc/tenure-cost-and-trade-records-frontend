@@ -22,6 +22,7 @@ import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultim
 import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
+import models.submissions.common.AnswerYes
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.UltimatelyResponsibleOutsideRepairsPageId
 import play.api.i18n.I18nSupport
@@ -70,7 +71,7 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case ForTypes.for6020 =>
+      case ForTypes.for6020                    =>
         if (
           request.sessionData.aboutLeaseOrAgreementPartOne
             .flatMap(_.includedInYourRentDetails)
@@ -80,7 +81,13 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
         } else {
           controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
         }
-      case _                => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match {
+          case Some(AnswerYes) =>
+            controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show().url
+        }
+      case _                                   => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
     }
 
 }
