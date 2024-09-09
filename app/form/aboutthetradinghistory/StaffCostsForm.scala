@@ -15,7 +15,7 @@
  */
 
 package form.aboutthetradinghistory
-import form.MappingSupport.{costOfSalesMapping, mappingPerYear}
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.StaffCosts
 import play.api.data.Forms.{mapping, single}
 import play.api.data.{Form, Mapping}
@@ -25,10 +25,10 @@ object StaffCostsForm {
 
   private def sumMapping(year: String)(implicit messages: Messages): Mapping[StaffCosts] =
     mapping(
-      "wages"         -> costOfSalesMapping("staffCosts.wages", year),
-      "NI"            -> costOfSalesMapping("staffCosts.NI", year),
-      "pension"       -> costOfSalesMapping("staffCosts.pension", year),
-      "remunerations" -> costOfSalesMapping("staffCosts.remunerations", year)
+      "wages"         -> turnoverSalesMappingWithYear("staffCosts.wages", year),
+      "NI"            -> turnoverSalesMappingWithYear("staffCosts.NI", year),
+      "pension"       -> turnoverSalesMappingWithYear("staffCosts.pension", year),
+      "remunerations" -> turnoverSalesMappingWithYear("staffCosts.remunerations", year)
     )(StaffCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def staffCostsForm(years: Seq[String])(implicit messages: Messages): Form[Seq[StaffCosts]] =

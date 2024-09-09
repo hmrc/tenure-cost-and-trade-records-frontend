@@ -17,7 +17,7 @@
 package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
-import form.MappingSupport.{costOfSalesMapping, mappingPerYear}
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.CostOfSales6076IntermittentSum
 import play.api.data.Forms.{mapping, tuple}
 import play.api.data.validation.Constraints.maxLength
@@ -30,10 +30,10 @@ object CostOfSales6076IntermittentForm {
     messages: Messages
   ): Mapping[CostOfSales6076IntermittentSum] =
     mapping(
-      "importedPower" -> costOfSalesMapping("costOfSales6076.importedPower", year),
-      "TNuoS"         -> costOfSalesMapping("costOfSales6076.TNuoS", year),
-      "BSuoS"         -> costOfSalesMapping("costOfSales6076.BSuoS", year),
-      "otherSales"    -> costOfSalesMapping("costOfSales6076.otherSales", year)
+      "importedPower" -> turnoverSalesMappingWithYear("costOfSales6076.importedPower", year),
+      "TNuoS"         -> turnoverSalesMappingWithYear("costOfSales6076.TNuoS", year),
+      "BSuoS"         -> turnoverSalesMappingWithYear("costOfSales6076.BSuoS", year),
+      "otherSales"    -> turnoverSalesMappingWithYear("costOfSales6076.otherSales", year)
     )(CostOfSales6076IntermittentSum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def costOfSales6076IntermittentMapping(years: Seq[String])(implicit

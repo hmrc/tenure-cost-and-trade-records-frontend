@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{costOfSalesMapping, mappingPerYear}
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.GrossReceiptsForBaseLoad
 import play.api.data.Forms.{mapping, single}
 import play.api.data.{Form, Mapping}
@@ -26,17 +26,20 @@ object GrossReceiptsForBaseLoadForm {
 
   private def sumMapping(year: String)(implicit messages: Messages): Mapping[GrossReceiptsForBaseLoad] =
     mapping(
-      "renewableHeatIncentiveBioMethane" -> costOfSalesMapping(
+      "renewableHeatIncentiveBioMethane" -> turnoverSalesMappingWithYear(
         "grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane",
         year
       ),
-      "renewableHeatIncentiveBioMass"    -> costOfSalesMapping(
+      "renewableHeatIncentiveBioMass"    -> turnoverSalesMappingWithYear(
         "grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass",
         year
       ),
-      "byProductSales"                   -> costOfSalesMapping("grossReceiptsForBaseLoad.byProductSales", year),
-      "hotWaterHeatOrSteamSales"         -> costOfSalesMapping("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales", year),
-      "gateIncomeFromWaste"              -> costOfSalesMapping("grossReceiptsForBaseLoad.gateIncomeFromWaste", year)
+      "byProductSales"                   -> turnoverSalesMappingWithYear("grossReceiptsForBaseLoad.byProductSales", year),
+      "hotWaterHeatOrSteamSales"         -> turnoverSalesMappingWithYear(
+        "grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales",
+        year
+      ),
+      "gateIncomeFromWaste"              -> turnoverSalesMappingWithYear("grossReceiptsForBaseLoad.gateIncomeFromWaste", year)
     )(GrossReceiptsForBaseLoad.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def grossReceiptsForBaseLoadForm(

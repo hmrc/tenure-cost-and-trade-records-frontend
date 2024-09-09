@@ -17,7 +17,7 @@
 package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
-import form.MappingSupport.{costOfSalesMapping, mappingPerYear}
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
 import play.api.data.Forms.{mapping, tuple}
 import play.api.data.validation.Constraints.maxLength
@@ -28,11 +28,11 @@ object CostOfSales6076Form {
 
   private def sumMapping(year: String)(implicit messages: Messages): Mapping[CostOfSales6076Sum] =
     mapping(
-      "fuelOrFeedstock" -> costOfSalesMapping("costOfSales6076.fuelOrFeedstock", year),
-      "importedPower"   -> costOfSalesMapping("costOfSales6076.importedPower", year),
-      "TNuoS"           -> costOfSalesMapping("costOfSales6076.TNuoS", year),
-      "BSuoS"           -> costOfSalesMapping("costOfSales6076.BSuoS", year),
-      "otherSales"      -> costOfSalesMapping("costOfSales6076.otherSales", year)
+      "fuelOrFeedstock" -> turnoverSalesMappingWithYear("costOfSales6076.fuelOrFeedstock", year),
+      "importedPower"   -> turnoverSalesMappingWithYear("costOfSales6076.importedPower", year),
+      "TNuoS"           -> turnoverSalesMappingWithYear("costOfSales6076.TNuoS", year),
+      "BSuoS"           -> turnoverSalesMappingWithYear("costOfSales6076.BSuoS", year),
+      "otherSales"      -> turnoverSalesMappingWithYear("costOfSales6076.otherSales", year)
     )(CostOfSales6076Sum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def costOfSales6076Mapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =

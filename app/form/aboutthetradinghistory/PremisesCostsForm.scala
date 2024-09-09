@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{costOfSalesMapping, mappingPerYear}
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.PremisesCosts
 import play.api.data.Forms.{mapping, single}
 import play.api.data.{Form, Mapping}
@@ -35,17 +35,20 @@ object PremisesCostsForm {
 
   private def sumMapping(year: String)(implicit messages: Messages): Mapping[PremisesCosts] =
     mapping(
-      "energyAndUtilities"           -> costOfSalesMapping(
+      "energyAndUtilities"           -> turnoverSalesMappingWithYear(
         "premisesCosts.energyAndUtilities",
         year
       ),
-      "buildingRepairAndMaintenance" -> costOfSalesMapping(
+      "buildingRepairAndMaintenance" -> turnoverSalesMappingWithYear(
         "premisesCosts.buildingRepairAndMaintenance",
         year
       ),
-      "repairsAndRenewalsOfFixtures" -> costOfSalesMapping("premisesCosts.repairsAndRenewalsOfFixtures", year),
-      "rent"                         -> costOfSalesMapping("premisesCosts.rent", year),
-      "businessRates"                -> costOfSalesMapping("premisesCosts.businessRates", year),
-      "buildingInsurance"            -> costOfSalesMapping("premisesCosts.buildingInsurance", year)
+      "repairsAndRenewalsOfFixtures" -> turnoverSalesMappingWithYear(
+        "premisesCosts.repairsAndRenewalsOfFixtures",
+        year
+      ),
+      "rent"                         -> turnoverSalesMappingWithYear("premisesCosts.rent", year),
+      "businessRates"                -> turnoverSalesMappingWithYear("premisesCosts.businessRates", year),
+      "buildingInsurance"            -> turnoverSalesMappingWithYear("premisesCosts.buildingInsurance", year)
     )(PremisesCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
 }
