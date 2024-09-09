@@ -3035,6 +3035,7 @@ checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu
 checkYourAnswersAboutTheTradingHistory.drinks = Diodydd
 checkYourAnswersAboutTheTradingHistory.food = Bwyd
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Derbyniadau eraill
+checkYourAnswersAboutTheTradingHistory.other = Other
 checkYourAnswersAboutTheTradingHistory.accommodation = Llety
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Cyfraddau’r feddiannaeth, ar gyfartaledd
 checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Cyfanswm refeniw y gwerthiannau
