@@ -3140,6 +3140,7 @@ checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
 checkYourAnswersAboutTheTradingHistory.drinks = Drinks
 checkYourAnswersAboutTheTradingHistory.food = Food
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Other receipts
+checkYourAnswersAboutTheTradingHistory.other = Other
 checkYourAnswersAboutTheTradingHistory.accommodation = Accommodation
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Average occupancy rate
 checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Total sales revenue

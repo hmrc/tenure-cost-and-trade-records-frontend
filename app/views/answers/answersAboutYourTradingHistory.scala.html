@@ -33,6 +33,7 @@
 @import util.NumberUtil._
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswerYes
+@import models.submissions.aboutyouandtheproperty.BaseLoad
 
 @import java.time.LocalDate
 
@@ -226,8 +227,8 @@
         costOfSales.map(s => Seq(
             dateUtil.formatDayMonthAbbrYear(s.financialYearEnd),
             s.accommodation.getOrElse(zeroBigDecimal).asMoney,
-            s.drinks.getOrElse(zeroBigDecimal).asMoney,
             s.food.getOrElse(zeroBigDecimal).asMoney,
+            s.drinks.getOrElse(zeroBigDecimal).asMoney,
             s.other.getOrElse(zeroBigDecimal).asMoney,
             s.total.asMoney
         ))
@@ -238,9 +239,9 @@
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
-        messages("checkYourAnswersAboutTheTradingHistory.drinks"),
         messages("checkYourAnswersAboutTheTradingHistory.food"),
-        messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
+        messages("checkYourAnswersAboutTheTradingHistory.drinks"),
+        messages("checkYourAnswersAboutTheTradingHistory.other"),
         messages("costOfSales.total")
     ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
@@ -524,6 +525,14 @@
                         actions = actions
                     )
                 )
+            case ForTypes.for6015 =>
+                Seq(
+                    SummaryListRow(
+                        key = Key(HtmlContent(turnoverKeys0616)),
+                        value = Value(HtmlContent(sectionAnswers.answers.fold("")(t => turnoverValuesTable6016(t.turnoverSections)))),
+                        actions = actions
+                    )
+                )
             case ForTypes.for6030 =>
                 Seq(
                     SummaryListRow(
@@ -718,7 +727,7 @@
         answer6076("grossReceipts.total", _.grossReceiptsExcludingVAT.map(_.total))
     )
 
-    @if(!intermittentAnswer) {
+    @if(request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant).exists(_.renewablesPlant == BaseLoad)) {
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
             aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
             answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),
