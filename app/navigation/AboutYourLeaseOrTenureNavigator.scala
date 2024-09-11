@@ -355,27 +355,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         }
     }
 
-  private def whatIsYourRentBasedOnRouting: Session => Call = answers =>
-    val otherChoice = answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.whatIsYourCurrentRentBasedOnDetails.flatMap(_.currentRentBasedOn.name)
-    )
-    otherChoice match {
-      case Some("other") =>
-        answers.forType match {
-          case ForTypes.for6010 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 | ForTypes.for6076 =>
-            controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
-          case ForTypes.for6045 | ForTypes.for6046                                                          =>
-            controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-          case _                                                                                            => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
-        }
-      case _             =>
-        answers.forType match {
-          case ForTypes.for6045 | ForTypes.for6046 =>
-            controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-          case _                                   => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
-        }
+  private def whatIsYourRentBasedOnRouting: Session => Call    = answers =>
+    answers.forType match {
+      case ForTypes.for6010 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
+      case _                                                                         => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
     }
-
   private def tradeServicesDescriptionRouting: Session => Call = answers =>
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
 

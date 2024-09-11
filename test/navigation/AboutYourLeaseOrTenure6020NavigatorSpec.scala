@@ -296,22 +296,12 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to rent increase with RPI page when What is your current rent has been completed" in {
-
-      val session = session6020.copy(
-        aboutLeaseOrAgreementPartOne = Some(
-          session6020.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(whatIsYourCurrentRentBasedOnDetails =
-              Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("test")))
-            )
-          )
-        )
-      )
+    "return a function that goes to setting the current rent when What is your current rent has been completed" in {
       navigator
-        .nextPage(WhatRentBasedOnPageId, session)
+        .nextPage(WhatRentBasedOnPageId, session6020)
         .apply(
-          session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
+          session6020
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
         .show()
     }
 
