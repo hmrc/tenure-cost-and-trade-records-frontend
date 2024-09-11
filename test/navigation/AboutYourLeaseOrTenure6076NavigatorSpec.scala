@@ -230,24 +230,6 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to increase by RPI when what rent based on has been completed" in {
-      navigator
-        .nextPage(WhatRentBasedOnPageId, session6010)
-        .apply(
-          session6010
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
-        .show()
-    }
-
-    "return a function that goes to increase by RPI when what rent based on has been completed 6030" in {
-      navigator
-        .nextPage(WhatRentBasedOnPageId, session6030)
-        .apply(
-          session6030
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
-        .show()
-    }
-
     "return a function that goes to rent by gross or net turnover when increase by RPI has been completed" in {
       navigator
         .nextPage(RentIncreaseByRPIPageId, session6010)
@@ -506,44 +488,6 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .apply(
           session
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
-        .show()
-    }
-
-    "return a function that goes to rent increase with RPI page when What is your current rent has been completed" in {
-
-      val session = session6076Full.copy(
-        aboutLeaseOrAgreementPartOne = Some(
-          session6076Full.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(whatIsYourCurrentRentBasedOnDetails =
-              Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("test")))
-            )
-          )
-        )
-      )
-      navigator
-        .nextPage(WhatRentBasedOnPageId, session)
-        .apply(
-          session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
-        .show()
-    }
-
-    "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
-
-      val session = session6076Full.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
-          session6076Full.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
-              Some(HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1)))
-            )
-          )
-        )
-      )
-      navigator
-        .nextPage(HowIsCurrentRentFixedId, session)
-        .apply(
-          session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
         .show()
     }
 

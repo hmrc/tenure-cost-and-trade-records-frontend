@@ -191,22 +191,13 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to rent increase with RPI page when What is your current rent has been completed" in {
+    "return a function that goes to 'does the rent payable vary(...)', when 'what is the rent based on(...)' has been completed" in {
 
-      val session = session6010.copy(
-        aboutLeaseOrAgreementPartOne = Some(
-          session6010.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(whatIsYourCurrentRentBasedOnDetails =
-              Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("test")))
-            )
-          )
-        )
-      )
       navigator
-        .nextPage(WhatRentBasedOnPageId, session)
+        .nextPage(WhatRentBasedOnPageId, session6010)
         .apply(
-          session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
+          session6010
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
         .show()
     }
 
@@ -303,15 +294,6 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(RentOpenMarketPageId, session6010No)
         .apply(session6010No) shouldBe controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController
-        .show()
-    }
-
-    "return a function that goes to increase by RPI when what rent based on has been completed" in {
-      navigator
-        .nextPage(WhatRentBasedOnPageId, session6010)
-        .apply(
-          session6010
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
         .show()
     }
 

@@ -75,6 +75,15 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to setting the current rent when What is your current rent has been completed" in {
+      navigator
+        .nextPage(WhatRentBasedOnPageId, session6045)
+        .apply(
+          session6045
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
     "return a function that goes to describe the developments included in the rent page when rentDevelopedLand is completed with Yes" in {
       val answers = session6045.copy(
         aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
