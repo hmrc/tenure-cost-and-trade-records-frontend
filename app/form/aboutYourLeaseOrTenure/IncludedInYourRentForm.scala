@@ -57,7 +57,9 @@ object IncludedInYourRentForm {
         fields =>
           fields match {
             case IncludedInYourRentDetails(includedInYourRent, vatValue) =>
-              !(forTypes == ForTypes.for6045 && includedInYourRent.contains("vat") && vatValue.isEmpty)
+              !((forTypes == ForTypes.for6045 || forTypes == ForTypes.for6046) && includedInYourRent.contains(
+                "vat"
+              ) && vatValue.isEmpty)
           }
       )
   )

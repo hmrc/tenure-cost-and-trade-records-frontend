@@ -66,7 +66,7 @@
                       content = Text(messages("label.includedInYourRent.vat")),
                       value = "vat",
                       conditionalHtml = forTypes match {
-                          case ForTypes.for6045 =>
+                          case ForTypes.for6045 | ForTypes.for6046 =>
                               Some(
                                   govukInput(
                                       Input(
