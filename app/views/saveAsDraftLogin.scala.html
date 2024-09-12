@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import models.pages.Summary
 
 @this(
         layout: Layout,
@@ -28,13 +29,14 @@
         formWithCSRF: FormWithCSRF
 )
 
-
-@(form: Form[String])(implicit request: Request[?], messages: Messages)
+@(form: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("saveAsDraft.retrieveYourDraft"),
     theForm = form,
-    withTimeoutDialog = false
+    summary = Some(summary),
+    withTimeoutDialog = false,
+    backLinkUrl = controllers.routes.LoginController.show.url
 ) {
 
     <p class="govuk-body">@messages("saveAsDraft.passwordReminder")</p>
@@ -47,7 +49,6 @@
                 classes = "govuk-input--width-10",
                 label = Label(
                     content = Text(messages("saveAsDraft.password")),
-                    classes = "govuk-!-font-weight-bold"
                 ),
                 suffix = PrefixOrSuffix(
                     content = HtmlContent(

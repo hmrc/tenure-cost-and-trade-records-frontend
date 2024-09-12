@@ -3163,11 +3163,11 @@ saveAsDraft.login.parameter3=the postcode shown on the letter you received
 saveAsDraft.continue=Continue completing this form
 saveAsDraft.logout=Log out
 saveAsDraft.retrieveYourDraft=Retrieve your draft
-saveAsDraft.passwordReminder=Provide the password when you saved your draft or the one given to you when you were timed out of the service.
+saveAsDraft.passwordReminder=Enter the password you created when you signed out of the service.
 saveAsDraft.passwordHint=This will either be the password you created or the one given to you when you were timed out of the service.
 saveAsDraft.error.invalidPassword=The password you entered is not correct
-saveAsDraft.startAgain=Start form again
-saveAsDraft.forgotPassword=If you’ve forgotten your password, you’ll have to start the form again.
+saveAsDraft.startAgain=Start a new declaration
+saveAsDraft.forgotPassword=If you’ve forgotten your password, you will have to start the form again.
 saveAsDraft.timeout.login=Log in again
 
 # Feedback
