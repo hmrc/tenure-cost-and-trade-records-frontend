@@ -26,8 +26,6 @@ import utils.TestBaseSpec
 
 class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
-  val for6045 = "FOR6045"
-
   import utils.FormBindingTestAssertions._
 
   def IncludedInYourRentController(
@@ -82,15 +80,26 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
     def mustContainMissingVatValueErrorFor[T](field: String, f: Form[T]): Unit =
       mustContainError(field, "error.includedInYourRent.vatValue.required", f)
 
-    "error if vatValue is invalid" in {
+    "error if vatValue is invalid for form type 6045" in {
       val formData = baseData + ("vatValue" -> "invalid")
-      val form     = includedInYourRentForm(for6045).bind(formData)
+      val form     = includedInYourRentForm(forType6045).bind(formData)
       mustContainInvalidVatValueErrorFor("vatValue", form)
     }
 
-    "error if vatValue is missing" in {
+    "error if vatValue is missing form type 6045" in {
       val formData = baseData + ("vatValue" -> "")
-      val form     = includedInYourRentForm(for6045).bind(formData)
+      val form     = includedInYourRentForm(forType6045).bind(formData)
+      mustContainMissingVatValueErrorFor("", form)
+    }
+    "error if vatValue is invalid for form type 6046" in {
+      val formData = baseData + ("vatValue" -> "invalid")
+      val form     = includedInYourRentForm(forType6046).bind(formData)
+      mustContainInvalidVatValueErrorFor("vatValue", form)
+    }
+
+    "error if vatValue is missing form type 6046" in {
+      val formData = baseData + ("vatValue" -> "")
+      val form     = includedInYourRentForm(forType6046).bind(formData)
       mustContainMissingVatValueErrorFor("", form)
     }
   }
