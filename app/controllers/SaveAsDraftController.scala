@@ -99,7 +99,7 @@ class SaveAsDraftController @Inject() (
   }
 
   def loginToResume: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(saveAsDraftLoginView(saveAsDraftLoginForm))
+    Ok(saveAsDraftLoginView(saveAsDraftLoginForm, request.sessionData.toSummary))
   }
 
   def resume: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -108,7 +108,7 @@ class SaveAsDraftController @Inject() (
     saveAsDraftLoginForm
       .bindFromRequest()
       .fold(
-        formWithErrors => BadRequest(saveAsDraftLoginView(formWithErrors)),
+        formWithErrors => BadRequest(saveAsDraftLoginView(formWithErrors, request.sessionData.toSummary)),
         password =>
           backendConnector.loadSubmissionDraft(session.referenceNumber, hc).flatMap {
             case Some(draft) if draft.session.saveAsDraftPassword.exists(mongoHasher.verify(password, _)) =>
@@ -120,7 +120,7 @@ class SaveAsDraftController @Inject() (
               errorHandler.notFoundTemplate(request).map(NotFound(_))
             case _                                                                                        =>
               val formWithLoginError = saveAsDraftLoginForm.withError("password", "saveAsDraft.error.invalidPassword")
-              BadRequest(saveAsDraftLoginView(formWithLoginError))
+              BadRequest(saveAsDraftLoginView(formWithLoginError, request.sessionData.toSummary))
           }
       )
   }
