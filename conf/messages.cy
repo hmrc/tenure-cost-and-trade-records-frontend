@@ -1159,6 +1159,14 @@ error.workCarriedOutDetails.maxLength = Description of the work carried out must
 workCarriedOutCondition.heading = A oedd gofyn i chi wneud unrhyw waith fel un o amodau’r denantiaeth bresennol?
 error.workCarriedOutCondition.required = Select yes if you were required to carry out any works as a condition of the present tenancy or agreement
 
+# RENT FREE PERIOD
+#########################
+isGivenRentFreePeriod.heading = Where you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+error.isGivenRentFreePeriod.required = Select yes if you were given any rent-free period, payment or benefit
+rentFreePeriodDetails.heading = Give details of any rent-free period, payment or benefit
+rentFreePeriodDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
+error.rentFreePeriodDetails.maxLength = Description of given rent-free period, payment or benefit must be {0} characters or fewer
+
 # PAY A CAPITAL SUM
 ##################
 payACapitalSum.heading = A wnaethoch chi dalu swm cyfalaf neu bremiwm ar gyfer eich prydles neu gytundeb, gan anwybyddu unrhyw stocrestr tenantiaid?

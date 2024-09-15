@@ -23,7 +23,6 @@ import models.{ForTypes, Session}
 import navigation.identifiers._
 import play.api.Logging
 import play.api.mvc.Call
-import controllers.toOpt
 
 import javax.inject.Inject
 
