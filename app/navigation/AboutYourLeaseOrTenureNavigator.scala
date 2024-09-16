@@ -519,10 +519,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   private def workCarriedOutConditionRouting: Session => Call = answers =>
     answers.forType match {
       case ForTypes.for6045 | ForTypes.for6046 =>
-        controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()
+        controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show()
       case _                                   =>
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     }
+
+  private def isGivenRentFreePeriodIdRouting: Session => Call = answers =>
+    if answers.aboutLeaseOrAgreementPartFour.flatMap(_.isGivenRentFreePeriod).contains(AnswerYes) then
+      controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show()
+    else controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutTheLandlordPageId                        -> aboutYourLandlordRouting,
@@ -581,6 +586,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     CapitalSumDescriptionId                       -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     WorkCarriedOutDetailsId                       -> (_ => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()),
     WorkCarriedOutConditionId                     -> workCarriedOutConditionRouting,
+    IsGivenRentFreePeriodId                       -> isGivenRentFreePeriodIdRouting,
+    RentFreePeriodDetailsId                       -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
     PayCapitalSumId                               -> payCapitalSumRouting,
     PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),

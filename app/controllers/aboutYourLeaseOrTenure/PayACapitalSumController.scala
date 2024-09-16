@@ -86,7 +86,7 @@ class PayACapitalSumController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum"
       case _    =>
         answers.forType match {
-          case ForTypes.for6020 =>
+          case ForTypes.for6020                    =>
             answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven).map(_.benefitsGiven) match {
               case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
@@ -95,7 +95,11 @@ class PayACapitalSumController @Inject() (
                 logger.warn(s"Back link for pay capital sum page reached with unknown benefits given value")
                 controllers.routes.TaskListController.show().url
             }
-          case _                =>
+          case ForTypes.for6045 | ForTypes.for6046 =>
+            if answers.aboutLeaseOrAgreementPartFour.flatMap(_.isGivenRentFreePeriod).contains(AnswerYes) then
+              controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show().url
+            else controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show().url
+          case _                                   =>
             answers.aboutLeaseOrAgreementPartTwo.flatMap(
               _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
             ) match {

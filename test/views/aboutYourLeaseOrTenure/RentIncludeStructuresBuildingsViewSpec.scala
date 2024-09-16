@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm
-import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
@@ -44,7 +43,6 @@ class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[Answ
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
     }
 
     "Section heading is visible" in {
