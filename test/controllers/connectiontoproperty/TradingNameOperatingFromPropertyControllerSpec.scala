@@ -18,13 +18,14 @@ package controllers.connectiontoproperty
 
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 import models.ForTypes
-import models.submissions.connectiontoproperty.StillConnectedDetails
+import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, StillConnectedDetails}
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
@@ -164,9 +165,62 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       )
     }
 
+  }
+
+  "calculateBackLink" should {
     "return correct back link if query param from=TL is present" in {
-      val result = tradingNameOperatingFromPropertyController().show(FakeRequest(GET, "/path?from=TL"))
+      val result = tradingNameOperatingFromPropertyController().show(fakeRequestFromTL)
       contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
+    "return correct back link if query param from=CYA is present" in {
+      val result = tradingNameOperatingFromPropertyController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      )
+    }
+
+    "return back link to AreYouStillConnectedController for 6076 and addressConnectionType is 'Yes'" in {
+      val prefilledDetails: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        addressConnectionType = Some(AddressConnectionTypeYes)
+      )
+
+      val result =
+        tradingNameOperatingFromProperty6076Controller(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
+    }
+
+    "return back link to EditAddressController for 6076 and addressConnectionType is 'YesChangeAddress'" in {
+      val prefilledDetails: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        addressConnectionType = Some(AddressConnectionTypeYesChangeAddress)
+      )
+
+      val result =
+        tradingNameOperatingFromProperty6076Controller(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.EditAddressController.show().url
+      )
+    }
+
+    "return back link to TaskListController for 6076 and addressConnectionType is unknown" in {
+      val prefilledDetails: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        addressConnectionType = None
+      )
+
+      val result =
+        tradingNameOperatingFromProperty6076Controller(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
+    }
+
+    "return back link to VacantPropertiesController when forType is not 6076" in {
+      val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+      )
     }
   }
 

@@ -63,4 +63,20 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
     }
   }
 
+  "calculateBackLink" should {
+
+    "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
+      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+      )
+    }
+  }
+  "return correct back link with corresponding index" in {
+    val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
+    contentAsString(result) should include(
+      controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0).url
+    )
+  }
+
 }

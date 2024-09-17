@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.LettingPartOfPropertyRentIncludesForm.lettingPartOfPropertyRentIncludesForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -54,9 +54,7 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
             rentIncludesForm,
             index,
             currentSection.tenantDetails.name,
-            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController
-              .show(index)
-              .url,
+            calculateBackLink(index),
             request.sessionData.toSummary
           )
         )
@@ -75,9 +73,7 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
             formWithErrors,
             index,
             currentSection.tenantDetails.name,
-            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController
-              .show(index)
-              .url,
+            calculateBackLink(index),
             request.sessionData.toSummary
           )
         ),
@@ -98,6 +94,12 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
       }
     )).getOrElse(startRedirect)
   }
+
+  private def calculateBackLink(index: Int)(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(index).url
+    }
 
   private def startRedirect: Result = Redirect(routes.LettingPartOfPropertyDetailsController.show(None))
 

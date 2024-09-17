@@ -90,6 +90,10 @@ trait TestBaseSpec
     RequestTarget("", "", Map("from" -> Seq("CYA")))
   )
 
+  val fakeRequestFromTL: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
+    RequestTarget("", "", Map("from" -> Seq("TL")))
+  )
+
   val fakeRequestFromIES: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
     RequestTarget("", "", Map("from" -> Seq("IES")))
   )

@@ -30,7 +30,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RemoveConnectionsDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[RemoveConnectionsDetails], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
   pageHeading = messages("removeConnection.heading"),
@@ -38,7 +38,7 @@
     showAccountInfo = true,
     showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
-  backLinkUrl = controllers.notconnected.routes.PastConnectionController.show().url,
+  backLinkUrl = backLink,
   theForm = theForm
 ) {
 

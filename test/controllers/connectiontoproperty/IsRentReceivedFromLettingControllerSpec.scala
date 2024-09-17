@@ -21,9 +21,10 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
@@ -87,6 +88,21 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
 
         mustContainError(errorKey.isRentReceivedFromLetting, "error.isRentReceivedFromLetting.missing", form)
       }
+    }
+  }
+
+  "getBackLink" should {
+    "return back link to CYA page if query param present" in {
+      val result = isRentReceivedFromLettingController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+      )
+    }
+    "return back link to is the property vacant start date page if 'from' query param is not present" in {
+      val result = isRentReceivedFromLettingController().show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
+      )
     }
   }
 

@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.LettingPartOfPropertyRentForm.lettingPartOfPropertyRentForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -54,7 +54,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
             lettingDetailsForm,
             index,
             existingSection.get.tenantDetails.name,
-            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url,
+            calculateBackLink(index),
             request.sessionData.toSummary
           )
         )
@@ -73,7 +73,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
               formWithErrors,
               index,
               existingSection.tenantDetails.name,
-              controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url,
+              calculateBackLink(index),
               request.sessionData.toSummary
             )
           )
@@ -98,5 +98,11 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
         }
     )
   }
+
+  private def calculateBackLink(index: Int)(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url
+    }
 
 }

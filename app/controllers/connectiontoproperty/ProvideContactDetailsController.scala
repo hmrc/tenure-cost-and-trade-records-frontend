@@ -16,10 +16,10 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
-import models.Session
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.ProvideContactDetails
 import navigation.ConnectionToPropertyNavigator
@@ -53,12 +53,7 @@ class ProvideContactDetailsController @Inject() (
             case Some(customerDetails) => provideContactDetailsForm.fill(customerDetails)
             case _                     => provideContactDetailsForm
           },
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for provide your contact details page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for provide your contact details page reached with error $msg")
-          },
+          getBackLink,
           request.sessionData.toSummary
         )
       )
@@ -72,12 +67,7 @@ class ProvideContactDetailsController @Inject() (
         BadRequest(
           provideContactDetailsView(
             formWithErrors,
-            getBackLink(request.sessionData) match {
-              case Right(link) => link
-              case Left(msg)   =>
-                logger.warn(s"Navigation for provide your contact details page reached with error: $msg")
-                throw new RuntimeException(s"Navigation for provide your contact details page reached with error $msg")
-            },
+            getBackLink,
             request.sessionData.toSummary
           )
         ),
@@ -93,22 +83,23 @@ class ProvideContactDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): Either[String, String] =
-    answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
-      case Some("yes") =>
-        answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
-          case true  =>
-            Right(controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url)
-          case false =>
-            Right(
-              controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
-                .show(answers.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex)
-                .url
-            )
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    navigator.from match {
+      case "CYA" =>
+        navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case _     =>
+        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+          case Some(AnswerYes) =>
+            request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
+              case true  =>
+                controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
+              case false =>
+                controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
+                  .show(request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex)
+                  .url
+            }
+          case Some(AnswerNo)  => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
+          case _               => s"Unknown connection to property back link"
         }
-
-      case Some("no") => Right(controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url)
-      case _          => Left(s"Unknown connection to property back link")
     }
-
 }

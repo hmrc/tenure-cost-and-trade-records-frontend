@@ -26,14 +26,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[StartDateOfVacantProperty] {
 
+  val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+
   val messageKeyPrefix = "vacantPropertyStartDate"
 
   override val form: Form[StartDateOfVacantProperty] = VacantPropertyStartDateForm.vacantPropertyStartDateForm(messages)
 
-  def createView: () => Html = () => vacantPropertiesStartDateView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   def createViewUsingForm: Form[StartDateOfVacantProperty] => Html = (form: Form[StartDateOfVacantProperty]) =>
-    vacantPropertiesStartDateView(form, Summary("99996010001"))(fakeRequest, messages)
+    vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   "Vacant property start date view" must {
 

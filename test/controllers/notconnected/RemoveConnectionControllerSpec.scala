@@ -77,6 +77,19 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
       }
     }
   }
+  "calculateBackLink"            should {
+    "return back link to NotConnected CYA page when 'from=CYA' query param is present and user is not connected to the property" in {
+      val result = removeConnectionController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
+      )
+    }
+
+    "return back link to past connection page if 'from' query param is not present" in {
+      val result = removeConnectionController().show(fakeRequest)
+      contentAsString(result) should include(controllers.notconnected.routes.PastConnectionController.show().url)
+    }
+  }
 
   "Remove connection form" should {
 
