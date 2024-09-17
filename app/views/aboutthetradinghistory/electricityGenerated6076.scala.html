@@ -30,7 +30,7 @@
 )
 
 
-@(form: Form[Seq[(Int, String)]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[(Option[Int], String)]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @rowLabel(labelKey: String, hintKey: Option[String] = None) = {

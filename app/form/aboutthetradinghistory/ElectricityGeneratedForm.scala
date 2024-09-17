@@ -21,6 +21,8 @@ import play.api.data.Forms.{default, text, tuple}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
+import scala.util.Try
+
 /**
   * 6076 Electricity generated form.
   *
@@ -28,13 +30,29 @@ import play.api.i18n.Messages
   */
 object ElectricityGeneratedForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[(Int, String)] = tuple(
-    "weeks"                -> tradingPeriodWeeks(year),
+  private def weeksMapping(year: String, minWeeks: Int = 0)(implicit messages: Messages): Mapping[Option[Int]] =
+    text
+      .transform[Option[Int]](
+        str => {
+          val weeks = str.trim
+          if (weeks.isEmpty) None
+          else Try(Some(weeks.toInt)).getOrElse(None)
+        },
+        optInt => optInt.map(_.toString).getOrElse("")
+      )
+      .verifying(messages("error.weeksMapping.blank", year), optInt => optInt.isDefined)
+      .verifying(
+        messages("error.weeksMapping.invalid", year),
+        optInt => optInt.forall(weeks => (minWeeks to 52).contains(weeks))
+      )
+
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[(Option[Int], String)] = tuple(
+    "weeks"                -> weeksMapping(year),
     "electricityGenerated" -> default(text, "")
       .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
   )
 
-  def electricityGeneratedForm(years: Seq[String])(implicit messages: Messages): Form[Seq[(Int, String)]] =
+  def electricityGeneratedForm(years: Seq[String])(implicit messages: Messages): Form[Seq[(Option[Int], String)]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

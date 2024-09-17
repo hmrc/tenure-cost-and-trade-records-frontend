@@ -67,7 +67,7 @@ class ElectricityGeneratedController @Inject() (
     runWithSessionCheck { turnoverSections6076 =>
       val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[Seq[(Int, String)]](
+      continueOrSaveAsDraft[Seq[(Option[Int], String)]](
         electricityGeneratedForm(years),
         formWithErrors => BadRequest(electricityGeneratedView(formWithErrors, getBackLink)),
         success => {
