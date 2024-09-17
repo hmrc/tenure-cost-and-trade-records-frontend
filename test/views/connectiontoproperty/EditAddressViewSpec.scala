@@ -27,12 +27,14 @@ class EditAddressViewSpec extends QuestionViewBehaviours[EditTheAddress] {
 
   val messageKeyPrefix = "editAddress"
 
+  val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+
   override val form = EditAddressForm.editAddressForm
 
-  def createView = () => editAddressView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => editAddressView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[EditTheAddress]) =>
-    editAddressView(form, Summary("99996010001"))(fakeRequest, messages)
+    editAddressView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   "Edit Address view" must {
 

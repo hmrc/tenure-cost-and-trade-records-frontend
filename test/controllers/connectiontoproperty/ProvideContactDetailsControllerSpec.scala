@@ -17,12 +17,14 @@
 package controllers.connectiontoproperty
 
 import form.Errors
-import models.submissions.connectiontoproperty.StillConnectedDetails
+import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails}
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
+import models.submissions.common.{AnswerNo, AnswerYes}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class ProvideContactDetailsControllerSpec extends TestBaseSpec {
@@ -90,6 +92,51 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
         val res = provideContactDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
+    }
+  }
+  "getBackLink"                        should {
+
+    "return back link to CYA vacant when from is 'CYA'" in {
+      val result = provideContactDetailsController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+      )
+    }
+
+    "return back link to AddAnotherLettingPartOfPropertyController when rent is received and no lettings" in {
+      val prefilledDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        isAnyRentReceived = Some(AnswerYes),
+        lettingPartOfPropertyDetails = IndexedSeq.empty[LettingPartOfPropertyDetails]
+      )
+
+      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
+      )
+    }
+
+    "return back link to AddAnotherLettingPartOfPropertyController with correct index when rent is received and lettings exist" in {
+      val prefilledDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        isAnyRentReceived = Some(AnswerYes),
+        lettingPartOfPropertyDetailsIndex = 1
+      )
+
+      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(1).url
+      )
+    }
+
+    "return back link to IsRentReceivedFromLettingController when rent is not received" in {
+      val prefilledDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        isAnyRentReceived = Some(AnswerNo)
+      )
+
+      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
+      )
+
     }
   }
 

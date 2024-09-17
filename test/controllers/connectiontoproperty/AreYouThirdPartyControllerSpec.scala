@@ -24,6 +24,8 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
+import models.submissions.common.{AnswerNo, AnswerYes}
+
 import scala.language.reflectiveCalls
 
 class AreYouThirdPartyControllerSpec extends TestBaseSpec {
@@ -128,6 +130,49 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
     }
 
   }
+  "getBackLink" should {
+    "return back link to CYA page if query param present" in {
+      val result = areYouThirdPartyController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      )
+
+    }
+
+    "return back link to TradingNameOwnTheProperty page when tradingNameOwnTheProperty is 'yes'" in {
+      val prefilledDetailsYes: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        tradingNameOwnTheProperty = Some(AnswerYes)
+      )
+
+      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsYes)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+      )
+    }
+
+    "return back link to TradingNamePayingRent page when tradingNameOwnTheProperty is 'no'" in {
+      val prefilledDetailsNo: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        tradingNameOwnTheProperty = Some(AnswerNo)
+      )
+
+      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsNo)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
+      )
+    }
+
+    "return back link to ConnectionToThePropertyController if tradingNameOwnTheProperty is not set" in {
+      val prefilledDetailsNone: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
+        tradingNameOwnTheProperty = None
+      )
+
+      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsNone)).show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show().url
+      )
+    }
+  }
+
 }
 
 object TestData {

@@ -81,6 +81,22 @@ class PastConnectionControllerSpec extends TestBaseSpec {
     }
   }
 
+  "calculateBackLink" should {
+    "return back link to NotConnected CYA page when 'from=CYA' query param is present and user is not connected to the property" in {
+      val result = pastConnectionController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
+      )
+    }
+
+    "return back link to Are You Still Connected page if 'from' query param is not present" in {
+      val result = pastConnectionController().show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
+    }
+  }
+
   "Premises license conditions form" should {
     "error if premisesLicenseConditions is missing" in {
       val formData = baseFormData - errorKey.pastConnectionType

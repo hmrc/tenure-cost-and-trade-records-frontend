@@ -52,7 +52,7 @@ class TradingNameOwnThePropertyController @Inject() (
             case Some(ownTheProperty) => tradingNameOwnThePropertyForm.fill(ownTheProperty)
             case _                    => tradingNameOwnThePropertyForm
           },
-          getBackLink(),
+          getBackLink,
           request.sessionData.stillConnectedDetails
             .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
             .getOrElse(""),
@@ -69,7 +69,7 @@ class TradingNameOwnThePropertyController @Inject() (
         BadRequest(
           tradingNameOwnThePropertyView(
             formWithErrors,
-            getBackLink(),
+            getBackLink,
             request.sessionData.stillConnectedDetails
               .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
               .getOrElse(""),
@@ -96,6 +96,10 @@ class TradingNameOwnThePropertyController @Inject() (
   ): Option[AnswersYesNo] =
     request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)
 
-  private def getBackLink(): String =
-    controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
+  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      case _     => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
+    }
 }

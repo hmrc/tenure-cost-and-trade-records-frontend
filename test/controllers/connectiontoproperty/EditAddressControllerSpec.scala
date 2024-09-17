@@ -77,6 +77,37 @@ class EditAddressControllerSpec extends TestBaseSpec {
     }
   }
 
+  "calculateBackLink" should {
+
+    "return back link to CYA page when 'from=CYA' query param is present for vacant properties" in {
+      val result = editAddressController(
+        stillConnectedDetails = Some(prefilledStillConnectedVacantYes)
+      ).show(fakeRequestFromCYA)
+
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+      )
+    }
+
+    "return back link to CYA page when 'from=CYA' query param is present for not vacant properties" in {
+      val result = editAddressController(
+        stillConnectedDetails = Some(prefilledStillConnectedVacantNo)
+      ).show(fakeRequestFromCYA)
+
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      )
+    }
+
+    "return back link to Are You Still Connected page when no 'from' query param is present" in {
+      val result = editAddressController().show(fakeRequest)
+
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
+    }
+  }
+
   "Edit address form" should {
     "error if building number is missing" in {
       val formDataWithEmptybuildingNameNumber = baseFormData.updated(TestData.errorKey.buildingNameNumber, "")

@@ -51,16 +51,17 @@ class AreYouStillConnectedController @Inject() (
             case _                           => areYouStillConnectedForm
           },
           request.sessionData.toSummary,
-          navigator.from
+          calculateBackLink
         )
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit                                                                  = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AddressConnectionType](
       areYouStillConnectedForm,
-      formWithErrors => BadRequest(areYouStillConnectedView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(areYouStillConnectedView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
         session
@@ -83,6 +84,12 @@ class AreYouStillConnectedController @Inject() (
       }
     )
   }
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case "TL"  => controllers.routes.TaskListController.show().url
+      case _     => controllers.routes.LoginController.show.url
+    }
 
   private def connectionTypeInSession(implicit
     request: SessionRequest[AnyContent]

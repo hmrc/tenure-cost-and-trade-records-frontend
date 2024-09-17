@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TradingNamePayingRentForm.tradingNamePayingRentForm
 import models.submissions.common.AnswersYesNo
@@ -52,7 +52,7 @@ class TradingNamePayingRentController @Inject() (
             case Some(tradingNamePayingRent) => tradingNamePayingRentForm.fill(tradingNamePayingRent)
             case _                           => tradingNamePayingRentForm
           },
-          getBackLink(),
+          getBackLink,
           request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
           request.sessionData.toSummary
         )
@@ -67,7 +67,7 @@ class TradingNamePayingRentController @Inject() (
         BadRequest(
           tradingNamePayingRentView(
             formWithErrors,
-            getBackLink(),
+            getBackLink,
             request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
             request.sessionData.toSummary
           )
@@ -84,6 +84,11 @@ class TradingNamePayingRentController @Inject() (
     )
   }
 
-  private def getBackLink(): String =
-    controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      case _     =>
+        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+    }
 }

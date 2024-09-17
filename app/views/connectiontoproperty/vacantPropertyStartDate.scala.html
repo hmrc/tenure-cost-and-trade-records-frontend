@@ -27,14 +27,14 @@
 )
 
 
-@(theForm: Form[StartDateOfVacantProperty], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[StartDateOfVacantProperty], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("vacantPropertyStartDate.heading"),
  showSection = true,
     summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url,
+ backLinkUrl = backLink,
  theForm = theForm
 ) {
 

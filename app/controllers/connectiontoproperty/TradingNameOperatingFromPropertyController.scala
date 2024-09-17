@@ -87,9 +87,10 @@ class TradingNameOperatingFromPropertyController @Inject() (
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
-      case "TL" =>
+      case "TL"  =>
         controllers.routes.TaskListController.show().url + "#name-of-operator-from-property"
-      case _    =>
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      case _     =>
         request.sessionData.forType match {
           case ForTypes.for6076 =>
             request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {

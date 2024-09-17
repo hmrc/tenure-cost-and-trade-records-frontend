@@ -26,7 +26,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
   pageHeading = messages("pastConnectionType.heading"),
@@ -36,7 +36,7 @@
     showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
   summary = Some(summary),
-  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url,
+  backLinkUrl = backLink
 ) {
 
   @formWithCSRF(action = controllers.notconnected.routes.PastConnectionController.submit()) {
