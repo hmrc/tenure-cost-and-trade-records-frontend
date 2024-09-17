@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
@@ -63,11 +63,14 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec {
   }
 
   "RentFreePeriodDetailsController SUBMIT /" should {
-    "return BAD_REQUEST if an empty form is submitted" in {
+    "redirect to the next page if field `rentFreePeriodDetails` is not filled (optional field)" in {
       val res = rentFreePeriodDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
-      status(res) shouldBe BAD_REQUEST
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      )
     }
 
     "redirect to the next page if field `rentFreePeriodDetails` is filled" in {
