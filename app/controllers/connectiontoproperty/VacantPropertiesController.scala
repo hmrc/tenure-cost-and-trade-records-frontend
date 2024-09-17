@@ -16,12 +16,11 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
-import models.Session
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.VacantProperties
+import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, VacantProperties}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.VacantPropertiesPageId
 import play.api.Logging
@@ -53,7 +52,7 @@ class VacantPropertiesController @Inject() (
             case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
             case _                      => vacantPropertiesForm
           },
-          getBackLink(request.sessionData, navigator.from),
+          calculateBackLink,
           request.sessionData.toSummary
         )
       )
@@ -67,7 +66,7 @@ class VacantPropertiesController @Inject() (
         BadRequest(
           vacantPropertiesView(
             formWithErrors,
-            getBackLink(request.sessionData),
+            calculateBackLink,
             request.sessionData.toSummary
           )
         ),
@@ -91,14 +90,15 @@ class VacantPropertiesController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session, fromTaskList: String = ""): String =
-    fromTaskList match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#vacant-properties"
-      case _    =>
-        answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-          case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show().url
-          case _                          => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case "TL"  => controllers.routes.TaskListController.show().url + "#vacant-properties"
+      case _     =>
+        request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+          case Some(AddressConnectionTypeYesChangeAddress) =>
+            controllers.connectiontoproperty.routes.EditAddressController.show().url
+          case _                                           => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
         }
     }
-
 }

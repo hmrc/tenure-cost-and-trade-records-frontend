@@ -49,7 +49,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /" should {
+  "GET /"             should {
     "return 200" in {
       val result = areYouStillConnectedController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -59,6 +59,40 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
       val result = areYouStillConnectedController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+  }
+  "calculateBackLink" should {
+
+    "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
+      val result = areYouStillConnectedController(
+        stillConnectedDetails = Some(prefilledStillConnectedDetailsYes)
+      ).show(fakeRequestFromCYA)
+
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      )
+    }
+
+    "return back link to NotConnected CYA page when 'from=CYA' query param is present and user is not connected to the property" in {
+      val result = areYouStillConnectedController(
+        stillConnectedDetails = Some(prefilledStillConnectedDetailsNo)
+      ).show(fakeRequestFromCYA)
+
+      contentAsString(result) should include(
+        controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
+      )
+    }
+
+    "return back link to Task List when 'from=TL' query param is present" in {
+      val result = areYouStillConnectedController().show(fakeRequestFromTL)
+
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
+    "return back link to Login page when no 'from' query param is present" in {
+      val result = areYouStillConnectedController().show(fakeRequest)
+
+      contentAsString(result) should include(controllers.routes.LoginController.show.url)
     }
   }
 

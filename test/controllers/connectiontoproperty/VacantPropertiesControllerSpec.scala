@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import models.submissions.connectiontoproperty.StillConnectedDetails
+import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, StillConnectedDetails}
 import navigation.ConnectionToPropertyNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -25,14 +25,12 @@ import utils.TestBaseSpec
 
 class VacantPropertiesControllerSpec extends TestBaseSpec {
 
-  val vacantPropertiesNavigator = mock[ConnectionToPropertyNavigator]
-
   def vacantPropertiesController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledVacantProperties)
   ) =
     new VacantPropertiesController(
       stubMessagesControllerComponents(),
-      vacantPropertiesNavigator,
+      connectedToPropertyNavigator,
       vacantPropertiesView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
@@ -61,6 +59,57 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
     }
   }
 
+  "calculateBackLink" should {
+
+    "return back link to CYA page when 'from=CYA' query param is present for vacant properties" in {
+      val result = vacantPropertiesController(
+        stillConnectedDetails = Some(prefilledStillConnectedVacantYes)
+      ).show(fakeRequestFromCYA)
+
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+      )
+    }
+
+    "return back link to CYA page when 'from=CYA' query param is present for not vacant properties" in {
+      val result = vacantPropertiesController(
+        stillConnectedDetails = Some(prefilledStillConnectedVacantNo)
+      ).show(fakeRequestFromCYA)
+
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      )
+    }
+
+    "return back link to Task list page when 'from=TL' query param is present for not vacant properties" in {
+      val result = vacantPropertiesController().show(fakeRequestFromTL)
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#vacant-properties")
+    }
+
+    "return Edit Address page URL when addressConnectionType is AddressConnectionTypeYesChangeAddress and 'from' is not set" in {
+
+      val prefilledStillConnectedChangedAddress: StillConnectedDetails = prefilledStillConnectedDetailsYes.copy(
+        addressConnectionType = Some(AddressConnectionTypeYesChangeAddress)
+      )
+
+      val result = vacantPropertiesController(
+        stillConnectedDetails = Some(prefilledStillConnectedChangedAddress)
+      ).show(fakeRequest)
+
+      contentAsString(result) should include(controllers.connectiontoproperty.routes.EditAddressController.show().url)
+    }
+
+    "return Are You Still Connected page URL when addressConnectionType is not AddressConnectionTypeYesChangeAddress and 'from' is not set" in {
+      val result = vacantPropertiesController(
+        stillConnectedDetails = Some(prefilledStillConnectedDetailsYes)
+      ).show(fakeRequest)
+
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
+    }
+
+  }
   "VacantPropertiesController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 

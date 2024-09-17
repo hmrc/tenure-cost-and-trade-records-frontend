@@ -79,4 +79,19 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
     }
   }
 
+  "calculateBackLink" should {
+    "return back link to CYA page if query param present" in {
+      val result = vacantPropertiesStartDateController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+      )
+    }
+    "return back link to is the property vacant page if 'from' query param is not present" in {
+      val result = vacantPropertiesStartDateController().show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+      )
+    }
+  }
+
 }

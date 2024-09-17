@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -60,7 +60,7 @@ class IsRentReceivedFromLettingController @Inject() (
     )
   }
 
-  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent]                                        = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       isRentReceivedFromLettingForm,
       formWithErrors =>
@@ -89,7 +89,10 @@ class IsRentReceivedFromLettingController @Inject() (
       }
     )
   }
-
-  private def getBackLink(): String =
-    controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
+  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" =>
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+      case _     => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
+    }
 }

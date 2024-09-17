@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import models.submissions.connectiontoproperty.EditTheAddress
@@ -50,7 +50,8 @@ class EditAddressController @Inject() (
             case Some(editAddress) => editAddressForm.fill(editAddress)
             case _                 => editAddressForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          calculateBackLink
         )
       )
     )
@@ -59,7 +60,7 @@ class EditAddressController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[EditTheAddress](
       editAddressForm,
-      formWithErrors => BadRequest(editAddressView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(editAddressView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
         session
@@ -74,5 +75,11 @@ class EditAddressController @Inject() (
       }
     )
   }
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case _     => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+    }
 
 }

@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
 
-  def lettingPartOfPropertyDetailsControllerr(
+  def lettingPartOfPropertyDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
     new LettingPartOfPropertyDetailsController(
@@ -39,7 +39,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
 
   "LettingPartOfPropertyDetailsController GET /" should {
     "return 200 and HTML with Letting Part of Property Details in session" in {
-      val result = lettingPartOfPropertyDetailsControllerr().show(Some(0))(fakeRequest)
+      val result = lettingPartOfPropertyDetailsController().show(Some(0))(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -49,7 +49,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML Letting Part of Property Details with none in session" in {
-      val controller = lettingPartOfPropertyDetailsControllerr(stillConnectedDetails = None)
+      val controller = lettingPartOfPropertyDetailsController(stillConnectedDetails = None)
       val result     = controller.show(Some(0))(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -61,7 +61,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
 
     "render a page with an empty form" when {
       "not given an index" in {
-        val result = lettingPartOfPropertyDetailsControllerr().show(None)(fakeRequest)
+        val result = lettingPartOfPropertyDetailsController().show(None)(fakeRequest)
         val html   = Jsoup.parse(contentAsString(result))
 
         Option(html.getElementById("tenantName").`val`()).value                               shouldBe ""
@@ -75,7 +75,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
 
       "given an index" which {
         "doesn't already exist in the session" in {
-          val result = lettingPartOfPropertyDetailsControllerr().show(Some(2))(fakeRequest)
+          val result = lettingPartOfPropertyDetailsController().show(Some(2))(fakeRequest)
           val html   = Jsoup.parse(contentAsString(result))
 
           Option(html.getElementById("tenantName").`val`()).value                               shouldBe ""
@@ -88,10 +88,30 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
         }
       }
     }
+    "calculateBackLink" should {
+      "return back link to CYA page if query param present" in {
+        val result = lettingPartOfPropertyDetailsController().show(Some(0))(fakeRequestFromCYA)
+        contentAsString(result) should include(
+          controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+        )
+      }
+      "return back link to previous letting page" in {
+        val result = lettingPartOfPropertyDetailsController().show(Some(1))(fakeRequest)
+        contentAsString(result) should include(
+          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
+        )
+      }
+      "return back link to Is Rent Received From page if there is only 1 letting" in {
+        val result = lettingPartOfPropertyDetailsController().show(Some(0))(fakeRequest)
+        contentAsString(result) should include(
+          controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
+        )
+      }
 
+    }
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = lettingPartOfPropertyDetailsControllerr().submit(None)(
+        val res = lettingPartOfPropertyDetailsController().submit(None)(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST

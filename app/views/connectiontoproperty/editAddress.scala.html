@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[EditTheAddress], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[EditTheAddress], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @getAddressFieldValueOrDefaultUnlessErrors(field:String, defaultAddressValue: String) = @{
     if(theForm.hasErrors) {
@@ -43,7 +43,7 @@
   showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
     summary = Some(summary),
-  backLinkUrl = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url,
+  backLinkUrl = backLink,
   theForm = theForm
 ) {
   @formWithCSRF(action = controllers.connectiontoproperty.routes.EditAddressController.submit()) {

@@ -83,6 +83,21 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
     }
   }
 
+  "getBackLink" should {
+    "return back link to CYA page if query param present" in {
+      val result = tradingNamePayingRentController().show(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      )
+    }
+    "return back link to does (...) own the property page if 'from' query param is not present" in {
+      val result = tradingNamePayingRentController().show(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+      )
+    }
+  }
+
   object TestData {
     val errorKey: ErrorKey = new ErrorKey
 

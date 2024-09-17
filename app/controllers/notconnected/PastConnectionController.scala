@@ -16,7 +16,7 @@
 
 package controllers.notconnected
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.notconnected.PastConnectionForm.pastConnectionForm
 import models.submissions.notconnected.PastConnectionType
@@ -53,7 +53,8 @@ class PastConnectionController @Inject() (
               }
             case _                             => pastConnectionForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          calculateBackLink
         )
       )
     )
@@ -62,7 +63,8 @@ class PastConnectionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PastConnectionType](
       pastConnectionForm,
-      formWithErrors => BadRequest(pastConnectionView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(pastConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
       data => {
         val updatedData = updateRemoveConnectionDetails(_.copy(pastConnectionType = Some(data)))
         session.saveOrUpdate(updatedData)
@@ -70,5 +72,11 @@ class PastConnectionController @Inject() (
       }
     )
   }
+
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
+      case _     => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+    }
 
 }

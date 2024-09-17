@@ -26,7 +26,7 @@ import models.submissions.additionalinformation.*
 import models.submissions.common.*
 import models.submissions.connectiontoproperty.*
 import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, DownloadPDFReferenceNumber}
-import models.submissions.notconnected.{PastConnectionTypeYes, RemoveConnectionDetails, RemoveConnectionsDetails}
+import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
 import models.{AnnualRent, ForTypes, Session, SubmissionDraft}
@@ -134,10 +134,21 @@ trait FakeObjects {
   val prefilledRequestRefNumBlank = RequestReferenceNumberDetails()
 
   // Are your still connected sessions
-  val prefilledStillConnectedDetailsYes: StillConnectedDetails                       = StillConnectedDetails(
+  val prefilledStillConnectedDetailsYes: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee)
   )
+
+  val prefilledStillConnectedVacantYes: StillConnectedDetails = StillConnectedDetails(
+    Some(AddressConnectionTypeYes),
+    vacantProperties = Some(VacantProperties(VacantPropertiesDetailsYes))
+  )
+
+  val prefilledStillConnectedVacantNo: StillConnectedDetails = StillConnectedDetails(
+    Some(AddressConnectionTypeYes),
+    vacantProperties = Some(VacantProperties(VacantPropertiesDetailsNo))
+  )
+
   val prefilledStillConnectedDetailsEdit: StillConnectedDetails                      = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
