@@ -1139,7 +1139,7 @@ error.formerLeaseSurrendered.missing = Dewiswch ‘do’ os ildiwyd prydles neu 
 canRentBeReducedOnReview.heading = A oes modd gostwng y rhent ar adeg adolygiad o dan delerau’r brydles neu’r cytundeb?
 error.canRentBeReducedOnReview.missing = Dewiswch ‘oes’ os gall adolygiad arwain at ostyngiad yn eich rhent
 
-#PROPERTY UPDATES DURING THE CURRENT LEASE
+# PROPERTY UPDATES DURING THE CURRENT LEASE
 ##########################################
 propertyUpdates.heading = Diweddariadau i’r eiddo yn ystod y brydles bresennol
 propertyUpdates.declare = Mae’n rhaid i chi ddatgan unrhyw waith rydych wedi’i wneud ar yr eiddo yn ystod y brydles bresennol. Dim ond addasiadau, gwelliannau, adnewyddiadau, gosodiadau cychwynnol, neu atgyweiriadau cychwynnol a allai fod wedi effeithio ar werth yr eiddo y dylech eu cynnwys.
@@ -1147,17 +1147,25 @@ propertyUpdates.assign  = Os neilltuwyd y brydles i chi gan barti arall, mae’n
 propertyUpdates.label   = A yw’r eiddo wedi cael ei addasu, ei wella neu ei ddiweddaru mewn unrhyw ffordd yn ystod y brydles bresennol?
 error.propertyUpdates.missing   = Select yes if the property been altered, improved or updated in any way during the current lease
 
-#WORK CARRIED OUT DETAILS
+# WORK CARRIED OUT DETAILS
 #########################
 workCarriedOutDetails.heading = Rhowch fanylion y gwaith a waned
 workCarriedOutDetails.hint = Rhowch ddisgrifiad byr o’r gwaith, faint a gostiodd, a’r dyddiad cwblhau.
 error.workCarriedOutDetails.required = Enter a description of the work carried out
 error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
 
-#WORK CARRIED OUT CONDITION
+# WORK CARRIED OUT CONDITION
 #########################
 workCarriedOutCondition.heading = A oedd gofyn i chi wneud unrhyw waith fel un o amodau’r denantiaeth bresennol?
 error.workCarriedOutCondition.required = Select yes if you were required to carry out any works as a condition of the present tenancy or agreement
+
+# RENT FREE PERIOD
+#########################
+isGivenRentFreePeriod.heading = Were you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+error.isGivenRentFreePeriod.required = Select yes if you were given any rent-free period, payment or benefit
+rentFreePeriodDetails.heading = Give details of any rent-free period, payment or benefit
+rentFreePeriodDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
+error.rentFreePeriodDetails.maxLength = Description of given rent-free period, payment or benefit must be {0} characters or fewer
 
 # PAY A CAPITAL SUM
 ##################

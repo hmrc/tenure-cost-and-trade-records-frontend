@@ -658,6 +658,12 @@ POST        /work-carried-out-details                               controllers.
 GET         /work-carried-out-condition                             controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.show()
 POST        /work-carried-out-condition                             controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.submit()
 
+GET         /rent-free-period                                       controllers.aboutYourLeaseOrTenure.IsGivenRentFreePeriodController.show()
+POST        /rent-free-period                                       controllers.aboutYourLeaseOrTenure.IsGivenRentFreePeriodController.submit()
+
+GET         /rent-free-period-details                               controllers.aboutYourLeaseOrTenure.RentFreePeriodDetailsController.show()
+POST        /rent-free-period-details                               controllers.aboutYourLeaseOrTenure.RentFreePeriodDetailsController.submit()
+
 GET         /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.show()
 POST        /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.submit()
 

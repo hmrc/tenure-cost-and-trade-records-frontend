@@ -1141,7 +1141,7 @@ error.formerLeaseSurrendered.missing = Select yes if a former lease or agreement
 canRentBeReducedOnReview.heading = Can the rent be reduced on review under the terms of the lease or agreement?
 error.canRentBeReducedOnReview.missing = Select yes if the rent can be reduced on review
 
-#PROPERTY UPDATES DURING THE CURRENT LEASE
+# PROPERTY UPDATES DURING THE CURRENT LEASE
 ##########################################
 propertyUpdates.heading = Property updates during the current lease
 propertyUpdates.declare = You must declare any work you have done to the property during the current lease. Only include any alterations, improvements, refurbishment, initial fitting out or initial repairs that may have affected the property’s value.
@@ -1149,7 +1149,7 @@ propertyUpdates.assign  = If the lease was assigned to you by another party, you
 propertyUpdates.label   = Has the property been altered, improved or updated in any way during the current lease?
 error.propertyUpdates.missing = Select yes if the property been altered, improved or updated in any way during the current lease
 
-#WORK CARRIED OUT DETAILS
+# WORK CARRIED OUT DETAILS
 #########################
 
 workCarriedOutDetails.heading = Give details of the work carried out
@@ -1157,10 +1157,18 @@ workCarriedOutDetails.hint = Give a brief description of the work, how much it c
 error.workCarriedOutDetails.required = Enter a description of the work carried out
 error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
 
-#WORK CARRIED OUT CONDITION
+# WORK CARRIED OUT CONDITION
 #########################
 workCarriedOutCondition.heading = Were you required to carry out any works as a condition of the present tenancy or agreement?
 error.workCarriedOutCondition.required = Select yes if you were required to carry out any works as a condition of the present tenancy or agreement
+
+# RENT FREE PERIOD
+#########################
+isGivenRentFreePeriod.heading = Were you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+error.isGivenRentFreePeriod.required = Select yes if you were given any rent-free period, payment or benefit
+rentFreePeriodDetails.heading = Give details of any rent-free period, payment or benefit
+rentFreePeriodDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
+error.rentFreePeriodDetails.maxLength = Description of given rent-free period, payment or benefit must be {0} characters or fewer
 
 # PAY A CAPITAL SUM
 ##################
