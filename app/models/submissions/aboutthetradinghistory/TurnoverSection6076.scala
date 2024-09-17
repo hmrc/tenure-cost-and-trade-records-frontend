@@ -27,7 +27,7 @@ import java.time.LocalDate
   */
 case class TurnoverSection6076(
   financialYearEnd: LocalDate,
-  tradingPeriod: Int,
+  tradingPeriod: Option[Int] = None,
   electricityGenerated: Option[String] = None,
   otherIncome: Option[BigDecimal] = None,
   costOfSales6076Sum: Option[CostOfSales6076Sum] = None,
