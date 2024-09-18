@@ -15,13 +15,15 @@
  *@
 
 @import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import controllers.aboutthetradinghistory
+@import models.submissions.aboutthetradinghistory.TurnoverSection6045
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswersYesNo
 @import models.pages.Summary
 @import util.NumberUtil._
-
+@import util.DateUtilLocalised
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
@@ -30,17 +32,72 @@
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF,
-        govukSummaryList: GovukSummaryList
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised
 )
 
 
 @(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@tradingHistory = @{SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)}
 
-@answers = @{
-    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+@tradingHistoryOne = @{SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)}
+
+@tableRow(values: Seq[String]) = {
+    @values.map { value =>
+        <div class="hmrc-turnover-table-column">
+            @value
+        </div>
+       }
+    }
+
+@answer(valueLabelKey: String, getAnswer: TurnoverSection6045 => String) = @{
+
+        SummaryListRow(
+            key = Key(Text(messages(valueLabelKey))),
+            value = Value(HtmlContent(
+                tableRow(tradingHistoryOne.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer)).body
+            )),
+            classes = "no-border-bottom"
+        )
+    }
+
+@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
+        request.sessionData.financialYearEndDates6045.map(_._1)
+    }
+
+@financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
+        SummaryListRow(
+            key = Key(Text(messages("turnover.financialYearEnd"))),
+            value = Value(HtmlContent(
+                tableRow(
+                    tradingHistory.answers.map(financialYearEndDates).fold(Seq(""))(_.map(dateUtil.formatDayMonthAbbrYear))
+                ).body
+            )),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"$editPage?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages(pageHeadingKey)),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
+                            )
+                        )
+                    )
+                )
+            ),
+            classes = "no-border-bottom"
+        )
+    }
+@pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
+
+    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+@govukSummaryList(SummaryList(rows =
+    financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
+))
 }
-
 @layout(
     pageHeading = messages("cYa.additionalActivities.heading"),
     backLinkUrl = backLink,
@@ -56,7 +113,7 @@
 
     @govukSummaryList(SummaryList(rows =
 
-        answers.row(
+        tradingHistoryOne.row(
             "cYa.additionalActivities.activities.onSite.label",
             _.additionalActivities.flatMap(_.additionalActivitiesOnSite.flatMap(x => messages(s"label.${x.name}"))).orElse(""),
             controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities")
