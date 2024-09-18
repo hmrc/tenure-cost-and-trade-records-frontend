@@ -15,7 +15,7 @@
  */
 
 package controllers.connectiontoproperty
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
@@ -54,7 +54,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             .flatMap(_.addAnotherLettingToProperty)
             .fold(addAnotherLettingForm)(addAnotherLettingForm.fill),
           index,
-          controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(index).url,
+          calculateBackLink(index),
           request.sessionData.toSummary
         )
       )
@@ -74,9 +74,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             addAnotherLettingPartOfPropertyView(
               formWithErrors,
               index,
-              controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController
-                .show(index)
-                .url,
+              calculateBackLink(index),
               request.sessionData.toSummary
             )
           ),
@@ -192,5 +190,12 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       }
     )
   }
+
+  private def calculateBackLink(index: Int)(implicit request: SessionRequest[AnyContent]) =
+    navigator.from match {
+      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case _     =>
+        controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(index).url
+    }
 
 }
