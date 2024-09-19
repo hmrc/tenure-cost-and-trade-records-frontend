@@ -21,12 +21,10 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswersYesNo
-@import models.pages.Summary
 @import util.NumberUtil._
 @import util.DateUtilLocalised
-@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import util.SectionAnswersRowBuilder
+@import models.submissions.common.AnswerYes
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -116,12 +114,65 @@
         tradingHistoryOne.row(
             "cYa.additionalActivities.activities.onSite.label",
             _.additionalActivities.flatMap(_.additionalActivitiesOnSite.flatMap(x => messages(s"label.${x.name}"))).orElse(""),
-            controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities")
+            controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities") ++
+        tradingHistoryOne.conditionRow(_.additionalActivities.flatMap(_.additionalActivitiesOnSite).exists(_ == AnswerYes),
+           "cYa.additionalActivities.activities.allYear.label",
+           _.additionalActivities.map(_.additionalActivitiesAllYear.map(yesNo => messages(s"label.${yesNo.additionalActivitiesAllYear.name}"))),
+           controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show(),
+           "additionalActivitiesAllYear",
+           (messages("label.no"), _.additionalActivities.flatMap(_.additionalActivitiesAllYear).flatMap(_.weeksOpen).map {
+               weeksOpen =>
+                   weeksOpen match {
+                            case 1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek" , weeksOpen)
+                            case _ => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOpen)
+                        }
+                    })
+                )
+             ))
 
-
-    ))
-
-
+    @if(tradingHistoryOne.answers.flatMap(_.additionalActivities).flatMap(_.additionalActivitiesOnSite).contains(AnswerYes)) {
+        @pageAnswers("cYa.additionalActivities.shops.heading",
+            aboutthetradinghistory.routes.AdditionalShopsController.show(),
+            answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+                t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+            answer("cYa.additionalActivities.gross", _.additionalShops.flatMap(_.grossReceipts)),
+            answer("cYa.additionalActivities.costOfPurchases", _.additionalShops.flatMap(_.tradingPeriod)),
+        )
+        @pageAnswers("cYa.additionalActivities.catering.heading",
+            aboutthetradinghistory.routes.AdditionalCateringController.show(),
+            answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+                t => s"${t.additionalCatering.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+            answer("cYa.additionalActivities.gross", _.additionalCatering.flatMap(_.grossReceipts)),
+            answer("cYa.additionalActivities.costOfPurchases", _.additionalCatering.flatMap(_.tradingPeriod)),
+        )
+        @pageAnswers("cYa.additionalActivities.bars.heading",
+            aboutthetradinghistory.routes.AdditionalBarsClubsController.show(),
+            answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+                t => s"${t.additionalBarsClubs.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+            answer("cYa.additionalActivities.grossFromBars", _.additionalBarsClubs.flatMap(_.grossReceiptsBars)),
+            answer("cYa.additionalActivities.costOfBars", _.additionalBarsClubs.flatMap(_.barPurchases)),
+            answer("cYa.additionalActivities.grossFromMembership", _.additionalBarsClubs.flatMap(_.grossClubMembership)),
+            answer("cYa.additionalActivities.grossFromSeparate", _.additionalBarsClubs.flatMap(_.grossClubSeparate)),
+            answer("cYa.additionalActivities.costOfEntertainment", _.additionalBarsClubs.flatMap(_.costOfEntertainment))
+        )
+        @pageAnswers("cYa.additionalActivities.amusements.heading",
+            aboutthetradinghistory.routes.AdditionalAmusementsController.show(),
+            answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+                t => s"${t.additionalAmusements.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+            answer("cYa.additionalActivities.receipts", _.additionalAmusements.flatMap(_.receipts)),
+        )
+        @pageAnswers("cYa.additionalActivities.miscellaneous.heading",
+            aboutthetradinghistory.routes.AdditionalMiscController.show(),
+            answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
+                t => s"${t.additionalMisc.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+            answer("cYa.additionalActivities.grossFromOther", _.additionalMisc.flatMap(_.leisureReceipts)),
+            answer("cYa.additionalActivities.storageOfCaravans", _.additionalMisc.flatMap(_.winterStorageReceipts)),
+            answer("cYa.additionalActivities.numberOfVans", _.additionalMisc.flatMap(_.numberOfVans)),
+            answer("cYa.additionalActivities.otherActivities", _.additionalMisc.flatMap(_.otherActivitiesReceipts)),
+            answer("cYa.additionalActivities.otherServices", _.additionalMisc.flatMap(_.otherServicesReceipts)),
+            answer("cYa.additionalActivities.gasBottled", _.additionalMisc.flatMap(_.bottledGasReceipts)),
+        )
+    }
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.submit()) {
 
         @includes.checkYourAnswersRadioButtons(

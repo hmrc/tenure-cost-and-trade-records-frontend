@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalActivitiesOnSiteForm.additionalActivitiesOnSiteForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalActivitiesOnSiteId
 import play.api.Logging
@@ -70,22 +70,33 @@ class AdditionalActivitiesOnSiteController @Inject() (
           )
         ),
       data => {
+        val previousAnswer = request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.additionalActivities)
+          .flatMap(_.additionalActivitiesOnSite)
+
         val updatedSession = AboutTheTradingHistoryPartOne.updateAdditionalActivities { additionalActivities =>
           additionalActivities.copy(additionalActivitiesOnSite = Some(data))
         }
         session
           .saveOrUpdate(updatedSession)
-          .map(_ =>
-            Redirect(
-              navigator
-                .nextPage6045(
-                  AdditionalActivitiesOnSiteId,
-                  updatedSession,
-                  navigator.cyaPageForAdditionalActivities
-                )
-                .apply(updatedSession)
-            )
-          )
+          .map { _ =>
+
+            val nextPage = (previousAnswer, data, navigator.from) match {
+              case (Some(AnswerYes), AnswerYes, "CYA") =>
+                controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
+              case (Some(AnswerNo), AnswerYes, _)      =>
+                controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show()
+              case _                                   =>
+                navigator
+                  .nextPage6045(
+                    AdditionalActivitiesOnSiteId,
+                    updatedSession,
+                    navigator.cyaPageForAdditionalActivities
+                  )
+                  .apply(updatedSession)
+            }
+            Redirect(nextPage)
+          }
       }
     )
   }

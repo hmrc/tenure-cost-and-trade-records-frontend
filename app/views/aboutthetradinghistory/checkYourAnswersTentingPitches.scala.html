@@ -120,7 +120,7 @@
                 controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
                 "tentingPitchesOnSite") ++
                     tradingHistoryOne.conditionRow(
-                        _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.map(_.name)).contains("yes"),
+                        _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite).exists(_ == AnswerYes),
                         "cYa.touringAndTentingPitches.pitchesAllYear.label",
                         _.touringAndTentingPitches.map(_.tentingPitchesAllYear.map(yesNo => messages(s"label.${yesNo.tentingPitchesAllYear.name}"))),
                         controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(),

@@ -2675,6 +2675,20 @@ cYa.additionalActivities.amusements.heading = Amusements
 cYa.additionalActivities.miscellaneous.heading = Miscellaneous activities
 cYa.additionalActivities.activities.onSite.label = Additional activities on site?
 cYa.additionalActivities.activities.allYear.label = Additional activities open all year?
+cYa.additionalActivities.gross = Gross receipts
+cYa.additionalActivities.costOfPurchases = Cost of purchases
+cYa.additionalActivities.grossFromBars = Gross receipts from bar sales
+cYa.additionalActivities.costOfBars = Cost of bar purchases
+cYa.additionalActivities.grossFromMembership = Gross receipts from club membership fees
+cYa.additionalActivities.grossFromSeparate = Gross receipts from separate entry charges
+cYa.additionalActivities.costOfEntertainment = Cost of entertainment
+cYa.additionalActivities.receipts = Receipts
+cYa.additionalActivities.grossFromOther = Gross receipts from other leisure facilities
+cYa.additionalActivities.storageOfCaravans = Storage of touring caravans
+cYa.additionalActivities.numberOfVans = Number of vans
+cYa.additionalActivities.otherActivities = Other activities not covered previously
+cYa.additionalActivities.otherServices = Sale of other services
+cYa.additionalActivities.gasBottled = Sale of bottled gas
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
