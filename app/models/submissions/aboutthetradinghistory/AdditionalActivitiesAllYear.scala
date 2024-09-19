@@ -20,8 +20,8 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class AdditionalActivitiesAllYear(
-  tentingPitchesAllYear: AnswersYesNo,
-  weekOfPitchesUse: Option[Int] = None
+  additionalActivitiesAllYear: AnswersYesNo,
+  weeksOpen: Option[Int] = None
 )
 
 object AdditionalActivitiesAllYear {

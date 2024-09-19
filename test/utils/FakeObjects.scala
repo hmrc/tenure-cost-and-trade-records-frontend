@@ -705,8 +705,8 @@ trait FakeObjects {
         additionalActivitiesOnSite = Some(AnswerYes),
         additionalActivitiesAllYear = Some(
           AdditionalActivitiesAllYear(
-            tentingPitchesAllYear = AnswerNo,
-            weekOfPitchesUse = Some(30)
+            additionalActivitiesAllYear = AnswerNo,
+            weeksOpen = Some(30)
           )
         )
       )

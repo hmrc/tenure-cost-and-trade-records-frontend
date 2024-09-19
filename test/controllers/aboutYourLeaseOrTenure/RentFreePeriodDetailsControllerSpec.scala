@@ -67,7 +67,7 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec {
       val res = rentFreePeriodDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody()
       )
-      status(res) shouldBe SEE_OTHER
+      status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
       )
