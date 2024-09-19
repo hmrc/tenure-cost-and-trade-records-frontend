@@ -2662,7 +2662,7 @@ error.additionalAmusements.receipts.negative = Receipts from on-site amusements 
 
 #ADDITIONAL MISC
 additionalMisc.heading = Miscellaneous activities
-additionalMisc.p = If you run any other activities for which a separate charge is made, enter the receipts excluding VAT
+additionalMisc.p = If you run any other activities for which a separate charge is made, enter the receipts excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 additionalMisc.leisureReceipts.label = Gross receipts from other leisure facilities
 additionalMisc.leisureReceipts.hint = For example, golf, tennis, moorings, boat storage.
 additionalMisc.giveDetails = Give details
