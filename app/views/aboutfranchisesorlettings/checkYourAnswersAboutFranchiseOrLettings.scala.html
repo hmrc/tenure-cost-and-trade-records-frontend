@@ -32,17 +32,23 @@
 
 @(theForm: Form[CheckYourAnswersAboutFranchiseOrLettings], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-@is6020 = @{
-    request.sessionData.forType == ForTypes.for6020
+@label         = @{
+    request.sessionData.forType match {
+        case  ForTypes.for6015 | ForTypes.for6016  => messages("label.section.aboutTheFranchiseConcessions")
+        case  ForTypes.for6020 =>                     messages("label.section.aboutTheLettings")
+        case  ForTypes.for6045 | ForTypes.for6046  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+        case _                                     => messages("label.section.aboutTheFranchiseLettings")
+    }
 }
 
-@isConcession  = @{
-    request.sessionData.forType == ForTypes.for6015 || request.sessionData.forType == ForTypes.for6016}
-
-@label = @{if (is6020) messages("label.section.aboutTheLettings") else if (isConcession) messages("label.section.aboutTheFranchiseConcessions")  else messages("label.section.aboutTheFranchiseLettings")}
 
 @pageHeading = @{
-    if (is6020) messages("checkYourAnswersLettings.heading") else if (isConcession) messages("checkYourAnswersAboutConcessionsOrLettings.heading") else  messages("checkYourAnswersAboutFranchiseOrLettings.heading")
+  request.sessionData.forType match {
+      case  ForTypes.for6015 | ForTypes.for6016  => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
+      case  ForTypes.for6020                     => messages("checkYourAnswersLettings.heading")
+      case  ForTypes.for6045 | ForTypes.for6046  => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
+      case _                                     => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
+  }
 }
 
     @layout(
@@ -55,10 +61,9 @@
         theForm = theForm
     ) {
         @{
-            if(is6020) {
+            if(request.sessionData.forType == ForTypes.for6020) {
                 answersLetting()
             } else {
-
                 answersSectionAboutTheFranchiseLettings()
             }
         }

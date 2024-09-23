@@ -698,6 +698,7 @@ franchiseLettings.subheading = Do you receive income from letting out parts of y
 franchiseLettings.6020.heading = Is any rent received from letting any parts of the property?
 franchiseLettings.6020.p1 = For example, advertising rights, telecom mats, charging points, and ATMs. You will have the opportunity to add multiple lettings if required.
 franchiseLettings.6030.heading = Do you receive rental income from any franchises or lettings?
+franchiseLettings.6045.heading =  Do you receive rental income from any concessions, franchises or lettings?
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY (6030)
@@ -706,6 +707,7 @@ franchiseLettingsIncome.heading = Do you receive rental income from any franchis
 franchiseLettingsIncome.p1 = You must declare:
 franchiseLettingsIncome.list1 = any payments received instead of trading income from concessions or franchise agreements - for example, tearooms, vehicle charging points or car washes
 franchiseLettingsIncome.list2 = rent received from letting other parts of the property, including advertising billboards, telephone masts or car parking
+franchiseLettingsIncome6045.list1 = any payments received instead of trading income from concessions or franchise agreements
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # ABOUT YOUR LANDLORD
@@ -2906,9 +2908,11 @@ maxOf5Lettings.error = Please confirm that you understand the VOA will contact y
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franchises or lettings
 checkYourAnswersAboutConcessionsOrLettings.heading = Check your answers – concessions or lettings
+checkYourAnswersAboutConcessionsOrLettings6045.heading = Check your answers – concessions franchises or lettings
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
 checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings = Franchises or lettings?
+checkYourAnswersAboutFranchiseOrLettings.6045.lettings = Income from concessions, franchise or lettings?
 checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
 checkYourAnswersAboutFranchiseOrLettings.separateBusiness = Separate business run from the property?
 checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading = Lettings

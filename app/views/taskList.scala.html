@@ -451,6 +451,16 @@
      }
     </h2>
     <ul class="app-task-list__items">
+    @if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+     @includes.taskListItem(
+      "franchise-or-lettings-tied-to-property",
+      "taskList.rentalIncomeStatus",
+      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+      section4Completed,
+      session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+      section3point3Completed.isEmpty
+     )
+    } else {
      @if(!(Seq(ForTypes.for6020) contains forType)) {
       @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
@@ -458,9 +468,9 @@
        session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
        forType match {
         case ForTypes.for6045 => section3point3Completed.isEmpty
-        case _                => section3Completed.isEmpty
+        case _ => section3Completed.isEmpty
        }
-       )
+      )
      }
      @if(forType == ForTypes.for6030) {
       @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
@@ -500,6 +510,7 @@
        )
       }
      }
+    }
     </ul>
    </li>
   }

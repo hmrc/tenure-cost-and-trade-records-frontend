@@ -45,13 +45,16 @@
 @forType6015_6016 = @{
     forType == ForTypes.for6015 || forType == ForTypes.for6016
 }
+@forType6045_6046 = @{
+    forType == ForTypes.for6045 && forType == ForTypes.for6046
+}
 
 @separateBusinessesIncomeMsgKey = @{
-    if (forType == ForTypes.for6030) {
-        "checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings"
-    } else {
-        "checkYourAnswersAboutFranchiseOrLettings.franchiseLettings"
-    }
+  forType match {
+      case ForTypes.for6030                    => "checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings"
+      case ForTypes.for6045 | ForTypes.for6046 => "checkYourAnswersAboutFranchiseOrLettings.6045.lettings"
+      case _                                   => "checkYourAnswersAboutFranchiseOrLettings.franchiseLettings"
+  }
 }
 
 @addedSeparateBusinessMsgKey = @{
@@ -81,7 +84,9 @@
 
 }
 
-<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading")</h2>
+@if(forType6045_6046){
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading")</h2>
+}
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(separateBusinessesIncomeMsgKey,
