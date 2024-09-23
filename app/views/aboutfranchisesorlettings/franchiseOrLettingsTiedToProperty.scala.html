@@ -33,25 +33,24 @@
 
 @(theForm: Form[?], userType: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
-@for6015 = @{userType == ForTypes.for6015 || userType == ForTypes.for6016}
-@for6020 = @{userType == ForTypes.for6020}
 @label = @{
-  (for6015, for6020) match {
-   case (true, _) => messages("label.section.aboutTheFranchiseConcessions")
-   case (false, true) => messages("label.section.aboutTheLettings")
-   case _ => messages("label.section.aboutTheFranchiseLettings")
-   }
+  userType match {
+      case ForTypes.for6015 | ForTypes.for6016 => messages("label.section.aboutTheFranchiseConcessions")
+      case ForTypes.for6020                    => messages("label.section.aboutTheLettings")
+      case ForTypes.for6045 | ForTypes.for6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
+      case _                                   => messages("label.section.aboutTheFranchiseLettings")
+  }
 }
 
 @heading = @{
     userType match {
         case ForTypes.for6015 | ForTypes.for6016 => messages("franchiseLettingsIncome.heading")
-        case ForTypes.for6020 => messages("franchiseLettings.6020.heading")
-        case ForTypes.for6030 => messages("franchiseLettings.6030.heading")
-        case _ => messages("franchiseLettings.heading")
+        case ForTypes.for6020                    => messages("franchiseLettings.6020.heading")
+        case ForTypes.for6030                    => messages("franchiseLettings.6030.heading")
+        case ForTypes.for6045 | ForTypes.for6046 => messages("franchiseLettings.6045.heading")
+        case _                                   => messages("franchiseLettings.heading")
     }
 }
-
 @layout(
     pageHeading = heading,
     showSection = true,
@@ -62,7 +61,25 @@
 ) {
 
     @userType match {
-        case userType if userType != ForTypes.for6020 && userType != ForTypes.for6030 => {
+        case ForTypes.for6020 => {
+            <p class="govuk-body govuk-hint">@messages("franchiseLettings.6020.p1")</p>
+        }
+        case ForTypes.for6030 => {
+            <p class="govuk-body">@messages("franchiseLettingsIncome.p1")</p>
+
+            <ul class='govuk-list govuk-list--bullet'>
+                <li><span class="govuk-body">@messages("franchiseLettingsIncome.list1")</span></li>
+                <li><span class="govuk-body">@messages("franchiseLettingsIncome.list2")</span></li>
+            </ul>
+        }
+        case ForTypes.for6045 | ForTypes.for6046 => {
+            <p class="govuk-body">@messages("franchiseLettingsIncome.p1")</p>
+            <ul class='govuk-list govuk-list--bullet'>
+                <li><span class="govuk-body">@messages("franchiseLettingsIncome6045.list1")</span></li>
+                <li><span class="govuk-body">@messages("franchiseLettingsIncome.list2")</span></li>
+            </ul>
+        }
+        case _ => {
             <p class="govuk-body">@messages("franchiseLettings.p1")</p>
             <p class="govuk-body">@messages("franchiseLettings.p2")</p>
 
@@ -72,17 +89,6 @@
             </ul>
 
             <h2 class="govuk-heading-m">@messages("franchiseLettings.subheading")</h2>
-        }
-        case userType if userType == ForTypes.for6030 => {
-            <p class="govuk-body">@messages("franchiseLettingsIncome.p1")</p>
-
-            <ul class='govuk-list govuk-list--bullet'>
-                <li><span class="govuk-body">@messages("franchiseLettingsIncome.list1")</span></li>
-                <li><span class="govuk-body">@messages("franchiseLettingsIncome.list2")</span></li>
-            </ul>
-        }
-        case _ => {
-            <p class="govuk-body">@messages("franchiseLettings.6020.p1")</p>
         }
     }
 
