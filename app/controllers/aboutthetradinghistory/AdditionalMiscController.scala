@@ -19,10 +19,10 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.AdditionalMiscForm.additionalMiscForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.{updateAboutTheTradingHistoryPartOne, updateAdditionalActivities}
-import models.submissions.aboutthetradinghistory.{AdditionalCatering, AdditionalMisc, AdditionalMiscDetails, TurnoverSection6045, TurnoverSection6076}
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
+import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.{AdditionalMiscId, OtherIncomeId}
+import navigation.identifiers.AdditionalMiscId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
@@ -81,14 +81,17 @@ class AdditionalMiscController @Inject() (
             )
           )
 
-          session
-            .saveOrUpdate(updatedData)
-            .map { _ =>
-              navigator.cyaPage
-                .filter(_ => navigator.from == "CYA")
-                .getOrElse(navigator.nextPage(AdditionalMiscId, updatedData).apply(updatedData))
-            }
-            .map(Redirect)
+          session.saveOrUpdate(updatedData).map { _ =>
+            Redirect(
+              navigator
+                .nextPage6045(
+                  AdditionalMiscId,
+                  updatedData,
+                  navigator.cyaPageForAdditionalActivities
+                )
+                .apply(updatedData)
+            )
+          }
         }
       )
     }
