@@ -122,6 +122,12 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
           case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
         }
+      case ForTypes.for6045 | ForTypes.for6046 =>
+        answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
+          case Some(AnswerYes) =>
+            controllers.routes.TaskListController.show().url // TODO when section ready for 6045
+          case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+        }
       case _                                   =>
         logger.warn(s"Back link reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
