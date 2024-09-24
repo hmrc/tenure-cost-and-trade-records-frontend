@@ -19,7 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**
@@ -68,6 +68,15 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data isVATPayableForWholeProperty submitted" in {
+      val res = isVATPayableForWholePropertyController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "isVatPayableForWholeProperty" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

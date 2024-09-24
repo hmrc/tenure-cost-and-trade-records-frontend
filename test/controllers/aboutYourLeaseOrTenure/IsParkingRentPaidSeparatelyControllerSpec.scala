@@ -20,7 +20,7 @@ import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm.isParkingRent
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
@@ -78,6 +78,15 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data isParkingRentPaidSeparately submitted" in {
+      val res = isParkingRentPaidSeparatelyController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "isParkingRentPaidSeparately" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

@@ -28,7 +28,7 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
 
-  def IncludedInYourRentController(
+  def includedInYourRentController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new IncludedInYourRentController(
     stubMessagesControllerComponents(),
@@ -40,7 +40,7 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
   "IncludedInYourRentController GET /" should {
     "return 200 and HTML with Included In Your Rent Details in the session" in {
-      val result = IncludedInYourRentController().show(fakeRequest)
+      val result = includedInYourRentController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -50,7 +50,7 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with no Included In Your Rent Details in the session" in {
-      val controller = IncludedInYourRentController(aboutLeaseOrAgreementPartOne = None)
+      val controller = includedInYourRentController(aboutLeaseOrAgreementPartOne = None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -63,8 +63,18 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
   "IncludedInYourRentController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = IncludedInYourRentController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = includedInYourRentController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data includedInYourRent submitted" in {
+      val res = includedInYourRentController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "includedInYourRent[0]" -> "nondomesticRates",
+          "vatValue"              -> "100"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
