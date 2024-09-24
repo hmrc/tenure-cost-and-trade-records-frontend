@@ -19,7 +19,7 @@ package form.aboutthetradinghistory
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
 import form.MappingSupport.{mappingPerYear, nonNegativeNumberWithYear, tradingPeriodWeeks, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails}
-import play.api.data.Forms.{mapping, optional, tuple}
+import play.api.data.Forms.{mapping, tuple}
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
