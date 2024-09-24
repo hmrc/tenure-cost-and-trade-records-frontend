@@ -16,10 +16,11 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**
@@ -68,6 +69,15 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data isRentUnderReview submitted" in {
+      val res = isRentUnderReviewController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "isRentUnderReview" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
