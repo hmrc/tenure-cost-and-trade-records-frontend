@@ -85,6 +85,8 @@ object Errors {
   // About Franchises or Lettings
   val typeOfLetting = "error.typeOfLetting.required"
 
+  val typeOfIncome = "error.typeOfIncome.required"
+
   // Incentives, Payments and Conditions
   val formerLeaseAgreementSurrendered = "error.formerLeaseAgreementSurrendered.required"
   val rentReducedOnReview             = "error.rentReducedOnReview.required"

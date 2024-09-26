@@ -1,0 +1,67 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import models.pages.Summary
+@import models.submissions.aboutfranchisesorlettings.TypeOfIncome
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(theForm: Form[TypeOfIncome], index: Option[Int] = None, summary: Summary, backLink: String, formType: String)(implicit request: Request[?], messages: Messages)
+
+    @layout(
+        pageHeading = messages("typeOfIncome.heading"),
+        showH1 = true,
+        showSection = true,
+        summary = Some(summary),
+        sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+        backLinkUrl = backLink,
+        theForm = theForm
+    ) {
+
+        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.submit(index)) {
+            <p class="govuk-body">@messages("typeOfIncome.p")</p>
+            @includes.radioButtons(
+                govukRadios,
+                theForm,
+                "typeOfIncome",
+                items = Seq(
+                    RadioItem(
+                        content = Text(messages("typeOfIncome.concession.label")),
+                        value = Some("typeConcessionOrFranchise"),
+                        hint = Some(Hint(content = Text(messages("typeOfIncome.concession.hint"))))
+
+                    ),
+                    RadioItem(
+                        content = Text(messages("typeOfIncome.letting.label")),
+                        value = Some("typeLetting"),
+                        hint = Some(Hint(content = Text(messages("typeOfIncome.letting.hint"))))
+                    )),
+                inline = false
+            )
+            @includes.continueSaveAsDraftButtons(govukButton)
+        }
+    }
