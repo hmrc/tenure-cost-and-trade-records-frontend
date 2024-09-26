@@ -687,6 +687,15 @@ hint.partialTie = You have some flexibility to source certain items independentl
 partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Select which type of tie you have
 
+# SOURCE OF RENTAL INCOME
+typeOfIncome.heading = Select a source of rental income
+typeOfIncome.p = You will have the option to add multiple sources of rental income if required
+typeOfIncome.concession.label = Concession or franchise
+typeOfIncome.concession.hint = For example, accommodation or catering businesses.
+typeOfIncome.letting.label = Letting other parts of the property
+typeOfIncome.letting.hint = For example, advertising billboards, telephone masts or car parking.
+error.typeOfIncome.required = Select a source of rental income
+
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
 franchiseLettings.heading = Rental income
