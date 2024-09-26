@@ -1423,6 +1423,9 @@ capitalSumDescription.heading = Give details of any amount paid
 capitalSumDescription.hint   = Leave blank if the rent has been reviewed since the amount was paid.
 error.capitalSumDescription.maxLength = The description of the capital sum or premium should be 2000 characters or fewer.
 
+#CAPITAL PAID SUM 6045
+capitalPaidSum6045.heading = Was a capital sum or premium paid by or to the occupier in respect of the lease or agreement?
+
 # LEGAL PLANNING RESTRICTIONS
 #############################
 legalOrPlanningRestrictions.heading = Other factors affecting the rent
