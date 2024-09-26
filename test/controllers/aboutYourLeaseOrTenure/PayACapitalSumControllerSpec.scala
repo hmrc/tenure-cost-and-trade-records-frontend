@@ -18,11 +18,12 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class PayACapitalSumControllerSpec extends TestBaseSpec {
@@ -34,7 +35,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
-    )
+    ),
+    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
   ) =
     new PayACapitalSumController(
       stubMessagesControllerComponents(),
@@ -43,7 +45,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(
         forType = forType,
         aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
-        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
+        aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
       ),
       mockSessionRepo
     )
@@ -115,6 +118,28 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.routes.TaskListController.show().url
+      )
+    }
+
+    "return 200 and HTML back link rent free period details with Yes in the session with 6045" in {
+      val controller = payACapitalSumController(ForTypes.for6045)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show().url
+      )
+    }
+
+    "return 200 and HTML back link rent free period details with none in the session with 6045" in {
+      val controller = payACapitalSumController(ForTypes.for6045, aboutLeaseOrAgreementPartFour = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show().url
       )
     }
 

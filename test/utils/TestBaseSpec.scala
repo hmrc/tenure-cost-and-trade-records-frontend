@@ -201,6 +201,7 @@ trait TestBaseSpec
                 aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
                 aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
                 aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
+                aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour,
                 requestReferenceNumberDetails = requestReferenceNumberDetails,
                 downloadPDFDetails = downloadPDFDetails
               ),

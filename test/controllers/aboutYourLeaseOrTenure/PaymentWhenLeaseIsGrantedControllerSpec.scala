@@ -96,5 +96,12 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = paymentWhenLeaseIsGrantedController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("receivePaymentWhenLeaseGranted" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

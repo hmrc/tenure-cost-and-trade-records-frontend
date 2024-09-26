@@ -99,11 +99,17 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
 
   "PaymentForTradeServicesController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = paymentForTradeServicesController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = paymentForTradeServicesController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("paymentForTradeServices" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

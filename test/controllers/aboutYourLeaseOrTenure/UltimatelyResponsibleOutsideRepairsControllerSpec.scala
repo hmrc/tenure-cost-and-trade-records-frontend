@@ -18,10 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 import models.ForTypes
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 import play.api.test.*
 import play.api.test.Helpers.*
@@ -34,7 +35,8 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
   def ultimatelyResponsibleOutsideRepairsController(
     forType: String = ForTypes.for6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
+    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
   ) = new UltimatelyResponsibleOutsideRepairsController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
@@ -42,7 +44,8 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(
       forType = forType,
       aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
+      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
+      aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
     ),
     mockSessionRepo
   )
@@ -77,6 +80,28 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+      )
+    }
+
+    "return 200 and HTML with Ultimately Responsible Outside Repairs for 6045 in the session" in {
+      val controller = ultimatelyResponsibleOutsideRepairsController(forType = ForTypes.for6045)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show().url
+      )
+    }
+
+    "return 200 and HTML with Ultimately Responsible Outside Repairs for 6045 no structure build details in the session" in {
+      val controller = ultimatelyResponsibleOutsideRepairsController(ForTypes.for6045, None, None, None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show().url
       )
     }
   }

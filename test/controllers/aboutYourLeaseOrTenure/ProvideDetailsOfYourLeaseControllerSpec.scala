@@ -66,11 +66,26 @@ class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec {
 
   "ConnectedToLandlordDetailsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = provideDetailsOfYourLeaseController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "throw a BAD_REQUEST if intervalsOfRentReview is greater than max length is submitted" in {
+      val res = provideDetailsOfYourLeaseController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "provideDetailsOfYourLease" -> "x" * 2001
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = provideDetailsOfYourLeaseController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("provideDetailsOfYourLease" -> "Provide details of your lease")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

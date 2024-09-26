@@ -17,7 +17,6 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,14 +24,12 @@ import utils.TestBaseSpec
 
 class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def whatIsYourRentBasedOnController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       whatIsYourRentBasedOnView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
       mockSessionRepo
@@ -41,7 +38,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
   def whatIsYourRentBasedOnControllerNone =
     new WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
-      mockAboutYourLeaseOrTenureNavigator,
+      aboutYourLeaseOrTenureNavigator,
       whatIsYourRentBasedOnView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
       mockSessionRepo
@@ -76,6 +73,42 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "throw a BAD_REQUEST if other selected but whatIsYourRentBasedOn is empty when submitted" in {
+      val res = whatIsYourRentBasedOnController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "currentRentBasedOn" -> "other"
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "throw a BAD_REQUEST if whatIsYourRentBasedOn is greater than max length is submitted" in {
+      val res = whatIsYourRentBasedOnController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "whatIsYourRentBasedOn" -> "x" * 501
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "throw a BAD_REQUEST if currentRentBasedOn is other without whatIsYourRentBasedOn" in {
+      val res = whatIsYourRentBasedOnController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "currentRentBasedOn" -> "other"
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data currentRentBasedOn submitted" in {
+      val res = whatIsYourRentBasedOnController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "currentRentBasedOn" -> "fixed"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }
