@@ -19,7 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**
@@ -68,6 +68,15 @@ class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data isGivenRentFreePeriod submitted" in {
+      val res = isGivenRentFreePeriodController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "isGivenRentFreePeriod" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

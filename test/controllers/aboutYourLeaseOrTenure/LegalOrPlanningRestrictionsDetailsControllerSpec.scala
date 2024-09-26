@@ -64,5 +64,23 @@ class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "throw a BAD_REQUEST if intervalsOfRentReview is greater than max length is submitted" in {
+      val res = legalOrPlanningRestrictionsDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "legalOrPlanningRestrictionsDetails" -> "x" * 501
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = legalOrPlanningRestrictionsDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "legalOrPlanningRestrictionsDetails" -> "Legal or planning restrictions details"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

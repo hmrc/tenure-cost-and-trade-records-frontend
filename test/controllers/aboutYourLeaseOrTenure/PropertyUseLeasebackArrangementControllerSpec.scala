@@ -20,9 +20,8 @@ import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyU
 import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
@@ -100,6 +99,13 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = propertyUseLeasebackAgreementController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("propertyUseLeasebackArrangement" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
 
     "Trading Name own the property form" should {

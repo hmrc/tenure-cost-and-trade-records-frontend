@@ -64,5 +64,14 @@ class MethodToFixCurrentRentControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = methodToFixCurrentRentController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "methodUsedToFixCurrentRent" -> "agreement"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

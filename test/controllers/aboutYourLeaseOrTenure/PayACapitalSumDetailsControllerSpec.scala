@@ -90,7 +90,6 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
 
   "PayACapitalSumDetailsController SUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
-
       val res = payACapitalSumDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
