@@ -77,7 +77,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case ForTypes.for6020 =>
+      case ForTypes.for6020                    =>
         request.sessionData.aboutLeaseOrAgreementPartTwo
           .flatMap(_.payACapitalSumDetails)
           .map(_.capitalSumOrPremium) match {
@@ -92,9 +92,9 @@ class LegalOrPlanningRestrictionsController @Inject() (
           .flatMap(_.payACapitalSumDetails)
           .map(_.capitalSumOrPremium) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
-          case _ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+          case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }
-      case _                => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
+      case _                                   => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
     }
 
 }
