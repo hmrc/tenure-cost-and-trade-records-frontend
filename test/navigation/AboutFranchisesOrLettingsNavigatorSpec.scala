@@ -16,6 +16,7 @@
 
 package navigation
 
+import models.submissions.common.AnswerNo
 import navigation.identifiers._
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
@@ -324,6 +325,38 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
         ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
+    }
+
+    // TESTS FOR FORMS 6045 AND 6046
+
+    "About franchise or lettings navigator for forms 6045/6046" when {
+
+      "return a function that goes to source of income page when concession page has been completed yes" in {
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6045)
+          .apply(
+            sessionAboutFranchiseOrLetting6045
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
+      }
+
+      "return a function that goes to CYA page when concession page has been completed no" in {
+
+        val updatedSession = sessionAboutFranchiseOrLetting6045.copy(
+          aboutFranchisesOrLettings = sessionAboutFranchiseOrLetting6045.aboutFranchisesOrLettings.map(
+            _.copy(
+              franchisesOrLettingsTiedToProperty = Some(AnswerNo)
+            )
+          )
+        )
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(FranchiseOrLettingsTiedToPropertyId, updatedSession)
+          .apply(
+            updatedSession
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+          .show()
+      }
     }
   }
 }

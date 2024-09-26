@@ -36,6 +36,7 @@ import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAY
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
 import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
+import play.api.data.{Forms, Mapping}
 import models.AnnualRent
 import play.api.data.Forms.{boolean, default, mapping, optional, seq, text}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
@@ -63,6 +64,7 @@ object MappingSupport {
 
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val typeOfLettingMapping: Mapping[TypeOfLetting]                              = Forms.of[TypeOfLetting]
+  val typeOfIncomeMapping: Mapping[TypeOfIncome]                                = Forms.of[TypeOfIncome]
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
   val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] =
     Forms.of[BuildingOperationHaveAWebsite]

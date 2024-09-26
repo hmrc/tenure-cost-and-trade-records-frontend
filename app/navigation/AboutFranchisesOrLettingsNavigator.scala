@@ -71,6 +71,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
           case ForTypes.for6020                    =>
             val idx: Int = answers.aboutFranchisesOrLettings.map(_.lettings.map(_.size).getOrElse(0)).getOrElse(0)
             controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(idx))
+          case ForTypes.for6045 | ForTypes.for6046 =>
+            controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
           case _                                   =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
         }

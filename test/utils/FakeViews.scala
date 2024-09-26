@@ -229,6 +229,7 @@ trait FakeViews { this: Injecting =>
   lazy val rentReceivedFromView: rentReceivedFrom                                                          = inject[rentReceivedFrom]
   lazy val calculatingTheRentView: calculatingTheRentFor                                                   = inject[calculatingTheRentFor]
   lazy val typeOfLettingView: typeOfLetting                                                                = inject[typeOfLetting]
+  lazy val typeOfIncomeView: typeOfIncome                                                                  = inject[typeOfIncome]
   lazy val telecomMastLettingView: telecomMastLetting                                                      = inject[telecomMastLetting]
   lazy val rentDetailsView: rentDetails                                                                    = inject[rentDetails]
   lazy val otherLettingView: otherLetting                                                                  = inject[otherLetting]

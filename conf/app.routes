@@ -375,6 +375,9 @@ POST        /income-expenditure-summary-6076                        controllers.
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
 
+GET         /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.show(idx: Option[Int] ?= None)
+POST        /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.submit(idx: Option[Int])
+
 GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
 

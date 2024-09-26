@@ -20,7 +20,7 @@ import models._
 import models.submissions.Form6010._
 import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.aboutfranchisesorlettings.TypeOfLetting
+import models.submissions.aboutfranchisesorlettings.{TypeOfIncome, TypeOfLetting}
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.{AnswersYesNo, BuildingInsurance, CYAYesNo, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, VacantPropertiesDetails}
@@ -132,4 +132,7 @@ object Formats {
   // About Franchises or Lettings
   implicit val typeOfLettingFormat: Formatter[TypeOfLetting] =
     namedEnumFormatter(TypeOfLetting, Errors.typeOfLetting)
+
+  implicit val typeOfIncomeFormat: Formatter[TypeOfIncome] =
+    namedEnumFormatter(TypeOfIncome, Errors.typeOfIncome)
 }
