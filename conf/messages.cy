@@ -1354,43 +1354,47 @@ tenantsAdditionsDisregarded.list3 = uwchraddio llety
 tenantsAdditionsDisregarded.subheading = A gafodd unrhyw ychwanegiadau neu welliannau gan denantiaid eu diystyru ar yr adeg y cytunwyd ar y rhent neu y penderfynwyd arno?
 error.tenantsAdditionsDisregarded.missing = Dewiswch ‘do’ os cafodd unrhyw ychwanegiadau neu welliannau eu diystyru
 
-##TENANTS ADDITIONS DISREGARDED DETAILS
+# TENANTS ADDITIONS DISREGARDED DETAILS
 #######################################
 tenantsAdditionsDisregardedDetails.heading = Disgrifiwch yr ychwanegiadau neu'r gwelliannau a ddiystyrwyd
 hint.tenantsAdditionsDisregardedDetails = Rhowch ddisgrifiad byr o'r gwaith a wnaed a faint oedd y gost.
 error.tenantsAdditionsDisregardedDetails.required = Nodwch ddisgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru
 error.tenantsAdditionsDisregardedDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 500 o gymeriadau neu lai
 
-#LEASE SURRENDERED EARLY
+# LEASE SURRENDERED EARLY
 #########################
 leaseSurrenderedEarly.heading = Was a former lease or agreement surrendered early as a condition of the present one being granted?
 error.leaseSurrenderedEarly.required = Select yes if former lease or agreement was surrendered early as a condition of the present one being granted
 
-#BENEFITS GIVEN
+# BENEFITS GIVEN
 ###############
 benefitsGiven.heading = A roddwyd cyfnod di-rent, unrhyw daliad, neu unrhyw fuddion eraill i chi pan ganiatawyd y brydles neu’r cytundeb?
 error.benefitsGiven.required = Select yes if you were given a rent-free period, any payment or any other benefits when the lease or agreement was granted
 
-#BENEFITS GIVEN DETAILS
+# BENEFITS GIVEN DETAILS
 #######################
 benefitsGivenDetails.heading = Rhowch fanylion unrhyw gyfnod, taliad neu fudd di-rent
 benefitsGivenDetails.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers cael y budd.
 error.benefitsGivenDetails.maxLength = The description of the rent, payment or benefit should be 2000 characters or fewer.
 
 
-#CAPITAL PAID SUM 6020
+# CAPITAL PAID SUM 6020
 capitalPaidSum6020.heading = A dalwyd swm cyfalaf neu bremiwm gan y meddiannydd neu iddo mewn perthynas â’r brydles neu’r cytundeb?
 error.capitalPaidSum6020.required = Select yes if capital sum or premium was paid by or to the occupier in respect of the lease or agreement
 
 
-#CAPITAL SUM DESCRIPTION 6020
+# CAPITAL SUM DESCRIPTION 6020
 #########################
 capitalSumDescription.heading = Rhowch fanylion unrhyw swm a dalwyd gan y tenant neu iddo
 capitalSumDescription.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers i’r swm gael ei dalu.
 error.capitalSumDescription.maxLength = The description of the capital sum or premium should be 2000 characters or fewer.
 
-#CAPITAL PAID SUM 6045
+# CAPITAL PAID SUM 6045
 capitalPaidSum6045.heading = Was a capital sum or premium paid by or to the occupier in respect of the lease or agreement?
+
+# CAPITAL SUM DESCRIPTION 6045
+#########################
+capitalSumDescription6045.heading = Give details of any amount paid by or to the tenant
 
 # LEGAL PLANNING RESTRICTIONS
 #############################
