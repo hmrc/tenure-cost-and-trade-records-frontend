@@ -1389,6 +1389,9 @@ capitalSumDescription.heading = Rhowch fanylion unrhyw swm a dalwyd gan y tenant
 capitalSumDescription.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers i’r swm gael ei dalu.
 error.capitalSumDescription.maxLength = The description of the capital sum or premium should be 2000 characters or fewer.
 
+#CAPITAL PAID SUM 6045
+capitalPaidSum6045.heading = Was a capital sum or premium paid by or to the occupier in respect of the lease or agreement?
+
 # LEGAL PLANNING RESTRICTIONS
 #############################
 legalOrPlanningRestrictions.heading = Ffactorau eraill sy’n effeithio ar y rhent

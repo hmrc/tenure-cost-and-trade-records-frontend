@@ -18,9 +18,9 @@ package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.test.Helpers.stubMessagesControllerComponents
+import play.api.mvc.request.RequestTarget
 import utils.TestBaseSpec
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.api.test.FakeRequest
 
 class RentDetailsControllerSpec extends TestBaseSpec {
@@ -151,6 +151,28 @@ class RentDetailsControllerSpec extends TestBaseSpec {
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/add-another-letting?idx=3"
     ) // Adjust according to your actual redirect
-
   }
+
+  "handle form submission redirect to CYA if come from CYA" in {
+    val validData = Map(
+      "annualRent"      -> "1000",
+      "dateInput.day"   -> "15",
+      "dateInput.month" -> "5",
+      "dateInput.year"  -> "2020"
+    )
+    val request   = FakeRequest(POST, "/rent-details-submit")
+      .withTarget(
+        RequestTarget("", "", Map("from" -> Seq("CYA")))
+      )
+      .withFormUrlEncodedBody(validData.toSeq*)
+
+    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
+    val controller     = rentDetailsController()
+    val result         = controller.submit(2)(sessionRequest)
+    status(result)           shouldBe SEE_OTHER
+    redirectLocation(result) shouldBe Some(
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    )
+  }
+
 }

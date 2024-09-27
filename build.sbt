@@ -5,7 +5,7 @@ val defaultPort = 9526
 val appName     = "tenure-cost-and-trade-records-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "3.4.3"
+ThisBuild / scalaVersion := "3.5.1"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)

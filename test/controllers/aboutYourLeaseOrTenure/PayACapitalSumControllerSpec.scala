@@ -163,6 +163,67 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe SEE_OTHER
     }
+
+    "Redirect when 6020 form Yes answer submitted" in {
+      val res = payACapitalSumController(ForTypes.for6020).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
+      )
+    }
+
+    "Redirect when 6020 form No answer submitted" in {
+      val res = payACapitalSumController(ForTypes.for6020).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+      )
+    }
+
+    "Redirect when 6030 form Yes answer submitted" in {
+      val res = payACapitalSumController(ForTypes.for6030).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
+      )
+    }
+
+    "Redirect when 6030 form No answer submitted" in {
+      val res = payACapitalSumController(ForTypes.for6030).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
+      )
+    }
+
+    "Redirect when 6045 form Yes answer submitted" in {
+      val res = payACapitalSumController(ForTypes.for6045).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
+      )
+    }
+
+    "Redirect when 6045 form No answer submitted" in {
+      val res = payACapitalSumController(ForTypes.for6045).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+      )
+    }
+
   }
 
   "Pay a capital sum form" should {

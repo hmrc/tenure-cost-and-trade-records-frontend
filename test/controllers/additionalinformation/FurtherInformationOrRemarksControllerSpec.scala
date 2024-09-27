@@ -73,5 +73,16 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
       )
       status(result) shouldBe SEE_OTHER
     }
+
+    "return 400 if textarea value length is more then 2000" in {
+      val maxlengthErrorData = Seq(
+        "furtherInformationOrRemarks" -> "x" * 2001
+      )
+      val result             = furtherInformationOrRemarksController().submit(
+        FakeRequest().withFormUrlEncodedBody(maxlengthErrorData*)
+      )
+      status(result) shouldBe SEE_OTHER
+    }
+
   }
 }
