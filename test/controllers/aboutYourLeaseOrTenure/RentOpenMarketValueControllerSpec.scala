@@ -18,7 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,14 +25,12 @@ import utils.TestBaseSpec
 
 class RentOpenMarketValueControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def rentOpenMarketValueController(
     forType: String = ForTypes.for6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new RentOpenMarketValueController(
     stubMessagesControllerComponents(),
-    mockAboutYourLeaseOrTenureNavigator,
+    aboutYourLeaseOrTenureNavigator,
     rentOpenMarketValueView,
     preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
@@ -82,6 +79,14 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
       )
     }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val request = FakeRequest(GET, "/path?from=TL")
+      val result  = rentOpenMarketValueController().show(request)
+      val html    = contentAsString(result)
+
+      html should include(controllers.routes.TaskListController.show().url + "#rent-open-market-value")
+    }
   }
 
   "RentOpenMarketValueController SUBMIT /" should {
@@ -90,6 +95,13 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data rentOpenMarketValue submitted" in {
+      val res = rentOpenMarketValueController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("rentOpenMarketValue" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }

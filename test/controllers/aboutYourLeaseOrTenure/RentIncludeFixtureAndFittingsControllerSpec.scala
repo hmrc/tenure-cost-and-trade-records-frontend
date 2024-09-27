@@ -18,15 +18,12 @@ package controllers.aboutYourLeaseOrTenure
 
 import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
-
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
   def rentIncludeFixtureAndFittingsController(
     forType: String = ForTypes.for6010,
@@ -36,7 +33,7 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
     )
   ) = new RentIncludeFixtureAndFittingsController(
     stubMessagesControllerComponents(),
-    mockAboutYourLeaseOrTenureNavigator,
+    aboutYourLeaseOrTenureNavigator,
     rentIncludeFixtureAndFittingsView,
     preEnrichedActionRefiner(
       forType = forType,
@@ -147,6 +144,13 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = rentIncludeFixtureAndFittingsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncludeFixturesAndFittings" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }

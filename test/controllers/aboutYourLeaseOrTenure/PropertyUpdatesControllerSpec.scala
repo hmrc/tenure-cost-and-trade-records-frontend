@@ -17,12 +17,13 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import models.ForTypes
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class PropertyUpdatesControllerSpec extends TestBaseSpec {
@@ -31,6 +32,8 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def propertyUpdateController(
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
@@ -39,7 +42,11 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
       propertyUpdatesView,
-      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
+        aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
+      ),
       mockSessionRepo
     )
 
@@ -64,6 +71,40 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
       )
     }
+
+    "return 200 and HTML with property updates in the session for 6045 tenant additional disregarded yes" in {
+      val result = propertyUpdateController(forType = ForTypes.for6045).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+      )
+    }
+
+    "return 200 and HTML with property updates in the session for 6045 tenant additional disregarded no" in {
+      val result = propertyUpdateController(
+        forType = ForTypes.for6045,
+        aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+      ).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+      )
+    }
+
+    "return 200 and HTML property updates with none in the session for 6045" in {
+      val controller = propertyUpdateController(forType = ForTypes.for6045, aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url
+      )
+    }
   }
 
   "PropertyUpdatesController SUBMIT /" should {
@@ -72,6 +113,13 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = propertyUpdateController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("propertyUpdates" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

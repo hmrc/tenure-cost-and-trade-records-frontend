@@ -65,5 +65,23 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = rentPayableVaryOnQuantityOfBeersDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "rentPayableVaryOnQuantityOfBeersDetails" -> "text"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "throw a BAD_REQUEST if describeFittingsTextArea is greater than max length is submitted" in {
+      val res = rentPayableVaryOnQuantityOfBeersDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "rentPayableVaryOnQuantityOfBeersDetails" -> "x" * 501
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 }

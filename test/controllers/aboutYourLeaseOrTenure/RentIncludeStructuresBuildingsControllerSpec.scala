@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartThree}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -31,6 +31,9 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.*
 
   def rentIncludeStructuresBuildingsController(
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    ),
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
       prefilledAboutLeaseOrAgreementPartFour
     )
@@ -54,13 +57,24 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no rent Include Structures Buildings in the session" in {
-      val controller = rentIncludeStructuresBuildingsController(None)
+      val controller = rentIncludeStructuresBuildingsController(aboutLeaseOrAgreementPartFour = None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show().url
+      )
+    }
+
+    "return 200 and HTML when no rent Include Structures Buildings in the session with no rentDevelopedLand" in {
+      val controller = rentIncludeStructuresBuildingsController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show().url
       )
     }
   }

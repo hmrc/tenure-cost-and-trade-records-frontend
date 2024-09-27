@@ -17,9 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
-import play.api.http.Status.{OK, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 /**
@@ -81,6 +80,15 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec {
       redirectLocation(res) shouldBe Some(
         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
       )
+    }
+
+    "throw a BAD_REQUEST if rentFreePeriodDetails is greater than max length is submitted" in {
+      val res = rentFreePeriodDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "rentFreePeriodDetails" -> "x" * 2001
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
     }
 
   }

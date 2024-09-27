@@ -70,6 +70,24 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "rentPayableVaryAccordingToGrossOrNetDetails" -> "text"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "throw a BAD_REQUEST if describeFittingsTextArea is greater than max length is submitted" in {
+      val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "rentPayableVaryAccordingToGrossOrNetDetails" -> "x" * 501
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 
   "Rent payable vary according to gross or net details form" should {
