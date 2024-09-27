@@ -42,7 +42,7 @@ class PayACapitalSumView6020Spec extends QuestionViewBehaviours[PayACapitalSumDe
     behave like normalPage(createView, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to tenants additions disregarded Page" in {
-      val doc = asDocument(createView())
+      val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
@@ -50,7 +50,7 @@ class PayACapitalSumView6020Spec extends QuestionViewBehaviours[PayACapitalSumDe
     }
 
     "Section heading is visible" in {
-      val doc = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
@@ -80,7 +80,7 @@ class PayACapitalSumView6020Spec extends QuestionViewBehaviours[PayACapitalSumDe
     }
 
     "contain continue button with the value Continue" in {
-      val doc = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }

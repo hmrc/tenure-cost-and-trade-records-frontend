@@ -88,7 +88,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = aboutYourLandlordController().show()(FakeRequest(GET, "/path?from=CYA"))
+      val result = aboutYourLandlordController().show()(fakeRequestFromCYA)
       contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
 
@@ -117,6 +117,20 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
       val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
       status(res) shouldBe SEE_OTHER
+    }
+
+    "REDIRECT to CYA if come from CYA" in {
+      val lookup = AddressLookup(
+        Some(Address(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None)),
+        Some("auditRef"),
+        Some("id")
+      )
+      when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
+      val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequestFromCYA)
+      status(res)           shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(
+        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
+      )
     }
   }
 
