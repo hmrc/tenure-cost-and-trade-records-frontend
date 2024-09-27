@@ -32,9 +32,9 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.*
 
   def legalOrPlanningRestrictionsController(
-                                             forType: String = ForTypes.for6020,
-                                             aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-                                           ) =
+    forType: String = ForTypes.for6020,
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ) =
     new LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
       aboutYourLeaseOrTenureNavigator,
@@ -46,9 +46,9 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
   "LegalOrPlanningRestrictionsController GET /" should {
     "return 200 and HTML with legal or planning restrictions in the session" in {
       val result = legalOrPlanningRestrictionsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
       )
@@ -56,10 +56,10 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
 
     "return 200 and HTML with capital sum with yes in the session" in {
       val controller = legalOrPlanningRestrictionsController(ForTypes.for6020)
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
       )
@@ -68,10 +68,10 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
     "return 200 and HTML with capital sum with no in the session" in {
       val controller =
         legalOrPlanningRestrictionsController(ForTypes.for6020, Some(prefilledAboutLeaseOrAgreementPartTwoNo))
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
       )
@@ -79,10 +79,10 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
 
     "return 200 and HTML legal or planning restrictions is none in the session for 6020" in {
       val controller = legalOrPlanningRestrictionsController(ForTypes.for6020, None)
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.routes.TaskListController.show().url
       )
@@ -92,7 +92,7 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
   "LegalOrPlanningRestrictionsController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = legalOrPlanningRestrictionsController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty *)
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -108,7 +108,7 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
   "Legal or planning restrictions form" should {
     "error if Legal or planning restrictions answer is missing" in {
       val formData = baseFormData - errorKey.legalOrPlanningRestrictions
-      val form = legalPlanningRestrictionsForm.bind(formData)
+      val form     = legalPlanningRestrictionsForm.bind(formData)
 
       mustContainError(errorKey.legalOrPlanningRestrictions, "error.legalOrPlanningRestrictions.missing", form)
     }
