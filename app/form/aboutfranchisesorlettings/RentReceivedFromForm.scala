@@ -19,7 +19,6 @@ package form.aboutfranchisesorlettings
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.RentReceivedFrom
 import play.api.data.Form
-import play.api.data.Forms.mapping
 import play.api.i18n.Messages
 import play.api.data.Forms._
 import play.api.data.format.Formats._

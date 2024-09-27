@@ -163,6 +163,23 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe SEE_OTHER
     }
+
+    "Redirect when 6020 form data submitted" in {
+      val res = payACapitalSumController(ForTypes.for6020).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url)
+    }
+
+    "Redirect when 6045 form data submitted" in {
+      val res = payACapitalSumController(ForTypes.for6045).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url)
+    }
+
   }
 
   "Pay a capital sum form" should {
