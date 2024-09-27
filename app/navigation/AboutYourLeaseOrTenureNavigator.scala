@@ -345,7 +345,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case ForTypes.for6020                    => controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
           case ForTypes.for6030                    => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
           case ForTypes.for6045 | ForTypes.for6046 =>
-            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
+            controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
           case _                                   => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
       case _           =>
