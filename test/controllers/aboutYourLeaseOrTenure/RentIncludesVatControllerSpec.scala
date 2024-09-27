@@ -17,7 +17,6 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -25,13 +24,11 @@ import utils.TestBaseSpec
 
 class RentIncludesVatControllerSpec extends TestBaseSpec {
 
-  val mockAboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
-
   def rentIncludesVatController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new RentIncludesVatController(
     stubMessagesControllerComponents(),
-    mockAboutYourLeaseOrTenureNavigator,
+    aboutYourLeaseOrTenureNavigator,
     rentIncludesVatView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
     mockSessionRepo
@@ -62,11 +59,17 @@ class RentIncludesVatControllerSpec extends TestBaseSpec {
 
   "RentIncludesVatController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = rentIncludesVatController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = rentIncludesVatController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncludesVat" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }

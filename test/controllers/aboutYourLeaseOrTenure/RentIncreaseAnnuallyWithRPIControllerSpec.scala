@@ -78,5 +78,12 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data rentIncreasedAnnuallyWithRPIs submitted" in {
+      val res = rentIncreaseAnnuallyWithRPIController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncreasedAnnuallyWithRPIs" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

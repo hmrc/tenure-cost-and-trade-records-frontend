@@ -16,22 +16,31 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import models.ForTypes
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.{status, *}
 import utils.TestBaseSpec
 
 class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
 
   def rentIncludeFixtureAndFittingsDetailsController(
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
+    forType: String = ForTypes.for6010,
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
+      prefilledAboutLeaseOrAgreementPartThree
+    )
   ) = new RentIncludeFixtureAndFittingsDetailsController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     rentIncludeFixtureAndFittingsDetailsView,
     rentIncludeFixtureAndFittingsDetailsTextAreaView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+    preEnrichedActionRefiner(
+      forType = forType,
+      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+    ),
     mockSessionRepo
   )
 
@@ -56,6 +65,30 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
       )
     }
+
+    "return 200 data for 6045" in {
+      val result = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+      )
+    }
+
+    "return 200 and HTML Rent Includes trade services with none in the session for 6045" in {
+      val controller = rentIncludeFixtureAndFittingsDetailsController(
+        forType = ForTypes.for6045,
+        aboutLeaseOrAgreementPartThree = None
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+      )
+    }
   }
 
   "RentIncludeFixtureAndFittingsDetailsController SUBMIT /" should {
@@ -70,6 +103,31 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
       val controller = rentIncludeFixtureAndFittingsDetailsController(aboutLeaseOrAgreementPartOne = None)
       val res        = controller.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted for 6045" in {
+      val res = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "describeFittingsTextArea" -> "Rent include fixture and fitting details"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "throw a BAD_REQUEST if an empty form is submitted for 6045" in {
+      val res = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "throw a BAD_REQUEST if describeFittingsTextArea is greater than max length is submitted" in {
+      val res = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "describeFittingsTextArea" -> "x" * 2001
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }
 

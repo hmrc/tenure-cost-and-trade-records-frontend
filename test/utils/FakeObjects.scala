@@ -1448,7 +1448,7 @@ trait FakeObjects {
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo)),
     whatIsYourCurrentRentBasedOnDetails =
-      Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("Open market"))),
+      Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnOther, Some("Other"))),
     checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes"))
   )
 
