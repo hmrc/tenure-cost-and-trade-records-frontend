@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
@@ -31,13 +32,22 @@
 )
 
 
-@(form: Form[CapitalSumDescription], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(form: Form[CapitalSumDescription])(implicit request: SessionRequest[?], messages: Messages)
+
+
+@heading = @{
+ request.sessionData.forType match {
+  case ForTypes.for6045 | ForTypes.for6046 => "capitalSumDescription6045.heading"
+  case _                => "capitalSumDescription.heading"
+ }
+}
+
 
 @layout(
- pageHeading = messages("capitalSumDescription.heading"),
+ pageHeading = messages(heading),
  showH1 = true,
  showSection = true,
- summary = summary,
+ summary = Some(request.sessionData.toSummary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url,
  theForm = form

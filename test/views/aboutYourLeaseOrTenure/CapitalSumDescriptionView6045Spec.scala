@@ -22,13 +22,13 @@ import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[CapitalSumDescription] {
+class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[CapitalSumDescription] {
 
-  val messageKeyPrefix = "capitalSumDescription"
+  val messageKeyPrefix = "capitalSumDescription6045"
 
   override val form = capitalSumDescriptionForm
 
-  val sessionRequest = SessionRequest(stillConnectedDetails6020YesSession, fakeRequest)
+  val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, fakeRequest)
 
   def createView = () => capitalSumDescriptionView(form)(sessionRequest, messages)
 

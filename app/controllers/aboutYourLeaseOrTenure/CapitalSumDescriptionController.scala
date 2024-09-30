@@ -49,8 +49,7 @@ class CapitalSumDescriptionController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.capitalSumDescription) match {
           case Some(data) => capitalSumDescriptionForm.fill(data)
           case _          => capitalSumDescriptionForm
-        },
-        request.sessionData.toSummary
+        }
       )
     )
   }
@@ -58,7 +57,7 @@ class CapitalSumDescriptionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CapitalSumDescription](
       capitalSumDescriptionForm,
-      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(view(formWithErrors)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(capitalSumDescription = Some(data)))
 
@@ -68,4 +67,5 @@ class CapitalSumDescriptionController @Inject() (
       }
     )
   }
+
 }
