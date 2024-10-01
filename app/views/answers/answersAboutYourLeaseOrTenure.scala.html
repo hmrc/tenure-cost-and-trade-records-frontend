@@ -318,7 +318,7 @@
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                     _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "rentIncludeTradeServices") ++
-                sectionAnswers.conditionRow(_.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes"),
+                sectionAnswers.conditionRow(answers => answers.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes") && answers.rentIncludeTradeServicesInformation.isDefined,
                     "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                     _.rentIncludeTradeServicesInformation.map(info =>
                         Seq(info.sumIncludedInRent.map(_.asMoney), Option(info.describeTheServices))
@@ -326,14 +326,24 @@
                     ),
                     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
                     ("valueAsHtml", _ => None)) ++
+                sectionAnswers3.conditionRow(
+                    _.rentIncludeTradeServicesDetailsTextArea.isDefined && sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).map(_.rentIncludeTradeServices).contains(AnswerYes),
+                    "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
+                    _.rentIncludeTradeServicesDetailsTextArea,
+                    aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "describeServicesTextArea") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails",
                     _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                     aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "rentIncludeFixturesAndFittings") ++
                 sectionAnswers.conditionRow(
-                    _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).contains("yes"),
+                    answers => answers.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).contains("yes") && answers.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent).isDefined,
                     "checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent",
                     _.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent.map(_.asMoney)),
-                    aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "rentIncludeFixturesAndFittingsDetails")
+                    aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "rentIncludeFixturesAndFittingsDetails") ++
+                sectionAnswers3.conditionRow(
+                    _.rentIncludeFixtureAndFittingsDetailsTextArea.isDefined && sectionAnswers.answers.flatMap(_.rentIncludeFixturesAndFittingsDetails).map(_.rentIncludeFixturesAndFittingsDetails).contains(AnswerYes),
+                    "checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent",
+                    _.rentIncludeFixtureAndFittingsDetailsTextArea,
+                    aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "describeFittingsTextArea")
     ))
 }
 
@@ -482,10 +492,14 @@
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                         aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
-                    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
+                    sectionAnswers.conditionRow(
+                        _.rentIncreasedAnnuallyWithRPIDetails.isDefined,
+                        "checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
                         _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                         aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
-                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
+                    sectionAnswers2.conditionRow(
+                        _.rentPayableVaryAccordingToGrossOrNetDetails.isDefined,
+                        "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
                         _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                         aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
                     sectionAnswers2.conditionRow(
@@ -549,10 +563,14 @@
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                         aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
-                    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
+                    sectionAnswers.conditionRow(
+                        _.rentIncreasedAnnuallyWithRPIDetails.isDefined,
+                        "checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
                         _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                         aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
-                    sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
+                    sectionAnswers2.conditionRow(
+                        _.rentPayableVaryAccordingToGrossOrNetDetails.isDefined,
+                        "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
                         _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                         aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
                     sectionAnswers2.conditionRow(
@@ -571,6 +589,11 @@
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
                         _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
                         aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
+                    sectionAnswers3.conditionRow(
+                        _.isRentUnderReview.isDefined,
+                        "checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview",
+                        _.isRentUnderReview.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
+                        aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show(), "isRentUnderReview") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
