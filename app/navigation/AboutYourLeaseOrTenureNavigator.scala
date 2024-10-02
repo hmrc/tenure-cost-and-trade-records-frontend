@@ -52,6 +52,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(),
     aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(),
+    aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(),
     aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(),

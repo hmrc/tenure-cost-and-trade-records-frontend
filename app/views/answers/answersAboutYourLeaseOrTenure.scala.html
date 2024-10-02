@@ -607,6 +607,17 @@
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
                         _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
                         aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
+                    sectionAnswers4.conditionRow(
+                        _.surrenderedLeaseAgreementDetails.isDefined && sectionAnswers2.answers.flatMap(_.incentivesPaymentsConditionsDetails).map(_.formerLeaseSurrendered).contains(AnswerYes),
+                        "checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails",
+                        _.surrenderedLeaseAgreementDetails.map(details =>
+                            Seq(
+                                messages("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount", details.surrenderedLeaseAgreementAmount.asMoney),
+                                messages("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months", details.surrenderedLeaseAgreementMonths.escapedHtml)
+                            ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
+                        ),
+                        aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show(), "",
+                        ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
                         aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
@@ -614,8 +625,17 @@
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
                         _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
-                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
-
+                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails") ++
+                    sectionAnswers3.conditionRow(
+                        _.propertyUpdates.isDefined,
+                        "checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs",
+                        _.propertyUpdates.map(_.updates).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                        aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show(), "propertyUpdates") ++
+                    sectionAnswers3.conditionRow(
+                        _.propertyUpdates.map(_.updates).contains(AnswerYes),
+                        "checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork",
+                        _.workCarriedOutDetails.map(_.workCarriedOutDetails),
+                        aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(), "workCarriedOutDetails")
         ))
     }
 
@@ -684,6 +704,11 @@
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading")</h2>
     @if(forType !=ForTypes.for6020) {
         @govukSummaryList(SummaryList(rows =
+            sectionAnswers3.conditionRow(
+                _.workCarriedOutCondition.isDefined,
+                "checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition",
+                _.workCarriedOutCondition.map(_.workCarriedOutCondition).map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
+                aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
             sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium",
                 _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
                 aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
