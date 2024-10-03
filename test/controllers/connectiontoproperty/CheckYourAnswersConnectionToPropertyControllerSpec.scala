@@ -18,7 +18,6 @@ package controllers.connectiontoproperty
 
 import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.checkYourAnswersConnectionToPropertyForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.test.Helpers.stubMessagesControllerComponents
 import utils.TestBaseSpec
 import play.api.test.Helpers._
 import play.api.http.Status

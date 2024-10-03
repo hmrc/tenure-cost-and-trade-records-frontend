@@ -19,7 +19,6 @@ package controllers
 import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
-import play.api.http.Status.{FOUND, OK}
 import play.api.test.Helpers._
 import stub.StubSessionRepo
 import utils.TestBaseSpec

@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultim
 import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
-import play.api.test.FakeRequest
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

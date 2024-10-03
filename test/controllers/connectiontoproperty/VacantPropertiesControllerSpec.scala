@@ -17,7 +17,6 @@
 package controllers.connectiontoproperty
 
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, StillConnectedDetails}
-import navigation.ConnectionToPropertyNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._

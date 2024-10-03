@@ -17,7 +17,6 @@
 package controllers.aboutthetradinghistory
 
 import form.aboutthetradinghistory.TentingPitchesCertificatedForm
-import form.aboutthetradinghistory.TentingPitchesCertificatedForm.tentingPitchesCertificatedForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
