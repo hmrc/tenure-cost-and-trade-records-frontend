@@ -17,10 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.http.Status._
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
@@ -31,7 +29,7 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
     )
   ) = new ServicePaidSeparatelyChargeController(
     stubMessagesControllerComponents(),
-    inject[AboutYourLeaseOrTenureNavigator],
+    aboutYourLeaseOrTenureNavigator,
     servicePaidSeparatelyChargeView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo
@@ -73,6 +71,13 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(result) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data servicePaidSeparatelyCharge submitted" in {
+        val res = servicePaidSeparatelyChargeController().submit(0)(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("annualCharge" -> "1000")
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
   }

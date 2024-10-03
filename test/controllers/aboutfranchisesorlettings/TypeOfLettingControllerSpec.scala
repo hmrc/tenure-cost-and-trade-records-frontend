@@ -19,7 +19,6 @@ package controllers.aboutfranchisesorlettings
 import actions.SessionRequest
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.test.FakeRequest
-import play.api.test.Helpers.stubMessagesControllerComponents
 import utils.TestBaseSpec
 import play.api.test.Helpers._
 

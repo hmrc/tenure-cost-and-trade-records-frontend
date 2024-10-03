@@ -20,9 +20,8 @@ import actions.SessionRequest
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
-import play.api.http.Status._
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
@@ -70,6 +69,22 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = servicePaidSeparatelyController().submit(None)(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data servicePaidSeparately submitted" in {
+        val res = servicePaidSeparatelyController().submit(Some(0))(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("description" -> "Description")
+        )
+        status(res) shouldBe SEE_OTHER
+      }
+
+      "throw a BAD_REQUEST if description is greater than max length is submitted" in {
+        val res = servicePaidSeparatelyController().submit(Some(0))(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "description" -> "x" * 501
+          )
         )
         status(res) shouldBe BAD_REQUEST
       }

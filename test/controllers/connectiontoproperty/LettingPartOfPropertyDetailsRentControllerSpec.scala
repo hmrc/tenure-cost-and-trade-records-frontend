@@ -17,7 +17,6 @@
 package controllers.connectiontoproperty
 
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.test.Helpers.stubMessagesControllerComponents
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest

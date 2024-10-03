@@ -21,7 +21,8 @@ import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidS
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status._
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -71,6 +72,13 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val result = servicePaidSeparatelyListController().submit(1)(fakeRequest)
         status(result) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data servicePaidSeparatelyList submitted" in {
+        val res = servicePaidSeparatelyListController().submit(0)(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("servicePaidSeparatelyList" -> "yes")
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
 

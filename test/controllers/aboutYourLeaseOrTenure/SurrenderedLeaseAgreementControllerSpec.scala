@@ -63,5 +63,15 @@ class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec {
       val res = surrenderedLeaseAgreementController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data surrenderedLeaseAgreement submitted" in {
+      val res = surrenderedLeaseAgreementController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "surrenderedLeaseAgreementAmount" -> "1000",
+          "surrenderedLeaseAgreementMonths" -> "Lease agreement months"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }

@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeSe
 import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
