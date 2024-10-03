@@ -36,7 +36,7 @@
 @(form: Form[Seq[AdditionalAmusements]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@turnoverRow(formField: String,  labelKey: String, classes: String, suffix: Option[PrefixOrSuffix] = None) = @{
+@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: Option[PrefixOrSuffix] = None) = @{
     Seq(
         TableRow(
             content = Text(messages(labelKey))
@@ -46,10 +46,10 @@
                 govukInput(Input(
                     classes = classes,
                     attributes = Map(
-                        "maxlength" -> "2",
+                        "maxlength" -> "13",
                         "aria-label" -> messages(labelKey)
                     ),
-                    suffix = suffix
+                    prefix = prefix
                 ).withFormField(form(formField)))
             )
         )
