@@ -387,6 +387,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     FeeReceivedPageId                          -> (answers =>
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
     ),
+    ConcessionTypeFeesId                       -> (_ => controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")),
     CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,

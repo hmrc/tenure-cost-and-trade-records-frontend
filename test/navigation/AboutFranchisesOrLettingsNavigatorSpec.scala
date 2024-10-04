@@ -319,6 +319,14 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to add another letting page when fee received comleted" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(FeeReceivedPageId, sessionAboutFranchiseOrLetting6030YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6030YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
+    }
+
     "return a function that goes to task list page from cya" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, sessionAboutFranchiseOrLetting6010NoSession)
@@ -338,8 +346,8 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           .apply(
             sessionAboutFranchiseOrLetting6045
           ) shouldBe controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
-      }
 
+      }
       "return a function that goes to CYA page when concession page has been completed no" in {
 
         val updatedSession = sessionAboutFranchiseOrLetting6045.copy(
@@ -356,6 +364,16 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
             updatedSession
           ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
           .show()
+      }
+
+      "return a function that goes to add another income page when  concession type fees finished" in {
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(ConcessionTypeFeesId, sessionAboutFranchiseOrLetting6045)
+          .apply(
+            sessionAboutFranchiseOrLetting6045
+          ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings") // TODO
+
       }
     }
   }

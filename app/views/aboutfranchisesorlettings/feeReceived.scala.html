@@ -35,6 +35,20 @@
 
 @(form: Form[?], idx: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@dataForType = @{
+  request.sessionData.forType match {
+      case ForTypes.for6046 | ForTypes.for6045 => request.sessionData.financialYearEndDates6045
+      case _                                   => request.sessionData.financialYearEndDates6030
+  }
+}
+
+@controllerForType = @{
+    request.sessionData.forType match {
+        case ForTypes.for6046 | ForTypes.for6045 => controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.submit(idx)
+        case _                                   => controllers.aboutfranchisesorlettings.routes.FeeReceivedController.submit(idx)
+    }
+}
+
 @layout(
     pageHeading = messages("feeReceived.heading", operatorName),
     showSection = true,
@@ -45,14 +59,16 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-two-thirds">@messages("feeReceived.p1")</p>
+    @if(request.sessionData.forType == ForTypes.for6030) {
 
-    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FeeReceivedController.submit(idx)) {
+        <p class="govuk-body govuk-!-width-two-thirds">@messages("feeReceived.p1")</p>
+    }
+    @formWithCSRF(action = controllerForType) {
 
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
-                @request.sessionData.financialYearEndDates6030.map { case (finYearEnd, idx) =>
+                @dataForType.map { case (finYearEnd, idx) =>
                 <td>
 
                     @govukTable(Table(
@@ -104,18 +120,20 @@
             </tbody>
         </table>
 
-        @hmrcCharacterCount(
-            CharacterCount(
-                rows = 3,
-                maxLength = 2000,
-                classes = "govuk-!-width-two-thirds",
-                label = Label(
-                    content = Text(messages("feeReceived.feeCalculationDetails")),
-                    classes = "govuk-!-font-weight-bold"
-                )
-            ).withFormField(form("feeCalculationDetails"))
-        )
+@if(request.sessionData.forType == ForTypes.for6030) {
 
+    @hmrcCharacterCount(
+        CharacterCount(
+            rows = 3,
+            maxLength = 2000,
+            classes = "govuk-!-width-two-thirds",
+            label = Label(
+                content = Text(messages("feeReceived.feeCalculationDetails")),
+                classes = "govuk-!-font-weight-bold"
+            )
+        ).withFormField(form("feeCalculationDetails"))
+    )
+}
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 

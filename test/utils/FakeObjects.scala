@@ -1032,7 +1032,21 @@ trait FakeObjects {
   )
 
   val prefilledAboutFranchiseOrLettings6045: AboutFranchisesOrLettings                         = AboutFranchisesOrLettings(
-    Some(AnswerYes)
+    Some(AnswerYes),
+    rentalIncome = Some(
+      IndexedSeq(
+        ConcessionIncomeRecord(
+          businessDetails = Some(
+            CateringOperationBusinessDetails(
+              operatorName = "Operator",
+              typeOfBusiness = "Bar",
+              howBusinessPropertyIsUsed = "Leased"
+            )
+          ),
+          feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 2023))))
+        )
+      )
+    )
   )
   val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings                           = AboutFranchisesOrLettings(
     Some(AnswerNo),

@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfIncomeForm.typeOfIncomeForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, IncomeRecord, TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -46,12 +46,10 @@ class TypeOfIncomeController @Inject() (
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[TypeOfIncome] =
       for {
-        requestedIndex                <- index
-        existingAccommodationSections <-
-          request.sessionData.aboutFranchisesOrLettings.map(_.rentalIncome.getOrElse(IndexedSeq.empty))
-        requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
-        sourceType                    <- requestedAccommodationSection.sourceType
-      } yield sourceType
+        requestedIndex  <- index
+        allRecords      <- request.sessionData.aboutFranchisesOrLettings.map(_.rentalIncome.getOrElse(IndexedSeq.empty))
+        requestedRecord <- allRecords.lift(requestedIndex)
+      } yield requestedRecord.sourceType
 
     Ok(
       view(
@@ -64,7 +62,7 @@ class TypeOfIncomeController @Inject() (
     )
   }
 
-  def submit(index: Option[Int])                                         = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TypeOfIncome](
       typeOfIncomeForm,
       formWithErrors =>
@@ -117,15 +115,27 @@ class TypeOfIncomeController @Inject() (
       Redirect(toSpecificController(source, index))
     }
   }
-  private def createIncomeRecord(sourceType: TypeOfIncome): IncomeRecord = IncomeRecord()
+
+  private def createIncomeRecord(sourceType: TypeOfIncome): IncomeRecord =
+    sourceType match {
+      case TypeConcessionOrFranchise =>
+        ConcessionIncomeRecord(
+          sourceType = TypeConcessionOrFranchise
+        )
+
+      case TypeLetting =>
+        LettingIncomeRecord(
+          sourceType = TypeLetting
+        )
+    }
 
   private def toSpecificController(typeOfLetting: TypeOfIncome, index: Option[Int]): Call = {
     val targetIndex = index.getOrElse(0)
     typeOfLetting match {
       case TypeConcessionOrFranchise =>
-        controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(targetIndex))
+        controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
       case TypeLetting               =>
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(targetIndex))
+        controllers.routes.TaskListController.show() // TODO !!!
     }
   }
 

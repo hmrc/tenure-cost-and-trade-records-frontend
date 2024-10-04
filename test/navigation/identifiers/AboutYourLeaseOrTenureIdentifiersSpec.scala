@@ -182,6 +182,14 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
       assert(WorkCarriedOutConditionId.toString.equals("workCarriedOutConditionPage"))
     }
 
+    "Identifier for rent free period page" in {
+      assert(IsGivenRentFreePeriodId.toString.equals("isGivenRentFreePeriodPage"))
+    }
+
+    "Identifier for rent free period details page" in {
+      assert(RentFreePeriodDetailsId.toString.equals("rentFreePeriodDetailsPage"))
+    }
+
     "Identifier for car parking annual rent page" in {
       assert(CarParkingAnnualRentId.toString.equals("carParkingAnnualRentPage"))
     }

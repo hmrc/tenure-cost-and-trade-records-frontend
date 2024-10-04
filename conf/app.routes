@@ -375,8 +375,22 @@ POST        /income-expenditure-summary-6076                        controllers.
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
 
+# concession/franchise/letting new loop beginning
+
 GET         /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.show(idx: Option[Int] ?= None)
 POST        /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.submit(idx: Option[Int])
+
+GET         /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.show(idx: Int)
+POST        /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.submit(idx: Int)
+
+GET         /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.show(idx: Int)
+POST        /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.submit(idx: Int)
+
+# GET         /letting-details                                      controllers.aboutfranchisesorlettings.LettingTypeDetailsControllerller.show(idx: Option[Int] ?= None)
+# POST        /letting-details                                      controllers.aboutfranchisesorlettings.LettingTypeDetailsControllerller.submit(idx: Option[Int])
+
+# concession/franchise/letting new loop end !!!
+
 
 GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
