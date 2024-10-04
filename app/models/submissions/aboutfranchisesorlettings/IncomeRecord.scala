@@ -57,7 +57,9 @@ object ConcessionIncomeRecord {
 }
 
 case class LettingIncomeRecord(
-  sourceType: TypeOfIncome = TypeLetting
+  sourceType: TypeOfIncome = TypeLetting,
+  operatorDetails: Option[LettingOtherPartOfPropertyInformationDetails] = None,
+  rent: Option[LettingOtherPartOfPropertyRentDetails] = None
 ) extends IncomeRecord
 
 object LettingIncomeRecord {
