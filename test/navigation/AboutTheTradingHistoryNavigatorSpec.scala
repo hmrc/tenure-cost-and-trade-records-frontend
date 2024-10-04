@@ -370,6 +370,48 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           .show()
     }
 
+    "return a function that goes to Pitches For Glamping  page when Pitches For Caravans is completed" in {
+      navigator
+        .nextPage(PitchesForCaravansId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.aboutthetradinghistory.routes.PitchesForGlampingController.show()
+    }
+
+    "return a function that goes to Rally Areas  page when Pitches For Glamping is completed" in {
+      navigator
+        .nextPage(PitchesForGlampingId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.aboutthetradinghistory.routes.RallyAreasController.show()
+    }
+
+    "return a function that goes to Tenting Pitches Total  page when Pitches For Rally areas is completed" in {
+      navigator
+        .nextPage(RallyAreasId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.aboutthetradinghistory.routes.TentingPitchesTotalController.show()
+    }
+
+    "return a function that goes to Tenting Pitches Certificated page when Tenting Pitches Total is completed" in {
+      navigator
+        .nextPage(TentingPitchesTotalId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()
+    }
+
+    "return a function that goes to CYA Tenting Pitches  page when Tenting Pitches Certificated is completed" in {
+      navigator
+        .nextPage(TentingPitchesCertificatedId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
+    }
+
+    "return a function that goes to Task List  page when CYA Tenting Pitches is completed" in {
+      navigator
+        .nextPage(CheckYourAnswersOtherHolidayAccommodationId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe
+        controllers.routes.TaskListController.show().withFragment("tradingHistory")
+    }
+
     "return a function that goes to catering  page when additional activities shops is completed" in {
       navigator
         .nextPage(AdditionalShopsId, sessionAboutYou6045)

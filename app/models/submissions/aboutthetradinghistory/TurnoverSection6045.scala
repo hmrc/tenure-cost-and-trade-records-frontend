@@ -27,6 +27,7 @@ import java.time.LocalDate
   */
 case class TurnoverSection6045(
   financialYearEnd: LocalDate,
+  tradingPeriod: Int = 52,
   // 3. Caravans
   grossReceiptsCaravanFleetHire: Option[GrossReceiptsCaravanFleetHire] = None,
   singleCaravansOwnedByOperator: Option[CaravansTrading6045] = None,
