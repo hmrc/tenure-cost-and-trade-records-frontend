@@ -47,7 +47,7 @@ object FeeReceivedForm {
       mapping(
         "feeReceivedPerYear"    -> feeReceivedPerYearSeq(years),
         "feeCalculationDetails" -> optional(text(maxLength = 2000))
-          .verifying(messages("error.feeReceived.feeCalculationDetails.required"), _.nonEmpty)
+        // .verifying(messages("error.feeReceived.feeCalculationDetails.required"), _.nonEmpty)
       )(FeeReceived.apply)(o => Some(Tuple.fromProductTyped(o)))
     }
 

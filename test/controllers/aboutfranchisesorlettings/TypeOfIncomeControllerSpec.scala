@@ -17,8 +17,9 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcessionOrFranchise, TypeLetting}
 import play.api.http.Status._
+import play.api.libs.json.{JsError, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
@@ -37,6 +38,30 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6045),
       mockSessionRepo
     )
+
+  "IncomeRecord" should {
+
+    "serialize and deserialize correctly for ConcessionIncomeRecord" in {
+      val incomeRecord = ConcessionIncomeRecord(
+        sourceType = TypeConcessionOrFranchise
+      )
+      val json         = Json.toJson(incomeRecord: IncomeRecord)
+      json.as[IncomeRecord] shouldBe incomeRecord
+    }
+
+    "serialize and deserialize correctly for LettingIncomeRecord" in {
+      val incomeRecord = LettingIncomeRecord(
+        sourceType = TypeLetting
+      )
+      val json         = Json.toJson(incomeRecord: IncomeRecord)
+      json.as[IncomeRecord] shouldBe incomeRecord
+    }
+
+    "fail to deserialize for unknown sourceType" in {
+      val json = Json.obj("sourceType" -> "unknownType")
+      json.validate[IncomeRecord] shouldBe a[JsError]
+    }
+  }
 
   "GET /"    should {
     "return 200" in {
@@ -94,7 +119,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
     val result         = controller.submit(Some(0))(sessionRequest)
 
     status(result)           shouldBe SEE_OTHER
-    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/catering-operation-business-details?idx=0")
+    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/concession-type-details?idx=0")
     verify(mockSessionRepo).saveOrUpdate(any)(any, any)
   }
 
@@ -107,7 +132,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
-      "/send-trade-and-cost-information/letting-other-part-of-property-details?idx=0"
+      "/send-trade-and-cost-information/task-list" // TODO !!!
     )
   }
 

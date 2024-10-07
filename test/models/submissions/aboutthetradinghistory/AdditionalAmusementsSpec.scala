@@ -19,12 +19,12 @@ package models.submissions.aboutthetradinghistory
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.Json
 
-class AdditionalAmusementsSpec extends PlaySpec{
+class AdditionalAmusementsSpec extends PlaySpec {
 
   "AdditionalAmusements" should {
     "serialize and deserialize correctly" in {
       val additionalAmusementsSpec = AdditionalAmusements(receipts = Some(BigDecimal(1000)))
-      val json = Json.toJson(additionalAmusementsSpec: AdditionalAmusements)
+      val json                     = Json.toJson(additionalAmusementsSpec: AdditionalAmusements)
       json.as[AdditionalAmusements] mustBe additionalAmusementsSpec
     }
   }
