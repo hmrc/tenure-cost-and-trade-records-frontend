@@ -2891,26 +2891,41 @@ error.rentPayableDetails.maxLength = Description of selected items included in r
 
 # WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
 whatYouWillNeed.heading = What you’ll need to complete this section
-whatYouWillNeed.subheading = To complete this section, you’ll need figures relating to the categories listed here. If any of the information we need does not apply to your property, enter the number 0 where requested.
-whatYouWillNeed.l1 = Gwybodaeth am ddeiliadaeth a chyfrifyddu
-whatYouWillNeed.p1 = When you built or took over the property, and your financial year end
+whatYouWillNeed.header1 = If your business has occupied the property for longer than 3 years
+whatYouWillNeed.text1 = You’ll need trading figures from the 3 most recent financial years.
+whatYouWillNeed.header2 = If your business has occupied the property for less than 3 years
+whatYouWillNeed.text2 = You’ll be asked for figures from all completed financial years since you occupied the property.
+whatYouWillNeed.text3 = You’ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
+whatYouWillNeed.l1 = Occupation and accounting information
+whatYouWillNeed.p1 = When you built or took over the property, and your financial year end.
 whatYouWillNeed.l2 = How much power you generated
 whatYouWillNeed.l3 = Gross receipts
-whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives
-whatYouWillNeed.l4 = Incwm arall
-whatYouWillNeed.p4 = Any other income not listed in your gross receipts
+whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives.
+whatYouWillNeed.l4 = Other income
+whatYouWillNeed.p4 = Any other income not listed in your gross receipts.
 whatYouWillNeed.l5 = Cost of sales
-whatYouWillNeed.p5 = Details of any costs incurred
+whatYouWillNeed.p5 = Details of any costs incurred.
 whatYouWillNeed.l6 = Staff costs
-whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration
+whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration.
 whatYouWillNeed.l7 = Premises costs
 whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
-whatYouWillNeed.l8 = Treuliau gweithredu a gweinyddol
-whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees
+whatYouWillNeed.l8 = Operational and administrative expenses
+whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees.
 whatYouWillNeed.l9 = Head office expenses
-whatYouWillNeed.p9 = If applicable
+whatYouWillNeed.p9 = If applicable.
 whatYouWillNeed.subheading2 = If you do not have this information to hand
 whatYouWillNeed.p10 = Select <b>Save as draft</b> and complete the declaration when you’re ready.
+whatYouWillNeed.6045.l1 = Occupation and accounting information
+whatYouWillNeed.6045.p1 = When you bought or took over the property, and your financial year end.
+whatYouWillNeed.6045.l2 = Static caravans
+whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.
+whatYouWillNeed.6045.l3 = Income from other holiday accommodation
+whatYouWillNeed.6045.p3 = Including chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units.
+whatYouWillNeed.6045.l4 = Income from touring and tenting pitches
+whatYouWillNeed.6045.p4 = Including pitches for caravans, motorhomes, tents, rally areas, or glamping pitches for pre-erected or mobile structures like yurts, tipis or shepherd huts.
+whatYouWillNeed.6045.l5 = Trading figures from other activities
+whatYouWillNeed.6045.p5 = Including shops, catering, bars and clubs, and amusements.
+
 
 # CHECK YOUR ANSWERS
 ####################
