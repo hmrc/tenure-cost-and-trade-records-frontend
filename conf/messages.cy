@@ -112,7 +112,7 @@ label.section.aboutTheProperty = Amdanoch chi a’r eiddo
 label.section.aboutYourTradingHistory = Hanes masnachu
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
-label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises and lettings
+label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises or lettings
 label.section.aboutTheLettings = Lettings
 label.section.aboutYourLeaseOrTenure = Eich prydles neu eich cytundeb
 label.section.additionalInformation = Gwybodaeth ychwanegol
@@ -696,7 +696,7 @@ typeOfIncome.letting.label = Letting other parts of the property
 typeOfIncome.letting.hint = For example, advertising billboards, telephone masts or car parking.
 error.typeOfIncome.required = Select a source of rental income
 
-#CONCESSION TYPE DETAILS
+# CONCESSION TYPE DETAILS
 concessionTypeDetails.heading = Provide the operators’s details
 concessionTypeDetails.operator = Operators’s name
 concessionTypeDetails.describeType = Describe the type of business
@@ -711,6 +711,9 @@ error.concessionTypeDetails.describeType.maxLength = Description of the business
 
 error.concessionTypeDetails.describeUse.required = Enter a description how the property is used
 error.concessionTypeDetails.describeUse.maxLength = Description of use of the property
+
+# LETTING TYPE DETAILS
+hint.lettingTypeDetails = For example, a billboard or car parking
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
@@ -731,7 +734,7 @@ error.franchiseOrLettings.missing = Select yes if you receive income from lettin
 franchiseLettingsIncome.heading = Do you receive rental income from any franchise or lettings?
 franchiseLettingsIncome.p1 = You must declare:
 franchiseLettingsIncome.list1 = any payments received instead of trading income from concessions or franchise agreements - for example, tearooms, vehicle charging points or car washes
-franchiseLettingsIncome.list2 = rent received from letting other parts of the property, including advertising billboards, telephone masts or car parking
+franchiseLettingsIncome.list2 = rent received from letting other parts of the property including advertising billboards, telephone masts or car parking
 franchiseLettingsIncome6045.list1 = any payments received instead of trading income from concessions or franchise agreements
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 

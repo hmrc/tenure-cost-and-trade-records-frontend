@@ -136,6 +136,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def getCateringOperationsIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
 
+  private def getRentalIncomeIndex(session: Session): Int =
+    session.aboutFranchisesOrLettings.map(_.rentalIncomeIndex).getOrElse(0)
+
   private def isCateringDetailsIncomplete(detail: CateringOperationSection, forType: String): Boolean =
     if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
       detail.cateringOperationDetails == null ||
@@ -388,6 +391,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
     ),
     ConcessionTypeFeesId                       -> (_ => controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")),
+    LettingTypeDetailsId                       ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.LettingTypeRentController.show(getRentalIncomeIndex(answers))
+      ),
+    LettingTypeRentId                          ->
+      (_ => controllers.routes.TaskListController.show()), // TODO !!!
     CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,

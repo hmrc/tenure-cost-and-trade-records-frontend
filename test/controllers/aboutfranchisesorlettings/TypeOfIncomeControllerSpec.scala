@@ -132,7 +132,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
-      "/send-trade-and-cost-information/task-list" // TODO !!!
+      "/send-trade-and-cost-information/letting-type-details?idx=0"
     )
   }
 

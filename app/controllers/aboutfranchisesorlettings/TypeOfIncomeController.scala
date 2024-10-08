@@ -135,7 +135,7 @@ class TypeOfIncomeController @Inject() (
       case TypeConcessionOrFranchise =>
         controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
       case TypeLetting               =>
-        controllers.routes.TaskListController.show() // TODO !!!
+        controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
     }
   }
 
