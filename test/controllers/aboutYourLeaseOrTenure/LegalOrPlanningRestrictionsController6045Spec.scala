@@ -53,6 +53,17 @@ class LegalOrPlanningRestrictionsController6045Spec extends TestBaseSpec {
       )
     }
 
+    "return 200 and HTML legal or planning restrictions is none in the session for 6045" in {
+      val controller = legalOrPlanningRestrictionsController(aboutLeaseOrAgreementPartTwo = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      )
+    }
+
     "return 200 and HTML with capital sum with yes in the session" in {
       val controller = legalOrPlanningRestrictionsController(ForTypes.for6020)
       val result     = controller.show(fakeRequest)

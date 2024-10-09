@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import models.ForTypes
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -27,13 +28,14 @@ import utils.TestBaseSpec
 class IsRentUnderReviewControllerSpec extends TestBaseSpec {
 
   def isRentUnderReviewController(
+    forType: String = ForTypes.for6010,
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) = new IsRentUnderReviewController(
     isRentUnderReviewView,
     aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo,
     stubMessagesControllerComponents()
   )
@@ -59,6 +61,17 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
       )
     }
+
+    "return 200 and HTML is rent under review is present in session for 6045" in {
+      val controller = isRentUnderReviewController(ForTypes.for6045)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
+      )
+    }
   }
 
   "IsRentUnderReviewController SUBMIT /" should {
@@ -69,11 +82,9 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data isRentUnderReview submitted" in {
+    "Redirect when form data submitted" in {
       val res = isRentUnderReviewController().submit(
-        FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "isRentUnderReview" -> "yes"
-        )
+        FakeRequest(POST, "/").withFormUrlEncodedBody("isRentUnderReview" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }

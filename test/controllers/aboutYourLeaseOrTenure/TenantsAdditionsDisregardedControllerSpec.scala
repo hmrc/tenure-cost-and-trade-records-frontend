@@ -69,6 +69,31 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
       )
     }
+
+    "return 200 and HTML Tenants Additional Disregard with formerLeaseSurrendered is yes in the session" in {
+      val controller = tenantsAdditionsDisregardedController(forType = ForTypes.for6045)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
+      )
+    }
+
+    "return 200 and HTML Tenants Additional Disregard with one in the session" in {
+      val controller = tenantsAdditionsDisregardedController(
+        forType = ForTypes.for6045,
+        aboutLeaseOrAgreementPartTwo = None
+      )
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+      )
+    }
   }
 
   "TenantsAdditionsDisregardedController SUBMIT /" should {

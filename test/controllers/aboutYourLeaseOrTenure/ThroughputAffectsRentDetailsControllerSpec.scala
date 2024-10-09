@@ -17,9 +17,9 @@
 package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**
@@ -66,6 +66,20 @@ class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = throughputAffectsRentDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody()
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = throughputAffectsRentDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("throughputAffectsRentDetails" -> "Throughput Details")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "throw a BAD_REQUEST if tenantsAdditionsDisregardedDetails is greater than max length is submitted" in {
+      val res = throughputAffectsRentDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("throughputAffectsRentDetails" -> "x" * 2001)
       )
       status(res) shouldBe BAD_REQUEST
     }

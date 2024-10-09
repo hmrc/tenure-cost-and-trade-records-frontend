@@ -73,7 +73,7 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
         status(res) shouldBe BAD_REQUEST
       }
 
-      "Redirect when form data servicePaidSeparately submitted" in {
+      "Redirect when form data submitted" in {
         val res = servicePaidSeparatelyController().submit(Some(0))(
           FakeRequest(POST, "/").withFormUrlEncodedBody("description" -> "Description")
         )

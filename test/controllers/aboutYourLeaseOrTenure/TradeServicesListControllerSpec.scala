@@ -21,8 +21,8 @@ import form.aboutYourLeaseOrTenure.TradeServicesListForm.addAnotherServiceForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -82,6 +82,13 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val result = tradeServicesListController().submit(1)(fakeRequest)
         status(result) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data submitted" in {
+        val res = tradeServicesListController().submit(0)(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("tradeServicesList" -> "yes")
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
 

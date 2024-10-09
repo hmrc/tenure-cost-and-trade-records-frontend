@@ -87,6 +87,17 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
         )
         status(res) shouldBe BAD_REQUEST
       }
+
+      "Redirect when form data rentOpenMarketValue submitted" in {
+        val res = tenancyLeaseAgreementExpireController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "tenancyLeaseAgreementExpire.day"   -> "1",
+            "tenancyLeaseAgreementExpire.month" -> "1",
+            "tenancyLeaseAgreementExpire.year"  -> "2025"
+          )
+        )
+        status(res) shouldBe SEE_OTHER
+      }
     }
   }
 }
