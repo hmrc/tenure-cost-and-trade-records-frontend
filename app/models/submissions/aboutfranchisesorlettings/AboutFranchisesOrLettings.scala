@@ -38,7 +38,8 @@ case class AboutFranchisesOrLettings(
   fromCYA: Option[Boolean] = None,
   cateringOrFranchiseFee: Option[AnswersYesNo] = None, // added for 6030 journey - Feb 2024
   lettings: Option[IndexedSeq[LettingPartOfProperty]] = None, // 6020 lettings
-  rentalIncome: Option[IndexedSeq[IncomeRecord]] = None
+  rentalIncome: Option[IndexedSeq[IncomeRecord]] = None,
+  rentalIncomeIndex: Int = 0
 )
 
 object AboutFranchisesOrLettings {
@@ -58,7 +59,8 @@ object AboutFranchisesOrLettings {
       (__ \ "fromCYA").readNullable[Boolean] and
       (__ \ "cateringOrFranchiseFee").readNullable[AnswersYesNo] and
       (__ \ "lettings").readNullable[IndexedSeq[LettingPartOfProperty]] and
-      (__ \ "rentalIncome").readNullable[IndexedSeq[IncomeRecord]]
+      (__ \ "rentalIncome").readNullable[IndexedSeq[IncomeRecord]] and
+      (__ \ "rentalIncomeIndex").read[Int]
   )(AboutFranchisesOrLettings.apply)
 
   implicit val format: Format[AboutFranchisesOrLettings] =

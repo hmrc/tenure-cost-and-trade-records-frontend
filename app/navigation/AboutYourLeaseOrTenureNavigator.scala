@@ -40,6 +40,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   override val postponeCYARedirectPages: Set[String] = Set(
     aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show(),
     aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show(),
     aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show(),
     aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show(),
@@ -50,6 +52,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(),
     aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(),
+    aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(),
+    aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(),
+    aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(),
     aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(),
     aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(),

@@ -114,7 +114,7 @@ label.section.aboutTheProperty = About you and the property
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
-label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises and lettings
+label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises or lettings
 label.section.aboutTheLettings = Lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
@@ -693,7 +693,7 @@ hint.partialTie = You have some flexibility to source certain items independentl
 partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Select which type of tie you have
 
-# SOURCE OF RENTAL INCOME
+# TYPE OF INCOME
 typeOfIncome.heading = Select a source of rental income
 typeOfIncome.p = You will have the option to add multiple sources of rental income if required
 typeOfIncome.concession.label = Concession or franchise
@@ -701,6 +701,25 @@ typeOfIncome.concession.hint = For example, accommodation or catering businesses
 typeOfIncome.letting.label = Letting other parts of the property
 typeOfIncome.letting.hint = For example, advertising billboards, telephone masts or car parking.
 error.typeOfIncome.required = Select a source of rental income
+
+# CONCESSION TYPE DETAILS
+concessionTypeDetails.heading = Provide the operators’s details
+concessionTypeDetails.operator = Operators’s name
+concessionTypeDetails.describeType = Describe the type of business
+hint.concessionTypeDetails.describeType = For example, bar, club, restaurant
+concessionTypeDetails.describeUse = Describe how the property is used
+
+error.concessionTypeDetails.operator.required = Enter the name of the operator
+error.concessionTypeDetails.operator.maxLength = Operator‘s name must be 100 characters or fewer
+
+error.concessionTypeDetails.describeType.required = Enter a description of the business
+error.concessionTypeDetails.describeType.maxLength = Description of the business must be 100 characters or fewer
+
+error.concessionTypeDetails.describeUse.required = Enter a description how the property is used
+error.concessionTypeDetails.describeUse.maxLength = Description of use of the property
+
+# LETTING TYPE DETAILS
+hint.lettingTypeDetails = For example, a billboard or car parking
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
@@ -721,7 +740,7 @@ error.franchiseOrLettings.missing = Select yes if you receive income from lettin
 franchiseLettingsIncome.heading = Do you receive rental income from any franchise or lettings?
 franchiseLettingsIncome.p1 = You must declare:
 franchiseLettingsIncome.list1 = any payments received instead of trading income from concessions or franchise agreements - for example, tearooms, vehicle charging points or car washes
-franchiseLettingsIncome.list2 = rent received from letting other parts of the property, including advertising billboards, telephone masts or car parking
+franchiseLettingsIncome.list2 = rent received from letting other parts of the property including advertising billboards, telephone masts or car parking
 franchiseLettingsIncome6045.list1 = any payments received instead of trading income from concessions or franchise agreements
 error.franchiseOrLettings.missing = Select yes if you receive any rental income from franchises or lettings
 
@@ -2942,26 +2961,40 @@ error.rentPayableDetails.maxLength = Description of selected items included in r
 
 # WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
 whatYouWillNeed.heading = What you’ll need to complete this section
-whatYouWillNeed.subheading = To complete this section, you’ll need figures relating to the categories listed here. If any of the information we need does not apply to your property, enter the number 0 where requested.
+whatYouWillNeed.header1 = If your business has occupied the property for longer than 3 years
+whatYouWillNeed.text1 = You’ll need trading figures from the 3 most recent financial years.
+whatYouWillNeed.header2 = If your business has occupied the property for less than 3 years
+whatYouWillNeed.text2 = You’ll be asked for figures from all completed financial years since you occupied the property.
+whatYouWillNeed.text3 = You’ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
 whatYouWillNeed.l1 = Occupation and accounting information
-whatYouWillNeed.p1 = When you built or took over the property, and your financial year end
+whatYouWillNeed.p1 = When you built or took over the property, and your financial year end.
 whatYouWillNeed.l2 = How much power you generated
 whatYouWillNeed.l3 = Gross receipts
-whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives
+whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives.
 whatYouWillNeed.l4 = Other income
-whatYouWillNeed.p4 = Any other income not listed in your gross receipts
+whatYouWillNeed.p4 = Any other income not listed in your gross receipts.
 whatYouWillNeed.l5 = Cost of sales
-whatYouWillNeed.p5 = Details of any costs incurred
+whatYouWillNeed.p5 = Details of any costs incurred.
 whatYouWillNeed.l6 = Staff costs
-whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration
+whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration.
 whatYouWillNeed.l7 = Premises costs
 whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
 whatYouWillNeed.l8 = Operational and administrative expenses
-whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees
+whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees.
 whatYouWillNeed.l9 = Head office expenses
-whatYouWillNeed.p9 = If applicable
+whatYouWillNeed.p9 = If applicable.
 whatYouWillNeed.subheading2 = If you do not have this information to hand
 whatYouWillNeed.p10 = Select <b>Save as draft</b> and complete the declaration when you’re ready.
+whatYouWillNeed.6045.l1 = Occupation and accounting information
+whatYouWillNeed.6045.p1 = When you bought or took over the property, and your financial year end.
+whatYouWillNeed.6045.l2 = Static caravans
+whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.
+whatYouWillNeed.6045.l3 = Income from other holiday accommodation
+whatYouWillNeed.6045.p3 = Including chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units.
+whatYouWillNeed.6045.l4 = Income from touring and tenting pitches
+whatYouWillNeed.6045.p4 = Including pitches for caravans, motorhomes, tents, rally areas, or glamping pitches for pre-erected or mobile structures like yurts, tipis or shepherd huts.
+whatYouWillNeed.6045.l5 = Trading figures from other activities
+whatYouWillNeed.6045.p5 = Including shops, catering, bars and clubs, and amusements.
 
 
 # CHECK YOUR ANSWERS
@@ -3056,13 +3089,18 @@ checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Date lease 
 checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = What the rent includes
 checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Charges included in the rent
 checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Items the rent includes or relates to
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Party responsible for inside repairs?
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Party responsible for outside repairs?
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Party responsible for building insurance?
+checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand = Rent relates to developed land?
+checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails = Description of included developments
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings = Rent includes structures or buildings?
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails = Description of included structures
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Party responsible for inside repairs
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Party responsible for outside repairs
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Party responsible for building insurance
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices = Rent includes trade services?
 checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices = Description of trade services
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails = Rent includes equipment?
 checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent = Sum included in rent to cover trade fixtures and fittings
+checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent = Sum included in rent to cover equipment
 checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading = How the rent was calculated
 checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue = Rent based on open market value?
 checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn = What the rent is based on
@@ -3073,9 +3111,13 @@ checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks = Rent 
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails = How rent varies according to alcohol supplied
 checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed = How and when the rent was fixed
 checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent = How the rent was agreed
+checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview = Rent currently under review?
 checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Rent reviews: frequency and due date
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = Can rent be reduced?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Former lease surrendered early?
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Details of former lease
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months = Term remaining {0} months
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Disregarded additions or improvements?
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails = Description of disregarded improvements
 checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading = Exclusions, restrictions or incentives
@@ -3115,7 +3157,7 @@ checkYourAnswersAboutYourLeaseOrTenure.separatelyRentedSpaces = Separately rente
 checkYourAnswersAboutYourLeaseOrTenure.parkingCostsDetails = Details of parking costs
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeEquipment = Rent includes equipment?
 checkYourAnswersAboutYourLeaseOrTenure.descriptionOfEquipment = Description of equipment
-checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs = Alterations, Improvements or repairs?
+checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs = Alterations, improvements or repairs?
 checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork = Details of work
 checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition = Work required to secure lease?
 checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven = Benefits received when lease was granted?

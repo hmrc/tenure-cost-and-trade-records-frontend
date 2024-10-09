@@ -375,9 +375,27 @@ POST        /income-expenditure-summary-6076                        controllers.
 GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
 POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
 
+# concession/franchise/letting new loop beginning
+
 GET         /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.show(idx: Option[Int] ?= None)
 POST        /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.submit(idx: Option[Int])
 
+GET         /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.show(idx: Int)
+POST        /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.submit(idx: Int)
+
+GET         /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.show(idx: Int)
+POST        /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.submit(idx: Int)
+
+GET         /letting-type-details                                   controllers.aboutfranchisesorlettings.LettingTypeDetailsController.show(idx: Int)
+POST        /letting-type-details                                   controllers.aboutfranchisesorlettings.LettingTypeDetailsController.submit(idx: Int)
+
+ GET         /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.show(idx: Int)
+ POST        /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.submit(idx: Int)
+
+# GET         /letting-type-included                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.show(idx: Int)
+# POST        /letting-type-included                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.submit(idx: Int)
+
+# concession/franchise/letting new loop end !!!
 GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
 
