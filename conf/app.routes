@@ -190,6 +190,9 @@ POST        /financial-year-end-dates                               controllers.
 GET         /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.show()
 POST        /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.submit()
 
+GET         /financial-years                                        controllers.aboutthetradinghistory.FinancialYearsController.show
+POST        /financial-years                                        controllers.aboutthetradinghistory.FinancialYearsController.submit
+
 GET         /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.show(index: Int)
 POST        /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.submit(index: Int)
 

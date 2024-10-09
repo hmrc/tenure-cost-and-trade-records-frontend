@@ -24,7 +24,7 @@ import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.lettingTypeDetails
 
