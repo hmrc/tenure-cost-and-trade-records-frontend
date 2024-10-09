@@ -72,9 +72,9 @@ class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
 
     "Redirect when form data submitted" in {
       val res = throughputAffectsRentController().submit(
-        FakeRequest(POST, "/").withFormUrlEncodedBody("doesRentVaryToThroughput" -> "yes")
+        FakeRequest(POST, "/").withFormUrlEncodedBody("throughputAffectsRent" -> "yes")
       )
-      status(res) shouldBe BAD_REQUEST
+      status(res) shouldBe SEE_OTHER
     }
   }
 

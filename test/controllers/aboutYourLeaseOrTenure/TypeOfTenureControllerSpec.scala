@@ -76,7 +76,19 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
 
     "Redirect when form data submitted" in {
       val res = typeOfTenureController().submit(
-        FakeRequest(POST, "/").withFormUrlEncodedBody("typeOfTenureDetails" -> "test")
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "typeOfTenure[0]"     -> "leasehold",
+          "typeOfTenureDetails" -> "test"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "throw a BAD_REQUEST if tenantsAdditionsDisregardedDetails is greater than max length is submitted" in {
+      val res = typeOfTenureController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "typeOfTenureDetails" -> "x" * 2001
+        )
       )
       status(res) shouldBe BAD_REQUEST
     }

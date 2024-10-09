@@ -82,11 +82,21 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = leaseOrAgreementYearsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = leaseOrAgreementYearsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "commenceWithinThreeYears"        -> "no",
+          "agreedReviewedAlteredThreeYears" -> "no",
+          "rentUnderReviewNegotiated"       -> "no"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 }

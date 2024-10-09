@@ -65,5 +65,21 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = tenantsAdditionsDisregardedDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("tenantsAdditionsDisregardedDetails" -> "Tenants Details")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "throw a BAD_REQUEST if tenantsAdditionsDisregardedDetails is greater than max length is submitted" in {
+      val res = tenantsAdditionsDisregardedDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "tenantsAdditionsDisregardedDetails" -> "x" * 501
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 }
