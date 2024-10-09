@@ -392,9 +392,6 @@ POST        /letting-type-details                                   controllers.
  GET         /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.show(idx: Int)
  POST        /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.submit(idx: Int)
 
-# GET         /letting-type-included                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.show(idx: Int)
-# POST        /letting-type-included                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.submit(idx: Int)
-
 # concession/franchise/letting new loop end !!!
 GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
 POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
