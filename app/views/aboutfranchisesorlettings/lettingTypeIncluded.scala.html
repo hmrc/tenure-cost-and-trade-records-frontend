@@ -1,0 +1,99 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.ExclusiveCheckbox
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import models.pages.Summary
+
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukCheckboxes: GovukCheckboxes,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(form: Form[?], index: Int, operatorName: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[?], messages: Messages)
+
+@layout(
+    pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading"),
+    showSection = true,
+    showH1 = false,
+    sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+    backLinkUrl = backLink,
+    theForm = form
+) {
+
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingTypeIncludedController.submit(index)
+    ) {
+
+        @govukCheckboxes(
+            Checkboxes(
+                name = "itemsInRent[]",
+                fieldset = Some(Fieldset(
+                    legend = Some(Legend(
+                        classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
+                        content = Text(messages("cateringOperationOrLettingAccommodationCheckboxesDetails.title", operatorName)),
+                        isPageHeading = true
+                    ))
+                )),
+                items = Seq(
+                    CheckboxItem(
+                        value = "rates",
+                        content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates")),
+                        id = "rates"
+                    ),
+                    CheckboxItem(
+                        value = "propertyInsurance",
+                        content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance")),
+                        id = "propertyInsurance"
+                    ),
+                    CheckboxItem(
+                        value = "outsideRepairs",
+                        content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs")),
+                        id = "outsideRepairs"
+                    ),
+                    CheckboxItem(
+                        value = "insideRepairs",
+                        content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs")),
+                        id = "insideRepairs"
+                    ),
+                    CheckboxItem(
+                        divider = (messages("label.or"))
+                    ),
+                    CheckboxItem(
+                        behaviour = ExclusiveCheckbox,
+                        value = "noneOfThese",
+                        content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese")),
+                        id = "noneOfThese"
+                    )
+                ),
+                hint = Some(Hint(content = Text(messages("hint.cateringOperationOrLettingAccommodationCheckboxesDetails"))))
+            ).withFormField(form("itemsInRent"))
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

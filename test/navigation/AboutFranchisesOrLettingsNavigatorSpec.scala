@@ -375,6 +375,15 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings") // TODO
 
       }
+
+      "return a function that goes to add another income page when  letting type included finished" in {
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(LettingTypeIncludedId, sessionAboutFranchiseOrLetting6045)
+          .apply(
+            sessionAboutFranchiseOrLetting6045
+          ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings") // TODO
+      }
     }
   }
 }

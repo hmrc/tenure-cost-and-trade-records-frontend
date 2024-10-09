@@ -20,6 +20,7 @@ label.account.property=Property
 label.underReview=(under review)
 label.yes = Yes
 label.no = No
+label.or = or
 label.pound = £
 label.weeks = wythnos
 fieldsAreMandatory.label = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
@@ -710,7 +711,7 @@ error.concessionTypeDetails.describeType.required = Enter a description of the b
 error.concessionTypeDetails.describeType.maxLength = Description of the business must be 100 characters or fewer
 
 error.concessionTypeDetails.describeUse.required = Enter a description how the property is used
-error.concessionTypeDetails.describeUse.maxLength = Description of use of the property
+error.concessionTypeDetails.describeUse.maxLength = Description of use of the property must be 100 characters or fewer
 
 # LETTING TYPE DETAILS
 hint.lettingTypeDetails = For example, a billboard or car parking
