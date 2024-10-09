@@ -391,12 +391,13 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
     ),
     ConcessionTypeFeesId                       -> (_ => controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")),
-    LettingTypeDetailsId                       ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.LettingTypeRentController.show(getRentalIncomeIndex(answers))
-      ),
-    LettingTypeRentId                          ->
-      (_ => controllers.routes.TaskListController.show()), // TODO !!!
+    LettingTypeDetailsId                       -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.LettingTypeRentController.show(getRentalIncomeIndex(answers))
+    ),
+    LettingTypeRentId                          -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.LettingTypeIncludedController.show(getRentalIncomeIndex(answers))
+    ),
+    LettingTypeIncludedId                      -> (_ => controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")),
     CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
     CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,

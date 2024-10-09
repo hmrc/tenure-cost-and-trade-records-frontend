@@ -21,6 +21,7 @@ label.account.property=Property
 label.underReview=(under review)
 label.yes = Yes
 label.no = No
+label.or = or
 label.pound = £
 label.weeks = weeks
 label.units = units

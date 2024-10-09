@@ -20,6 +20,7 @@ label.account.property=Property
 label.underReview=(under review)
 label.yes = Yes
 label.no = No
+label.or = or
 label.pound = £
 label.weeks = wythnos
 fieldsAreMandatory.label = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
