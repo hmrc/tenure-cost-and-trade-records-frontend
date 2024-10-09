@@ -47,9 +47,9 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
       backlinkUrl shouldBe controllers.routes.TaskListController.show().url
     }
 
-    "contain subheading" in {
+    "contain whatYouWillNeed.header1" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("whatYouWillNeed.subheading")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.header1")))
     }
 
     "contain list" in {

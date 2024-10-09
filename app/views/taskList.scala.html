@@ -245,7 +245,7 @@
    </h2>
    <ul class="app-task-list__items">
     @includes.taskListItem("about-your-trading-history", "aboutYourTradingHistory.heading",
-     if(forType == ForTypes.for6076) {
+     if(forType == ForTypes.for6045 || forType == ForTypes.for6046 || forType == ForTypes.for6076) {
       controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show()
      } else { controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show() },
      section3Completed,
