@@ -1,6 +1,8 @@
 # microservice specific routes
 
 ->         /hmrc-frontend                                           hmrcfrontend.Routes
+->         /send-trade-and-cost-information                         requestReferenceNumber.Routes
+->         /send-trade-and-cost-information                         connectionToProperty.Routes
 
 GET         /assets/*file                                           controllers.Assets.versioned(path = "/public", file: Asset)
 # Dummy start page
@@ -12,6 +14,9 @@ GET         /$count<\d>-sign-in-attempts-remaining                  controllers.
 GET         /lockedout                                              controllers.LoginController.lockedOut
 GET         /logout                                                 controllers.LoginController.logout
 GET         /loggedout                                              controllers.LoginController.loggedOut
+
+GET         /test-endpoint                                          controllers.TestController.testEndpoint
+GET         /test-endpoint-let                                      controllers.aboutfranchisesorlettings.TestLetController.testEndpoint
 
 GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
 
@@ -35,71 +40,12 @@ GET         /error/resume                                           controllers.
 GET         /max-lettings                                           controllers.MaxOfLettingsReachedController.show(src: Option[String] ?= None)
 POST        /max-lettings                                           controllers.MaxOfLettingsReachedController.submit(src: Option[String] ?=None)
 
-# No reference number
-GET         /request-reference-number-with-session                  controllers.requestReferenceNumber.RequestReferenceNumberController.startWithSession()
-GET         /request-reference-number                               controllers.requestReferenceNumber.RequestReferenceNumberController.show()
-POST        /request-reference-number                               controllers.requestReferenceNumber.RequestReferenceNumberController.submit()
-
-GET         /request-reference-number-contact-details               controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.show()
-POST        /request-reference-number-contact-details               controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.submit()
-
-GET         /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.show()
-POST        /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.submit()
-GET         /confirmation-request-reference-number                  controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.confirmation()
-
 # PDF download
 GET         /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.show()
 POST        /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.submit()
 
 GET         /download-pdf/:forType                                  controllers.downloadFORTypeForm.DownloadPDFController.show(forType: String)
 
-# Connection to the property
-GET         /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.show()
-POST        /are-you-still-connected                                controllers.connectiontoproperty.AreYouStillConnectedController.submit()
-
-GET         /edit-address                                           controllers.connectiontoproperty.EditAddressController.show()
-POST        /edit-address                                           controllers.connectiontoproperty.EditAddressController.submit()
-
-GET         /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.show()
-POST        /connection-to-the-property                             controllers.connectiontoproperty.ConnectionToThePropertyController.submit()
-
-GET         /vacant-properties                                      controllers.connectiontoproperty.VacantPropertiesController.show()
-POST        /vacant-properties                                      controllers.connectiontoproperty.VacantPropertiesController.submit()
-
-GET         /name-of-operator-from-property                         controllers.connectiontoproperty.TradingNameOperatingFromPropertyController.show()
-POST        /name-of-operator-from-property                         controllers.connectiontoproperty.TradingNameOperatingFromPropertyController.submit()
-
-GET         /trading-name-own-the-property                          controllers.connectiontoproperty.TradingNameOwnThePropertyController.show()
-POST        /trading-name-own-the-property                          controllers.connectiontoproperty.TradingNameOwnThePropertyController.submit()
-
-GET         /trading-name-paying-rent                               controllers.connectiontoproperty.TradingNamePayingRentController.show()
-POST        /trading-name-paying-rent                               controllers.connectiontoproperty.TradingNamePayingRentController.submit()
-
-GET         /are-you-third-party                                    controllers.connectiontoproperty.AreYouThirdPartyController.show()
-POST        /are-you-third-party                                    controllers.connectiontoproperty.AreYouThirdPartyController.submit()
-
-GET         /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.show()
-POST        /vacant-property-start-date                             controllers.connectiontoproperty.VacantPropertiesStartDateController.submit()
-
-GET         /is-rent-received-from-letting                          controllers.connectiontoproperty.IsRentReceivedFromLettingController.show()
-POST        /is-rent-received-from-letting                          controllers.connectiontoproperty.IsRentReceivedFromLettingController.submit()
-
-GET         /your-contact-details                                   controllers.connectiontoproperty.ProvideContactDetailsController.show()
-POST        /your-contact-details                                   controllers.connectiontoproperty.ProvideContactDetailsController.submit()
-
-GET         /letting-part-of-property-details                       controllers.connectiontoproperty.LettingPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
-POST        /letting-part-of-property-details                       controllers.connectiontoproperty.LettingPartOfPropertyDetailsController.submit(idx: Option[Int])
-
-GET         /letting-part-of-property-rent                          controllers.connectiontoproperty.LettingPartOfPropertyDetailsRentController.show(idx: Int)
-POST        /letting-part-of-property-rent                          controllers.connectiontoproperty.LettingPartOfPropertyDetailsRentController.submit(idx: Int)
-
-GET         /letting-part-of-property-checkbox                      controllers.connectiontoproperty.LettingPartOfPropertyItemsIncludedInRentController.show(idx: Int)
-POST        /letting-part-of-property-checkbox                      controllers.connectiontoproperty.LettingPartOfPropertyItemsIncludedInRentController.submit(idx: Int)
-
-GET         /add-another-letting-part-of-property                   controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.show(idx: Int)
-POST        /add-another-letting-part-of-property                   controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.submit(idx: Int)
-GET         /remove-letting-part-of-property                        controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.remove(idx: Int)
-POST        /remove-letting-part-of-property                        controllers.connectiontoproperty.AddAnotherLettingPartOfPropertyController.performRemove(idx: Int)
 
 # Not connected
 GET         /past-connection-type                                   controllers.notconnected.PastConnectionController.show()
@@ -757,14 +703,6 @@ POST        /contact-details-question                               controllers.
 
 GET         /alternate-contact-details                              controllers.aboutyouandtheproperty.AlternativeContactDetailsController.show()
 POST        /alternate-contact-details                              controllers.aboutyouandtheproperty.AlternativeContactDetailsController.submit()
-
-GET         /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.show()
-POST        /check-your-answers-connection-to-property              controllers.connectiontoproperty.CheckYourAnswersConnectionToPropertyController.submit()
-
-GET         /check-your-answers-connection-to-vacant-property       controllers.connectiontoproperty.CheckYourAnswersConnectionToVacantPropertyController.show()
-
-POST        /connection-to-property-declaration                     controllers.connectiontoproperty.ConnectionToPropertySubmissionController.submit()
-GET         /connection-to-property-confirmation                    controllers.connectiontoproperty.ConnectionToPropertySubmissionController.confirmation()
 
 GET         /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.show()
 POST        /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.submit()
