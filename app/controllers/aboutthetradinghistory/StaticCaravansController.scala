@@ -83,7 +83,13 @@ class StaticCaravansController @Inject() (
     .flatMap(_.caravans)
     .flatMap(_.anyStaticLeisureCaravansOnSite)
 
-  private def getBackLink: String =
-    aboutthetradinghistory.routes.FinancialYearsController.show.url
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    navigator.from match {
+      case "CYA" =>
+        navigator.cyaPage
+          .getOrElse(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+          .url
+      case _     => aboutthetradinghistory.routes.FinancialYearsController.show.url
+    }
 
 }
