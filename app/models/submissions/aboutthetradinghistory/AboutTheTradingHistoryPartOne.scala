@@ -22,6 +22,7 @@ import play.api.libs.json._
 
 case class AboutTheTradingHistoryPartOne(
   isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false),
+  isFinancialYearsCorrect: Option[Boolean] = None,
   // 6076
   whatYouWillNeed: Option[String] = None, // Added July 2024
   turnoverSections6076: Option[Seq[TurnoverSection6076]] = None,

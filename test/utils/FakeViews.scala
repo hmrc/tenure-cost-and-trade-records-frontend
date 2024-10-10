@@ -124,6 +124,7 @@ trait FakeViews { this: Injecting =>
   lazy val financialYearEndDatesView: financialYearEndDates                                         = inject[financialYearEndDates]
   lazy val editFinancialYearEndDateView: editFinancialYearEndDate                                   = inject[editFinancialYearEndDate]
   lazy val financialYearEndDatesSummaryView: financialYearEndDatesSummary                           = inject[financialYearEndDatesSummary]
+  lazy val financialYearsView: financialYears                                                       = inject[financialYears]
   lazy val turnoverView: turnover                                                                   = inject[turnover]
   lazy val turnover6020View: turnover6020                                                           = inject[turnover6020]
   lazy val turnover6030View: turnover6030                                                           = inject[turnover6030]

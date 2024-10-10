@@ -17,7 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.StaticCaravansForm.staticCaravansForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -27,7 +27,6 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil.backLinkToFinancialYearEndDates
 import views.html.aboutthetradinghistory.staticCaravans
 
 import javax.inject.{Inject, Named, Singleton}
@@ -85,6 +84,12 @@ class StaticCaravansController @Inject() (
     .flatMap(_.anyStaticLeisureCaravansOnSite)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    backLinkToFinancialYearEndDates(navigator)
+    navigator.from match {
+      case "CYA" =>
+        navigator.cyaPage
+          .getOrElse(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+          .url
+      case _     => aboutthetradinghistory.routes.FinancialYearsController.show.url
+    }
 
 }

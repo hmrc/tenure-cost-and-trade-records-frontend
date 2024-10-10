@@ -1454,6 +1454,19 @@ financialYearEndDates.heading = Change your financial year-end dates
 financialYearEndDates.p1 = Adjust any of the dates displayed on this page to show the changes to your financial year end.
 financialYearEndDates.financialYear.label = Financial year ending {0}
 
+# FINANCIAL YEAR-END DATES SUMMARY
+##############################
+financialYearEndDatesSummary.heading = Your most recent financial year end dates
+financialYearEndDatesSummary.p1 = These dates are based on the information you have provided.
+financialYearEndDatesSummary.isFinancialYearEndDatesCorrect = These financial year end dates are correct
+error.financialYearEndDates.incorrect = Select if these financial year end dates are correct
+
+# FINANCIAL YEARS CYA
+financialYears.heading = Check your answers - occupation and accounting information
+financialYears.p1 = You must check these dates before you complete the rest of this section.
+financialYears.warning = If you change your occupation date or your financial year end at any point after this page, you will have to enter all your trading history information again.
+financialYears.isFinancialYearsCorrect = The occupation and accounting information is correct
+error.financialYears.incorrect = Select if the occupation and accounting information is correct
 
 # CURRENT RENT FIRST PAID
 #########################
