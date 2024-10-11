@@ -1,0 +1,11 @@
+# PDF download
+GET         /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.show()
+POST        /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.submit()
+
+GET         /download-pdf/:forType                                  controllers.downloadFORTypeForm.DownloadPDFController.show(forType: String)
+
+
+
+GET         /test-endpoint-one                                      controllers.downloadFORTypeForm.TestOneController.testEndpoint
+GET         /test-endpoint-two                                      controllers.downloadFORTypeForm.TestTwoController.testEndpoint
+GET         /test-endpoint-three                                      controllers.downloadFORTypeForm.TestThreeController.testEndpoint

@@ -1,0 +1,111 @@
+# About the francise or letting
+GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
+POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
+
+# concession/franchise/letting new loop beginning
+
+GET         /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.show(idx: Option[Int] ?= None)
+POST        /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.submit(idx: Option[Int])
+
+GET         /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.show(idx: Int)
+POST        /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.submit(idx: Int)
+
+GET         /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.show(idx: Int)
+POST        /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.submit(idx: Int)
+
+GET         /letting-type-details                                   controllers.aboutfranchisesorlettings.LettingTypeDetailsController.show(idx: Int)
+POST        /letting-type-details                                   controllers.aboutfranchisesorlettings.LettingTypeDetailsController.submit(idx: Int)
+
+ GET         /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.show(idx: Int)
+ POST        /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.submit(idx: Int)
+
+# concession/franchise/letting new loop end !!!
+GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
+POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
+
+GET         /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.show()
+POST        /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.submit()
+
+GET         /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.show(idx: Option[Int] ?= None)
+POST        /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.submit(idx: Option[Int])
+
+GET         /catering-operation-business-details                    controllers.aboutfranchisesorlettings.CateringOperationBusinessDetailsController.show(idx: Option[Int] ?= None)
+POST        /catering-operation-business-details                    controllers.aboutfranchisesorlettings.CateringOperationBusinessDetailsController.submit(idx: Option[Int])
+
+
+GET         /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.show(idx: Int)
+POST        /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.submit(idx: Int)
+
+GET         /rent-received-from                                     controllers.aboutfranchisesorlettings.RentReceivedFromController.show(idx: Int)
+POST        /rent-received-from                                     controllers.aboutfranchisesorlettings.RentReceivedFromController.submit(idx: Int)
+
+GET         /calculating-the-rent-for                               controllers.aboutfranchisesorlettings.CalculatingTheRentForController.show(idx: Int)
+POST        /calculating-the-rent-for                               controllers.aboutfranchisesorlettings.CalculatingTheRentForController.submit(idx: Int)
+
+GET         /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.show(idx: Int)
+POST        /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.submit(idx: Int)
+
+GET         /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.show(idx: Int)
+POST        /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.submit(idx: Int)
+GET         /remove-catering-operation                              controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.remove(idx: Int)
+POST        /remove-catering-operation                              controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.performRemove(idx: Int)
+
+GET         /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
+POST        /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.submit(idx: Option[Int])
+
+GET         /letting-other-part-of-property-rent                    controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.show(idx: Int)
+POST        /letting-other-part-of-property-rent                    controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.submit(idx: Int)
+
+GET         /letting-other-part-of-property-checkbox                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesController.show(idx: Int)
+POST        /letting-other-part-of-property-checkbox                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesController.submit(idx: Int)
+
+GET         /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.show(idx: Int)
+POST        /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.submit(idx: Int)
+GET         /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.remove(idx: Int)
+POST        /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx: Int)
+
+#6020 Lettings
+GET         /type-of-letting                                        controllers.aboutfranchisesorlettings.TypeOfLettingController.show(idx: Option[Int] ?= None)
+POST        /type-of-letting                                        controllers.aboutfranchisesorlettings.TypeOfLettingController.submit(idx: Option[Int])
+
+GET         /atm-letting                                            controllers.aboutfranchisesorlettings.AtmLettingController.show(idx: Option[Int] ?= None)
+POST        /atm-letting                                            controllers.aboutfranchisesorlettings.AtmLettingController.submit(idx: Option[Int])
+
+GET         /telecom-mast-letting                                   controllers.aboutfranchisesorlettings.TelecomMastLettingController.show(idx: Option[Int] ?= None)
+POST        /telecom-mast-letting                                   controllers.aboutfranchisesorlettings.TelecomMastLettingController.submit(idx: Option[Int])
+
+GET         /advertising-right-letting                              controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.show(idx: Option[Int] ?= None)
+POST        /advertising-right-letting                              controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.submit(idx: Option[Int])
+
+GET         /other-letting                                          controllers.aboutfranchisesorlettings.OtherLettingController.show(idx: Option[Int] ?= None)
+POST        /other-letting                                          controllers.aboutfranchisesorlettings.OtherLettingController.submit(idx: Option[Int])
+
+GET         /rent-details                                           controllers.aboutfranchisesorlettings.RentDetailsController.show(idx: Int)
+POST        /rent-details                                           controllers.aboutfranchisesorlettings.RentDetailsController.submit(idx: Int)
+
+GET         /add-another-letting                                    controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.show(idx: Int)
+POST        /add-another-letting                                    controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.submitLetting(idx: Int)
+GET         /remove-letting                                         controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.remove(idx: Int)
+POST        /remove-letting                                         controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.performRemove(idx: Int)
+# Form 6015 routing
+GET         /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.show()
+POST        /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
+
+GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
+POST        /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.submit()
+
+GET         /fee-received                                           controllers.aboutfranchisesorlettings.FeeReceivedController.show(idx: Int)
+POST        /fee-received                                           controllers.aboutfranchisesorlettings.FeeReceivedController.submit(idx: Int)
+
+GET         /check-your-answers-about-franchise-or-lettings         controllers.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+POST        /check-your-answers-about-franchise-or-lettings         controllers.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsController.submit()
+
+
+
+GET         /test-endpoint-let                                      controllers.aboutfranchisesorlettings.TestLetController.testEndpoint
+GET         /test-endpoint-let-one                                      controllers.aboutfranchisesorlettings.TestLetOneController.testEndpoint
+GET         /test-endpoint-let-two                                      controllers.aboutfranchisesorlettings.TestLetTwoController.testEndpoint
+GET         /test-endpoint-let-three                                      controllers.aboutfranchisesorlettings.TestLetThreeController.testEndpoint
+GET         /test-endpoint-let-four                                      controllers.aboutfranchisesorlettings.TestLetFourController.testEndpoint
+GET         /test-endpoint-let-five                                      controllers.aboutfranchisesorlettings.TestLetFiveController.testEndpoint
+
