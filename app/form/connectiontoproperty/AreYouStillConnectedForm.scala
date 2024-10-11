@@ -17,13 +17,10 @@
 package form.connectiontoproperty
 
 import form.MappingSupport.addressConnectionType
-import models.submissions.connectiontoproperty.AddressConnectionType
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object AreYouStillConnectedForm {
-
-  lazy val baseAreYouStillConnectedForm: Form[AddressConnectionType] = Form(baseAreYouStillConnectedMapping)
 
   val baseAreYouStillConnectedMapping = mapping(
     "isRelated" -> addressConnectionType
