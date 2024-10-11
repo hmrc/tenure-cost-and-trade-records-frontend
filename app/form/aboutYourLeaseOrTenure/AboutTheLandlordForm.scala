@@ -17,12 +17,13 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.landlordAddressMapping
-import models.submissions.aboutYourLeaseOrTenure.{AboutTheLandlord, LandlordAddress}
+import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AboutTheLandlordForm {
+
   val aboutTheLandlordForm: Form[AboutTheLandlord] = Form(
     mapping(
       "landlordFullName" -> default(text, "").verifying(
@@ -33,6 +34,4 @@ object AboutTheLandlordForm {
     )(AboutTheLandlord.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 
-  def isValidLandlordAddress(landlordAddress: LandlordAddress): Boolean =
-    landlordAddress.buildingNameNumber.nonEmpty && landlordAddress.town.nonEmpty && landlordAddress.postcode.nonEmpty
 }

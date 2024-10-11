@@ -17,13 +17,10 @@
 package form.connectiontoproperty
 
 import form.MappingSupport.connectionToThePropertyType
-import models.submissions.connectiontoproperty.ConnectionToProperty
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object ConnectionToThePropertyForm {
-
-  lazy val baseConnectionToThePropertyForm: Form[ConnectionToProperty] = Form(baseConnectionToThePropertyMapping)
 
   val baseConnectionToThePropertyMapping = mapping(
     "connectionToTheProperty" -> connectionToThePropertyType
