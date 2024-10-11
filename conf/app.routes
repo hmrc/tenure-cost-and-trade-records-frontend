@@ -190,6 +190,9 @@ POST        /financial-year-end-dates                               controllers.
 GET         /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.show()
 POST        /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.submit()
 
+GET         /financial-years                                        controllers.aboutthetradinghistory.FinancialYearsController.show
+POST        /financial-years                                        controllers.aboutthetradinghistory.FinancialYearsController.submit
+
 GET         /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.show(index: Int)
 POST        /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.submit(index: Int)
 
@@ -788,8 +791,11 @@ GET         /confirmation-not-connected                             controllers.
 POST        /declaration                                            controllers.FormSubmissionController.submit()
 GET         /confirmation                                           controllers.FormSubmissionController.confirmation()
 
-POST        /declaration-request-reference-number                   controllers.RequestReferenceNumberFormSubmissionController.submit()
-GET         /confirmation-request-reference-number                  controllers.RequestReferenceNumberFormSubmissionController.confirmation()
+# Unused endpoint
+# POST        /declaration-request-reference-number                   controllers.RequestReferenceNumberFormSubmissionController.submit()
+
+# Endpoint /confirmation-request-reference-number is already defined above
+# GET         /confirmation-request-reference-number                  controllers.RequestReferenceNumberFormSubmissionController.confirmation()
 
 GET        /feedback                                                controllers.FeedbackController.feedback
 GET        /thankyou-for-your-feedback                              controllers.FeedbackController.feedbackThx

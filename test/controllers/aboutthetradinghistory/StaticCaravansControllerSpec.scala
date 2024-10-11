@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 
 class StaticCaravansControllerSpec extends TestBaseSpec {
 
-  private val previousPage = "/financial-year-end"
+  private val previousPage = aboutthetradinghistory.routes.FinancialYearsController.show.url
 
   private val nextPageOnYes = aboutthetradinghistory.routes.CaravansOpenAllYearController.show().url
 
