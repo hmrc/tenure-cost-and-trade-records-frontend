@@ -1,0 +1,84 @@
+# About you
+GET         /about-you                                    controllers.aboutyouandtheproperty.AboutYouController.show()
+POST        /about-you                                    controllers.aboutyouandtheproperty.AboutYouController.submit()
+# About the property
+GET         /about-the-property                           controllers.aboutyouandtheproperty.AboutThePropertyController.show()
+POST        /about-the-property                           controllers.aboutyouandtheproperty.AboutThePropertyController.submit()
+# About the property 6045/46 property currently used
+
+GET         /property-currently-used                      controllers.aboutyouandtheproperty.PropertyCurrentlyUsedController.show()
+POST        /property-currently-used                      controllers.aboutyouandtheproperty.PropertyCurrentlyUsedController.submit()
+# About the property 6030
+GET         /about-the-property-description               controllers.aboutyouandtheproperty.AboutThePropertyStringController.show()
+POST        /about-the-property-description               controllers.aboutyouandtheproperty.AboutThePropertyStringController.submit()
+
+GET         /charity-question                             controllers.aboutyouandtheproperty.CharityQuestionController.show()
+POST        /charity-question                             controllers.aboutyouandtheproperty.CharityQuestionController.submit()
+
+GET         /trading-activity                             controllers.aboutyouandtheproperty.TradingActivityController.show()
+POST        /trading-activity                             controllers.aboutyouandtheproperty.TradingActivityController.submit()
+
+GET         /website-for-property                         controllers.aboutyouandtheproperty.WebsiteForPropertyController.show()
+POST        /website-for-property                         controllers.aboutyouandtheproperty.WebsiteForPropertyController.submit()
+
+GET         /licensable-activities                        controllers.aboutyouandtheproperty.LicensableActivitiesController.show()
+POST        /licensable-activities                        controllers.aboutyouandtheproperty.LicensableActivitiesController.submit()
+
+GET         /licensable-activities-details                controllers.aboutyouandtheproperty.LicensableActivitiesDetailsController.show()
+POST        /licensable-activities-details                controllers.aboutyouandtheproperty.LicensableActivitiesDetailsController.submit()
+
+GET         /premises-license-conditions                  controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.show()
+POST        /premises-license-conditions                  controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.submit()
+
+GET         /premises-license-conditions-details          controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.show()
+POST        /premises-license-conditions-details          controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.submit()
+
+GET         /enforcement-action-been-taken                controllers.aboutyouandtheproperty.EnforcementActionBeenTakenController.show()
+POST        /enforcement-action-been-taken                controllers.aboutyouandtheproperty.EnforcementActionBeenTakenController.submit()
+
+GET         /enforcement-action-been-taken-details        controllers.aboutyouandtheproperty.EnforcementActionBeenTakenDetailsController.show()
+POST        /enforcement-action-been-taken-details        controllers.aboutyouandtheproperty.EnforcementActionBeenTakenDetailsController.submit()
+
+GET         /tied-for-goods                               controllers.aboutyouandtheproperty.TiedForGoodsController.show()
+POST        /tied-for-goods                               controllers.aboutyouandtheproperty.TiedForGoodsController.submit()
+
+GET         /tied-for-goods-details                       controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.show()
+POST        /tied-for-goods-details                       controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.submit()
+
+# About you and the property 6076
+
+GET         /renewables-plants                            controllers.aboutyouandtheproperty.RenewablesPlantController.show()
+POST        /renewables-plants                            controllers.aboutyouandtheproperty.RenewablesPlantController.submit()
+
+GET         /three-years-constructed                      controllers.aboutyouandtheproperty.ThreeYearsConstructedController.show()
+POST        /three-years-constructed                      controllers.aboutyouandtheproperty.ThreeYearsConstructedController.submit()
+
+GET         /plant-and-technology                         controllers.aboutyouandtheproperty.PlantAndTechnologyController.show()
+POST        /plant-and-technology                         controllers.aboutyouandtheproperty.PlantAndTechnologyController.submit()
+
+GET         /generator-capacity                           controllers.aboutyouandtheproperty.GeneratorCapacityController.show()
+POST        /generator-capacity                           controllers.aboutyouandtheproperty.GeneratorCapacityController.submit()
+
+GET         /batteries-capacity                           controllers.aboutyouandtheproperty.BatteriesCapacityController.show()
+POST        /batteries-capacity                           controllers.aboutyouandtheproperty.BatteriesCapacityController.submit()
+
+GET         /costs-breakdown                              controllers.aboutyouandtheproperty.CostsBreakdownController.show()
+POST        /costs-breakdown                              controllers.aboutyouandtheproperty.CostsBreakdownController.submit()
+
+
+# Form 6015 routing
+GET         /premises-license-granted                     controllers.aboutyouandtheproperty.PremisesLicenseGrantedController.show()
+POST        /premises-license-granted                     controllers.aboutyouandtheproperty.PremisesLicenseGrantedController.submit()
+
+# Form 6015 routing
+GET         /premises-license-granted-details             controllers.aboutyouandtheproperty.PremisesLicenseGrantedDetailsController.show()
+POST        /premises-license-granted-details             controllers.aboutyouandtheproperty.PremisesLicenseGrantedDetailsController.submit()
+
+GET         /contact-details-question                     controllers.aboutyouandtheproperty.ContactDetailsQuestionController.show()
+POST        /contact-details-question                     controllers.aboutyouandtheproperty.ContactDetailsQuestionController.submit()
+
+GET         /alternate-contact-details                    controllers.aboutyouandtheproperty.AlternativeContactDetailsController.show()
+POST        /alternate-contact-details                    controllers.aboutyouandtheproperty.AlternativeContactDetailsController.submit()
+
+GET         /check-your-answers-about-the-property        controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.show()
+POST        /check-your-answers-about-the-property        controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.submit()

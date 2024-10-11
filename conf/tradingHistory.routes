@@ -1,0 +1,238 @@
+# About the trading history
+GET         /about-your-trading-history                            controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
+POST        /about-your-trading-history                            controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
+
+GET         /what-you-will-need                                    controllers.aboutthetradinghistory.WhatYouWillNeedController.show()
+POST        /what-you-will-need                                    controllers.aboutthetradinghistory.WhatYouWillNeedController.submit()
+
+GET         /financial-year-end                                    controllers.aboutthetradinghistory.FinancialYearEndController.show()
+POST        /financial-year-end                                    controllers.aboutthetradinghistory.FinancialYearEndController.submit()
+
+GET         /financial-year-end-dates                              controllers.aboutthetradinghistory.FinancialYearEndDatesController.show()
+POST        /financial-year-end-dates                              controllers.aboutthetradinghistory.FinancialYearEndDatesController.submit()
+# About the trading history part one
+GET         /financial-year-end-dates-summary                      controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.show()
+POST        /financial-year-end-dates-summary                      controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.submit()
+
+GET         /financial-years                                       controllers.aboutthetradinghistory.FinancialYearsController.show
+POST        /financial-years                                       controllers.aboutthetradinghistory.FinancialYearsController.submit
+
+GET         /financial-year-end-date                               controllers.aboutthetradinghistory.EditFinancialYearEndDateController.show(index: Int)
+POST        /financial-year-end-date                               controllers.aboutthetradinghistory.EditFinancialYearEndDateController.submit(index: Int)
+
+GET         /turnover                                              controllers.aboutthetradinghistory.TurnoverController.show()
+POST        /turnover                                              controllers.aboutthetradinghistory.TurnoverController.submit()
+
+GET         /non-fuel-turnover                                     controllers.aboutthetradinghistory.NonFuelTurnoverController.show()
+POST        /non-fuel-turnover                                     controllers.aboutthetradinghistory.NonFuelTurnoverController.submit()
+
+GET         /turnover-6030                                         controllers.aboutthetradinghistory.Turnover6030Controller.show()
+POST        /turnover-6030                                         controllers.aboutthetradinghistory.Turnover6030Controller.submit()
+
+GET         /electricity-generated                                 controllers.aboutthetradinghistory.ElectricityGeneratedController.show()
+POST        /electricity-generated                                 controllers.aboutthetradinghistory.ElectricityGeneratedController.submit()
+
+GET         /other-income                                          controllers.aboutthetradinghistory.OtherIncomeController.show()
+POST        /other-income                                          controllers.aboutthetradinghistory.OtherIncomeController.submit()
+
+GET         /operational-expenses                                  controllers.aboutthetradinghistory.OperationalExpensesController.show()
+POST        /operational-expenses                                  controllers.aboutthetradinghistory.OperationalExpensesController.submit()
+
+GET         /head-office-expenses                                  controllers.aboutthetradinghistory.HeadOfficeExpensesController.show()
+POST        /head-office-expenses                                  controllers.aboutthetradinghistory.HeadOfficeExpensesController.submit()
+
+GET         /electric-vehicle-charging-points                      controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.show()
+POST        /electric-vehicle-charging-points                      controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.submit()
+
+# FORM 6045/46 routing start
+GET         /static-caravans                                       controllers.aboutthetradinghistory.StaticCaravansController.show()
+POST        /static-caravans                                       controllers.aboutthetradinghistory.StaticCaravansController.submit()
+
+GET         /are-caravans-open-all-year                            controllers.aboutthetradinghistory.CaravansOpenAllYearController.show()
+POST        /are-caravans-open-all-year                            controllers.aboutthetradinghistory.CaravansOpenAllYearController.submit()
+
+GET         /gross-receipts-fleet-caravans                         controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.show()
+POST        /gross-receipts-fleet-caravans                         controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.submit()
+
+GET         /single-caravans-owned-by-operator                     controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.show()
+POST        /single-caravans-owned-by-operator                     controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.submit()
+
+GET         /single-caravans-sublet                                controllers.aboutthetradinghistory.SingleCaravansSubletController.show()
+POST        /single-caravans-sublet                                controllers.aboutthetradinghistory.SingleCaravansSubletController.submit()
+
+GET         /single-caravans-age-categories                        controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.show()
+POST        /single-caravans-age-categories                        controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.submit()
+
+GET         /twin-unit-caravans-owned-by-operator                  controllers.aboutthetradinghistory.TwinUnitCaravansOwnedByOperatorController.show()
+POST        /twin-unit-caravans-owned-by-operator                  controllers.aboutthetradinghistory.TwinUnitCaravansOwnedByOperatorController.submit()
+
+GET         /twin-unit-caravans-sublet                             controllers.aboutthetradinghistory.TwinUnitCaravansSubletController.show()
+POST        /twin-unit-caravans-sublet                             controllers.aboutthetradinghistory.TwinUnitCaravansSubletController.submit()
+
+GET         /twin-unit-caravans-age-categories                     controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.show()
+POST        /twin-unit-caravans-age-categories                     controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.submit()
+
+GET         /caravans-site-capacity                                controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.show()
+POST        /caravans-site-capacity                                controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.submit()
+
+GET         /caravans-per-service                                  controllers.aboutthetradinghistory.CaravansPerServiceController.show()
+POST        /caravans-per-service                                  controllers.aboutthetradinghistory.CaravansPerServiceController.submit()
+
+GET         /caravans-annual-pitch-fee                             controllers.aboutthetradinghistory.CaravansAnnualPitchFeeController.show()
+POST        /caravans-annual-pitch-fee                             controllers.aboutthetradinghistory.CaravansAnnualPitchFeeController.submit()
+
+GET         /other-holiday-accommodation                           controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
+POST        /other-holiday-accommodation                           controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
+
+GET         /tenting-pitches-on-site                               controllers.aboutthetradinghistory.TentingPitchesOnSiteController.show()
+POST        /tenting-pitches-on-site                               controllers.aboutthetradinghistory.TentingPitchesOnSiteController.submit()
+
+GET         /tenting-pitches-all-year                              controllers.aboutthetradinghistory.TentingPitchesAllYearController.show()
+POST        /tenting-pitches-all-year                              controllers.aboutthetradinghistory.TentingPitchesAllYearController.submit()
+
+GET         /pitches-for-caravans                                  controllers.aboutthetradinghistory.PitchesForCaravansController.show()
+POST        /pitches-for-caravans                                  controllers.aboutthetradinghistory.PitchesForCaravansController.submit()
+
+GET         /pitches-for-glamping                                  controllers.aboutthetradinghistory.PitchesForGlampingController.show()
+POST        /pitches-for-glamping                                  controllers.aboutthetradinghistory.PitchesForGlampingController.submit()
+
+GET         /rally-areas                                           controllers.aboutthetradinghistory.RallyAreasController.show()
+POST        /rally-areas                                           controllers.aboutthetradinghistory.RallyAreasController.submit()
+
+GET         /tenting-pitches-total                                 controllers.aboutthetradinghistory.TentingPitchesTotalController.show()
+POST        /tenting-pitches-total                                 controllers.aboutthetradinghistory.TentingPitchesTotalController.submit()
+
+GET         /tenting-pitches-certificated                          controllers.aboutthetradinghistory.TentingPitchesCertificatedController.show()
+POST        /tenting-pitches-certificated                          controllers.aboutthetradinghistory.TentingPitchesCertificatedController.submit()
+
+GET         /other-holiday-accommodation-open-all-year             controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.show()
+POST        /other-holiday-accommodation-open-all-year             controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.submit()
+
+GET         /gross-receipts-letting-units                          controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.show()
+POST        /gross-receipts-letting-units                          controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.submit()
+
+GET         /gross-receipts-sub-let-units                          controllers.aboutthetradinghistory.GrossReceiptsSubLetUnitsController.show()
+POST        /gross-receipts-sub-let-units                          controllers.aboutthetradinghistory.GrossReceiptsSubLetUnitsController.submit()
+
+GET         /total-site-capacity                                   controllers.aboutthetradinghistory.TotalSiteCapacity6045Controller.show()
+POST        /total-site-capacity                                   controllers.aboutthetradinghistory.TotalSiteCapacity6045Controller.submit()
+
+GET         /additional-activities-on-site                         controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.show()
+POST        /additional-activities-on-site                         controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.submit()
+
+GET         /additional-activities-all-year                        controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.show()
+POST        /additional-activities-all-year                        controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.submit()
+
+GET         /additional-shops                                      controllers.aboutthetradinghistory.AdditionalShopsController.show()
+POST        /additional-shops                                      controllers.aboutthetradinghistory.AdditionalShopsController.submit()
+
+GET         /additional-catering                                   controllers.aboutthetradinghistory.AdditionalCateringController.show()
+POST        /additional-catering                                   controllers.aboutthetradinghistory.AdditionalCateringController.submit()
+
+GET         /additional-bars-clubs                                 controllers.aboutthetradinghistory.AdditionalBarsClubsController.show()
+POST        /additional-bars-clubs                                 controllers.aboutthetradinghistory.AdditionalBarsClubsController.submit()
+
+GET         /additional-amusements                                 controllers.aboutthetradinghistory.AdditionalAmusementsController.show()
+POST        /additional-amusements                                 controllers.aboutthetradinghistory.AdditionalAmusementsController.submit()
+
+GET         /additional-misc                                       controllers.aboutthetradinghistory.AdditionalMiscController.show()
+POST        /additional-misc                                       controllers.aboutthetradinghistory.AdditionalMiscController.submit()
+
+GET         /check-your-answers-other-holiday-accommodation        controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
+POST        /check-your-answers-other-holiday-accommodation        controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
+
+GET         /check-your-answers-tenting-pitches                    controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.show()
+POST        /check-your-answers-tenting-pitches                    controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.submit()
+
+GET         /check-your-answers-additional-activities              controllers.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesController.show()
+POST        /check-your-answers-additional-activities              controllers.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesController.submit()
+# FORM 6045/46 routing end
+
+# Form 6015 routing start
+GET         /cost-of-sales                                         controllers.aboutthetradinghistory.CostOfSalesController.show()
+POST        /cost-of-sales                                         controllers.aboutthetradinghistory.CostOfSalesController.submit()
+
+GET         /total-payroll-costs                                   controllers.aboutthetradinghistory.TotalPayrollCostsController.show()
+POST        /total-payroll-costs                                   controllers.aboutthetradinghistory.TotalPayrollCostsController.submit()
+
+GET         /variable-operating-expenses                           controllers.aboutthetradinghistory.VariableOperatingExpensesController.show()
+POST        /variable-operating-expenses                           controllers.aboutthetradinghistory.VariableOperatingExpensesController.submit()
+
+GET         /fixed-operating-expenses                              controllers.aboutthetradinghistory.FixedOperatingExpensesController.show()
+POST        /fixed-operating-expenses                              controllers.aboutthetradinghistory.FixedOperatingExpensesController.submit()
+
+GET         /other-costs                                           controllers.aboutthetradinghistory.OtherCostsController.show()
+POST        /other-costs                                           controllers.aboutthetradinghistory.OtherCostsController.submit()
+
+GET         /income-expenditure-summary                            controllers.aboutthetradinghistory.IncomeExpenditureSummaryController.show()
+POST        /income-expenditure-summary                            controllers.aboutthetradinghistory.IncomeExpenditureSummaryController.submit()
+
+GET         /unusual-circumstances                                 controllers.aboutthetradinghistory.UnusualCircumstancesController.show()
+POST        /unusual-circumstances                                 controllers.aboutthetradinghistory.UnusualCircumstancesController.submit()
+
+# Form 6015 routing end
+
+# 6076 trading history
+
+GET         /cost-of-sales-6076                                    controllers.aboutthetradinghistory.CostOfSales6076Controller.show()
+POST        /cost-of-sales-6076                                    controllers.aboutthetradinghistory.CostOfSales6076Controller.submit()
+
+GET         /cost-of-sales-intermittent-6076                       controllers.aboutthetradinghistory.CostOfSales6076IntermittentController.show()
+POST        /cost-of-sales-intermittent-6076                       controllers.aboutthetradinghistory.CostOfSales6076IntermittentController.submit()
+
+
+GET         /staff-costs                                           controllers.aboutthetradinghistory.StaffCostsController.show()
+POST        /staff-costs                                           controllers.aboutthetradinghistory.StaffCostsController.submit()
+
+GET         /gross-receipts-excluding-vat                          controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.show()
+POST        /gross-receipts-excluding-vat                          controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.submit()
+
+GET         /gross-receipts-for-base-load                          controllers.aboutthetradinghistory.GrossReceiptsForBaseLoadController.show()
+POST        /gross-receipts-for-base-load                          controllers.aboutthetradinghistory.GrossReceiptsForBaseLoadController.submit()
+
+GET         /premises-costs                                        controllers.aboutthetradinghistory.PremisesCostsController.show()
+POST        /premises-costs                                        controllers.aboutthetradinghistory.PremisesCostsController.submit()
+
+GET         /income-expenditure-summary-6076                       controllers.aboutthetradinghistory.IncomeExpenditureSummary6076Controller.show()
+POST        /income-expenditure-summary-6076                       controllers.aboutthetradinghistory.IncomeExpenditureSummary6076Controller.submit()
+
+# Form 6076 routing end
+
+#Form 6020 routing
+
+GET         /total-fuel-sold                                       controllers.aboutthetradinghistory.TotalFuelSoldController.show()
+POST        /total-fuel-sold                                       controllers.aboutthetradinghistory.TotalFuelSoldController.submit()
+
+GET         /bunkered-fuel-question                                controllers.aboutthetradinghistory.BunkeredFuelQuestionController.show()
+POST        /bunkered-fuel-question                                controllers.aboutthetradinghistory.BunkeredFuelQuestionController.submit()
+
+GET         /bunkered-fuel-sold                                    controllers.aboutthetradinghistory.BunkeredFuelSoldController.show()
+POST        /bunkered-fuel-sold                                    controllers.aboutthetradinghistory.BunkeredFuelSoldController.submit()
+
+GET         /bunker-fuel-cards-details                             controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /bunker-fuel-cards-details                             controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-bunker-fuel-cards-details                 controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-bunker-fuel-cards-details                 controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-bunker-fuel-cards-details                      controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-bunker-fuel-cards-details                      controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx: Int)
+
+GET         /customer-credit-accounts                              controllers.aboutthetradinghistory.CustomerCreditAccountsController.show()
+POST        /customer-credit-accounts                              controllers.aboutthetradinghistory.CustomerCreditAccountsController.submit()
+
+GET         /accept-low-margin-fuel-card                           controllers.aboutthetradinghistory.AcceptLowMarginFuelCardController.show()
+POST        /accept-low-margin-fuel-card                           controllers.aboutthetradinghistory.AcceptLowMarginFuelCardController.submit()
+
+GET         /percentage-from-fuel-cards                            controllers.aboutthetradinghistory.PercentageFromFuelCardsController.show()
+POST        /percentage-from-fuel-cards                            controllers.aboutthetradinghistory.PercentageFromFuelCardsController.submit()
+
+GET         /low-margin-fuel-cards-details                         controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.show(idx: Option[Int] ?= None)
+POST        /low-margin-fuel-cards-details                         controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.submit(idx: Option[Int])
+
+GET         /add-another-low-margin-fuel-cards-details             controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.show(idx: Int)
+POST        /add-another-low-margin-fuel-cards-details             controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.submit(idx: Int)
+GET         /remove-low-margin-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.remove(idx: Int)
+POST        /remove-low-margin-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.performRemove(idx: Int)
+
+GET         /check-your-answers-about-the-trading-history          controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.show()
+POST        /check-your-answers-about-the-trading-history          controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.submit()

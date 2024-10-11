@@ -1,0 +1,234 @@
+# About your lease or tenure
+GET         /about-your-landlord                                        controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
+POST        /about-your-landlord                                        controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
+GET         /landlord-address-callback                                  controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.addressLookupCallback(id: String ?= "")
+
+# Form 6076 only
+GET         /provide-details-of-your-lease                              controllers.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseController.show()
+POST        /provide-details-of-your-lease                              controllers.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseController.submit()
+
+GET         /lease-or-agreement-details                                 controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.show()
+POST        /lease-or-agreement-details                                 controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.submit()
+
+GET         /current-annual-rent                                        controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.show()
+POST        /current-annual-rent                                        controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.submit()
+
+GET         /current-rent-first-paid                                    controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.show()
+POST        /current-rent-first-paid                                    controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.submit()
+
+GET         /rent-open-market-value                                     controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.show()
+POST        /rent-open-market-value                                     controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.submit()
+
+# Form 6045/46 only
+
+GET         /rent-developed-land                                        controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.show()
+POST        /rent-developed-land                                        controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.submit()
+
+GET         /rent-developed-land-details                                controllers.aboutYourLeaseOrTenure.RentDevelopedLandDetailsController.show()
+POST        /rent-developed-land-details                                controllers.aboutYourLeaseOrTenure.RentDevelopedLandDetailsController.submit()
+
+GET         /rent-include-structures-buildings                          controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
+POST        /rent-include-structures-buildings                          controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
+
+GET         /rent-include-structures-buildings-details                  controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.show()
+POST        /rent-include-structures-buildings-details                  controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.submit()
+
+GET         /surrendered-lease-agreement-details                        controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.show()
+POST        /surrendered-lease-agreement-details                        controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.submit()
+
+# Form 6011 routing
+GET         /tenancy-lease-agreement-expire                             controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
+POST        /tenancy-lease-agreement-expire                             controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()
+
+GET         /current-lease-or-agreement-begin                           controllers.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginController.show()
+POST        /current-lease-or-agreement-begin                           controllers.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginController.submit()
+
+GET         /included-in-your-rent                                      controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.show()
+POST        /included-in-your-rent                                      controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.submit()
+
+GET         /rent-includes-vat                                          controllers.aboutYourLeaseOrTenure.RentIncludesVatController.show()
+POST        /rent-includes-vat                                          controllers.aboutYourLeaseOrTenure.RentIncludesVatController.submit()
+
+GET         /does-the-rent-payable                                      controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.show()
+POST        /does-the-rent-payable                                      controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.submit()
+
+GET         /rent-include-trade-services                                controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.show()
+POST        /rent-include-trade-services                                controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.submit()
+
+# Form 6030 :
+
+GET         /trade-services-description                                 controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.show(idx: Option[Int] ?= None)
+POST        /trade-services-description                                 controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.submit(idx: Option[Int])
+
+GET         /payment-for-trade-services                                 controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.show()
+POST        /payment-for-trade-services                                 controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.submit()
+
+
+GET         /trade-services-list                                        controllers.aboutYourLeaseOrTenure.TradeServicesListController.show(idx: Int)
+POST        /trade-services-list                                        controllers.aboutYourLeaseOrTenure.TradeServicesListController.submit(idx: Int)
+GET         /trade-services-remove                                      controllers.aboutYourLeaseOrTenure.TradeServicesListController.remove(idx: Int)
+POST        /trade-services-remove                                      controllers.aboutYourLeaseOrTenure.TradeServicesListController.performRemove(idx: Int)
+
+GET         /service-paid-separately                                    controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.show(idx: Option[Int] ?= None)
+POST        /service-paid-separately                                    controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.submit(idx: Option[Int])
+
+GET         /service-paid-separately-charge                             controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.show(idx: Int)
+POST        /service-paid-separately-charge                             controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.submit(idx: Int)
+
+GET         /service-paid-separately-list                               controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.show(idx: Int)
+POST        /service-paid-separately-list                               controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.submit(idx: Int)
+GET         /service-paid-separately-remove                             controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.remove(idx: Int)
+POST        /service-paid-separately-remove                             controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.performRemove(idx: Int)
+
+
+GET         /rent-include-trade-services-details                        controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.show()
+POST        /rent-include-trade-services-details                        controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.submit()
+
+GET         /type-of-tenure                                             controllers.aboutYourLeaseOrTenure.TypeOfTenureController.show()
+POST        /type-of-tenure                                             controllers.aboutYourLeaseOrTenure.TypeOfTenureController.submit()
+
+GET         /throughput-affects-rent                                    controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentController.show()
+POST        /throughput-affects-rent                                    controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentController.submit()
+
+GET         /throughput-affects-rent-details                            controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsController.show()
+POST        /throughput-affects-rent-details                            controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsController.submit()
+
+GET         /is-vat-payable-for-whole-property                          controllers.aboutYourLeaseOrTenure.IsVATPayableForWholePropertyController.show()
+POST        /is-vat-payable-for-whole-property                          controllers.aboutYourLeaseOrTenure.IsVATPayableForWholePropertyController.submit()
+
+GET         /does-rent-include-parking                                  controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.show()
+POST        /does-rent-include-parking                                  controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.submit()
+
+GET         /included-in-rent-parking-spaces                            controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.show()
+POST        /included-in-rent-parking-spaces                            controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.submit()
+
+GET         /is-parking-rent-paid-separately                            controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.show()
+POST        /is-parking-rent-paid-separately                            controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.submit()
+
+GET         /rented-separately-parking-spaces                           controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.show()
+POST        /rented-separately-parking-spaces                           controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.submit()
+
+GET         /car-parking-annual-rent                                    controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.show()
+POST        /car-parking-annual-rent                                    controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.submit()
+
+GET         /rented-equipment-details                                   controllers.aboutYourLeaseOrTenure.RentedEquipmentDetailsController.show()
+POST        /rented-equipment-details                                   controllers.aboutYourLeaseOrTenure.RentedEquipmentDetailsController.submit()
+
+GET         /included-in-rent                                           controllers.aboutYourLeaseOrTenure.IncludedInRent6020Controller.show()
+POST        /included-in-rent                                           controllers.aboutYourLeaseOrTenure.IncludedInRent6020Controller.submit()
+
+#Form 6030 routing
+GET         /rent-payable-vary-on-quantity-of-beers                     controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersController.show()
+POST        /rent-payable-vary-on-quantity-of-beers                     controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersController.submit()
+
+GET         /rent-payable-vary-on-quantity-of-beers-details             controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsController.show()
+POST        /rent-payable-vary-on-quantity-of-beers-details             controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsController.submit()
+
+GET         /rent-payable-vary-according-to-gross-or-net                controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetController.show()
+POST        /rent-payable-vary-according-to-gross-or-net                controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetController.submit()
+
+GET         /rent-payable-vary-according-to-gross-or-net-details        controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
+POST        /rent-payable-vary-according-to-gross-or-net-details        controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()
+
+GET         /rent-include-fixtures-and-fittings                         controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsController.show()
+POST        /rent-include-fixtures-and-fittings                         controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsController.submit()
+
+GET         /rent-include-fixtures-and-fittings-details                 controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.show()
+POST        /rent-include-fixtures-and-fittings-details                 controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.submit()
+
+GET         /former-lease-surrendered                                   controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.show()
+POST        /former-lease-surrendered                                   controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.submit()
+
+GET         /pay-a-capital-sum                                          controllers.aboutYourLeaseOrTenure.PayACapitalSumController.show()
+POST        /pay-a-capital-sum                                          controllers.aboutYourLeaseOrTenure.PayACapitalSumController.submit()
+
+GET         /pay-a-capital-sum-details                                  controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.show()
+POST        /pay-a-capital-sum-details                                  controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.submit()
+
+GET         /receive-payment-when-lease-granted                         controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.show()
+POST        /receive-payment-when-lease-granted                         controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.submit()
+
+GET         /can-rent-be-reduced-on-review                              controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.show()
+POST        /can-rent-be-reduced-on-review                              controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.submit()
+
+GET         /property-updates                                           controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.show()
+POST        /property-updates                                           controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.submit()
+
+GET         /work-carried-out-details                                   controllers.aboutYourLeaseOrTenure.WorkCarriedOutDetailsController.show()
+POST        /work-carried-out-details                                   controllers.aboutYourLeaseOrTenure.WorkCarriedOutDetailsController.submit()
+
+GET         /work-carried-out-condition                                 controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.show()
+POST        /work-carried-out-condition                                 controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.submit()
+
+GET         /rent-free-period                                           controllers.aboutYourLeaseOrTenure.IsGivenRentFreePeriodController.show()
+POST        /rent-free-period                                           controllers.aboutYourLeaseOrTenure.IsGivenRentFreePeriodController.submit()
+
+GET         /rent-free-period-details                                   controllers.aboutYourLeaseOrTenure.RentFreePeriodDetailsController.show()
+POST        /rent-free-period-details                                   controllers.aboutYourLeaseOrTenure.RentFreePeriodDetailsController.submit()
+
+GET         /rent-increase-annually-with-rpi                            controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.show()
+POST        /rent-increase-annually-with-rpi                            controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.submit()
+
+GET         /method-to-fix-current-rent                                 controllers.aboutYourLeaseOrTenure.MethodToFixCurrentRentController.show()
+POST        /method-to-fix-current-rent                                 controllers.aboutYourLeaseOrTenure.MethodToFixCurrentRentController.submit()
+
+GET         /how-is-current-rent-fixed                                  controllers.aboutYourLeaseOrTenure.HowIsCurrentRentFixedController.show()
+POST        /how-is-current-rent-fixed                                  controllers.aboutYourLeaseOrTenure.HowIsCurrentRentFixedController.submit()
+
+GET         /tenants-additions-disregarded                              controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedController.show()
+POST        /tenants-additions-disregarded                              controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedController.submit()
+
+GET         /tenants-additions-disregarded-details                      controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.show()
+POST        /tenants-additions-disregarded-details                      controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.submit()
+
+GET         /lease-surrendered-early                                    controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
+POST        /lease-surrendered-early                                    controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
+
+GET         /benefits-given                                             controllers.aboutYourLeaseOrTenure.BenefitsGivenController.show()
+POST        /benefits-given                                             controllers.aboutYourLeaseOrTenure.BenefitsGivenController.submit()
+
+GET         /benefits-given-details                                     controllers.aboutYourLeaseOrTenure.BenefitsGivenDetailsController.show()
+POST        /benefits-given-datails                                     controllers.aboutYourLeaseOrTenure.BenefitsGivenDetailsController.submit()
+
+GET         /capital-sum-description                                    controllers.aboutYourLeaseOrTenure.CapitalSumDescriptionController.show()
+POST        /capital-sum-description                                    controllers.aboutYourLeaseOrTenure.CapitalSumDescriptionController.submit()
+
+
+GET         /legal-or-planning-restrictions                             controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.show()
+POST        /legal-or-planning-restrictions                             controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.submit()
+
+GET         /legal-or-planning-restrictions-details                     controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.show()
+POST        /legal-or-planning-restrictions-details                     controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.submit()
+
+GET         /intervals-of-rent-review                                   controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.show()
+POST        /intervals-of-rent-review                                   controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.submit()
+
+GET         /is-rent-under-review                                       controllers.aboutYourLeaseOrTenure.IsRentUnderReviewController.show()
+POST        /is-rent-under-review                                       controllers.aboutYourLeaseOrTenure.IsRentUnderReviewController.submit()
+
+GET         /current-rent-payable-within-12-months                      controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.show()
+POST        /current-rent-payable-within-12-months                      controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.submit()
+
+GET         /property-use-leaseback-arrangement                         controllers.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementController.show()
+POST        /property-use-leaseback-arrangement                         controllers.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementController.submit()
+
+GET         /what-is-your-rent-based-on                                 controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.show()
+POST        /what-is-your-rent-based-on                                 controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.submit()
+
+GET         /ultimately-responsible-building-insurance                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.show()
+POST        /ultimately-responsible-building-insurance                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.submit()
+
+GET         /ultimately-responsible-inside-repairs                      controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.show()
+POST        /ultimately-responsible-inside-repairs                      controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.submit()
+
+GET         /ultimately-responsible-outside-repairs                     controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.show()
+POST        /ultimately-responsible-outside-repairs                     controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.submit()
+
+GET         /connected-to-landlord                                      controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.show()
+POST        /connected-to-landlord                                      controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.submit()
+
+GET         /connected-to-landlord-details                              controllers.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsController.show()
+POST        /connected-to-landlord-details                              controllers.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsController.submit()
+
+GET         /check-your-answers-lease-or-tenure                         controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+POST        /check-your-answers-lease-or-tenure                         controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.submit()
