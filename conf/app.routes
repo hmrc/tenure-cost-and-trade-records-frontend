@@ -1,745 +1,90 @@
 # microservice specific routes
 
-->         /hmrc-frontend                                           hmrcfrontend.Routes
-->         /                                                        connectiontoproperty.Routes
+->          /hmrc-frontend                                      hmrcfrontend.Routes
+->          /                                                   connectionToProperty.Routes
+->          /                                                   franchisesOrLettings.Routes
+->          /                                                   leaseOrTenure.Routes
+->          /                                                   tradingHistory.Routes
+->          /                                                   youAndProperty.Routes
 
-GET         /assets/*file                                           controllers.Assets.versioned(path = "/public", file: Asset)
+GET         /assets/*file                                       controllers.Assets.versioned(path = "/public", file: Asset)
 # Dummy start page
-GET         /                                                       controllers.Application.index
+GET         /                                                   controllers.Application.index
 # Sign in page
-GET         /login                                                  controllers.LoginController.show
-POST        /login                                                  controllers.LoginController.submit
-GET         /$count<\d>-sign-in-attempts-remaining                  controllers.LoginController.loginFailed(count: Int)
-GET         /lockedout                                              controllers.LoginController.lockedOut
-GET         /logout                                                 controllers.LoginController.logout
-GET         /loggedout                                              controllers.LoginController.loggedOut
+GET         /login                                              controllers.LoginController.show
+POST        /login                                              controllers.LoginController.submit
+GET         /$count<\d>-sign-in-attempts-remaining              controllers.LoginController.loginFailed(count: Int)
+GET         /lockedout                                          controllers.LoginController.lockedOut
+GET         /logout                                             controllers.LoginController.logout
+GET         /loggedout                                          controllers.LoginController.loggedOut
 
-GET         /invalid-form-type                                      controllers.LoginController.notValidFORType()
+GET         /invalid-form-type                                  controllers.LoginController.notValidFORType()
 
-GET         /timeout                                                controllers.SaveAsDraftController.timeout(path)
-GET         /sessiontimeout                                         controllers.SaveAsDraftController.sessionTimeout
+GET         /timeout                                            controllers.SaveAsDraftController.timeout(path)
+GET         /sessiontimeout                                     controllers.SaveAsDraftController.sessionTimeout
 
+GET         /task-list                                          controllers.TaskListController.show()
 
 # SAVE AS DRAFT
-GET         /saved                                                  controllers.SaveAsDraftController.customPassword(path)
-POST        /saved                                                  controllers.SaveAsDraftController.saveAsDraft(path)
-GET         /saved/resume                                           controllers.SaveAsDraftController.loginToResume
-POST        /saved/resume                                           controllers.SaveAsDraftController.resume
-GET         /saved/startagain                                       controllers.SaveAsDraftController.startAgain
+GET         /saved                                              controllers.SaveAsDraftController.customPassword(path)
+POST        /saved                                              controllers.SaveAsDraftController.saveAsDraft(path)
+GET         /saved/resume                                       controllers.SaveAsDraftController.loginToResume
+POST        /saved/resume                                       controllers.SaveAsDraftController.resume
+GET         /saved/startagain                                   controllers.SaveAsDraftController.startAgain
 
 # JSON Model ERROR
 
-GET         /error/resume                                           controllers.error.ErrorHandlerController.showJsonError
+GET         /error/resume                                       controllers.error.ErrorHandlerController.showJsonError
 
 # MAXIMUM OF LETTINGS REACHED
 
-GET         /max-lettings                                           controllers.MaxOfLettingsReachedController.show(src: Option[String] ?= None)
-POST        /max-lettings                                           controllers.MaxOfLettingsReachedController.submit(src: Option[String] ?=None)
+GET         /max-lettings                                       controllers.MaxOfLettingsReachedController.show(src: Option[String] ?= None)
+POST        /max-lettings                                       controllers.MaxOfLettingsReachedController.submit(src: Option[String] ?=None)
 
 # No reference number
-GET         /request-reference-number-with-session                  controllers.requestReferenceNumber.RequestReferenceNumberController.startWithSession()
-GET         /request-reference-number                               controllers.requestReferenceNumber.RequestReferenceNumberController.show()
-POST        /request-reference-number                               controllers.requestReferenceNumber.RequestReferenceNumberController.submit()
+GET         /request-reference-number-with-session              controllers.requestReferenceNumber.RequestReferenceNumberController.startWithSession()
+GET         /request-reference-number                           controllers.requestReferenceNumber.RequestReferenceNumberController.show()
+POST        /request-reference-number                           controllers.requestReferenceNumber.RequestReferenceNumberController.submit()
 
-GET         /request-reference-number-contact-details               controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.show()
-POST        /request-reference-number-contact-details               controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.submit()
+GET         /request-reference-number-contact-details           controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.show()
+POST        /request-reference-number-contact-details           controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.submit()
 
-GET         /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.show()
-POST        /check-your-answers-request-reference-number            controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.submit()
-GET         /confirmation-request-reference-number                  controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.confirmation()
+GET         /check-your-answers-request-reference-number        controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.show()
+POST        /check-your-answers-request-reference-number        controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.submit()
+GET         /confirmation-request-reference-number              controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.confirmation()
 
 # PDF download
-GET         /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.show()
-POST        /download-pdf-reference-number                          controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.submit()
+GET         /download-pdf-reference-number                      controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.show()
+POST        /download-pdf-reference-number                      controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.submit()
 
-GET         /download-pdf/:forType                                  controllers.downloadFORTypeForm.DownloadPDFController.show(forType: String)
+GET         /download-pdf/:forType                              controllers.downloadFORTypeForm.DownloadPDFController.show(forType: String)
 
 # Not connected
-GET         /past-connection-type                                   controllers.notconnected.PastConnectionController.show()
-POST        /past-connection-type                                   controllers.notconnected.PastConnectionController.submit()
+GET         /past-connection-type                               controllers.notconnected.PastConnectionController.show()
+POST        /past-connection-type                               controllers.notconnected.PastConnectionController.submit()
 
-GET         /remove-connection                                      controllers.notconnected.RemoveConnectionController.show()
-POST        /remove-connection                                      controllers.notconnected.RemoveConnectionController.submit()
-# About you
-GET         /about-you                                              controllers.aboutyouandtheproperty.AboutYouController.show()
-POST        /about-you                                              controllers.aboutyouandtheproperty.AboutYouController.submit()
-# About the property
-GET         /about-the-property                                     controllers.aboutyouandtheproperty.AboutThePropertyController.show()
-POST        /about-the-property                                     controllers.aboutyouandtheproperty.AboutThePropertyController.submit()
-# About the property 6045/46 property currently used
+GET         /remove-connection                                  controllers.notconnected.RemoveConnectionController.show()
+POST        /remove-connection                                  controllers.notconnected.RemoveConnectionController.submit()
 
-GET         /property-currently-used                                controllers.aboutyouandtheproperty.PropertyCurrentlyUsedController.show()
-POST        /property-currently-used                                controllers.aboutyouandtheproperty.PropertyCurrentlyUsedController.submit()
-# About the property 6030
-GET         /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.show()
-POST        /about-the-property-description                         controllers.aboutyouandtheproperty.AboutThePropertyStringController.submit()
+GET         /check-your-answers-not-connected                   controllers.notconnected.CheckYourAnswersNotConnectedController.show()
+POST        /check-your-answers-not-connected                   controllers.notconnected.CheckYourAnswersNotConnectedController.submit()
 
-GET         /charity-question                                       controllers.aboutyouandtheproperty.CharityQuestionController.show()
-POST        /charity-question                                       controllers.aboutyouandtheproperty.CharityQuestionController.submit()
-
-GET         /trading-activity                                       controllers.aboutyouandtheproperty.TradingActivityController.show()
-POST        /trading-activity                                       controllers.aboutyouandtheproperty.TradingActivityController.submit()
-
-GET         /website-for-property                                   controllers.aboutyouandtheproperty.WebsiteForPropertyController.show()
-POST        /website-for-property                                   controllers.aboutyouandtheproperty.WebsiteForPropertyController.submit()
-
-GET         /licensable-activities                                  controllers.aboutyouandtheproperty.LicensableActivitiesController.show()
-POST        /licensable-activities                                  controllers.aboutyouandtheproperty.LicensableActivitiesController.submit()
-
-GET         /licensable-activities-details                          controllers.aboutyouandtheproperty.LicensableActivitiesDetailsController.show()
-POST        /licensable-activities-details                          controllers.aboutyouandtheproperty.LicensableActivitiesDetailsController.submit()
-
-GET         /premises-license-conditions                            controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.show()
-POST        /premises-license-conditions                            controllers.aboutyouandtheproperty.PremisesLicenseConditionsController.submit()
-
-GET         /premises-license-conditions-details                    controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.show()
-POST        /premises-license-conditions-details                    controllers.aboutyouandtheproperty.PremisesLicenseConditionsDetailsController.submit()
-
-GET         /enforcement-action-been-taken                          controllers.aboutyouandtheproperty.EnforcementActionBeenTakenController.show()
-POST        /enforcement-action-been-taken                          controllers.aboutyouandtheproperty.EnforcementActionBeenTakenController.submit()
-
-GET         /enforcement-action-been-taken-details                  controllers.aboutyouandtheproperty.EnforcementActionBeenTakenDetailsController.show()
-POST        /enforcement-action-been-taken-details                  controllers.aboutyouandtheproperty.EnforcementActionBeenTakenDetailsController.submit()
-
-GET         /tied-for-goods                                         controllers.aboutyouandtheproperty.TiedForGoodsController.show()
-POST        /tied-for-goods                                         controllers.aboutyouandtheproperty.TiedForGoodsController.submit()
-
-GET         /tied-for-goods-details                                 controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.show()
-POST        /tied-for-goods-details                                 controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.submit()
-
-# About you and the property 6076
-
-GET         /renewables-plants                                      controllers.aboutyouandtheproperty.RenewablesPlantController.show()
-POST        /renewables-plants                                      controllers.aboutyouandtheproperty.RenewablesPlantController.submit()
-
-GET         /three-years-constructed                                controllers.aboutyouandtheproperty.ThreeYearsConstructedController.show()
-POST        /three-years-constructed                                controllers.aboutyouandtheproperty.ThreeYearsConstructedController.submit()
-
-GET         /plant-and-technology                                   controllers.aboutyouandtheproperty.PlantAndTechnologyController.show()
-POST        /plant-and-technology                                   controllers.aboutyouandtheproperty.PlantAndTechnologyController.submit()
-
-GET         /generator-capacity                                     controllers.aboutyouandtheproperty.GeneratorCapacityController.show()
-POST        /generator-capacity                                     controllers.aboutyouandtheproperty.GeneratorCapacityController.submit()
-
-GET         /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.show()
-POST        /batteries-capacity                                     controllers.aboutyouandtheproperty.BatteriesCapacityController.submit()
-
-GET         /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.show()
-POST        /costs-breakdown                                        controllers.aboutyouandtheproperty.CostsBreakdownController.submit()
-
-# About the trading history
-GET         /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
-POST        /about-your-trading-history                             controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
-
-GET         /what-you-will-need                                     controllers.aboutthetradinghistory.WhatYouWillNeedController.show()
-POST        /what-you-will-need                                     controllers.aboutthetradinghistory.WhatYouWillNeedController.submit()
-
-GET         /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.show()
-POST        /financial-year-end                                     controllers.aboutthetradinghistory.FinancialYearEndController.submit()
-
-GET         /financial-year-end-dates                               controllers.aboutthetradinghistory.FinancialYearEndDatesController.show()
-POST        /financial-year-end-dates                               controllers.aboutthetradinghistory.FinancialYearEndDatesController.submit()
-# About the trading history part one
-GET         /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.show()
-POST        /financial-year-end-dates-summary                       controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.submit()
-
-GET         /financial-years                                        controllers.aboutthetradinghistory.FinancialYearsController.show
-POST        /financial-years                                        controllers.aboutthetradinghistory.FinancialYearsController.submit
-
-GET         /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.show(index: Int)
-POST        /financial-year-end-date                                controllers.aboutthetradinghistory.EditFinancialYearEndDateController.submit(index: Int)
-
-GET         /turnover                                               controllers.aboutthetradinghistory.TurnoverController.show()
-POST        /turnover                                               controllers.aboutthetradinghistory.TurnoverController.submit()
-
-GET         /non-fuel-turnover                                      controllers.aboutthetradinghistory.NonFuelTurnoverController.show()
-POST        /non-fuel-turnover                                      controllers.aboutthetradinghistory.NonFuelTurnoverController.submit()
-
-GET         /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.show()
-POST        /turnover-6030                                          controllers.aboutthetradinghistory.Turnover6030Controller.submit()
-
-GET         /electricity-generated                                  controllers.aboutthetradinghistory.ElectricityGeneratedController.show()
-POST        /electricity-generated                                  controllers.aboutthetradinghistory.ElectricityGeneratedController.submit()
-
-GET         /other-income                                           controllers.aboutthetradinghistory.OtherIncomeController.show()
-POST        /other-income                                           controllers.aboutthetradinghistory.OtherIncomeController.submit()
-
-GET         /operational-expenses                                   controllers.aboutthetradinghistory.OperationalExpensesController.show()
-POST        /operational-expenses                                   controllers.aboutthetradinghistory.OperationalExpensesController.submit()
-
-GET         /head-office-expenses                                   controllers.aboutthetradinghistory.HeadOfficeExpensesController.show()
-POST        /head-office-expenses                                   controllers.aboutthetradinghistory.HeadOfficeExpensesController.submit()
-
-GET         /electric-vehicle-charging-points                       controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.show()
-POST        /electric-vehicle-charging-points                       controllers.aboutthetradinghistory.ElectricVehicleChargingPointsController.submit()
-
-# FORM 6045/46 routing start
-GET         /static-caravans                                        controllers.aboutthetradinghistory.StaticCaravansController.show()
-POST        /static-caravans                                        controllers.aboutthetradinghistory.StaticCaravansController.submit()
-
-GET         /are-caravans-open-all-year                             controllers.aboutthetradinghistory.CaravansOpenAllYearController.show()
-POST        /are-caravans-open-all-year                             controllers.aboutthetradinghistory.CaravansOpenAllYearController.submit()
-
-GET         /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.show()
-POST        /gross-receipts-fleet-caravans                          controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.submit()
-
-GET         /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.show()
-POST        /single-caravans-owned-by-operator                      controllers.aboutthetradinghistory.SingleCaravansOwnedByOperatorController.submit()
-
-GET         /single-caravans-sublet                                 controllers.aboutthetradinghistory.SingleCaravansSubletController.show()
-POST        /single-caravans-sublet                                 controllers.aboutthetradinghistory.SingleCaravansSubletController.submit()
-
-GET         /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.show()
-POST        /single-caravans-age-categories                         controllers.aboutthetradinghistory.SingleCaravansAgeCategoriesController.submit()
-
-GET         /twin-unit-caravans-owned-by-operator                   controllers.aboutthetradinghistory.TwinUnitCaravansOwnedByOperatorController.show()
-POST        /twin-unit-caravans-owned-by-operator                   controllers.aboutthetradinghistory.TwinUnitCaravansOwnedByOperatorController.submit()
-
-GET         /twin-unit-caravans-sublet                              controllers.aboutthetradinghistory.TwinUnitCaravansSubletController.show()
-POST        /twin-unit-caravans-sublet                              controllers.aboutthetradinghistory.TwinUnitCaravansSubletController.submit()
-
-GET         /twin-unit-caravans-age-categories                      controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.show()
-POST        /twin-unit-caravans-age-categories                      controllers.aboutthetradinghistory.TwinUnitCaravansAgeCategoriesController.submit()
-
-GET         /caravans-site-capacity                                 controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.show()
-POST        /caravans-site-capacity                                 controllers.aboutthetradinghistory.CaravansTotalSiteCapacityController.submit()
-
-GET         /caravans-per-service                                   controllers.aboutthetradinghistory.CaravansPerServiceController.show()
-POST        /caravans-per-service                                   controllers.aboutthetradinghistory.CaravansPerServiceController.submit()
-
-GET         /caravans-annual-pitch-fee                              controllers.aboutthetradinghistory.CaravansAnnualPitchFeeController.show()
-POST        /caravans-annual-pitch-fee                              controllers.aboutthetradinghistory.CaravansAnnualPitchFeeController.submit()
-
-GET         /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.show()
-POST        /other-holiday-accommodation                            controllers.aboutthetradinghistory.OtherHolidayAccommodationController.submit()
-
-GET         /tenting-pitches-on-site                                controllers.aboutthetradinghistory.TentingPitchesOnSiteController.show()
-POST        /tenting-pitches-on-site                                controllers.aboutthetradinghistory.TentingPitchesOnSiteController.submit()
-
-GET         /tenting-pitches-all-year                               controllers.aboutthetradinghistory.TentingPitchesAllYearController.show()
-POST        /tenting-pitches-all-year                               controllers.aboutthetradinghistory.TentingPitchesAllYearController.submit()
-
-GET         /pitches-for-caravans                                   controllers.aboutthetradinghistory.PitchesForCaravansController.show()
-POST        /pitches-for-caravans                                   controllers.aboutthetradinghistory.PitchesForCaravansController.submit()
-
-GET         /pitches-for-glamping                                   controllers.aboutthetradinghistory.PitchesForGlampingController.show()
-POST        /pitches-for-glamping                                   controllers.aboutthetradinghistory.PitchesForGlampingController.submit()
-
-GET         /rally-areas                                            controllers.aboutthetradinghistory.RallyAreasController.show()
-POST        /rally-areas                                            controllers.aboutthetradinghistory.RallyAreasController.submit()
-
-GET         /tenting-pitches-total                                  controllers.aboutthetradinghistory.TentingPitchesTotalController.show()
-POST        /tenting-pitches-total                                  controllers.aboutthetradinghistory.TentingPitchesTotalController.submit()
-
-GET         /tenting-pitches-certificated                            controllers.aboutthetradinghistory.TentingPitchesCertificatedController.show()
-POST        /tenting-pitches-certificated                            controllers.aboutthetradinghistory.TentingPitchesCertificatedController.submit()
-
-GET         /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.show()
-POST        /other-holiday-accommodation-open-all-year              controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.submit()
-
-GET         /gross-receipts-letting-units                           controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.show()
-POST        /gross-receipts-letting-units                           controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.submit()
-
-GET         /gross-receipts-sub-let-units                           controllers.aboutthetradinghistory.GrossReceiptsSubLetUnitsController.show()
-POST        /gross-receipts-sub-let-units                           controllers.aboutthetradinghistory.GrossReceiptsSubLetUnitsController.submit()
-
-GET         /total-site-capacity                                    controllers.aboutthetradinghistory.TotalSiteCapacity6045Controller.show()
-POST        /total-site-capacity                                    controllers.aboutthetradinghistory.TotalSiteCapacity6045Controller.submit()
-
-GET         /additional-activities-on-site                          controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.show()
-POST        /additional-activities-on-site                          controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.submit()
-
-GET         /additional-activities-all-year                         controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.show()
-POST        /additional-activities-all-year                         controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.submit()
-
-GET         /additional-shops                                       controllers.aboutthetradinghistory.AdditionalShopsController.show()
-POST        /additional-shops                                       controllers.aboutthetradinghistory.AdditionalShopsController.submit()
-
-GET         /additional-catering                                    controllers.aboutthetradinghistory.AdditionalCateringController.show()
-POST        /additional-catering                                    controllers.aboutthetradinghistory.AdditionalCateringController.submit()
-
-GET         /additional-bars-clubs                                  controllers.aboutthetradinghistory.AdditionalBarsClubsController.show()
-POST        /additional-bars-clubs                                  controllers.aboutthetradinghistory.AdditionalBarsClubsController.submit()
-
-GET         /additional-amusements                                  controllers.aboutthetradinghistory.AdditionalAmusementsController.show()
-POST        /additional-amusements                                  controllers.aboutthetradinghistory.AdditionalAmusementsController.submit()
-
-GET         /additional-misc                                        controllers.aboutthetradinghistory.AdditionalMiscController.show()
-POST        /additional-misc                                        controllers.aboutthetradinghistory.AdditionalMiscController.submit()
-
-GET         /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.show()
-POST        /check-your-answers-other-holiday-accommodation         controllers.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationController.submit()
-
-GET         /check-your-answers-tenting-pitches                     controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.show()
-POST        /check-your-answers-tenting-pitches                     controllers.aboutthetradinghistory.CheckYourAnswersTentingPitchesController.submit()
-
-GET         /check-your-answers-additional-activities               controllers.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesController.show()
-POST        /check-your-answers-additional-activities               controllers.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesController.submit()
-# FORM 6045/46 routing end
-
-# Form 6015 routing start
-GET         /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.show()
-POST        /cost-of-sales                                          controllers.aboutthetradinghistory.CostOfSalesController.submit()
-
-GET         /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.show()
-POST        /total-payroll-costs                                    controllers.aboutthetradinghistory.TotalPayrollCostsController.submit()
-
-GET         /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.show()
-POST        /variable-operating-expenses                            controllers.aboutthetradinghistory.VariableOperatingExpensesController.submit()
-
-GET         /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.show()
-POST        /fixed-operating-expenses                               controllers.aboutthetradinghistory.FixedOperatingExpensesController.submit()
-
-GET         /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.show()
-POST        /other-costs                                            controllers.aboutthetradinghistory.OtherCostsController.submit()
-
-GET         /income-expenditure-summary                             controllers.aboutthetradinghistory.IncomeExpenditureSummaryController.show()
-POST        /income-expenditure-summary                             controllers.aboutthetradinghistory.IncomeExpenditureSummaryController.submit()
-
-GET         /unusual-circumstances                                  controllers.aboutthetradinghistory.UnusualCircumstancesController.show()
-POST        /unusual-circumstances                                  controllers.aboutthetradinghistory.UnusualCircumstancesController.submit()
-
-# Form 6015 routing end
-
-# 6076 trading history
-
-GET         /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.show()
-POST        /cost-of-sales-6076                                     controllers.aboutthetradinghistory.CostOfSales6076Controller.submit()
-
-GET         /cost-of-sales-intermittent-6076                        controllers.aboutthetradinghistory.CostOfSales6076IntermittentController.show()
-POST        /cost-of-sales-intermittent-6076                        controllers.aboutthetradinghistory.CostOfSales6076IntermittentController.submit()
-
-
-GET         /staff-costs                                            controllers.aboutthetradinghistory.StaffCostsController.show()
-POST        /staff-costs                                            controllers.aboutthetradinghistory.StaffCostsController.submit()
-
-GET         /gross-receipts-excluding-vat                           controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.show()
-POST        /gross-receipts-excluding-vat                           controllers.aboutthetradinghistory.GrossReceiptsExcludingVATController.submit()
-
-GET         /gross-receipts-for-base-load                           controllers.aboutthetradinghistory.GrossReceiptsForBaseLoadController.show()
-POST        /gross-receipts-for-base-load                           controllers.aboutthetradinghistory.GrossReceiptsForBaseLoadController.submit()
-
-GET         /premises-costs                                         controllers.aboutthetradinghistory.PremisesCostsController.show()
-POST        /premises-costs                                         controllers.aboutthetradinghistory.PremisesCostsController.submit()
-
-GET         /income-expenditure-summary-6076                        controllers.aboutthetradinghistory.IncomeExpenditureSummary6076Controller.show()
-POST        /income-expenditure-summary-6076                        controllers.aboutthetradinghistory.IncomeExpenditureSummary6076Controller.submit()
-
-# Form 6076 routing end
-
-# About the francise or letting
-GET         /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.show()
-POST        /franchise-or-lettings-tied-to-property                 controllers.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyController.submit()
-
-# concession/franchise/letting new loop beginning
-
-GET         /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.show(idx: Option[Int] ?= None)
-POST        /type-of-income                                         controllers.aboutfranchisesorlettings.TypeOfIncomeController.submit(idx: Option[Int])
-
-GET         /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.show(idx: Int)
-POST        /concession-type-details                                controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.submit(idx: Int)
-
-GET         /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.show(idx: Int)
-POST        /concession-type-fees                                   controllers.aboutfranchisesorlettings.ConcessionTypeFeesController.submit(idx: Int)
-
-GET         /letting-type-details                                   controllers.aboutfranchisesorlettings.LettingTypeDetailsController.show(idx: Int)
-POST        /letting-type-details                                   controllers.aboutfranchisesorlettings.LettingTypeDetailsController.submit(idx: Int)
-
- GET         /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.show(idx: Int)
- POST        /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.submit(idx: Int)
-
-# concession/franchise/letting new loop end !!!
-GET         /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.show()
-POST        /catering-operation-or-letting-accommodation            controllers.aboutfranchisesorlettings.CateringOperationController.submit()
-
-GET         /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.show()
-POST        /letting-other-part-of-property                         controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyController.submit()
-
-GET         /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.show(idx: Option[Int] ?= None)
-POST        /catering-operation-details                             controllers.aboutfranchisesorlettings.CateringOperationDetailsController.submit(idx: Option[Int])
-
-GET         /catering-operation-business-details                    controllers.aboutfranchisesorlettings.CateringOperationBusinessDetailsController.show(idx: Option[Int] ?= None)
-POST        /catering-operation-business-details                    controllers.aboutfranchisesorlettings.CateringOperationBusinessDetailsController.submit(idx: Option[Int])
-
-
-GET         /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.show(idx: Int)
-POST        /catering-operation-rent                                controllers.aboutfranchisesorlettings.CateringOperationDetailsRentController.submit(idx: Int)
-
-GET         /rent-received-from                                     controllers.aboutfranchisesorlettings.RentReceivedFromController.show(idx: Int)
-POST        /rent-received-from                                     controllers.aboutfranchisesorlettings.RentReceivedFromController.submit(idx: Int)
-
-GET         /calculating-the-rent-for                               controllers.aboutfranchisesorlettings.CalculatingTheRentForController.show(idx: Int)
-POST        /calculating-the-rent-for                               controllers.aboutfranchisesorlettings.CalculatingTheRentForController.submit(idx: Int)
-
-GET         /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.show(idx: Int)
-POST        /catering-operation-rent-includes                       controllers.aboutfranchisesorlettings.CateringOperationRentIncludesController.submit(idx: Int)
-
-GET         /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.show(idx: Int)
-POST        /add-another-catering-operation                         controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.submit(idx: Int)
-GET         /remove-catering-operation                              controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.remove(idx: Int)
-POST        /remove-catering-operation                              controllers.aboutfranchisesorlettings.AddAnotherCateringOperationController.performRemove(idx: Int)
-
-GET         /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
-POST        /letting-other-part-of-property-details                 controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.submit(idx: Option[Int])
-
-GET         /letting-other-part-of-property-rent                    controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.show(idx: Int)
-POST        /letting-other-part-of-property-rent                    controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.submit(idx: Int)
-
-GET         /letting-other-part-of-property-checkbox                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesController.show(idx: Int)
-POST        /letting-other-part-of-property-checkbox                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesController.submit(idx: Int)
-
-GET         /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.show(idx: Int)
-POST        /add-another-letting-other-part-of-property             controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.submit(idx: Int)
-GET         /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.remove(idx: Int)
-POST        /remove-letting-other-part-of-property                  controllers.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyController.performRemove(idx: Int)
-
-#6020 Lettings
-GET         /type-of-letting                                        controllers.aboutfranchisesorlettings.TypeOfLettingController.show(idx: Option[Int] ?= None)
-POST        /type-of-letting                                        controllers.aboutfranchisesorlettings.TypeOfLettingController.submit(idx: Option[Int])
-
-GET         /atm-letting                                            controllers.aboutfranchisesorlettings.AtmLettingController.show(idx: Option[Int] ?= None)
-POST        /atm-letting                                            controllers.aboutfranchisesorlettings.AtmLettingController.submit(idx: Option[Int])
-
-GET         /telecom-mast-letting                                   controllers.aboutfranchisesorlettings.TelecomMastLettingController.show(idx: Option[Int] ?= None)
-POST        /telecom-mast-letting                                   controllers.aboutfranchisesorlettings.TelecomMastLettingController.submit(idx: Option[Int])
-
-GET         /advertising-right-letting                              controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.show(idx: Option[Int] ?= None)
-POST        /advertising-right-letting                              controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.submit(idx: Option[Int])
-
-GET         /other-letting                                          controllers.aboutfranchisesorlettings.OtherLettingController.show(idx: Option[Int] ?= None)
-POST        /other-letting                                          controllers.aboutfranchisesorlettings.OtherLettingController.submit(idx: Option[Int])
-
-GET         /rent-details                                           controllers.aboutfranchisesorlettings.RentDetailsController.show(idx: Int)
-POST        /rent-details                                           controllers.aboutfranchisesorlettings.RentDetailsController.submit(idx: Int)
-
-GET         /add-another-letting                                    controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.show(idx: Int)
-POST        /add-another-letting                                    controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.submitLetting(idx: Int)
-GET         /remove-letting                                         controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.remove(idx: Int)
-POST        /remove-letting                                         controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.performRemove(idx: Int)
-# About your lease or tenure
-GET         /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
-POST        /about-your-landlord                                    controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
-GET         /landlord-address-callback                              controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.addressLookupCallback(id: String ?= "")
-
-# Form 6076 only
-GET         /provide-details-of-your-lease                          controllers.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseController.show()
-POST        /provide-details-of-your-lease                          controllers.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseController.submit()
-
-GET         /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.show()
-POST        /lease-or-agreement-details                             controllers.aboutYourLeaseOrTenure.LeaseOrAgreementYearsController.submit()
-
-GET         /current-annual-rent                                    controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.show()
-POST        /current-annual-rent                                    controllers.aboutYourLeaseOrTenure.CurrentAnnualRentController.submit()
-
-GET         /current-rent-first-paid                                controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.show()
-POST        /current-rent-first-paid                                controllers.aboutYourLeaseOrTenure.CurrentRentFirstPaidController.submit()
-
-GET         /rent-open-market-value                                 controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.show()
-POST        /rent-open-market-value                                 controllers.aboutYourLeaseOrTenure.RentOpenMarketValueController.submit()
-
-# Form 6045/46 only
-
-GET         /rent-developed-land                                    controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.show()
-POST        /rent-developed-land                                    controllers.aboutYourLeaseOrTenure.RentDevelopedLandController.submit()
-
-GET         /rent-developed-land-details                            controllers.aboutYourLeaseOrTenure.RentDevelopedLandDetailsController.show()
-POST        /rent-developed-land-details                            controllers.aboutYourLeaseOrTenure.RentDevelopedLandDetailsController.submit()
-
-GET         /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.show()
-POST        /rent-include-structures-buildings                      controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsController.submit()
-
-GET         /rent-include-structures-buildings-details              controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.show()
-POST        /rent-include-structures-buildings-details              controllers.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsController.submit()
-
-GET         /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.show()
-POST        /surrendered-lease-agreement-details                    controllers.aboutYourLeaseOrTenure.SurrenderLeaseAgreementDetailsController.submit()
-
-# Form 6011 routing
-GET         /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.show()
-POST        /tenancy-lease-agreement-expire                         controllers.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireController.submit()
-
-GET         /current-lease-or-agreement-begin                       controllers.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginController.show()
-POST        /current-lease-or-agreement-begin                       controllers.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginController.submit()
-
-GET         /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.show()
-POST        /included-in-your-rent                                  controllers.aboutYourLeaseOrTenure.IncludedInYourRentController.submit()
-
-GET         /rent-includes-vat                                      controllers.aboutYourLeaseOrTenure.RentIncludesVatController.show()
-POST        /rent-includes-vat                                      controllers.aboutYourLeaseOrTenure.RentIncludesVatController.submit()
-
-GET         /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.show()
-POST        /does-the-rent-payable                                  controllers.aboutYourLeaseOrTenure.DoesTheRentPayableController.submit()
-
-GET         /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.show()
-POST        /rent-include-trade-services                            controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesController.submit()
-
-# Form 6030 :
-
-GET         /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.show(idx: Option[Int] ?= None)
-POST        /trade-services-description                             controllers.aboutYourLeaseOrTenure.TradeServicesDescriptionController.submit(idx: Option[Int])
-
-GET         /payment-for-trade-services                             controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.show()
-POST        /payment-for-trade-services                              controllers.aboutYourLeaseOrTenure.PaymentForTradeServicesController.submit()
-
-
-GET         /trade-services-list                                    controllers.aboutYourLeaseOrTenure.TradeServicesListController.show(idx: Int)
-POST        /trade-services-list                                    controllers.aboutYourLeaseOrTenure.TradeServicesListController.submit(idx: Int)
-GET         /trade-services-remove                                  controllers.aboutYourLeaseOrTenure.TradeServicesListController.remove(idx: Int)
-POST        /trade-services-remove                                  controllers.aboutYourLeaseOrTenure.TradeServicesListController.performRemove(idx: Int)
-
-GET         /service-paid-separately                                controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.show(idx: Option[Int] ?= None)
-POST        /service-paid-separately                                controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyController.submit(idx: Option[Int])
-
-GET         /service-paid-separately-charge                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.show(idx: Int)
-POST        /service-paid-separately-charge                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeController.submit(idx: Int)
-
-GET         /service-paid-separately-list                           controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.show(idx: Int)
-POST        /service-paid-separately-list                           controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.submit(idx: Int)
-GET         /service-paid-separately-remove                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.remove(idx: Int)
-POST        /service-paid-separately-remove                         controllers.aboutYourLeaseOrTenure.ServicePaidSeparatelyListController.performRemove(idx: Int)
-
-
-GET         /rent-include-trade-services-details                    controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.show()
-POST        /rent-include-trade-services-details                    controllers.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsController.submit()
-
-# Form 6015 routing
-GET         /premises-license-granted                               controllers.aboutyouandtheproperty.PremisesLicenseGrantedController.show()
-POST        /premises-license-granted                               controllers.aboutyouandtheproperty.PremisesLicenseGrantedController.submit()
-
-# Form 6015 routing
-GET         /premises-license-granted-details                       controllers.aboutyouandtheproperty.PremisesLicenseGrantedDetailsController.show()
-POST        /premises-license-granted-details                       controllers.aboutyouandtheproperty.PremisesLicenseGrantedDetailsController.submit()
-
-# Form 6015 routing
-GET         /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.show()
-POST        /concession-or-franchise                                controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
-
-#Form 6020 routing
-
-GET         /total-fuel-sold                                        controllers.aboutthetradinghistory.TotalFuelSoldController.show()
-POST        /total-fuel-sold                                        controllers.aboutthetradinghistory.TotalFuelSoldController.submit()
-
-GET         /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.show()
-POST        /bunkered-fuel-question                                 controllers.aboutthetradinghistory.BunkeredFuelQuestionController.submit()
-
-GET         /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.show()
-POST        /bunkered-fuel-sold                                     controllers.aboutthetradinghistory.BunkeredFuelSoldController.submit()
-
-GET         /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.show(idx: Option[Int] ?= None)
-POST        /bunker-fuel-cards-details                              controllers.aboutthetradinghistory.BunkerFuelCardDetailsController.submit(idx: Option[Int])
-
-GET         /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.show(idx: Int)
-POST        /add-another-bunker-fuel-cards-details                  controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.submit(idx: Int)
-GET         /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.remove(idx: Int)
-POST        /remove-bunker-fuel-cards-details                       controllers.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx: Int)
-
-GET         /customer-credit-accounts                               controllers.aboutthetradinghistory.CustomerCreditAccountsController.show()
-POST        /customer-credit-accounts                               controllers.aboutthetradinghistory.CustomerCreditAccountsController.submit()
-
-GET         /accept-low-margin-fuel-card                            controllers.aboutthetradinghistory.AcceptLowMarginFuelCardController.show()
-POST        /accept-low-margin-fuel-card                            controllers.aboutthetradinghistory.AcceptLowMarginFuelCardController.submit()
-
-GET         /percentage-from-fuel-cards                             controllers.aboutthetradinghistory.PercentageFromFuelCardsController.show()
-POST        /percentage-from-fuel-cards                             controllers.aboutthetradinghistory.PercentageFromFuelCardsController.submit()
-
-GET         /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.show(idx: Option[Int] ?= None)
-POST        /low-margin-fuel-cards-details                          controllers.aboutthetradinghistory.LowMarginFuelCardDetailsController.submit(idx: Option[Int])
-
-GET         /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.show(idx: Int)
-POST        /add-another-low-margin-fuel-cards-details              controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.submit(idx: Int)
-GET         /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.remove(idx: Int)
-POST        /remove-low-margin-fuel-cards-details                   controllers.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsController.performRemove(idx: Int)
-
-GET         /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.show()
-POST        /type-of-tenure                                         controllers.aboutYourLeaseOrTenure.TypeOfTenureController.submit()
-
-GET         /throughput-affects-rent                                controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentController.show()
-POST        /throughput-affects-rent                                controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentController.submit()
-
-GET         /throughput-affects-rent-details                        controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsController.show()
-POST        /throughput-affects-rent-details                        controllers.aboutYourLeaseOrTenure.ThroughputAffectsRentDetailsController.submit()
-
-GET         /is-vat-payable-for-whole-property                      controllers.aboutYourLeaseOrTenure.IsVATPayableForWholePropertyController.show()
-POST        /is-vat-payable-for-whole-property                      controllers.aboutYourLeaseOrTenure.IsVATPayableForWholePropertyController.submit()
-
-GET         /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.show()
-POST        /does-rent-include-parking                              controllers.aboutYourLeaseOrTenure.DoesRentIncludeParkingController.submit()
-
-GET         /included-in-rent-parking-spaces                        controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.show()
-POST        /included-in-rent-parking-spaces                        controllers.aboutYourLeaseOrTenure.IncludedInRentParkingSpacesController.submit()
-
-GET         /is-parking-rent-paid-separately                        controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.show()
-POST        /is-parking-rent-paid-separately                        controllers.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyController.submit()
-
-GET         /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.show()
-POST        /rented-separately-parking-spaces                       controllers.aboutYourLeaseOrTenure.RentedSeparatelyParkingSpacesController.submit()
-
-GET         /car-parking-annual-rent                                controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.show()
-POST        /car-parking-annual-rent                                controllers.aboutYourLeaseOrTenure.CarParkingAnnualRentController.submit()
-
-GET         /rented-equipment-details                               controllers.aboutYourLeaseOrTenure.RentedEquipmentDetailsController.show()
-POST        /rented-equipment-details                               controllers.aboutYourLeaseOrTenure.RentedEquipmentDetailsController.submit()
-
-GET         /included-in-rent                                       controllers.aboutYourLeaseOrTenure.IncludedInRent6020Controller.show()
-POST        /included-in-rent                                       controllers.aboutYourLeaseOrTenure.IncludedInRent6020Controller.submit()
-
-#Form 6030 routing
-GET         /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
-POST        /concession-or-franchise-fee                            controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.submit()
-
-GET         /fee-received                                           controllers.aboutfranchisesorlettings.FeeReceivedController.show(idx: Int)
-POST        /fee-received                                           controllers.aboutfranchisesorlettings.FeeReceivedController.submit(idx: Int)
-
-GET         /rent-payable-vary-on-quantity-of-beers                 controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersController.show()
-POST        /rent-payable-vary-on-quantity-of-beers                 controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersController.submit()
-
-GET         /rent-payable-vary-on-quantity-of-beers-details         controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsController.show()
-POST        /rent-payable-vary-on-quantity-of-beers-details         controllers.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsController.submit()
-
-GET         /rent-payable-vary-according-to-gross-or-net            controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetController.show()
-POST        /rent-payable-vary-according-to-gross-or-net            controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetController.submit()
-
-GET         /rent-payable-vary-according-to-gross-or-net-details    controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
-POST        /rent-payable-vary-according-to-gross-or-net-details    controllers.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()
-
-GET         /rent-include-fixtures-and-fittings                     controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsController.show()
-POST        /rent-include-fixtures-and-fittings                     controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsController.submit()
-
-GET         /rent-include-fixtures-and-fittings-details             controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.show()
-POST        /rent-include-fixtures-and-fittings-details             controllers.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsDetailsController.submit()
-
-GET         /former-lease-surrendered                               controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.show()
-POST        /former-lease-surrendered                               controllers.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsController.submit()
-
-GET         /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.show()
-POST        /pay-a-capital-sum                                      controllers.aboutYourLeaseOrTenure.PayACapitalSumController.submit()
-
-GET         /pay-a-capital-sum-details                              controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.show()
-POST        /pay-a-capital-sum-details                              controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.submit()
-
-GET         /receive-payment-when-lease-granted                     controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.show()
-POST        /receive-payment-when-lease-granted                     controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.submit()
-
-GET         /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.show()
-POST        /can-rent-be-reduced-on-review                          controllers.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewController.submit()
-
-GET         /property-updates                                       controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.show()
-POST        /property-updates                                       controllers.aboutYourLeaseOrTenure.PropertyUpdatesController.submit()
-
-GET         /work-carried-out-details                               controllers.aboutYourLeaseOrTenure.WorkCarriedOutDetailsController.show()
-POST        /work-carried-out-details                               controllers.aboutYourLeaseOrTenure.WorkCarriedOutDetailsController.submit()
-
-GET         /work-carried-out-condition                             controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.show()
-POST        /work-carried-out-condition                             controllers.aboutYourLeaseOrTenure.WorkCarriedOutConditionController.submit()
-
-GET         /rent-free-period                                       controllers.aboutYourLeaseOrTenure.IsGivenRentFreePeriodController.show()
-POST        /rent-free-period                                       controllers.aboutYourLeaseOrTenure.IsGivenRentFreePeriodController.submit()
-
-GET         /rent-free-period-details                               controllers.aboutYourLeaseOrTenure.RentFreePeriodDetailsController.show()
-POST        /rent-free-period-details                               controllers.aboutYourLeaseOrTenure.RentFreePeriodDetailsController.submit()
-
-GET         /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.show()
-POST        /rent-increase-annually-with-rpi                        controllers.aboutYourLeaseOrTenure.RentIncreaseAnnuallyWithRPIController.submit()
-
-GET         /method-to-fix-current-rent                             controllers.aboutYourLeaseOrTenure.MethodToFixCurrentRentController.show()
-POST        /method-to-fix-current-rent                             controllers.aboutYourLeaseOrTenure.MethodToFixCurrentRentController.submit()
-
-GET         /how-is-current-rent-fixed                              controllers.aboutYourLeaseOrTenure.HowIsCurrentRentFixedController.show()
-POST        /how-is-current-rent-fixed                              controllers.aboutYourLeaseOrTenure.HowIsCurrentRentFixedController.submit()
-
-GET         /tenants-additions-disregarded                          controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedController.show()
-POST        /tenants-additions-disregarded                          controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedController.submit()
-
-GET         /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.show()
-POST        /tenants-additions-disregarded-details                  controllers.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsController.submit()
-
-GET         /lease-surrendered-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.show()
-POST        /lease-surrendered-early                                 controllers.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyController.submit()
-
-GET         /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.show()
-POST        /benefits-given                                         controllers.aboutYourLeaseOrTenure.BenefitsGivenController.submit()
-
-GET         /benefits-given-details                                 controllers.aboutYourLeaseOrTenure.BenefitsGivenDetailsController.show()
-POST        /benefits-given-datails                                 controllers.aboutYourLeaseOrTenure.BenefitsGivenDetailsController.submit()
-
-GET         /capital-sum-description                                controllers.aboutYourLeaseOrTenure.CapitalSumDescriptionController.show()
-POST        /capital-sum-description                                controllers.aboutYourLeaseOrTenure.CapitalSumDescriptionController.submit()
-
-
-GET         /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.show()
-POST        /legal-or-planning-restrictions                         controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsController.submit()
-
-GET         /legal-or-planning-restrictions-details                 controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.show()
-POST        /legal-or-planning-restrictions-details                 controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.submit()
-
-GET         /intervals-of-rent-review                               controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.show()
-POST        /intervals-of-rent-review                               controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.submit()
-
-GET         /is-rent-under-review                                   controllers.aboutYourLeaseOrTenure.IsRentUnderReviewController.show()
-POST        /is-rent-under-review                                   controllers.aboutYourLeaseOrTenure.IsRentUnderReviewController.submit()
-
-GET         /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.show()
-POST        /current-rent-payable-within-12-months                  controllers.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsController.submit()
-
-GET         /property-use-leaseback-arrangement                     controllers.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementController.show()
-POST        /property-use-leaseback-arrangement                     controllers.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementController.submit()
-
-GET         /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.show()
-POST        /what-is-your-rent-based-on                             controllers.aboutYourLeaseOrTenure.WhatIsYourRentBasedOnController.submit()
-
-GET         /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.show()
-POST        /ultimately-responsible-building-insurance              controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsuranceController.submit()
-
-GET         /ultimately-responsible-inside-repairs                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.show()
-POST        /ultimately-responsible-inside-repairs                  controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsController.submit()
-
-GET         /ultimately-responsible-outside-repairs                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.show()
-POST        /ultimately-responsible-outside-repairs                 controllers.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsController.submit()
-
-GET         /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.show()
-POST        /connected-to-landlord                                  controllers.aboutYourLeaseOrTenure.ConnectedToLandlordController.submit()
-
-GET         /connected-to-landlord-details                          controllers.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsController.show()
-POST        /connected-to-landlord-details                          controllers.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsController.submit()
-
-GET         /task-list                                              controllers.TaskListController.show()
+GET         /confirmation-not-connected                         controllers.notconnected.CheckYourAnswersNotConnectedController.confirmation()
 
 # Additional information
-GET         /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.show()
-POST        /further-information-or-remarks                         controllers.additionalinformation.FurtherInformationOrRemarksController.submit()
+GET         /further-information-or-remarks                     controllers.additionalinformation.FurtherInformationOrRemarksController.show()
+POST        /further-information-or-remarks                     controllers.additionalinformation.FurtherInformationOrRemarksController.submit()
 
-GET         /contact-details-question                               controllers.aboutyouandtheproperty.ContactDetailsQuestionController.show()
-POST        /contact-details-question                               controllers.aboutyouandtheproperty.ContactDetailsQuestionController.submit()
+GET         /check-your-answers-additional-information          controllers.additionalinformation.CheckYourAnswersAdditionalInformationController.show()
+POST        /check-your-answers-additional-information          controllers.additionalinformation.CheckYourAnswersAdditionalInformationController.submit()
 
-GET         /alternate-contact-details                              controllers.aboutyouandtheproperty.AlternativeContactDetailsController.show()
-POST        /alternate-contact-details                              controllers.aboutyouandtheproperty.AlternativeContactDetailsController.submit()
+POST        /declaration                                        controllers.FormSubmissionController.submit()
+GET         /confirmation                                       controllers.FormSubmissionController.confirmation()
 
-GET         /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.show()
-POST        /check-your-answers-about-the-property                  controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.submit()
-
-GET         /check-your-answers-about-the-trading-history           controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.show()
-POST        /check-your-answers-about-the-trading-history           controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.submit()
-
-GET         /check-your-answers-about-franchise-or-lettings         controllers.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-POST        /check-your-answers-about-franchise-or-lettings         controllers.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsController.submit()
-
-GET         /check-your-answers-additional-information              controllers.additionalinformation.CheckYourAnswersAdditionalInformationController.show()
-POST        /check-your-answers-additional-information              controllers.additionalinformation.CheckYourAnswersAdditionalInformationController.submit()
-
-GET         /check-your-answers-lease-or-tenure                     controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.show()
-POST        /check-your-answers-lease-or-tenure                     controllers.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureController.submit()
-
-GET         /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.show()
-POST        /check-your-answers-not-connected                       controllers.notconnected.CheckYourAnswersNotConnectedController.submit()
-GET         /confirmation-not-connected                             controllers.notconnected.CheckYourAnswersNotConnectedController.confirmation()
-
-POST        /declaration                                            controllers.FormSubmissionController.submit()
-GET         /confirmation                                           controllers.FormSubmissionController.confirmation()
-
-GET        /feedback                                                controllers.FeedbackController.feedback
-GET        /thankyou-for-your-feedback                              controllers.FeedbackController.feedbackThx
-POST       /feedback                                                controllers.FeedbackController.feedbackSubmit
-POST       /feedback-not-connected                                  controllers.FeedbackController.feedbackNotConnectedSubmit
-POST       /feedback-connected                                      controllers.FeedbackController.feedbackConnectedSubmit
-POST       /feedback-vacant-property                                controllers.FeedbackController.feedbackVacantPropertySubmit
-POST       /feedback-request-reference-number                       controllers.FeedbackController.feedbackRequestReferenceNumber
+GET         /feedback                                           controllers.FeedbackController.feedback
+GET         /thankyou-for-your-feedback                         controllers.FeedbackController.feedbackThx
+POST        /feedback                                           controllers.FeedbackController.feedbackSubmit
+POST        /feedback-not-connected                             controllers.FeedbackController.feedbackNotConnectedSubmit
+POST        /feedback-connected                                 controllers.FeedbackController.feedbackConnectedSubmit
+POST        /feedback-vacant-property                           controllers.FeedbackController.feedbackVacantPropertySubmit
+POST        /feedback-request-reference-number                  controllers.FeedbackController.feedbackRequestReferenceNumber
