@@ -18,24 +18,24 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord, LettingOtherPartOfPropertyInformationDetails, LettingOtherPartOfPropertyRentDetails}
+import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord}
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.LettingTypeRentId
+import navigation.identifiers.{LettingTypeIncludedId, LettingTypeRentId}
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.lettingTypeRent
+import views.html.aboutfranchisesorlettings.lettingTypeIncluded
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class LettingTypeRentController @Inject() (
+class LettingTypeIncludedController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
-  view: lettingTypeRent,
+  view: lettingTypeIncluded,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
@@ -43,7 +43,7 @@ class LettingTypeRentController @Inject() (
     with I18nSupport
     with Logging {
 
-  private def getLettingIncomeRecord(index: Int)(implicit request: SessionRequest[?]): Option[LettingIncomeRecord] =
+  private def getLettingIncomeRecord(index: Int)(implicit request: SessionRequest[_]): Option[LettingIncomeRecord] =
     for {
       allRecords <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       record     <- allRecords.lift(index)
@@ -53,16 +53,18 @@ class LettingTypeRentController @Inject() (
                     }
     } yield letting
 
-  private def getOperatorName(index: Int)(implicit request: SessionRequest[?]): String =
+  private def getOperatorName(index: Int)(implicit request: SessionRequest[_]): String =
     getLettingIncomeRecord(index).flatMap(_.operatorDetails.map(_.operatorName)).getOrElse("")
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails = getLettingIncomeRecord(index).flatMap(_.rent)
+    val existingDetails = getLettingIncomeRecord(index).flatMap(_.itemsIncluded)
     val operatorName    = getOperatorName(index)
 
     Ok(
       view(
-        existingDetails.fold(lettingOtherPartOfPropertyRentForm)(lettingOtherPartOfPropertyRentForm.fill),
+        existingDetails.fold(cateringOperationOrLettingAccommodationRentIncludesForm)(
+          cateringOperationOrLettingAccommodationRentIncludesForm.fill
+        ),
         index,
         operatorName,
         calculateBackLink(index),
@@ -73,10 +75,11 @@ class LettingTypeRentController @Inject() (
   }
 
   def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+
     val operatorName = getOperatorName(idx)
 
-    continueOrSaveAsDraft[LettingOtherPartOfPropertyRentDetails](
-      lettingOtherPartOfPropertyRentForm,
+    continueOrSaveAsDraft[List[String]](
+      cateringOperationOrLettingAccommodationRentIncludesForm,
       formWithErrors =>
         BadRequest(
           view(
@@ -92,7 +95,7 @@ class LettingTypeRentController @Inject() (
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
           if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
-              records.updated(idx, records(idx).asInstanceOf[LettingIncomeRecord].copy(rent = Some(data)))
+              records.updated(idx, records(idx).asInstanceOf[LettingIncomeRecord].copy(itemsIncluded = Some(data)))
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
           } else {
@@ -101,17 +104,17 @@ class LettingTypeRentController @Inject() (
         }(request)
 
         session.saveOrUpdate(updatedSession).map { _ =>
-          Redirect(navigator.nextPage(LettingTypeRentId, updatedSession).apply(updatedSession))
+          Redirect(navigator.nextPage(LettingTypeIncludedId, updatedSession).apply(updatedSession))
 
         }
       }
     )
   }
 
-  private def calculateBackLink(idx: Int)(implicit request: Request[AnyContent]) =
+  private def calculateBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]) =
     request.getQueryString("from") match {
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-      case _           => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(idx).url
+      case _           => controllers.aboutfranchisesorlettings.routes.LettingTypeRentController.show(idx).url
     }
 }
