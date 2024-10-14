@@ -1,0 +1,151 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
+@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import models.submissions.aboutfranchisesorlettings.{LettingIncomeRecord,ConcessionIncomeRecord}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        formWithCSRF: FormWithCSRF
+)
+
+
+@(theForm: Form[?], index: Int, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@label = @{messages("label.section.aboutTheLettings")}
+
+@pluralSuffix = @{ if (incomeRecords.size > 1) "s" else "" }
+
+@pageHeading = @{
+    incomeRecords.size match {
+        case 1 => messages("rentalIncomeList.heading")
+        case 0 => messages("rentalIncomeList.zeroLetting.heading")
+        case _ => messages("rentalIncomeList.plural.heading", incomeRecords.size)
+
+    }
+}
+
+@incomeRecords = @{
+    val records = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
+    records.zipWithIndex.map { case (record, index) =>
+        record match {
+            case concession: ConcessionIncomeRecord =>
+                (concession.businessDetails.flatMap(_.operatorName).getOrElse("No name specified"), controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url)
+            case letting: LettingIncomeRecord =>
+                (letting.operatorDetails.flatMap(_.operatorName).getOrElse("No name specified"), controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
+        }
+    }
+
+}
+
+
+@formLabel = @{
+        val list = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
+        list match {
+            case Some(Seq()) => messages("label.rentalIncomeList.income")
+            case Some(list) if list.forall(_.isInstanceOf[LettingIncomeRecord]) =>
+                messages("label.rentalIncomeList.letting")
+            case Some(list) if list.forall(_.isInstanceOf[ConcessionIncomeRecord]) =>
+                messages("label.rentalIncomeList.concession")
+            case _   => messages("label.rentalIncomeList.income")
+        }
+    }
+
+
+
+@layout(
+    pageHeading = pageHeading,
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+    backLinkUrl = backLink,
+    theForm = theForm
+) {
+
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.submit(index)) {
+
+        @govukSummaryList(
+            SummaryList(
+                rows = incomeRecords.zipWithIndex.map { case ((operatorName,changeUrl), idx) =>
+                    SummaryListRow(
+                        key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+                        actions = Actions(
+                            items = Seq(
+                                ActionItem(
+                                    changeUrl,
+                                    content = Text("Change")),
+                                ActionItem(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.remove(idx).url,
+                                    content = Text("Remove"))
+                            ),
+                            classes = "hmrc-summary-list__actions"
+                        )
+                    )
+                },
+                classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+            )
+        )
+
+        @govukRadios(
+            Radios(
+                name = "rentalIncomeList",
+                idPrefix = Option("rentalIncomeList"),
+                classes = "govuk-radios--inline",
+                items = Seq(
+                    "yes" -> messages("label.yes"),
+                    "no" -> messages("label.no")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm("rentalIncomeList").value.getOrElse("")),
+                    value = Option(radioItem._1)
+                )
+                ),
+                errorMessage =  theForm.errors.asTextErrorMessageForField("rentalIncomeList"),
+                fieldset = Option(
+                    Fieldset(
+                        legend = Option(
+                            Legend(
+                                content = Text(formLabel),
+                                classes = "govuk-!-font-weight-bold"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+}

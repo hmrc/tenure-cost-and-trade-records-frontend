@@ -126,7 +126,9 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
       case FOR6045 | FOR6046 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
           case Some(AnswerYes) =>
-            controllers.routes.TaskListController.show().url // TODO when section ready for 6045
+            controllers.aboutfranchisesorlettings.routes.RentalIncomeListController
+              .show(answers.aboutFranchisesOrLettings.map(_.rentalIncomeIndex).getOrElse(0))
+              .url
           case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
         }
       case _                 =>

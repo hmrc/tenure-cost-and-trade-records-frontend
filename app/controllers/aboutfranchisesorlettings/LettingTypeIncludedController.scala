@@ -74,7 +74,7 @@ class LettingTypeIncludedController @Inject() (
     )
   }
 
-  def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
 
     val operatorName = getOperatorName(idx)
 

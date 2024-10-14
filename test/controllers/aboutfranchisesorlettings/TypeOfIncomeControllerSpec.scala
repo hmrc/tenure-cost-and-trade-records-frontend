@@ -99,19 +99,6 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
     }
   }
 
-  // TODO when the new journey cya ready
-
-//  "process data correctly when from is 'CYA' via form submission" in {
-//    val controller     = typeOfLettingController()
-//    val request        = FakeRequest(POST, "/submit-path")
-//      .withFormUrlEncodedBody("typeOfIncome" -> "typeOfIncome", "from" -> "CYA")
-//    val sessionRequest = SessionRequest(session, request)
-//    val result         = controller.submit(Some(0))(sessionRequest)
-//    status(result)           shouldBe SEE_OTHER
-//    redirectLocation(result) shouldBe Some(
-//      "/send-trade-and-cost-information/check-your-answers-about-franchise-or-lettings"
-//    )
-//  }
   "update income and redirect to concession/franchise details if type selected is concessionFranchise type" in {
     val controller     = typeOfIncomeController()
     val request        = FakeRequest(POST, "/submit-path")
@@ -136,5 +123,4 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
       "/send-trade-and-cost-information/letting-type-details?idx=0"
     )
   }
-
 }

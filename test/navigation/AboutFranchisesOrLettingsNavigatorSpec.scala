@@ -372,7 +372,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           .nextPage(ConcessionTypeFeesId, sessionAboutFranchiseOrLetting6045)
           .apply(
             sessionAboutFranchiseOrLetting6045
-          ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings") // TODO
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
 
       }
 
@@ -382,7 +382,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           .nextPage(LettingTypeIncludedId, sessionAboutFranchiseOrLetting6045)
           .apply(
             sessionAboutFranchiseOrLetting6045
-          ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings") // TODO
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
       }
     }
   }
