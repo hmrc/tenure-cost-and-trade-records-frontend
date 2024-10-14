@@ -1241,7 +1241,7 @@ error.methodToFixCurrentRents.required = Dewiswch sut y cytunwyd ar y rhent pres
 
 # HOW IS CURRENT RENT FIXED
 ##########################
-howIsCurrentRentFixed.heading = Sut cafodd y rhent presennol ei osod?
+howIsCurrentRentFixed.heading = Gosod y rhent presennol
 label.newLeaseAgreement = Ar ddechrau prydles neu gytundeb newydd
 label.interimRent = Fel rhent interim o dan y Ddeddf Landlord a Thenant
 label.rentReview = Mewn adolygiad rhent
