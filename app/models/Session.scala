@@ -38,6 +38,7 @@ case class Session(
   forType: String,
   address: Address,
   token: String,
+  isWelsh: Boolean,
   stillConnectedDetails: Option[StillConnectedDetails] = None,
   removeConnectionDetails: Option[RemoveConnectionDetails] = None,
   aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = None,

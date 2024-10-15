@@ -148,12 +148,12 @@ class LoginController @Inject() (
     logger.debug(s"Signing in with: reference number : $cleanedRefNumber, postcode: $cleanPostcode")
 
     loginToBackend(hc, ec)(cleanedRefNumber, cleanPostcode, startTime)
-      .flatMap { case NoExistingDocument(token, forNum, address) =>
+      .flatMap { case NoExistingDocument(token, forNum, address, isWelsh) =>
         auditLogin(referenceNumber, false, address, forNum)
         ForTypes.find(forNum) match {
           case Some(_) =>
             session
-              .start(Session(referenceNumber, forNum, address, token))
+              .start(Session(referenceNumber, forNum, address, token, isWelsh))
               .flatMap { _ =>
                 backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map {
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
@@ -162,7 +162,7 @@ class LoginController @Inject() (
               }
           case None    =>
             session
-              .start(Session(referenceNumber, forNum, address, token))
+              .start(Session(referenceNumber, forNum, address, token, isWelsh))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
         }
       }
