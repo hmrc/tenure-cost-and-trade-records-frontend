@@ -22,7 +22,6 @@ import connectors.{Audit, SubmissionConnector}
 import models.submissions.NotConnectedSubmission
 import controllers.{FORDataCaptureController, FeedbackFormMapper}
 import models.Session
-import navigation.RemoveConnectionNavigator
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{JsObject, Json}
@@ -40,7 +39,6 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CheckYourAnswersNotConnectedController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: RemoveConnectionNavigator,
   submissionConnector: SubmissionConnector,
   checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
   confirmationNotConnectedView: confirmationNotConnected,

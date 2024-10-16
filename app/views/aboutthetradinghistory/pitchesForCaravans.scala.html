@@ -37,22 +37,6 @@
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
 }
 
-@turnoverRow(formField: String, labelKey: String, prefix: Option[PrefixOrSuffix]) = @{
-    Seq(
-        TableRow(
-            content = HtmlContent(rowLabel(labelKey))
-        ),
-        TableRow(
-            content = HtmlContent(
-                govukInput(
-                    Input(
-                        prefix = prefix,
-                        attributes = Map(
-                            "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
-                        )
-                    ).withFormField(form(formField))))))
-}
 
 @layout(
     pageHeading = messages("pitchesForCaravans.heading"),

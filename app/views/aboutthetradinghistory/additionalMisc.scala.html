@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails}
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -61,8 +60,6 @@
 }
 
 @poundPrefix = @{PrefixOrSuffix(content = Text(messages("label.pound")))}
-
-@vanSuffix=    @{PrefixOrSuffix(content = Text(messages("additionalMisc.numberOfVans.suffix")))}
 
 @turnoverRow(formField: String, labelKey: String, hint: String = "", classes: String = "", prefix: Option[PrefixOrSuffix] = poundPrefix, inputClasses: String = "", explanationMsg: String = "")  = @{
 
