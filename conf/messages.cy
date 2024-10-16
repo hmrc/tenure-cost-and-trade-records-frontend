@@ -3194,6 +3194,12 @@ checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other h
 checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.onSite = Other holiday accommodation on site?
 
+changeOccupationAndAccountingInfo.heading = Changing your occupation and accounting information
+changeOccupationAndAccountingInfo.p1 = Changing your occupation date or your financial year-end date will invalidate all your entries in the trading history section.
+changeOccupationAndAccountingInfo.warning = If you change this information, your trading history entries will be deleted and you will have to complete the section again.
+changeOccupationAndAccountingInfo.question = Are you sure you want to change your occupation and accounting information?
+error.changeOccupationAndAccountingInfo.required = Select yes if you would like to change your occupation and accounting information
+
 # Confirmation Page
 ###################
 confirmation.heading = Declaration sent successfully

@@ -343,6 +343,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ =>
       controllers.routes.TaskListController.show().withFragment("tradingHistory")
-    )
+    ),
+    ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show())
   )
 }

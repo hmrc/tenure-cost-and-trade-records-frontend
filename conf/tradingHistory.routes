@@ -236,3 +236,6 @@ POST        /remove-low-margin-fuel-cards-details                  controllers.a
 
 GET         /check-your-answers-about-the-trading-history          controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.show()
 POST        /check-your-answers-about-the-trading-history          controllers.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryController.submit()
+
+GET         /change-occupation-and-accounting-info                 controllers.aboutthetradinghistory.ChangeOccupationAndAccountingController.show
+POST        /change-occupation-and-accounting-info                 controllers.aboutthetradinghistory.ChangeOccupationAndAccountingController.submit
