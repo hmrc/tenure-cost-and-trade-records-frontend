@@ -17,25 +17,18 @@
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 
 
 @this(
         layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
-        govukInput: GovukInput,
         govukInsetText: GovukInsetText,
         dataTable: tentingPitchesTradingDataTable
 )
 
 
 @(form: Form[Seq[TentingPitchesTradingData]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
-
-
-@rowLabel(labelKey: String) = {
-    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
-}
 
 
 @layout(
