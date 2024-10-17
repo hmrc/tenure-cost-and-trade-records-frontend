@@ -14,41 +14,37 @@
  * limitations under the License.
  *@
 
+@import models.ForType
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+
+@import scala.collection.StringOps
 
 @this(layout: Layout)
 
 
 @(forType: String, referenceNumber: String)(implicit request: Request[?], messages: Messages)
 
-@removePrefix(forType: String) = @{forType.stripPrefix("FOR")}
+@forWithoutPrefix = @{new StringOps(forType).filter(_.isDigit)}
 
-@downloadSection(forType: String) = {
-   <p class="govuk-body"><a class="govuk-link" target="_blank" href=@messages(s"downloadPdf.${removePrefix(forType)}.url")>@messages(s"downloadPdf.${removePrefix(forType)}.label")</a></p>
-        <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button">@messages("downloadPdf.continueJourneyButton")</a>
-    }
+@isVaidForType = @{
+  ForType.find(forType).isDefined
+}
 
 @layout(
   pageHeading = messages("downloadPdf.heading"),
-    showH1 = false,
+  showH1 = false,
   backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
 
-    @forType match {
-        case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6020 | ForTypes.for6030 | ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6048 | ForTypes.for6076 => {
-            <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
-            <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
-            @downloadSection(forType)
-        }
-        case _                => {
-            <h2 class="govuk-heading-l">@{messages("downloadPdf.subheading")}</h2>
-            <p class="govuk-body">@messages("downloadPdf.no.download")</p>
-            <p class="govuk-body">@HtmlContent(messages("downloadPdf.retry")).asHtml</p>
-
-            <a href="@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
-        }
+    @if(isVaidForType) {
+        <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
+        <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
+        <p class="govuk-body"><a class="govuk-link" target="_blank" href=@messages(s"downloadPdf.$forWithoutPrefix.url")>@messages(s"downloadPdf.$forWithoutPrefix.label")</a></p>
+        <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button">@messages("downloadPdf.continueJourneyButton")</a>
+    } else {
+        <h2 class="govuk-heading-l">@{messages("downloadPdf.subheading")}</h2>
+        <p class="govuk-body">@messages("downloadPdf.no.download")</p>
+        <p class="govuk-body">@HtmlContent(messages("downloadPdf.retry")).asHtml</p>
+        <a href="@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
     }
 }
-
-
-

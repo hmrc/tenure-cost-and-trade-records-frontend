@@ -19,6 +19,8 @@ package controllers.aboutthetradinghistory
 import actions.SessionRequest
 import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
+import models.ForType
+import models.ForType.*
 import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
@@ -37,7 +39,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def financialYearEndController(
-    forType: String = "FOR6010",
+    forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new FinancialYearEndController(
     stubMessagesControllerComponents(),
@@ -144,7 +146,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
       // Act
       val result =
-        financialYearEndController("FOR6030", Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
+        financialYearEndController(FOR6030, Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
 
       // Assert
       status(result)           shouldBe SEE_OTHER
@@ -165,7 +167,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
       // Act
       val result =
-        financialYearEndController("FOR6020", Some(prefilledAboutYourTradingHistory6020)).submit(sessionRequest)
+        financialYearEndController(FOR6020, Some(prefilledAboutYourTradingHistory6020)).submit(sessionRequest)
 
       // Assert
       status(result)           shouldBe SEE_OTHER

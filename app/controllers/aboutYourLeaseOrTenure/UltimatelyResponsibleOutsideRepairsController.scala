@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import models.submissions.common.AnswerYes
@@ -71,7 +72,7 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case ForTypes.for6020                    =>
+      case FOR6020           =>
         if (
           request.sessionData.aboutLeaseOrAgreementPartOne
             .flatMap(_.includedInYourRentDetails)
@@ -81,13 +82,13 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
         } else {
           controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
         }
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6045 | FOR6046 =>
         request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show().url
         }
-      case _                                   => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
+      case _                 => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
     }
 
 }

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.mvc.request.RequestTarget
 import utils.TestBaseSpec
@@ -33,7 +34,7 @@ class RentDetailsControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutFranchisesOrLettingsNavigator,
     rentDetailsView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
     mockSessionRepo
   )
 

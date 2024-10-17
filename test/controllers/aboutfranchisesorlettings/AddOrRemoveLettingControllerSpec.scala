@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
 import play.api.http.Status
@@ -37,7 +38,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     aboutFranchisesOrLettingsNavigator,
     addOrRemoveLettingView,
     genericRemoveConfirmationView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
     mockSessionRepo
   )
 

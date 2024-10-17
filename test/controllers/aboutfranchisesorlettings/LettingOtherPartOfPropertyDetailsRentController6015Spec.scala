@@ -17,7 +17,8 @@
 package controllers.aboutfranchisesorlettings
 
 import controllers.aboutfranchisesorlettings
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
@@ -37,7 +38,7 @@ class LettingOtherPartOfPropertyDetailsRentController6015Spec extends TestBaseSp
       stubMessagesControllerComponents(),
       mockAboutFranchisesOrLettingsNavigator,
       lettingOtherPartOfPropertyRentDetailsView,
-      preEnrichedActionRefiner(forType = ForTypes.for6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      preEnrichedActionRefiner(forType = FOR6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 

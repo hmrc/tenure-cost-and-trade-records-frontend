@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationDetails, CateringOperationSection}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -131,9 +132,9 @@ class CateringOperationDetailsController @Inject() (
 
   private def getBackLink(answers: Session, maybeIndex: Option[Int]): Either[String, String] =
     answers.forType match {
-      case ForTypes.for6015 | ForTypes.for6016 =>
+      case FOR6015 | FOR6016 =>
         Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
-      case _                                   =>
+      case _                 =>
         maybeIndex match {
           case Some(index) if index > 0 =>
             Right(

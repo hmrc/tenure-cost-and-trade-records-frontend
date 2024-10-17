@@ -17,14 +17,15 @@
 package controllers.aboutthetradinghistory
 
 import controllers.aboutthetradinghistory
-import models.ForTypes._
+import models.ForType
+import models.ForType.*
 import play.api.http.Status
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class WhatYouWillNeedControllerSpec extends TestBaseSpec {
 
-  def whatYouWillNeedController(forType: String = for6010) = new WhatYouWillNeedController(
+  def whatYouWillNeedController(forType: ForType = FOR6010) = new WhatYouWillNeedController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     whatYouWillNeedView,
@@ -47,26 +48,26 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return OK for FOR6045 " in {
-      val result = whatYouWillNeedController(for6045).show(fakeRequest)
+    "return OK for FOR6045" in {
+      val result = whatYouWillNeedController(FOR6045).show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
     }
 
-    "return OK for FOR6046 " in {
-      val result = whatYouWillNeedController(for6046).show(fakeRequest)
+    "return OK for FOR6046" in {
+      val result = whatYouWillNeedController(FOR6046).show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
     }
 
-    "return OK for FOR6048 " in {
-      val result = whatYouWillNeedController(for6048).show(fakeRequest)
+    "return OK for FOR6048" in {
+      val result = whatYouWillNeedController(FOR6048).show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
     }
 
-    "return OK for FOR6076 " in {
-      val result = whatYouWillNeedController(for6076).show(fakeRequest)
+    "return OK for FOR6076" in {
+      val result = whatYouWillNeedController(FOR6076).show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
     }

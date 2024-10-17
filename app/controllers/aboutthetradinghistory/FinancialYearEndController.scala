@@ -19,7 +19,8 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CheckYourAnswersAboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost, TurnoverSection, TurnoverSection6020, TurnoverSection6030}
@@ -82,7 +83,7 @@ class FinancialYearEndController @Inject() (
             val isFinancialYearsListUnchanged  = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears
 
             val updatedData: Session = request.sessionData.forType match {
-              case ForTypes.for6020                    =>
+              case FOR6020           =>
                 buildUpdateData6020(
                   firstOccupy,
                   data._1,
@@ -91,7 +92,7 @@ class FinancialYearEndController @Inject() (
                   isFinancialYearEndDayUnchanged,
                   isFinancialYearsListUnchanged
                 )
-              case ForTypes.for6030                    =>
+              case FOR6030           =>
                 buildUpdateData6030(
                   firstOccupy,
                   data._1,
@@ -100,19 +101,19 @@ class FinancialYearEndController @Inject() (
                   isFinancialYearEndDayUnchanged,
                   isFinancialYearsListUnchanged
                 )
-              case ForTypes.for6045 | ForTypes.for6046 =>
+              case FOR6045 | FOR6046 =>
                 buildUpdatedData6045(
                   aboutTheTradingHistory,
                   newOccupationAndAccounting,
                   isFinancialYearEndDayUnchanged
                 )
-              case ForTypes.for6076                    =>
+              case FOR6076           =>
                 buildUpdatedData6076(
                   aboutTheTradingHistory,
                   newOccupationAndAccounting,
                   isFinancialYearEndDayUnchanged
                 )
-              case _                                   =>
+              case _                 =>
                 buildUpdateData(
                   firstOccupy,
                   data._1,
@@ -129,12 +130,12 @@ class FinancialYearEndController @Inject() (
                   .filter(_ =>
                     navigator.from == "CYA" && !data._2 &&
                       (isFinancialYearsListUnchanged || (
-                        request.sessionData.forType == ForTypes.for6076 && request.sessionData.aboutTheTradingHistoryPartOne
+                        request.sessionData.forType == FOR6076 && request.sessionData.aboutTheTradingHistoryPartOne
                           .flatMap(_.turnoverSections6076)
                           .flatMap(_.headOption)
                           .exists(_.electricityGenerated.isDefined)
                       ) || (
-                        (request.sessionData.forType == ForTypes.for6045 || request.sessionData.forType == ForTypes.for6046) &&
+                        (request.sessionData.forType == FOR6045 || request.sessionData.forType == FOR6046) &&
                           request.sessionData.aboutTheTradingHistoryPartOne
                             .flatMap(_.turnoverSections6045)
                             .flatMap(_.headOption)

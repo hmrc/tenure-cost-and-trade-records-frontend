@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.{AnswerNo, AnswerYes}
-import models.{AnnualRent, ForTypes, Session}
+import models.{AnnualRent, Session}
+import models.ForType.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
 import play.api.Logging
@@ -86,7 +87,7 @@ class CurrentAnnualRentController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6011 =>
+      case FOR6011 =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
@@ -95,6 +96,6 @@ class CurrentAnnualRentController @Inject() (
             logger.warn(s"Back link for current annual rent page reached with unknown value")
             controllers.routes.TaskListController.show().url
         }
-      case _                => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
+      case _       => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
     }
 }

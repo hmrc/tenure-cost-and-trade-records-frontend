@@ -20,12 +20,13 @@ import actions.{SessionRequest, WithSessionRefiner}
 import config.AppConfig
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.{ForType, Session}
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import org.scalatest.{Inside, OptionValues}
@@ -124,7 +125,7 @@ trait TestBaseSpec
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
       removeConnectionDetails = Some(prefilledRemoveConnection),
       aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
-      forType = ForTypes.for6015
+      forType = FOR6015
     )
 
   val preFilledSession6020: WithSessionRefiner =
@@ -132,7 +133,7 @@ trait TestBaseSpec
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
       removeConnectionDetails = Some(prefilledRemoveConnection),
       aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
-      forType = ForTypes.for6020
+      forType = FOR6020
     )
 
   val preFilledSession6076: WithSessionRefiner =
@@ -140,7 +141,7 @@ trait TestBaseSpec
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
       removeConnectionDetails = Some(prefilledRemoveConnection),
       aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
-      forType = ForTypes.for6076
+      forType = FOR6076
     )
 
   val preFilledSessionNone: WithSessionRefiner =
@@ -155,11 +156,11 @@ trait TestBaseSpec
       referenceNumber = "99996045004",
       aboutTheTradingHistory = prefilledAboutYourTradingHistory6045,
       aboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045,
-      forType = ForTypes.for6045
+      forType = FOR6045
     )
   def preEnrichedActionRefiner(
     referenceNumber: String = "99996010004",
-    forType: String = "FOR6010",
+    forType: ForType = FOR6010,
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll),
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo),

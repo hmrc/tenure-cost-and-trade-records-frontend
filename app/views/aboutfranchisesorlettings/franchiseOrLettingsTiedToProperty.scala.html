@@ -23,6 +23,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -31,23 +32,23 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], userType: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], forType: ForType, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @label = @{
-  userType match {
-      case ForTypes.for6015 | ForTypes.for6016 => messages("label.section.aboutTheFranchiseConcessions")
-      case ForTypes.for6020                    => messages("label.section.aboutTheLettings")
-      case ForTypes.for6045 | ForTypes.for6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
+  forType match {
+      case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
+      case FOR6020                    => messages("label.section.aboutTheLettings")
+      case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
       case _                                   => messages("label.section.aboutTheFranchiseLettings")
   }
 }
 
 @heading = @{
-    userType match {
-        case ForTypes.for6015 | ForTypes.for6016 => messages("franchiseLettingsIncome.heading")
-        case ForTypes.for6020                    => messages("franchiseLettings.6020.heading")
-        case ForTypes.for6030                    => messages("franchiseLettings.6030.heading")
-        case ForTypes.for6045 | ForTypes.for6046 => messages("franchiseLettings.6045.heading")
+    forType match {
+        case FOR6015 | FOR6016 => messages("franchiseLettingsIncome.heading")
+        case FOR6020                    => messages("franchiseLettings.6020.heading")
+        case FOR6030                    => messages("franchiseLettings.6030.heading")
+        case FOR6045 | FOR6046 => messages("franchiseLettings.6045.heading")
         case _                                   => messages("franchiseLettings.heading")
     }
 }
@@ -60,11 +61,11 @@
     theForm = theForm
 ) {
 
-    @userType match {
-        case ForTypes.for6020 => {
+    @forType match {
+        case FOR6020 => {
             <p class="govuk-body govuk-hint">@messages("franchiseLettings.6020.p1")</p>
         }
-        case ForTypes.for6030 => {
+        case FOR6030 => {
             <p class="govuk-body">@messages("franchiseLettingsIncome.p1")</p>
 
             <ul class='govuk-list govuk-list--bullet'>
@@ -72,7 +73,7 @@
                 <li><span class="govuk-body">@messages("franchiseLettingsIncome.list2")</span></li>
             </ul>
         }
-        case ForTypes.for6045 | ForTypes.for6046 => {
+        case FOR6045 | FOR6046 => {
             <p class="govuk-body">@messages("franchiseLettingsIncome.p1")</p>
             <ul class='govuk-list govuk-list--bullet'>
                 <li><span class="govuk-body">@messages("franchiseLettingsIncome6045.list1")</span></li>

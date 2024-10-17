@@ -21,7 +21,8 @@ import config.ErrorHandler
 import connectors.AddressLookupConnector
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
@@ -130,7 +131,7 @@ class AboutYourLandlordController @Inject() (
     )
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
-    if (answers.forType == ForTypes.for6020)
+    if (answers.forType == FOR6020)
       controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show().url
     else
       navigator.from match {

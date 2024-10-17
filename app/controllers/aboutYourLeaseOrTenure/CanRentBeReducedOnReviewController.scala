@@ -19,7 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
-import models.ForTypes
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -70,7 +70,7 @@ class CanRentBeReducedOnReviewController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case ForTypes.for6020 =>
+      case FOR6020 =>
         if (
           request.sessionData.aboutLeaseOrAgreementPartTwo
             .flatMap(_.intervalsOfRentReview)
@@ -80,7 +80,7 @@ class CanRentBeReducedOnReviewController @Inject() (
         } else {
           controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
         }
-      case _                => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+      case _       => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
     }
 
 }

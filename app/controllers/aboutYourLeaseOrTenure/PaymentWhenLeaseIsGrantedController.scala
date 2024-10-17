@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -83,9 +84,9 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
         ) match {
           case Some("yes") =>
             answers.forType match {
-              case ForTypes.for6030 =>
+              case FOR6030 =>
                 controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
-              case _                => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+              case _       => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
             }
           case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _           =>

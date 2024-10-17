@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -32,7 +33,7 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def rentPayableVaryAccordingToGrossOrNetController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
       prefilledAboutLeaseOrAgreementPartOneNoOpenMarket
     ),
@@ -71,22 +72,8 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 and HTML with Rent Payable Vary Gross or Net and form type invalid in the sessions" in {
-      val controller = rentPayableVaryAccordingToGrossOrNetController(
-        forType = "6060",
-        aboutLeaseOrAgreementPartOne = None
-      )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
-      )
-    }
-
     "return 200 and HTML with Rent Payable Vary Gross or Net and 6030 in the sessions" in {
-      val controller = rentPayableVaryAccordingToGrossOrNetController(forType = ForTypes.for6011)
+      val controller = rentPayableVaryAccordingToGrossOrNetController(forType = FOR6011)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

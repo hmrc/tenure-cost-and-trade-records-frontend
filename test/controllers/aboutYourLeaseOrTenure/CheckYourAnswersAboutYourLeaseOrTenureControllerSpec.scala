@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,7 +27,7 @@ import utils.TestBaseSpec
 class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec {
 
   def cYAAboutYourLeaseOrTenureController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) = new CheckYourAnswersAboutYourLeaseOrTenureController(
@@ -103,7 +104,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
 
     "return 200 and HTML with CYA and when no Legal Planning Restrictions (Yes) in the session for 6011" in {
       val controller =
-        cYAAboutYourLeaseOrTenureController(forType = ForTypes.for6011, aboutLeaseOrAgreementPartTwo = None)
+        cYAAboutYourLeaseOrTenureController(forType = FOR6011, aboutLeaseOrAgreementPartTwo = None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -115,7 +116,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
 
     "return exception with CYA and when no Legal Planning Restrictions in the session for other forms" in {
       val controller =
-        cYAAboutYourLeaseOrTenureController(forType = ForTypes.for6020, aboutLeaseOrAgreementPartTwo = None)
+        cYAAboutYourLeaseOrTenureController(forType = FOR6020, aboutLeaseOrAgreementPartTwo = None)
       val result     = controller.show(fakeRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe "Navigation for CYA about lease without correct selection of conditions by controller"
@@ -124,7 +125,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
 
     "return exception with CYA and when no Legal Planning Restrictions in the session for 6076" in {
       val controller =
-        cYAAboutYourLeaseOrTenureController(forType = ForTypes.for6076, aboutLeaseOrAgreementPartTwo = None)
+        cYAAboutYourLeaseOrTenureController(forType = FOR6076, aboutLeaseOrAgreementPartTwo = None)
       val result     = controller.show(fakeRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe "Navigation for CYA about lease without correct selection of conditions by controller"

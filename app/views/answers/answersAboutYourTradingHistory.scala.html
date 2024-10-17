@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.ForType.*
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 @import models.submissions.aboutthetradinghistory.CostOfSales
@@ -108,10 +109,10 @@
 
 @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
     forType match {
-        case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
-        case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 | ForTypes.for6046 => request.sessionData.financialYearEndDates6045.map(_._1)
-        case ForTypes.for6076 => request.sessionData.financialYearEndDates6076.map(_._1)
+        case FOR6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
+        case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case FOR6045 | FOR6046 => request.sessionData.financialYearEndDates6045.map(_._1)
+        case FOR6076 => request.sessionData.financialYearEndDates6076.map(_._1)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
 }
@@ -495,7 +496,7 @@
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
-@if(Seq(ForTypes.for6045, ForTypes.for6046) contains forType) {
+@if(Seq(FOR6045, FOR6046) contains forType) {
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
             _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
@@ -521,7 +522,7 @@
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                     _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                     forType match {
-                        case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6076 =>
+                        case FOR6020 | FOR6045 | FOR6046 | FOR6076 =>
                             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
                         case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                     },
@@ -530,12 +531,12 @@
 }
 
 
-@if(!(Seq(ForTypes.for6020, ForTypes.for6045, ForTypes.for6046, ForTypes.for6076) contains forType)) {
+@if(!(Seq(FOR6020, FOR6045, FOR6046, FOR6076) contains forType)) {
     <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
         forType match {
-            case ForTypes.for6016 =>
+            case FOR6016 =>
                 Seq(
                     SummaryListRow(
                         key = Key(HtmlContent(turnoverKeys0616)),
@@ -543,7 +544,7 @@
                         actions = actions
                     )
                 )
-            case ForTypes.for6015 =>
+            case FOR6015 =>
                 Seq(
                     SummaryListRow(
                         key = Key(HtmlContent(turnoverKeys0616)),
@@ -551,7 +552,7 @@
                         actions = actions
                     )
                 )
-            case ForTypes.for6030 =>
+            case FOR6030 =>
                 Seq(
                     SummaryListRow(
                         key = Key(HtmlContent(turnoverKeys6030)),
@@ -571,7 +572,7 @@
     ))
 }
 
-@if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+@if(forType == FOR6045 || forType == FOR6046) {
 
     <h2 class="govuk-heading-l">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.section")</h2>
 
@@ -724,7 +725,7 @@
 
 }
 
-@if(forType == ForTypes.for6076) {
+@if(forType == FOR6076) {
 
     @pageAnswers("taskList.6076.powerGenerated",
         aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
@@ -836,7 +837,7 @@
 
 }
 
-@if(forType == ForTypes.for6030) {
+@if(forType == FOR6030) {
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030",
             _.unusualCircumstances.map(_.unusualCircumstances),
@@ -844,7 +845,7 @@
     ))
 }
 
-@if(forType == ForTypes.for6020) {
+@if(forType == FOR6020) {
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.fuelSales")</h2>
 
@@ -1036,7 +1037,7 @@
     ))
 }
 
-@if(forType == ForTypes.for6015) {
+@if(forType == FOR6015) {
     <h2 class="govuk-heading-m">@messages("costOfSales.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =

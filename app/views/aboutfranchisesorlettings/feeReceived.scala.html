@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.ForType.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
@@ -37,14 +38,14 @@
 
 @dataForType = @{
   request.sessionData.forType match {
-      case ForTypes.for6046 | ForTypes.for6045 => request.sessionData.financialYearEndDates6045
+      case FOR6046 | FOR6045 => request.sessionData.financialYearEndDates6045
       case _                                   => request.sessionData.financialYearEndDates6030
   }
 }
 
 @controllerForType = @{
     request.sessionData.forType match {
-        case ForTypes.for6046 | ForTypes.for6045 => controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.submit(idx)
+        case FOR6046 | FOR6045 => controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.submit(idx)
         case _                                   => controllers.aboutfranchisesorlettings.routes.FeeReceivedController.submit(idx)
     }
 }
@@ -59,7 +60,7 @@
     theForm = form
 ) {
 
-    @if(request.sessionData.forType == ForTypes.for6030) {
+    @if(request.sessionData.forType == FOR6030) {
 
         <p class="govuk-body govuk-!-width-two-thirds">@messages("feeReceived.p1")</p>
     }
@@ -120,7 +121,7 @@
             </tbody>
         </table>
 
-@if(request.sessionData.forType == ForTypes.for6030) {
+@if(request.sessionData.forType == FOR6030) {
 
     @hmrcCharacterCount(
         CharacterCount(

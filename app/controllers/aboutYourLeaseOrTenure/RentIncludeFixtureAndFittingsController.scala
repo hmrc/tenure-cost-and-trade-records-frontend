@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
@@ -86,12 +87,12 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     val index = answers.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
 
     answers.forType match {
-      case ForTypes.for6020 =>
+      case FOR6020 =>
         answers.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.isRentPaidSeparately) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show().url
           case _               => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
         }
-      case ForTypes.for6030 =>
+      case FOR6030 =>
         answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices).map(_.paymentForTradeService) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
@@ -100,7 +101,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
             logger.warn(s"Back link for fixture and fittings page reached with unknown payment trade services value")
             controllers.routes.TaskListController.show().url
         }
-      case _                =>
+      case _       =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(
           _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
         ) match {

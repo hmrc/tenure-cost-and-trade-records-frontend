@@ -16,17 +16,18 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{status, *}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
 
   def rentIncludeTradeServicesDetailsController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -63,7 +64,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Rent Include Trade Services Details in the session for 6045" in {
-      val result = rentIncludeTradeServicesDetailsController(forType = ForTypes.for6045).show(fakeRequest)
+      val result = rentIncludeTradeServicesDetailsController(forType = FOR6045).show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -74,7 +75,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML Rent Include Trade Services Details with none in the session for 6045" in {
       val controller = rentIncludeTradeServicesDetailsController(
-        forType = ForTypes.for6045,
+        forType = FOR6045,
         aboutLeaseOrAgreementPartThree = None
       )
       val result     = controller.show(fakeRequest)
@@ -96,7 +97,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     }
 
     "throw a BAD_REQUEST if an empty form is submitted for 6045" in {
-      val res = rentIncludeTradeServicesDetailsController(forType = ForTypes.for6045).submit(
+      val res = rentIncludeTradeServicesDetailsController(forType = FOR6045).submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
@@ -110,7 +111,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when form data submitted for 6045" in {
-      val res = rentIncludeTradeServicesDetailsController(forType = ForTypes.for6045).submit(
+      val res = rentIncludeTradeServicesDetailsController(forType = FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("describeServicesTextArea" -> "text")
       )
       status(res) shouldBe SEE_OTHER

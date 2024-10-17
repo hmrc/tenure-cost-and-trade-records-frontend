@@ -20,7 +20,8 @@ import config.ErrorHandler
 import connectors.AddressLookupConnector
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import models.{Address, AddressLookup, ForTypes}
+import models.{Address, AddressLookup, ForType}
+import models.ForType.*
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -39,7 +40,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   val errorHandler: ErrorHandler                         = inject[ErrorHandler]
 
   def aboutYourLandlordController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new AboutYourLandlordController(
     stubMessagesControllerComponents(),
@@ -66,7 +67,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with About Your Landlord in the session for 6020" in {
-      val controller = aboutYourLandlordController(forType = forType6020)
+      val controller = aboutYourLandlordController(forType = FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

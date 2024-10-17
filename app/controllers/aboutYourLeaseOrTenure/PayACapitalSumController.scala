@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
@@ -86,7 +87,7 @@ class PayACapitalSumController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum"
       case _    =>
         answers.forType match {
-          case ForTypes.for6020                    =>
+          case FOR6020           =>
             answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven).map(_.benefitsGiven) match {
               case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
@@ -95,11 +96,11 @@ class PayACapitalSumController @Inject() (
                 logger.warn(s"Back link for pay capital sum page reached with unknown benefits given value")
                 controllers.routes.TaskListController.show().url
             }
-          case ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6045 | FOR6046 =>
             if answers.aboutLeaseOrAgreementPartFour.flatMap(_.isGivenRentFreePeriod).contains(AnswerYes) then
               controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show().url
             else controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show().url
-          case _                                   =>
+          case _                 =>
             answers.aboutLeaseOrAgreementPartTwo.flatMap(
               _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
             ) match {

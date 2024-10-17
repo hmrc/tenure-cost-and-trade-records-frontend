@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.ForType.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @import java.time.LocalDate
@@ -41,9 +42,9 @@
 
 @indices = @{
   request.sessionData.forType match {
-      case ForTypes.for6020 =>
+      case FOR6020 =>
           request.sessionData.aboutTheTradingHistory.flatMap(_.turnoverSections6020).fold(Seq.empty[Int])(_.indices)
-      case ForTypes.for6030 =>
+      case FOR6030 =>
           request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections6030.indices)
       case _ => request.sessionData.aboutTheTradingHistory.fold(Seq.empty[Int])(_.turnoverSections.indices)
   }

@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.Audit
 import crypto.MongoHasher
+import models.ForType.*
 import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER, TEMPORARY_REDIRECT}
 import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
@@ -183,13 +184,12 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       val draft   = submissionDraft.copy(session = session)
       backendConnector.saveAsDraft(refNum, draft, hc)
       backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(draft) // SubmissionDraft exists
-      sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN", forType = "TMP_VALUE"))
+      sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN"))
 
       val sessionBefore = sessionRepo.get.futureValue.value
       mongoHasher.verify(password, sessionBefore.saveAsDraftPassword.getOrElse("")) shouldBe true
 
-      sessionBefore.token   shouldBe "NEW_TOKEN"
-      sessionBefore.forType shouldBe "TMP_VALUE"
+      sessionBefore.token shouldBe "NEW_TOKEN"
 
       val result = saveAsDraftController.resume(
         fakeRequest
@@ -203,7 +203,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       val sessionAfter = sessionRepo.get.futureValue.value
       sessionAfter.saveAsDraftPassword shouldBe None
       sessionAfter.token               shouldBe "NEW_TOKEN"
-      sessionAfter.forType             shouldBe "FOR6010"
+      sessionAfter.forType             shouldBe FOR6010
     }
   }
 

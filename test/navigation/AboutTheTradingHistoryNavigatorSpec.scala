@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import models.ForType.*
 import models.Session
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, AdditionalActivities, TouringAndTentingPitches}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, Intermittent, RenewablesPlant}
@@ -55,7 +56,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
   val sessionAboutYou: Session =
     Session(
       "99996010004",
-      "FOR6010",
+      FOR6010,
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       stillConnectedDetailsYes,
@@ -65,7 +66,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
   val sessionAboutYouIntermittent: Session =
     Session(
       "99996076004",
-      "FOR6010",
+      FOR6010,
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       stillConnectedDetailsYes,
@@ -75,13 +76,13 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
     )
 
-  val sessionAboutYou6015             = sessionAboutYou.copy(referenceNumber = "99996015004", forType = "FOR6015")
-  val sessionAboutYou6020             = sessionAboutYou.copy(referenceNumber = "99996020004", forType = "FOR6020")
-  val sessionAboutYou6030             = sessionAboutYou.copy(referenceNumber = "99996030004", forType = "FOR6030")
-  val sessionAboutYou6045             = sessionAboutYou.copy(referenceNumber = "99996045004", forType = "FOR6045")
-  val sessionAboutYou6076             = sessionAboutYou.copy(referenceNumber = "99996076004", forType = "FOR6076")
+  val sessionAboutYou6015             = sessionAboutYou.copy(referenceNumber = "99996015004", forType = FOR6015)
+  val sessionAboutYou6020             = sessionAboutYou.copy(referenceNumber = "99996020004", forType = FOR6020)
+  val sessionAboutYou6030             = sessionAboutYou.copy(referenceNumber = "99996030004", forType = FOR6030)
+  val sessionAboutYou6045             = sessionAboutYou.copy(referenceNumber = "99996045004", forType = FOR6045)
+  val sessionAboutYou6076             = sessionAboutYou.copy(referenceNumber = "99996076004", forType = FOR6076)
   val sessionAboutYouIntermittent6076 =
-    sessionAboutYouIntermittent.copy(referenceNumber = "99996076004", forType = "FOR6076")
+    sessionAboutYouIntermittent.copy(referenceNumber = "99996076004", forType = FOR6076)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

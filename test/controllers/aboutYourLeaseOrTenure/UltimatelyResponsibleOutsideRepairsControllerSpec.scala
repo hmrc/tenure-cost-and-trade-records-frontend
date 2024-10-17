@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import utils.TestBaseSpec
@@ -32,7 +33,7 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def ultimatelyResponsibleOutsideRepairsController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
@@ -61,7 +62,7 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Ultimately Responsible Outside Repairs 6020 in the session" in {
-      val controller = ultimatelyResponsibleOutsideRepairsController(forType = ForTypes.for6020)
+      val controller = ultimatelyResponsibleOutsideRepairsController(forType = FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -72,7 +73,7 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Ultimately Responsible Outside Repairs in the session" in {
-      val controller = ultimatelyResponsibleOutsideRepairsController(ForTypes.for6020, None, None)
+      val controller = ultimatelyResponsibleOutsideRepairsController(FOR6020, None, None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -83,7 +84,7 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Ultimately Responsible Outside Repairs for 6045 in the session" in {
-      val controller = ultimatelyResponsibleOutsideRepairsController(forType = ForTypes.for6045)
+      val controller = ultimatelyResponsibleOutsideRepairsController(forType = FOR6045)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -94,7 +95,7 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Ultimately Responsible Outside Repairs for 6045 no structure build details in the session" in {
-      val controller = ultimatelyResponsibleOutsideRepairsController(ForTypes.for6045, None, None, None)
+      val controller = ultimatelyResponsibleOutsideRepairsController(FOR6045, None, None, None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

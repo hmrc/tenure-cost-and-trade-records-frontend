@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -32,7 +33,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def propertyUpdateController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -73,7 +74,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with property updates in the session for 6045 tenant additional disregarded yes" in {
-      val result = propertyUpdateController(forType = ForTypes.for6045).show(fakeRequest)
+      val result = propertyUpdateController(forType = FOR6045).show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -84,7 +85,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML with property updates in the session for 6045 tenant additional disregarded no" in {
       val result = propertyUpdateController(
-        forType = ForTypes.for6045,
+        forType = FOR6045,
         aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
       ).show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -96,7 +97,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML property updates with none in the session for 6045" in {
-      val controller = propertyUpdateController(forType = ForTypes.for6045, aboutLeaseOrAgreementPartTwo = None)
+      val controller = propertyUpdateController(forType = FOR6045, aboutLeaseOrAgreementPartTwo = None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

@@ -20,7 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 import form.confirmableActionForm.confirmableActionForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -52,11 +53,11 @@ class AddAnotherCateringOperationController @Inject() (
   ): Option[AboutFranchisesOrLettings] =
     request.sessionData.aboutFranchisesOrLettings
 
-  private def forType(implicit request: SessionRequest[AnyContent]): String =
+  private def forType(implicit request: SessionRequest[AnyContent]): ForType =
     request.sessionData.forType
 
   private def getOperatorName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
-    if (forType == ForTypes.for6030) {
+    if (forType == FOR6030) {
       franchisesOrLettingsData
         .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(idx)))
         .map(_.cateringOperationBusinessDetails.operatorName)
@@ -67,7 +68,7 @@ class AddAnotherCateringOperationController @Inject() (
     }
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val addAnother = if (forType == ForTypes.for6030) {
+    val addAnother = if (forType == FOR6030) {
       franchisesOrLettingsData
         .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(index)))
         .flatMap(_.addAnotherOperationToProperty)
@@ -117,7 +118,7 @@ class AddAnotherCateringOperationController @Inject() (
             )
           ),
         data =>
-          if (forType == ForTypes.for6030) {
+          if (forType == FOR6030) {
             Redirect(
               if (data == AnswerNo && navigator.from == "CYA") {
                 controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
@@ -210,7 +211,7 @@ class AddAnotherCateringOperationController @Inject() (
       {
         case AnswerYes =>
           forType match {
-            case ForTypes.for6030 =>
+            case FOR6030 =>
               franchisesOrLettingsData.flatMap(_.cateringOperationBusinessSections).map { businessSections =>
                 val updatedSections = businessSections.patch(idx, Nil, 1)
                 session.saveOrUpdate(
@@ -219,7 +220,7 @@ class AddAnotherCateringOperationController @Inject() (
                   )
                 )
               }
-            case _                =>
+            case _       =>
               franchisesOrLettingsData.map(_.cateringOperationSections).map { cateringOperationSections =>
                 val updatedSections = cateringOperationSections.patch(idx, Nil, 1)
                 session.saveOrUpdate(
@@ -239,7 +240,7 @@ class AddAnotherCateringOperationController @Inject() (
   private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else if (forType == ForTypes.for6030) {
+    } else if (forType == FOR6030) {
       controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx).url
     } else {
       controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx).url

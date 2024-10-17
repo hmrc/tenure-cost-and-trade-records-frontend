@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import models.ForType.*
 @import models.submissions.aboutyouandtheproperty.PropertyDetailsString
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -25,9 +26,9 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyDetailsString], forType: String, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[PropertyDetailsString], forType: ForType, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
-@for6020 = @{forType == ForTypes.for6020}
+@for6020 = @{forType == FOR6020}
 
 @hint = @{
     if(for6020) Some(Hint(content = Text(messages("hint.propertyCurrentlyUsedString"))))  else {
