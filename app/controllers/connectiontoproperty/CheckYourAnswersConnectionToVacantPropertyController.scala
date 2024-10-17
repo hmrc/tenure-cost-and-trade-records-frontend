@@ -18,7 +18,6 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import navigation.ConnectionToPropertyNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -31,7 +30,6 @@ import scala.concurrent.Future
 @Singleton
 class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: ConnectionToPropertyNavigator,
   checkYourAnswersConnectionToVacantPropertyView: checkYourAnswersConnectionToVacantProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

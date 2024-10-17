@@ -15,41 +15,49 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import actions.SessionRequest
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF,
-
+        govukWarningText: GovukWarningText
 )
 
 
-@(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[?])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
-    pageHeading = messages("tentingPitchesCertificated.heading"),
+    pageHeading = messages("changeOccupationAndAccountingInfo.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
-    backLinkUrl = backLink,
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    theForm = theForm,
-    showH1 = false
+    backLinkUrl = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url,
+    theForm = form,
+    fullWidth = false,
+    showH1 = true
 ) {
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.submit()) {
+
+    <p class="govuk-body">@messages("changeOccupationAndAccountingInfo.p1")</p>
+
+    @govukWarningText(WarningText(
+        content = Text(messages("changeOccupationAndAccountingInfo.warning"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.submit) {
 
         @includes.radioButtonsYesNo(
             govukRadios,
-            theForm,
-            "tentingPitchesCertificated",
-            "tentingPitchesCertificated.heading",
-            classes = "govuk-fieldset__legend--l",
-            isHeading = true
+            form,
+            "changeOccupationAndAccountingInfo",
+            "changeOccupationAndAccountingInfo.question",
+            "label.yes",
+            "label.no",
+            "govuk-fieldset__legend--m"
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }
-
 
 }

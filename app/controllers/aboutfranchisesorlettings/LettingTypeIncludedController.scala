@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord}
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.{LettingTypeIncludedId, LettingTypeRentId}
+import navigation.identifiers.LettingTypeIncludedId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -43,7 +43,7 @@ class LettingTypeIncludedController @Inject() (
     with I18nSupport
     with Logging {
 
-  private def getLettingIncomeRecord(index: Int)(implicit request: SessionRequest[_]): Option[LettingIncomeRecord] =
+  private def getLettingIncomeRecord(index: Int)(implicit request: SessionRequest[?]): Option[LettingIncomeRecord] =
     for {
       allRecords <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       record     <- allRecords.lift(index)
@@ -53,7 +53,7 @@ class LettingTypeIncludedController @Inject() (
                     }
     } yield letting
 
-  private def getOperatorName(index: Int)(implicit request: SessionRequest[_]): String =
+  private def getOperatorName(index: Int)(implicit request: SessionRequest[?]): String =
     getLettingIncomeRecord(index).flatMap(_.operatorDetails.map(_.operatorName)).getOrElse("")
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>

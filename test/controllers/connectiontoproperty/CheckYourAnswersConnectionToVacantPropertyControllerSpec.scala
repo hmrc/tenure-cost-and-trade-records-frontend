@@ -28,7 +28,6 @@ class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseS
   ) =
     new CheckYourAnswersConnectionToVacantPropertyController(
       stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
       checkYourAnswersConnectionToVacantProperty,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo

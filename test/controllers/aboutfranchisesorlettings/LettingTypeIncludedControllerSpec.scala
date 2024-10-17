@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 
-import controllers.aboutfranchisesorlettings.LettingTypeIncludedController
+package controllers.aboutfranchisesorlettings
+
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
-import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
-
-import controllers.aboutfranchisesorlettings.LettingTypeIncludedController
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import navigation.AboutFranchisesOrLettingsNavigator
-import org.jsoup.Jsoup
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.MessagesControllerComponents
 import play.api.test.FakeRequest
@@ -110,7 +103,8 @@ class LettingTypeIncludedControllerSpec extends TestBaseSpec {
       val res = controller().submit(0)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
-
+      status(res) shouldBe BAD_REQUEST
     }
   }
+
 }
