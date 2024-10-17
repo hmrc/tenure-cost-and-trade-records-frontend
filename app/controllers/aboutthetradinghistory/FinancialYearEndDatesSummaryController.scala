@@ -19,7 +19,8 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDatesSummaryForm.financialYearEndDatesSummaryForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import navigation.AboutTheTradingHistoryNavigator
@@ -97,20 +98,20 @@ class FinancialYearEndDatesSummaryController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(implicit request: SessionRequest[AnyContent]) =
     request.sessionData.forType match {
-      case ForTypes.for6020                    =>
+      case FOR6020           =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
-      case ForTypes.for6030                    => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6030           => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
+      case FOR6045 | FOR6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6045)
           .flatMap(_.headOption)
           .exists(_.grossReceiptsCaravanFleetHire.isDefined)
-      case ForTypes.for6076                    =>
+      case FOR6076           =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6076)
           .flatMap(_.headOption)
           .exists(_.electricityGenerated.isDefined)
-      case _                                   => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
+      case _                 => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
     }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]) =

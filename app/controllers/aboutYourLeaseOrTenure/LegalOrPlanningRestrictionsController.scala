@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictions
 import models.submissions.common.{AnswerNo, AnswerYes}
@@ -77,7 +78,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case ForTypes.for6020                    =>
+      case FOR6020           =>
         request.sessionData.aboutLeaseOrAgreementPartTwo
           .flatMap(_.payACapitalSumDetails)
           .map(_.capitalSumOrPremium) match {
@@ -87,14 +88,14 @@ class LegalOrPlanningRestrictionsController @Inject() (
             logger.warn(s"Back link for pay capital sum page reached with unknown benefits given value")
             controllers.routes.TaskListController.show().url
         }
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6045 | FOR6046 =>
         request.sessionData.aboutLeaseOrAgreementPartTwo
           .flatMap(_.payACapitalSumDetails)
           .map(_.capitalSumOrPremium) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }
-      case _                                   => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
+      case _                 => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
     }
 
 }

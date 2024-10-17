@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfProperties6030Form.lettingOtherPartOfProperties6030Form
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
-import models.{ForTypes, Session}
+import models.ForType
+import models.ForType.*
+import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -45,14 +47,14 @@ class LettingOtherPartOfPropertyController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[AnyContent]): String =
+  private def forType(implicit request: SessionRequest[AnyContent]): ForType =
     request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationView(
-          if (forType == ForTypes.for6030) {
+          if (forType == FOR6030) {
             request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
               case Some(lettingOtherPartOfProperty) =>
                 lettingOtherPartOfProperties6030Form.fill(lettingOtherPartOfProperty)
@@ -75,7 +77,7 @@ class LettingOtherPartOfPropertyController @Inject() (
               )
           },
           request.sessionData.toSummary,
-          request.sessionData.forType
+          forType
         )
       )
     )
@@ -83,7 +85,7 @@ class LettingOtherPartOfPropertyController @Inject() (
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      if (forType == ForTypes.for6030) {
+      if (forType == FOR6030) {
         lettingOtherPartOfProperties6030Form
       } else {
         lettingOtherPartOfPropertiesForm
@@ -102,7 +104,7 @@ class LettingOtherPartOfPropertyController @Inject() (
                 )
             },
             request.sessionData.toSummary,
-            request.sessionData.forType
+            forType
           )
         ),
       data => {
@@ -129,9 +131,9 @@ class LettingOtherPartOfPropertyController @Inject() (
       case "TL" => Right(controllers.routes.TaskListController.show().url + "#letting-other-part-of-property")
       case _    =>
         answers.forType match {
-          case ForTypes.for6015 | ForTypes.for6016 =>
+          case FOR6015 | FOR6016 =>
             Right(getBackLinkOfrSections(answers))
-          case _                                   =>
+          case _                 =>
             Right(getBackLinkOfrSections(answers))
         }
     }
@@ -146,9 +148,9 @@ class LettingOtherPartOfPropertyController @Inject() (
         controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index).url
       case None        =>
         answers.forType match {
-          case ForTypes.for6015 | ForTypes.for6016 =>
+          case FOR6015 | FOR6016 =>
             controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
-          case _                                   => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+          case _                 => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
         }
     }
 

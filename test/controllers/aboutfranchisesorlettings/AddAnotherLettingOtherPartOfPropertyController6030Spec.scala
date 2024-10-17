@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@ package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -38,7 +39,7 @@ class AddAnotherLettingOtherPartOfPropertyController6030Spec extends TestBaseSpe
       aboutFranchisesOrLettingsNavigator,
       addAnotherOperationConcessionFranchise,
       genericRemoveConfirmationView,
-      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      preEnrichedActionRefiner(forType = FOR6030, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 

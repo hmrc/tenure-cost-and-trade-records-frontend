@@ -21,7 +21,8 @@ import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import play.api.Logging
@@ -90,7 +91,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6010 | ForTypes.for6011 =>
+      case FOR6010 | FOR6011 =>
         answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
           case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
           case Some("no")  => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
@@ -98,7 +99,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
-      case ForTypes.for6015 | ForTypes.for6016 =>
+      case FOR6015 | FOR6016 =>
         answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
           case Some("yes") =>
             controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
@@ -107,7 +108,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
-      case ForTypes.for6030                    =>
+      case FOR6030           =>
         answers.aboutYouAndTheProperty.flatMap(_.charityQuestion.map(_.name)) match {
           case Some("yes") => controllers.aboutyouandtheproperty.routes.TradingActivityController.show().url
           case Some("no")  => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url
@@ -115,10 +116,10 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             logger.warn(s"Backlink error, No value for charity question")
             controllers.routes.TaskListController.show().url
         }
-      case ForTypes.for6020                    => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6020           => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
+      case FOR6045 | FOR6046 =>
         controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
-      case ForTypes.for6076                    => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
-      case _                                   => controllers.routes.LoginController.show.url
+      case FOR6076           => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
+      case _                 => controllers.routes.LoginController.show.url
     }
 }

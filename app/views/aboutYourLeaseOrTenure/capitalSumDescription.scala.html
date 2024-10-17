@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.ForType.*
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
@@ -35,7 +36,7 @@
 
 @heading = @{
  request.sessionData.forType match {
-  case ForTypes.for6045 | ForTypes.for6046 => "capitalSumDescription6045.heading"
+  case FOR6045 | FOR6046 => "capitalSumDescription6045.heading"
   case _                => "capitalSumDescription.heading"
  }
 }

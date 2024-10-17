@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -89,9 +90,9 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
     otherChoice match {
       case Some("other") =>
         answers.forType match {
-          case ForTypes.for6010 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 | ForTypes.for6076 =>
+          case FOR6010 | FOR6015 | FOR6016 | FOR6030 | FOR6076 =>
             controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
-          case _                                                                                            => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
+          case _                                               => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
         }
       case _             =>
         logger.warn(

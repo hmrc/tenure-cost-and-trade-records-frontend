@@ -16,7 +16,8 @@
 
 package controllers.aboutfranchisesorlettings
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
@@ -46,7 +47,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       mockAboutFranchisesOrLettingsNavigator,
       cateringOperationDetailsView,
-      preEnrichedActionRefiner(forType = ForTypes.for6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      preEnrichedActionRefiner(forType = FOR6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 

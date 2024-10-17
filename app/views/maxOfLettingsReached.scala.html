@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import actions.SessionRequest
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(
@@ -40,9 +41,9 @@
  source match {
   case "franchiseCatering" =>
    forType match {
-    case ForTypes.for6010 | ForTypes.for6011 => messages(s"maxOf5Lettings.businessOrFranchise.heading")
-    case ForTypes.for6015 | ForTypes.for6016 => messages(s"maxOf5Lettings.businessOrConcession.heading")
-    case ForTypes.for6030 => messages(s"maxOf5Lettings.concessionOrFranchise.heading")
+    case FOR6010 | FOR6011 => messages(s"maxOf5Lettings.businessOrFranchise.heading")
+    case FOR6015 | FOR6016 => messages(s"maxOf5Lettings.businessOrConcession.heading")
+    case FOR6030 => messages(s"maxOf5Lettings.concessionOrFranchise.heading")
     case _ => messages("maxOf5Lettings.heading")
    }
   case _ => messages("maxOf5Lettings.heading")
@@ -53,9 +54,9 @@
  source match {
   case "franchiseCatering" =>
    forType match {
-    case ForTypes.for6010 | ForTypes.for6011 => messages("maxOf5Lettings.businessOrFranchise.content")
-    case ForTypes.for6015 | ForTypes.for6016 => messages("maxOf5Lettings.businessOrConcession.content")
-    case ForTypes.for6030                    => messages("maxOf5Lettings.concessionOrFranchise.content")
+    case FOR6010 | FOR6011 => messages("maxOf5Lettings.businessOrFranchise.content")
+    case FOR6015 | FOR6016 => messages("maxOf5Lettings.businessOrConcession.content")
+    case FOR6030                    => messages("maxOf5Lettings.concessionOrFranchise.content")
     case _                                   => messages("maxOf5Lettings.content")
    }
   case _                                     => messages("maxOf5Lettings.content")

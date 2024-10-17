@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -31,7 +32,7 @@ class LegalOrPlanningRestrictionsController6045Spec extends TestBaseSpec {
   import TestData.*
   import utils.FormBindingTestAssertions.*
   def legalOrPlanningRestrictionsController(
-    forType: String = ForTypes.for6045,
+    forType: ForType = FOR6045,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new LegalOrPlanningRestrictionsController(
@@ -65,7 +66,7 @@ class LegalOrPlanningRestrictionsController6045Spec extends TestBaseSpec {
     }
 
     "return 200 and HTML with capital sum with yes in the session" in {
-      val controller = legalOrPlanningRestrictionsController(ForTypes.for6020)
+      val controller = legalOrPlanningRestrictionsController(FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -77,7 +78,7 @@ class LegalOrPlanningRestrictionsController6045Spec extends TestBaseSpec {
 
     "return 200 and HTML with capital sum with no in the session" in {
       val controller =
-        legalOrPlanningRestrictionsController(ForTypes.for6020, Some(prefilledAboutLeaseOrAgreementPartTwoNo))
+        legalOrPlanningRestrictionsController(FOR6020, Some(prefilledAboutLeaseOrAgreementPartTwoNo))
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -88,7 +89,7 @@ class LegalOrPlanningRestrictionsController6045Spec extends TestBaseSpec {
     }
 
     "return 200 and HTML legal or planning restrictions is none in the session for 6020" in {
-      val controller = legalOrPlanningRestrictionsController(ForTypes.for6020, None)
+      val controller = legalOrPlanningRestrictionsController(FOR6020, None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

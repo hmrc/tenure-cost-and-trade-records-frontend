@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationRentIncludesPageId
@@ -95,8 +96,8 @@ class CateringOperationRentIncludesController @Inject() (
     )).getOrElse(startRedirect)
   }
 
-  def backlink(forType: String, index: Int): String = {
-    val isForType6016Or6015 = forType == ForTypes.for6016 || forType == ForTypes.for6015
+  def backlink(forType: ForType, index: Int): String = {
+    val isForType6016Or6015 = forType == FOR6016 || forType == FOR6015
 
     isForType6016Or6015 match {
       case true  =>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -39,7 +40,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
       "tenant",
       backLink,
       Summary("99996010001"),
-      "6010"
+      FOR6010
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LettingOtherPartOfPropertyRentDetails]) =>
@@ -50,7 +51,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
       "tenant",
       backLink,
       Summary("99996010001"),
-      "6010"
+      FOR6010
     )(fakeRequest, messages)
 
   "Catering operation rent details view" must {

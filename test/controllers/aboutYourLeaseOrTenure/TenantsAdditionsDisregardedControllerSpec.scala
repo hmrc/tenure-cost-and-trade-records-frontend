@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,7 +27,7 @@ import utils.TestBaseSpec
 class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
 
   def tenantsAdditionsDisregardedController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new TenantsAdditionsDisregardedController(
@@ -49,7 +50,7 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML Tenants Additional Disregard with none in the session" in {
-      val controller = tenantsAdditionsDisregardedController(forType = ForTypes.for6020)
+      val controller = tenantsAdditionsDisregardedController(forType = FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -71,7 +72,7 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML Tenants Additional Disregard with formerLeaseSurrendered is yes in the session" in {
-      val controller = tenantsAdditionsDisregardedController(forType = ForTypes.for6045)
+      val controller = tenantsAdditionsDisregardedController(forType = FOR6045)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -83,7 +84,7 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML Tenants Additional Disregard with one in the session" in {
       val controller = tenantsAdditionsDisregardedController(
-        forType = ForTypes.for6045,
+        forType = FOR6045,
         aboutLeaseOrAgreementPartTwo = None
       )
       val result     = controller.show(fakeRequest)

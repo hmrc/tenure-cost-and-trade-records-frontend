@@ -17,6 +17,7 @@
 @import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.ForType.*
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
@@ -31,7 +32,7 @@
 )
 
 
-@(theForm: Form[IncludedInYourRentDetails], summary: Summary, forTypes: String, fromLocation: String = "")(implicit request: Request[?], messages: Messages)
+@(theForm: Form[IncludedInYourRentDetails], summary: Summary, forType: ForType, fromLocation: String = "")(implicit request: Request[?], messages: Messages)
 
 
 @layout(
@@ -65,8 +66,8 @@
                       id = "vat",
                       content = Text(messages("label.includedInYourRent.vat")),
                       value = "vat",
-                      conditionalHtml = forTypes match {
-                          case ForTypes.for6045 | ForTypes.for6046 =>
+                      conditionalHtml = forType match {
+                          case FOR6045 | FOR6046 =>
                               Some(
                                   govukInput(
                                       Input(

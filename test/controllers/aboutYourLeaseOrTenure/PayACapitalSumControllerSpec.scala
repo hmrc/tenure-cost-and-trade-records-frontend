@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -31,7 +32,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
   def payACapitalSumController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -86,7 +87,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with benefit given with yes in the session with 6020" in {
-      val controller = payACapitalSumController(ForTypes.for6020)
+      val controller = payACapitalSumController(FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -98,7 +99,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML with benefit given with no in the session with 6020" in {
       val controller = payACapitalSumController(
-        ForTypes.for6020,
+        FOR6020,
         aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
       )
       val result     = controller.show(fakeRequest)
@@ -111,7 +112,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML benefit given with none in the session with 6020" in {
-      val controller = payACapitalSumController(ForTypes.for6020, aboutLeaseOrAgreementPartThree = None)
+      val controller = payACapitalSumController(FOR6020, aboutLeaseOrAgreementPartThree = None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -122,7 +123,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML back link rent free period details with Yes in the session with 6045" in {
-      val controller = payACapitalSumController(ForTypes.for6045)
+      val controller = payACapitalSumController(FOR6045)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -133,7 +134,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML back link rent free period details with none in the session with 6045" in {
-      val controller = payACapitalSumController(ForTypes.for6045, aboutLeaseOrAgreementPartFour = None)
+      val controller = payACapitalSumController(FOR6045, aboutLeaseOrAgreementPartFour = None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -165,7 +166,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when 6020 form Yes answer submitted" in {
-      val res = payACapitalSumController(ForTypes.for6020).submit(
+      val res = payACapitalSumController(FOR6020).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
@@ -175,7 +176,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when 6020 form No answer submitted" in {
-      val res = payACapitalSumController(ForTypes.for6020).submit(
+      val res = payACapitalSumController(FOR6020).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
       )
       status(res) shouldBe SEE_OTHER
@@ -185,7 +186,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when 6030 form Yes answer submitted" in {
-      val res = payACapitalSumController(ForTypes.for6030).submit(
+      val res = payACapitalSumController(FOR6030).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
@@ -195,7 +196,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when 6030 form No answer submitted" in {
-      val res = payACapitalSumController(ForTypes.for6030).submit(
+      val res = payACapitalSumController(FOR6030).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
       )
       status(res) shouldBe SEE_OTHER
@@ -205,7 +206,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when 6045 form Yes answer submitted" in {
-      val res = payACapitalSumController(ForTypes.for6045).submit(
+      val res = payACapitalSumController(FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
@@ -215,7 +216,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when 6045 form No answer submitted" in {
-      val res = payACapitalSumController(ForTypes.for6045).submit(
+      val res = payACapitalSumController(FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
       )
       status(res) shouldBe SEE_OTHER

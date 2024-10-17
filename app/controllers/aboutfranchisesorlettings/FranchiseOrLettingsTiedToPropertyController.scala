@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
-import models.ForTypes
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -82,7 +82,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
                     request.sessionData.aboutFranchisesOrLettings
                       .flatMap(_.franchisesOrLettingsTiedToProperty)
                       .contains(AnswerYes)) ||
-                    (data == AnswerYes && request.sessionData.forType == ForTypes.for6020 &&
+                    (data == AnswerYes && request.sessionData.forType == FOR6020 &&
                       request.sessionData.aboutFranchisesOrLettings
                         .flatMap(_.lettings.map(_.size > 0))
                         .getOrElse(false))

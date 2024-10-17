@@ -16,6 +16,7 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.ForType.*
 @import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 @import models.pages.Summary
 @import views.html.answers.answersAboutYourTradingHistory
@@ -36,7 +37,7 @@
 
 @cyaPageHeading = @{
     forType match {
-        case ForTypes.for6045 | ForTypes.for6046 => messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.heading")
+        case FOR6045 | FOR6046 => messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.heading")
         case _ => messages("checkYourAnswersAboutTheTradingHistory.heading")
     }
 }

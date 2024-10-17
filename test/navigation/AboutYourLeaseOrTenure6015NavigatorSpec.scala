@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
@@ -37,7 +38,7 @@ class AboutYourLeaseOrTenure6015NavigatorSpec extends TestBaseSpec {
 
   val navigator2 = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6015 = Session("99996010004", "FOR6015", prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=")
+  val session6015 = Session("99996010004", FOR6015, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=")
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

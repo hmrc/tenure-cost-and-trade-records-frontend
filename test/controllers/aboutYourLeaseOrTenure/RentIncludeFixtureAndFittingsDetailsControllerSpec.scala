@@ -16,17 +16,18 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{status, *}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
 
   def rentIncludeFixtureAndFittingsDetailsController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -67,7 +68,7 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 data for 6045" in {
-      val result = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).show(fakeRequest)
+      val result = rentIncludeFixtureAndFittingsDetailsController(forType = FOR6045).show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -78,7 +79,7 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML Rent Includes trade services with none in the session for 6045" in {
       val controller = rentIncludeFixtureAndFittingsDetailsController(
-        forType = ForTypes.for6045,
+        forType = FOR6045,
         aboutLeaseOrAgreementPartThree = None
       )
       val result     = controller.show(fakeRequest)
@@ -106,7 +107,7 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
     }
 
     "Redirect when form data submitted for 6045" in {
-      val res = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).submit(
+      val res = rentIncludeFixtureAndFittingsDetailsController(forType = FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "describeFittingsTextArea" -> "Rent include fixture and fitting details"
         )
@@ -115,14 +116,14 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec {
     }
 
     "throw a BAD_REQUEST if an empty form is submitted for 6045" in {
-      val res = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).submit(
+      val res = rentIncludeFixtureAndFittingsDetailsController(forType = FOR6045).submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "throw a BAD_REQUEST if describeFittingsTextArea is greater than max length is submitted" in {
-      val res = rentIncludeFixtureAndFittingsDetailsController(forType = ForTypes.for6045).submit(
+      val res = rentIncludeFixtureAndFittingsDetailsController(forType = FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "describeFittingsTextArea" -> "x" * 2001
         )

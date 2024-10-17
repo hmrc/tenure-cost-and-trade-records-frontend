@@ -16,6 +16,7 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -50,7 +51,7 @@
         <p class="govuk-body">@messages("whatYouWillNeed.text3")</p>
 
         <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-            @if(forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+            @if(forType == FOR6045 || forType == FOR6046) {
                 <li>
                     <strong>@messages("whatYouWillNeed.6045.l1")</strong>
                     <p class="govuk-body">@messages("whatYouWillNeed.6045.p1")</p>
@@ -72,7 +73,7 @@
                     <p class="govuk-body">@messages("whatYouWillNeed.6045.p5")</p>
                 </li>
             }
-            @if(forType == ForTypes.for6048) {
+            @if(forType == FOR6048) {
                 <li>
                     <strong>@messages("whatYouWillNeed.6048.l1")</strong>
                     <p class="govuk-body">@messages("whatYouWillNeed.6048.p1")</p>
@@ -102,7 +103,7 @@
                     <p class="govuk-body">@messages("whatYouWillNeed.6048.p7")</p>
                 </li>
             }
-            @if(forType == ForTypes.for6076) {
+            @if(forType == FOR6076) {
                 <li>
                     <strong>@messages("whatYouWillNeed.l1")</strong>
                     <p class="govuk-body">@messages("whatYouWillNeed.p1")</p>

@@ -20,7 +20,8 @@ import actions.WithSessionRefiner
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId
@@ -90,12 +91,12 @@ class PropertyUseLeasebackArrangementController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#leaseback-arrangement"
       case _    =>
         answers.forType match {
-          case ForTypes.for6020 | ForTypes.for6076 | ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6020 | FOR6076 | FOR6045 | FOR6046 =>
             answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
               case Some("yes") => aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
               case _           => aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
             }
-          case _                                                                         => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+          case _                                     => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
         }
     }
 

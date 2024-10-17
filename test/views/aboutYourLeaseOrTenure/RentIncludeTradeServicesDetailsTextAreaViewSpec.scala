@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm
+import models.ForType.*
 import models.pages.Summary
 import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
@@ -30,10 +31,10 @@ class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehavi
     RentIncludeTradeServicesDetailsTextAreaForm.rentIncludeTradeServicesDetailsTextAreaForm
 
   def createView = () =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, "FOR6010", Summary("99996076001"))(fakeRequest, messages)
+    rentIncludeTradeServicesDetailsTextAreaView(form, FOR6010, Summary("99996076001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, "FOR6010", Summary("99996076001"))(fakeRequest, messages)
+    rentIncludeTradeServicesDetailsTextAreaView(form, FOR6010, Summary("99996076001"))(fakeRequest, messages)
 
   "Rent include trade services details" must {
 

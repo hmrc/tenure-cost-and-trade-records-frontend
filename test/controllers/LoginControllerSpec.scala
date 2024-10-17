@@ -18,6 +18,7 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
+import models.ForType.*
 import models.audit.UserData
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
@@ -160,7 +161,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
       val loginToBackendFunction = (refNum: RefNumber, postcode: Postcode, start: StartTime) => {
         assert(refNum.equals("01234567000"))
-        Future.successful(NoExistingDocument("token", "forNum", prefilledAddress))
+        Future.successful(NoExistingDocument("token", FOR6010.toString, prefilledAddress))
       }
 
       val loginToBackend = mock[LoginToBackendAction]
@@ -193,7 +194,7 @@ class LoginControllerSpec extends TestBaseSpec {
           Json.obj(
             Audit.referenceNumber -> "01234567000",
             "returningUser"       -> false,
-            Audit.formOfReturn    -> "forNum",
+            Audit.formOfReturn    -> FOR6010.toString,
             "address"             -> prefilledAddress
           )
         )
@@ -232,7 +233,7 @@ class LoginControllerSpec extends TestBaseSpec {
         eqTo(
           UserData(
             referenceNumber,
-            forType6010,
+            FOR6010,
             prefilledAddress,
             stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
             removeConnectionDetails = Some(prefilledRemoveConnection),

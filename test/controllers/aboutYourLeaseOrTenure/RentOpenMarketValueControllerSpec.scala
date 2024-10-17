@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,7 +27,7 @@ import utils.TestBaseSpec
 class RentOpenMarketValueControllerSpec extends TestBaseSpec {
 
   def rentOpenMarketValueController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new RentOpenMarketValueController(
     stubMessagesControllerComponents(),
@@ -59,7 +60,7 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with Yes in the sessions with 6020" in {
-      val controller = rentOpenMarketValueController(forType = ForTypes.for6020)
+      val controller = rentOpenMarketValueController(forType = FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -70,7 +71,7 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with No in the sessions with 6020" in {
-      val controller = rentOpenMarketValueController(ForTypes.for6020, Some(prefilledAboutLeaseOrAgreementPartOneNo))
+      val controller = rentOpenMarketValueController(FOR6020, Some(prefilledAboutLeaseOrAgreementPartOneNo))
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

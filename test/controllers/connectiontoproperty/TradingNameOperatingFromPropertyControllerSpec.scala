@@ -17,7 +17,8 @@
 package controllers.connectiontoproperty
 
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.connectiontoproperty.*
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -32,7 +33,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   import TestData._
 
   def tradingNameOperatingFromPropertyController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ) =
     new TradingNameOperatingFromPropertyController(
@@ -50,7 +51,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
     )
 
@@ -61,7 +62,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
     )
 
@@ -72,7 +73,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = ForTypes.for6076, stillConnectedDetails = stillConnectedDetails),
+      preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
       mockSessionRepo
     )
 
@@ -126,7 +127,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with trading name present in session for 6076" in {
-      val controller = tradingNameOperatingFromPropertyController(forType = ForTypes.for6076)
+      val controller = tradingNameOperatingFromPropertyController(forType = FOR6076)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -138,7 +139,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
 
     "return 200 when trading name present is not session for 6076" in {
       val controller = tradingNameOperatingFromPropertyController(
-        forType = ForTypes.for6076,
+        forType = FOR6076,
         stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit)
       )
       val result     = controller.show(fakeRequest)
@@ -152,7 +153,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
 
     "return 200 when trading name present is not session" in {
       val controller = tradingNameOperatingFromPropertyController(
-        forType = ForTypes.for6076,
+        forType = FOR6076,
         stillConnectedDetails = None
       )
       val result     = controller.show(fakeRequest)

@@ -18,6 +18,8 @@ package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
 import controllers.aboutthetradinghistory
+import models.ForType
+import models.ForType.*
 import models.Session
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import play.api.http.Status
@@ -29,7 +31,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
 
   def editFinancialYearEndDateController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
-    forType: String = "FOR6010",
+    forType: ForType = FOR6010,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None
   ): EditFinancialYearEndDateController = new EditFinancialYearEndDateController(
     stubMessagesControllerComponents(),
@@ -65,7 +67,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
     "return 200 for 6020" in {
       val result = editFinancialYearEndDateController(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
-        forType = "FOR6020"
+        forType = FOR6020
       ).show(0)(FakeRequest())
       status(result) shouldBe Status.OK
     }
@@ -73,7 +75,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
     "return 200 for 6030" in {
       val result = editFinancialYearEndDateController(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
-        forType = "FOR6030"
+        forType = FOR6030
       ).show(0)(FakeRequest())
       status(result) shouldBe Status.OK
     }
@@ -142,7 +144,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
           ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
-          forType = "FOR6020"
+          forType = FOR6020
         ).submit(index)(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -166,7 +168,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
           ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
-          forType = "FOR6020"
+          forType = FOR6020
         ).submit(index)(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -189,7 +191,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
           ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
-          forType = "FOR6030"
+          forType = FOR6030
         ).submit(index)(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
@@ -213,7 +215,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
           ) // aboutYourTradingHistory6010YesSession
         val result          = editFinancialYearEndDateController(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
-          forType = "FOR6030"
+          forType = FOR6030
         ).submit(index)(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(

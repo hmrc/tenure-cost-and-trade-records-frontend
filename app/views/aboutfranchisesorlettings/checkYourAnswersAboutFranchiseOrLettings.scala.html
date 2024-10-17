@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.ForType.*
 @import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 @import models.pages.Summary
 @import views.html.answers.answersAboutTheFranchiseLettings
@@ -34,9 +35,9 @@
 
 @label         = @{
     request.sessionData.forType match {
-        case  ForTypes.for6015 | ForTypes.for6016  => messages("label.section.aboutTheFranchiseConcessions")
-        case  ForTypes.for6020 =>                     messages("label.section.aboutTheLettings")
-        case  ForTypes.for6045 | ForTypes.for6046  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+        case  FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
+        case  FOR6020 =>                     messages("label.section.aboutTheLettings")
+        case  FOR6045 | FOR6046  => messages("label.section.aboutTheConcessionsFranchisesLettings")
         case _                                     => messages("label.section.aboutTheFranchiseLettings")
     }
 }
@@ -44,9 +45,9 @@
 
 @pageHeading = @{
   request.sessionData.forType match {
-      case  ForTypes.for6015 | ForTypes.for6016  => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
-      case  ForTypes.for6020                     => messages("checkYourAnswersLettings.heading")
-      case  ForTypes.for6045 | ForTypes.for6046  => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
+      case  FOR6015 | FOR6016  => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
+      case  FOR6020                     => messages("checkYourAnswersLettings.heading")
+      case  FOR6045 | FOR6046  => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
       case _                                     => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
   }
 }
@@ -61,7 +62,7 @@
         theForm = theForm
     ) {
         @{
-            if(request.sessionData.forType == ForTypes.for6020) {
+            if(request.sessionData.forType == FOR6020) {
                 answersLetting()
             } else {
                 answersSectionAboutTheFranchiseLettings()

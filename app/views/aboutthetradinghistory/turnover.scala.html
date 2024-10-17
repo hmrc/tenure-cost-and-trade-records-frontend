@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.ForType.*
 @import models.submissions.aboutthetradinghistory.TurnoverSection
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
@@ -34,12 +35,12 @@
 @(form: Form[Seq[TurnoverSection]],fromLocation:String="")(implicit request: SessionRequest[?], messages: Messages)
 
 @detailsContent = {
-@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+@if(forType == FOR6010 || forType == FOR6011) {
     <p class="govuk-body">@messages("turnover.details.p1")</p>
     <p class="govuk-body">@messages("turnover.details.p2")</p>
 }
 
-@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+@if(forType == FOR6015 || forType == FOR6016) {
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h1")</p>
     <p class="govuk-body">@messages("turnover.details.6015.p1")</p>
     <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h3")</p>
@@ -67,14 +68,14 @@
 }
 
 @otherReceiptsHeading = {
-@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+@if(forType == FOR6010 || forType == FOR6011) {
     <p class="govuk-body">
     @{HtmlContent(messages("turnover.otherReceipts")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption.60106011")</span>
     </p>
 }
 
-@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+@if(forType == FOR6015 || forType == FOR6016) {
     <p class="govuk-body">
         @{HtmlContent(messages("turnover.otherReceipts")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.otherReceiptsCaption")</span>
@@ -98,14 +99,14 @@
 }
 
 @accommodationHeading = {
-@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+@if(forType == FOR6010 || forType == FOR6011) {
     <p class="govuk-body">
     @{HtmlContent(messages("turnover.accommodation")).asHtml}
         <span class="govuk-caption-m">@messages("turnover.accommodationCaption")</span>
     </p>
 }
 
-@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+@if(forType == FOR6015 || forType == FOR6016) {
     <p class="govuk-body">
         @{HtmlContent(messages("turnover.accommodation")).asHtml}
     </p>
@@ -113,13 +114,13 @@
 }
 
 @averageOccupancyRateHeading = {
-@if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+@if(forType == FOR6010 || forType == FOR6011) {
     <p class="govuk-body govuk-!-font-weight-bold">
         @messages("turnover.averageOccupancyRate")
         <span class="govuk-caption-m">@messages("turnover.averageOccupancyRateCaption")</span>
     </p>
 }
-@if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+@if(forType == FOR6015 || forType == FOR6016) {
     <p class="govuk-body govuk-!-font-weight-bold">
     @messages("turnover.averageOccupancyRate")
     </p>
@@ -321,10 +322,10 @@
     }
 
 @renderRows(idx: Int) = @{
-    if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+    if(forType == FOR6010 || forType == FOR6011) {
         for60106011Rows(idx)
     }else {
-        if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        if(forType == FOR6015 || forType == FOR6016) {
             for60156016Rows(idx)
         }else{
             Seq.empty
@@ -333,7 +334,7 @@
 }
 
 @layout(
-    pageHeading = if(forType == ForTypes.for6015) {
+    pageHeading = if(forType == FOR6015) {
         messages("turnover.6015.heading")
     } else {
         messages("turnover.heading")
@@ -357,11 +358,11 @@
 ) {
 
 
-    @if(forType == ForTypes.for6010 || forType == ForTypes.for6011) {
+    @if(forType == FOR6010 || forType == FOR6011) {
         <p class="govuk-body">@messages("turnover.p1")</p>
     }
 
-    @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+    @if(forType == FOR6015 || forType == FOR6016) {
         <p class="govuk-body">@messages("turnover.6015.p1")</p>
         <p class="govuk-body">@messages("turnover.6015.p2")</p>
         @* TODO - Reinstate paragraph when cut and paste functionality developed *@
@@ -400,7 +401,7 @@
                 </tr>
             </tbody>
         </table>
-        @if(forType == ForTypes.for6015 || forType == ForTypes.for6016) {
+        @if(forType == FOR6015 || forType == FOR6016) {
             @youMustIncludeHeading
         }
         @includes.continueSaveAsDraftButtons(govukButton)

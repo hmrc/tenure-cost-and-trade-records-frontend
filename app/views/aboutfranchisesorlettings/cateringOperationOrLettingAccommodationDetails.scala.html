@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -26,11 +27,11 @@
 )
 
 
-@(theForm: Form[?], index: Option[Int], concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], index: Option[Int], concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
-@typeConcession = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
+@typeConcession = @{forType == FOR6015 || forType == FOR6016}
 
-@typeBusinessDetails = @{formType == ForTypes.for6030}
+@typeBusinessDetails = @{forType == FOR6030}
 
 @label =@{
         if(typeConcession) messages("label.section.aboutTheFranchiseConcessions")  else {

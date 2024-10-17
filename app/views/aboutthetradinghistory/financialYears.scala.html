@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import actions.SessionRequest
 @import controllers.aboutthetradinghistory
+@import models.ForType.*
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import util.SectionAnswersRowBuilder
 @import util.DateUtilLocalised
@@ -65,10 +66,10 @@
 
 @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
     forType match {
-        case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
-        case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 | ForTypes.for6046 => request.sessionData.financialYearEndDates6045.map(_._1)
-        case ForTypes.for6076 => request.sessionData.financialYearEndDates6076.map(_._1)
+        case FOR6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
+        case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case FOR6045 | FOR6046 => request.sessionData.financialYearEndDates6045.map(_._1)
+        case FOR6076 => request.sessionData.financialYearEndDates6076.map(_._1)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
 }
@@ -143,7 +144,7 @@
                         Seq(
                             ActionItem(
                                 href = forType match {
-                                    case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6076 =>
+                                    case FOR6020 | FOR6045 | FOR6046 | FOR6076 =>
                                         aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
                                     case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
                                 },

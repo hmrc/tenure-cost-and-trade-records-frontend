@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import models.ForType.*
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -27,7 +28,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     unusualCircumstancesView,
-    preEnrichedActionRefiner(forType = "FOR6015"),
+    preEnrichedActionRefiner(forType = FOR6015),
     mockSessionRepo
   )
 
@@ -35,7 +36,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     unusualCircumstancesView,
-    preEnrichedActionRefiner(forType = "FOR6030"),
+    preEnrichedActionRefiner(forType = FOR6030),
     mockSessionRepo
   )
 

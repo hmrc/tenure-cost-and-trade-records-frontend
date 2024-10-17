@@ -19,6 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
+import models.ForType
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -41,7 +42,7 @@ class IncludedInYourRentController @Inject() (
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[?]): String = request.sessionData.forType
+  private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -52,7 +53,7 @@ class IncludedInYourRentController @Inject() (
             case _                               => includedInYourRentForm(forType)
           },
           request.sessionData.toSummary,
-          request.sessionData.forType,
+          forType,
           navigator.from
         )
       )
@@ -67,7 +68,7 @@ class IncludedInYourRentController @Inject() (
           includedInYourRentView(
             formWithErrors,
             request.sessionData.toSummary,
-            request.sessionData.forType
+            forType
           )
         ),
       data => {

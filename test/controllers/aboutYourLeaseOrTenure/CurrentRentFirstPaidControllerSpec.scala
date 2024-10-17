@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -27,7 +28,7 @@ import org.jsoup.Jsoup
 class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
   def currentRentFirstPaidController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -69,7 +70,7 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when None in session for 6011" in {
-      val controller = currentRentFirstPaidController(forType = ForTypes.for6011, aboutLeaseOrAgreementPartOne = None)
+      val controller = currentRentFirstPaidController(forType = FOR6011, aboutLeaseOrAgreementPartOne = None)
       val result     = controller.show()(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -80,7 +81,7 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with throughput affect rent, does rent vary in the session for 6020" in {
-      val controller = currentRentFirstPaidController(forType = ForTypes.for6020)
+      val controller = currentRentFirstPaidController(forType = FOR6020)
       val result     = controller.show()(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -91,7 +92,7 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no throughput affect rent, does rent vary in the session for 6020" in {
-      val controller = currentRentFirstPaidController(forType = ForTypes.for6020, aboutLeaseOrAgreementPartThree = None)
+      val controller = currentRentFirstPaidController(forType = FOR6020, aboutLeaseOrAgreementPartThree = None)
       val result     = controller.show()(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

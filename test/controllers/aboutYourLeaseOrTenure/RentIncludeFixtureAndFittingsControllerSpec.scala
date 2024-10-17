@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,7 +27,7 @@ import utils.TestBaseSpec
 class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
   def rentIncludeFixtureAndFittingsController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -79,7 +80,7 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Rent Paid Separately with yes in the session for 6020" in {
-      val result = rentIncludeFixtureAndFittingsController(forType = ForTypes.for6020).show(fakeRequest)
+      val result = rentIncludeFixtureAndFittingsController(forType = FOR6020).show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -90,7 +91,7 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML Rent Paid Separately with one in the session for 6020" in {
       val result = rentIncludeFixtureAndFittingsController(
-        forType = ForTypes.for6020,
+        forType = FOR6020,
         aboutLeaseOrAgreementPartThree = None
       ).show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -102,7 +103,7 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Payment For Trade Services with yes in the session for 6030" in {
-      val result = rentIncludeFixtureAndFittingsController(forType = ForTypes.for6030).show(fakeRequest)
+      val result = rentIncludeFixtureAndFittingsController(forType = FOR6030).show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -113,7 +114,7 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML with Payment For Trade Services with no in the session for 6030" in {
       val result = rentIncludeFixtureAndFittingsController(
-        forType = ForTypes.for6030,
+        forType = FOR6030,
         aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
       ).show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -126,7 +127,7 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML Payment For Trade Services with none in the session for 6030" in {
       val result = rentIncludeFixtureAndFittingsController(
-        forType = ForTypes.for6030,
+        forType = FOR6030,
         aboutLeaseOrAgreementPartThree = None
       ).show(fakeRequest)
       status(result)        shouldBe Status.OK

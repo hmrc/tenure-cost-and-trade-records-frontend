@@ -30,6 +30,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -49,9 +50,9 @@
     }
 }
 
-@rentOrLandlordSfx = @{if(request.sessionData.forType == ForTypes.for6020) messages("addTradeService.heading.rent") else messages("addTradeService.heading.landlord")}
+@rentOrLandlordSfx = @{if(request.sessionData.forType == FOR6020) messages("addTradeService.heading.rent") else messages("addTradeService.heading.landlord")}
 
-@hint                      = @{if(request.sessionData.forType == ForTypes.for6020) messages("addTradeService.label6020") else messages("addTradeService.label")}
+@hint                      = @{if(request.sessionData.forType == FOR6020) messages("addTradeService.label6020") else messages("addTradeService.label")}
 
 @headingZeroTrade = @{if (numberOfServices.size == 0) messages("addTradeServiceZero.heading") else if (numberOfServices.size > 1) messages("addTradeServicePlural.heading", numberOfServices.size, service, rentOrLandlordSfx) else messages("addTradeService.heading", numberOfServices.size, service, rentOrLandlordSfx)}
 

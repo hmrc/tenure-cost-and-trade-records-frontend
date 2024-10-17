@@ -18,6 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -27,19 +28,19 @@
 )
 
 
-@(theForm: Form[PayACapitalSumDetails], forType: String, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[PayACapitalSumDetails], forType: ForType, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @payACapitalSum = @{
   forType match {
-      case ForTypes.for6020 => "capitalPaidSum6020"
-      case ForTypes.for6045 | ForTypes.for6046 => "capitalPaidSum6045"
+      case FOR6020 => "capitalPaidSum6020"
+      case FOR6045 | FOR6046 => "capitalPaidSum6045"
       case _                => "payACapitalSum"
   }
 }
 
 @hint = @{
   forType match {
-      case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 => ""
+      case FOR6020 | FOR6045 | FOR6046 => ""
       case _                => "hint.payACapitalSum"
   }
 }

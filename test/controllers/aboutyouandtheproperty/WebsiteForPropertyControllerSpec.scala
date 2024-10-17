@@ -17,6 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import form.Errors
+import models.ForType.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -46,7 +47,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     websiteForPropertyView,
-    preEnrichedActionRefiner(forType = "FOR6030", aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
@@ -56,7 +57,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     websiteForPropertyView,
-    preEnrichedActionRefiner(forType = "FOR6045", aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 

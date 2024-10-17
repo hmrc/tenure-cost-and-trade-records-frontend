@@ -20,7 +20,8 @@ import connectors.Audit
 import controllers.connectiontoproperty.routes
 import identifiers._
 import play.api.mvc.Call
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.common.AnswerYes
 import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
 import play.api.Logging
@@ -66,9 +67,9 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
       case Some("yes")                =>
         answers.forType match {
-          case ForTypes.for6076 =>
+          case FOR6076 =>
             controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
-          case _                =>
+          case _       =>
             controllers.connectiontoproperty.routes.VacantPropertiesController.show()
         }
       case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
@@ -82,9 +83,9 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
 
   private def editAddressRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6076 =>
+      case FOR6076 =>
         controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
-      case _                =>
+      case _       =>
         controllers.connectiontoproperty.routes.VacantPropertiesController.show()
     }
 

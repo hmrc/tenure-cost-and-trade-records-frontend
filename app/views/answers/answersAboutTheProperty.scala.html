@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 @import util.NumberUtil._
+@import models.ForType.*
 @import models.submissions.common.AnswerYes
 
 @this(govukSummaryList: GovukSummaryList)
@@ -73,7 +74,7 @@
             )
 ))
 
-@if(forType == ForTypes.for6076) {
+@if(forType == FOR6076) {
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType")</h2>
     @govukSummaryList(SummaryList(rows =
@@ -110,7 +111,7 @@
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 
-@if(forType == ForTypes.for6020) {
+@if(forType == FOR6020) {
     @govukSummaryList(SummaryList(rows =
 
         sectionAnswers.row(
@@ -123,7 +124,7 @@
     )
     )
 
-} else if(forType == ForTypes.for6030) {
+} else if(forType == FOR6030) {
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
@@ -164,7 +165,7 @@
 
 )
 
-    } else if (forType == ForTypes.for6076) {
+    } else if (forType == FOR6076) {
 @govukSummaryList(SummaryList(rows =
     sectionAnswersPartTwo.row(
         "checkYourAnswersAboutTheProperty.plantDescription",
@@ -188,7 +189,7 @@
                 ("valueAsHtml", _ => None)
             )))
 
-    } else if (forType == ForTypes.for6045 || forType == ForTypes.for6046) {
+    } else if (forType == FOR6045 || forType == FOR6046) {
 
 
 @govukSummaryList(SummaryList(rows =

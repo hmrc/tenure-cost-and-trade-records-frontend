@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.ForType.*
 @import models.submissions.common.AnswerYes
 @import navigation.AboutFranchisesOrLettingsNavigator
 @import navigation.identifiers._
@@ -43,16 +44,16 @@
 }
 
 @forType6015_6016 = @{
-    forType == ForTypes.for6015 || forType == ForTypes.for6016
+    forType == FOR6015 || forType == FOR6016
 }
 @forType6045_6046 = @{
-    forType == ForTypes.for6045 && forType == ForTypes.for6046
+    forType == FOR6045 && forType == FOR6046
 }
 
 @separateBusinessesIncomeMsgKey = @{
   forType match {
-      case ForTypes.for6030                    => "checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings"
-      case ForTypes.for6045 | ForTypes.for6046 => "checkYourAnswersAboutFranchiseOrLettings.6045.lettings"
+      case FOR6030                    => "checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings"
+      case FOR6045 | FOR6046 => "checkYourAnswersAboutFranchiseOrLettings.6045.lettings"
       case _                                   => "checkYourAnswersAboutFranchiseOrLettings.franchiseLettings"
   }
 }
@@ -95,7 +96,7 @@
 ))
 
 @if(sectionAnswers.answers.flatMap(_.franchisesOrLettingsTiedToProperty).contains(AnswerYes)) {
-    @if(forType == ForTypes.for6030) {
+    @if(forType == FOR6030) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading")</h2>
 
         @govukSummaryList(SummaryList(rows =

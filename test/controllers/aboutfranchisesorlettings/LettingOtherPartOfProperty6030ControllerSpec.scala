@@ -17,7 +17,8 @@
 package controllers.aboutfranchisesorlettings
 
 import form.aboutfranchisesorlettings.LettingOtherPartOfProperties6030Form.lettingOtherPartOfProperties6030Form
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -37,7 +38,7 @@ class LettingOtherPartOfProperty6030ControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       lettingOtherPartOfPropertyView,
-      preEnrichedActionRefiner(forType = ForTypes.for6030, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      preEnrichedActionRefiner(forType = FOR6030, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 

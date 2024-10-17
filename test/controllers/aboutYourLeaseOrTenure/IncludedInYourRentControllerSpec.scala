@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.data.Form
 import play.api.http.Status
@@ -92,24 +93,24 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
     "error if vatValue is invalid for form type 6045" in {
       val formData = baseData + ("vatValue" -> "invalid")
-      val form     = includedInYourRentForm(forType6045).bind(formData)
+      val form     = includedInYourRentForm(FOR6045).bind(formData)
       mustContainInvalidVatValueErrorFor("vatValue", form)
     }
 
     "error if vatValue is missing form type 6045" in {
       val formData = baseData + ("vatValue" -> "")
-      val form     = includedInYourRentForm(forType6045).bind(formData)
+      val form     = includedInYourRentForm(FOR6045).bind(formData)
       mustContainMissingVatValueErrorFor("", form)
     }
     "error if vatValue is invalid for form type 6046" in {
       val formData = baseData + ("vatValue" -> "invalid")
-      val form     = includedInYourRentForm(forType6046).bind(formData)
+      val form     = includedInYourRentForm(FOR6046).bind(formData)
       mustContainInvalidVatValueErrorFor("vatValue", form)
     }
 
     "error if vatValue is missing form type 6046" in {
       val formData = baseData + ("vatValue" -> "")
-      val form     = includedInYourRentForm(forType6046).bind(formData)
+      val form     = includedInYourRentForm(FOR6046).bind(formData)
       mustContainMissingVatValueErrorFor("", form)
     }
   }

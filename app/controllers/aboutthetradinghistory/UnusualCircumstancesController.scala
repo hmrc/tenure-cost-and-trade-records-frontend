@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.UnusualCircumstancesForm.unusualCircumstancesForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import navigation.AboutTheTradingHistoryNavigator
@@ -80,8 +81,8 @@ class UnusualCircumstancesController @Inject() (
 
   private def getBackLink(implicit answers: SessionRequest[AnyContent]): String =
     answers.sessionData.forType match {
-      case ForTypes.for6015 => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-      case ForTypes.for6030 => controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
-      case _                => controllers.routes.TaskListController.show().url
+      case FOR6015 => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      case FOR6030 => controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
+      case _       => controllers.routes.TaskListController.show().url
     }
 }

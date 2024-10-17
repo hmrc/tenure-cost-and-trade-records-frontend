@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -70,8 +71,8 @@ class TenantsAdditionsDisregardedController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case ForTypes.for6020                    => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
+      case FOR6045 | FOR6046 =>
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(
           _.incentivesPaymentsConditionsDetails.flatMap(_.formerLeaseSurrendered.name)
         ) match {
@@ -79,7 +80,7 @@ class TenantsAdditionsDisregardedController @Inject() (
             controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
           case _           => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
         }
-      case _                                   =>
+      case _                 =>
         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
     }
 

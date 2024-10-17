@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package stub
 
 import connectors.BackendConnector
+import models.ForType.*
 import models.{FORLoginResponse, SubmissionDraft}
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -34,7 +35,7 @@ case class StubBackendConnector() extends BackendConnector {
   ): Future[FORLoginResponse] = ???
 
   def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] =
-    Future.successful("FOR6010")
+    Future.successful(FOR6010.toString)
 
   override def saveAsDraft(
     referenceNumber: String,

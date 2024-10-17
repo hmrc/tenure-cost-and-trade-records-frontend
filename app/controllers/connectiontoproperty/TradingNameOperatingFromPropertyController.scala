@@ -19,7 +19,8 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, TradingNameOperatingFromProperty}
 import navigation.ConnectionToPropertyNavigator
@@ -92,7 +93,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
       case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     =>
         request.sessionData.forType match {
-          case ForTypes.for6076 =>
+          case FOR6076 =>
             request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
               case Some(AddressConnectionTypeYes)              =>
                 controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
@@ -101,7 +102,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
               case _                                           =>
                 controllers.routes.TaskListController.show().url
             }
-          case _                => controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+          case _       => controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
         }
 
     }

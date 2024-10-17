@@ -17,7 +17,8 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import play.api.data.Form
 import play.api.data.Forms.{list, mapping, optional, text}
@@ -33,7 +34,7 @@ object IncludedInYourRentForm {
     case None                                           => Valid
   }
 
-  def includedInYourRentForm(forTypes: String): Form[IncludedInYourRentDetails] = Form(
+  def includedInYourRentForm(forType: ForType): Form[IncludedInYourRentDetails] = Form(
     mapping(
       "includedInYourRent" -> list(text).verifying(
         nonEmptyList("error.includedInYourRent.required"),
@@ -57,7 +58,7 @@ object IncludedInYourRentForm {
         fields =>
           fields match {
             case IncludedInYourRentDetails(includedInYourRent, vatValue) =>
-              !((forTypes == ForTypes.for6045 || forTypes == ForTypes.for6046) && includedInYourRent.contains(
+              !((forType == FOR6045 || forType == FOR6046) && includedInYourRent.contains(
                 "vat"
               ) && vatValue.isEmpty)
           }

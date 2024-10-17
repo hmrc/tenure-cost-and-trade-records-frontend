@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -38,7 +39,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
       checkYourAnswersAboutFranchiseOrLettings,
       preEnrichedActionRefiner(
         referenceNumber = "99996016004",
-        forType = "FOR6016",
+        forType = FOR6016,
         aboutFranchisesOrLettings = aboutFranchisesOrLettings
       ),
       mockSessionRepo
@@ -53,7 +54,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
       checkYourAnswersAboutFranchiseOrLettings,
       preEnrichedActionRefiner(
         referenceNumber = "99996016004",
-        forType = "FOR6016",
+        forType = FOR6016,
         aboutFranchisesOrLettings = aboutFranchisesOrLettings
       ),
       mockSessionRepo

@@ -18,6 +18,8 @@ package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
 import controllers.aboutthetradinghistory
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -28,7 +30,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
 
   def financialYearsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
-    forType: String = "FOR6045",
+    forType: ForType = FOR6045,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
   ) = new FinancialYearsController(
     stubMessagesControllerComponents(),

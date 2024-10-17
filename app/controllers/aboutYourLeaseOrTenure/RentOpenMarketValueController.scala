@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm.rentOpenMarketValuesForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
 import models.submissions.common.AnswerYes
@@ -85,16 +86,16 @@ class RentOpenMarketValueController @Inject() (
         ) match {
           case Some(AnswerYes) =>
             answers.forType match {
-              case ForTypes.for6020 =>
+              case FOR6020 =>
                 controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
-              case _                =>
+              case _       =>
                 controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
             }
           case _               =>
             answers.forType match {
-              case ForTypes.for6020 =>
+              case FOR6020 =>
                 controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
-              case _                =>
+              case _       =>
                 controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
             }
         }

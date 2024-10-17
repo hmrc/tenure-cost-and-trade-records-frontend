@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.downloadFORTypeForm.downloadPDF
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class DownloadPDFController @Inject() (
@@ -33,12 +33,14 @@ class DownloadPDFController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FrontendController(mcc) {
 
-  def show(forType: String): Action[AnyContent] = Action.async { implicit request =>
+  def show(forType: String): Action[AnyContent] = Action { implicit request =>
     val referenceNumber = request.session.get("referenceNumber").getOrElse("")
+
     audit.sendExplicitAudit(
       "ForRequestedFromReference",
       DownloadPDFAudit(referenceNumber, forType, request.uri)
     )
-    Future.successful(Ok(downloadPDFView(forType, referenceNumber)))
+    Ok(downloadPDFView(forType, referenceNumber))
   }
+
 }

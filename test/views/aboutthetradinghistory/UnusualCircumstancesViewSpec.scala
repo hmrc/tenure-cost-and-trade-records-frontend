@@ -18,6 +18,7 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.UnusualCircumstancesForm
+import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import org.scalatest.matchers.must.Matchers._
@@ -34,16 +35,16 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
   override val form = UnusualCircumstancesForm.unusualCircumstancesForm
 
   def createView = () =>
-    unusualCircumstancesView(form, "FOR6010", backLink, Summary("99996010001"))(sessionRequest, messages)
+    unusualCircumstancesView(form, FOR6010, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[UnusualCircumstances]) =>
-    unusualCircumstancesView(form, "FOR6010", backLink, Summary("99996010001"))(sessionRequest, messages)
+    unusualCircumstancesView(form, FOR6010, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createView6030 = () =>
-    unusualCircumstancesView(form, "FOR6030", backLink, Summary("99996010001"))(sessionRequest, messages)
+    unusualCircumstancesView(form, FOR6030, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm6030 = (form: Form[UnusualCircumstances]) =>
-    unusualCircumstancesView(form, "FOR6030", backLink, Summary("99996010001"))(sessionRequest, messages)
+    unusualCircumstancesView(form, FOR6030, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   "Unusual Circumstances view" must {
 

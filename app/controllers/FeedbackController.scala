@@ -162,7 +162,7 @@ class FeedbackController @Inject() (
         "comments"        -> f.comments.getOrElse(""),
         "satisfaction"    -> f.rating.get,
         "referenceNumber" -> session.referenceNumber,
-        "forType"         -> session.forType
+        "forType"         -> session.forType.toString
       )
     )
 

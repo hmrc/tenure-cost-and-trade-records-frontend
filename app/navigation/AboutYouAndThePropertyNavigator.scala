@@ -18,7 +18,8 @@ package navigation
 
 import connectors.Audit
 import models.submissions.common.{AnswerNo, AnswerYes}
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.identifiers._
 import play.api.Logging
 import play.api.mvc.Call
@@ -42,17 +43,17 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
 
   private def alternativeContactDetailsRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6020 | ForTypes.for6030 =>
+      case FOR6020 | FOR6030 =>
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-      case ForTypes.for6076                    => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+      case FOR6045 | FOR6046 =>
         controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
-      case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+      case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
     }
 
   private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
     val answersForType = answers.forType
-    if (answersForType.equals(ForTypes.for6020)) {
+    if (answersForType.equals(FOR6020)) {
       controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     } else
       controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
@@ -60,12 +61,12 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
 
   private def websiteForPropertyRouting: Session => Call     = answers =>
     answers.forType match {
-      case ForTypes.for6015 | ForTypes.for6016 =>
+      case FOR6015 | FOR6016 =>
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
-      case ForTypes.for6030                    => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show()
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6030           => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show()
+      case FOR6045 | FOR6046 =>
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-      case _                                   => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+      case _                 => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
 
     }
   private def charityQuestionRouting: Session => Call        = answers =>
@@ -77,7 +78,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for charity question routing")
     }
   private def premisesLicenseGrantedRouting: Session => Call = answers =>
-    if (answers.forType.equals(ForTypes.for6015) || answers.forType.equals(ForTypes.for6016)) {
+    if (answers.forType.equals(FOR6015) || answers.forType.equals(FOR6016)) {
       answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
         case Some("yes") =>
           controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
@@ -94,7 +95,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def premisesLicenseGrantedDetailsRouting: Session => Call = answers =>
-    if (answers.forType == ForTypes.for6015 || answers.forType == ForTypes.for6016)
+    if (answers.forType == FOR6015 || answers.forType == FOR6016)
       controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     else
       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
@@ -149,12 +150,12 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
       case Some(AnswerNo)  =>
         answers.forType match {
-          case ForTypes.for6020 | ForTypes.for6030 =>
+          case FOR6020 | FOR6030 =>
             controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-          case ForTypes.for6076                    => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
-          case ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+          case FOR6045 | FOR6046 =>
             controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
-          case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+          case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
         }
       case _               =>
         logger.warn(

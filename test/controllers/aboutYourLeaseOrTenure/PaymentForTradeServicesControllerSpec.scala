@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeServicesForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -31,7 +32,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   def paymentForTradeServicesController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
@@ -67,7 +68,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with trade services in the session for 6030" in {
-      val controller = paymentForTradeServicesController(forType = ForTypes.for6030)
+      val controller = paymentForTradeServicesController(forType = FOR6030)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -78,7 +79,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML trade services with none in the session for 6030" in {
-      val controller = paymentForTradeServicesController(ForTypes.for6030, None)
+      val controller = paymentForTradeServicesController(FOR6030, None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

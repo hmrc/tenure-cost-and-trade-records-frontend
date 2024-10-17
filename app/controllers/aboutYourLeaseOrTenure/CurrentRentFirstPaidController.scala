@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import models.submissions.common.AnswerYes
@@ -72,13 +73,13 @@ class CurrentRentFirstPaidController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6011 => controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show().url
-      case ForTypes.for6020 =>
+      case FOR6011 => controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show().url
+      case FOR6020 =>
         answers.aboutLeaseOrAgreementPartThree.flatMap(_.throughputAffectsRent).map(_.doesRentVaryToThroughput) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show().url
           case _               => aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
         }
-      case _                => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
+      case _       => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
     }
 
 }

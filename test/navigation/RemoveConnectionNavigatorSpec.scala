@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import models.ForType.*
 import models.Session
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
@@ -60,7 +61,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
   val sessionAdditionalInformation: Session                   =
     Session(
       "99996010004",
-      "FOR6010",
+      FOR6010,
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       stillConnectedDetailsYes,

@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import models.ForType.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -56,7 +57,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
   def checkYourAnswersAboutThePropertyController6015No(
@@ -65,14 +66,14 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
   def checkYourAnswersAboutThePropertyController6015None() = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6015, aboutYouAndTheProperty = None),
+    preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = None),
     mockSessionRepo
   )
 
@@ -82,7 +83,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
   def checkYourAnswersAboutThePropertyController6030No(
@@ -91,14 +92,14 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
   def checkYourAnswersAboutThePropertyController6030None() = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6030, aboutYouAndTheProperty = None),
+    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = None),
     mockSessionRepo
   )
 
@@ -108,7 +109,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6020, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6020, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
@@ -118,7 +119,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6076, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6076, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
@@ -128,7 +129,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
@@ -138,7 +139,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = forType6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
+    preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
 
@@ -146,7 +147,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = "", aboutYouAndTheProperty = None),
+    preEnrichedActionRefiner(forType = FOR6010, aboutYouAndTheProperty = None),
     mockSessionRepo
   )
 
@@ -274,7 +275,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.routes.LoginController.show.url
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
   }

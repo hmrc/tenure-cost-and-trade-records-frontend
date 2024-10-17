@@ -16,6 +16,7 @@
 
 package utils
 
+import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
@@ -29,21 +30,12 @@ import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, 
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
-import models.{AnnualRent, ForTypes, Session, SubmissionDraft}
+import models.{AnnualRent, ForType, Session, SubmissionDraft}
 
 import java.time.{Instant, LocalDate}
 
 trait FakeObjects {
   val referenceNumber: String = "99996010004"
-  val forType6010: String     = "FOR6010"
-  val forType6011: String     = "FOR6011"
-  val forType6015: String     = "FOR6015"
-  val forType6016: String     = "FOR6016"
-  val forType6030: String     = "FOR6030"
-  val forType6020: String     = "FOR6020"
-  val forType6076: String     = "FOR6076"
-  val forType6045: String     = "FOR6045"
-  val forType6046: String     = "FOR6046"
 
   val prefilledAddress: Address =
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
@@ -109,15 +101,15 @@ trait FakeObjects {
     "TRADING NAME"
   )
 
-  val baseFilled6010Session: Session = Session(referenceNumber, forType6010, prefilledAddress, token)
-  val baseFilled6011Session: Session = Session(referenceNumber, forType6011, prefilledAddress, token)
-  val baseFilled6015Session: Session = Session(referenceNumber, forType6015, prefilledAddress, token)
-  val baseFilled6016Session: Session = Session(referenceNumber, forType6016, prefilledAddress, token)
-  val baseFilled6030Session: Session = Session(referenceNumber, forType6030, prefilledAddress, token)
-  val baseFilled6020Session: Session = Session(referenceNumber, forType6020, prefilledAddress, token)
-  val baseFilled6076Session: Session = Session(referenceNumber, forType6076, prefilledAddress, token)
-  val baseFilled6045Session: Session = Session(referenceNumber, forType6045, prefilledAddress, token)
-  val baseFilled6046Session: Session = Session(referenceNumber, forType6046, prefilledAddress, token)
+  val baseFilled6010Session: Session = Session(referenceNumber, FOR6010, prefilledAddress, token)
+  val baseFilled6011Session: Session = Session(referenceNumber, FOR6011, prefilledAddress, token)
+  val baseFilled6015Session: Session = Session(referenceNumber, FOR6015, prefilledAddress, token)
+  val baseFilled6016Session: Session = Session(referenceNumber, FOR6016, prefilledAddress, token)
+  val baseFilled6030Session: Session = Session(referenceNumber, FOR6030, prefilledAddress, token)
+  val baseFilled6020Session: Session = Session(referenceNumber, FOR6020, prefilledAddress, token)
+  val baseFilled6076Session: Session = Session(referenceNumber, FOR6076, prefilledAddress, token)
+  val baseFilled6045Session: Session = Session(referenceNumber, FOR6045, prefilledAddress, token)
+  val baseFilled6046Session: Session = Session(referenceNumber, FOR6046, prefilledAddress, token)
 
   // Request reference number
   val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
@@ -1284,12 +1276,12 @@ trait FakeObjects {
   val prefilledBaseSession                    =
     Session(
       "99996010004",
-      "FOR6010",
+      FOR6010,
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       saveAsDraftPassword = Some("pass")
     )
-  val submissionDraft                         = SubmissionDraft("FOR6010", prefilledBaseSession, "/send-trade-and-cost-information/about-you")
+  val submissionDraft                         = SubmissionDraft(FOR6010, prefilledBaseSession, "/send-trade-and-cost-information/about-you")
   val prefilledRemoveConnection               =
     RemoveConnectionDetails(
       Some(
@@ -1304,7 +1296,7 @@ trait FakeObjects {
 
   val notConnectedSubmission = NotConnectedSubmission(
     "id",
-    ForTypes.for6010,
+    FOR6010,
     prefilledAddress,
     "John Smith",
     Some("test@test.com"),
@@ -1684,7 +1676,7 @@ trait FakeObjects {
 
   val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(
     Some(DownloadPDFReferenceNumber(referenceNumber)),
-    Some(DownloadPDF(forType6010))
+    Some(DownloadPDF(FOR6010.toString))
   )
 
   val prefilledFull6020Session = sessionAboutFranchiseOrLetting6020Session.copy(

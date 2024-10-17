@@ -30,7 +30,7 @@
 )
 
 
-@(theForm: Form[TypeOfIncome], index: Option[Int] = None, summary: Summary, backLink: String, formType: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[TypeOfIncome], index: Option[Int] = None, summary: Summary, backLink: String, forType: ForType)(implicit request: Request[?], messages: Messages)
 
     @layout(
         pageHeading = messages("typeOfIncome.heading"),

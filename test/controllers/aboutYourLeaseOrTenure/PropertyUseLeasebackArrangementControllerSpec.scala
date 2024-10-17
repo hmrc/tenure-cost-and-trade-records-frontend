@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -29,7 +30,7 @@ import scala.language.reflectiveCalls
 class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   import TestData._
   def propertyUseLeasebackAgreementController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
     new PropertyUseLeasebackArrangementController(
@@ -63,7 +64,7 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with connection to landlord yes in the session for 6020" in {
-      val controller = propertyUseLeasebackAgreementController(forType = ForTypes.for6020)
+      val controller = propertyUseLeasebackAgreementController(forType = FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -75,7 +76,7 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML with connection to landlord no in the session for 6020" in {
       val controller = propertyUseLeasebackAgreementController(
-        forType = ForTypes.for6020,
+        forType = FOR6020,
         aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
       )
       val result     = controller.show(fakeRequest)

@@ -19,7 +19,8 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDatesForm.financialYearEndDatesForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation}
 import navigation.AboutTheTradingHistoryNavigator
@@ -53,8 +54,8 @@ class FinancialYearEndDatesController @Inject() (
         val occupationAndAccounting          = aboutTheTradingHistory.occupationAndAccountingInformation.get
         val financialYearEnd: Seq[LocalDate] =
           request.sessionData.forType match {
-            case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-            case _                => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+            case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+            case _       => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
           }
         Ok(
           financialYearEndDatesView(
@@ -69,8 +70,8 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(implicit request: SessionRequest[AnyContent]): Boolean =
     request.sessionData.forType match {
-      case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
-      case _                => aboutTheTradingHistory.turnoverSections.nonEmpty
+      case FOR6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
+      case _       => aboutTheTradingHistory.turnoverSections.nonEmpty
     }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -100,8 +101,8 @@ class FinancialYearEndDatesController @Inject() (
               }
 
             val updatedData: Session = request.sessionData.forType match {
-              case ForTypes.for6030 => buildUpdateData6030(aboutTheTradingHistory, data, newOccupationAndAccounting)
-              case _                => buildUpdateData(aboutTheTradingHistory, data, newOccupationAndAccounting)
+              case FOR6030 => buildUpdateData6030(aboutTheTradingHistory, data, newOccupationAndAccounting)
+              case _       => buildUpdateData(aboutTheTradingHistory, data, newOccupationAndAccounting)
             }
             session
               .saveOrUpdate(updatedData)
@@ -122,8 +123,8 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(implicit request: SessionRequest[AnyContent]) =
     request.sessionData.forType match {
-      case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
-      case _                => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
+      case FOR6030 => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
+      case _       => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
     }
 
   private def buildUpdateData(

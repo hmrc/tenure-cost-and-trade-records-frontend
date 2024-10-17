@@ -19,7 +19,8 @@ package navigation
 import connectors.Audit
 import controllers.aboutYourLeaseOrTenure
 import models.submissions.common.{AnswerNo, AnswerYes}
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.identifiers._
 import play.api.Logging
 import play.api.mvc.Call
@@ -64,10 +65,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def aboutYourLandlordRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 |
-          ForTypes.for6076 =>
+      case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 | FOR6076 =>
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-      case _ =>
+      case _                                                         =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
@@ -76,11 +76,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6011                                                          =>
+          case FOR6011                               =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-          case ForTypes.for6020 | ForTypes.for6076 | ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6020 | FOR6076 | FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-          case _                                                                         => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+          case _                                     => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
         }
       case _           =>
         logger.warn(
@@ -91,21 +91,21 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def connectedToLandlordDetailsRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6011                                                          =>
+      case FOR6011                               =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-      case ForTypes.for6020 | ForTypes.for6076 | ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6020 | FOR6076 | FOR6045 | FOR6046 =>
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-      case _                                                                         =>
+      case _                                     =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
   private def currentAnnualRentRouting: Session => Call =
     _.forType match {
-      case ForTypes.for6011 =>
+      case FOR6011 =>
         controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show()
-      case ForTypes.for6020 =>
+      case FOR6020 =>
         controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show()
-      case _                =>
+      case _       =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 
@@ -123,14 +123,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def currentRentFirstPaidRouting: Session => Call = answers =>
-    if (answers.forType == ForTypes.for6011)
+    if (answers.forType == FOR6011)
       controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show()
     else
       controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show()
 
   private def includedInYourRentRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6020 =>
+      case FOR6020 =>
         if (
           answers.aboutLeaseOrAgreementPartOne
             .flatMap(_.includedInYourRentDetails)
@@ -140,7 +140,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         } else {
           aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
         }
-      case _                => aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
+      case _       => aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show()
     }
 
   private def rentIncludeTradeServicesRouting: Session => Call = answers =>
@@ -149,15 +149,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6020 | ForTypes.for6030 =>
+          case FOR6020 | FOR6030 =>
             controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
-          case _                                   => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
+          case _                 => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
         }
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6020 | ForTypes.for6030 =>
+          case FOR6020 | FOR6030 =>
             controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
-          case _                                   => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+          case _                 => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
         }
       case _           =>
         logger.warn(
@@ -174,13 +174,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         .contains(AnswerYes)
     ) {
       answers.forType match {
-        case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show()
-        case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show()
+        case FOR6020 => controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show()
+        case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show()
       }
     } else {
       answers.forType match {
-        case ForTypes.for6020 => controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show()
-        case _                => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
+        case FOR6020 => controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show()
+        case _       => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()
       }
     }
 
@@ -188,9 +188,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6020 | FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-          case _                                                      => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
+          case _                           => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
         }
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
       case _           =>
@@ -208,9 +208,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6010 =>
+          case FOR6010 =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
-          case _                => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+          case _       => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
         }
       case _           =>
         logger.warn(
@@ -221,9 +221,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def payableGrossOrNetDetailsRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 =>
+      case FOR6015 | FOR6016 | FOR6030 =>
         controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-      case _                                                      =>
+      case _                           =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
     }
 
@@ -243,19 +243,19 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def methodToFixCurrentRentRouting: Session => Call =
     _.forType match {
-      case ForTypes.for6045 | ForTypes.for6046 => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
-      case _                                   => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+      case FOR6045 | FOR6046 => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
+      case _                 => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
     }
 
   private def isRentUnderReviewRouting: Session => Call =
     _.forType match {
-      case ForTypes.for6045 | ForTypes.for6046 => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
-      case _                                   => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+      case FOR6045 | FOR6046 => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+      case _                 => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
     }
 
   private def intervalsOfRentReviewRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6020 =>
+      case FOR6020 =>
         if (
           answers.aboutLeaseOrAgreementPartTwo
             .flatMap(_.intervalsOfRentReview)
@@ -265,13 +265,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         } else {
           controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
         }
-      case _                => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+      case _       => aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
     }
 
   private def canRentBeReducedRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
-      case _                => aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()
+      case FOR6020 => aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
+      case _       => aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show()
     }
 
   private def propertyUpdatesRouting: Session => Call = answers =>
@@ -294,10 +294,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show()
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6020                    => controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
-          case ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
+          case FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
-          case _                                   => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
+          case _                 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
         }
       case _           =>
         logger.warn(
@@ -308,10 +308,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def tenantsAdditionsDisregardedDetailsRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6020                    => aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6020           => aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
+      case FOR6045 | FOR6046 =>
         controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
-      case _                                   => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
+      case _                 => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     }
 
   private def benefitsGivenRouting: Session => Call = answers =>
@@ -348,25 +348,25 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6020                    => controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
-          case ForTypes.for6030                    => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
-          case ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
+          case FOR6030           => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
+          case FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
-          case _                                   => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+          case _                 => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
       case _           =>
         answers.forType match {
-          case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6020 | FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
-          case _                                                      => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+          case _                           => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
     }
 
   private def whatIsYourRentBasedOnRouting: Session => Call    = answers =>
     answers.forType match {
-      case ForTypes.for6010 | ForTypes.for6015 | ForTypes.for6016 | ForTypes.for6030 =>
+      case FOR6010 | FOR6015 | FOR6016 | FOR6030 =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
-      case _                                                                         => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+      case _                                     => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
     }
   private def tradeServicesDescriptionRouting: Session => Call = answers =>
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
@@ -387,8 +387,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           .show(Some(getIndexOfPaidServices(answers) + 1))
       case _               =>
         answers.forType match {
-          case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
-          case _                => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+          case FOR6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
+          case _       => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
         }
     }
   }
@@ -427,8 +427,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
       case _               =>
         answers.forType match {
-          case ForTypes.for6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
-          case _                => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+          case FOR6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
+          case _       => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
         }
     }
 
@@ -459,17 +459,17 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   // Form 6076 only
   private def provideDetailsOfYourLeaseRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6076 =>
+      case FOR6076 =>
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
-      case _                =>
+      case _       =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
   private def doesRentPayableRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6045 | FOR6046 =>
         controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show()
-      case _                                   =>
+      case _                 =>
         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     }
 
@@ -479,13 +479,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
-          case _                => aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+          case FOR6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
+          case _       => aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
         }
       case Some("no")  =>
         answers.forType match {
-          case ForTypes.for6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
-          case _                => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
+          case FOR6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
+          case _       => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
         }
       case _           =>
         logger.warn(
@@ -512,9 +512,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show()
-          case _                                   => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+          case _                 => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
         }
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
       case _           =>
@@ -526,9 +526,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def workCarriedOutConditionRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6045 | FOR6046 =>
         controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show()
-      case _                                   =>
+      case _                 =>
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     }
 

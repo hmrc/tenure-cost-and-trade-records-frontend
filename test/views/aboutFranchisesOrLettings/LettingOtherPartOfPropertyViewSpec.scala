@@ -17,6 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.{ConcessionOrFranchiseFeeForm, LettingOtherPartOfPropertiesForm}
+import models.ForType.*
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -36,7 +37,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
-      "FOR6010"
+      FOR6010
     )(fakeRequest, messages)
 
   def createView6030 = () =>
@@ -45,7 +46,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996030001"),
-      "FOR6030"
+      FOR6030
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
@@ -54,7 +55,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
-      "FOR6010"
+      FOR6010
     )(fakeRequest, messages)
 
   def createViewUsingForm6030 = (form: Form[AnswersYesNo]) =>
@@ -63,7 +64,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996030001"),
-      "FOR6030"
+      FOR6030
     )(fakeRequest, messages)
 
   "Letting other parts of property view" must {

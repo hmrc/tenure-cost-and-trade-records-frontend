@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -49,7 +50,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
       mockSessionRepo
     )
 
@@ -62,7 +63,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
       mockSessionRepo
     )
 

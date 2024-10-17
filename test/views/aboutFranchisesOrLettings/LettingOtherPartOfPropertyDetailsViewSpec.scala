@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,13 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
+
 class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
 
   val messageKeyPrefix     = "lettingOtherPartOfPropertyDetails"
@@ -37,7 +39,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
-      "6010"
+      FOR6010
     )(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
@@ -48,7 +50,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
-      "6010"
+      FOR6010
     )(fakeRequest, messages)
 
   "Catering operation details view" must {

@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,7 +27,7 @@ import utils.TestBaseSpec
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
   def currentAnnualRentController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new CurrentAnnualRentController(
     stubMessagesControllerComponents(),
@@ -48,7 +49,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Connected To Landlord Yes in the session for 6011" in {
-      val controller = currentAnnualRentController(ForTypes.for6011)
+      val controller = currentAnnualRentController(FOR6011)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -59,7 +60,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Connected To Landlord No in the session for 6011" in {
-      val controller = currentAnnualRentController(ForTypes.for6011, Some(prefilledAboutLeaseOrAgreementPartOneNo))
+      val controller = currentAnnualRentController(FOR6011, Some(prefilledAboutLeaseOrAgreementPartOneNo))
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -70,7 +71,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Connected To Landlord in the session for 6011" in {
-      val controller = currentAnnualRentController(ForTypes.for6011, None)
+      val controller = currentAnnualRentController(FOR6011, None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
