@@ -44,7 +44,7 @@ class RequestReferenceNumberController @Inject() (
     with I18nSupport {
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
-    session.start(Session("", "", Address("", None, "", None, ""), ""))
+    session.start(Session("", "", Address("", None, "", None, ""), "", isWelsh = false))
     Future.successful(Redirect(routes.RequestReferenceNumberController.show()))
   }
 

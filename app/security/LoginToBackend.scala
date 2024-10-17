@@ -39,7 +39,8 @@ object LoginToBackend {
     } yield ned(
       lr.forAuthToken,
       lr.forType,
-      lr.address
+      lr.address,
+      lr.isWelsh
     )
 
   private def ned = NoExistingDocument.apply
@@ -47,4 +48,4 @@ object LoginToBackend {
 
 sealed trait LoginResult
 
-case class NoExistingDocument(token: String, forNum: String, address: Address) extends LoginResult
+case class NoExistingDocument(token: String, forNum: String, address: Address, isWelsh: Boolean) extends LoginResult
