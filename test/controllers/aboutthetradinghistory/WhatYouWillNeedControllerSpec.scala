@@ -17,30 +17,58 @@
 package controllers.aboutthetradinghistory
 
 import controllers.aboutthetradinghistory
+import models.ForTypes._
 import play.api.http.Status
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class WhatYouWillNeedControllerSpec extends TestBaseSpec {
 
-  val whatYouWillNeedController = new WhatYouWillNeedController(
+  def whatYouWillNeedController(forType: String = for6010) = new WhatYouWillNeedController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     whatYouWillNeedView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
+    preEnrichedActionRefiner(
+      forType = forType,
+      aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)
+    ),
     mockSessionRepo
   )
 
   "GET /" should {
     "return 200" in {
-      val result = whatYouWillNeedController.show(fakeRequest)
+      val result = whatYouWillNeedController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = whatYouWillNeedController.show(fakeRequest)
+      val result = whatYouWillNeedController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return OK for FOR6045 " in {
+      val result = whatYouWillNeedController(for6045).show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return OK for FOR6046 " in {
+      val result = whatYouWillNeedController(for6046).show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return OK for FOR6048 " in {
+      val result = whatYouWillNeedController(for6048).show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return OK for FOR6076 " in {
+      val result = whatYouWillNeedController(for6076).show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
     }
   }
 
@@ -48,7 +76,7 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec {
 
     "redirect if a form is submitted" in {
       val res =
-        whatYouWillNeedController.submit(fakePostRequest.withFormUrlEncodedBody("whatYouWillNeed" -> "confirmed"))
+        whatYouWillNeedController().submit(fakePostRequest.withFormUrlEncodedBody("whatYouWillNeed" -> "confirmed"))
       status(res) shouldBe Status.SEE_OTHER
 
       redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url)
