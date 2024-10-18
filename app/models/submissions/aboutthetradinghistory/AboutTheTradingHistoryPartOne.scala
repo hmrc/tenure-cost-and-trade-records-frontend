@@ -18,7 +18,8 @@ package models.submissions.aboutthetradinghistory
 
 import actions.SessionRequest
 import models.Session
-import play.api.libs.json._
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.*
 
 case class AboutTheTradingHistoryPartOne(
   isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false),
@@ -38,7 +39,9 @@ case class AboutTheTradingHistoryPartOne(
   touringAndTentingPitches: Option[TouringAndTentingPitches] = None,
   additionalActivities: Option[AdditionalActivities] = None,
   additionalMiscDetails: Option[AdditionalMiscDetails] = None,
-  fromCYA: Option[Boolean] = None
+  fromCYA: Option[Boolean] = None,
+  // 6048
+  areYouVATRegistered: Option[AnswersYesNo] = None
 )
 
 object AboutTheTradingHistoryPartOne {

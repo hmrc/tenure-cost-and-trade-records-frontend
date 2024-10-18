@@ -22,12 +22,12 @@
 @this(layout: Layout)
 
 
-@(forType: String, referenceNumber: String)(implicit request: Request[?], messages: Messages)
+@(forTypeStr: String, referenceNumber: String)(implicit request: Request[?], messages: Messages)
 
-@forWithoutPrefix = @{new StringOps(forType).filter(_.isDigit)}
+@forWithoutPrefix = @{new StringOps(forTypeStr).filter(_.isDigit)}
 
-@isVaidForType = @{
-  ForType.find(forType).isDefined
+@findForType = @{
+  ForType.find(forTypeStr)
 }
 
 @layout(
@@ -36,15 +36,16 @@
   backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
 
-    @if(isVaidForType) {
-        <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
-        <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
-        <p class="govuk-body"><a class="govuk-link" target="_blank" href=@messages(s"downloadPdf.$forWithoutPrefix.url")>@messages(s"downloadPdf.$forWithoutPrefix.label")</a></p>
-        <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button">@messages("downloadPdf.continueJourneyButton")</a>
-    } else {
+    @findForType.fold {
         <h2 class="govuk-heading-l">@{messages("downloadPdf.subheading")}</h2>
         <p class="govuk-body">@messages("downloadPdf.no.download")</p>
         <p class="govuk-body">@HtmlContent(messages("downloadPdf.retry")).asHtml</p>
         <a href="@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
+    } { forType =>
+        <h1 class="govuk-heading-l">@messages("downloadPdf.heading")</h1>
+        <p class="govuk-body">@messages("downloadPdf.englishWelsh")</p>
+        <p class="govuk-body"><a class="govuk-link" target="_blank" href=@messages(s"downloadPdf.$forWithoutPrefix.url")>@messages(s"downloadPdf.$forWithoutPrefix.label")</a></p>
+        <a href="@routes.LoginController.show?ref=@referenceNumber&forType=@forType" class="govuk-button" data-module="govuk-button">@messages("downloadPdf.continueJourneyButton")</a>
     }
+
 }

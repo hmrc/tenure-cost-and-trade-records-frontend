@@ -246,6 +246,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for gross receipts all year")
     }
 
+  private def whatYouWillNeedRouting: Session => Call =
+    _.forType match {
+      case FOR6048 => aboutthetradinghistory.routes.AreYouVATRegisteredController.show
+      case _       => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId               -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                      -> financialYearEndRouting,
@@ -328,7 +334,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     AdditionalMiscId                            -> (_ =>
       controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
     ),
-    WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
+    WhatYouWillNeedPageId                       -> whatYouWillNeedRouting,
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
@@ -345,6 +351,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ =>
       controllers.routes.TaskListController.show().withFragment("tradingHistory")
     ),
-    ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show())
+    ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
+    AreYouVATRegisteredId                       -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show())
   )
 }

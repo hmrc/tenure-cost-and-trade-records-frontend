@@ -3018,6 +3018,9 @@ whatYouWillNeed.6048.p6 = Including subscriptions, telephone and broadband, book
 whatYouWillNeed.6048.l7 = Operational costs
 whatYouWillNeed.6048.p7 = Including any utilities, laundry and cleaning, repairs and maintenance, TV licences, travelling expenses and other costs.
 
+areYouVATRegistered.heading = Are you VAT registered?
+error.areYouVATRegistered.required = Select yes if you are VAT registered
+
 
 # CHECK YOUR ANSWERS
 ####################

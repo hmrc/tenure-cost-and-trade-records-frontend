@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.ForType.*
 @import models.submissions.Form6010.DayMonthsDuration
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
@@ -37,12 +38,17 @@
 
 @(theForm: Form[(DayMonthsDuration, Boolean)])(implicit request: SessionRequest[?], messages: Messages)
 
+@forType = @{
+    request.sessionData.forType
+}
+
 @layout(
     pageHeading = messages("financialYearEnd.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url,
+    backLinkUrl = if (forType == FOR6048) controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url
+                  else controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url,
     theForm = theForm
 ) {
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndController.submit()) {

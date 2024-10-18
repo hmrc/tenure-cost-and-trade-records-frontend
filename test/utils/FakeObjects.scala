@@ -550,6 +550,10 @@ trait FakeObjects {
     OccupationalAndAccountingInformation(MonthsYearDuration(1, 2021), DayMonthsDuration(22, 4))
   )
 
+  val prefilledAboutYourTradingHistory6048: AboutTheTradingHistory = AboutTheTradingHistory(
+    OccupationalAndAccountingInformation(MonthsYearDuration(1, 2018), DayMonthsDuration(22, 4))
+  )
+
   val prefilledAboutYourTradingHistory6076: AboutTheTradingHistory = AboutTheTradingHistory(
     OccupationalAndAccountingInformation(MonthsYearDuration(9, 2017), DayMonthsDuration(27, 9))
   )
