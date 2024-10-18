@@ -101,15 +101,15 @@ trait FakeObjects {
     "TRADING NAME"
   )
 
-  val baseFilled6010Session: Session = Session(referenceNumber, FOR6010, prefilledAddress, token)
-  val baseFilled6011Session: Session = Session(referenceNumber, FOR6011, prefilledAddress, token)
-  val baseFilled6015Session: Session = Session(referenceNumber, FOR6015, prefilledAddress, token)
-  val baseFilled6016Session: Session = Session(referenceNumber, FOR6016, prefilledAddress, token)
-  val baseFilled6030Session: Session = Session(referenceNumber, FOR6030, prefilledAddress, token)
-  val baseFilled6020Session: Session = Session(referenceNumber, FOR6020, prefilledAddress, token)
-  val baseFilled6076Session: Session = Session(referenceNumber, FOR6076, prefilledAddress, token)
-  val baseFilled6045Session: Session = Session(referenceNumber, FOR6045, prefilledAddress, token)
-  val baseFilled6046Session: Session = Session(referenceNumber, FOR6046, prefilledAddress, token)
+  val baseFilled6010Session: Session = Session(referenceNumber, FOR6010, prefilledAddress, token, isWelsh = false)
+  val baseFilled6011Session: Session = Session(referenceNumber, FOR6011, prefilledAddress, token, isWelsh = false)
+  val baseFilled6015Session: Session = Session(referenceNumber, FOR6015, prefilledAddress, token, isWelsh = false)
+  val baseFilled6016Session: Session = Session(referenceNumber, FOR6016, prefilledAddress, token, isWelsh = false)
+  val baseFilled6030Session: Session = Session(referenceNumber, FOR6030, prefilledAddress, token, isWelsh = false)
+  val baseFilled6020Session: Session = Session(referenceNumber, FOR6020, prefilledAddress, token, isWelsh = false)
+  val baseFilled6076Session: Session = Session(referenceNumber, FOR6076, prefilledAddress, token, isWelsh = false)
+  val baseFilled6045Session: Session = Session(referenceNumber, FOR6045, prefilledAddress, token, isWelsh = false)
+  val baseFilled6046Session: Session = Session(referenceNumber, FOR6046, prefilledAddress, token, isWelsh = false)
 
   // Request reference number
   val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
@@ -1283,6 +1283,7 @@ trait FakeObjects {
       FOR6010,
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+      isWelsh = false,
       saveAsDraftPassword = Some("pass")
     )
   val submissionDraft                         = SubmissionDraft(FOR6010, prefilledBaseSession, "/send-trade-and-cost-information/about-you")

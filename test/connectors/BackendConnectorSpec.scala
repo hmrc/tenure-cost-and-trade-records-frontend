@@ -75,7 +75,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll with Befo
       val testID             = "99996010008"
       val responseJsonString =
         """
-          |{"forAuthToken":"Basic OTk5OTYwMTAwMDE6U2Vuc2l0aXZlKC4uLik=","forType":"FOR6010","address":{"buildingNameNumber":"001","street1":"GORING ROAD","street2":"GORING-BY-SEA, WORTHING","postcode":"BN12 4AX"}}
+          |{"forAuthToken":"Basic OTk5OTYwMTAwMDE6U2Vuc2l0aXZlKC4uLik=","forType":"FOR6010","address":{"buildingNameNumber":"001","street1":"GORING ROAD","street2":"GORING-BY-SEA, WORTHING","postcode":"BN12 4AX"},"isWelsh":false}
           |""".stripMargin
       stubFor(
         post(urlEqualTo("/tenure-cost-and-trade-records/authenticate")).willReturn(

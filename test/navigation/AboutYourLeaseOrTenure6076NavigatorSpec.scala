@@ -40,6 +40,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     FOR6010,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6010Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
@@ -49,6 +50,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     FOR6030,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo6030)
   )
@@ -58,6 +60,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     FOR6030,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo),
     aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
@@ -68,6 +71,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     FOR6076,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo),
     aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
@@ -78,6 +82,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     FOR6010,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
@@ -86,6 +91,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     FOR6030,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
@@ -94,6 +100,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     FOR6010,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPayPartTwo)
   )

@@ -44,7 +44,8 @@ class LoginToBackendSpec extends UnitTest {
           r === NoExistingDocument(
             loginResponse.forAuthToken,
             loginResponse.forType,
-            loginResponse.address
+            loginResponse.address,
+            loginResponse.isWelsh
           )
         )
       }
@@ -58,7 +59,7 @@ class LoginToBackendSpec extends UnitTest {
     val testAddress   = Address("123", None, "test", None, postcode)
     val forType       = FOR6010.toString
     val auth          = "YouAreLoggedInNow"
-    val loginResponse = FORLoginResponse(auth, forType, testAddress)
+    val loginResponse = FORLoginResponse(auth, forType, testAddress, isWelsh = false)
     val now           = ZonedDateTime.of(2015, 3, 2, 13, 20, 0, 0, ZoneOffset.UTC)
   }
 }

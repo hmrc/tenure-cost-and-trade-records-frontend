@@ -40,6 +40,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
     FOR6045,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6045TextArea),
     aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree6045TextArea)
   )

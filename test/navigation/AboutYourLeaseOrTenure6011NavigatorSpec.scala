@@ -36,7 +36,8 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6011 = Session("99996010004", FOR6011, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=")
+  val session6011 =
+    Session("99996010004", FOR6011, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

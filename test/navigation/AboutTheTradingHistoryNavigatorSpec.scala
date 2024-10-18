@@ -59,6 +59,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       FOR6010,
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+      isWelsh = false,
       stillConnectedDetailsYes,
       removeConnection
     )
@@ -69,6 +70,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       FOR6010,
       prefilledAddress,
       "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+      isWelsh = false,
       stillConnectedDetailsYes,
       removeConnection,
       aboutYouAndTheProperty = AboutYouAndTheProperty(

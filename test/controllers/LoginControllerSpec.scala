@@ -161,7 +161,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
       val loginToBackendFunction = (refNum: RefNumber, postcode: Postcode, start: StartTime) => {
         assert(refNum.equals("01234567000"))
-        Future.successful(NoExistingDocument("token", "forNum", prefilledAddress))
+        Future.successful(NoExistingDocument("token", "forNum", prefilledAddress, isWelsh = false))
       }
 
       val loginToBackend = mock[LoginToBackendAction]

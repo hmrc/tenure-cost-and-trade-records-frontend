@@ -19,7 +19,7 @@ package models
 import models.submissions.common.Address
 import play.api.libs.json.{Json, OFormat}
 
-case class FORLoginResponse(forAuthToken: String, forType: String, address: Address)
+case class FORLoginResponse(forAuthToken: String, forType: String, address: Address, isWelsh: Boolean)
 
 object FORLoginResponse {
   implicit val formats: OFormat[FORLoginResponse] = Json.format
