@@ -74,6 +74,12 @@ class PastConnectionControllerSpec extends TestBaseSpec {
     }
 
     "SUBMIT /" should {
+      "return 303 with location pointing to next page" in {
+        val request = FakeRequest(POST, "/").withFormUrlEncodedBody("pastConnectionType" -> "yes")
+        val result  = pastConnectionController().submit(request)
+        status(result)                   shouldBe Status.SEE_OTHER
+        header("Location", result).value shouldBe controllers.notconnected.routes.RemoveConnectionController.show().url
+      }
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = pastConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
