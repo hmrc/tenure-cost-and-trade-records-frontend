@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
@@ -43,7 +44,7 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
     checkYourAnswersOtherHolidayAccommodationView,
     preEnrichedActionRefiner(
       referenceNumber = "99996045004",
-      forType = "FOR6045",
+      forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(aboutTheTradingHistoryPartOne)
     ),
     mockSessionRepo

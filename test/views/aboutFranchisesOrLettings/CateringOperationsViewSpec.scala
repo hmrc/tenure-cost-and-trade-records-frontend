@@ -17,6 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.CateringOperationForm
+import models.ForType.*
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -36,7 +37,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
       Summary("99996010001"),
-      "6010"
+      FOR6010
     )(fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
@@ -45,7 +46,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       messageKeyPrefix,
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
       Summary("99996010001"),
-      "6010"
+      FOR6010
     )(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {

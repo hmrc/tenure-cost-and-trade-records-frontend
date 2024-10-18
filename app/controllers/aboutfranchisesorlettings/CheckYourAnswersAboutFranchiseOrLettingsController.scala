@@ -22,7 +22,8 @@ import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsFo
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CheckYourAnswersAboutFranchiseOrLettings}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId
 import play.api.Logging
@@ -97,10 +98,10 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     answers: Session
   ): String = // TODO Look at the back link logic. Got it loading but I'll come back to it! - Pete
     answers.forType match {
-      case ForTypes.for6010 | ForTypes.for6011 =>
+      case FOR6010 | FOR6011 =>
         getBackUrlFor6010and6011(answers)
 
-      case ForTypes.for6015 | ForTypes.for6016 =>
+      case FOR6015 | FOR6016 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
           case Some("yes") =>
             controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
@@ -110,7 +111,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
             controllers.routes.TaskListController.show().url
         }
-      case ForTypes.for6020                    =>
+      case FOR6020           =>
         val answersYesNo: Option[AnswersYesNo] =
           answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty)
         answersYesNo match {
@@ -122,13 +123,13 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
           case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
         }
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6045 | FOR6046 =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
           case Some(AnswerYes) =>
             controllers.routes.TaskListController.show().url // TODO when section ready for 6045
           case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
         }
-      case _                                   =>
+      case _                 =>
         logger.warn(s"Back link reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
     }

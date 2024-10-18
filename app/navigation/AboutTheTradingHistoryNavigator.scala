@@ -20,7 +20,8 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import controllers.aboutthetradinghistory.routes
 import models.submissions.common.{AnswerNo, AnswerYes}
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.identifiers._
 import play.api.Logging
 import play.api.mvc.{AnyContent, Call, Request}
@@ -58,8 +59,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   ): Session => Call =
     if (from == "IES") {
       _.forType match {
-        case ForTypes.for6076 => ies6076SpecificRoute
-        case _                => iesSpecificRoute
+        case FOR6076 => ies6076SpecificRoute
+        case _       => iesSpecificRoute
       }
     } else {
       super.nextPage(id, session)
@@ -87,18 +88,18 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     s.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
       case Some(true) =>
         s.forType match {
-          case ForTypes.for6020 | ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6076 =>
+          case FOR6020 | FOR6045 | FOR6046 | FOR6076 =>
             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-          case _                                                                         => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+          case _                                     => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
         }
 
       case _ =>
         s.forType match {
-          case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
-          case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
-          case ForTypes.for6045 | ForTypes.for6046 => aboutthetradinghistory.routes.FinancialYearsController.show
-          case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
-          case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
+          case FOR6020           => aboutthetradinghistory.routes.TotalFuelSoldController.show()
+          case FOR6030           => aboutthetradinghistory.routes.Turnover6030Controller.show()
+          case FOR6045 | FOR6046 => aboutthetradinghistory.routes.FinancialYearsController.show
+          case FOR6076           => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+          case _                 => aboutthetradinghistory.routes.TurnoverController.show()
         }
     }
   }
@@ -116,28 +117,28 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def financialYearEndDatesRouting: Session => Call =
     _.forType match {
-      case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
-      case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
-      case ForTypes.for6045 | ForTypes.for6046 => aboutthetradinghistory.routes.FinancialYearsController.show
-      case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
-      case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
+      case FOR6020           => aboutthetradinghistory.routes.TotalFuelSoldController.show()
+      case FOR6030           => aboutthetradinghistory.routes.Turnover6030Controller.show()
+      case FOR6045 | FOR6046 => aboutthetradinghistory.routes.FinancialYearsController.show
+      case FOR6076           => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+      case _                 => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
   private def financialYearsRouting: Session => Call =
     _.forType match {
-      case ForTypes.for6020                    => aboutthetradinghistory.routes.TotalFuelSoldController.show()
-      case ForTypes.for6030                    => aboutthetradinghistory.routes.Turnover6030Controller.show()
-      case ForTypes.for6045 | ForTypes.for6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
-      case ForTypes.for6076                    => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
-      case _                                   => aboutthetradinghistory.routes.TurnoverController.show()
+      case FOR6020           => aboutthetradinghistory.routes.TotalFuelSoldController.show()
+      case FOR6030           => aboutthetradinghistory.routes.Turnover6030Controller.show()
+      case FOR6045 | FOR6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
+      case FOR6076           => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+      case _                 => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
   private def turnoverRouting: Session => Call =
     _.forType match {
-      case ForTypes.for6015 => aboutthetradinghistory.routes.CostOfSalesController.show()
-      case ForTypes.for6020 => aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show()
-      case ForTypes.for6030 => aboutthetradinghistory.routes.UnusualCircumstancesController.show()
-      case _                => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+      case FOR6015 => aboutthetradinghistory.routes.CostOfSalesController.show()
+      case FOR6020 => aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show()
+      case FOR6030 => aboutthetradinghistory.routes.UnusualCircumstancesController.show()
+      case _       => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     }
 
   private def getAddAnotherBunkerFuelCardsDetailRouting(answers: Session): Call = {
@@ -245,6 +246,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for gross receipts all year")
     }
 
+  private def whatYouWillNeedRouting: Session => Call =
+    _.forType match {
+      case FOR6048 => aboutthetradinghistory.routes.AreYouVATRegisteredController.show
+      case _       => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()
+    }
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYourTradingHistoryPageId               -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
     FinancialYearEndPageId                      -> financialYearEndRouting,
@@ -327,7 +334,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     AdditionalMiscId                            -> (_ =>
       controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
     ),
-    WhatYouWillNeedPageId                       -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
+    WhatYouWillNeedPageId                       -> whatYouWillNeedRouting,
     TentingPitchesTotalId                       -> (_ => aboutthetradinghistory.routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
@@ -344,6 +351,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     CheckYourAnswersAboutTheTradingHistoryId    -> (_ =>
       controllers.routes.TaskListController.show().withFragment("tradingHistory")
     ),
-    ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show())
+    ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
+    AreYouVATRegisteredId                       -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show())
   )
 }

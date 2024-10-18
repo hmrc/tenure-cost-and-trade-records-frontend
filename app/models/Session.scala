@@ -35,7 +35,7 @@ import java.time.LocalDate
 // New session properties must be also added to class `UserData` and method `toUserData`
 case class Session(
   referenceNumber: String,
-  forType: String,
+  forType: ForType,
   address: Address,
   token: String,
   isWelsh: Boolean,

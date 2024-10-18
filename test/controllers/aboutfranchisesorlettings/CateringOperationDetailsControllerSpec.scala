@@ -16,7 +16,8 @@
 
 package controllers.aboutfranchisesorlettings
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
@@ -47,7 +48,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       mockAboutFranchisesOrLettingsNavigator,
       cateringOperationDetailsView,
-      preEnrichedActionRefiner(forType = ForTypes.for6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      preEnrichedActionRefiner(forType = FOR6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 

@@ -17,7 +17,8 @@
 package controllers.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -30,7 +31,7 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
   def canRentBeReducedOnReviewController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) = new CanRentBeReducedOnReviewController(
     stubMessagesControllerComponents(),
@@ -52,7 +53,7 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with Can Rent Be Reduced On Review in the session 6020" in {
-      val controller = canRentBeReducedOnReviewController(ForTypes.for6020)
+      val controller = canRentBeReducedOnReviewController(FOR6020)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -63,7 +64,7 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML when no Can Rent Be Reduced On Review in the session 6020" in {
-      val controller = canRentBeReducedOnReviewController(ForTypes.for6020, None)
+      val controller = canRentBeReducedOnReviewController(FOR6020, None)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

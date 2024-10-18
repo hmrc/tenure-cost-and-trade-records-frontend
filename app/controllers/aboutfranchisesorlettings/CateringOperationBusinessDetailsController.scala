@@ -22,7 +22,9 @@ import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.c
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetailsForm.cateringOperationBusinessDetailsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationBusinessDetails, CateringOperationBusinessSection}
-import models.{ForTypes, Session}
+import models.ForType
+import models.ForType.*
+import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationBusinessPageId
 import play.api.i18n.I18nSupport
@@ -45,7 +47,7 @@ class CateringOperationBusinessDetailsController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[AnyContent]): String =
+  private def forType(implicit request: SessionRequest[AnyContent]): ForType =
     request.sessionData.forType
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -61,7 +63,7 @@ class CateringOperationBusinessDetailsController @Inject() (
 
     Ok(
       cateringOperationDetailsView(
-        if (forType == ForTypes.for6030) {
+        if (forType == FOR6030) {
           existingDetails.fold(cateringOperationBusinessDetails6030Form)(
             cateringOperationBusinessDetails6030Form.fill
           )
@@ -82,14 +84,14 @@ class CateringOperationBusinessDetailsController @Inject() (
             )
         },
         request.sessionData.toSummary,
-        request.sessionData.forType
+        forType
       )
     )
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CateringOperationBusinessDetails](
-      if (forType == ForTypes.for6030) {
+      if (forType == FOR6030) {
         cateringOperationBusinessDetails6030Form
       } else {
         cateringOperationBusinessDetailsForm
@@ -151,11 +153,11 @@ class CateringOperationBusinessDetailsController @Inject() (
 
   private def getBackLink(answers: Session, maybeIndex: Option[Int]): Either[String, String] =
     answers.forType match {
-      case ForTypes.for6015 | ForTypes.for6016 =>
+      case FOR6015 | FOR6016 =>
         Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
-      case ForTypes.for6030                    =>
+      case FOR6030           =>
         Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show().url)
-      case _                                   =>
+      case _                 =>
         maybeIndex match {
           case Some(index) if index > 0 =>
             Right(

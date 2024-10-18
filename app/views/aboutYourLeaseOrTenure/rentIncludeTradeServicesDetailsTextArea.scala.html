@@ -22,6 +22,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -30,7 +31,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[String], forType: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], forType: ForType, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("describeServicesTextArea.heading"),
@@ -55,7 +56,7 @@
      isPageHeading = true
     ),
     errorMessage = theForm.errors.asTextErrorMessageForField("describeServicesTextArea"),
-    hint = if(forType == ForTypes.for6045 || forType == ForTypes.for6046) Some(Hint(content = Text(messages("rentIncludeTradeServicesDetailsTextBoxArea.hint")))) else Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
+    hint = if(forType == FOR6045 || forType == FOR6046) Some(Hint(content = Text(messages("rentIncludeTradeServicesDetailsTextBoxArea.hint")))) else Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
    ).withFormField(theForm("describeServicesTextArea"))
   )
 

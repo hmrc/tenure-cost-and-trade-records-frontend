@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.DoesTheRentPayableForm
+import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import org.scalatest.matchers.must.Matchers._
@@ -29,10 +30,10 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
 
   override val form = DoesTheRentPayableForm.doesTheRentPayableForm
 
-  def createView = () => doesTheRentPayableView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, "FOR6010", Summary("99996010001"))(fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
 
   "Rent payable view" must {
 

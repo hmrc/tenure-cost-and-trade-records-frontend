@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.common.AnswerNo
@@ -36,7 +37,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
 
   val session6045 = Session(
     "99996045004",
-    "FOR6045 ",
+    FOR6045,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
@@ -65,7 +66,8 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
     "return a function that goes to lease or agreement years page when about your landlord has been completed" in {
       navigator
         .nextPage(ConnectedToLandlordDetailsPageId, session6045)
-        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
+        .show()
     }
 
     "return a function that goes to rent include trade services details page when rent include trade services has been completed" in {

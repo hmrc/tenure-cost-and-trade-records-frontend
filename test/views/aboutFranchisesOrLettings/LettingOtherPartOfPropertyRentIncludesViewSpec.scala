@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesForm
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
+import models.ForType.*
 import models.pages.Summary
 
 class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehaviours[List[String]] {
@@ -32,13 +33,13 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
   override val form = lettingOtherPartOfPropertyRentIncludesForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), "FOR6010")(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(
       fakeRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[List[String]]) =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), "FOR6010")(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(
       fakeRequest,
       messages
     )

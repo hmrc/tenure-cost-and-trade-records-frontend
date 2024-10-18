@@ -17,10 +17,12 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import utils.TestBaseSpec
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
+
 class TelecomMastLettingControllerSpec extends TestBaseSpec {
 
   def telecomMastLettingController(
@@ -31,7 +33,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutFranchisesOrLettingsNavigator,
     telecomMastLettingView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
     mockSessionRepo
   )
 

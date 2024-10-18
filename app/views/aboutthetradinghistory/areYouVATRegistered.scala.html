@@ -17,45 +17,38 @@
 @import actions.SessionRequest
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        formWithCSRF: FormWithCSRF,
-        govukWarningText: GovukWarningText
+        formWithCSRF: FormWithCSRF
 )
 
 
 @(form: Form[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
-    pageHeading = messages("changeOccupationAndAccountingInfo.heading"),
+    pageHeading = messages("areYouVATRegistered.heading"),
     showSection = true,
     summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url,
+    backLinkUrl = controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url,
     theForm = form,
     fullWidth = false,
-    showH1 = true
+    showH1 = false
 ) {
 
-    <p class="govuk-body">@messages("changeOccupationAndAccountingInfo.p1")</p>
-
-    @govukWarningText(WarningText(
-        content = Text(messages("changeOccupationAndAccountingInfo.warning"))
-    ))
-
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.submit) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.submit) {
 
         @includes.radioButtonsYesNo(
             govukRadios,
             form,
-            "changeOccupationAndAccountingInfo",
-            "changeOccupationAndAccountingInfo.question",
+            "areYouVATRegistered",
+            "areYouVATRegistered.heading",
             "label.yes",
             "label.no",
-            "govuk-fieldset__legend--m"
+            "govuk-fieldset__legend--m",
+            isHeading = true
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)

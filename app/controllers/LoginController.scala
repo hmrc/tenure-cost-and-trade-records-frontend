@@ -24,7 +24,9 @@ import form.PostcodeMapping.customPostcodeMapping
 import form.Errors
 import models.audit.DownloadPDFAudit
 import models.submissions.common.Address
-import models.{ForTypes, Session}
+import models.ForType
+import models.ForType.*
+import models.Session
 import play.api.Logging
 import play.api.data.Form
 import play.api.data.Forms._
@@ -102,11 +104,11 @@ class LoginController @Inject() (
     val forTypeFromURL         = request.getQueryString("forType")
     val form                   = loginForm.fill(LoginDetails(referenceNumberFromUrl, "", nowInUK))
 
-    forTypeFromURL match {
+    forTypeFromURL.flatMap(ForType.find) match {
       case Some(forType) =>
         audit.sendExplicitAudit(
           "ForRequestedFromContinue",
-          DownloadPDFAudit(referenceNumberFromUrl, forType, request.uri)
+          DownloadPDFAudit(referenceNumberFromUrl, forType.toString, request.uri)
         )
       case _             => Future.successful(Ok(login(form)))
     }
@@ -150,19 +152,19 @@ class LoginController @Inject() (
     loginToBackend(hc, ec)(cleanedRefNumber, cleanPostcode, startTime)
       .flatMap { case NoExistingDocument(token, forNum, address, isWelsh) =>
         auditLogin(referenceNumber, false, address, forNum)
-        ForTypes.find(forNum) match {
-          case Some(_) =>
+        ForType.find(forNum) match {
+          case Some(forType) =>
             session
-              .start(Session(referenceNumber, forNum, address, token, isWelsh))
+              .start(Session(referenceNumber, forType, address, token, isWelsh))
               .flatMap { _ =>
                 backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map {
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
                   case _       => Redirect(startPage)
                 }
               }
-          case None    =>
+          case None          =>
             session
-              .start(Session(referenceNumber, forNum, address, token, isWelsh))
+              .start(Session(referenceNumber, FOR6010, address, token, isWelsh))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
         }
       }

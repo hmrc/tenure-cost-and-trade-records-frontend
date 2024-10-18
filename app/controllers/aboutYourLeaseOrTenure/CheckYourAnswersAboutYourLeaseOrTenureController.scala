@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CheckYourAnswersAboutYourLeaseOrTenureId
 import play.api.Logging
@@ -120,13 +121,13 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
             controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url
           case _                                    =>
             answers.forType match {
-              case ForTypes.for6010 =>
+              case FOR6010 =>
                 controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
-              case ForTypes.for6011 =>
+              case FOR6011 =>
                 controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show().url
-              case ForTypes.for6076 =>
+              case FOR6076 =>
                 controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show().url
-              case _                =>
+              case _       =>
                 logger.warn(s"Navigation for CYA about lease without correct selection of conditions by controller")
                 throw new RuntimeException("Invalid option exception for CYA about lease back link")
             }

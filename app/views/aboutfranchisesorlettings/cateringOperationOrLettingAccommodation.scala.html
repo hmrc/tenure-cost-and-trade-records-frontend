@@ -24,6 +24,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -32,11 +33,11 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], cateringOrLetting: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], cateringOrLetting: String, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
-@for6015 = @{formType == ForTypes.for6015 || formType == ForTypes.for6016}
+@for6015 = @{forType == FOR6015 || forType == FOR6016}
 
-@for6030 = @{formType == ForTypes.for6030}
+@for6030 = @{forType == FOR6030}
 
 @label =@{
   if(for6015) messages("label.section.aboutTheFranchiseConcessions")  else {

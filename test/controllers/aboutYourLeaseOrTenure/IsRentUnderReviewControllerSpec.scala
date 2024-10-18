@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -28,7 +29,7 @@ import utils.TestBaseSpec
 class IsRentUnderReviewControllerSpec extends TestBaseSpec {
 
   def isRentUnderReviewController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
@@ -63,7 +64,7 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML is rent under review is present in session for 6045" in {
-      val controller = isRentUnderReviewController(ForTypes.for6045)
+      val controller = isRentUnderReviewController(FOR6045)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")

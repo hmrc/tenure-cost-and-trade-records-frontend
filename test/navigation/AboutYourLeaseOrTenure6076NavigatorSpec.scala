@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs}
 import models.submissions.common.{BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
@@ -36,7 +37,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
 
   val session6010 = Session(
     "99996010004",
-    "FOR6010",
+    FOR6010,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
@@ -46,7 +47,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
 
   val session6030 = Session(
     "99996030004",
-    "FOR6030",
+    FOR6030,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
@@ -56,7 +57,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
 
   val session6030Full = Session(
     "99996030004",
-    "FOR6030",
+    FOR6030,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
@@ -67,7 +68,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
 
   val session6076Full = Session(
     "99996076004",
-    "FOR6076",
+    FOR6076,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
@@ -78,7 +79,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
 
   val session6010No            = Session(
     "99996010004",
-    "FOR6010",
+    FOR6010,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
@@ -87,7 +88,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
   )
   val session6030No            = Session(
     "99996030004",
-    "FOR6030",
+    FOR6030,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
@@ -96,7 +97,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
   )
   val session6010PayNavigation = Session(
     "99996010004",
-    "FOR6010",
+    FOR6010,
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,

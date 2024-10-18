@@ -16,10 +16,12 @@
 
 package controllers.aboutfranchisesorlettings
 
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import utils.TestBaseSpec
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
+
 class AtmLettingControllerSpec extends TestBaseSpec {
 
   def atmLettingController(
@@ -30,7 +32,7 @@ class AtmLettingControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutFranchisesOrLettingsNavigator,
     atmLettingView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6020),
+    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
     mockSessionRepo
   )
 

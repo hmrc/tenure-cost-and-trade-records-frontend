@@ -292,3 +292,7 @@ case object CheckYourAnswersAboutTheTradingHistoryId extends Identifier {
 case object ChangeOccupationAndAccountingId extends Identifier {
   override def toString: String = "changeOccupationAndAccountingPage"
 }
+
+case object AreYouVATRegisteredId extends Identifier {
+  override def toString: String = "areYouVATRegisteredPage"
+}

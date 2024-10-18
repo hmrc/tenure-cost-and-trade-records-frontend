@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-package models
+package form.aboutthetradinghistory
 
-import models.submissions.common.Address
-import play.api.libs.json.{Json, OFormat}
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
 
-case class FORLoginResponse(forAuthToken: String, forType: String, address: Address, isWelsh: Boolean)
+object AreYouVATRegisteredForm {
 
-object FORLoginResponse {
-  implicit val formats: OFormat[FORLoginResponse] = Json.format
+  val areYouVATRegisteredForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "areYouVATRegistered" -> createYesNoType("error.areYouVATRegistered.required")
+      )
+    )
+
 }

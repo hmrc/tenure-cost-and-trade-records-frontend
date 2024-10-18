@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import models.ForType.*
 @import models.submissions.aboutyouandtheproperty.PropertyDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -29,10 +30,10 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyDetails], forType: String, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[PropertyDetails], forType: ForType, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @content = {
-@if(forType.equals(ForTypes.for6010) || forType.equals(ForTypes.for6011)) {
+@if(forType == FOR6010 || forType == FOR6011) {
   @govukRadios(
     Radios(
       fieldset = Some(Fieldset(
@@ -96,7 +97,7 @@
   )
 }
 
-@if(forType.equals(ForTypes.for6015) || forType.equals(ForTypes.for6016)) {
+@if(forType == FOR6015 || forType == FOR6016) {
   @govukRadios(
     Radios(
       fieldset = Some(Fieldset(

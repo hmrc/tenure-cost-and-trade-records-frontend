@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@ import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInfor
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
 import play.api.Logging
@@ -95,9 +96,9 @@ class AboutYourTradingHistoryController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6045 | ForTypes.for6046 | ForTypes.for6048 | ForTypes.for6076 =>
+      case FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
         controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
-      case _                                                                         => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
+      case _                                     => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
     }
 
 }

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
+import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcessionOrFranchise, TypeLetting}
 import play.api.http.Status._
 import play.api.libs.json.{JsError, Json}
@@ -35,7 +36,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       typeOfIncomeView,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = forType6045),
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6045),
       mockSessionRepo
     )
 

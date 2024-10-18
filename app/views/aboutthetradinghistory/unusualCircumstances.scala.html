@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.ForType.*
 @import models.submissions.aboutthetradinghistory.UnusualCircumstances
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -30,9 +31,9 @@
 )
 
 
-@(theForm: Form[UnusualCircumstances], forType: String, backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[UnusualCircumstances], forType: ForType, backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-@heading = @{if(forType.equals(ForTypes.for6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") }}
+@heading = @{if(forType.equals(FOR6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") }}
 
 @layout(
     pageHeading = heading,

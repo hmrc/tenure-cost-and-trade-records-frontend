@@ -19,7 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeServicesForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.PaymentForTradeServices
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -89,9 +90,9 @@ class PaymentForTradeServicesController @Inject() (
             controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
           case None        =>
             answers.forType match {
-              case ForTypes.for6030 =>
+              case FOR6030 =>
                 controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-              case _                => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+              case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
             }
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
 import navigation.AboutYouAndThePropertyNavigator
@@ -80,10 +81,10 @@ class WebsiteForPropertyController @Inject() (
 
   private def backLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6030 | ForTypes.for6020 =>
+      case FOR6030 | FOR6020 =>
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6045 | FOR6046 =>
         controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show().url
-      case _                                   => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
+      case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
     }
 }

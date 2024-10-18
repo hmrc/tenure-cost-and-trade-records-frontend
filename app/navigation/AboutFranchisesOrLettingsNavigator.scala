@@ -19,7 +19,9 @@ package navigation
 import connectors.Audit
 import controllers.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSection, CateringOperationSection, LettingSection}
-import models.{ForTypes, Session}
+import models.ForType
+import models.ForType.*
+import models.Session
 import navigation.identifiers._
 import play.api.Logging
 import play.api.mvc.Call
@@ -64,16 +66,16 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6015 | ForTypes.for6016 =>
+          case FOR6015 | FOR6016 =>
             controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
-          case ForTypes.for6030                    =>
+          case FOR6030           =>
             controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show()
-          case ForTypes.for6020                    =>
+          case FOR6020           =>
             val idx: Int = answers.aboutFranchisesOrLettings.map(_.lettings.map(_.size).getOrElse(0)).getOrElse(0)
             controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(idx))
-          case ForTypes.for6045 | ForTypes.for6046 =>
+          case FOR6045 | FOR6046 =>
             controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
-          case _                                   =>
+          case _                 =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
         }
       case Some("no")  =>
@@ -95,7 +97,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
       case Some("yes") =>
         answers.forType match {
-          case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6015 | ForTypes.for6016 =>
+          case FOR6010 | FOR6011 | FOR6015 | FOR6016 =>
             val maybeCatering = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lastOption)
             val idx           = getCateringOperationsIndex(answers)
             maybeCatering match {
@@ -104,7 +106,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
               case _                                                                        =>
                 controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
             }
-          case ForTypes.for6030                                                          =>
+          case FOR6030                               =>
             val maybeCatering =
               answers.aboutFranchisesOrLettings.flatMap(
                 _.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty).lastOption
@@ -116,7 +118,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
               case _                                                                   =>
                 controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
             }
-          case _                                                                         =>
+          case _                                     =>
             logger.warn(
               s"Navigation for franchise or letting reached without a valid FOR Type"
             )
@@ -139,8 +141,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def getRentalIncomeIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.rentalIncomeIndex).getOrElse(0)
 
-  private def isCateringDetailsIncomplete(detail: CateringOperationSection, forType: String): Boolean =
-    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+  private def isCateringDetailsIncomplete(detail: CateringOperationSection, forType: ForType): Boolean =
+    if (forType == FOR6015 || forType == FOR6016) {
       detail.cateringOperationDetails == null ||
       detail.rentReceivedFrom.isEmpty ||
       detail.calculatingTheRent.isEmpty ||
@@ -154,8 +156,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def isCateringBusinessDetailsIncomplete6030(detail: CateringOperationBusinessSection): Boolean =
     detail.feeReceived.isEmpty
 
-  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: String): Call =
-    if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: ForType): Call =
+    if (forType == FOR6015 || forType == FOR6016) {
       if (detail.rentReceivedFrom.isEmpty)
         controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx)
       else if (detail.calculatingTheRent.isEmpty)
@@ -178,17 +180,17 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
     }
 
-  private def isLettingDetailIncomplete(detail: LettingSection, forType: String): Boolean = {
+  private def isLettingDetailIncomplete(detail: LettingSection, forType: ForType): Boolean = {
     val isCommonConditionMet   = detail.lettingOtherPartOfPropertyInformationDetails == null || detail.itemsInRent.isEmpty
-    val isSpecificConditionMet = if (forType.equals("FOR6015") || forType.equals("FOR6016")) {
+    val isSpecificConditionMet = if (forType == FOR6015 || forType == FOR6016) {
       detail.lettingOtherPartOfPropertyRent6015Details.isEmpty
     } else {
       detail.lettingOtherPartOfPropertyRentDetails.isEmpty
     }
     isCommonConditionMet || isSpecificConditionMet
   }
-  def getIncompleteLettingCall(detail: LettingSection, forType: String, idx: Int): Call   = {
-    val for601516 = if (forType.equals("FOR6015") || forType.equals("FOR6016")) true else false
+  def getIncompleteLettingCall(detail: LettingSection, forType: ForType, idx: Int): Call   = {
+    val for601516 = if (forType == FOR6015 || forType == FOR6016) true else false
     if (detail.lettingOtherPartOfPropertyInformationDetails == null)
       controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
     else if (detail.lettingOtherPartOfPropertyRent6015Details.isEmpty && for601516)
@@ -202,10 +204,10 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   private def cateringOperationsDetailsConditionsRouting: Session => Call = answers =>
     answers.forType match {
-      case ForTypes.for6015 | ForTypes.for6016 =>
+      case FOR6015 | FOR6016 =>
         controllers.aboutfranchisesorlettings.routes.RentReceivedFromController
           .show(getCateringOperationsIndex(answers))
-      case _                                   =>
+      case _                 =>
         controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
           .show(getCateringOperationsIndex(answers))
     }

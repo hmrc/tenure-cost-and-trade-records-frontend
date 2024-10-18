@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import models.ForType.*
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
@@ -37,7 +38,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     checkYourAnswersTentingPitchesView,
     preEnrichedActionRefiner(
       referenceNumber = "99996045333",
-      forType = "FOR6045",
+      forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneCYA6045)
     ),
     mockSessionRepo
@@ -49,7 +50,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     checkYourAnswersTentingPitchesView,
     preEnrichedActionRefiner(
       referenceNumber = "99996045333",
-      forType = "FOR6045",
+      forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneTentYes)
     ),
     mockSessionRepo
@@ -61,7 +62,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     checkYourAnswersTentingPitchesView,
     preEnrichedActionRefiner(
       referenceNumber = "99996045333",
-      forType = "FOR6045",
+      forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneTentNo)
     ),
     mockSessionRepo

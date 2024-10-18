@@ -20,6 +20,7 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration._
+import models.ForType.*
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -82,7 +83,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll with Befo
         )
       )
       val result             = await(backendConnector.verifyCredentials(testID, "SomePostCode"))
-      result.forType shouldBe "FOR6010"
+      result.forType shouldBe FOR6010.toString
     }
 
     "save SubmissionDraft successfully" in {

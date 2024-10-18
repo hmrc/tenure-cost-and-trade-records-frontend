@@ -18,6 +18,7 @@ package controllers
 
 import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
+import models.ForType.*
 import models.audit.UserData
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
@@ -232,7 +233,7 @@ class LoginControllerSpec extends TestBaseSpec {
         eqTo(
           UserData(
             referenceNumber,
-            forType6010,
+            FOR6010,
             prefilledAddress,
             stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
             removeConnectionDetails = Some(prefilledRemoveConnection),

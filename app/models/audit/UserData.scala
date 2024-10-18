@@ -16,6 +16,7 @@
 
 package models.audit
 
+import models.ForType
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
@@ -33,7 +34,7 @@ import play.api.libs.json.{Json, OFormat}
   */
 case class UserData(
   referenceNumber: String,
-  forType: String,
+  forType: ForType,
   address: Address,
   stillConnectedDetails: Option[StillConnectedDetails],
   removeConnectionDetails: Option[RemoveConnectionDetails],

@@ -15,6 +15,7 @@
  *@
 
 @import actions.SessionRequest
+@import models.ForType.*
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -35,11 +36,11 @@
 }
 
     @heading = @{
-        if(forType == ForTypes.for6076) messages("areYouThirdParty6076.heading") else messages("areYouThirdParty.heading")
+        if(forType == FOR6076) messages("areYouThirdParty6076.heading") else messages("areYouThirdParty.heading")
     }
 
     @showH1 = @{
-        if(forType == ForTypes.for6076) true else false
+        if(forType == FOR6076) true else false
     }
 
 @layout(
@@ -54,7 +55,7 @@
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
 
-      @if(forType == ForTypes.for6076) {
+      @if(forType == FOR6076) {
 
           <p class="govuk-body">@{
               messages("areYouThirdParty6076.p1", tradingName)

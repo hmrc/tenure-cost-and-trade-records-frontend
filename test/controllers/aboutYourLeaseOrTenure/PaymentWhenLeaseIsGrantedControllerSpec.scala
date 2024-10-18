@@ -16,7 +16,8 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import models.ForTypes
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,7 +27,7 @@ import utils.TestBaseSpec
 class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
 
   def paymentWhenLeaseIsGrantedController(
-    forType: String = ForTypes.for6010,
+    forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new PaymentWhenLeaseIsGrantedController(
@@ -73,7 +74,7 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with pay capital sum details yes in the session for 6030" in {
-      val controller = paymentWhenLeaseIsGrantedController(forType = ForTypes.for6030)
+      val controller = paymentWhenLeaseIsGrantedController(forType = FOR6030)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")

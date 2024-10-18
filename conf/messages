@@ -253,7 +253,7 @@ downloadPdf.6045.url = https://www.gov.uk/government/publications/request-for-re
 downloadPdf.6045.label = VO6045 request for rental information: caravan sites - receipts
 downloadPdf.6046.url = https://www.gov.uk/government/publications/request-for-rental-information-caravan-sites-rental
 downloadPdf.6046.label = VO6046 request for rental information: caravan sites - rental
-downloadPdf.6048.url = https://www.gov.uk/government/publications/request-for-rental-information-receipts-general-basic
+downloadPdf.6048.url = https://www.gov.uk/government/publications/self-catering-holiday-homes-questionnaire
 downloadPdf.6048.label = VO6048 request for rental information: self-catering holiday homes (applies to England)
 downloadPdf.6076.url = https://www.gov.uk/government/publications/vo-6076-request-for-rental-information-renewable-energy
 downloadPdf.6076.label = VO6076 request for rental information: Renewable Energy (opens in a new tab)
@@ -3017,6 +3017,9 @@ whatYouWillNeed.6048.l6 = Administrative costs
 whatYouWillNeed.6048.p6 = Including subscriptions, telephone and broadband, booking agency fees, advertising and printing.
 whatYouWillNeed.6048.l7 = Operational costs
 whatYouWillNeed.6048.p7 = Including any utilities, laundry and cleaning, repairs and maintenance, TV licences, travelling expenses and other costs.
+
+areYouVATRegistered.heading = Are you VAT registered?
+error.areYouVATRegistered.required = Select yes if you are VAT registered
 
 
 # CHECK YOUR ANSWERS

@@ -28,7 +28,8 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import play.api.Logging
 import views.html.aboutYourLeaseOrTenure.propertyUpdates
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
@@ -76,7 +77,7 @@ class PropertyUpdatesController @Inject() (
 
   private def backLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6045 | ForTypes.for6046 =>
+      case FOR6045 | FOR6046 =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
           _.tenantAdditionsDisregardedDetails.flatMap(_.tenantAdditionalDisregarded.name)
         ) match {
@@ -87,7 +88,7 @@ class PropertyUpdatesController @Inject() (
             logger.warn(s"Back link for property updates page reached with unknown value")
             controllers.routes.TaskListController.show().url
         }
-      case _                                   => controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+      case _                 => controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
     }
 
 }

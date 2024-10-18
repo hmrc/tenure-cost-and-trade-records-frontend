@@ -16,6 +16,7 @@
 
 @import actions.SessionRequest
 @import controllers.connectiontoproperty
+@import models.ForType.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 
@@ -49,7 +50,7 @@
             else messages("label.no.na")), connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
     }
 
-@if(forType != ForTypes.for6076) {
+@if(forType != FOR6076) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.vacancyStatus.heading")</h2>
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersConnectionToProperty.isPropertyVacant", _.vacantProperties.map(_.vacantProperties.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")), connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties")

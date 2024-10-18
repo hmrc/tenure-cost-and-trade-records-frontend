@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
 import form.requestReferenceNumber.RequestReferenceNumberForm.requestReferenceNumberForm
+import models.ForType.*
 import models.Session
 import models.submissions.common.Address
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
@@ -44,7 +45,7 @@ class RequestReferenceNumberController @Inject() (
     with I18nSupport {
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
-    session.start(Session("", "", Address("", None, "", None, ""), "", isWelsh = false))
+    session.start(Session("", FOR6010, Address("", None, "", None, ""), "", isWelsh = false))
     Future.successful(Redirect(routes.RequestReferenceNumberController.show()))
   }
 

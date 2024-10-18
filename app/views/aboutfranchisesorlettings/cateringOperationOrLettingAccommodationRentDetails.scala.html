@@ -25,6 +25,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import models.ForType.*
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -36,10 +37,10 @@
 )
 
 
-@(theForm: Form[?], index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary, formType: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], index: Int, cateringOrLetting: String, operatorName: String, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
 @label =@{
-    if(formType == ForTypes.for6015 || formType == ForTypes.for6016) messages("label.section.aboutTheFranchiseConcessions")  else {
+    if(forType == FOR6015 || forType == FOR6016) messages("label.section.aboutTheFranchiseConcessions")  else {
         messages("label.section.aboutTheFranchiseLettings")
     }
 }
@@ -89,7 +90,7 @@
 
         @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
 
-        @if(formType == ForTypes.for6015 || formType == ForTypes.for6016) {
+        @if(forType == FOR6015 || forType == FOR6016) {
             @govukCheckboxes(
                 Checkboxes(
                     name = "declaration",

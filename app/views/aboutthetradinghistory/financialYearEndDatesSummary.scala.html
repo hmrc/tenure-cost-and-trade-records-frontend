@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import actions.SessionRequest
+@import models.ForType.*
 @import models.pages.Summary
 @import util.SectionAnswersRowBuilder
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -41,10 +42,10 @@
 
 @financialYearEndData(aboutTheTradingHistory: AboutTheTradingHistory) = @{
     val financialYearEndDates = request.sessionData.forType match {
-        case ForTypes.for6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
-        case ForTypes.for6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-        case ForTypes.for6045 | ForTypes.for6046 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
-        case ForTypes.for6076 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
+        case FOR6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
+        case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case FOR6045 | FOR6046 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
+        case FOR6076 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
     financialYearEndDates.map(date => dateUtil.formatDate(date)).zipWithIndex

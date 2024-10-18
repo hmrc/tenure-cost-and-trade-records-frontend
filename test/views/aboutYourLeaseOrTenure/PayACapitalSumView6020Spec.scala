@@ -17,6 +17,7 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm
+import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
@@ -32,10 +33,10 @@ class PayACapitalSumView6020Spec extends QuestionViewBehaviours[PayACapitalSumDe
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
-  def createView = () => payACapitalSumView(form, "FOR6020", backLink, Summary("99996020001"))(fakeRequest, messages)
+  def createView = () => payACapitalSumView(form, FOR6020, backLink, Summary("99996020001"))(fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PayACapitalSumDetails]) =>
-    payACapitalSumView(form, "FOR6020", backLink, Summary("99996020001"))(fakeRequest, messages)
+    payACapitalSumView(form, FOR6020, backLink, Summary("99996020001"))(fakeRequest, messages)
 
   "capital sum or premium view" must {
 

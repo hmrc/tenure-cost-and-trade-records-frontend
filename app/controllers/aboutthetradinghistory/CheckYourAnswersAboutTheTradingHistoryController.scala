@@ -22,7 +22,8 @@ import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm.ch
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 import models.submissions.common.AnswerYes
-import models.{ForTypes, Session}
+import models.ForType.*
+import models.Session
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
 import play.api.Logging
@@ -87,13 +88,13 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case ForTypes.for6010 | ForTypes.for6011 | ForTypes.for6016 =>
+      case FOR6010 | FOR6011 | FOR6016 =>
         controllers.aboutthetradinghistory.routes.TurnoverController.show().url
-      case ForTypes.for6015 | ForTypes.for6030                    =>
+      case FOR6015 | FOR6030           =>
         controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show().url
-      case ForTypes.for6020                                       =>
+      case FOR6020                     =>
         controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show().url
-      case ForTypes.for6045 | ForTypes.for6046                    =>
+      case FOR6045 | FOR6046           =>
         if (
           answers.aboutTheTradingHistoryPartOne
             .flatMap(_.caravans)
@@ -103,9 +104,9 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
           controllers.aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show().url
         else
           controllers.aboutthetradinghistory.routes.StaticCaravansController.show().url
-      case ForTypes.for6076                                       =>
+      case FOR6076                     =>
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-      case _                                                      =>
+      case _                           =>
         logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
         controllers.routes.TaskListController.show().url
     }
