@@ -56,8 +56,7 @@ class TypeOfIncomeController @Inject() (
         existingDetails.fold(typeOfIncomeForm)(typeOfIncomeForm.fill),
         index,
         request.sessionData.toSummary,
-        getBackLink,
-        request.sessionData.forType
+        getBackLink
       )
     )
   }
@@ -71,8 +70,7 @@ class TypeOfIncomeController @Inject() (
             formWithErrors,
             index,
             request.sessionData.toSummary,
-            getBackLink,
-            request.sessionData.forType
+            getBackLink
           )
         ),
       data => {
@@ -104,15 +102,20 @@ class TypeOfIncomeController @Inject() (
   private def updateSessionAndRedirect(
     updatedRecords: IndexedSeq[IncomeRecord],
     source: TypeOfIncome,
-    index: Option[Int]
+    updatedIndex: Option[Int]
   )(implicit request: SessionRequest[AnyContent], hc: HeaderCarrier): Future[Result] = {
     val existingFranchisesOrLetting =
       request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
     val updatedSession              = request.sessionData.copy(
-      aboutFranchisesOrLettings = Some(existingFranchisesOrLetting.copy(rentalIncome = Some(updatedRecords)))
+      aboutFranchisesOrLettings = Some(
+        existingFranchisesOrLetting.copy(
+          rentalIncome = Some(updatedRecords),
+          rentalIncomeIndex = updatedIndex.getOrElse(0)
+        )
+      )
     )
     session.saveOrUpdate(updatedSession).map { _ =>
-      Redirect(toSpecificController(source, index))
+      Redirect(toSpecificController(source, updatedIndex))
     }
   }
 

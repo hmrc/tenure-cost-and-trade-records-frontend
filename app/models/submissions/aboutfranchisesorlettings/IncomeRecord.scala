@@ -16,10 +16,12 @@
 
 package models.submissions.aboutfranchisesorlettings
 
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{JsError, JsObject, JsResult, JsValue, Json, OFormat}
 
 sealed trait IncomeRecord {
   def sourceType: TypeOfIncome
+  def addAnotherRecord: Option[AnswersYesNo]
 
 }
 
@@ -49,7 +51,8 @@ object IncomeRecord {
 case class ConcessionIncomeRecord(
   sourceType: TypeOfIncome = TypeConcessionOrFranchise,
   businessDetails: Option[CateringOperationBusinessDetails] = None,
-  feeReceived: Option[FeeReceived] = None
+  feeReceived: Option[FeeReceived] = None,
+  addAnotherRecord: Option[AnswersYesNo] = None
 ) extends IncomeRecord
 
 object ConcessionIncomeRecord {
@@ -60,7 +63,8 @@ case class LettingIncomeRecord(
   sourceType: TypeOfIncome = TypeLetting,
   operatorDetails: Option[LettingOtherPartOfPropertyInformationDetails] = None,
   rent: Option[LettingOtherPartOfPropertyRentDetails] = None,
-  itemsIncluded: Option[List[String]] = None
+  itemsIncluded: Option[List[String]] = None,
+  addAnotherRecord: Option[AnswersYesNo] = None
 ) extends IncomeRecord
 
 object LettingIncomeRecord {

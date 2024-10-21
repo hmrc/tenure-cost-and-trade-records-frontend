@@ -716,6 +716,16 @@ error.concessionTypeDetails.describeUse.maxLength = Description of use of the pr
 # LETTING TYPE DETAILS
 hint.lettingTypeDetails = For example, a billboard or car parking
 
+# RENTAL INCOME LIST
+####################
+rentalIncomeList.heading = You have added 1 source of rental income
+rentalIncomeList.plural.heading = You have added {0} sources of rental income
+label.rentalIncomeList.letting = Do you need to add another letting?
+label.rentalIncomeList.concession = Do you need to add another separate concession or franchise?
+label.rentalIncomeList.income = Do you need to add another source of rental income?
+rentalIncomeList.zeroLetting.heading = You have removed all your rental incomes
+error.rentalIncomeList.required = Select yes if you would lke to add another source of income
+
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
 franchiseLettings.heading = Rental income

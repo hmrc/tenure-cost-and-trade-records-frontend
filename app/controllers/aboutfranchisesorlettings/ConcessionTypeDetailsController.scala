@@ -83,7 +83,7 @@ class ConcessionTypeDetailsController @Inject() (
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(idx, records(idx).asInstanceOf[ConcessionIncomeRecord].copy(businessDetails = Some(data)))
             }
-            aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
+            aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
           } else {
             aboutFranchisesOrLettings
           }
@@ -91,7 +91,6 @@ class ConcessionTypeDetailsController @Inject() (
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(idx))
-
         }
       }
     )

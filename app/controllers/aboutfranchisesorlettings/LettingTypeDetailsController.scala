@@ -65,7 +65,7 @@ class LettingTypeDetailsController @Inject() (
     )
   }
 
-  def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LettingOtherPartOfPropertyInformationDetails](
       lettingOtherPartOfPropertyForm,
       formWithErrors =>
@@ -84,7 +84,10 @@ class LettingTypeDetailsController @Inject() (
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(idx, records(idx).asInstanceOf[LettingIncomeRecord].copy(operatorDetails = Some(data)))
             }
-            aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
+            aboutFranchisesOrLettings.copy(
+              rentalIncome = updatedRentalIncome,
+              rentalIncomeIndex = idx
+            )
           } else {
             aboutFranchisesOrLettings
           }
@@ -92,13 +95,12 @@ class LettingTypeDetailsController @Inject() (
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(LettingTypeDetailsId, updatedSession).apply(updatedSession))
-
         }
       }
     )
   }
 
-  private def calculateBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
     request.getQueryString("from") match {
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url

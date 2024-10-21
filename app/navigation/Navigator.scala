@@ -86,6 +86,11 @@ abstract class Navigator @Inject() (
       nextCall
     }
 
+  def idx(implicit request: Request[AnyContent]): String =
+    request
+      .getQueryString("idx")
+      .getOrElse(request.body.asFormUrlEncoded.flatMap(_.get("idx").flatMap(_.headOption)).getOrElse(""))
+
   def from(implicit request: Request[AnyContent]): String =
     request
       .getQueryString("from")

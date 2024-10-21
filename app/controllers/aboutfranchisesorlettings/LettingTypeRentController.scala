@@ -72,7 +72,7 @@ class LettingTypeRentController @Inject() (
     )
   }
 
-  def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val operatorName = getOperatorName(idx)
 
     continueOrSaveAsDraft[LettingOtherPartOfPropertyRentDetails](
@@ -102,7 +102,6 @@ class LettingTypeRentController @Inject() (
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(LettingTypeRentId, updatedSession).apply(updatedSession))
-
         }
       }
     )

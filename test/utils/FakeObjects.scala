@@ -1027,7 +1027,7 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSectionIncomplete)
   )
 
-  val prefilledAboutFranchiseOrLettings6045: AboutFranchisesOrLettings                         = AboutFranchisesOrLettings(
+  val prefilledAboutFranchiseOrLettings6045: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
     rentalIncome = Some(
       IndexedSeq(
@@ -1062,6 +1062,28 @@ trait FakeObjects {
             )
           )
         )
+      )
+    )
+  )
+
+  val lettingIncomeRecord                                                                      = LettingIncomeRecord(
+    operatorDetails = Some(
+      LettingOtherPartOfPropertyInformationDetails(
+        operatorName = "Letting Operator",
+        typeOfBusiness = "Property Letting",
+        lettingAddress = LettingAddress(
+          buildingNameNumber = "123",
+          street1 = Some("Main Street"),
+          town = "Bristol",
+          county = Some("Bristol"),
+          postcode = "AN12 3YZ"
+        )
+      )
+    ),
+    rent = Some(
+      LettingOtherPartOfPropertyRentDetails(
+        annualRent = 15000.00,
+        dateInput = LocalDate.of(2021, 1, 1)
       )
     )
   )
