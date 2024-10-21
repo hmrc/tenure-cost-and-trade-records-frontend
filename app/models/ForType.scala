@@ -18,6 +18,9 @@ package models
 
 import play.api.libs.json.Format
 
+/**
+ * @author Yuriy Tumakha
+ */
 enum ForType:
   case FOR6010, // Public Houses
     FOR6011, // Pubs, licensed restaurants and wine bars
@@ -27,7 +30,7 @@ enum ForType:
     FOR6030, // Petrol filling stations (trade)
     FOR6045, // Caravan sites – receipts
     FOR6046, // Caravan sites – rental
-    FOR6048, // Self catering holiday homes
+    FOR6048, // Self-catering holiday homes
     FOR6076 // Renewable Energy
 end ForType
 
