@@ -112,6 +112,8 @@ hint.all.apply = Select all that apply.
 ###############
 label.section.connectionToTheProperty = Connection to the property
 label.section.aboutTheProperty = About you and the property
+label.section.lettingHistory = Letting history
+label.section.accommodation = Accommodation details
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
@@ -1484,6 +1486,7 @@ error.legalOrPlanningRestrictionsDetails.maxLength = The description of the othe
 # ABOUT YOUR TRADING HISTORY
 ##############################
 aboutYourTradingHistory.heading = Occupation and accounting information
+aboutYourTradingHistory.6048.heading = Accounting information
 firstOccupy.heading = When did you first occupy the property?
 fieldName.firstOccupy = the {0} when you first occupied the property
 
@@ -2885,6 +2888,7 @@ error.batteriesCapacity.required = Explain what is the capacity of any installed
 furtherInformationOrRemarks.heading = Further information or remarks
 hint.furtherInformationOrRemarks = Provide further details if there was not enough room for you to complete your answers to any of the previous questions, or if any questions require further explanation or clarification.
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
+furtherInformationOrRemarksTasklist.6048.heading = Additional information
 error.furtherInformationOrRemarks.maxLength = Further information must be 2,000 characters or fewer
 
 # ALTERNATIVE DETAILS QUESTION
@@ -3317,7 +3321,7 @@ checkYourAnswersAboutTheTradingHistory.totalCosts = Total costs
 checkYourAnswersAboutTheTradingHistory.rent = Rent
 checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
 checkYourAnswersAboutTheTradingHistory.otherExpenses = Other expenses
-#CYA OTHER HOLIDAY ACCOMMODATION 6045/46
+# CYA OTHER HOLIDAY ACCOMMODATION 6045/46
 checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.onSite = Other holiday accommodation on site?
@@ -3335,6 +3339,12 @@ changeOccupationAndAccountingInfo.p1 = Changing your occupation date or your fin
 changeOccupationAndAccountingInfo.warning = If you change this information, your trading history entries will be deleted and you will have to complete the section again.
 changeOccupationAndAccountingInfo.question = Are you sure you want to change your occupation and accounting information?
 error.changeOccupationAndAccountingInfo.required = Select yes if you would like to change your occupation and accounting information
+
+# CYA LETTING HISTORY
+checkYourAnswersLettingHistory.residentialTenants = Residential tenants
+
+# CYA ACCOMMODATION DETAILS
+checkYourAnswersAccommodation.accommodationDetails = Accommodation details
 
 # Confirmation Page
 ###################
