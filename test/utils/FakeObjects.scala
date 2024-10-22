@@ -110,6 +110,7 @@ trait FakeObjects {
   val baseFilled6076Session: Session = Session(referenceNumber, FOR6076, prefilledAddress, token, isWelsh = false)
   val baseFilled6045Session: Session = Session(referenceNumber, FOR6045, prefilledAddress, token, isWelsh = false)
   val baseFilled6046Session: Session = Session(referenceNumber, FOR6046, prefilledAddress, token, isWelsh = false)
+  val baseFilled6048Session: Session = Session(referenceNumber, FOR6048, prefilledAddress, token, isWelsh = false)
 
   // Request reference number
   val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
