@@ -3081,6 +3081,7 @@ checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading =
 checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Letting other parts of the property?
 checkYourAnswersAboutFranchiseOrLettings.operatorCount = Business {0}
 checkYourAnswersAboutFranchiseOrLettings.operatorName = Name and address
+
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Letting {0}
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s details
 checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
@@ -3101,6 +3102,10 @@ checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = You have added {0} l
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Concession or franchise fee
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
+cya.rentalIncomeList.heading = You have added 1 source of rental income
+cya.rentalIncomeList.plural.heading = You have added {0} sources of rental income
+cya.concessionOrFranchise.operatorNumber = Concession or franchise {0}
+cya.concessionOrFranchise.operatorDetails = Operator''s details
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure

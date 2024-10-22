@@ -46,15 +46,11 @@
 @forType6015_6016 = @{
     forType == FOR6015 || forType == FOR6016
 }
-@forType6045_6046 = @{
-    forType == FOR6045 && forType == FOR6046
-}
 
 @separateBusinessesIncomeMsgKey = @{
   forType match {
       case FOR6030                    => "checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings"
-      case FOR6045 | FOR6046 => "checkYourAnswersAboutFranchiseOrLettings.6045.lettings"
-      case _                                   => "checkYourAnswersAboutFranchiseOrLettings.franchiseLettings"
+      case _                          => "checkYourAnswersAboutFranchiseOrLettings.franchiseLettings"
   }
 }
 
@@ -85,9 +81,6 @@
 
 }
 
-@if(forType6045_6046){
-    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading")</h2>
-}
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(separateBusinessesIncomeMsgKey,

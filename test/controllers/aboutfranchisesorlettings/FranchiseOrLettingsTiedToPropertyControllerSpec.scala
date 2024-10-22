@@ -51,6 +51,18 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = franchiseOrLettingsTiedToPropertyController().show()(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      )
+    }
+    "return task list back link if no query params in the url" in {
+      val result = franchiseOrLettingsTiedToPropertyController().show()(fakeRequest)
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url + "#franchise-or-lettings-tied-to-property"
+      )
+    }
   }
 
   "SUBMIT /" should {

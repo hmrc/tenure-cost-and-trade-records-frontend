@@ -3034,6 +3034,10 @@ checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = Rydych wedi ychwaneg
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Concession or franchise fee
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
+cya.rentalIncomeList.heading = You have added 1 source of rental income
+cya.rentalIncomeList.plural.heading = You have added {0} sources of rental income
+cya.concessionOrFranchise.operatorNumber = Concession or franchise {0}
+cya.concessionOrFranchise.operatorDetails = Operator''s details
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Gwiriwch eich atebion – eich prydles neu eich cytundeb
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
