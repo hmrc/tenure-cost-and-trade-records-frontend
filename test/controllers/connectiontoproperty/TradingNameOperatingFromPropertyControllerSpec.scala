@@ -231,6 +231,24 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = tradingNameOperatingFromPropertyController().submit(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "tradingNameFromProperty" -> "Trading name"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Bad request when string exceeds 50 char" in {
+      val res = tradingNameOperatingFromPropertyController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "capitalSumDescription" -> "X" * 51
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 
   "Trading Name Operating From Property form" should {

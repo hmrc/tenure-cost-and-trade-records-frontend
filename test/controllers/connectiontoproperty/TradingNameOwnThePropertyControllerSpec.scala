@@ -19,9 +19,8 @@ package controllers.connectiontoproperty
 import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -71,6 +70,15 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = tradingNameOwnThePropertyController().submit(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "tradingNameOwnTheProperty" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
 
     "Trading Name own the property form" should {

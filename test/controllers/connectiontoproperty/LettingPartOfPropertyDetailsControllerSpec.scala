@@ -117,5 +117,79 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
       }
     }
 
+    "Redirect when form data submitted" in {
+      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "tenantName"                               -> "Tenants name",
+          "descriptionOfLetting"                     -> "Description of letting",
+          "correspondenceAddress.buildingNameNumber" -> "Building name number",
+          "correspondenceAddress.street1"            -> "Street",
+          "correspondenceAddress.town"               -> "Town",
+          "correspondenceAddress.county"             -> "County",
+          "correspondenceAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Bad request when tenantName exceeds 50 char" in {
+      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "tenantName"                               -> "X" * 51,
+          "descriptionOfLetting"                     -> "Description of letting",
+          "correspondenceAddress.buildingNameNumber" -> "Building name number",
+          "correspondenceAddress.street1"            -> "Street",
+          "correspondenceAddress.town"               -> "Town",
+          "correspondenceAddress.county"             -> "County",
+          "correspondenceAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Bad request when descriptionOfLetting exceeds 50 char" in {
+      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "tenantName"                               -> "Tenants name",
+          "descriptionOfLetting"                     -> "X" * 51,
+          "correspondenceAddress.buildingNameNumber" -> "Building name number",
+          "correspondenceAddress.street1"            -> "Street",
+          "correspondenceAddress.town"               -> "Town",
+          "correspondenceAddress.county"             -> "County",
+          "correspondenceAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Bad request when buildingNameNumber exceeds 50 char" in {
+      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "tenantName"                               -> "Tenants name",
+          "descriptionOfLetting"                     -> "Description of letting",
+          "correspondenceAddress.buildingNameNumber" -> "X" * 51,
+          "correspondenceAddress.street1"            -> "Street",
+          "correspondenceAddress.town"               -> "X" * 51,
+          "correspondenceAddress.buildingNameNumber" -> "County",
+          "correspondenceAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "Bad request when town exceeds 50 char" in {
+      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "tenantName"                               -> "Tenants name",
+          "descriptionOfLetting"                     -> "Description of letting",
+          "correspondenceAddress.buildingNameNumber" -> "Building name number",
+          "correspondenceAddress.street1"            -> "Street",
+          "correspondenceAddress.town"               -> "X" * 51,
+          "correspondenceAddress.county"             -> "County",
+          "correspondenceAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 }

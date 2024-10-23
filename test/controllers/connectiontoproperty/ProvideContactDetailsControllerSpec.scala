@@ -93,6 +93,18 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
         status(res) shouldBe BAD_REQUEST
       }
     }
+
+    "SUBMIT / Redirect when form data submitted" in {
+      val res = provideContactDetailsController().submit(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "yourContactDetails.fullName"              -> "Full name",
+          "yourContactDetails.contactDetails.phone"  -> "12345678902",
+          "yourContactDetails.contactDetails.email"  -> "any.name@email.com",
+          "yourContactDetails.additionalInformation" -> "Additional information"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
   "getBackLink"                        should {
 

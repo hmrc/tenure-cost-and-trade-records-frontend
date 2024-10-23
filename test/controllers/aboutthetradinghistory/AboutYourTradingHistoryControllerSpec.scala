@@ -18,11 +18,13 @@ package controllers.aboutthetradinghistory
 
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import models.ForType
 import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import play.api.test.FakeRequest
 import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
+
 import scala.language.reflectiveCalls
 
 class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
@@ -30,12 +32,16 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def aboutYourTradingHistoryController(
+    forType: ForType = ForType.FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new AboutYourTradingHistoryController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     aboutYourTradingHistoryView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+    preEnrichedActionRefiner(
+      forType = forType,
+      aboutTheTradingHistory = aboutTheTradingHistory
+    ),
     mockSessionRepo
   )
 
@@ -51,6 +57,28 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "return 200 and HTML for 6045" in {
+      val controller = aboutYourTradingHistoryController(forType = ForType.FOR6045)
+      val result     = controller.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
+      )
+    }
+
+    "return 200 and HTML when the session is None" in {
+      val controller = aboutYourTradingHistoryController(aboutTheTradingHistory = None)
+      val result     = controller.show()(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.routes.TaskListController.show().url + "#about-your-trading-history"
+      )
+    }
+
     "return correct backLink when 'from=TL' query param is present" in {
       val result = aboutYourTradingHistoryController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show().url)
@@ -61,6 +89,16 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = aboutYourTradingHistoryController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = aboutYourTradingHistoryController().submit(
+        FakeRequest(POST, "/path?from=TL").withFormUrlEncodedBody(
+          "firstOccupy.month" -> "4",
+          "firstOccupy.year"  -> "2021"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

@@ -60,6 +60,15 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = lettingPartOfPropertyItemsIncludedInRentController().submit(0)(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "itemsInRent[0]" -> "rates"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "calculateBackLink" should {
