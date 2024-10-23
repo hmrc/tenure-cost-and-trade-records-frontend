@@ -255,7 +255,12 @@ trait FakeObjects {
   val stillConnectedDetails6045NoSession: Session             =
     baseFilled6045Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
 
-// Not connected sessions
+  val stillConnectedDetails6048YesSession: Session =
+    baseFilled6048Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))
+  val stillConnectedDetails6048NoSession: Session  =
+    baseFilled6048Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsNo))
+
+  // Not connected sessions
   val prefilledNotConnectedYes: RemoveConnectionDetails  = RemoveConnectionDetails(
     Some(
       RemoveConnectionsDetails(
@@ -373,7 +378,8 @@ trait FakeObjects {
 
   val prefilledAboutYouAndThePropertyPartTwo6045: AboutYouAndThePropertyPartTwo =
     prefilledAboutYouAndThePropertyPartTwo.copy(propertyCurrentlyUsed = prefilledPropertyCurrentlyInUsed)
-  val prefilledPropertyCurrentlyInUsed                                          =
+
+  val prefilledPropertyCurrentlyInUsed =
     PropertyCurrentlyUsed(List("fleetCaravanPark", "chaletPark", "other"), Some("another use details"))
 
   val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
@@ -416,6 +422,9 @@ trait FakeObjects {
     stillConnectedDetails6045YesSession.copy(aboutYouAndThePropertyPartTwo =
       Some(prefilledAboutYouAndThePropertyPartTwo6045)
     )
+
+  val aboutYouAndTheProperty6048YesSession: Session =
+    stillConnectedDetails6048YesSession
 
   val aboutYouAndTheProperty6045NoSession: Session             =
     stillConnectedDetails6045NoSession.copy(aboutYouAndThePropertyPartTwo =
@@ -713,21 +722,51 @@ trait FakeObjects {
     )
   )
 
+  val prefilledTurnoverSections6048: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne(
+    isFinancialYearEndDatesCorrect = true,
+    isFinancialYearsCorrect = true,
+    turnoverSections6048 = Seq(
+      TurnoverSection6048(
+        today,
+        income = 111
+      ),
+      TurnoverSection6048(
+        today.minusYears(1),
+        income = 222
+      ),
+      TurnoverSection6048(
+        today.minusYears(2),
+        income = 333
+      )
+    )
+  )
+
   val aboutYourTradingHistory6045YesSession: Session =
     aboutYouAndTheProperty6045YesSession.copy(
       aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
       aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
     )
 
-  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSession: Session      =
+  val aboutYourTradingHistory6048YesSession: Session =
+    aboutYouAndTheProperty6048YesSession.copy(
+      aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6048),
+      aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6048)
+    )
+
+  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSession: Session =
     aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
       prefilledAboutTheTradingHistoryPartOneCYA6045
     )
+
   val prefilledAboutTheTradingHistoryPartOneCYA6045: AboutTheTradingHistoryPartOne =
     prefilledTurnoverSections6045.copy(otherHolidayAccommodation =
       Some(OtherHolidayAccommodation(Some(AnswerNo), None))
     )
-  val prefilledAboutTheTradingHistoryPartOneCYA6045All                             = prefilledAboutTheTradingHistoryPartOneCYA6045.copy(
+
+  val prefilledAboutTheTradingHistoryPartOneCYA6048: AboutTheTradingHistoryPartOne =
+    prefilledTurnoverSections6048
+
+  val prefilledAboutTheTradingHistoryPartOneCYA6045All                           = prefilledAboutTheTradingHistoryPartOneCYA6045.copy(
     otherHolidayAccommodation = Some(
       OtherHolidayAccommodation(
         Some(AnswerYes),
@@ -737,7 +776,7 @@ trait FakeObjects {
       )
     )
   )
-  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes: Session   =
+  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes: Session =
     aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
       prefilledAboutTheTradingHistoryPartOneCYA6045All
     )

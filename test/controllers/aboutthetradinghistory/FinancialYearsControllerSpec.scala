@@ -50,6 +50,16 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
       status(result) shouldBe Status.OK
     }
 
+    "return 200 for 6048" in {
+      val session6048    = aboutYourTradingHistory6048YesSession
+      val sessionRequest = SessionRequest(session6048, FakeRequest())
+
+      val result = financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).show()(
+        sessionRequest
+      )
+      status(result) shouldBe Status.OK
+    }
+
     "return HTML" in {
       val result = financialYearsController().show()(FakeRequest())
       contentType(result) shouldBe Some("text/html")
@@ -134,6 +144,45 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
 
         val result =
           financialYearsController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        )
+      }
+
+      "redirect to the next page for 6048 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearsCorrect" -> "true"
+          )
+        val session6048     = aboutYourTradingHistory6048YesSession
+        val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+        val result =
+          financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.StaticCaravansController.show().url // TODO: Income6048Controller
+        )
+      }
+
+      "redirect to CYA for 6048 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearsCorrect" -> "true",
+            "from"                    -> "CYA"
+          )
+        val session6048     = aboutYourTradingHistory6048YesSession
+        val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+        val result =
+          financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
             sessionRequest
           )
 

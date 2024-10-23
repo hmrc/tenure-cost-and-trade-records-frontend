@@ -16,13 +16,18 @@
 
 package controllers.aboutthetradinghistory
 
+import actions.SessionRequest
+import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
+import models.ForType
+import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
+
 import scala.language.reflectiveCalls
 
 class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
@@ -30,18 +35,31 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def aboutYourTradingHistoryController(
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
+    forType: ForType = FOR6010
   ) = new AboutYourTradingHistoryController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     aboutYourTradingHistoryView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+    preEnrichedActionRefiner(
+      aboutTheTradingHistory = aboutTheTradingHistory,
+      forType = forType
+    ),
     mockSessionRepo
   )
 
   "About your trading history controller" should {
     "return 200" in {
       val result = aboutYourTradingHistoryController().show(fakeRequest)
+      status(result) shouldBe Status.OK
+    }
+
+    "return 200 for 6048" in {
+      val session6048    = aboutYourTradingHistory6048YesSession
+      val sessionRequest = SessionRequest(session6048, FakeRequest())
+
+      val result =
+        aboutYourTradingHistoryController(session6048.aboutTheTradingHistory, session6048.forType).show(sessionRequest)
       status(result) shouldBe Status.OK
     }
 
@@ -61,6 +79,21 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = aboutYourTradingHistoryController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "redirect to the next page for 6048" in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(baseFormData.toSeq*)
+
+      val sessionRequest =
+        SessionRequest(
+          aboutYourTradingHistory6048YesSession,
+          requestWithForm
+        )
+
+      val result = aboutYourTradingHistoryController().submit(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.FinancialYearEndController.show().url)
     }
   }
 

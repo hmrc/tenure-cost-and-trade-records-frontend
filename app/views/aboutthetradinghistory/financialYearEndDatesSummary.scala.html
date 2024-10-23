@@ -45,6 +45,7 @@
         case FOR6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
         case FOR6045 | FOR6046 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
+        case FOR6048 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case FOR6076 => request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }

@@ -262,6 +262,45 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
         )
       }
 
+      "redirect to the next page for 6048" in {
+        val index           = 0
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "financialYearEnd.day"   -> "22",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022"
+          )
+        val session6048     = aboutYourTradingHistory6048YesSession
+        val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+        val result = editFinancialYearEndDateController(session6048).submit(index)(sessionRequest)
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+        )
+      }
+
+      "redirect to CYA for 6048" in {
+        val index           = 0
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "financialYearEnd.day"   -> "22",
+            "financialYearEnd.month" -> "2",
+            "financialYearEnd.year"  -> "2022",
+            "from"                   -> "CYA"
+          )
+        val session6048     = aboutYourTradingHistory6048YesSession
+        val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+        val result = editFinancialYearEndDateController(session6048).submit(index)(sessionRequest)
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        )
+      }
+
       "redirect to the next page for 6076" in {
         val index           = 0
         val requestWithForm = FakeRequest(POST, "/")

@@ -81,6 +81,11 @@ case class Session(
       .flatMap(_.turnoverSections6045)
       .fold(Seq.empty[(LocalDate, Int)])(_.map(_.financialYearEnd).zipWithIndex)
 
+  def financialYearEndDates6048: Seq[(LocalDate, Int)] =
+    aboutTheTradingHistoryPartOne
+      .flatMap(_.turnoverSections6048)
+      .fold(Seq.empty[(LocalDate, Int)])(_.map(_.financialYearEnd).zipWithIndex)
+
   def financialYearEndDates6076: Seq[(LocalDate, Int)] =
     aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
