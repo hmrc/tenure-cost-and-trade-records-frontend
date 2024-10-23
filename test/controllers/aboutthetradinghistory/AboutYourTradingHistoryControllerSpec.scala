@@ -36,7 +36,7 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
 
   def aboutYourTradingHistoryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
-    forType: ForType = FOR6010,
+    forType: ForType = FOR6010
   ) = new AboutYourTradingHistoryController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
@@ -58,7 +58,8 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
       val session6048    = aboutYourTradingHistory6048YesSession
       val sessionRequest = SessionRequest(session6048, FakeRequest())
 
-      val result = aboutYourTradingHistoryController(session6048.aboutTheTradingHistory, session6048.forType).show(sessionRequest)
+      val result =
+        aboutYourTradingHistoryController(session6048.aboutTheTradingHistory, session6048.forType).show(sessionRequest)
       status(result) shouldBe Status.OK
     }
 
@@ -91,7 +92,7 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
         )
 
       val result = aboutYourTradingHistoryController().submit(sessionRequest)
-      status(result) shouldBe SEE_OTHER
+      status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.FinancialYearEndController.show().url)
     }
   }
