@@ -110,6 +110,8 @@ hint.all.apply = Dewiswch bob un sy’n berthnasol.
 ###############
 label.section.connectionToTheProperty = Cysylltiad â’r eiddo
 label.section.aboutTheProperty = Amdanoch chi a’r eiddo
+label.section.lettingHistory = Letting history
+label.section.accommodation = Accommodation details
 label.section.aboutYourTradingHistory = Hanes masnachu
 label.section.aboutTheFranchiseLettings = Franchises or lettings
 label.section.aboutTheFranchiseConcessions = Concessions and lettings
@@ -1447,6 +1449,7 @@ error.legalOrPlanningRestrictionsDetails.maxLength = Mae’n rhaid i’r disgrif
 # ABOUT YOUR TRADING HISTORY
 ##############################
 aboutYourTradingHistory.heading = Gwybodaeth am ddeiliadaeth a chyfrifyddu
+aboutYourTradingHistory.6048.heading = Accounting information
 firstOccupy.heading = Pryd y gwnaethoch feddiannu’r eiddo am y tro cyntaf?
 fieldName.firstOccupy = the {0} when you first occupied the property
 
@@ -2818,6 +2821,7 @@ error.batteriesCapacity.required = Explain what is the capacity of any installed
 furtherInformationOrRemarks.heading = Rhagor o wybodaeth neu sylwadau
 hint.furtherInformationOrRemarks = Rhowch fanylion pellach os nad oedd digon o le i chi gwblhau’ch atebion i unrhyw un o’r cwestiynau blaenorol, neu os oes angen esboniad neu eglurhad pellach ar unrhyw gwestiynau.
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
+furtherInformationOrRemarksTasklist.6048.heading = Additional information
 error.furtherInformationOrRemarks.maxLength = Mae’n rhaid i’r wybodaeth bellach fod yn 2,000 o gymeriadau neu lai
 
 # ALTERNATIVE DETAILS QUESTION
@@ -3103,7 +3107,7 @@ checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput = Rhent yn amryw
 checkYourAnswersAboutYourLeaseOrTenure.howThroughputAffectsRent = Sut mae trwygyrch yn effeithio ar rent
 checkYourAnswersAboutYourLeaseOrTenure.vatPayable = TAW yn daladwy?
 checkYourAnswersAboutTheProperty.heading = Check your answers – about you and the property
-checkYourAnswersAboutTheProperty.aboutYou.heading = Your contact details
+checkYourAnswersAboutTheProperty.aboutYou.heading = Contact information
 checkYourAnswersAboutTheProperty.contact.details = Contact details
 checkYourAnswersAboutTheProperty.aboutProperty.technologyType = Technology type
 checkYourAnswersAboutTheProperty.aboutProperty.renewable = Renewable plant type
@@ -3216,7 +3220,7 @@ checkYourAnswersAboutTheTradingHistory.totalCosts = Cyfanswm y costau
 checkYourAnswersAboutTheTradingHistory.rent = Rhent
 checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
 checkYourAnswersAboutTheTradingHistory.otherExpenses = Treuliau eraill
-#CYA OTHER HOLIDAY ACCOMMODATION 6045/46
+# CYA OTHER HOLIDAY ACCOMMODATION 6045/46
 checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.onSite = Other holiday accommodation on site?
@@ -3226,6 +3230,13 @@ changeOccupationAndAccountingInfo.p1 = Changing your occupation date or your fin
 changeOccupationAndAccountingInfo.warning = If you change this information, your trading history entries will be deleted and you will have to complete the section again.
 changeOccupationAndAccountingInfo.question = Are you sure you want to change your occupation and accounting information?
 error.changeOccupationAndAccountingInfo.required = Select yes if you would like to change your occupation and accounting information
+
+# CYA LETTING HISTORY
+checkYourAnswersLettingHistory.residentialTenants = Residential tenants
+
+# CYA ACCOMMODATION DETAILS
+checkYourAnswersAccommodation.accommodationDetails = Accommodation details
+
 
 # Confirmation Page
 ###################

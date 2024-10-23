@@ -21,11 +21,9 @@ import form.aboutfranchisesorlettings.RentalIncomeListForm.rentalIncomeListForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord}
 import play.api.http.Status._
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-
-import java.time.LocalDate
 
 class RentalIncomeListControllerSpec extends TestBaseSpec {
   import TestData._
@@ -129,7 +127,7 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
     val controllerWithMaxEntries = controller(Some(rentalIncomeWithMaxEntries))
     val formData                 = Map("rentalIncomeList" -> "yes")
     val request                  = FakeRequest(POST, "/send-trade-and-cost-information/type-of-income?idx=5").withFormUrlEncodedBody(
-      formData.toSeq: _*
+      formData.toSeq*
     )
 
     val result = controllerWithMaxEntries.submit(5)(request)
