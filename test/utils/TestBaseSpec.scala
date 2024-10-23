@@ -158,6 +158,15 @@ trait TestBaseSpec
       aboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045,
       forType = FOR6045
     )
+
+  val preFilledSession6048: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      referenceNumber = "99996048004",
+      aboutTheTradingHistory = prefilledAboutYourTradingHistory6048,
+      aboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6048,
+      forType = FOR6048
+    )
+
   def preEnrichedActionRefiner(
     referenceNumber: String = "99996010004",
     forType: ForType = FOR6010,
