@@ -143,6 +143,45 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
         )
       }
 
+      "redirect to the next page for 6048 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearsCorrect" -> "true"
+          )
+        val session6048     = aboutYourTradingHistory6048YesSession
+        val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+        val result =
+          financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.StaticCaravansController.show().url // TODO: Income6048Controller
+        )
+      }
+
+      "redirect to CYA for 6048 " in {
+        val requestWithForm = FakeRequest(POST, "/")
+          .withFormUrlEncodedBody(
+            "isFinancialYearsCorrect" -> "true",
+            "from"                    -> "CYA"
+          )
+        val session6048     = aboutYourTradingHistory6048YesSession
+        val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+        val result =
+          financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+            sessionRequest
+          )
+
+        status(result)           shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+        )
+      }
+
     }
 
   }
