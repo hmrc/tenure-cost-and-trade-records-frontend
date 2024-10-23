@@ -52,7 +52,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
 
     "return 200 for 6048" in {
       val session6048    = aboutYourTradingHistory6048YesSession
-      val sessionRequest = SessionRequest(session6048, requestWithForm)
+      val sessionRequest = SessionRequest(session6048, FakeRequest())
 
       val result = financialYearEndDatesSummaryController(session6048.aboutTheTradingHistory, session6048.forType)
         .show()(sessionRequest)
