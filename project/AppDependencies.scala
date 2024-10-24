@@ -4,7 +4,7 @@ import sbt.*
 object AppDependencies {
 
   val bootstrapVersion    = "9.5.0"
-  val playFrontendVersion = "11.0.0"
+  val playFrontendVersion = "11.1.0"
   val mongoVersion        = "2.3.0"
   val cryptoJsonVersion   = "8.1.0"
 
