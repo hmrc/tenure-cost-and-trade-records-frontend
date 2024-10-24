@@ -24,8 +24,8 @@ import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.ForType
 import play.api.http.Status
-import play.api.test.Helpers.*
 import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
 
