@@ -81,6 +81,18 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = lettingPartOfPropertyDetailsRentController().submit(0)(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "annualRent"      -> "12345",
+          "dateInput.day"   -> "22",
+          "dateInput.month" -> "10",
+          "dateInput.year"  -> "2024"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "calculateBackLink" should {

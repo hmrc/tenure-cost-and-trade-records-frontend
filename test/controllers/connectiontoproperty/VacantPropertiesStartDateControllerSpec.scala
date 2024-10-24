@@ -19,9 +19,8 @@ package controllers.connectiontoproperty
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
@@ -76,6 +75,17 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = vacantPropertiesStartDateController().submit(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "startDateOfVacantProperty.day"   -> "20",
+          "startDateOfVacantProperty.month" -> "10",
+          "startDateOfVacantProperty.year"  -> "2024"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

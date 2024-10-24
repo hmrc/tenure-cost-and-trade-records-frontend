@@ -16,9 +16,8 @@
 
 package controllers.aboutthetradinghistory
 
-import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 /**
@@ -54,6 +53,15 @@ class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = acceptLowMarginFuelCardController.submit(
+        FakeRequest(POST, "/path?from=TL").withFormUrlEncodedBody(
+          "acceptLowMarginFuelCard" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

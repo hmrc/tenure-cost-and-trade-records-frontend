@@ -117,5 +117,14 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = vacantPropertiesController().submit(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "vacantProperties" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 }
