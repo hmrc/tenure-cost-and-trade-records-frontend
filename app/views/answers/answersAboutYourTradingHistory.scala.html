@@ -28,6 +28,7 @@
 @import models.submissions.aboutthetradinghistory.TurnoverSection6020
 @import models.submissions.aboutthetradinghistory.TurnoverSection6030
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
+@import models.submissions.aboutthetradinghistory.TurnoverSection6048
 @import models.submissions.aboutthetradinghistory.TurnoverSection6076
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
 @import util.DateUtilLocalised
@@ -112,6 +113,7 @@
         case FOR6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
         case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
         case FOR6045 | FOR6046 => request.sessionData.financialYearEndDates6045.map(_._1)
+        case FOR6048 => request.sessionData.financialYearEndDates6048.map(_._1)
         case FOR6076 => request.sessionData.financialYearEndDates6076.map(_._1)
         case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
@@ -487,6 +489,12 @@
         additionalParagraph)
 }
 
+@answer6048(valueLabelKey: String, getAnswer: TurnoverSection6048 => String, additionalParagraph: Option[String] = None) = @{
+    answer(valueLabelKey,
+        sectionAnswers1.answers.flatMap(_.turnoverSections6048).getOrElse(Seq.empty).map(getAnswer),
+        additionalParagraph)
+}
+
 @answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => String, additionalParagraph: Option[String] = None) = @{
     answer(valueLabelKey,
         sectionAnswers1.answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
@@ -496,7 +504,7 @@
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
-@if(Seq(FOR6045, FOR6046) contains forType) {
+@if(Seq(FOR6045, FOR6046, FOR6048) contains forType) {
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
             _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
@@ -522,7 +530,7 @@
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                     _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                     forType match {
-                        case FOR6020 | FOR6045 | FOR6046 | FOR6076 =>
+                        case FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
                             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
                         case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                     },
@@ -531,7 +539,7 @@
 }
 
 
-@if(!(Seq(FOR6020, FOR6045, FOR6046, FOR6076) contains forType)) {
+@if(!(Seq(FOR6020, FOR6045, FOR6046, FOR6048, FOR6076) contains forType)) {
     <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =

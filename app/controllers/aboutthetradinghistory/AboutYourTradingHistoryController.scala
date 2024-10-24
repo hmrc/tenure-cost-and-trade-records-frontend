@@ -84,7 +84,8 @@ class AboutYourTradingHistoryController @Inject() (
                   && (
                     newFinancialYears(occupationAndAccounting) == previousFinancialYears ||
                       newFinancialYears(occupationAndAccounting) == previousFinancialYears6076 ||
-                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6045
+                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6045 ||
+                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6048
                   )
               )
               .getOrElse(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData))

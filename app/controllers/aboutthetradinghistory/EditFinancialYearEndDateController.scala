@@ -58,6 +58,10 @@ class EditFinancialYearEndDateController @Inject() (
               request.sessionData.aboutTheTradingHistoryPartOne
                 .flatMap(_.turnoverSections6045)
                 .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
+            case FOR6048           =>
+              request.sessionData.aboutTheTradingHistoryPartOne
+                .flatMap(_.turnoverSections6048)
+                .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case FOR6076           =>
               request.sessionData.aboutTheTradingHistoryPartOne
                 .flatMap(_.turnoverSections6076)
@@ -82,6 +86,8 @@ class EditFinancialYearEndDateController @Inject() (
       case FOR6030           => aboutTheTradingHistory.turnoverSections6030.nonEmpty
       case FOR6045 | FOR6046 =>
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).exists(_.nonEmpty)
+      case FOR6048           =>
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).exists(_.nonEmpty)
       case FOR6076           =>
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).exists(_.nonEmpty)
       case _                 => aboutTheTradingHistory.turnoverSections.nonEmpty
@@ -98,6 +104,10 @@ class EditFinancialYearEndDateController @Inject() (
         case FOR6045 | FOR6046 =>
           request.sessionData.aboutTheTradingHistoryPartOne
             .flatMap(_.turnoverSections6045)
+            .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
+        case FOR6048           =>
+          request.sessionData.aboutTheTradingHistoryPartOne
+            .flatMap(_.turnoverSections6048)
             .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
         case FOR6076           =>
           request.sessionData.aboutTheTradingHistoryPartOne
@@ -136,6 +146,7 @@ class EditFinancialYearEndDateController @Inject() (
               case FOR6030           =>
                 buildUpdateData6030(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
               case FOR6045 | FOR6046 => buildUpdatedData6045(index, data, newOccupationAndAccounting)
+              case FOR6048           => buildUpdatedData6048(index, data, newOccupationAndAccounting)
               case FOR6076           => buildUpdatedData6076(index, data, newOccupationAndAccounting)
               case _                 => buildUpdateData(aboutTheTradingHistory, index, data, newOccupationAndAccounting)
             }
@@ -166,6 +177,11 @@ class EditFinancialYearEndDateController @Inject() (
           .flatMap(_.turnoverSections6045)
           .flatMap(_.headOption)
           .exists(_.grossReceiptsCaravanFleetHire.isDefined)
+      case FOR6048           =>
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.turnoverSections6048)
+          .flatMap(_.headOption)
+          .exists(_.income.isDefined)
       case FOR6076           =>
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.turnoverSections6076)
@@ -263,6 +279,32 @@ class EditFinancialYearEndDateController @Inject() (
         updatedData.aboutTheTradingHistoryPartOne
           .getOrElse(AboutTheTradingHistoryPartOne())
           .copy(turnoverSections6045 = Some(updatedTurnoverSections))
+      )
+    )
+  }
+
+  private def buildUpdatedData6048(
+    index: Int,
+    data: LocalDate,
+    newOccupationAndAccounting: OccupationalAndAccountingInformation
+  )(implicit request: SessionRequest[AnyContent]): Session = {
+    val turnoverSections6048    =
+      request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).getOrElse(Seq.empty)
+    val updatedTurnoverSections = turnoverSections6048.updated(
+      index,
+      turnoverSections6048(index).copy(financialYearEnd = data)
+    )
+
+    val updatedData = updateAboutTheTradingHistory(
+      _.copy(
+        occupationAndAccountingInformation = Some(newOccupationAndAccounting)
+      )
+    )
+    updatedData.copy(
+      aboutTheTradingHistoryPartOne = Some(
+        updatedData.aboutTheTradingHistoryPartOne
+          .getOrElse(AboutTheTradingHistoryPartOne())
+          .copy(turnoverSections6048 = Some(updatedTurnoverSections))
       )
     )
   }

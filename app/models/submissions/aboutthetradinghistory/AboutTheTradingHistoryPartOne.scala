@@ -41,6 +41,7 @@ case class AboutTheTradingHistoryPartOne(
   additionalMiscDetails: Option[AdditionalMiscDetails] = None,
   fromCYA: Option[Boolean] = None,
   // 6048
+  turnoverSections6048: Option[Seq[TurnoverSection6048]] = None,
   areYouVATRegistered: Option[AnswersYesNo] = None
 )
 

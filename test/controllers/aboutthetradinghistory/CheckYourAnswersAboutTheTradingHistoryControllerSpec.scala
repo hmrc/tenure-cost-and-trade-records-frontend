@@ -65,6 +65,14 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
+  val checkYourAnswersAboutTradingHistoryController6048 = new CheckYourAnswersAboutTheTradingHistoryController(
+    stubMessagesControllerComponents(),
+    mockAboutTheTradingHistoryNavigator,
+    checkYourAnswersAboutTheTradingHistoryView,
+    preFilledSession6048,
+    mockSessionRepo
+  )
+
   val checkYourAnswersAboutTradingHistoryController6076 = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
@@ -116,6 +124,11 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
       val result = checkYourAnswersAboutTradingHistoryController6045.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return 200 6048" in {
+      val result = checkYourAnswersAboutTradingHistoryController6048.show(fakeRequest)
+      status(result) shouldBe Status.OK
     }
 
     "return 200 6076" in {
