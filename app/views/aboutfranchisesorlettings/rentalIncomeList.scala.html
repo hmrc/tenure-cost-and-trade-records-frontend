@@ -44,9 +44,6 @@
 
 @(theForm: Form[?], index: Int, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@label = @{messages("label.section.aboutTheLettings")}
-
-@pluralSuffix = @{ if (incomeRecords.size > 1) "s" else "" }
 
 @pageHeading = @{
     incomeRecords.size match {
