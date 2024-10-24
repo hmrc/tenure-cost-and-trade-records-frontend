@@ -22,7 +22,6 @@ import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInfor
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import models.ForType
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -36,7 +35,7 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   def aboutYourTradingHistoryController(
-    forType: ForType = ForType.FOR6010,
+    forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new AboutYourTradingHistoryController(
     stubMessagesControllerComponents(),
@@ -60,7 +59,7 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
       val sessionRequest = SessionRequest(session6048, FakeRequest())
 
       val result =
-        aboutYourTradingHistoryController(session6048.aboutTheTradingHistory, session6048.forType).show(sessionRequest)
+        aboutYourTradingHistoryController(session6048.forType, session6048.aboutTheTradingHistory).show(sessionRequest)
       status(result) shouldBe Status.OK
     }
 
@@ -71,7 +70,7 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML for 6045" in {
-      val controller = aboutYourTradingHistoryController(forType = ForType.FOR6045)
+      val controller = aboutYourTradingHistoryController(forType = FOR6045)
       val result     = controller.show()(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
