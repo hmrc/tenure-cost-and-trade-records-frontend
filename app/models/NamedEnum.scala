@@ -56,12 +56,10 @@ trait NamedEnumSupport[E <: NamedEnum] {
 
 object EnumFormat {
   def apply[T <: NamedEnum](enumObject: NamedEnumSupport[T]): Format[T] =
-    Format[T](generateReads(enumObject), generateWrites(enumObject))
+    Format[T](generateReads(enumObject), generateWrites)
 
-  private def generateWrites[T <: NamedEnum](enumObject: NamedEnumSupport[T]): Writes[T] = new Writes[T] {
-    def writes(data: T): JsValue =
-      JsString(data.name)
-  }
+  private def generateWrites[T <: NamedEnum]: Writes[T] =
+    (data: T) => JsString(data.name)
 
   private def generateReads[T <: NamedEnum](enumObject: NamedEnumSupport[T]): Reads[T] = new Reads[T] {
     def reads(json: JsValue): JsResult[T] = json match {
