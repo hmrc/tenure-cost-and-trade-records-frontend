@@ -29,13 +29,15 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
 
   val messageKeyPrefix = "franchiseLettings"
 
+  val backLink = s"${controllers.routes.TaskListController.show().url}#franchise-or-lettings-tied-to-property"
+
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
   def createView: () => Html = () =>
-    franchiseOrLettingsTiedToPropertyView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
+    franchiseOrLettingsTiedToPropertyView(form, FOR6010, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    franchiseOrLettingsTiedToPropertyView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
+    franchiseOrLettingsTiedToPropertyView(form, FOR6010, backLink, Summary("99996010001"))(fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
 
