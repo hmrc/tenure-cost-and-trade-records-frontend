@@ -129,12 +129,11 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             controllers.aboutfranchisesorlettings.routes.RentalIncomeListController
               .show(answers.aboutFranchisesOrLettings.map(_.rentalIncomeIndex).getOrElse(0))
               .url
-          case _ => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+          case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
         }
-          case _                 =>
-            logger.warn(s"Back link reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
-
+      case _                 =>
+        logger.warn(s"Back link reached with unknown enforcement taken value")
+        controllers.routes.TaskListController.show().url
     }
 
   private def getBackUrlFor6010and6011(session: Session): String = {
