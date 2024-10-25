@@ -16,7 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import models.ForType.*
@@ -53,6 +53,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
             case _                                        => franchiseOrLettingsTiedToPropertyForm
           },
           request.sessionData.forType,
+          calculateBacklink,
           request.sessionData.toSummary
         )
       )
@@ -67,6 +68,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
           franchiseOrLettingsTiedToPropertyView(
             formWithErrors,
             request.sessionData.forType,
+            calculateBacklink,
             request.sessionData.toSummary
           )
         ),
@@ -96,5 +98,12 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
       }
     )
   }
+
+  private def calculateBacklink(implicit request: SessionRequest[AnyContent]): String =
+    if (navigator.from == "CYA") {
+      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    } else {
+      controllers.routes.TaskListController.show().url + "#franchise-or-lettings-tied-to-property"
+    }
 
 }

@@ -42,6 +42,9 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutFranchiseOrLettings]) =>
     cyaFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
+  def createView6045 = () =>
+    cyaFranchiseOrLettingsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+
   "Check Your Answers About Franchise Or Lettings view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
@@ -65,5 +68,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+  }
+  "Check Your Answers About The Property view for 6045" must {
+    behave like normalPage(createView6045, messageKeyPrefix)
   }
 }

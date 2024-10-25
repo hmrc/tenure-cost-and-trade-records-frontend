@@ -32,7 +32,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], forType: ForType, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], forType: ForType, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @label = @{
   forType match {
@@ -57,7 +57,7 @@
     showSection = true,
     summary = Some(summary),
     sectionName = label,
-    backLinkUrl = controllers.routes.TaskListController.show().url + "#franchise-or-lettings-tied-to-property",
+    backLinkUrl = backLink,
     theForm = theForm
 ) {
 
