@@ -62,18 +62,22 @@
                 items = Seq(
                     CheckboxItem(
                         value = "rates",
+                        id= "rates",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates"))
                     ),
                     CheckboxItem(
                         value = "propertyInsurance",
+                        id= "propertyInsurance",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance"))
                     ),
                     CheckboxItem(
                         value = "outsideRepairs",
+                        id= "outsideRepairs",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs"))
                     ),
                     CheckboxItem(
                         value = "insideRepairs",
+                        id= "insideRepairs",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs"))
                     ),
                     CheckboxItem(
@@ -81,6 +85,7 @@
                     ),
                     CheckboxItem(
                         behaviour = ExclusiveCheckbox,
+                        id= "noneOfThese",
                         value = "noneOfThese",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese"))
                     )
