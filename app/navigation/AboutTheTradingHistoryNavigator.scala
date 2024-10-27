@@ -129,7 +129,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case FOR6020           => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case FOR6030           => aboutthetradinghistory.routes.Turnover6030Controller.show()
       case FOR6045 | FOR6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
-      case FOR6048           => aboutthetradinghistory.routes.StaticCaravansController.show() // TODO: Income6048Controller
+      case FOR6048           => aboutthetradinghistory.routes.Income6048Controller.show
       case FOR6076           => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
       case _                 => aboutthetradinghistory.routes.TurnoverController.show()
     }
@@ -353,6 +353,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       controllers.routes.TaskListController.show().withFragment("tradingHistory")
     ),
     ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
-    AreYouVATRegisteredId                       -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show())
+    AreYouVATRegisteredId                       -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
+    Income6048Id                                -> (_ => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()) // TODO: FixedCosts6048Controller
   )
 }

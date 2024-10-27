@@ -242,3 +242,6 @@ POST        /change-occupation-and-accounting-info                 controllers.a
 
 GET         /are-you-vat-registered                                controllers.aboutthetradinghistory.AreYouVATRegisteredController.show
 POST        /are-you-vat-registered                                controllers.aboutthetradinghistory.AreYouVATRegisteredController.submit
+
+GET         /income                                                controllers.aboutthetradinghistory.Income6048Controller.show
+POST        /income                                                controllers.aboutthetradinghistory.Income6048Controller.submit

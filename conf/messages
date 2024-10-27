@@ -2035,6 +2035,8 @@ error.subLetUnits.numberOfUnits.negative = Number of sub-let units in the year e
 error.subLetUnits.numberOfUnits.nonNumeric = The number of sub-let units in the year ending {0} must be a number
 
 # TURNOVER 6048
+turnover.6048.income.heading = Income
+turnover.6048.income.p1 = Provide us with details of your income. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
 turnover.6048.income.letting = Letting income
 turnover.6048.excludingVAT = (excluding VAT)
 turnover.6048.income.serviceProvision = Income from service provision
