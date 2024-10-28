@@ -168,7 +168,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
 
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.Income6048Controller.show().url
+          aboutthetradinghistory.routes.Income6048Controller.show.url
         )
       }
 

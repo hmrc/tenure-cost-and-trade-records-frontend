@@ -354,6 +354,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     AreYouVATRegisteredId                       -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
-    Income6048Id                                -> (_ => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()) // TODO: FixedCosts6048Controller
+    Income6048Id                                -> (_ =>
+      aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    ) // TODO: FixedCosts6048Controller
   )
 }

@@ -36,11 +36,11 @@ import scala.concurrent.{ExecutionContext, Future}
   */
 @Singleton
 class Income6048Controller @Inject() (
-  mcc: MessagesControllerComponents,
-  navigator: AboutTheTradingHistoryNavigator,
   income6048View: income6048,
+  navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") val session: SessionRepo,
+  mcc: MessagesControllerComponents
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {

@@ -150,6 +150,7 @@ trait FakeViews { this: Injecting =>
   lazy val changeOccupationAndAccountingInfoView: changeOccupationAndAccountingInfo                 =
     inject[changeOccupationAndAccountingInfo]
   lazy val areYouVATRegisteredView: areYouVATRegistered                                             = inject[areYouVATRegistered]
+  lazy val income6048View: income6048                                                               = inject[income6048]
   lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                                 = inject[lowMarginFuelCardsDetails]
   lazy val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails              =
     inject[addAnotherLowMarginFuelCardDetails]
