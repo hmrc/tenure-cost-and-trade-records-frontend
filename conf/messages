@@ -2863,6 +2863,12 @@ label.furtherInformation = Further information or remarks
 key.additionalInformation = Additional information
 label.altDetails = Alternative correspondence address
 
+#COMMERCIAL LETTING QUESTION
+############################
+commercialLettingQuestion.heading = When did the property first become available for commercial letting?
+commercialLettingQuestion.p = If you do not know the exact date provide an estimate
+fieldName.commercialLettingQuestion =  the {0} when property first become available for commercial letting
+
 #TYPE OF RENEWABLE PLANT
 renewablesPlant.heading = What type of renewables plant do you operate?
 renewablesPlant.intermittent.label = Intermittent

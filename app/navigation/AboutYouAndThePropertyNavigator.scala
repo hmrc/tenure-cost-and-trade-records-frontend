@@ -48,8 +48,13 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
       case FOR6045 | FOR6046 =>
         controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+      case FOR6048           => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
       case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
     }
+
+  private def commercialLettingQuestionRouting: Session => Call = answers =>
+    if answers.isWelsh then controllers.routes.TaskListController.show() // TODO
+    else controllers.routes.TaskListController.show() // TODO
 
   private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
     val answersForType = answers.forType
@@ -155,6 +160,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
           case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
           case FOR6045 | FOR6046 =>
             controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+          case FOR6048           => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
           case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
         }
       case _               =>
@@ -180,6 +186,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     AlternativeContactDetailsId             -> alternativeContactDetailsRouting,
+    CommercialLettingQuestionId             -> commercialLettingQuestionRouting,
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,

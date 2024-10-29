@@ -18,13 +18,15 @@ package models.submissions.aboutyouandtheproperty
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.Form6010.MonthsYearDuration
 import play.api.libs.json.{Json, OFormat}
 
 case class AboutYouAndThePropertyPartTwo(
   plantAndTechnology: Option[String] = None,
   generatorCapacity: Option[String] = None,
   batteriesCapacity: Option[String] = None,
-  propertyCurrentlyUsed: Option[PropertyCurrentlyUsed] = None
+  propertyCurrentlyUsed: Option[PropertyCurrentlyUsed] = None,
+  commercialLetDate: Option[MonthsYearDuration] = None
 )
 
 object AboutYouAndThePropertyPartTwo {

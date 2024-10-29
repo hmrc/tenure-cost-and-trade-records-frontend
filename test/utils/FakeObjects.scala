@@ -379,6 +379,10 @@ trait FakeObjects {
   val prefilledAboutYouAndThePropertyPartTwo6045: AboutYouAndThePropertyPartTwo =
     prefilledAboutYouAndThePropertyPartTwo.copy(propertyCurrentlyUsed = prefilledPropertyCurrentlyInUsed)
 
+  val prefilledAboutYouAndThePropertyPartTwo6048: AboutYouAndThePropertyPartTwo = AboutYouAndThePropertyPartTwo(
+    commercialLetDate = MonthsYearDuration(9, 2022)
+  )
+
   val prefilledPropertyCurrentlyInUsed =
     PropertyCurrentlyUsed(List("fleetCaravanPark", "chaletPark", "other"), Some("another use details"))
 

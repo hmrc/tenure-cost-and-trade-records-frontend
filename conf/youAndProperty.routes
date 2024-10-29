@@ -44,6 +44,10 @@ POST        /tied-for-goods                               controllers.aboutyouan
 
 GET         /tied-for-goods-details                       controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.show()
 POST        /tied-for-goods-details                       controllers.aboutyouandtheproperty.TiedForGoodsDetailsController.submit()
+# About you and the propert 6048
+
+GET         /commercial-letting-question                  controllers.aboutyouandtheproperty.CommercialLettingQuestionController.show()
+POST        /commercial-letting-question                  controllers.aboutyouandtheproperty.CommercialLettingQuestionController.submit()
 
 # About you and the property 6076
 
