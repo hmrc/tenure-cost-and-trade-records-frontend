@@ -94,6 +94,10 @@ case object BatteriesCapacityId extends Identifier {
   override def toString: String = "batteriesCapacityPage"
 }
 
+case object CommercialLettingQuestionId extends Identifier {
+  override def toString: String = "commercialLettingQuestionPage"
+}
+
 case object GeneratorCapacityId extends Identifier {
   override def toString: String = "generatorCapacityPage"
 }
