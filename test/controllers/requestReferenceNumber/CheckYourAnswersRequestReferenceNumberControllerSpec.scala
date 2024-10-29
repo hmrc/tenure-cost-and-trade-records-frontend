@@ -34,7 +34,9 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
 
   import TestData._
 
-  trait ControllerWithInjectedSubmissionConnectorFixture(val requestReferenceNumberDetails: RequestReferenceNumberDetails):
+  trait ControllerWithInjectedSubmissionConnectorFixture(
+    val requestReferenceNumberDetails: RequestReferenceNumberDetails
+  ):
     val controller = new CheckYourAnswersRequestReferenceNumberController(
       stubMessagesControllerComponents(),
       inject[SubmissionConnector],
@@ -46,9 +48,11 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
       mockSessionRepo
     )
 
-  trait ControllerWithMockedSubmissionConnectorFixture(val requestReferenceNumberDetails: RequestReferenceNumberDetails):
+  trait ControllerWithMockedSubmissionConnectorFixture(
+    val requestReferenceNumberDetails: RequestReferenceNumberDetails
+  ):
     val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
-    val controller = new CheckYourAnswersRequestReferenceNumberController(
+    val controller                                   = new CheckYourAnswersRequestReferenceNumberController(
       stubMessagesControllerComponents(),
       mockSubmissionConnector,
       checkYourAnswersRequestReferenceNumberView,
@@ -58,7 +62,6 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
       preEnrichedActionRefiner(requestReferenceNumberDetails = Some(requestReferenceNumberDetails)),
       mockSessionRepo
     )
-
 
   "GET /" should {
     "return 200" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
@@ -72,7 +75,9 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return 200 with empty session" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumBlank) {
+    "return 200 with empty session" in new ControllerWithInjectedSubmissionConnectorFixture(
+      prefilledRequestRefNumBlank
+    ) {
       val result = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
@@ -86,16 +91,29 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
   }
 
   "SUBMIT /" should {
-    "handle positive confirmation scenarios" should {
-      "return 303 and audit the successful outcome" in new ControllerWithMockedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
-        when(mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(any[HeaderCarrier])).thenReturn(Future.successful(()))
+    "handle positive confirmation scenarios"          should {
+      "return 303 and audit the successful outcome" in new ControllerWithMockedSubmissionConnectorFixture(
+        prefilledRequestRefNumCYA
+      ) {
+        when(
+          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
+            any[HeaderCarrier]
+          )
+        ).thenReturn(Future.successful(()))
         val result = controller.submit()(fakeRequest)
         status(result) shouldBe Status.SEE_OTHER
-        header("Location", result).value shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.confirmation().url
+        header(
+          "Location",
+          result
+        ).value        shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+          .confirmation()
+          .url
       }
     }
     "handle exception and return InternalServerError" should {
-      "return 500 and audit the failure" in new ControllerWithMockedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
+      "return 500 and audit the failure" in new ControllerWithMockedSubmissionConnectorFixture(
+        prefilledRequestRefNumCYA
+      ) {
 
         // Mocking the submissionConnector to throw an exception
         when(

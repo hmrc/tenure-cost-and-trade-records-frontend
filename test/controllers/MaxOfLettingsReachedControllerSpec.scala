@@ -16,13 +16,59 @@
 
 package controllers
 
+import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
-import play.api.http.Status.{BAD_REQUEST, OK}
-import play.api.test.{FakeRequest, Helpers}
-import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import navigation.identifiers.Identifier
+import org.scalatest.OptionValues
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.mvc.{AnyContent, Call, Request}
+import play.api.test.Helpers.{contentType, header, status, stubMessagesControllerComponents}
+import play.api.test.{DefaultAwaitTimeout, FakeRequest, Helpers}
+import uk.gov.hmrc.http.HeaderCarrier
+import utils.{MockitoExtendedSugar, TestBaseSpec}
 
-class MaxOfLettingsReachedControllerSpec extends TestBaseSpec {
+trait MaxOfLettingsReachedControllerBehaviours:
+  this: AnyWordSpecLike with Matchers with MockitoExtendedSugar with DefaultAwaitTimeout with OptionValues =>
+
+  def updatingStillConnectedDetails(
+    src: String,
+    controller: MaxOfLettingsReachedController,
+    navigator: AboutFranchisesOrLettingsNavigator
+  ) =
+    "reply 303 and location header when sourcing from '$src'" in {
+      val request = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
+      val result  = controller.submit(Some("connection"))(request)
+      status(result)                   shouldBe SEE_OTHER
+      header("Location", result).value shouldBe controllers.connectiontoproperty.routes.ProvideContactDetailsController
+        .show()
+        .url
+      reset(navigator)
+    }
+
+  def updatingFranchiseOrLettings(
+    src: String,
+    controller: MaxOfLettingsReachedController,
+    navigator: AboutFranchisesOrLettingsNavigator
+  ) =
+    s"reply 303 and location header when sourcing from '$src'" in {
+      val anyIdentifier             = any[Identifier]
+      val anySession                = any[Session]
+      val anyHeaderCarrier          = any[HeaderCarrier]
+      val anyRequest                = any[Request[AnyContent]]
+      val stubSessionToCallFunction = (_: Session) => Call("GET", "url")
+      when(navigator.nextPage(anyIdentifier, anySession)(anyHeaderCarrier, anyRequest))
+        .thenReturn(stubSessionToCallFunction)
+      val request                   = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
+      val result                    = controller.submit(Some(src))(request)
+      status(result)                   shouldBe SEE_OTHER
+      header("Location", result).value shouldBe "url"
+      // TODO verify(navigator, times(1)).nextPage(MaxOfLettingsReachedCateringId, anySession)(hc, request)
+      reset(navigator)
+    }
+
+class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettingsReachedControllerBehaviours {
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
@@ -64,6 +110,28 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec {
     }
   }
   "SUBMIT /" should {
+
+    behave like updatingStillConnectedDetails(
+      src = "connection",
+      maxOfLettingsReachedController,
+      mockAboutFranchisesOrLettingsNavigator
+    )
+    behave like updatingFranchiseOrLettings(
+      src = "franchiseCatering",
+      maxOfLettingsReachedController,
+      mockAboutFranchisesOrLettingsNavigator
+    )
+    behave like updatingFranchiseOrLettings(
+      src = "franchiseLetting",
+      maxOfLettingsReachedController,
+      mockAboutFranchisesOrLettingsNavigator
+    )
+    behave like updatingFranchiseOrLettings(
+      src = "lettings",
+      maxOfLettingsReachedController,
+      mockAboutFranchisesOrLettingsNavigator
+    )
+
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = maxOfLettingsReachedController.submit(None)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
