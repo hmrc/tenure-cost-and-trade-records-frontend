@@ -18,6 +18,7 @@ package models.submissions.aboutthetradinghistory
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.Json
 import utils.FakeObjects
 
 /**
@@ -25,7 +26,17 @@ import utils.FakeObjects
   */
 class AboutTheTradingHistoryPartOneSpec extends AnyFlatSpec with Matchers with FakeObjects {
 
-  "AboutTheTradingHistoryPartOne" should "handle model turnoverSections6076" in {
+  "AboutTheTradingHistoryPartOne" should "be serialized/deserialized from JSON for 6076" in {
+    val json = Json.toJson(prefilledTurnoverSections6076)
+    json.as[AboutTheTradingHistoryPartOne] shouldBe prefilledTurnoverSections6076
+  }
+
+  it should "be serialized/deserialized from JSON for 6048" in {
+    val json = Json.toJson(prefilledTurnoverSections6048)
+    json.as[AboutTheTradingHistoryPartOne] shouldBe prefilledTurnoverSections6048
+  }
+
+  it should "handle model turnoverSections6076" in {
     val turnoverSections6076 = aboutYourTradingHistory6076YesSession.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .getOrElse(Seq.empty)
@@ -33,6 +44,23 @@ class AboutTheTradingHistoryPartOneSpec extends AnyFlatSpec with Matchers with F
     turnoverSections6076.flatMap(_.operationalExpenses.map(_.total)).sum shouldBe 63
     turnoverSections6076.flatMap(_.costOfSales6076Sum.map(_.total)).sum  shouldBe 45
     turnoverSections6076.flatMap(_.staffCosts.map(_.total)).sum          shouldBe 195000
+  }
+
+  it should "handle model turnoverSections6045" in {
+    prefilledTurnoverSections6045.turnoverSections6045.flatMap(_.headOption).map(_.financialYearEnd) shouldBe Some(
+      today
+    )
+
+    val caravans = prefilledTurnoverSections6045.caravans
+    caravans.flatMap(_.singleCaravansAge).fold(0)(_.fleetHire.total)       shouldBe 100
+    caravans.flatMap(_.singleCaravansAge).fold(0)(_.privateSublet.total)   shouldBe 26
+    caravans.flatMap(_.twinUnitCaravansAge).fold(0)(_.fleetHire.total)     shouldBe 1000
+    caravans.flatMap(_.twinUnitCaravansAge).fold(0)(_.privateSublet.total) shouldBe 10
+    caravans.flatMap(_.totalSiteCapacity).fold(0)(_.total)                 shouldBe 21
+  }
+
+  it should "handle model turnoverSections6048" in {
+    prefilledTurnoverSections6048.turnoverSections6048.map(_.flatMap(_.income.map(_.total)).sum) shouldBe Some(666)
   }
 
 }

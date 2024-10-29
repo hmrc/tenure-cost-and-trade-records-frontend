@@ -1,0 +1,157 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.Income6048
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.DateUtilLocalised
+@import util.NumberUtil._
+
+@this(
+        layout: Layout,
+        formWithCSRF: FormWithCSRF,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        dateUtil: DateUtilLocalised
+)
+
+@(form: Form[Seq[(Int, Income6048)]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+
+@rowLabel(labelKey: String, excludingVAT: Boolean = false, hintKey: Option[String] = None) = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+        @if(excludingVAT) {
+            @messages("turnover.6048.excludingVAT")
+        }
+    </p>
+@if(hintKey.nonEmpty) {
+    <span class="govuk-caption-m">@messages(hintKey)</span>
+}
+}
+
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey, excludingVAT = true, Option(hintKey).filterNot(_.isEmpty)))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        prefix = Some(PrefixOrSuffix(
+                            content = Text("£")
+                        )),
+                        attributes = Map(
+                            "maxlength" -> "13",
+                            "aria-label" -> messages(labelKey)
+                        )
+                    ).withFormField(form(formField))
+                )
+            )
+        )
+    )
+}
+
+@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(rowLabel(labelKey))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    classes = s"govuk-input--width-$styleWidth",
+                    attributes = Map(
+                        "maxlength" -> maxLength.toString,
+                        "aria-label" -> messages(labelKey)
+                    ),
+                    suffix = Some(PrefixOrSuffix(
+                        content = Text(messages(suffixKey))
+                    ))
+                ).withFormField(form(formField)))
+            )
+        )
+    )
+}
+
+@columns = @{
+    request.sessionData.financialYearEndDates6048.size
+}
+
+@totalContent(idx: Int) = {
+    <span
+    data-total-prefix="turnover[@idx].income."
+    data-total-items="letting,serviceProvision,other">
+    @form.value.flatMap(_.lift(idx)).fold("")(_._2.total.asMoney)
+    </span>
+}
+
+@layout(
+    pageHeading = messages("turnover.6048.income.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
+
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6048.income.p1")</p>
+
+    @govukInsetText(InsetText(
+        content = Text(messages("fieldsAreMandatory.label"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.Income6048Controller.submit) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6048.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2),
+                            turnoverRow(s"turnover[$idx].income.letting", "turnover.6048.income.letting"),
+                            turnoverRow(s"turnover[$idx].income.serviceProvision", "turnover.6048.income.serviceProvision", "turnover.6048.income.serviceProvision.hint"),
+                            turnoverRow(s"turnover[$idx].income.other", "turnover.6048.income.other", "turnover.6048.income.other.hint"),
+                            Seq(
+                                TableRow(content = HtmlContent(rowLabel("turnover.6048.income.total"))),
+                                TableRow(content = HtmlContent(totalContent(idx)))
+                            )
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+
+}

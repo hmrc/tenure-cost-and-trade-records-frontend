@@ -1995,6 +1995,26 @@ error.subLetUnits.numberOfUnits.required = Enter the number of sub-let units
 error.subLetUnits.numberOfUnits.negative = Number of sub-let units cannot be a negative number
 error.subLetUnits.numberOfUnits.nonNumeric = The number of sub-let units must be a number
 
+# TURNOVER 6048
+turnover.6048.income.heading = Income
+turnover.6048.income.p1 = Provide us with details of your income. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
+turnover.6048.income.letting = Letting income
+turnover.6048.excludingVAT = (excluding VAT)
+turnover.6048.income.serviceProvision = Income from service provision
+turnover.6048.income.serviceProvision.hint = For example gas, electricity or logs.
+turnover.6048.income.other = Income from other charges
+turnover.6048.income.other.hint = For example laundry, meals or leisure activities.
+turnover.6048.income.total = Total income
+error.turnover.6048.income.letting.required = Enter 0 if you did not have any letting income in the year ending {0}
+error.turnover.6048.income.letting.range = Letting income in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.income.letting.negative = Letting income in the year ending {0} cannot be a negative number
+error.turnover.6048.income.serviceProvision.required = Enter 0 if you did not have any income from service provision in the year ending {0}
+error.turnover.6048.income.serviceProvision.range = Income from service provision in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.income.serviceProvision.negative = Income from service provision in the year ending {0} cannot be a negative number
+error.turnover.6048.income.other.required = Enter 0 if you did not have any income from other charges in the year ending {0}
+error.turnover.6048.income.other.range = Income from other charges in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.income.other.negative = Income from other charges in the year ending {0} cannot be a negative number
+
 # TURNOVER 6076
 turnover.6076.heading = Faint o drydan a gynhyrchoch?
 turnover.6076.p1 = Os yw diwedd eich blwyddyn ariannol wedi newid yn ystod y cyfnod a ddangosir, gallwch olygu’r dyddiadau yn unol â hynny. Os gwnaeth unrhyw un o’ch blynyddoedd ariannol gwmpasu cyfnod nad oedd yn 52 wythnos, nodwch y nifer berthnasol o wythnosau.
