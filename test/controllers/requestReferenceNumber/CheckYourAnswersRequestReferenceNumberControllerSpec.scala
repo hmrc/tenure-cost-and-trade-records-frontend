@@ -34,78 +34,86 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
 
   import TestData._
 
-  val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
-
-  def checkYourAnswersRequestReferenceController(
-    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
-  ) =
-    new CheckYourAnswersRequestReferenceNumberController(
+  trait ControllerWithInjectedSubmissionConnectorFixture(
+    val requestReferenceNumberDetails: RequestReferenceNumberDetails
+  ):
+    val controller = new CheckYourAnswersRequestReferenceNumberController(
       stubMessagesControllerComponents(),
       inject[SubmissionConnector],
       checkYourAnswersRequestReferenceNumberView,
       confirmationRequestReferenceNumberView,
       inject[ErrorHandler],
       inject[Audit],
-      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+      preEnrichedActionRefiner(requestReferenceNumberDetails = Some(requestReferenceNumberDetails)),
       mockSessionRepo
     )
 
-  def checkYourAnswersRequestReferenceControllerWithMockConnector(
-    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
-  ) =
-    new CheckYourAnswersRequestReferenceNumberController(
+  trait ControllerWithMockedSubmissionConnectorFixture(
+    val requestReferenceNumberDetails: RequestReferenceNumberDetails
+  ):
+    val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
+    val controller                                   = new CheckYourAnswersRequestReferenceNumberController(
       stubMessagesControllerComponents(),
       mockSubmissionConnector,
       checkYourAnswersRequestReferenceNumberView,
       confirmationRequestReferenceNumberView,
       inject[ErrorHandler],
       inject[Audit],
-      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
-      mockSessionRepo
-    )
-  def checkYourAnswersRequestReferenceControllerBlank(
-    requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
-  ) =
-    new CheckYourAnswersRequestReferenceNumberController(
-      stubMessagesControllerComponents(),
-      inject[SubmissionConnector],
-      checkYourAnswersRequestReferenceNumberView,
-      confirmationRequestReferenceNumberView,
-      inject[ErrorHandler],
-      inject[Audit],
-      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+      preEnrichedActionRefiner(requestReferenceNumberDetails = Some(requestReferenceNumberDetails)),
       mockSessionRepo
     )
 
   "GET /" should {
-    "return 200" in {
-      val result = checkYourAnswersRequestReferenceController().show(fakeRequest)
+    "return 200" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
+      val result = controller.show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
-      val result = checkYourAnswersRequestReferenceController().show(fakeRequest)
+    "return HTML" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
+      val result = controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return 200 with empty session" in {
-      val result = checkYourAnswersRequestReferenceControllerBlank().show(fakeRequest)
+    "return 200 with empty session" in new ControllerWithInjectedSubmissionConnectorFixture(
+      prefilledRequestRefNumBlank
+    ) {
+      val result = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "confirmation return 200" in {
-      val result = checkYourAnswersRequestReferenceController().confirmation(fakeRequest)
+    "confirmation return 200" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
+      val result = controller.confirmation(fakeRequest)
       status(result) shouldBe Status.OK
     }
   }
 
   "SUBMIT /" should {
+    "handle positive confirmation scenarios"          should {
+      "return 303 and audit the successful outcome" in new ControllerWithMockedSubmissionConnectorFixture(
+        prefilledRequestRefNumCYA
+      ) {
+        when(
+          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
+            any[HeaderCarrier]
+          )
+        ).thenReturn(Future.successful(()))
+        val result = controller.submit()(fakeRequest)
+        status(result) shouldBe Status.SEE_OTHER
+        header(
+          "Location",
+          result
+        ).value        shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+          .confirmation()
+          .url
+      }
+    }
     "handle exception and return InternalServerError" should {
-      "return 500 and audit the failure" in {
-        val controller = checkYourAnswersRequestReferenceControllerWithMockConnector()
+      "return 500 and audit the failure" in new ControllerWithMockedSubmissionConnectorFixture(
+        prefilledRequestRefNumCYA
+      ) {
 
         // Mocking the submissionConnector to throw an exception
         when(
