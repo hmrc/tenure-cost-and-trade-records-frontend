@@ -25,6 +25,19 @@ FOR - form of return - forms used for users to send details of different types o
 * You can start the dependencies in service manager by running:
 >sm2 --start VOA_TCTR   
 >mongod
+
+## Unit test
+You can run the unit test and produce the test coverage report as follows:
+
+```shell
+sbt ";clean;coverage;test;it:test;coverageReport"
+```
+
+Then point your browser to the [`./target/scala-3.5.1/scoverage-report/index.html`](./target/scala-3.5.1/scoverage-report/index.html) file and read the report.
+
+You can configure the test coverage settings by editing the [`CodeCoverageSettings.scala`](./project/CodeCoverageSettings.scala) file, for example by increasing (or decreasing) the `coverageMinimumStmtTotal` percentage. Read the official [scalac-scoverage-plugin](https://github.com/scoverage/scalac-scoverage-plugin?tab=readme-ov-file#scalac-scoverage-plugin) and [sbt-scoverage](https://github.com/scoverage/sbt-scoverage?tab=readme-ov-file#minimum-coverage) user guides to understand more.  
+
+
 ## Run the service
 >sbt run
 
