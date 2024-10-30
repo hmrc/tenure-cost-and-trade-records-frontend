@@ -265,6 +265,24 @@
      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation), // TODO: data saved by ResidentialTenantsController
      section2Completed.isEmpty
     )
+    @includes.taskListItem("temporary-occupiers", "checkYourAnswersLettingHistory.temporaryOccupiers",
+     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), // TODO: TemporaryOccupiersController
+     section4Completed,
+     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation), // TODO: data saved by TemporaryOccupiersController
+     section2Completed.isEmpty
+    )
+    @includes.taskListItem("letting-intention", "checkYourAnswersLettingHistory.lettingIntention",
+     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), // TODO: LettingIntentionController
+     section4Completed,
+     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation), // TODO: data saved by LettingIntentionController
+     section2Completed.isEmpty
+    )
+    @includes.taskListItem("advertising-property", "checkYourAnswersLettingHistory.advertisingProperty",
+     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), // TODO: AdvertisingPropertyController
+     section4Completed,
+     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation), // TODO: data saved by AdvertisingPropertyController
+     section2Completed.isEmpty
+    )
     </ul>
    </li>
 
