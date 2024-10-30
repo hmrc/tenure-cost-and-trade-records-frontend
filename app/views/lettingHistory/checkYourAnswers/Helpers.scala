@@ -36,14 +36,12 @@ object Helpers:
     LettingHistory.permanentResidents(request.sessionData).zipWithIndex.map { (resident, index) =>
       CardData(
         index = index,
-        removeAction =
-          routes.ResidentListController.performRemove(index).withFromCheckYourAnswer.withFragment(fragment),
+        removeAction = routes.ResidentListController.performRemove(index).withFromCheckYourAnswer(fragment),
         entries = Seq(
           CardEntry(
             key = messages("lettingHistory.checkYourAnswers.permanentResidents.cardKey1"),
             value = List(resident.name, resident.address.replace("\n", "<br>")).mkString("<br>"),
-            changeAction =
-              routes.ResidentDetailController.show(Some(index)).withFromCheckYourAnswer.withFragment(fragment)
+            changeAction = routes.ResidentDetailController.show(Some(index)).withFromCheckYourAnswer(fragment)
           )
         )
       )
@@ -55,8 +53,7 @@ object Helpers:
     LettingHistory.completedLettings(request.sessionData).zipWithIndex.map { (occupier, index) =>
       CardData(
         index = index,
-        removeAction =
-          routes.OccupierListController.performRemove(index).withFromCheckYourAnswer.withFragment(fragment),
+        removeAction = routes.OccupierListController.performRemove(index).withFromCheckYourAnswer(fragment),
         entries = Seq(
           CardEntry(
             key = messages("lettingHistory.checkYourAnswers.completedLettings.cardKey1"),
@@ -68,8 +65,7 @@ object Helpers:
               occupier.address.county,
               Some(occupier.address.postcode)
             ).filter(_.isDefined).map(_.get).mkString("<br>"),
-            changeAction =
-              routes.OccupierDetailController.show(Some(index)).withFromCheckYourAnswer.withFragment(fragment)
+            changeAction = routes.OccupierDetailController.show(Some(index)).withFromCheckYourAnswer(fragment)
           )
         )
       )
@@ -81,27 +77,26 @@ object Helpers:
     LettingHistory.onlineAdvertising(request.sessionData).zipWithIndex.map { (advertising, index) =>
       CardData(
         index = index,
-        removeAction =
-          routes.AdvertisingListController.performRemove(index).withFromCheckYourAnswer.withFragment(fragment),
+        removeAction = routes.AdvertisingListController.performRemove(index).withFromCheckYourAnswer(fragment),
         entries = Seq(
           CardEntry(
             key = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardKey1"),
             value = List(advertising.websiteAddress, advertising.propertyReferenceNumber).mkString("<br>"),
-            changeAction =
-              routes.AdvertisingDetailController.show(Some(index)).withFromCheckYourAnswer.withFragment(fragment)
+            changeAction = routes.AdvertisingDetailController.show(Some(index)).withFromCheckYourAnswer(fragment)
           )
         )
       )
     }
 
-  def lettingIntentionSummaryData(
-    dateUtil: DateUtilLocalised
+  def intendedLettingsSummaryData(
+    dateUtil: DateUtilLocalised,
+    fragment: String
   )(using request: SessionRequest[AnyContent], messages: Messages): Seq[SummaryEntry] = {
     val data = mutable.Buffer(
       SummaryEntry(
-        key = messages("lettingHistory.checkYourAnswers.lettingIntentions.nights"),
+        key = messages("lettingHistory.checkYourAnswers.intendedLettings.nights"),
         maybeValue = mapInt2String(LettingHistory.intendedLettingsNights(request.sessionData)),
-        changeAction = routes.HowManyNightsController.show.withFromCheckYourAnswer
+        changeAction = routes.HowManyNightsController.show.withFromCheckYourAnswer(fragment)
       )
     )
     if LettingHistory.intendedLettingsNights(request.sessionData).isDefined
@@ -111,28 +106,28 @@ object Helpers:
       if !meetsCriteria.get then
         data ++= Seq(
           SummaryEntry(
-            key = messages("lettingHistory.checkYourAnswers.lettingIntentions.hasStopped"),
+            key = messages("lettingHistory.checkYourAnswers.intendedLettings.hasStopped"),
             maybeValue = mapBool2String(LettingHistory.intendedLettingsHasStopped(request.sessionData)),
-            changeAction = routes.HasStoppedLettingController.show.withFromCheckYourAnswer
+            changeAction = routes.HasStoppedLettingController.show.withFromCheckYourAnswer(fragment)
           ),
           SummaryEntry(
-            key = messages("lettingHistory.checkYourAnswers.lettingIntentions.whenWasLastLet"),
+            key = messages("lettingHistory.checkYourAnswers.intendedLettings.whenWasLastLet"),
             maybeValue = mapDate2String(LettingHistory.intendedLettingsWhenWasLastLet(request.sessionData), dateUtil),
-            changeAction = routes.WhenWasLastLetController.show.withFromCheckYourAnswer
+            changeAction = routes.WhenWasLastLetController.show.withFromCheckYourAnswer(fragment)
           )
         )
 
       // regardless of meeting lettings criteria, add the following entries
       data ++= Seq(
         SummaryEntry(
-          key = messages("lettingHistory.checkYourAnswers.lettingIntentions.isYearlyAvailable"),
+          key = messages("lettingHistory.checkYourAnswers.intendedLettings.isYearlyAvailable"),
           maybeValue = mapBool2String(LettingHistory.intendedLettingsIsYearlyAvailable(request.sessionData)),
-          changeAction = routes.IsYearlyAvailableController.show.withFromCheckYourAnswer
+          changeAction = routes.IsYearlyAvailableController.show.withFromCheckYourAnswer(fragment)
         ),
         SummaryEntry(
-          key = messages("lettingHistory.checkYourAnswers.lettingIntentions.tradingPeriod"),
+          key = messages("lettingHistory.checkYourAnswers.intendedLettings.tradingPeriod"),
           maybeValue = mapPeriod2String(LettingHistory.intendedLettingsTradingPeriod(request.sessionData), dateUtil),
-          changeAction = routes.TradingSeasonController.show.withFromCheckYourAnswer
+          changeAction = routes.TradingSeasonController.show.withFromCheckYourAnswer(fragment)
         )
       )
       data.toSeq
@@ -162,13 +157,10 @@ object Helpers:
       .map(d => dateUtil.formatDate(d))
       .orElse(Some(""))
 
-  def mapSummaryDataWithFragment(data: Seq[SummaryEntry], fragment: String): Seq[SummaryEntry] =
-    data.map { entry =>
-      entry.copy(changeAction = entry.changeAction.withFragment(fragment))
-    }
-
   extension (call: Call)
-    def withFromCheckYourAnswer =
+    def withFromCheckYourAnswer(fragment: String) =
+      // Append the "from" query string parameter with a "single" value
+      // Notice that the ";" semicolon character is just a "trick" intended to propagate the fragment
       call.copy(
-        url = call.url + (if call.url.contains("?") then "&" else "?") + "from=CYA"
+        url = call.url + (if call.url.contains("?") then "&" else "?") + s"from=CYA;$fragment"
       )

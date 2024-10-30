@@ -22,6 +22,8 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import views.lettingHistory.LettingHistoryTaskListHelper
+@import models.submissions.lettingHistory.LettingHistory
 
 
 @this(layout: Layout,
@@ -68,13 +70,14 @@
 @section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
 
 @section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted).map(_.name)}
+@sectionLettingHistoryCompleted = @{ "yes" }
 
 @completedSections = @{
  (forType match {
   case FOR6048 => Seq(
    section1Completed, // 1. Connection to the property
    section2Completed, // 2. About you and the property
-   section4Completed, // 3. Letting history
+   sectionLettingHistoryCompleted, // 3. Letting history
    section4AccommodationCompleted, // 4. Accommodation details
    section3Completed, // 5. Trading history
    section5Completed, // 6. Your lease or agreement
@@ -257,15 +260,41 @@
 
   @if(forType == FOR6048) {
    <li>
-    <h2 id="lettingHistory" class="app-task-list__section">
+    <h2 id="letting-history" class="app-task-list__section">
      <span class="app-task-list__section-number">3. </span> @messages("label.section.lettingHistory")
     </h2>
     <ul class="app-task-list__items">
-    @includes.taskListItem("residential-tenants", "checkYourAnswersLettingHistory.residentialTenants",
-     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), // TODO: ResidentialTenantsController
-     section4Completed, // TODO: 3. Letting history
-     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation), // TODO: data saved by ResidentialTenantsController
-     section2Completed.isEmpty
+    @includes.taskListItem(
+        taskId = "residential-tenants",
+        taskNameKey = "checkYourAnswersLettingHistory.residentialTenants",
+        taskPage = controllers.lettingHistory.routes.ResidentListController.show,
+        sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("residential-tenants"),
+        pageAnswer = LettingHistory.hasPermanentResidents(session),
+        cannotStartYet = false
+    )
+    @includes.taskListItem(
+        taskId = "temporary-occupiers",
+        taskNameKey = "checkYourAnswersLettingHistory.temporaryOccupiers",
+        taskPage = controllers.lettingHistory.routes.OccupierListController.show,
+        sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("temporary-occupiers"),
+        pageAnswer = LettingHistory.hasCompletedLettings(session),
+        cannotStartYet = false
+    )
+    @includes.taskListItem(
+        taskId = "intended-lettings",
+        taskNameKey = "checkYourAnswersLettingHistory.intendedLettings",
+        taskPage = controllers.lettingHistory.routes.HowManyNightsController.show,
+        sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("intended-lettings"),
+        pageAnswer = LettingHistory.intendedLettings(session),
+        cannotStartYet = false
+    )
+    @includes.taskListItem(
+        taskId = "online-advertising",
+        taskNameKey = "checkYourAnswersLettingHistory.onlineAdvertising",
+        taskPage = controllers.lettingHistory.routes.AdvertisingListController.show,
+        sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("online-advertising"),
+        pageAnswer = LettingHistory.hasOnlineAdvertising(session),
+        cannotStartYet = false
     )
     </ul>
    </li>
@@ -696,7 +725,7 @@
        session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
       )
      }
-     
+
     </ul>
    </li>
   }

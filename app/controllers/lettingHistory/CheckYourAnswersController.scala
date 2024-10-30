@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ class CheckYourAnswersController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with Logging:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     val filledForm =
@@ -71,5 +71,3 @@ class CheckYourAnswersController @Inject() (
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = CheckYourAnswersPageId)
-
-}
