@@ -3567,6 +3567,9 @@ error.changeOccupationAndAccountingInfo.required = Select yes if you would like 
 
 # CYA LETTING HISTORY
 checkYourAnswersLettingHistory.residentialTenants = Residential tenants
+checkYourAnswersLettingHistory.temporaryOccupiers = Temporary occupiers
+checkYourAnswersLettingHistory.lettingIntention = Letting intention
+checkYourAnswersLettingHistory.advertisingProperty = Advertising the property
 
 # CYA ACCOMMODATION DETAILS
 checkYourAnswersAccommodation.accommodationDetails = Accommodation details
