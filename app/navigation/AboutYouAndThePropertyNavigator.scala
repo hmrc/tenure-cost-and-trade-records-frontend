@@ -53,8 +53,9 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def commercialLettingQuestionRouting: Session => Call = answers =>
-    if answers.isWelsh then controllers.routes.TaskListController.show() // TODO
-    else controllers.routes.TaskListController.show() // TODO
+    if answers.isWelsh then
+      controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show()
+    else controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show()
 
   private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
     val answersForType = answers.forType
@@ -187,6 +188,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     AlternativeContactDetailsId             -> alternativeContactDetailsRouting,
     CommercialLettingQuestionId             -> commercialLettingQuestionRouting,
+    CommercialLettingAvailabilityId         -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
+    CommercialLettingAvailabilityWelshId    -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,

@@ -21,12 +21,17 @@ import models.Session
 import models.submissions.Form6010.MonthsYearDuration
 import play.api.libs.json.{Json, OFormat}
 
+import java.time.LocalDate
+
 case class AboutYouAndThePropertyPartTwo(
   plantAndTechnology: Option[String] = None,
   generatorCapacity: Option[String] = None,
   batteriesCapacity: Option[String] = None,
   propertyCurrentlyUsed: Option[PropertyCurrentlyUsed] = None,
-  commercialLetDate: Option[MonthsYearDuration] = None
+  commercialLetDate: Option[MonthsYearDuration] = None,
+  commercialLetAvailability: Option[Int] = None,
+  commercialLetAvailabilityWelsh: Option[Seq[LettingAvailability]] = None,
+  financialEndYearDates: Option[Seq[LocalDate]] = None
 )
 
 object AboutYouAndThePropertyPartTwo {

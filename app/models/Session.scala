@@ -65,6 +65,11 @@ case class Session(
     */
   def referenceNumberCleaned: String = referenceNumber.replaceAll("[^0-9]", "")
 
+  def financialYearEndDatesCommercialLetting: Seq[(LocalDate, Int)] =
+    aboutYouAndThePropertyPartTwo.fold(Seq.empty[(LocalDate, Int)])(
+      _.financialEndYearDates.getOrElse(Seq()).zipWithIndex
+    )
+
   def financialYearEndDates: Seq[(LocalDate, Int)] =
     aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(_.turnoverSections.map(_.financialYearEnd).zipWithIndex)
 

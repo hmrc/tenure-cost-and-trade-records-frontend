@@ -42,7 +42,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "About your trading history controller" should {
+  "Controller - commercial letting question" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -91,32 +91,34 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     }
 
     "redirect to the next page for Welsh property" in {
+
       val requestWithForm = FakeRequest(POST, "")
         .withFormUrlEncodedBody(baseFormData.toSeq*)
 
-      val sessionRequest =
-        SessionRequest(
-          aboutYourTradingHistory6048YesSession.copy(isWelsh = true),
-          requestWithForm
-        )
+      val sessionRequest = SessionRequest(baseFilled6048WelshSession, requestWithForm)
 
       val result = controller().submit(sessionRequest)
       status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(controllers.routes.TaskListController.show().url) // TODO
+      redirectLocation(result) shouldBe Some(
+        controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url // TODO!!!
+      )
     }
+
     "redirect to the next page for English property" in {
       val requestWithForm = FakeRequest(POST, "")
         .withFormUrlEncodedBody(baseFormData.toSeq*)
 
       val sessionRequest =
         SessionRequest(
-          aboutYourTradingHistory6048YesSession.copy(isWelsh = false),
+          baseFilled6048Session,
           requestWithForm
         )
 
       val result = controller().submit(sessionRequest)
       status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(controllers.routes.TaskListController.show().url) // TODO
+      redirectLocation(result) shouldBe Some(
+        controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url
+      )
     }
   }
 

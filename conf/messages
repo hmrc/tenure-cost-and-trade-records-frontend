@@ -2879,6 +2879,28 @@ commercialLettingQuestion.heading = When did the property first become available
 commercialLettingQuestion.p = If you do not know the exact date provide an estimate
 fieldName.commercialLettingQuestion =  the {0} when property first become available for commercial letting
 
+#COMMERCIAL LETTING AVAILABILITY
+################################
+
+commercialLettingAvailability.heading = Availability for commercial lettings - up to 28 nights
+commercialLettingAvailability.declare = Declare how many nights your property was available for letting commercially - in periods not longer than 28 nights - within the stated. This includes any nights when the property was vacant, even though it was open for commercial lettings.
+commercialLettingAvailability.list = Do not include any parts of property:
+commercialLettingAvailability.list.p1 = used by family or friends
+commercialLettingAvailability.list.p2 = let out to staff or permanent residents
+commercialLettingAvailability.list.p3 = used for lettings longer than 28 nights
+commercialLettingAvailability.label = How many nights was the property available, in periods up to 28 nights between 1 April 2023 and 31 March 2024?
+commercialLettingAvailability.label.nights = nights
+error.commercialLettingAvailability.required = State how many nights was the property available
+commercialLettingAvailability.label.welsh = How many nights was the property available in periods up to 28 nights, in the following years?
+commercialLettingAvailability.label.welsh.year = Year ending
+commercialLettingAvailability.label.welsh.nights = Number of nights available
+error.commercialLettingAvailability.required = State how many nights was the property available in year between 1 April 2023 and 31 March 2024
+error.commercialLettingAvailability.range = The number of nights must be a figure between 0 and 365
+error.commercialLettingAvailability.welsh.required = State how many nights was the property available in the year ending {0}
+error.commercialLettingAvailability.welsh.range = Number of nights in the year ending {0} must be a number between 1 and 365
+
+
+
 #TYPE OF RENEWABLE PLANT
 renewablesPlant.heading = What type of renewables plant do you operate?
 renewablesPlant.intermittent.label = Intermittent
