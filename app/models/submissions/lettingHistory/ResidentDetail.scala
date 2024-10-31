@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package models.submissions.lettingHistory
 
-case object PermanentResidentsPageId extends Identifier:
-  override def toString: String = "permanentResidentsPage"
+import play.api.libs.json.{Format, Json}
 
-case object ResidentDetailPageId extends Identifier:
-  override def toString: String = "residentDetailPage"
+case class ResidentDetail(name: String, address: String)
+
+object ResidentDetail:
+  def unapply(obj: ResidentDetail): Option[(String, String)] = Some(obj.name, obj.address)
+  given Format[ResidentDetail]                               = Json.format

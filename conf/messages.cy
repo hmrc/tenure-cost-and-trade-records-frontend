@@ -1567,6 +1567,12 @@ lettingHistory.isPermanentResidence.label = Is any part of the property used as 
 lettingHistory.isPermanentResidence.hint = Include any commercial residential lettings and staff accommodation.
 lettingHistory.isPermanentResidence.error= Select yes if the property is used as permanent residence.
 
+lettingHistory.residentDetail.heading = Resident''s details
+lettingHistory.residentDetail.subheading = We need the contact details of one person for each part of the property used as a main residence by a tenant or employee. You will have the opportunity to add additional households if required.
+label.lettingHistory.residentDetail.name.label = Resident''s name
+lettingHistory.residentDetail.address.label = Resident''s address
+lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
+
 
 # 6010 TYPES
 ##############################
