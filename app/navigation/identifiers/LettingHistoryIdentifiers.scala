@@ -22,16 +22,24 @@ case object PermanentResidentsPageId extends Identifier:
 case object ResidentDetailPageId extends Identifier:
   override def toString: String = "residentDetailPage"
 
+case object ResidentRemovePageId extends Identifier:
+  override def toString: String = "residentRemovePage"
+
 case object ResidentListPageId extends Identifier:
   override def toString: String = "residentListPage"
 
 case object CompletedLettingsPageId extends Identifier:
   override def toString: String = "commercialLettingsPage"
 
+case object OccupierDetailPageId extends Identifier:
+  override def toString: String = "occupierDetailPage"
+
 extension (string: String)
   def asPageIdentifier: Option[Identifier] = string match
     case "permanentResidentsPage" => Some(PermanentResidentsPageId)
     case "residentDetailPage"     => Some(ResidentDetailPageId)
+    case "residentRemovePage"     => Some(ResidentRemovePageId)
     case "residentListPage"       => Some(ResidentListPageId)
     case "completedLettingsPage"  => Some(CompletedLettingsPageId)
+    case "occupierDetailPage"     => Some(OccupierDetailPageId)
     case _                        => None

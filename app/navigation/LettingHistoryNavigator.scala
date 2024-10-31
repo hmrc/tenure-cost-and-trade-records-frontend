@@ -23,7 +23,7 @@ import models.Session
 import models.submissions.common.AnswerYes
 import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, hasCompletedLettings, hasPermanentResidents, permanentResidents}
-import navigation.identifiers.{CompletedLettingsPageId, Identifier, PermanentResidentsPageId, ResidentDetailPageId, ResidentListPageId}
+import navigation.identifiers.{CompletedLettingsPageId, Identifier, OccupierDetailPageId, PermanentResidentsPageId, ResidentDetailPageId, ResidentListPageId, ResidentRemovePageId}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{AnyContent, Call, Result}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -58,24 +58,27 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
         if fromPage == PermanentResidentsPageId.toString
         then routes.PermanentResidentsController.show
         else routes.ResidentListController.show
+    },
+    OccupierDetailPageId     -> { (_, _) =>
+      Some(routes.CompletedLettingsController.show)
     }
   )
 
   def backLinkUrl(ofPage: Identifier, navigationData: Map[String, String] = Map.empty)(using
     request: SessionRequest[AnyContent]
   ): Option[String] =
-    val navigationDataAndFromPage =
-      request.session
-        .get("from")
-        .fold(ifEmpty = navigationData)(from => navigationData + ("from" -> from))
-
     val call =
       for
         sessionToMaybeCallFunc <- backwardNavigationMap.get(ofPage)
-        backwardCall           <- sessionToMaybeCallFunc.apply(request.sessionData, navigationDataAndFromPage)
+        backwardCall           <- sessionToMaybeCallFunc.apply(request.sessionData, enriched(navigationData))
       yield backwardCall
 
     call.map(_.toString)
+
+  private def enriched(navigationData: Map[String, String] = Map.empty)(using
+    request: SessionRequest[AnyContent]
+  ) =
+    request.session.get("from").fold(ifEmpty = navigationData)(from => navigationData + ("from" -> from))
 
   // ----------------------------------------------------------------------------------------------------------------
 
@@ -101,47 +104,54 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
     ResidentDetailPageId     -> { (_, _) =>
       Some(routes.ResidentListController.show)
     },
+    ResidentRemovePageId     -> { (_, _) =>
+      Some(routes.ResidentListController.show)
+    },
     ResidentListPageId       -> { (updatedSession, navigationData) =>
-      // Note that navigationData.isDefinedAt("hasMoreResidents") is certainly true! See ResidentListController.submit()
-      if navigationData("hasMoreResidents") == AnswerYes.toString
-      then
-        if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
-        then Some(routes.ResidentDetailController.show(index = None))
+      // assert(navigationData.isDefinedAt("hasMoreResidents"))
+      for answer <- Some(navigationData("hasMoreResidents"))
+      yield
+        if answer == AnswerYes.toString
+        then
+          if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
+          then routes.ResidentDetailController.show(index = None)
+          else
+            // TODO Introduce the controllers.lettingHistory.MaxPermanentResidentsController
+            Call("GET", "/path/to/max-permanent-residents")
         else
-          // TODO Introduce the controllers.lettingHistory.MaxPermanentResidentsController
-          Some(Call("GET", "/path/to/max-permanent-residents"))
-      else
-        // AnswerNo
-        Some(routes.CompletedLettingsController.show)
+          // AnswerNo
+          routes.CompletedLettingsController.show
     },
     CompletedLettingsPageId  -> { (updatedSession, _) =>
       for answer <- hasCompletedLettings(updatedSession)
       yield
         if answer == AnswerYes
-        then
-          // TODO Introduce the OccupierDetailController
-          Call("GET", "/path/to/occupier-detail")
+        then routes.OccupierDetailController.show(index = None)
         else
           // AnswerNo
-          // TODO Introduce the OccupierDetailController
+          // TODO Introduce the HowManyNightsController
           Call("GET", "/path/to/how-many-nights")
+    },
+    OccupierDetailPageId     -> { (_, _) =>
+      // TODO Introduce the RentalPeriodController
+      Some(Call("GET", "/path/to/rental-period"))
     }
   )
 
   @deprecated
   override val routeMap: Map[Identifier, Session => Call] = Map.empty
 
-  def redirect(fromPage: Identifier, updatedSession: Session, navigationData: Map[String, String] = Map.empty)(using
+  def redirect(currentPage: Identifier, updatedSession: Session, navigationData: Map[String, String] = Map.empty)(using
     hc: HeaderCarrier,
     request: SessionRequest[AnyContent]
   ): Result = {
     val nextCall =
-      for call <- forwardNavigationMap(fromPage)(updatedSession, navigationData)
+      for call <- forwardNavigationMap(currentPage)(updatedSession, enriched(navigationData))
       yield auditNextUrl(updatedSession)(call)
 
     nextCall match
       case Some(call) =>
-        Redirect(call).withSession(request.session + ("from" -> fromPage.toString))
+        Redirect(call).withSession(request.session + ("from" -> currentPage.toString))
       case _          =>
         throw new Exception("NavigatorIllegalStage : couldn't determine redirect call")
   }

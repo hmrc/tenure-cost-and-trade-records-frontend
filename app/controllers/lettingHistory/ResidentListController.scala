@@ -22,10 +22,10 @@ import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmation
 import form.lettingHistory.ResidentListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.LettingHistory.byRemovingPermanentResidentAt
+import models.submissions.lettingHistory.LettingHistory.{byRemovingPermanentResidentAt, permanentResidents}
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.ResidentListPageId
+import navigation.identifiers.{ResidentListPageId, ResidentRemovePageId}
 import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
@@ -49,30 +49,34 @@ class ResidentListController @Inject() (
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    Ok(theListView(theListForm, backLinkUrl, LettingHistory.permanentResidents(request.sessionData)))
+    Ok(theListView(theListForm, permanentResidents(request.sessionData), backLinkUrl))
   }
 
   def remove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    this.foldResidentDetailAt(index) { residentialDetail =>
+    withResidentDetailAt(index) { residentialDetail =>
       successful(Ok(renderTheConfirmationViewWith(theRemoveConfirmationForm, residentialDetail, index)))
     }
   }
 
   def performRemove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    this.foldResidentDetailAt(index) { residentialDetail =>
+    withResidentDetailAt(index) { residentialDetail =>
       theRemoveConfirmationForm
         .bindFromRequest()
         .fold(
           formWithErrors =>
             successful(BadRequest(renderTheConfirmationViewWith(formWithErrors, residentialDetail, index))),
           answer =>
-            if answer == AnswerYes then
-              given Session = request.sessionData
-              for updatedSession <- repository.saveOrUpdateSession(byRemovingPermanentResidentAt(index))
-              yield Redirect(routes.ResidentListController.show)
-            else
-              // AnswerNo
-              successful(Redirect(routes.ResidentListController.show))
+            val eventuallySavedSession =
+              if answer == AnswerYes then
+                given Session = request.sessionData
+                for savedSession <- repository.saveOrUpdateSession(byRemovingPermanentResidentAt(index))
+                yield savedSession
+              else
+                // AnswerNo
+                successful(request.sessionData)
+
+            for savedSession <- eventuallySavedSession
+            yield navigator.redirect(currentPage = ResidentRemovePageId, savedSession)
         )
     }
   }
@@ -83,13 +87,13 @@ class ResidentListController @Inject() (
       theFormWithErrors =>
         successful(
           BadRequest(
-            theListView(theFormWithErrors, backLinkUrl, LettingHistory.permanentResidents(request.sessionData))
+            theListView(theFormWithErrors, permanentResidents(request.sessionData), backLinkUrl)
           )
         ),
       hasMoreResidents =>
         successful(
           navigator.redirect(
-            fromPage = ResidentListPageId,
+            currentPage = ResidentListPageId,
             updatedSession = request.sessionData,
             navigationData = Map("hasMoreResidents" -> hasMoreResidents.toString)
           )
@@ -97,7 +101,7 @@ class ResidentListController @Inject() (
     )
   }
 
-  private def foldResidentDetailAt(
+  private def withResidentDetailAt(
     index: Int
   )(func: ResidentDetail => Future[Result])(using request: SessionRequest[AnyContent]): Future[Result] =
     LettingHistory

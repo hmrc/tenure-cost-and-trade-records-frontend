@@ -33,7 +33,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
   "the ResidentDetail controller" when {
     "the user session is fresh"                 should {
       "be handling GET /detail by replying 200 with the form showing name and address fields" in new FreshSessionFixture {
-        val result  = controller.show()(fakeGetRequest)
+        val result  = controller.show(maybeIndex = None)(fakeGetRequest)
         val content = contentAsString(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
@@ -41,7 +41,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         content                     should include("""name="name"""")
         content                     should include("""name="address"""")
       }
-      "be handling good POST /detail by replying 303 redirect to to 'Residents List' page" in new FreshSessionFixture {
+      "be handling good POST /detail by replying 303 redirect to the 'Residents List' page" in new FreshSessionFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
           "name"    -> "Mr. Unknown",
           "address" -> "Neverland"
@@ -61,7 +61,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled with name and address values" in new StaleSessionFixture(
           oneResident
         ) {
-          val result  = controller.show(index = Some(0))(fakeGetRequest)
+          val result  = controller.show(maybeIndex = Some(0))(fakeGetRequest)
           val content = contentAsString(result)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML

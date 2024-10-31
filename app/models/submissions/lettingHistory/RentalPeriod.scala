@@ -16,12 +16,15 @@
 
 package models.submissions.lettingHistory
 
+import play.api.libs.json.{Format, Json}
+
 import java.time.LocalDate
 
-case class RentPeriod(
+case class RentalPeriod(
   fromDate: LocalDate,
   toDate: LocalDate
 )
 
-object RentPeriod:
-  def unapply(obj: RentPeriod): Option[(LocalDate, LocalDate)] = Some((obj.fromDate, obj.toDate))
+object RentalPeriod:
+  def unapply(obj: RentalPeriod): Option[(LocalDate, LocalDate)] = Some((obj.fromDate, obj.toDate))
+  given Format[RentalPeriod]                                     = Json.format

@@ -17,14 +17,14 @@
 package controllers.lettingHistory
 
 import actions.SessionRequest
-import models.submissions.lettingHistory.RentPeriod
+import models.submissions.lettingHistory.RentalPeriod
 import play.api.mvc.AnyContent
 
 import java.time.LocalDate
 import java.time.Month.{APRIL, MARCH}
 
 trait WelshJourneySupport:
-  private def lastFiscalYearEnd = {
+  def lastFiscalYearEnd = {
     val now = LocalDate.now()
     if now.getMonth.getValue > 3
     then now.getYear
@@ -32,9 +32,9 @@ trait WelshJourneySupport:
   }
 
   // The Welsh journey requires 3 years of data instead of 1 year
-  def previousRentPeriod(using request: SessionRequest[AnyContent]) =
+  def previousRentalPeriod(using request: SessionRequest[AnyContent]) =
     val numberOfYearsBack = if request.sessionData.isWelsh then 3 else 1
-    RentPeriod(
+    RentalPeriod(
       fromDate = LocalDate.of(lastFiscalYearEnd - numberOfYearsBack, APRIL, 1),
       toDate = LocalDate.of(lastFiscalYearEnd, MARCH, 31)
     )

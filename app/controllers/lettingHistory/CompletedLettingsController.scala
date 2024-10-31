@@ -52,17 +52,17 @@ class CompletedLettingsController @Inject (
         hasCompletedLettings <- lettingHistory.hasCompletedLettings
       yield freshForm.fill(hasCompletedLettings)
 
-    Ok(theView(filledForm.getOrElse(freshForm), previousRentPeriod, backLinkUrl))
+    Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentPeriod, backLinkUrl))),
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
       hasCompletedLettings =>
         given Session = request.sessionData
-        for updatedSession <- repository.saveOrUpdateSession(withCompletedLettings(hasCompletedLettings))
-        yield navigator.redirect(fromPage = CompletedLettingsPageId, updatedSession)
+        for savedSession <- repository.saveOrUpdateSession(withCompletedLettings(hasCompletedLettings))
+        yield navigator.redirect(currentPage = CompletedLettingsPageId, savedSession)
     )
   }
 

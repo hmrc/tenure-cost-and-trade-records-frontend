@@ -24,28 +24,29 @@
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton)
 
-@(theForm: Form[AnswersYesNo], backLink: Option[String], residentsDetails: List[ResidentDetail])(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], permanentResidents: List[ResidentDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
-@residentsCount = @{
-    residentsDetails.length
-}
+@fromPage = @{ request.session.get("from") }
+
+@residentsCount = @{ permanentResidents.length }
 
 @pageHeadingMessageKey = @{
-    if(residentsCount == 1) "lettingHistory.residentList.heading.singular"
+    if (residentsCount == 0 && fromPage == Some("residentRemovePage")) "lettingHistory.residentList.heading.removed"
+    else if (residentsCount == 1) "lettingHistory.residentList.heading.singular"
     else "lettingHistory.residentList.heading.plural"
 }
 
 @layout(
-    theForm = theForm,
     summary = Some(request.sessionData.toSummary),
     pageHeading = messages(pageHeadingMessageKey, residentsCount),
     backLinkUrl = backLink,
     showSection = true,
     sectionName = messages("label.section.lettingHistory"),
+    theForm = theForm,
 ) {
 
     @govukSummaryList(SummaryList(
-        rows = residentsDetails.zipWithIndex.map { (resident, index) =>
+        rows = permanentResidents.zipWithIndex.map { (resident, index) =>
             SummaryListRow(
                 key = Key(
                     content = Text(resident.name),
@@ -71,7 +72,6 @@
             )
         }
     ))
-
     @formWithCSRF(action = routes.ResidentListController.submit) {
         @includes.radioButtonsYesNo(
             govukRadios,
