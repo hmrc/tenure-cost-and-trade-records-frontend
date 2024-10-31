@@ -1558,6 +1558,16 @@ error.whatIsYourRentBasedOn.required = Describe how your rent is calculated
 error.currentRentBasedOn.required = Select what your rent is based on
 error.currentRentBasedOn.maxLength = Additional information must be 500 characters or fewer
 
+
+# LETTING HISTORY 6048
+# ############################
+lettingHistory.permanentResidents.heading = Permanent residents
+lettingHistory.permanentResidents.subheading = You must declare if any part of the property is occupied by tenants or employees as their permanent residence. Include any commercial residential lettings and staff accommodation.
+lettingHistory.isPermanentResidence.label = Is any part of the property used as a permanent residence by tenants or employees?
+lettingHistory.isPermanentResidence.hint = Include any commercial residential lettings and staff accommodation.
+lettingHistory.isPermanentResidence.error= Select yes if the property is used as permanent residence.
+
+
 # 6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier

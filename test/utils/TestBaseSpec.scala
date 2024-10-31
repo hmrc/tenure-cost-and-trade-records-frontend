@@ -28,6 +28,7 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import models.ForType.*
 import models.{ForType, Session}
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
+import models.submissions.lettingHistory.LettingHistory
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import org.scalatest.{Inside, OptionValues}
 import org.scalatest.concurrent.ScalaFutures
@@ -52,6 +53,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait TestBaseSpec
     extends AnyWordSpec
     with Matchers
+    with CustomMatchers
     with FutureAwaits
     with DefaultAwaitTimeout
     with MockitoExtendedSugar
@@ -84,6 +86,8 @@ trait TestBaseSpec
   def messagesApi: MessagesApi = inject[MessagesApi]
 
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
+
+  val fakeGetRequest = fakeRequest
 
   val fakePostRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("POST", "/")
 
@@ -187,7 +191,8 @@ trait TestBaseSpec
       prefilledAboutLeaseOrAgreementPartFour
     ),
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA),
-    downloadPDFDetails: Option[DownloadPDFDetails] = None
+    downloadPDFDetails: Option[DownloadPDFDetails] = None,
+    lettingHistory: Option[LettingHistory] = None
   ): WithSessionRefiner =
     new WithSessionRefiner(mockSessionRepository) {
 
@@ -214,7 +219,8 @@ trait TestBaseSpec
                 aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
                 aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour,
                 requestReferenceNumberDetails = requestReferenceNumberDetails,
-                downloadPDFDetails = downloadPDFDetails
+                downloadPDFDetails = downloadPDFDetails,
+                lettingHistory = lettingHistory
               ),
               request = request
             )

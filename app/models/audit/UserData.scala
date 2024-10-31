@@ -25,6 +25,7 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
+import models.submissions.lettingHistory.LettingHistory
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json.{Json, OFormat}
@@ -49,7 +50,8 @@ case class UserData(
   aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree],
   aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour],
   requestReferenceNumber: Option[RequestReferenceNumberDetails],
-  downloadPDFDetails: Option[DownloadPDFDetails]
+  downloadPDFDetails: Option[DownloadPDFDetails],
+  lettingHistory: Option[LettingHistory]
 )
 
 object UserData {

@@ -25,6 +25,7 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
+import models.submissions.lettingHistory.LettingHistory
 import models.submissions.notconnected.SensitiveRemoveConnectionDetails
 import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumber
 import play.api.libs.json.{Json, OFormat}
@@ -51,7 +52,9 @@ case class SensitiveSession(
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber],
-  downloadPDFDetails: Option[DownloadPDFDetails] = None
+  downloadPDFDetails: Option[DownloadPDFDetails] = None,
+  lettingHistory: Option[LettingHistory] = None
+  // Also add more properties to both this.decryptedValue and SensitiveSession.apply methods (see below)
 ) extends Sensitive[Session] {
 
   override def decryptedValue: Session = Session(
@@ -75,7 +78,9 @@ case class SensitiveSession(
     saveAsDraftPassword,
     lastCYAPageUrl,
     requestReferenceNumberDetails.map(_.decryptedValue),
-    downloadPDFDetails
+    downloadPDFDetails,
+    lettingHistory
+    // Add more properties here ...
   )
 }
 
@@ -104,6 +109,7 @@ object SensitiveSession {
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_)),
-    session.downloadPDFDetails
+    session.downloadPDFDetails,
+    session.lettingHistory
   )
 }
