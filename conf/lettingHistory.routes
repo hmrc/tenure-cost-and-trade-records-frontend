@@ -1,12 +1,15 @@
 # lettingHistory.routes
 
-GET         /permanent-residents                                controllers.lettingHistory.PermanentResidentsController.show
-POST        /permanent-residents                                controllers.lettingHistory.PermanentResidentsController.submit
+GET         /letting-history/permanent-residents                controllers.lettingHistory.PermanentResidentsController.show
+POST        /letting-history/permanent-residents                controllers.lettingHistory.PermanentResidentsController.submit
 
-GET         /resident-detail                                    controllers.lettingHistory.ResidentDetailController.show(index: Option[Int] ?= None)
-POST        /resident-detail                                    controllers.lettingHistory.ResidentDetailController.submit
+GET         /letting-history/resident-detail                    controllers.lettingHistory.ResidentDetailController.show(index: Option[Int] ?= None)
+POST        /letting-history/resident-detail                    controllers.lettingHistory.ResidentDetailController.submit
 
-GET         /resident-list                                      controllers.lettingHistory.ResidentListController.show
-GET         /resident-remove                                    controllers.lettingHistory.ResidentListController.remove(index: Int)
-POST        /resident-remove                                    controllers.lettingHistory.ResidentListController.performRemove(index: Int)
-POST        /resident-list                                      controllers.lettingHistory.ResidentListController.submit
+GET         /letting-history/resident-list                      controllers.lettingHistory.ResidentListController.show
+GET         /letting-history/resident-remove                    controllers.lettingHistory.ResidentListController.remove(index: Int)
+POST        /letting-history/resident-remove                    controllers.lettingHistory.ResidentListController.performRemove(index: Int)
+POST        /letting-history/resident-list                      controllers.lettingHistory.ResidentListController.submit
+
+GET         /letting-history/commercial-lettings                controllers.lettingHistory.CompletedLettingsController.show
+POST        /letting-history/commercial-lettings                controllers.lettingHistory.CompletedLettingsController.submit

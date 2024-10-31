@@ -28,11 +28,11 @@ class LettingHistorySpec extends AnyWordSpec with CustomMatchers with Matchers w
   "the LettingHistory model" when {
     "updating a fresh session" should {
       "set the isPermanent boolean flag" in new FreshSessionFixture {
-        val updatedSession = LettingHistory.sessionWithPermanentResidents(hasPermanentResidents = AnswerNo)
+        val updatedSession = LettingHistory.withPermanentResidents(hasPermanentResidents = AnswerNo)
         LettingHistory.hasPermanentResidents(updatedSession).value must beAnswerNo
       }
       "add the first resident detail" in new FreshSessionFixture {
-        val updateSession      = LettingHistory.sessionByAddingPermanentResident(
+        val updateSession      = LettingHistory.byAddingPermanentResident(
           ResidentDetail(
             name = "Mr. Peter Pan",
             address = "20, Fantasy Street, Birds' Island, BIR067"
@@ -45,8 +45,10 @@ class LettingHistorySpec extends AnyWordSpec with CustomMatchers with Matchers w
       }
     }
     "updating a stale session" should {
-      "set the isPermanent boolean flag" in new StaleSessionFixture(LettingHistory(hasPermanentResidents = AnswerYes)) {
-        val updatedSession = LettingHistory.sessionWithPermanentResidents(AnswerNo)
+      "set the isPermanent boolean flag" in new StaleSessionFixture(
+        LettingHistory(hasPermanentResidents = Some(AnswerYes))
+      ) {
+        val updatedSession = LettingHistory.withPermanentResidents(AnswerNo)
         LettingHistory.hasPermanentResidents(updatedSession).value must beAnswerNo
       }
       "add a new unknown resident detail" in new StaleSessionFixture(havingKnownResident) {
@@ -54,7 +56,7 @@ class LettingHistorySpec extends AnyWordSpec with CustomMatchers with Matchers w
           name = "Mr. New Guest",
           address = "Sleeping on the sofa"
         )
-        val updateSession      = LettingHistory.sessionByAddingPermanentResident(misterNewGuest)
+        val updateSession      = LettingHistory.byAddingPermanentResident(misterNewGuest)
         val permanentResidents = LettingHistory.permanentResidents(updateSession)
         permanentResidents must have size 2
         permanentResidents(0) mustBe misterKnownTenant
@@ -63,7 +65,7 @@ class LettingHistorySpec extends AnyWordSpec with CustomMatchers with Matchers w
       "add an already known resident by just overwriting the same" in new StaleSessionFixture(havingKnownResident) {
         // Update the session by adding the very same resident name
         val misterKnownAtDifferentAddress = misterKnownTenant.copy(address = "different address")
-        val updateSession                 = LettingHistory.sessionByAddingPermanentResident(misterKnownAtDifferentAddress)
+        val updateSession                 = LettingHistory.byAddingPermanentResident(misterKnownAtDifferentAddress)
         // Assert that nothing changed (the size of the detail list is still 1)
         val permanentResidents            = LettingHistory.permanentResidents(updateSession)
         permanentResidents must have size 1
@@ -113,6 +115,6 @@ class LettingHistorySpec extends AnyWordSpec with CustomMatchers with Matchers w
   )
 
   val havingKnownResident = LettingHistory(
-    hasPermanentResidents = AnswerYes,
+    hasPermanentResidents = Some(AnswerYes),
     permanentResidents = List(misterKnownTenant)
   )

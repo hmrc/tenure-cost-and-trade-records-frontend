@@ -25,6 +25,7 @@
 @(theForm: Form[ResidentDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
+    theForm = theForm,
     summary = Some(request.sessionData.toSummary),
     pageHeading = messages("lettingHistory.residentDetail.heading"),
     backLinkUrl = backLink,

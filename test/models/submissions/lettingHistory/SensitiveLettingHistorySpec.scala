@@ -21,40 +21,44 @@ import crypto.MongoCrypto
 import models.submissions.common.AnswerYes
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
+import org.scalatest.OptionValues
 import play.api.Configuration
 import play.api.libs.json.{JsSuccess, Json}
 
-class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers:
+class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionValues:
 
   given MongoCrypto = new MongoCrypto(Configuration(ConfigFactory.load()))
 
   it should "encrypt and decrypt sensitive fields correctly" in {
-    val encryptedValue = SensitiveLettingHistory(clearValue)
-    encryptedValue.decryptedValue mustBe clearValue
+    val encryptedLettingHistory = SensitiveLettingHistory(clearLettingHistory)
+    encryptedLettingHistory.decryptedValue mustBe clearLettingHistory
   }
 
   it should "serialize to encrypted JSON" in {
-    val encryptedValue = SensitiveLettingHistory(clearValue)
+    val encryptedValue = SensitiveLettingHistory(clearLettingHistory)
     val jsonValue      = Json.toJson(encryptedValue)
 
     (jsonValue \ "hasPermanentResidents").as[String] mustBe "yes"
     val encryptedResidentDetail = (jsonValue \ "permanentResidents").head.as[SensitiveResidentDetail]
-    encryptedResidentDetail.name    must not be clearValue.permanentResidents.head.name
-    encryptedResidentDetail.address must not be clearValue.permanentResidents.head.address
+    encryptedResidentDetail.name    must not be clearLettingHistory.permanentResidents.head.name
+    encryptedResidentDetail.address must not be clearLettingHistory.permanentResidents.head.address
+
+    (jsonValue \ "hasCompletedLettings").as[String] mustBe "yes"
   }
 
   it should "deserialize from encrypted JSON" in {
-    val encryptedLettingHistory = SensitiveLettingHistory(clearValue)
+    val encryptedLettingHistory = SensitiveLettingHistory(clearLettingHistory)
     val jsonValue               = Json.toJson(encryptedLettingHistory)
     Json.fromJson[SensitiveLettingHistory](jsonValue) mustBe JsSuccess(encryptedLettingHistory)
   }
 
-  val clearValue = LettingHistory(
-    hasPermanentResidents = AnswerYes,
+  val clearLettingHistory = LettingHistory(
+    hasPermanentResidents = Some(AnswerYes),
     permanentResidents = List(
       ResidentDetail(
         name = "Mr. Peter Pan",
         address = "20, Fantasy Street, Birds' Island, BIR067"
       )
-    )
+    ),
+    hasCompletedLettings = Some(AnswerYes)
   )

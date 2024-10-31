@@ -16,15 +16,9 @@
 
 package form.lettingHistory
 
-import form.lettingHistory.FieldMappings.nonEmptyText
-import models.submissions.lettingHistory.ResidentDetail
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.text
+import play.api.data.validation.Constraints.nonEmpty
 
-object ResidentDetailForm:
-  val theForm = Form(
-    mapping(
-      "name"    -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.name.required"),
-      "address" -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.address.required")
-    )(ResidentDetail.apply)(ResidentDetail.unapply)
-  )
+object FieldMappings:
+
+  def nonEmptyText(errorMessage: String) = text.verifying(nonEmpty(errorMessage = errorMessage))

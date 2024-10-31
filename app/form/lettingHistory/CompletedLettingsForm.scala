@@ -16,15 +16,14 @@
 
 package form.lettingHistory
 
-import form.lettingHistory.FieldMappings.nonEmptyText
-import models.submissions.lettingHistory.ResidentDetail
+import form.MappingSupport.createYesNoType as answerYesNo
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object ResidentDetailForm:
-  val theForm = Form(
-    mapping(
-      "name"    -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.name.required"),
-      "address" -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.address.required")
-    )(ResidentDetail.apply)(ResidentDetail.unapply)
+object CompletedLettingsForm:
+  val theForm = Form[AnswersYesNo](
+    single(
+      "hasCompletedLettings" -> answerYesNo(errorMessage = "lettingHistory.hasCompletedLettings.required")
+    )
   )

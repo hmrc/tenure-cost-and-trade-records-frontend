@@ -24,6 +24,7 @@
 @(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
+    theForm = theForm,
     summary = Some(request.sessionData.toSummary),
     pageHeading = messages("lettingHistory.permanentResidents.heading"),
     backLinkUrl = backLink,
@@ -38,7 +39,7 @@
             govukRadios,
             theForm,
             name = "hasPermanentResidents",
-            label = "lettingHistory.hasPermanentResidents.label",
+            legendKey = "lettingHistory.hasPermanentResidents.legend",
             hint = messages("lettingHistory.hasPermanentResidents.hint"),
             classes = "govuk-fieldset__legend--s",
             isHeading = true

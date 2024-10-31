@@ -28,7 +28,7 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.permanentResidents as PermanentResidentsView
 
-class PermanentResidentsControllerSpec extends LettingHistorySpec:
+class PermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
 
   "the PermanentResidents controller" when {
     "the user session is fresh" should {
@@ -42,8 +42,12 @@ class PermanentResidentsControllerSpec extends LettingHistorySpec:
         content                     should not include "checked"
       }
       "be handling invalid POST hasPermanentResidents=null and reply 400 with error message" in new FreshSessionFixture {
-        val result = controller.submit(fakePostRequest)
-        status(result)        shouldBe BAD_REQUEST
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "hasPermanentResidents" -> ""
+          )
+        )
+        status(result) shouldBe BAD_REQUEST
         contentAsString(result) should include("lettingHistory.hasPermanentResidents.error")
       }
       "be handling POST hasPermanentResidents='yes' and reply 303 redirect to the 'Residents Details' page" in new FreshSessionFixture {
@@ -80,7 +84,7 @@ class PermanentResidentsControllerSpec extends LettingHistorySpec:
           // Answering 'no' will clear out all residents details
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hasPermanentResidents" -> "no"))
           status(result)                  shouldBe SEE_OTHER
-          redirectLocation(result).value  shouldBe "/path/to/completed-lettings"
+          redirectLocation(result).value  shouldBe routes.CompletedLettingsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasPermanentResidents(data).value should beAnswerNo
           permanentResidents(data)        shouldBe Nil
@@ -124,7 +128,7 @@ class PermanentResidentsControllerSpec extends LettingHistorySpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasPermanentResidents = if permanentResidents.isEmpty then AnswerNo else AnswerYes,
+            hasPermanentResidents = Some(if permanentResidents.isEmpty then AnswerNo else AnswerYes),
             permanentResidents = permanentResidents
           )
         )

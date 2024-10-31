@@ -22,7 +22,7 @@ import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmation
 import form.lettingHistory.ResidentListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.LettingHistory.sessionByRemovingPermanentResidentAt
+import models.submissions.lettingHistory.LettingHistory.byRemovingPermanentResidentAt
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.ResidentListPageId
@@ -68,7 +68,7 @@ class ResidentListController @Inject() (
           answer =>
             if answer == AnswerYes then
               given Session = request.sessionData
-              for updatedSession <- repository.saveOrUpdateSession(sessionByRemovingPermanentResidentAt(index))
+              for updatedSession <- repository.saveOrUpdateSession(byRemovingPermanentResidentAt(index))
               yield Redirect(routes.ResidentListController.show)
             else
               // AnswerNo

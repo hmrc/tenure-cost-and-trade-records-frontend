@@ -16,7 +16,7 @@
 
 package form.lettingHistory
 
-import form.MappingSupport.createYesNoType
+import form.MappingSupport.createYesNoType as answerYesNo
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
@@ -24,6 +24,6 @@ import play.api.data.Forms.single
 object PermanentResidentsForm:
   val theForm = Form[AnswersYesNo](
     single(
-      "hasPermanentResidents" -> createYesNoType("lettingHistory.hasPermanentResidents.error")
+      "hasPermanentResidents" -> answerYesNo(errorMessage = "lettingHistory.hasPermanentResidents.error")
     )
   )

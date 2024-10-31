@@ -20,14 +20,18 @@ import models.submissions.common.AnswersYesNo
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveLettingHistory(
-  hasPermanentResidents: AnswersYesNo,
-  permanentResidents: List[SensitiveResidentDetail]
+  hasPermanentResidents: Option[AnswersYesNo],
+  permanentResidents: List[SensitiveResidentDetail],
+  hasCompletedLettings: Option[AnswersYesNo],
+  completedLettings: List[SensitiveResidentDetail]
 ) extends Sensitive[LettingHistory]:
 
   override def decryptedValue: LettingHistory =
     LettingHistory(
       hasPermanentResidents,
-      permanentResidents.map(_.decryptedValue)
+      permanentResidents.map(_.decryptedValue),
+      hasCompletedLettings,
+      completedLettings.map(_.decryptedValue)
     )
 
 object SensitiveLettingHistory:
@@ -39,5 +43,7 @@ object SensitiveLettingHistory:
   def apply(lettingHistory: LettingHistory): SensitiveLettingHistory =
     SensitiveLettingHistory(
       lettingHistory.hasPermanentResidents,
-      lettingHistory.permanentResidents.map(SensitiveResidentDetail(_))
+      lettingHistory.permanentResidents.map(SensitiveResidentDetail(_)),
+      lettingHistory.hasCompletedLettings,
+      lettingHistory.completedLettings.map(SensitiveResidentDetail(_))
     )
