@@ -16,7 +16,7 @@
 
 package controllers.lettingHistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.Session
@@ -43,17 +43,28 @@ class ResidentDetailController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport:
 
-  def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    Ok(theView(theForm))
+  def show(index: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
+    val freshForm  = theForm
+    val filledForm =
+      for
+        idx            <- index
+        lettingHistory <- request.sessionData.lettingHistory
+        residentDetail <- lettingHistory.permanentResidents.lift(idx)
+      yield freshForm.fill(residentDetail)
+
+    Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ResidentDetail](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors))),
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       residentDetail =>
         given Session = request.sessionData
         for updatedSession <- repository.saveOrUpdateSession(sessionByAddingPermanentResident(residentDetail))
-        yield Redirect(navigator.nextCall(ResidentDetailPageId, updatedSession))
+        yield navigator.redirect(fromPage = ResidentDetailPageId, updatedSession)
     )
   }
+
+  private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
+    navigator.backLinkUrl(ofPage = ResidentDetailPageId)
