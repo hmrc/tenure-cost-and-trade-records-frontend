@@ -134,7 +134,7 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
-      controllers.routes.MaxOfLettingsReachedController.show(Some("lettings")).url
+      controllers.routes.MaxOfLettingsReachedController.show(Some("rentalIncome")).url
     )
   }
 

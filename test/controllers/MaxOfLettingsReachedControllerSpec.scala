@@ -98,6 +98,10 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
       val result = maxOfLettingsReachedController.show("lettings")(fakeRequest)
       status(result) shouldBe OK
     }
+    "return 200 when no scr parameter equals rentalIncome" in {
+      val result = maxOfLettingsReachedController.show("rentalIncome")(fakeRequest)
+      status(result) shouldBe OK
+    }
     "return 200 when no scr parameter equals franchiseLetting" in {
       val result = maxOfLettingsReachedController.show("franchiseLetting")(fakeRequest)
       status(result) shouldBe OK
@@ -128,6 +132,12 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
     )
     behave like updatingFranchiseOrLettings(
       src = "lettings",
+      maxOfLettingsReachedController,
+      mockAboutFranchisesOrLettingsNavigator
+    )
+
+    behave like updatingFranchiseOrLettings(
+      src = "rentalIncome",
       maxOfLettingsReachedController,
       mockAboutFranchisesOrLettingsNavigator
     )

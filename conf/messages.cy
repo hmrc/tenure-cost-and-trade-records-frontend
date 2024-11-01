@@ -2794,6 +2794,12 @@ checkYourAnswersAdditionalInformation.heading = Gwiriwch eich atebion – gwybod
 label.furtherInformation = Rhagor o wybodaeth neu sylwadau
 key.additionalInformation = Gwybodaeth ychwanegol
 
+#COMMERCIAL LETTING QUESTION
+############################
+commercialLettingQuestion.heading = When did the property first become available for commercial letting?
+commercialLettingQuestion.p = If you do not know the exact date provide an estimate
+fieldName.commercialLettingQuestion =  the {0} when property first become available for commercial letting
+
 
 #TYPE OF RENEWABLES PLANT
 #################################
@@ -3006,6 +3012,7 @@ checkYourAnswersNotConnected.subheading2 = Eich manylion cyswllt
 
 # MAXIMUM OF 5 LETTINGS
 ##################################
+##################################
 maxOf5Lettings.heading = You have added the maximum of 5 lettings
 maxOf5Lettings.content = lettings
 maxOf5Lettings.businessOrFranchise.heading = You have added the maximum of 5 separate businesses or franchises
@@ -3014,9 +3021,13 @@ maxOf5Lettings.businessOrConcession.heading = You have added the maximum of 5 se
 maxOf5Lettings.businessOrConcession.content = businesses or concessions
 maxOf5Lettings.concessionOrFranchise.heading = You have added the maximum of 5 separate concessions or franchises
 maxOf5Lettings.concessionOrFranchise.content = concessions or franchises
-maxOf5Lettings.contact = If you have 6 or more {0} at your property, the VOA will contact you to collect information on the remaining lettings.
+maxOf5Lettings.rentalIncome.heading = You have added the maximum of 5 sources of rental income
+maxOf5Lettings.rentalIncome.content = sources of rental income
+maxOf5Lettings.contact = If you have 6 or more {0}, the VOA will contact you to collect their information.
+maxOf5Lettings.rentalIncome.confirm = I confirm that I understand the VOA will contact me regarding the remaining {0}
 maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining businesses.
 maxOf5Lettings.link = Check or update the 5 added businesses
+maxOf5Lettings.rentalIncome.link = Check or update the 5 added sources of rental income
 maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
 
 # About franchise or lettings CYA

@@ -32,13 +32,16 @@
 
 @sectionName = @{
  source match {
-  case "connection"  => messages("label.section.connectionToTheProperty")
-  case "lettings"    => messages("label.section.aboutTheLettings")
-  case _             => messages("label.section.aboutTheFranchiseConcessions")
+  case "connection"   => messages("label.section.connectionToTheProperty")
+  case "lettings"     => messages("label.section.aboutTheLettings")
+  case "rentalIncome" => messages("label.section.aboutTheConcessionsFranchisesLettings")
+  case _              => messages("label.section.aboutTheFranchiseConcessions")
  }
 }
+
 @sectionHeading = @{
  source match {
+  case "rentalIncome"      =>  messages("maxOf5Lettings.rentalIncome.heading")
   case "franchiseCatering" =>
    forType match {
     case FOR6010 | FOR6011 => messages(s"maxOf5Lettings.businessOrFranchise.heading")
@@ -50,8 +53,25 @@
  }
 }
 
+@confirm = @{
+ source match {
+  case "rentalIncome" => messages("maxOf5Lettings.rentalIncome.confirm", sectionContent)
+  case _ => messages("maxOf5Lettings.confirm")
+
+ }
+}
+
+@link = @{
+ source match {
+  case "rentalIncome" => messages("maxOf5Lettings.rentalIncome.link")
+  case _ => messages("maxOf5Lettings.confirm")
+
+ }
+}
+
 @sectionContent = @{
  source match {
+  case "rentalIncome"      => messages("maxOf5Lettings.rentalIncome.content")
   case "franchiseCatering" =>
    forType match {
     case FOR6010 | FOR6011 => messages("maxOf5Lettings.businessOrFranchise.content")
@@ -62,6 +82,9 @@
   case _                                     => messages("maxOf5Lettings.content")
  }
 }
+
+
+
 @forType = @{request.sessionData.forType}
 
 
@@ -83,7 +106,7 @@
     name = "maxOfLettings",
     items = Seq(
      CheckboxItem(
-      content = Text(messages("maxOf5Lettings.confirm")),
+      content = Text(confirm),
       value = "true",
       checked = form("maxOfLettings").value.contains("true"),
      )
@@ -91,9 +114,7 @@
    ).withFormField(form("maxOfLettings"))
   )
 
-  <p class="govuk-body">
-   <a href="@backLink" class="govuk-link">@messages("maxOf5Lettings.link")</a>
-  </p>
+  <p class="govuk-body"><a href="@backLink" class="govuk-link">@link</a></p>
 
   <br>
   <br>
