@@ -95,7 +95,7 @@ class RentalIncomeListController @Inject() (
         ),
       answer =>
         if (answer == AnswerYes && numberOfRentalIncomes >= 5 && navigator.from != "CYA") {
-          Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings"))))
+          Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("rentalIncome"))))
         } else {
           rentalIncomeData match {
             case Some(entries) if entries.isDefinedAt(index) =>

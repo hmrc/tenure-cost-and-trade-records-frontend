@@ -82,12 +82,14 @@ class MaxOfLettingsReachedController @Inject() (
           case Some("franchiseLetting")  =>
             updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
           case Some("lettings")          => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
+          case Some("rentalIncome")      => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
+
         }
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
             src match {
-              case Some("connection")        =>
+              case Some("connection") =>
                 connectionNavigator
                   .cyaPageDependsOnSession(updatedData)
                   .filter(_ => connectionNavigator.from == "CYA")
@@ -96,12 +98,7 @@ class MaxOfLettingsReachedController @Inject() (
                       .nextWithoutRedirectToCYA(MaxOfLettingsReachedId, updatedData)
                       .apply(updatedData)
                   )
-              case Some("franchiseCatering") =>
-                franchiseNavigator.nextPage(MaxOfLettingsReachedCateringId, updatedData).apply(updatedData)
-              case Some("franchiseLetting")  =>
-                franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
-              case Some("lettings")          =>
-                franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
+              case _                  => franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
             }
           }
           .map(Redirect)
@@ -131,6 +128,12 @@ class MaxOfLettingsReachedController @Inject() (
           controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting),
           "franchiseLetting"
+        )
+      case Some("rentalIncome")      =>
+        (
+          controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(4).url,
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncomeMax),
+          "rentalIncome"
         )
       case Some("lettings")          =>
         (
