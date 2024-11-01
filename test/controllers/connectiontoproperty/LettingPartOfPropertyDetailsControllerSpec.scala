@@ -117,7 +117,22 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
       }
     }
 
-    "Redirect when form data submitted" in {
+    "Redirect when form data submitted without CYA param" in {
+      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "tenantName"                               -> "Tenants name",
+          "descriptionOfLetting"                     -> "Description of letting",
+          "correspondenceAddress.buildingNameNumber" -> "Building name number",
+          "correspondenceAddress.street1"            -> "Street",
+          "correspondenceAddress.town"               -> "Town",
+          "correspondenceAddress.county"             -> "County",
+          "correspondenceAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted with CYA param" in {
       val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "tenantName"                               -> "Tenants name",

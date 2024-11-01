@@ -41,43 +41,20 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def areYouThirdPartyControllerNoOwnProperty(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoToAll)
-  ) =
-    new AreYouThirdPartyController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      areYouThirdPartyView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def areYouThirdPartyControllerNoneOwnProperty(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoneOwnProperty)
-  ) =
-    new AreYouThirdPartyController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      areYouThirdPartyView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
   "AreYouThirdPartyController GET /" should {
 
-    "return 200" in {
+    "return 200 and HTML with are you third party in session" in {
       val result = areYouThirdPartyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = areYouThirdPartyController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return HTML no value own property value" in {
-      val result = areYouThirdPartyControllerNoOwnProperty().show(fakeRequest)
+    "return 200 and HTML no value own property value" in {
+      val result = areYouThirdPartyController(Some(prefilledStillConnectedDetailsNoToAll)).show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -86,8 +63,8 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return HTML none own property value" in {
-      val result = areYouThirdPartyControllerNoneOwnProperty().show(fakeRequest)
+    "return 200 and HTML none own property value" in {
+      val result = areYouThirdPartyController(Some(prefilledStillConnectedDetailsNoneOwnProperty)).show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -104,6 +81,24 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted without CYA param" in {
+      val res = areYouThirdPartyController().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "areYouThirdParty" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted with CYA param" in {
+      val res = areYouThirdPartyController().submit()(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "areYouThirdParty" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
 
     "Are you third party form" should {

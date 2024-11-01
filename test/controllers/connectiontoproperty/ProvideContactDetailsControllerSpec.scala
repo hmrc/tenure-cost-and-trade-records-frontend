@@ -94,7 +94,19 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       }
     }
 
-    "SUBMIT / Redirect when form data submitted" in {
+    "SUBMIT / Redirect when form data submitted without CYA param" in {
+      val res = provideContactDetailsController().submit(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "yourContactDetails.fullName"              -> "Full name",
+          "yourContactDetails.contactDetails.phone"  -> "12345678902",
+          "yourContactDetails.contactDetails.email"  -> "any.name@email.com",
+          "yourContactDetails.additionalInformation" -> "Additional information"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "SUBMIT / Redirect when form data submitted with CYA param" in {
       val res = provideContactDetailsController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "yourContactDetails.fullName"              -> "Full name",
@@ -106,7 +118,8 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-  "getBackLink"                        should {
+
+  "getBackLink" should {
 
     "return back link to CYA vacant when from is 'CYA'" in {
       val result = provideContactDetailsController().show(fakeRequestFromCYA)
