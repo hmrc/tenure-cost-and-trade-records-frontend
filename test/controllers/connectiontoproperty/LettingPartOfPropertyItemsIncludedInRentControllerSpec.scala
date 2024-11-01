@@ -61,7 +61,16 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "Redirect when form data submitted without CYA param" in {
+      val res = lettingPartOfPropertyItemsIncludedInRentController().submit(0)(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "itemsInRent[0]" -> "rates"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted with CYA param" in {
       val res = lettingPartOfPropertyItemsIncludedInRentController().submit(0)(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "itemsInRent[0]" -> "rates"

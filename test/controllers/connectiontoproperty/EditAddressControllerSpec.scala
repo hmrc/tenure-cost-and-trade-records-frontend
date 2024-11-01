@@ -19,8 +19,10 @@ package controllers.connectiontoproperty
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import play.api.http.Status
-import play.api.test.Helpers._
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class EditAddressControllerSpec extends TestBaseSpec {
@@ -38,33 +40,25 @@ class EditAddressControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def editAddressControllerEditAddress(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsEdit)
-  ) = new EditAddressController(
-    stubMessagesControllerComponents(),
-    connectedToPropertyNavigator,
-    editAddressView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    mockSessionRepo
-  )
-
   "GET /" should {
-    "return 200" in {
+    "return 200 and HTML with Edit address in session" in {
       val result = editAddressController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = editAddressController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
     }
 
     "return 200 edit address in session" in {
-      val result = editAddressControllerEditAddress().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val result = editAddressController(Some(prefilledStillConnectedDetailsEdit)).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
     }
   }
 
@@ -74,6 +68,32 @@ class EditAddressControllerSpec extends TestBaseSpec {
         fakeRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted without CYA param" in {
+      val res = editAddressController().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "editAddress.buildingNameNumber" -> "Building name number",
+          "editAddress.street1"            -> "Street",
+          "editAddress.town"               -> "Town",
+          "editAddress.county"             -> "County",
+          "editAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted with CYA param" in {
+      val res = editAddressController().submit()(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
+          "editAddress.buildingNameNumber" -> "Building name number",
+          "editAddress.street1"            -> "Street",
+          "editAddress.town"               -> "Town",
+          "editAddress.county"             -> "County",
+          "editAddress.postcode"           -> "SW1A 1AA"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

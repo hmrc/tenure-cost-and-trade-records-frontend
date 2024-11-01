@@ -19,9 +19,8 @@ package controllers.connectiontoproperty
 import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -40,35 +39,28 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def isRentReceivedFromLettingControllerNoAnyRentReceived(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsNoneOwnProperty)
-  ) =
-    new IsRentReceivedFromLettingController(
-      stubMessagesControllerComponents(),
-      connectedToPropertyNavigator,
-      isRentReceivedFromLettingView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
   "IsRentReceivedFromLettingController GET /" should {
 
-    "return 200 when rent received is present in session" in {
+    "return 200 and HTML with Is rent received from letting in session" in {
       val result = isRentReceivedFromLettingController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = isRentReceivedFromLettingController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
+      )
     }
 
     "return 200 when no rent received in session" in {
-      val result = isRentReceivedFromLettingControllerNoAnyRentReceived().show(fakeRequest)
-      status(result)      shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      val result = isRentReceivedFromLettingController(
+        Some(prefilledStillConnectedDetailsNoneOwnProperty)
+      ).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
+      )
     }
   }
 
@@ -79,6 +71,20 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted without CYA param" in {
+      val result = isRentReceivedFromLettingController().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody("isRentReceivedFromLetting" -> "yes")
+      )
+      status(result) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted with CYA param" in {
+      val result = isRentReceivedFromLettingController().submit()(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody("isRentReceivedFromLetting" -> "yes")
+      )
+      status(result) shouldBe SEE_OTHER
     }
 
     "Is rent received from letting form" should {

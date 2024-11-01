@@ -72,7 +72,16 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "Redirect when form data submitted without CYA param" in {
+      val res = tradingNameOwnThePropertyController().submit(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "tradingNameOwnTheProperty" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted with CYA param" in {
       val res = tradingNameOwnThePropertyController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "tradingNameOwnTheProperty" -> "yes"

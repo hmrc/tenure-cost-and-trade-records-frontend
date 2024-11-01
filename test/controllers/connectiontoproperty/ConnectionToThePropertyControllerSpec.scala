@@ -20,7 +20,8 @@ import form.Errors
 import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
-import play.api.test.Helpers._
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
@@ -39,55 +40,33 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def connectionToThePropertyControllerEditAddress(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsEdit)
-  ) = new ConnectionToThePropertyController(
-    stubMessagesControllerComponents(),
-    connectedToPropertyNavigator,
-    connectionToThePropertyView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    mockSessionRepo
-  )
-
-  def connectionToThePropertyControllerException(
-    stillConnectedDetails: Option[StillConnectedDetails] = None
-  ) = new ConnectionToThePropertyController(
-    stubMessagesControllerComponents(),
-    connectedToPropertyNavigator,
-    connectionToThePropertyView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    mockSessionRepo
-  )
-
   "GET /" should {
-    "return 200" in {
+    "return 200 and HTML with connection to the property in session" in {
       val result = connectionToThePropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = connectionToThePropertyController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+      )
     }
   }
 
   "GET edit address" should {
-    "return 200" in {
-      val result = connectionToThePropertyControllerEditAddress().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = connectionToThePropertyControllerEditAddress().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with connection to the property with edit address in session" in {
+      val result = connectionToThePropertyController(Some(prefilledStillConnectedDetailsEdit)).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.EditAddressController.show().url
+      )
     }
   }
 
   "GET empty still connected" should {
     "return exception" in {
-      val result = connectionToThePropertyControllerException().show(fakeRequest)
+      val result = connectionToThePropertyController(None).show(fakeRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe "Navigation for connection to property page reached with error Unknown connection to property back link"
       }
@@ -100,6 +79,13 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
         fakeRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = connectionToThePropertyController().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody("connectionToTheProperty" -> "occupierTrustee")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
