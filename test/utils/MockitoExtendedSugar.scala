@@ -18,7 +18,7 @@ package utils
 
 import org.mockito.stubbing.{OngoingStubbing, Stubber}
 import org.mockito.verification.VerificationMode
-import org.mockito.{ArgumentMatcher, ArgumentMatchers, Mockito}
+import org.mockito.{ArgumentCaptor, ArgumentMatcher, ArgumentMatchers, Mockito}
 import org.scalatestplus.mockito.MockitoSugar
 
 /**
@@ -74,8 +74,11 @@ trait MockitoExtendedSugar extends MockitoSugar {
 
   def only: VerificationMode = Mockito.only()
 
+  def once: VerificationMode = Mockito.times(1)
+
   def times(wantedNumberOfInvocations: Int): VerificationMode = Mockito.times(wantedNumberOfInvocations)
 
   def calls(wantedNumberOfInvocations: Int): VerificationMode = Mockito.calls(wantedNumberOfInvocations)
 
+  def captor[T] = ArgumentCaptor.captor[T]()
 }

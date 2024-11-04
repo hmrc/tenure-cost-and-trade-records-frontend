@@ -1,0 +1,4 @@
+# lettingHistory.routes
+
+GET         /permanent-residents                                controllers.lettingHistory.PermanentResidentsController.show
+POST        /permanent-residents                                controllers.lettingHistory.PermanentResidentsController.submit

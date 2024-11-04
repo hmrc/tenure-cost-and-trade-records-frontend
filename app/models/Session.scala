@@ -26,9 +26,10 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
+import models.submissions.lettingHistory.LettingHistory
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import java.time.LocalDate
 
@@ -54,7 +55,8 @@ case class Session(
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
-  downloadPDFDetails: Option[DownloadPDFDetails] = None
+  downloadPDFDetails: Option[DownloadPDFDetails] = None,
+  lettingHistory: Option[LettingHistory] = None
   // New session properties must be also added to class `UserData` and method `toUserData`
 ) {
 
@@ -108,7 +110,8 @@ case class Session(
     aboutLeaseOrAgreementPartThree,
     aboutLeaseOrAgreementPartFour,
     requestReferenceNumberDetails,
-    downloadPDFDetails
+    downloadPDFDetails,
+    lettingHistory
   )
 
   def toSummary: Summary = Summary(
