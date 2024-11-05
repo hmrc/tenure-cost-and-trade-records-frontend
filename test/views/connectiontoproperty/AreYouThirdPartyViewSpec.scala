@@ -29,6 +29,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   override val form = AreYouThirdPartyForm.areYouThirdPartyForm
 
+  val sessionRequest6048 = SessionRequest(baseFilled6048Session, fakeRequest)
   val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
   val sessionRequest     = SessionRequest(baseFilled6010Session, fakeRequest)
 
@@ -55,6 +56,18 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   def createViewUsingForm6076 = (form: Form[AnswersYesNo]) =>
     areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary)(
       sessionRequest6076,
+      messages
+    )
+
+  def createView6048 = () =>
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary)(
+      sessionRequest6048,
+      messages
+    )
+
+  def createViewUsingForm6048 = (form: Form[AnswersYesNo]) =>
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary)(
+      sessionRequest6048,
       messages
     )
 
