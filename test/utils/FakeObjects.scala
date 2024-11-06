@@ -732,15 +732,18 @@ trait FakeObjects {
     turnoverSections6048 = Seq(
       TurnoverSection6048(
         today,
-        income = Income6048(1, 2, 3)
+        income = Income6048(1, 2, 3),
+        fixedCosts = FixedCosts6048(1, 3, 3)
       ),
       TurnoverSection6048(
         today.minusYears(1),
-        income = Income6048(10, 20, 30)
+        income = Income6048(10, 20, 30),
+        fixedCosts = FixedCosts6048(10, 30, 30)
       ),
       TurnoverSection6048(
         today.minusYears(2),
-        income = Income6048(100, 200, 300)
+        income = Income6048(100, 200, 300),
+        fixedCosts = FixedCosts6048(100, 300, 300)
       )
     )
   )

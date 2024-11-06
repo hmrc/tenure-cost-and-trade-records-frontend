@@ -21,11 +21,16 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class Income6048ControllerSpec extends TestBaseSpec {
+class FixedCosts6048ControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.FinancialYearsController.show.url
-  private val nextPage     = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
-  private val cyaPage      = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+  private val previousPage = aboutthetradinghistory.routes.Income6048Controller.show.url
+
+  private val nextPage =
+    aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+      .show()
+      .url // TODO: AccountingCosts6048Controller
+
+  private val cyaPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
   def income6048Controller =
     new Income6048Controller(

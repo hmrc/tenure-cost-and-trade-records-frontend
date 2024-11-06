@@ -28,7 +28,8 @@ import java.time.LocalDate
 case class TurnoverSection6048(
   financialYearEnd: LocalDate,
   tradingPeriod: Int = 52,
-  income: Option[Income6048] = None
+  income: Option[Income6048] = None,
+  fixedCosts: Option[FixedCosts6048] = None
 )
 
 object TurnoverSection6048 {

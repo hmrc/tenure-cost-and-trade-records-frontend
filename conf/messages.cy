@@ -2024,6 +2024,21 @@ error.turnover.6048.income.serviceProvision.negative = Income from service provi
 error.turnover.6048.income.other.required = Enter 0 if you did not have any income from other charges in the year ending {0}
 error.turnover.6048.income.other.range = Income from other charges in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.income.other.negative = Income from other charges in the year ending {0} cannot be a negative number
+turnover.6048.fixedCosts.heading = Fixed costs
+turnover.6048.fixedCosts.insurance = Insurance
+turnover.6048.fixedCosts.businessRatesOrCouncilTax = Business Rates or Council Tax paid
+turnover.6048.fixedCosts.rent = Rent paid
+turnover.6048.fixedCosts.rent.hint = Where applicable.
+turnover.6048.fixedCosts.total = Total fixed costs
+error.turnover.6048.fixedCosts.insurance.required = Enter 0 if you did not have any insurance costs in the year ending {0}
+error.turnover.6048.fixedCosts.insurance.range = Insurance costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.fixedCosts.insurance.negative = Insurance costs in the year ending {0} cannot be a negative number
+error.turnover.6048.fixedCosts.businessRatesOrCouncilTax.required = Enter 0 if you did not have any Business Rates or Council Tax costs in the year ending {0}
+error.turnover.6048.fixedCosts.businessRatesOrCouncilTax.range = Business Rates or Council Tax costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.fixedCosts.businessRatesOrCouncilTax.negative = Business Rates or Council Tax costs in the year ending {0} cannot be a negative number
+error.turnover.6048.fixedCosts.rent.required = Enter 0 if you did not have any rent costs in the year ending {0}
+error.turnover.6048.fixedCosts.rent.range = Rent costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.fixedCosts.rent.negative = Rent costs in the year ending {0} cannot be a negative number
 
 # TURNOVER 6076
 turnover.6076.heading = Faint o drydan a gynhyrchoch?
