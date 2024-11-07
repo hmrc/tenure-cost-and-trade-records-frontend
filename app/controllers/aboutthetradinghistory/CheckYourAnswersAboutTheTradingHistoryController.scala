@@ -76,9 +76,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
         ),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(checkYourAnswersAboutTheTradingHistory = Some(data)))
-          .copy(lastCYAPageUrl =
-            Some(controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url)
-          )
+          .copy(lastCYAPageUrl = Some(routes.CheckYourAnswersAboutTheTradingHistoryController.show().url))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
         }
@@ -88,12 +86,9 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case FOR6010 | FOR6011 | FOR6016 =>
-        controllers.aboutthetradinghistory.routes.TurnoverController.show().url
-      case FOR6015 | FOR6030           =>
-        controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show().url
-      case FOR6020                     =>
-        controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show().url
+      case FOR6010 | FOR6011 | FOR6016 => routes.TurnoverController.show().url
+      case FOR6015 | FOR6030           => routes.UnusualCircumstancesController.show().url
+      case FOR6020                     => routes.ElectricVehicleChargingPointsController.show().url
       case FOR6045 | FOR6046           =>
         if (
           answers.aboutTheTradingHistoryPartOne
@@ -101,13 +96,11 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
             .flatMap(_.anyStaticLeisureCaravansOnSite)
             .contains(AnswerYes)
         )
-          controllers.aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show().url
+          routes.CaravansAnnualPitchFeeController.show().url
         else
-          controllers.aboutthetradinghistory.routes.StaticCaravansController.show().url
-      case FOR6076                     =>
-        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-      case _                           =>
-        logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
+          routes.StaticCaravansController.show().url
+      case FOR6048                     => routes.FixedCosts6048Controller.show.url // TODO: OperationalCosts6048Controller
+      case FOR6076                     => routes.IncomeExpenditureSummary6076Controller.show().url
     }
+
 }

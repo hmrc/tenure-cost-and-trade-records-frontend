@@ -15,7 +15,7 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.aboutthetradinghistory.Income6048
+@import models.submissions.aboutthetradinghistory.FixedCosts6048
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
@@ -31,15 +31,12 @@
         dateUtil: DateUtilLocalised
 )
 
-@(form: Form[Seq[(Int, Income6048)]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[FixedCosts6048]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@rowLabel(labelKey: String, excludingVAT: Boolean = false, hintKey: Option[String] = None) = {
+@rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
-        @if(excludingVAT) {
-            @messages("turnover.6048.excludingVAT")
-        }
     </p>
 @if(hintKey.nonEmpty) {
     <span class="govuk-caption-m">@messages(hintKey)</span>
@@ -49,7 +46,7 @@
 @turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, excludingVAT = true, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
@@ -69,38 +66,16 @@
     )
 }
 
-@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int) = @{
-    Seq(
-        TableRow(
-            content = HtmlContent(rowLabel(labelKey))
-        ),
-        TableRow(
-            content = HtmlContent(
-                govukInput(Input(
-                    classes = s"govuk-input--width-$styleWidth",
-                    attributes = Map(
-                        "maxlength" -> maxLength.toString,
-                        "aria-label" -> messages(labelKey)
-                    ),
-                    suffix = Some(PrefixOrSuffix(
-                        content = Text(messages(suffixKey))
-                    ))
-                ).withFormField(form(formField)))
-            )
-        )
-    )
-}
-
 @totalContent(idx: Int) = {
     <span
-    data-total-prefix="turnover[@idx].income."
-    data-total-items="letting,serviceProvision,other">
-    @form.value.flatMap(_.lift(idx)).fold("")(_._2.total.asMoney)
+    data-total-prefix="turnover[@idx]."
+    data-total-items="insurance,businessRatesOrCouncilTax,rent">
+    @form.value.flatMap(_.lift(idx)).fold("")(_.total.asMoney)
     </span>
 }
 
 @layout(
-    pageHeading = messages("turnover.6048.income.heading"),
+    pageHeading = messages("turnover.6048.fixedCosts.heading"),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -109,13 +84,11 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6048.income.p1")</p>
-
     @govukInsetText(InsetText(
         content = Text(messages("fieldsAreMandatory.label"))
     ))
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.Income6048Controller.submit) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FixedCosts6048Controller.submit) {
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
@@ -128,12 +101,11 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2),
-                            turnoverRow(s"turnover[$idx].income.letting", "turnover.6048.income.letting"),
-                            turnoverRow(s"turnover[$idx].income.serviceProvision", "turnover.6048.income.serviceProvision", "turnover.6048.income.serviceProvision.hint"),
-                            turnoverRow(s"turnover[$idx].income.other", "turnover.6048.income.other", "turnover.6048.income.other.hint"),
+                            turnoverRow(s"turnover[$idx].insurance", "turnover.6048.fixedCosts.insurance"),
+                            turnoverRow(s"turnover[$idx].businessRatesOrCouncilTax", "turnover.6048.fixedCosts.businessRatesOrCouncilTax"),
+                            turnoverRow(s"turnover[$idx].rent", "turnover.6048.fixedCosts.rent", "turnover.6048.fixedCosts.rent.hint"),
                             Seq(
-                                TableRow(content = HtmlContent(rowLabel("turnover.6048.income.total"))),
+                                TableRow(content = HtmlContent(rowLabel("turnover.6048.fixedCosts.total"))),
                                 TableRow(content = HtmlContent(totalContent(idx)))
                             )
                         )

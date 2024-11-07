@@ -14,16 +14,21 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package models.submissions.aboutthetradinghistory
 
-import form.MappingSupport.createYesNoType
-import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.libs.json.{Json, OFormat}
 
-object PermanentResidentsForm:
-  val theForm = Form[AnswersYesNo](
-    single(
-      "isPermanentResidence" -> createYesNoType("lettingHistory.isPermanentResidence.error")
-    )
-  )
+/**
+  * @author Yuriy Tumakha
+  */
+case class FixedCosts6048(
+  insurance: Option[BigDecimal] = None,
+  businessRatesOrCouncilTax: Option[BigDecimal] = None,
+  rent: Option[BigDecimal] = None
+) {
+  def total: BigDecimal = Seq(insurance, businessRatesOrCouncilTax, rent).flatten.sum
+}
+
+object FixedCosts6048 {
+  implicit val format: OFormat[FixedCosts6048] = Json.format
+}

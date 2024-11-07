@@ -245,3 +245,6 @@ POST        /are-you-vat-registered                                controllers.a
 
 GET         /income                                                controllers.aboutthetradinghistory.Income6048Controller.show
 POST        /income                                                controllers.aboutthetradinghistory.Income6048Controller.submit
+
+GET         /fixed-costs                                           controllers.aboutthetradinghistory.FixedCosts6048Controller.show
+POST        /fixed-costs                                           controllers.aboutthetradinghistory.FixedCosts6048Controller.submit

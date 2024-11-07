@@ -300,3 +300,7 @@ case object AreYouVATRegisteredId extends Identifier {
 case object Income6048Id extends Identifier {
   override def toString: String = "income6048Page"
 }
+
+case object FixedCosts6048Id extends Identifier {
+  override def toString: String = "fixedCostsPage"
+}

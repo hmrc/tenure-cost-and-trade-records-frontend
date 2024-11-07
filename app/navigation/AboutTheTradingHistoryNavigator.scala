@@ -22,7 +22,7 @@ import controllers.aboutthetradinghistory.routes
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.ForType.*
 import models.Session
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -354,7 +354,8 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     ),
     ChangeOccupationAndAccountingId             -> (_ => aboutthetradinghistory.routes.AboutYourTradingHistoryController.show()),
     AreYouVATRegisteredId                       -> (_ => aboutthetradinghistory.routes.FinancialYearEndController.show()),
-    Income6048Id                                -> (_ =>
+    Income6048Id                                -> (_ => aboutthetradinghistory.routes.FixedCosts6048Controller.show),
+    FixedCosts6048Id                            -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ) // TODO: FixedCosts6048Controller
   )
