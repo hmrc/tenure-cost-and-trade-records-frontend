@@ -19,6 +19,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
+import form.connectiontoproperty.TradingNameOperatingFromProperty6048Form.tradingNameOperatingFromProperty6048Form
 import models.ForType
 import models.ForType.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -46,44 +47,86 @@ class TradingNameOperatingFromPropertyController @Inject() (
     with I18nSupport
     with Logging {
 
+  private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
+
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        nameOfBusinessOperatingFromPropertyView(
-          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-            case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
-            case _                      => tradingNameOperatingFromPropertyForm
-          },
-          calculateBackLink,
-          request.sessionData.toSummary,
-          navigator.from
+    if (forType == FOR6048) {
+      Future.successful(
+        Ok(
+          nameOfBusinessOperatingFromPropertyView(
+            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+              case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
+              case _                      => tradingNameOperatingFromProperty6048Form
+            },
+            calculateBackLink,
+            request.sessionData.toSummary,
+            navigator.from
+          )
         )
       )
-    )
+    } else {
+      Future.successful(
+        Ok(
+          nameOfBusinessOperatingFromPropertyView(
+            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+              case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
+              case _                      => tradingNameOperatingFromPropertyForm
+            },
+            calculateBackLink,
+            request.sessionData.toSummary,
+            navigator.from
+          )
+        )
+      )
+    }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[TradingNameOperatingFromProperty](
-      tradingNameOperatingFromPropertyForm,
-      formWithErrors =>
-        BadRequest(
-          nameOfBusinessOperatingFromPropertyView(
-            formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
-        val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
-        session.saveOrUpdate(updatedData).map { _ =>
-          val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(request) == "CYA")
-          val nextPage      =
-            redirectToCYA
-              .getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
-          Redirect(nextPage)
+    if (forType == FOR6048) {
+      continueOrSaveAsDraft[TradingNameOperatingFromProperty](
+        tradingNameOperatingFromProperty6048Form,
+        formWithErrors =>
+          BadRequest(
+            nameOfBusinessOperatingFromPropertyView(
+              formWithErrors,
+              calculateBackLink,
+              request.sessionData.toSummary
+            )
+          ),
+        data => {
+          val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
+          session.saveOrUpdate(updatedData).map { _ =>
+            val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(request) == "CYA")
+            val nextPage      =
+              redirectToCYA
+                .getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
+            Redirect(nextPage)
+          }
         }
-      }
-    )
+      )
+    } else {
+      continueOrSaveAsDraft[TradingNameOperatingFromProperty](
+        tradingNameOperatingFromPropertyForm,
+        formWithErrors =>
+          BadRequest(
+            nameOfBusinessOperatingFromPropertyView(
+              formWithErrors,
+              calculateBackLink,
+              request.sessionData.toSummary
+            )
+          ),
+        data => {
+          val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
+          session.saveOrUpdate(updatedData).map { _ =>
+            val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(request) == "CYA")
+            val nextPage      =
+              redirectToCYA
+                .getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
+            Redirect(nextPage)
+          }
+        }
+      )
+    }
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =

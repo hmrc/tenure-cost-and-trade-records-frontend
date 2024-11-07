@@ -16,6 +16,7 @@
 
 package views.connectiontoproperty
 
+import actions.SessionRequest
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm
 import models.pages.Summary
 import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
@@ -26,6 +27,8 @@ import views.behaviours.QuestionViewBehaviours
 
 class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[TradingNameOperatingFromProperty] {
 
+  private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
+
   val messageKeyPrefix = "tradingNameFromProperty"
 
   val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
@@ -34,11 +37,11 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[Tr
     TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 
   def createView: () => Html = () =>
-    tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   def createViewUsingForm: Form[TradingNameOperatingFromProperty] => Html =
     (form: Form[TradingNameOperatingFromProperty]) =>
-      tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+      tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(sessionRequest, messages)
 
   "Trading name operating from property view" must {
 
