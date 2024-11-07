@@ -25,7 +25,7 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
-import models.submissions.lettingHistory.{LettingHistory, SensitiveLettingHistory}
+import models.submissions.lettingHistory.SensitiveLettingHistory
 import models.submissions.notconnected.SensitiveRemoveConnectionDetails
 import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumber
 import play.api.libs.json.{Json, OFormat}

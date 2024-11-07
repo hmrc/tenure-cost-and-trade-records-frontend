@@ -34,7 +34,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
       s"lettingAvailAbility-$idx" -> "100"
     )
 
-  private def formData(idx: Int): Seq[(String, String)] =
+  private def formData: Seq[(String, String)] =
     validFormDataPerYear(0) ++
       validFormDataPerYear(1) ++
       validFormDataPerYear(2)
@@ -85,7 +85,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page" in {
       val res = controller().submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(1)*)
+        fakePostRequest.withFormUrlEncodedBody(formData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Option(controllers.routes.TaskListController.show().url)

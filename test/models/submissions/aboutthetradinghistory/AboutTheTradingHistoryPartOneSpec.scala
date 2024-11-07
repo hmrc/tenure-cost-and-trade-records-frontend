@@ -60,8 +60,10 @@ class AboutTheTradingHistoryPartOneSpec extends AnyFlatSpec with Matchers with F
   }
 
   it should "handle model turnoverSections6048" in {
-    prefilledTurnoverSections6048.turnoverSections6048.map(_.flatMap(_.income.map(_.total)).sum)     shouldBe Some(666)
-    prefilledTurnoverSections6048.turnoverSections6048.map(_.flatMap(_.fixedCosts.map(_.total)).sum) shouldBe Some(777)
+    val turnoverSections6048 = prefilledTurnoverSections6048.turnoverSections6048
+    turnoverSections6048.map(_.flatMap(_.income.map(_.total)).sum)          shouldBe Some(666)
+    turnoverSections6048.map(_.flatMap(_.fixedCosts.map(_.total)).sum)      shouldBe Some(777)
+    turnoverSections6048.map(_.flatMap(_.accountingCosts.map(_.total)).sum) shouldBe Some(888)
   }
 
 }

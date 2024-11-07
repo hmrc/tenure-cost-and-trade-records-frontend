@@ -17,7 +17,6 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.common.AnswerYes
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import org.mockito.ArgumentCaptor
