@@ -82,9 +82,7 @@ class FixedCosts6048ControllerSpec extends TestBaseSpec {
       validFormDataPerYear(2)
 
   private def invalidFormData: Seq[(String, String)] =
-    validFormDataPerYear(0).map { case (k, v) =>
-      (k, "-8")
-    } ++
+    validFormDataPerYear(0).map(t => (t._1, "-8")) ++
       validFormDataPerYear(1) ++
       validFormDataPerYear(2)
 
