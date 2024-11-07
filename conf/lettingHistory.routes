@@ -2,3 +2,6 @@
 
 GET         /permanent-residents                                controllers.lettingHistory.PermanentResidentsController.show
 POST        /permanent-residents                                controllers.lettingHistory.PermanentResidentsController.submit
+
+GET         /resident-detail                                    controllers.lettingHistory.ResidentDetailController.show
+POST        /resident-detail                                    controllers.lettingHistory.ResidentDetailController.submit

@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package form.lettingHistory
 
-case object PermanentResidentsPageId extends Identifier:
-  override def toString: String = "permanentResidentsPage"
+import models.submissions.lettingHistory.ResidentDetail
+import play.api.data.Form
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
-case object ResidentDetailPageId extends Identifier:
-  override def toString: String = "residentDetailPage"
+object ResidentDetailForm:
+  val theForm = Form(
+    mapping(
+      "name"    -> default(text, "").verifying(nonEmpty(errorMessage = "lettingHistory.residentDetail.name.error")),
+      "address" -> default(text, "").verifying(nonEmpty(errorMessage = "lettingHistory.residentDetail.address.error"))
+    )(ResidentDetail.apply)(ResidentDetail.unapply)
+  )
