@@ -101,16 +101,17 @@ trait FakeObjects {
     "TRADING NAME"
   )
 
-  val baseFilled6010Session: Session = Session(referenceNumber, FOR6010, prefilledAddress, token, isWelsh = false)
-  val baseFilled6011Session: Session = Session(referenceNumber, FOR6011, prefilledAddress, token, isWelsh = false)
-  val baseFilled6015Session: Session = Session(referenceNumber, FOR6015, prefilledAddress, token, isWelsh = false)
-  val baseFilled6016Session: Session = Session(referenceNumber, FOR6016, prefilledAddress, token, isWelsh = false)
-  val baseFilled6030Session: Session = Session(referenceNumber, FOR6030, prefilledAddress, token, isWelsh = false)
-  val baseFilled6020Session: Session = Session(referenceNumber, FOR6020, prefilledAddress, token, isWelsh = false)
-  val baseFilled6076Session: Session = Session(referenceNumber, FOR6076, prefilledAddress, token, isWelsh = false)
-  val baseFilled6045Session: Session = Session(referenceNumber, FOR6045, prefilledAddress, token, isWelsh = false)
-  val baseFilled6046Session: Session = Session(referenceNumber, FOR6046, prefilledAddress, token, isWelsh = false)
-  val baseFilled6048Session: Session = Session(referenceNumber, FOR6048, prefilledAddress, token, isWelsh = false)
+  val baseFilled6010Session: Session      = Session(referenceNumber, FOR6010, prefilledAddress, token, isWelsh = false)
+  val baseFilled6011Session: Session      = Session(referenceNumber, FOR6011, prefilledAddress, token, isWelsh = false)
+  val baseFilled6015Session: Session      = Session(referenceNumber, FOR6015, prefilledAddress, token, isWelsh = false)
+  val baseFilled6016Session: Session      = Session(referenceNumber, FOR6016, prefilledAddress, token, isWelsh = false)
+  val baseFilled6030Session: Session      = Session(referenceNumber, FOR6030, prefilledAddress, token, isWelsh = false)
+  val baseFilled6020Session: Session      = Session(referenceNumber, FOR6020, prefilledAddress, token, isWelsh = false)
+  val baseFilled6076Session: Session      = Session(referenceNumber, FOR6076, prefilledAddress, token, isWelsh = false)
+  val baseFilled6045Session: Session      = Session(referenceNumber, FOR6045, prefilledAddress, token, isWelsh = false)
+  val baseFilled6046Session: Session      = Session(referenceNumber, FOR6046, prefilledAddress, token, isWelsh = false)
+  val baseFilled6048Session: Session      = Session(referenceNumber, FOR6048, prefilledAddress, token, isWelsh = false)
+  val baseFilled6048WelshSession: Session = Session(referenceNumber, FOR6048, prefilledAddress, token, isWelsh = true)
 
   // Request reference number
   val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
@@ -380,7 +381,22 @@ trait FakeObjects {
     prefilledAboutYouAndThePropertyPartTwo.copy(propertyCurrentlyUsed = prefilledPropertyCurrentlyInUsed)
 
   val prefilledAboutYouAndThePropertyPartTwo6048: AboutYouAndThePropertyPartTwo = AboutYouAndThePropertyPartTwo(
-    commercialLetDate = MonthsYearDuration(9, 2022)
+    commercialLetDate = Option(MonthsYearDuration(9, 2022)),
+    commercialLetAvailability = Option(5),
+    commercialLetAvailabilityWelsh = Option(
+      Seq(
+        LettingAvailability(LocalDate.of(2024, 3, 31), 10),
+        LettingAvailability(LocalDate.of(2023, 3, 31), 20),
+        LettingAvailability(LocalDate.of(2022, 3, 31), 15)
+      )
+    ),
+    financialEndYearDates = Option(
+      Seq(
+        LocalDate.of(2024, 3, 31),
+        LocalDate.of(2023, 3, 31),
+        LocalDate.of(2022, 3, 31)
+      )
+    )
   )
 
   val prefilledPropertyCurrentlyInUsed =
