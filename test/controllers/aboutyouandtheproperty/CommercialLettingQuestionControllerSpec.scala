@@ -20,17 +20,20 @@ import actions.SessionRequest
 import form.aboutyouandtheproperty.CommercialLettingQuestionForm.commercialLettingQuestionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
+import scala.reflect.ClassManifestFactory.Any
 
 class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
   def controller(
+    isWelsh: Boolean = false,
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
@@ -38,7 +41,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     commercialLettingQuestionView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+    preEnrichedActionRefiner(isWelsh = isWelsh, aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
     mockSessionRepo
   )
 
@@ -91,16 +94,18 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     }
 
     "redirect to the next page for Welsh property" in {
+      def welshController =
+        controller(isWelsh = true, aboutYouAndThePropertyPartTwo = Some(prefilledAboutYouAndThePropertyPartTwo6048))
 
       val requestWithForm = FakeRequest(POST, "")
         .withFormUrlEncodedBody(baseFormData.toSeq*)
 
       val sessionRequest = SessionRequest(baseFilled6048WelshSession, requestWithForm)
 
-      val result = controller().submit(sessionRequest)
+      val result = welshController.submit(sessionRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(
-        controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url // TODO!!!
+        controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show().url
       )
     }
 

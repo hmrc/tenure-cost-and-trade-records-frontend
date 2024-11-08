@@ -16,8 +16,8 @@
 
 package controllers.aboutyouandtheproperty
 
-import form.aboutyouandtheproperty.CommercialLettingAvailabilityWelshForm
-import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, LettingAvailability}
+import form.aboutyouandtheproperty.CompletedCommercialLettingsWelshForm
+import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, CompletedLettings}
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import java.time.LocalDate
 
-class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
+class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
 
@@ -34,7 +34,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
   private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
-      s"lettingAvailAbility-$idx" -> "100"
+      s"completedLettings-$idx" -> "100"
     )
 
   private def formData(idx: Int): Seq[(String, String)] =
@@ -46,15 +46,15 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = new CommercialLettingAvailabilityWelshController(
+  ) = new CompletedCommercialLettingsWelshController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
-    commercialLettingAvailabilityWelshView,
+    completedCommercialLettingsWelshView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
     mockSessionRepo
   )
 
-  "Commercial letting availability welsh controller GET" should {
+  "Completed commercial lettings welsh controller GET" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe OK
@@ -75,12 +75,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
     "return correct backLink when no query param is present" in {
       val result = controller().show()(fakeRequest)
       contentAsString(result) should include(
-        controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show().url
+        controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url
       )
     }
   }
 
-  "Commercial letting availability welsh controller SUBMIT /" should {
+  "Completed commercial lettings welsh controller SUBMIT /" should {
     "return 400 for form with errors" in {
       val res = controller().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
@@ -88,64 +88,63 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page" in {
       val res = controller().submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(1)*)
+        fakePostRequest.withFormUrlEncodedBody(formData(12)*)
       )
       status(res)           shouldBe SEE_OTHER
-      redirectLocation(res) shouldBe Some(
-        controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
-      )
+      redirectLocation(res) shouldBe Option(controllers.routes.TaskListController.show().url) // TOD0
     }
 
     "return 400 and error message for invalid character" in {
 
-      val formData = Map("lettingAvailAbility-0" -> "xxx")
+      val formData = Map("completedLettings-0" -> "xxx")
 
       val form =
-        CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
+        CompletedCommercialLettingsWelshForm.completedCommercialLettingsWelshForm(years)(messages).bind(formData)
       mustContainError(
-        "lettingAvailAbility-0",
-        messages("error.commercialLettingAvailability.welsh.range", 2024.toString),
+        "completedLettings-0",
+        messages("error.completedCommercialLettings.welsh.range", 2024.toString),
         form
       )
     }
 
     "return 400 and error message for empty input" in {
 
-      val formData = Map("lettingAvailAbility-1" -> "")
+      val formData = Map("completedLettings-1" -> "")
 
       val form =
-        CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
+        CompletedCommercialLettingsWelshForm.completedCommercialLettingsWelshForm(years)(messages).bind(formData)
       mustContainError(
-        "lettingAvailAbility-1",
-        messages("error.commercialLettingAvailability.welsh.required", 2023.toString),
+        "completedLettings-1",
+        messages("error.completedCommercialLettings.welsh.required", 2023.toString),
         form
       )
     }
 
     "return 400 and error message for invalid number" in {
 
-      val formData = Map("lettingAvailAbility-2" -> "366")
+      val formData = Map("completedLettings-2" -> "366")
 
       val form =
-        CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
+        CompletedCommercialLettingsWelshForm.completedCommercialLettingsWelshForm(years)(messages).bind(formData)
       mustContainError(
-        "lettingAvailAbility-2",
-        messages("error.commercialLettingAvailability.welsh.range", 2022.toString),
+        "completedLettings-2",
+        messages("error.completedCommercialLettings.welsh.range", 2022.toString),
         form
       )
     }
 
-  }
+    "CompletedLettings" should {
+      "serialize and deserialize correctly" in {
+        val completedLettings = CompletedLettings(
+          financialYearEnd = LocalDate.of(2024, 3, 31),
+          numberOfNights = 120
+        )
 
-  "LettingAvailability" should {
-    "serialize and deserialize correctly" in {
-      val lettingAvailability = LettingAvailability(
-        financialYearEnd = LocalDate.of(2024, 3, 31),
-        numberOfNights = 120
-      )
-
-      val json = Json.toJson(lettingAvailability)
-      json.as[LettingAvailability] shouldBe lettingAvailability
+        val json = Json.toJson(completedLettings)
+        json.as[CompletedLettings] shouldBe completedLettings
+      }
     }
+
   }
+
 }

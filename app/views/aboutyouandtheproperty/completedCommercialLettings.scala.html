@@ -1,0 +1,72 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+)
+
+@(theForm: Form[Int], backLink: String,   summary: Summary)(implicit request: Request[?], messages: Messages)
+
+@layout(
+    pageHeading = messages("completedCommercialLettings.heading"),
+    showSection = true,
+    showH1 = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm,
+    fullWidth = true
+) {
+    <p class="govuk-body govuk-!-width-three-quarters label ">@messages("completedCommercialLettings.declare")</p>
+
+    <p class="govuk-body">@messages("completedCommercialLettings.include")</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("completedCommercialLettings.l1")</li>
+        <li>@messages("completedCommercialLettings.l2")</li>
+    </ul>
+    <br>
+    <br>
+
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.submit()) {
+
+
+        @govukInput(
+            Input(
+                id = "completedCommercialLettings",
+                name = "completedCommercialLettings",
+                classes = "govuk-input--width-3",
+                label = Label(
+                    content = Text(messages("completedCommercialLettings.formLabel")),
+                    classes = "govuk-!-font-weight-bold govuk-!-margin-bottom-3 govuk-!-width-three-quarters govuk-label--m"
+                ),
+                suffix = PrefixOrSuffix(
+                    content = Text(messages("commercialLettingAvailability.label.nights"))
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("completedCommercialLettings"),
+            ).withFormField(theForm("completedCommercialLettings"))
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

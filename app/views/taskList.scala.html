@@ -167,6 +167,21 @@
      section1Completed.isEmpty
     )
 
+    @if(forType == FOR6048) {
+     @includes.taskListItem("technology-type", "taskList.lettingAvailability",
+      controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
+      section2Completed,
+      session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate),
+      session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+     )
+     @includes.taskListItem("site-construction-details", "taskList.familyUse",
+      controllers.routes.TaskListController.show(), // TODO,
+      section2Completed,
+      session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate), // TODO
+      session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate).isEmpty
+     )
+    }
+
     @if(forType == FOR6076) {
      @includes.taskListItem("technology-type", "taskList.technologyType",
       controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
