@@ -19,6 +19,9 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import actions.SessionRequest
+@import models.ForType
+@import models.ForType.*
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,12 +29,23 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TradingNameOperatingFromProperty], backlink: String, summary: Summary, fromLocation:String ="")(implicit request: Request[?], messages: Messages)
+
+@(theForm: Form[TradingNameOperatingFromProperty], backlink: String, summary: Summary, fromLocation:String ="")(implicit request: SessionRequest[?], messages: Messages)
+
+@forType = @{request.sessionData.forType}
+
+@heading = @{
+ if(forType == FOR6048){
+  messages("tradingNameFromProperty4068.heading")
+ } else {
+  messages("tradingNameFromProperty.heading")
+ }
+}
 
  @layout(
- pageHeading = messages("tradingNameFromProperty.heading"),
+ pageHeading = heading,
  showSection = true,
- showH1 = true,
+ showH1 = false,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = backlink,
@@ -39,7 +53,7 @@
 ) {
  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
 
-  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", "tradingNameFromProperty")
+  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {"tradingNameFromPropertyHeadingLabel6048"} else {"tradingNameFromPropertyHeadingLabel"}, labelClasses = "govuk-!-font-weight-bold govuk-label--l")
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
