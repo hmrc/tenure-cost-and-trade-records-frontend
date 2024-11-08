@@ -292,10 +292,14 @@ hint.ownerTrustee = Select this if you own and occupy the property - you’re co
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
-label.tradingNameFromProperty = Enw masnachu
 tradingNameFromProperty.heading = Beth yw enw masnachu’r busnes neu’r sefydliad sy’n gweithredu o’r eiddo?
 error.tradingNameFromProperty.required = Nodwch enw masnachu’r busnes neu’r sefydliad
 error.tradingNameFromProperty.maxLength = Mae’n rhaid i’r enw masnachu fod yn 50 o gymeriadau neu lai
+label.tradingNameFromPropertyHeadingLabel = What is the trading name of the business or organisation operating from the property?
+label.tradingNameFromPropertyHeadingLabel6048 = What is the name of the person or company operating the self-catering business from the property?
+tradingNameFromProperty4068.heading = What is the name of the person or company operating the self-catering business from the property?
+error.tradingNameFromProperty6048.required = Enter the name of the person or company
+error.tradingNameFromProperty6048.maxLength = The name of the person or company must be 50 characters or fewer
 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
