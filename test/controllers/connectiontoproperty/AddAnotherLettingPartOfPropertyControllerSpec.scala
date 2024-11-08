@@ -19,6 +19,7 @@ package controllers.connectiontoproperty
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
@@ -42,31 +43,36 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
     )
 
   "GET /" should {
-    "return 200" in {
+    "return 200 and HTML with Add another letting part of property in session" in {
       val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(0).url
+      )
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val result = addAnotherLettingPartOfPropertyController().submit(0)(fakeRequest)
+      status(result) shouldBe BAD_REQUEST
     }
 
-    "return HTML" in {
-      val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "Redirect when form data submitted" in {
+      val res = addAnotherLettingPartOfPropertyController().submit(0)(
+        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody("addAnotherLettingPartOfProperty" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = addAnotherLettingPartOfPropertyController().submit(0)(fakeRequest)
-        status(result) shouldBe BAD_REQUEST
-      }
+  "REMOVE /" should {
+    "redirect if an empty form is submitted" in {
+      val result = addAnotherLettingPartOfPropertyController().remove(1)(fakeRequest)
+      status(result) shouldBe SEE_OTHER
     }
-
-    "REMOVE /" should {
-      "redirect if an empty form is submitted" in {
-        val result = addAnotherLettingPartOfPropertyController().remove(1)(fakeRequest)
-        status(result) shouldBe SEE_OTHER
-      }
-    }
-
   }
 
   "Remove catering operation" should {

@@ -41,15 +41,24 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
     )
 
   "GET /" should {
-    "return 200" in {
+    "return 200 and HTML with Connection to property CYA in session" in {
       val result = checkYourAnswersConnectionToPropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
+      )
     }
 
-    "return HTML" in {
-      val result = checkYourAnswersConnectionToPropertyController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "return 200 and HTML with None in session" in {
+      val result = checkYourAnswersConnectionToPropertyController(None).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
+      )
     }
   }
 
@@ -59,6 +68,13 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = checkYourAnswersConnectionToPropertyController().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody("checkYourAnswersConnectionToProperty" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
