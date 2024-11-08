@@ -17,11 +17,12 @@
 package models.submissions.lettingHistory
 
 import models.Session
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.libs.json.{Format, Json}
 
 case class LettingHistory(
-  isPermanentResidence: AnswersYesNo
+  isPermanentResidence: AnswersYesNo,
+  permanentResidents: List[ResidentDetail] = Nil
 )
 
 object LettingHistory:
@@ -40,11 +41,32 @@ object LettingHistory:
       ifEmpty = LettingHistory(
         isPermanentResidence = isPermanentResidence
       ),
-      copyFunc = lh => lh.copy(isPermanentResidence = isPermanentResidence)
+      copyFunc = lettingHistory =>
+        isPermanentResidence match
+          case AnswerYes =>
+            lettingHistory.copy(isPermanentResidence = isPermanentResidence)
+          case AnswerNo  =>
+            lettingHistory.copy(isPermanentResidence = isPermanentResidence, permanentResidents = Nil)
     )
 
   def isPermanentResidence(session: Session): Option[AnswersYesNo] =
     for lettingHistory <- session.lettingHistory
     yield lettingHistory.isPermanentResidence
+
+  def sessionByAddingPermanentResident(residentDetail: ResidentDetail)(using session: Session): Session =
+    this.foldLettingHistory(
+      ifEmpty = LettingHistory(
+        isPermanentResidence = AnswerYes,
+        permanentResidents = List(residentDetail)
+      ),
+      copyFunc =
+        lettingHistory => lettingHistory.copy(permanentResidents = lettingHistory.permanentResidents.:+(residentDetail))
+    )
+
+  def residentDetail(session: Session): Option[ResidentDetail] =
+    for
+      lettingHistory <- session.lettingHistory
+      firstResident  <- lettingHistory.permanentResidents.headOption
+    yield firstResident
 
   given Format[LettingHistory] = Json.format

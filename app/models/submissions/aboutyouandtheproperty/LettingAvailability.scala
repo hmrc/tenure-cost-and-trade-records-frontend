@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package models.submissions.aboutyouandtheproperty
 
-case object PermanentResidentsPageId extends Identifier:
-  override def toString: String = "permanentResidentsPage"
+import play.api.libs.json.{Json, OFormat}
 
-case object ResidentDetailPageId extends Identifier:
-  override def toString: String = "residentDetailPage"
+import java.time.LocalDate
+
+case class LettingAvailability(
+  financialYearEnd: LocalDate,
+  numberOfNights: Int
+)
+
+object LettingAvailability {
+  implicit val format: OFormat[LettingAvailability] = Json.format
+}

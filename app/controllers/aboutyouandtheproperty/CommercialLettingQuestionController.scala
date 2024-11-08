@@ -31,6 +31,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.commercialLettingQuestion
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
@@ -63,7 +64,9 @@ class CommercialLettingQuestionController @Inject() (
       commercialLettingQuestionForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink(request.sessionData))),
       data => {
-        val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(commercialLetDate = Some(data)))
+        val updatedData = updateAboutYouAndThePropertyPartTwo(
+          _.copy(commercialLetDate = Option(data), financialEndYearDates = calculateFinancialEndYearDates(data))
+        )
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CommercialLettingQuestionId, updatedData).apply(updatedData)))
@@ -71,10 +74,31 @@ class CommercialLettingQuestionController @Inject() (
     )
   }
 
+  private def calculateFinancialEndYearDates(commercialLetDate: MonthsYearDuration): Option[Seq[LocalDate]] = {
+    val commercialLet = commercialLetDate.toYearMonth.atEndOfMonth()
+
+    val endDates = commercialLet match {
+      case d if d.isAfter(LocalDate.of(2024, 3, 31)) => Seq.empty
+      case d                                         =>
+        d match {
+          case d if !d.isBefore(LocalDate.of(2023, 4, 1)) =>
+            Seq(LocalDate.of(2024, 3, 31))
+          case d if !d.isBefore(LocalDate.of(2022, 4, 1)) =>
+            Seq(LocalDate.of(2024, 3, 31), LocalDate.of(2023, 3, 31))
+          case _                                          =>
+            Seq(LocalDate.of(2024, 3, 31), LocalDate.of(2023, 3, 31), LocalDate.of(2022, 3, 31))
+        }
+    }
+    endDates match {
+      case Nil   => None
+      case dates => Option(dates)
+    }
+  }
+
   private def calculateBackLink(answers: Session)(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case "TL"  => s"${controllers.routes.TaskListController.show().url}#about-the-property"
       case _     =>
         answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion)) match {
           case Some(AnswerYes) =>

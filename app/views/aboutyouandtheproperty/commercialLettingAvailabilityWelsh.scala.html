@@ -1,0 +1,113 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import models.submissions.aboutyouandtheproperty.LettingAvailability
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.DateUtilLocalised
+@import actions.SessionRequest
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        dateUtil: DateUtilLocalised
+)
+
+
+@(theForm: Form[Seq[LettingAvailability]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@layout(
+ pageHeading = messages("commercialLettingAvailability.heading"),
+ showSection = true,
+ showH1 = true,
+ summary = request.sessionData.toSummary,
+ sectionName = messages("label.section.aboutTheProperty"),
+ backLinkUrl = backLink,
+ theForm = theForm,
+ fullWidth = true
+) {
+ <p class="govuk-body ">@messages("commercialLettingAvailability.declare")</p>
+
+ <p class="govuk-body">@messages("commercialLettingAvailability.list")</p>
+
+ <ul class="govuk-list govuk-list--bullet">
+  <li>@messages("commercialLettingAvailability.list.p1")</li>
+  <li>@messages("commercialLettingAvailability.list.p2")</li>
+  <li>@messages("commercialLettingAvailability.list.p3")</li>
+ </ul>
+
+
+ @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.submit()) {
+
+
+  <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-full">
+   <h2 class=" govuk-body govuk-label--m">@messages("commercialLettingAvailability.label.welsh")</h2>
+        <tbody>
+               <tr>
+               @request.sessionData.financialYearEndDatesCommercialLetting.map { case (finYearEnd, idx) =>
+    <td>
+     @govukTable(Table(
+      head = Seq(
+       HeadCell(
+        content = Text(messages("commercialLettingAvailability.label.welsh.year"))
+       ),
+       HeadCell(
+        content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
+       )
+      ),
+      firstCellIsHeader = true,
+      rows = Seq(
+       Seq(
+        TableRow(
+         content = Text(messages("commercialLettingAvailability.label.welsh.nights")),
+         classes = "govuk-!-width-one-quarter"
+
+
+        ),
+        TableRow(
+         content = HtmlContent(
+          govukInput(Input(
+           id = s"lettingAvailAbility-$idx",
+           name = s"lettingAvailAbility-$idx",
+           value = theForm(s"lettingAvailAbility-$idx").value,
+           classes = "govuk-input--width-5",
+           attributes = Map(
+            "aria-label" -> messages("commercialLettingAvailability.label.welsh.nights")
+           ),
+           suffix = Some(PrefixOrSuffix(
+            content = Text(messages("commercialLettingAvailability.label.nights"))
+           ))
+          ).withFormField(theForm(s"lettingAvailAbility-$idx")))
+         ),
+         classes = "govuk-!-width-one-third"
+        )
+       )
+      )
+     ))
+    </td>
+    }
+    </tr>
+   </tbody>
+  </table>
+  @includes.continueSaveAsDraftButtons(govukButton)
+  <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+  <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+ }
+}

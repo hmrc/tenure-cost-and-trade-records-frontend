@@ -49,6 +49,12 @@ POST        /tied-for-goods-details                       controllers.aboutyouan
 GET         /commercial-letting-question                  controllers.aboutyouandtheproperty.CommercialLettingQuestionController.show()
 POST        /commercial-letting-question                  controllers.aboutyouandtheproperty.CommercialLettingQuestionController.submit()
 
+GET         /commercial-letting-availability              controllers.aboutyouandtheproperty.CommercialLettingAvailabilityController.show()
+POST        /commercial-letting-availability              controllers.aboutyouandtheproperty.CommercialLettingAvailabilityController.submit()
+
+GET         /commercial-letting-availability-welsh        controllers.aboutyouandtheproperty.CommercialLettingAvailabilityWelshController.show()
+POST        /commercial-letting-availability-welsh        controllers.aboutyouandtheproperty.CommercialLettingAvailabilityWelshController.submit()
+
 # About you and the property 6076
 
 GET         /renewables-plants                            controllers.aboutyouandtheproperty.RenewablesPlantController.show()

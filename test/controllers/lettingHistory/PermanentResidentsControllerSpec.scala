@@ -17,8 +17,8 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.LettingHistory
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import org.mockito.ArgumentCaptor
 import play.api.http.MimeTypes.HTML
@@ -51,17 +51,18 @@ class PermanentResidentsControllerSpec extends TestBaseSpec:
         status(result)        shouldBe BAD_REQUEST
         contentAsString(result) should include("lettingHistory.isPermanentResidence.error")
       }
-      "be handling POST isPermanentResident='yes' and reply 303 with redirect location of 'Residents Details' page" in new FreshSessionFixture {
+      "be handling POST isPermanentResident='yes' and reply 303 redirect to 'Residents Details' page" in new FreshSessionFixture {
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("isPermanentResidence" -> "yes"))
         status(result)                   shouldBe SEE_OTHER
-        redirectLocation(result).value   shouldBe "/path/to/residents-details"
+        redirectLocation(result).value   shouldBe routes.ResidentDetailController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         isPermanentResidenceOf(data).value should beAnswerYes
       }
     }
     "the user session is stale" should {
       "be handling GET and reply 200 with the HTML form having checked radios" in new StaleSessionFixture(
-        isPermanentResidence = AnswerYes
+        isPermanentResidence = AnswerNo,
+        permanentResidents = Nil
       ) {
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
@@ -69,15 +70,29 @@ class PermanentResidentsControllerSpec extends TestBaseSpec:
         charset(result).value     shouldBe UTF_8.charset
         contentAsString(result)     should include("checked")
       }
-      "be handling POST isPermanentResident='no' and reply 303 with redirect location of 'Completed Commercial Lettings' page" in new StaleSessionFixture(
-        isPermanentResidence = AnswerYes
+      "be handling POST isPermanentResident='yes' and reply 303 redirect to 'Resident Detail' page" in new StaleSessionFixture(
+        isPermanentResidence = AnswerNo,
+        permanentResidents = Nil
       ) {
-        // Update the form with a different answer
+        // Answering 'no' will clear out all residents details
+        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("isPermanentResidence" -> "yes"))
+        status(result)                   shouldBe SEE_OTHER
+        redirectLocation(result).value   shouldBe routes.ResidentDetailController.show.url
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        isPermanentResidenceOf(data).value should beAnswerYes
+        residentDetailOf(data)           shouldBe None
+      }
+      "be handling POST isPermanentResident='no' and reply 303 redirect to 'Commercial Lettings' page" in new StaleSessionFixture(
+        isPermanentResidence = AnswerYes,
+        permanentResidents = List(ResidentDetail(name = "Mr. Somebody", address = "Somewhere in the world"))
+      ) {
+        // Answering 'no' will clear out all residents details
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("isPermanentResidence" -> "no"))
         status(result)                   shouldBe SEE_OTHER
         redirectLocation(result).value   shouldBe "/path/to/completed-commercial-lettings"
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         isPermanentResidenceOf(data).value should beAnswerNo
+        residentDetailOf(data)           shouldBe None
       }
     }
   }
@@ -90,6 +105,9 @@ class PermanentResidentsControllerSpec extends TestBaseSpec:
   trait SessionCapturingFixture:
     def isPermanentResidenceOf(session: ArgumentCaptor[Session]) =
       LettingHistory.isPermanentResidence(session.getValue)
+
+    def residentDetailOf(session: ArgumentCaptor[Session]) =
+      LettingHistory.residentDetail(session.getValue)
 
   // It represents the scenario of fresh session (there's no letting history yet in session)
   trait FreshSessionFixture extends MockRepositoryFixture with SessionCapturingFixture:
@@ -104,7 +122,7 @@ class PermanentResidentsControllerSpec extends TestBaseSpec:
     )
 
   // It represents the scenario of ongoing session (with some letting history already created)
-  trait StaleSessionFixture(isPermanentResidence: AnswersYesNo)
+  trait StaleSessionFixture(isPermanentResidence: AnswersYesNo, permanentResidents: List[ResidentDetail])
       extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new PermanentResidentsController(
@@ -114,7 +132,8 @@ class PermanentResidentsControllerSpec extends TestBaseSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            isPermanentResidence = isPermanentResidence
+            isPermanentResidence = isPermanentResidence,
+            permanentResidents = permanentResidents
           )
         )
       ),

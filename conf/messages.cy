@@ -292,10 +292,14 @@ hint.ownerTrustee = Select this if you own and occupy the property - you’re co
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
-label.tradingNameFromProperty = Enw masnachu
 tradingNameFromProperty.heading = Beth yw enw masnachu’r busnes neu’r sefydliad sy’n gweithredu o’r eiddo?
 error.tradingNameFromProperty.required = Nodwch enw masnachu’r busnes neu’r sefydliad
 error.tradingNameFromProperty.maxLength = Mae’n rhaid i’r enw masnachu fod yn 50 o gymeriadau neu lai
+label.tradingNameFromPropertyHeadingLabel = What is the trading name of the business or organisation operating from the property?
+label.tradingNameFromPropertyHeadingLabel6048 = What is the name of the person or company operating the self-catering business from the property?
+tradingNameFromProperty4068.heading = What is the name of the person or company operating the self-catering business from the property?
+error.tradingNameFromProperty6048.required = Enter the name of the person or company
+error.tradingNameFromProperty6048.maxLength = The name of the person or company must be 50 characters or fewer
 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
@@ -1567,6 +1571,12 @@ lettingHistory.isPermanentResidence.label = Is any part of the property used as 
 lettingHistory.isPermanentResidence.hint = Include any commercial residential lettings and staff accommodation.
 lettingHistory.isPermanentResidence.error= Select yes if the property is used as permanent residence.
 
+lettingHistory.residentDetail.heading = Resident''s details
+lettingHistory.residentDetail.subheading = We need the contact details of one person for each part of the property used as a main residence by a tenant or employee. You will have the opportunity to add additional households if required.
+label.lettingHistory.residentDetail.name.label = Resident''s name
+lettingHistory.residentDetail.address.label = Resident''s address
+lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
+
 
 # 6010 TYPES
 ##############################
@@ -2824,6 +2834,26 @@ key.additionalInformation = Gwybodaeth ychwanegol
 commercialLettingQuestion.heading = When did the property first become available for commercial letting?
 commercialLettingQuestion.p = If you do not know the exact date provide an estimate
 fieldName.commercialLettingQuestion =  the {0} when property first become available for commercial letting
+
+#COMMERCIAL LETTING AVAILABILITY
+################################
+
+commercialLettingAvailability.heading = Availability for commercial lettings - up to 28 nights
+commercialLettingAvailability.declare = Declare how many nights your property was available for letting commercially - in periods not longer than 28 nights - within the stated. This includes any nights when the property was vacant, even though it was open for commercial lettings.
+commercialLettingAvailability.list = Do not include any parts of property:
+commercialLettingAvailability.list.p1 = used by family or friends
+commercialLettingAvailability.list.p2 = let out to staff or permanent residents
+commercialLettingAvailability.list.p3 = used for lettings longer than 28 nights
+commercialLettingAvailability.label = How many nights was the property available, in periods up to 28 nights between 1 April 2023 and 31 March 2024?
+commercialLettingAvailability.label.nights = nights
+error.commercialLettingAvailability.required = State how many nights was the property available
+commercialLettingAvailability.label.welsh = How many nights was the property available in periods up to 28 nights, in the following years?
+commercialLettingAvailability.label.welsh.year = Year ending
+commercialLettingAvailability.label.welsh.nights = Number of nights available
+error.commercialLettingAvailability.required = State how many nights was the property available in year between 1 April 2023 and 31 March 2024
+error.commercialLettingAvailability.range = The number of nights must be a figure between 0 and 365
+error.commercialLettingAvailability.welsh.required = State how many nights was the property available in the year ending {0}
+error.commercialLettingAvailability.welsh.range = Number of nights in the year ending {0} must be a number between 1 and 365
 
 
 #TYPE OF RENEWABLES PLANT

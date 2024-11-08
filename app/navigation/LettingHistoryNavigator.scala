@@ -17,10 +17,11 @@
 package navigation
 
 import connectors.Audit
+import controllers.lettingHistory.routes
 import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import models.submissions.lettingHistory.LettingHistory
-import navigation.identifiers.{Identifier, PermanentResidentsPageId}
+import navigation.identifiers.{Identifier, PermanentResidentsPageId, ResidentDetailPageId}
 import play.api.mvc.Call
 
 import javax.inject.Inject
@@ -31,12 +32,11 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
     PermanentResidentsPageId -> { session =>
       LettingHistory.isPermanentResidence(session) match
         case Some(AnswerYes) =>
-          Call("GET", "/path/to/residents-details")
-        // TODO Introduce the controllers.lettingHistory.ResidentsDetailsController
+          routes.ResidentDetailController.show
 
         case Some(AnswerNo) =>
+          // TODO Introduce the controllers.lettingHistory.CompletedCommercialLettingsController
           Call("GET", "/path/to/completed-commercial-lettings")
-        // TODO Introduce the controllers.lettingHistory.CompletedCommercialLettingsController
 
         case _ =>
           // As long as this navigator gets invoked AFTER the session got copied with letting history data
@@ -44,5 +44,10 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
           throw new RuntimeException(
             "InvalidNavigation: session.lettingHistory.isPermanentResidence was expected to be defined"
           )
+    },
+    ResidentDetailPageId     -> { _ =>
+      // navigate to the "Resident's List" page regardless of the session data
+      // TODO Introduce the controllers.lettingHistory.ResidentListController
+      Call("GET", "/path/to/resident-list")
     }
   )
