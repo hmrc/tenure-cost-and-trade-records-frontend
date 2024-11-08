@@ -1439,7 +1439,8 @@ trait FakeObjects {
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
     Some(AnswerYes),
-    Some(AnswerNo)
+    Some(AnswerNo),
+    checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty("No"))
   )
 
   val prefilledNotVacantPropertiesNoCYA = StillConnectedDetails(
