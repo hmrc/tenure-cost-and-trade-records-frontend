@@ -99,7 +99,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
           routes.CaravansAnnualPitchFeeController.show().url
         else
           routes.StaticCaravansController.show().url
-      case FOR6048                     => routes.FixedCosts6048Controller.show.url // TODO: OperationalCosts6048Controller
+      case FOR6048                     => routes.AccountingCosts6048Controller.show.url // TODO: OperationalCosts6048Controller
       case FOR6076                     => routes.IncomeExpenditureSummary6076Controller.show().url
     }
 
