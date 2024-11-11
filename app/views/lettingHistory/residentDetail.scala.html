@@ -22,12 +22,12 @@
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukCharacterCount: GovukCharacterCount, govukButton: GovukButton)
 
-@(theForm: Form[ResidentDetail])(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[ResidentDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     summary = Some(request.sessionData.toSummary),
     pageHeading = messages("lettingHistory.residentDetail.heading"),
-    backLinkUrl = routes.PermanentResidentsController.show.url,
+    backLinkUrl = backLink,
     showSection = true,
     sectionName = messages("label.section.lettingHistory"),
 ) {

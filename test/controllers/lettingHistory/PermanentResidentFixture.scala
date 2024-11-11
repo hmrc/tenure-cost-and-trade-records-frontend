@@ -16,15 +16,17 @@
 
 package controllers.lettingHistory
 
-import models.Session
-import play.api.libs.json.Writes
-import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
+import models.submissions.lettingHistory.ResidentDetail
 
-import scala.concurrent.{ExecutionContext, Future}
+trait PermanentResidentFixture:
 
-extension (repository: SessionRepo)
-  def saveOrUpdateSession(
-    session: Session
-  )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[Session] =
-    repository.saveOrUpdate(session).map(_ => session)
+  val oneResident = List(
+    ResidentDetail(name = "one", address = "address1")
+  )
+
+  val fiveResidents = oneResident ++ List(
+    ResidentDetail(name = "two", address = "address2"),
+    ResidentDetail(name = "three", address = "address3"),
+    ResidentDetail(name = "four", address = "address4"),
+    ResidentDetail(name = "five", address = "address5")
+  )
