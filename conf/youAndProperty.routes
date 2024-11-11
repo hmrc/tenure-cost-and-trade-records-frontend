@@ -55,6 +55,12 @@ POST        /commercial-letting-availability              controllers.aboutyouan
 GET         /commercial-letting-availability-welsh        controllers.aboutyouandtheproperty.CommercialLettingAvailabilityWelshController.show()
 POST        /commercial-letting-availability-welsh        controllers.aboutyouandtheproperty.CommercialLettingAvailabilityWelshController.submit()
 
+GET         /completed-commercial-lettings                controllers.aboutyouandtheproperty.CompletedCommercialLettingsController.show()
+POST        /completed-commercial-lettings                controllers.aboutyouandtheproperty.CompletedCommercialLettingsController.submit()
+
+GET         /completed-commercial-lettings-welsh          controllers.aboutyouandtheproperty.CompletedCommercialLettingsWelshController.show()
+POST        /completed-commercial-lettings-welsh          controllers.aboutyouandtheproperty.CompletedCommercialLettingsWelshController.submit()
+
 # About you and the property 6076
 
 GET         /renewables-plants                            controllers.aboutyouandtheproperty.RenewablesPlantController.show()

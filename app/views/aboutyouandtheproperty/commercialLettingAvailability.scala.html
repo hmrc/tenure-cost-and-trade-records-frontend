@@ -34,13 +34,14 @@
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheProperty"),
  backLinkUrl = backLink,
- theForm = theForm
+ theForm = theForm,
+ fullWidth = true
 ) {
- <p class="govuk-body ">@messages("commercialLettingAvailability.declare")</p>
+ <p class="govuk-body govuk-!-width-three-quarters ">@messages("commercialLettingAvailability.declare")</p>
 
  <p class="govuk-body">@messages("commercialLettingAvailability.list")</p>
 
- <ul class="govuk-list govuk-list--bullet">
+ <ul class="govuk-list govuk-list--bullet ">
   <li>@messages("commercialLettingAvailability.list.p1")</li>
   <li>@messages("commercialLettingAvailability.list.p2")</li>
   <li>@messages("commercialLettingAvailability.list.p3")</li>
@@ -58,7 +59,7 @@
     classes = "govuk-input--width-3",
     label = Label(
      content = Text(messages("commercialLettingAvailability.label")),
-     classes = "govuk-!-font-weight-bold govuk-!-margin-bottom-3"
+     classes = "govuk-!-font-weight-bold govuk-!-margin-bottom-3 govuk-!-width-three-quarters govuk-label--m"
     ),
     suffix = PrefixOrSuffix(
      content = Text(messages("commercialLettingAvailability.label.nights"))

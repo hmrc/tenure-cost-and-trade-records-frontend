@@ -1665,6 +1665,8 @@ taskList.customerCreditAccounts = Customer credit accounts
 taskList.lowMarginCards = Low-margin fuel cards
 taskList.EVChargingPoints = EV charging points
 taskList.technologyType = Technology type
+taskList.lettingAvailability = Letting availability
+taskList.familyUse = Family use
 taskList.siteConstructionDetails = Site construction details
 taskList.howIsUsed = How the property is used
 taskList.6076.powerGenerated = Power generated
@@ -2905,6 +2907,21 @@ label.furtherInformation = Further information or remarks
 key.additionalInformation = Additional information
 label.altDetails = Alternative correspondence address
 
+#COMPLETED COMMERCIAL LETTINGS
+###############################
+
+completedCommercialLettings.heading = Completed commercial lettings - up to 28 nights
+completedCommercialLettings.declare = Declare how many nights your property was let commercially - in periods no longer than 28 nights - within the stated timeframe. Only include any nights when a guest paid to stay in the property.
+completedCommercialLettings.include = Do not include:
+completedCommercialLettings.l1 = any nights when the property was available, but unoccupied
+completedCommercialLettings.l2 = any consecutive bookings made by the same party totaling over 28 nights
+completedCommercialLettings.formLabel = How many nights was your property let, in periods of up to 28 nights, between 1 April 2023 and 31 March 2024?
+completedCommercialLettings.welsh.formLabel = How many nights was your property let, in periods of up to 28 nights, in the following years?
+error.completedCommercialLettings.required = State how many nights was the property let, between 1 April 2023 and 31 March 2024
+error.completedCommercialLettings.range = The number of nights must be a figure between 0 and 365
+error.completedCommercialLettings.welsh.required = State how many nights was the property let in the year ending {0}
+error.completedCommercialLettings.welsh.range = The number of nights in the year ending {0} must be a figure between 0 and 365
+
 #COMMERCIAL LETTING QUESTION
 ############################
 commercialLettingQuestion.heading = When did the property first become available for commercial letting?
@@ -2920,7 +2937,7 @@ commercialLettingAvailability.list = Do not include any parts of property:
 commercialLettingAvailability.list.p1 = used by family or friends
 commercialLettingAvailability.list.p2 = let out to staff or permanent residents
 commercialLettingAvailability.list.p3 = used for lettings longer than 28 nights
-commercialLettingAvailability.label = How many nights was the property available, in periods up to 28 nights between 1 April 2023 and 31 March 2024?
+commercialLettingAvailability.label = How many nights was your property available, in periods up to 28 nights,  between 1 April 2023 and 31 March 2024?
 commercialLettingAvailability.label.nights = nights
 error.commercialLettingAvailability.required = State how many nights was the property available
 commercialLettingAvailability.label.welsh = How many nights was the property available in periods up to 28 nights, in the following years?

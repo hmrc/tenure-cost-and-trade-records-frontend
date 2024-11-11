@@ -1,0 +1,110 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import models.submissions.aboutyouandtheproperty.CompletedLettings
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.DateUtilLocalised
+@import actions.SessionRequest
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        dateUtil: DateUtilLocalised
+)
+
+
+@(theForm: Form[Seq[CompletedLettings]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@layout(
+    pageHeading = messages("completedCommercialLettings.heading"),
+    showSection = true,
+    showH1 = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm,
+    fullWidth = true
+) {
+    <p class="govuk-body ">@messages("completedCommercialLettings.declare")</p>
+
+    <p class="govuk-body">@messages("completedCommercialLettings.include")</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("completedCommercialLettings.l1")</li>
+        <li>@messages("completedCommercialLettings.l2")</li>
+    </ul>
+
+
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.submit()) {
+
+
+        <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-full">
+            <h2 class=" govuk-body govuk-label--m">@messages("completedCommercialLettings.welsh.formLabel")</h2>
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDatesCommercialLetting.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(
+                                content = Text(messages("commercialLettingAvailability.label.welsh.year"))
+                            ),
+                            HeadCell(
+                                content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd))
+                            )
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("commercialLettingAvailability.label.welsh.nights")),
+                                    classes = "govuk-!-width-one-quarter"
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            id = s"completedLettings-$idx",
+                                            name = s"completedLettings-$idx",
+                                            value = theForm(s"completedLettings-$idx").value,
+                                            classes = "govuk-input--width-5",
+                                            attributes = Map(
+                                                "aria-label" -> messages("commercialLettingAvailability.label.welsh.nights")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("commercialLettingAvailability.label.nights"))
+                                            ))
+                                        ).withFormField(theForm(s"completedLettings-$idx")))
+                                    ),
+                                    classes = "govuk-!-width-one-third"
+                                )
+                            )
+                        )
+                    ))
+                </td>
+                }
+                </tr>
+            </tbody>
+        </table>
+        @includes.continueSaveAsDraftButtons(govukButton)
+        <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+    }
+}
