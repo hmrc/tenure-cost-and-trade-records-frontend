@@ -188,8 +188,14 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     AlternativeContactDetailsId             -> alternativeContactDetailsRouting,
     CommercialLettingQuestionId             -> commercialLettingQuestionRouting,
-    CommercialLettingAvailabilityId         -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
-    CommercialLettingAvailabilityWelshId    -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
+    CommercialLettingAvailabilityId         -> (_ =>
+      controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()
+    ),
+    CommercialLettingAvailabilityWelshId    -> (_ =>
+      controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
+    ),
+    CompletedCommercialLettingsId           -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
+    CompletedCommercialLettingsWelshId      -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,

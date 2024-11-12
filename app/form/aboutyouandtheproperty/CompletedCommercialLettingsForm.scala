@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package controllers.lettingHistory
+package form.aboutyouandtheproperty
 
-import models.Session
-import play.api.libs.json.Writes
-import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
+import play.api.data.Form
+import play.api.data.Forms.{default, single, text}
 
-import scala.concurrent.{ExecutionContext, Future}
+object CompletedCommercialLettingsForm {
 
-extension (repository: SessionRepo)
-  def saveOrUpdateSession(
-    session: Session
-  )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[Session] =
-    repository.saveOrUpdate(session).map(_ => session)
+  val completedCommercialLettingsForm: Form[Int] = Form(
+    single(
+      "completedCommercialLettings" -> default(text, "")
+        .verifying("error.completedCommercialLettings.required", _.nonEmpty)
+        .verifying("error.completedCommercialLettings.range", s => s.isEmpty || s.matches("""\d+"""))
+        .transform[Int](_.toInt, _.toString)
+        .verifying("error.completedCommercialLettings.range", n => n >= 0 && n <= 365)
+    )
+  )
+}

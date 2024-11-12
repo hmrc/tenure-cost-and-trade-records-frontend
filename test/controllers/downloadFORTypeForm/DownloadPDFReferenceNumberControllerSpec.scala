@@ -16,64 +16,69 @@
 
 package controllers.downloadFORTypeForm
 
-import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
+import connectors.BackendConnector
 import play.api.http.Status
-import play.api.test.Helpers._
-import stub.StubBackendConnector
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.test.Helpers.*
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
+
+import scala.concurrent.Future.{failed, successful}
 import scala.language.reflectiveCalls
 
-class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec {
+class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
 
-  import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
-
-  def downloadPDFReferenceNumberController() = new DownloadPDFReferenceNumberController(
-    stubMessagesControllerComponents(),
-    downloadPDFReferenceNumberView,
-    StubBackendConnector()
-  )
-
-  "GET /" should {
-    "return 200" in {
-      val result = downloadPDFReferenceNumberController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+  "the DownloadPDFReferenceNumber controller" when {
+    "handling GET /"  should {
+      "reply 200 with the HTML form" in new ControllerAndConnectorFixture {
+        val result  = controller.show(fakeRequest)
+        val content = contentAsString(result)
+        status(result)            shouldBe Status.OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        content                     should include("downloadPdfReferenceNumber.heading")
+      }
     }
-
-    "return HTML" in {
-      val result = downloadPDFReferenceNumberController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "handling POST /" should {
+      "reply 400 with error message when downloadPdfReferenceNumber is missing" in new ControllerAndConnectorFixture {
+        val result = controller.submit(fakePostRequest)
+        status(result)        shouldBe BAD_REQUEST
+        contentAsString(result) should include("error.downloadPdfReferenceNumber.required")
+      }
+      "reply 303 redirect to the 'Download PDF' page when downloadPdfReferenceNumber is unknown" in new ControllerAndConnectorFixture {
+        when(connector.retrieveFORType(any[String], any[HeaderCarrier]))
+          .thenReturn(failed(new Exception("cannot determine forType")))
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "downloadPdfReferenceNumber" -> "unknown"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.DownloadPDFController.show("invalidType").url
+        verify(connector, once).retrieveFORType(givenReferenceNumber.capture(), any[HeaderCarrier])
+        givenReferenceNumber.getValue  shouldBe "unknown"
+      }
+      "reply 303 redirect to the 'Download PDF' page when downloadPdfReferenceNumber is good" in new ControllerAndConnectorFixture {
+        when(connector.retrieveFORType(any[String], any[HeaderCarrier])).thenReturn(successful("FOR6010"))
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "downloadPdfReferenceNumber" -> "99996010004" // this resembles a good one!
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        session(result).get("referenceNumber").value shouldBe "99996010004"
+        redirectLocation(result).value               shouldBe routes.DownloadPDFController.show("FOR6010").url
+        verify(connector, once).retrieveFORType(givenReferenceNumber.capture(), any[HeaderCarrier])
+        givenReferenceNumber.getValue                shouldBe "99996010004"
+      }
     }
   }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = downloadPDFReferenceNumberController().submit(
-        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
-
-  "Download PDF reference number form" should {
-    "error if reference number is missing" in {
-      val formData = baseFormData - errorKey.referenceNumber
-      val form     = downloadPDFReferenceNumberForm.bind(formData)
-
-      mustContainError(errorKey.referenceNumber, "error.downloadPdfReferenceNumber.required", form)
-    }
-  }
-
-  object TestData {
-    val errorKey = new ErrorKey
-
-    class ErrorKey {
-      val referenceNumber = "downloadPdfReferenceNumber"
-    }
-
-    val baseFormData: Map[String, String] = Map(
-      "downloadPdfReferenceNumber" -> "9999601001"
+  trait ControllerAndConnectorFixture:
+    val connector            = mock[BackendConnector]
+    val givenReferenceNumber = captor[String]
+    val controller           = new DownloadPDFReferenceNumberController(
+      stubMessagesControllerComponents(),
+      downloadPDFReferenceNumberView,
+      connector
     )
-  }
-}

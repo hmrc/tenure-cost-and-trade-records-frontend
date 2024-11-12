@@ -16,7 +16,7 @@
 
 package controllers.lettingHistory
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.PermanentResidentsForm.theForm
 import models.Session
@@ -31,8 +31,8 @@ import repositories.SessionRepo
 import views.html.lettingHistory.permanentResidents as PermanentResidentsView
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.Future.successful
+import scala.concurrent.{ExecutionContext, Future}
 
 class PermanentResidentsController @Inject() (
   mcc: MessagesControllerComponents,
@@ -45,21 +45,24 @@ class PermanentResidentsController @Inject() (
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    val freshForm = theForm
-    val staleForm =
+    val freshForm  = theForm
+    val filledForm =
       for lettingHistory <- request.sessionData.lettingHistory
-      yield freshForm.fill(lettingHistory.isPermanentResidence)
+      yield freshForm.fill(lettingHistory.hasPermanentResidents)
 
-    Ok(theView(staleForm.getOrElse(freshForm)))
+    Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors))),
-      isPermanentResidence =>
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      hasPermanentResidents =>
         given Session = request.sessionData
-        for updatedSession <- repository.saveOrUpdateSession(sessionWithPermanentResidents(isPermanentResidence))
-        yield Redirect(navigator.nextCall(PermanentResidentsPageId, updatedSession))
+        for updatedSession <- repository.saveOrUpdateSession(sessionWithPermanentResidents(hasPermanentResidents))
+        yield navigator.redirect(fromPage = PermanentResidentsPageId, updatedSession)
     )
   }
+
+  private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
+    navigator.backLinkUrl(ofPage = PermanentResidentsPageId)

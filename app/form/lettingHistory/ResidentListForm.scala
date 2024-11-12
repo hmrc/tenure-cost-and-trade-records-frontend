@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package controllers.lettingHistory
+package form.lettingHistory
 
-import models.Session
-import play.api.libs.json.Writes
-import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
 
-import scala.concurrent.{ExecutionContext, Future}
-
-extension (repository: SessionRepo)
-  def saveOrUpdateSession(
-    session: Session
-  )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[Session] =
-    repository.saveOrUpdate(session).map(_ => session)
+object ResidentListForm:
+  val theForm = Form[AnswersYesNo](
+    single(
+      "hasMoreResidents" -> createYesNoType("lettingHistory.residentList.hasMoreResidents.error")
+    )
+  )

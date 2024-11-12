@@ -174,6 +174,7 @@ trait TestBaseSpec
   def preEnrichedActionRefiner(
     referenceNumber: String = "99996010004",
     forType: ForType = FOR6010,
+    isWelsh: Boolean = false,
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll),
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledRemoveConnection),
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo),
@@ -205,7 +206,7 @@ trait TestBaseSpec
                 forType,
                 prefilledAddress,
                 "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-                isWelsh = false,
+                isWelsh = isWelsh,
                 stillConnectedDetails = stillConnectedDetails,
                 removeConnectionDetails = removeConnectionDetails,
                 aboutYouAndTheProperty = aboutYouAndTheProperty,

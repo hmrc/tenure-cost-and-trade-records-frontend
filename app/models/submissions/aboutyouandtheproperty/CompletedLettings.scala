@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package controllers.lettingHistory
+package models.submissions.aboutyouandtheproperty
 
-import models.Session
-import play.api.libs.json.Writes
-import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
+import play.api.libs.json.{Json, OFormat}
 
-import scala.concurrent.{ExecutionContext, Future}
+import java.time.LocalDate
 
-extension (repository: SessionRepo)
-  def saveOrUpdateSession(
-    session: Session
-  )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[Session] =
-    repository.saveOrUpdate(session).map(_ => session)
+case class CompletedLettings(
+  financialYearEnd: LocalDate,
+  numberOfNights: Int
+)
+object CompletedLettings {
+  implicit val format: OFormat[CompletedLettings] = Json.format
+}

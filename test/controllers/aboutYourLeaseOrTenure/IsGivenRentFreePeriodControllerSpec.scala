@@ -72,7 +72,7 @@ class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
     "Redirect when form data isGivenRentFreePeriod submitted" in {
       val res = isGivenRentFreePeriodController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "isGivenRentFreePeriod" -> "yes"
+          "rentFreePeriod" -> "yes"
         )
       )
       status(res) shouldBe SEE_OTHER

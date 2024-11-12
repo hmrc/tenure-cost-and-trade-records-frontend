@@ -16,38 +16,115 @@
 
 package navigation
 
+import actions.SessionRequest
 import connectors.Audit
 import controllers.lettingHistory.routes
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswerYes
 import models.submissions.lettingHistory.LettingHistory
-import navigation.identifiers.{Identifier, PermanentResidentsPageId, ResidentDetailPageId}
-import play.api.mvc.Call
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, hasPermanentResidents, permanentResidents}
+import navigation.identifiers.{Identifier, PermanentResidentsPageId, ResidentDetailPageId, ResidentListPageId}
+import play.api.mvc.Results.Redirect
+import play.api.mvc.{AnyContent, Call, Result}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 
 class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
 
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    PermanentResidentsPageId -> { session =>
-      LettingHistory.isPermanentResidence(session) match
-        case Some(AnswerYes) =>
-          routes.ResidentDetailController.show
+  private type NavigationData     = Map[String, String]
+  private type NavigationFunction = (Session, NavigationData) => Option[Call]
 
-        case Some(AnswerNo) =>
-          // TODO Introduce the controllers.lettingHistory.CompletedCommercialLettingsController
-          Call("GET", "/path/to/completed-commercial-lettings")
-
-        case _ =>
-          // As long as this navigator gets invoked AFTER the session got copied with letting history data
-          // this case should never ever match
-          throw new RuntimeException(
-            "InvalidNavigation: session.lettingHistory.isPermanentResidence was expected to be defined"
-          )
+  /*
+   * This map specifies the BACK link call as a function of the current page identifier
+   * and the current session data. It is used by controllers' actions in need to
+   * determine the backLink URL of their template views.
+   */
+  private val backwardNavigationMap = Map[Identifier, NavigationFunction](
+    PermanentResidentsPageId -> { (_, _) =>
+      Some(controllers.routes.TaskListController.show().withFragment("lettingHistory"))
     },
-    ResidentDetailPageId     -> { _ =>
-      // navigate to the "Resident's List" page regardless of the session data
-      // TODO Introduce the controllers.lettingHistory.ResidentListController
-      Call("GET", "/path/to/resident-list")
+    ResidentDetailPageId     -> { (_, _) =>
+      Some(routes.PermanentResidentsController.show)
+    },
+    ResidentListPageId       -> { (currentSession, _) =>
+      if permanentResidents(currentSession).size < MaxNumberOfPermanentResidents
+      then Some(routes.ResidentDetailController.show(index = None))
+      else Some(routes.PermanentResidentsController.show)
     }
   )
+
+  def backLinkUrl(ofPage: Identifier, navigationData: Map[String, String] = Map.empty)(using
+    request: SessionRequest[AnyContent]
+  ): Option[String] =
+    val navigationDataAndFromPage =
+      request.session
+        .get("from")
+        .fold(ifEmpty = navigationData)(from => navigationData + ("from" -> from))
+
+    val call =
+      for
+        sessionToMaybeCallFunc <- backwardNavigationMap.get(ofPage)
+        backwardCall           <- sessionToMaybeCallFunc.apply(request.sessionData, navigationDataAndFromPage)
+      yield backwardCall
+
+    call.map(_.toString)
+
+  // ----------------------------------------------------------------------------------------------------------------
+
+  /*
+   * This map specifies the FORWARD route call as a function of the current page identifier
+   * and the current session data. It is used by controllers' actions that, usually
+   * after having processed POST requests, need to result with SEE_OTHER location
+   * (a.k.a. "redirect after-post" pattern)
+   */
+  private val forwardNavigationMap = Map[Identifier, NavigationFunction](
+    PermanentResidentsPageId -> { (updatedSession, _) =>
+      for answer <- hasPermanentResidents(updatedSession)
+      yield
+        if answer == AnswerYes
+        then
+          if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
+          then routes.ResidentDetailController.show(index = None)
+          else routes.ResidentListController.show
+        else
+          // AnswerNo
+          // TODO Introduce the controllers.lettingHistory.CompletedLettingsController
+          Call("GET", "/path/to/completed-lettings")
+    },
+    ResidentDetailPageId     -> { (_, _) =>
+      Some(routes.ResidentListController.show)
+    },
+    ResidentListPageId       -> { (updatedSession, navigationData) =>
+      // Note that navigationData.isDefinedAt("hasMoreResidents") is certainly true! See ResidentListController.submit()
+      if navigationData("hasMoreResidents") == AnswerYes.toString
+      then
+        if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
+        then Some(routes.ResidentDetailController.show())
+        else
+          // TODO Introduce the controllers.lettingHistory.MaxPermanentResidentsController
+          Some(Call("GET", "/path/to/max-permanent-residents"))
+      else
+        // AnswerNo
+        // TODO Introduce the controllers.lettingHistory.CompletedLettingsController
+        Some(Call("GET", "/path/to/completed-lettings"))
+    }
+  )
+
+  @deprecated
+  override val routeMap: Map[Identifier, Session => Call] = Map.empty
+
+  def redirect(fromPage: Identifier, updatedSession: Session, navigationData: Map[String, String] = Map.empty)(using
+    hc: HeaderCarrier,
+    request: SessionRequest[AnyContent]
+  ): Result = {
+    val nextCall =
+      for call <- forwardNavigationMap(fromPage)(updatedSession, navigationData)
+      yield auditNextUrl(updatedSession)(call)
+
+    nextCall match
+      case Some(call) =>
+        Redirect(call).withSession(request.session + ("from" -> fromPage.toString))
+      case _          =>
+        throw new Exception("NavigatorIllegalStage : couldn't determine redirect call")
+  }

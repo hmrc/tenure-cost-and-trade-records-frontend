@@ -75,14 +75,7 @@ class CateringOperationBusinessDetailsController @Inject() (
         index,
         "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
-        getBackLink(request.sessionData, index) match {
-          case Right(link) => link
-          case Left(msg)   =>
-            logger.warn(s"Navigation for catering operation details page reached with error: $msg")
-            throw new RuntimeException(
-              s"Navigation for catering operation details page reached with error $msg"
-            )
-        },
+        getBackLink(request.sessionData, index),
         request.sessionData.toSummary,
         forType
       )
@@ -103,14 +96,7 @@ class CateringOperationBusinessDetailsController @Inject() (
             index,
             "concessionDetails",
             "cateringOperationOrLettingAccommodationDetails",
-            getBackLink(request.sessionData, index) match {
-              case Right(link) => link
-              case Left(msg)   =>
-                logger.warn(s"Navigation for catering operation details page reached with error: $msg")
-                throw new RuntimeException(
-                  s"Navigation for catering operation details page reached with error $msg"
-                )
-            },
+            getBackLink(request.sessionData, index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
@@ -151,20 +137,18 @@ class CateringOperationBusinessDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session, maybeIndex: Option[Int]): Either[String, String] =
+  private def getBackLink(answers: Session, maybeIndex: Option[Int]): String =
     answers.forType match {
       case FOR6015 | FOR6016 =>
-        Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
+        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
       case FOR6030           =>
-        Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show().url)
+        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show().url
       case _                 =>
         maybeIndex match {
           case Some(index) if index > 0 =>
-            Right(
-              controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
-            )
+            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
           case _                        =>
-            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
+            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
         }
     }
 

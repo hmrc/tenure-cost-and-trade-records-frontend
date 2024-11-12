@@ -17,16 +17,16 @@
 package form.lettingHistory
 
 import models.submissions.common.AnswerYes
-import form.lettingHistory.PermanentResidentsForm.theForm
+import form.lettingHistory.ResidentListForm.theForm
+import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
 
-class PermanentResidentFormSpec extends AnyFlatSpec with Matchers with OptionValues:
+class ResidentListFormSpec extends AnyFlatSpec with Matchers with OptionValues:
 
   it should "bind data as expected" in {
     val data  = Map(
-      "hasPermanentResidents" -> "yes"
+      "hasMoreResidents" -> "yes"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
@@ -37,7 +37,7 @@ class PermanentResidentFormSpec extends AnyFlatSpec with Matchers with OptionVal
     val filled = theForm.fill(AnswerYes)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "hasPermanentResidents" -> "yes"
+      "hasMoreResidents" -> "yes"
     )
   }
 
@@ -45,8 +45,5 @@ class PermanentResidentFormSpec extends AnyFlatSpec with Matchers with OptionVal
     val bound = theForm.bind(Map.empty)
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound
-      .error("hasPermanentResidents")
-      .value
-      .message mustBe "lettingHistory.hasPermanentResidents.error"
+    bound.error("hasMoreResidents").value.message mustBe "lettingHistory.residentList.hasMoreResidents.error"
   }

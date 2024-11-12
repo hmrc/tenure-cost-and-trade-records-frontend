@@ -14,30 +14,33 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package form
 
-import models.submissions.common.AnswerYes
-import form.lettingHistory.PermanentResidentsForm.theForm
+import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm as theForm
+import models.submissions.downloadFORTypeForm.DownloadPDFReferenceNumber
+import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
 
-class PermanentResidentFormSpec extends AnyFlatSpec with Matchers with OptionValues:
+class DownloadPDFReferenceNumberFormSpec extends AnyFlatSpec with Matchers with OptionValues:
 
-  it should "bind data as expected" in {
+  it should "bind good data as expected" in {
     val data  = Map(
-      "hasPermanentResidents" -> "yes"
+      "downloadPdfReferenceNumber" -> "0123456789"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
   }
 
-  it should "unbind data as expected" in {
-    val filled = theForm.fill(AnswerYes)
+  it should "unbind good data as expected" in {
+    val referenceNumber = DownloadPDFReferenceNumber(
+      downloadPDFReferenceNumber = "0123456789"
+    )
+    val filled          = theForm.fill(referenceNumber)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "hasPermanentResidents" -> "yes"
+      "downloadPdfReferenceNumber" -> "0123456789"
     )
   }
 
@@ -45,8 +48,5 @@ class PermanentResidentFormSpec extends AnyFlatSpec with Matchers with OptionVal
     val bound = theForm.bind(Map.empty)
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound
-      .error("hasPermanentResidents")
-      .value
-      .message mustBe "lettingHistory.hasPermanentResidents.error"
+    bound.error("downloadPdfReferenceNumber").value.message mustBe "error.downloadPdfReferenceNumber.required"
   }

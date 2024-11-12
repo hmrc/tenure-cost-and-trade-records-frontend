@@ -21,11 +21,13 @@ import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.libs.json.{Format, Json}
 
 case class LettingHistory(
-  isPermanentResidence: AnswersYesNo,
+  hasPermanentResidents: AnswersYesNo = AnswerNo,
   permanentResidents: List[ResidentDetail] = Nil
 )
 
 object LettingHistory:
+
+  val MaxNumberOfPermanentResidents = 5
 
   private def foldLettingHistory(ifEmpty: LettingHistory, copyFunc: LettingHistory => LettingHistory)(using
     session: Session
@@ -36,37 +38,62 @@ object LettingHistory:
       )
     )
 
-  def sessionWithPermanentResidents(isPermanentResidence: AnswersYesNo)(using session: Session): Session =
+  def sessionWithPermanentResidents(hasPermanentResidents: AnswersYesNo)(using session: Session): Session =
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
-        isPermanentResidence = isPermanentResidence
+        hasPermanentResidents = hasPermanentResidents
       ),
       copyFunc = lettingHistory =>
-        isPermanentResidence match
+        hasPermanentResidents match
           case AnswerYes =>
-            lettingHistory.copy(isPermanentResidence = isPermanentResidence)
+            lettingHistory.copy(hasPermanentResidents = hasPermanentResidents)
           case AnswerNo  =>
-            lettingHistory.copy(isPermanentResidence = isPermanentResidence, permanentResidents = Nil)
+            lettingHistory.copy(hasPermanentResidents = hasPermanentResidents, permanentResidents = Nil)
     )
 
-  def isPermanentResidence(session: Session): Option[AnswersYesNo] =
+  def hasPermanentResidents(session: Session): Option[AnswersYesNo] =
     for lettingHistory <- session.lettingHistory
-    yield lettingHistory.isPermanentResidence
+    yield lettingHistory.hasPermanentResidents
 
   def sessionByAddingPermanentResident(residentDetail: ResidentDetail)(using session: Session): Session =
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
-        isPermanentResidence = AnswerYes,
+        hasPermanentResidents = AnswerYes,
         permanentResidents = List(residentDetail)
       ),
-      copyFunc =
-        lettingHistory => lettingHistory.copy(permanentResidents = lettingHistory.permanentResidents.:+(residentDetail))
+      copyFunc = { lettingHistory =>
+        lettingHistory.permanentResidents.zipWithIndex
+          .find { (r, _) =>
+            // find the eventually existing resident by name
+            r.name == residentDetail.name
+          }
+          .map { (_, index) =>
+            // patch the resident detail if found as existing
+            lettingHistory
+              .copy(permanentResidents = lettingHistory.permanentResidents.patch(index, List(residentDetail), 1))
+          }
+          .getOrElse {
+            // not found ... then append it
+            lettingHistory.copy(permanentResidents = lettingHistory.permanentResidents.:+(residentDetail))
+          }
+      }
     )
 
-  def residentDetail(session: Session): Option[ResidentDetail] =
+  def sessionByRemovingPermanentResidentAt(index: Int)(using session: Session): Session =
+    this.foldLettingHistory(
+      ifEmpty = LettingHistory(
+        hasPermanentResidents = AnswerYes,
+        permanentResidents = Nil
+      ),
+      copyFunc = { lettingHistory =>
+        lettingHistory.copy(permanentResidents = lettingHistory.permanentResidents.patch(index, Nil, 1))
+      }
+    )
+
+  def permanentResidents(session: Session): List[ResidentDetail] =
     for
-      lettingHistory <- session.lettingHistory
-      firstResident  <- lettingHistory.permanentResidents.headOption
-    yield firstResident
+      lettingHistory     <- session.lettingHistory.toList
+      permanentResidents <- lettingHistory.permanentResidents
+    yield permanentResidents
 
   given Format[LettingHistory] = Json.format

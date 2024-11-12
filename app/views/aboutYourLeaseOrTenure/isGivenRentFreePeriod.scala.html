@@ -28,7 +28,7 @@
 
 
 @layout(
-    pageHeading = messages("isGivenRentFreePeriod.heading"),
+    pageHeading = messages("rentFreePeriod.heading"),
     showH1 = false,
     showSection = true,
     summary = Some(request.sessionData.toSummary),
@@ -42,8 +42,8 @@
         @includes.radioButtonsYesNo(
             govukRadios,
             form,
-            "isGivenRentFreePeriod",
-            "isGivenRentFreePeriod.heading",
+            "rentFreePeriod",
+            "rentFreePeriod.heading",
             messages("label.yes.ydy"),
             messages("label.no.nac.ydy"),
             "govuk-fieldset__legend--l",
