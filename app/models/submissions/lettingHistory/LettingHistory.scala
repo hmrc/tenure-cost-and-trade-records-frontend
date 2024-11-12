@@ -22,7 +22,7 @@ import play.api.libs.json.{Format, Json}
 
 case class LettingHistory(
   hasPermanentResidents: AnswersYesNo = AnswerNo,
-  permanentResidents: List[ResidentDetail] = Nil,
+  permanentResidents: List[ResidentDetail] = Nil
 )
 
 object LettingHistory:
@@ -41,7 +41,7 @@ object LettingHistory:
   def sessionWithPermanentResidents(hasPermanentResidents: AnswersYesNo)(using session: Session): Session =
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasPermanentResidents = hasPermanentResidents,
+        hasPermanentResidents = hasPermanentResidents
       ),
       copyFunc = lettingHistory =>
         hasPermanentResidents match
@@ -59,7 +59,7 @@ object LettingHistory:
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
         hasPermanentResidents = AnswerYes,
-        permanentResidents = List(residentDetail),
+        permanentResidents = List(residentDetail)
       ),
       copyFunc = { lettingHistory =>
         lettingHistory.permanentResidents.zipWithIndex
@@ -83,7 +83,7 @@ object LettingHistory:
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
         hasPermanentResidents = AnswerYes,
-        permanentResidents = Nil,
+        permanentResidents = Nil
       ),
       copyFunc = { lettingHistory =>
         lettingHistory.copy(permanentResidents = lettingHistory.permanentResidents.patch(index, Nil, 1))

@@ -16,119 +16,187 @@
 
 package controllers.aboutfranchisesorlettings
 
-import models.ForType
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import models.{ForType, Session}
 import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.Identifier
 import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import org.jsoup.nodes.{Document, Element}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.libs.json.Writes
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.mvc.{AnyContent, Call, Request}
+import play.api.test.Helpers.*
+import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails as CateringOperationOrLettingAccommodationDetailsView
 
-class CateringOperationDetailsControllerSpec extends TestBaseSpec {
+import scala.concurrent.Future.successful
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+class CateringOperationDetailsControllerSpec extends TestBaseSpec:
 
-  def cateringOperationOrLettingAccommodationDetailsController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  ) =
-    new CateringOperationDetailsController(
-      stubMessagesControllerComponents(),
-      mockAboutFranchisesOrLettingsNavigator,
-      cateringOperationDetailsView,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
-    )
-
-  def cateringOperationOrLettingAccommodationDetailsController6015(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  ) =
-    new CateringOperationDetailsController(
-      stubMessagesControllerComponents(),
-      mockAboutFranchisesOrLettingsNavigator,
-      cateringOperationDetailsView,
-      preEnrichedActionRefiner(forType = FOR6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
-      val result = cateringOperationOrLettingAccommodationDetailsController().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return 200 6015" in {
-      val result = cateringOperationOrLettingAccommodationDetailsController6015().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = cateringOperationOrLettingAccommodationDetailsController().show(None)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return HTML 6015" in {
-      val result = cateringOperationOrLettingAccommodationDetailsController6015().show(None)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "render a page with an empty form" when {
-      "not given an index" in {
-        val result = cateringOperationOrLettingAccommodationDetailsController().show(None)(fakeRequest)
-        val html   = Jsoup.parse(contentAsString(result))
-
-        Option(html.getElementById("operatorName").`val`()).value                       shouldBe ""
-        Option(html.getElementById("typeOfBusiness").`val`()).value                     shouldBe ""
-        Option(html.getElementById("cateringAddress.buildingNameNumber").`val`()).value shouldBe ""
-        Option(html.getElementById("cateringAddress.street1").`val`()).value            shouldBe ""
-        Option(html.getElementById("cateringAddress.town").`val`()).value               shouldBe ""
-        Option(html.getElementById("cateringAddress.county").`val`()).value             shouldBe ""
-        Option(html.getElementById("cateringAddress.postcode").`val`()).value           shouldBe ""
+  "the CateringOperationDetails controller" when {
+    "handling GET / requests"  should {
+      "reply 200 with a fresh HTML form 6010 and backLink to /catering-operation-or-letting-accommodation" in new ControllerFixture(
+        FOR6010
+      ) {
+        val result = controller.show(index = None)(fakeGetRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = Jsoup.parse(contentAsString(result))
+        html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
+        html.getElementById("operatorName").value                       shouldBe ""
+        html.getElementById("typeOfBusiness").value                     shouldBe ""
+        html.getElementById("cateringAddress.buildingNameNumber").value shouldBe ""
+        html.getElementById("cateringAddress.street1").value            shouldBe ""
+        html.getElementById("cateringAddress.town").value               shouldBe ""
+        html.getElementById("cateringAddress.county").value             shouldBe ""
+        html.getElementById("cateringAddress.postcode").value           shouldBe ""
+        html.backLinkHref                                                 should endWith("/catering-operation-or-letting-accommodation")
       }
-      "given an index" which {
-        "doesn't already exist in the session" in {
-          val result = cateringOperationOrLettingAccommodationDetailsController().show(Some(2))(fakeRequest)
-          val html   = Jsoup.parse(contentAsString(result))
-
-          Option(html.getElementById("operatorName").`val`()).value                       shouldBe ""
-          Option(html.getElementById("typeOfBusiness").`val`()).value                     shouldBe ""
-          Option(html.getElementById("cateringAddress.buildingNameNumber").`val`()).value shouldBe ""
-          Option(html.getElementById("cateringAddress.street1").`val`()).value            shouldBe ""
-          Option(html.getElementById("cateringAddress.town").`val`()).value               shouldBe ""
-          Option(html.getElementById("cateringAddress.county").`val`()).value             shouldBe ""
-          Option(html.getElementById("cateringAddress.postcode").`val`()).value           shouldBe ""
-        }
+      "reply 200 with a pre-filled HTML form 6010 and backLink to /catering-operation-or-letting-accommodation" in new ControllerFixture(
+        FOR6010
+      ) {
+        val result = controller.show(index = Some(0))(fakeGetRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = Jsoup.parse(contentAsString(result))
+        html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
+        html.getElementById("operatorName").value                       shouldBe "Operator Name"
+        html.getElementById("typeOfBusiness").value                     shouldBe "Type of Business"
+        html.getElementById("cateringAddress.buildingNameNumber").value shouldBe "004"
+        html.getElementById("cateringAddress.street1").value            shouldBe "GORING ROAD"
+        html.getElementById("cateringAddress.town").value               shouldBe "GORING-BY-SEA, WORTHING"
+        html.getElementById("cateringAddress.county").value             shouldBe "West sussex"
+        html.getElementById("cateringAddress.postcode").value           shouldBe "BN12 4AX"
+        html.backLinkHref                                                 should endWith("/catering-operation-or-letting-accommodation")
+      }
+      "reply 200 with the HTML form 6015 and backLink to /concession-or-franchise" in new ControllerFixture(FOR6015) {
+        val result = controller.show(index = Some(2))(fakeGetRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = Jsoup.parse(contentAsString(result))
+        html.backLinkHref should endWith("/concession-or-franchise")
+      }
+      "reply 200 with the HTML form 6010 and backLink to /add-another-catering-operation" in new ControllerFixture(
+        FOR6010
+      ) {
+        val result = controller.show(index = Some(2))(fakeGetRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = Jsoup.parse(contentAsString(result))
+        html.backLinkHref should endWith("/add-another-catering-operation?idx=1") // the given index is decremented by 1
       }
     }
-    // TODO - figure out why this is not rendering with appropriate details from session in test environment - works on future test specs?
-//    "render a page with a pre-filled form" when {
-//      "given an index" which {
-//        "already exists in the session" in {
-//          val result = cateringOperationOrLettingAccommodationDetailsController().show(Some(0))(fakeRequest)
-//          val html   = Jsoup.parse(contentAsString(result))
-//
-//          Option(html.getElementById("operatorName").`val`())                       shouldBe "Operator Name"
-//          Option(html.getElementById("typeOfBusiness").`val`())                     shouldBe "Type of Business"
-//          Option(html.getElementById("cateringAddress.buildingNameNumber").`val`()) shouldBe "004"
-//          Option(html.getElementById("cateringAddress.street1").`val`()).value      shouldBe "GORING ROAD"
-//          Option(html.getElementById("cateringAddress.town").`val`()).value         shouldBe "GORING-BY-SEA, WORTHING"
-//          Option(html.getElementById("cateringAddress.county").`val`()).value       shouldBe "West Sussex"
-//          Option(html.getElementById("cateringAddress.postcode").`val`()).value     shouldBe "BN12 4AX"
-//        }
-//      }
-//    }
+    "handling POST / requests" should {
+      "reply 400 and error messages when the form is submitted with invalid data" in new ControllerFixture(FOR6010) {
+        val result  = controller.submit(index = None)(fakePostRequest)
+        val content = contentAsString(result)
+        status(result) shouldBe BAD_REQUEST
+        content          should include("error.operatorName.required")
+        content          should include("error.typeOfBusiness.required")
+      }
+      "reply 303 when the form is submitted with good data and index=0" in new ControllerFixture(FOR6010) {
+        val result = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatorName"                       -> "Another Operator",
+            "typeOfBusiness"                     -> "Different Business",
+            "cateringAddress.buildingNameNumber" -> "004",
+            "cateringAddress.street1"            -> "GORING ROAD",
+            "cateringAddress.town"               -> "GORING-BY-SEA, WORTHING",
+            "cateringAddress.county"             -> "West sussex",
+            "cateringAddress.postcode"           -> "BN12 4AX"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/path/to/anywhere"
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        val updatedCateringOperationDetails =
+          data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
+        updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
+        updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
+        reset(repository)
+      }
+      "reply 303 when the form is submitted with good data but missing index" in new ControllerFixture(FOR6010) {
+        pending
+        // val result = controller.submit(index = None)(
+        //   fakePostRequest.withFormUrlEncodedBody(
+        //     "operatorName" -> "Another Operator",
+        //     "typeOfBusiness" -> "Different Business",
+        //     "cateringAddress.buildingNameNumber" -> "004",
+        //     "cateringAddress.street1" -> "GORING ROAD",
+        //     "cateringAddress.town" -> "GORING-BY-SEA, WORTHING",
+        //     "cateringAddress.county" -> "West sussex",
+        //     "cateringAddress.postcode" -> "BN12 4AX"
+        //   )
+        // )
+        // status(result) shouldBe SEE_OTHER
+        // redirectLocation(result).value shouldBe "/path/to/anywhere"
+        // verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        // val updatedCateringOperationDetails =
+        //   data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
+        // updatedCateringOperationDetails.operatorName shouldBe "Another Operator" // instead of "Operator Name"
+        // updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
+        // reset(repository)
+      }
+      "reply 303 when the form is submitted with good data and the aboutFranchisesOrLettings was missing in session" in new ControllerFixture(
+        aboutFranchisesOrLettings = None
+      ) {
+        val result = controller.submit(index = None)(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatorName"                       -> "Another Operator",
+            "typeOfBusiness"                     -> "Different Business",
+            "cateringAddress.buildingNameNumber" -> "004",
+            "cateringAddress.street1"            -> "GORING ROAD",
+            "cateringAddress.town"               -> "GORING-BY-SEA, WORTHING",
+            "cateringAddress.county"             -> "West sussex",
+            "cateringAddress.postcode"           -> "BN12 4AX"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/path/to/anywhere"
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        val updatedCateringOperationDetails =
+          data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
+        updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
+        updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
+        reset(repository)
+      }
+    }
   }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
+  trait ControllerFixture(
+    givenForType: ForType = FOR6010,
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ):
 
-      val res = cateringOperationOrLettingAccommodationDetailsController().submit(None)(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+    extension (el: Element) def value = Option(el.`val`()).get
+    extension (d: Document)
+      def backLinkHref                = d.getElementsByClass("govuk-back-link").first().attribute("href").getValue
+
+    val navigator     = mock[AboutFranchisesOrLettingsNavigator]
+    val SessionToCall = (_: Session) => Call("GET", "/path/to/anywhere")
+    when(navigator.nextPage(any[Identifier], any[Session])(any[HeaderCarrier], any[Request[AnyContent]]))
+      .thenReturn(SessionToCall)
+
+    val repository = mock[SessionRepo]
+    val data       = captor[Session]
+    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+
+    val controller =
+      new CateringOperationDetailsController(
+        stubMessagesControllerComponents(),
+        navigator,
+        inject[CateringOperationOrLettingAccommodationDetailsView],
+        preEnrichedActionRefiner(
+          forType = givenForType,
+          aboutFranchisesOrLettings = aboutFranchisesOrLettings
+        ),
+        repository
       )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
-}

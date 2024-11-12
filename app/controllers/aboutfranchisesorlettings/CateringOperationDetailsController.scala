@@ -26,7 +26,6 @@ import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, 
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationDetailsPageId
 import play.api.i18n.I18nSupport
-import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
@@ -62,14 +61,7 @@ class CateringOperationDetailsController @Inject() (
         index,
         "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
-        getBackLink(request.sessionData, index) match {
-          case Right(link) => link
-          case Left(msg)   =>
-            logger.warn(s"Navigation for catering operation details page reached with error: $msg")
-            throw new RuntimeException(
-              s"Navigation for catering operation details page reached with error $msg"
-            )
-        },
+        getBackLink(request.sessionData, index),
         request.sessionData.toSummary,
         request.sessionData.forType
       )
@@ -86,14 +78,7 @@ class CateringOperationDetailsController @Inject() (
             index,
             "concessionDetails",
             "cateringOperationOrLettingAccommodationDetails",
-            getBackLink(request.sessionData, index) match {
-              case Right(link) => link
-              case Left(msg)   =>
-                logger.warn(s"Navigation for catering operation details page reached with error: $msg")
-                throw new RuntimeException(
-                  s"Navigation for catering operation details page reached with error $msg"
-                )
-            },
+            getBackLink(request.sessionData, index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
@@ -103,7 +88,9 @@ class CateringOperationDetailsController @Inject() (
           IndexedSeq(CateringOperationSection(cateringOperationDetails = data))
         )
         val updatedAboutFranchisesOrLettings =
-          request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
+          request.sessionData.aboutFranchisesOrLettings.fold(
+            ifFranchisesOrLettingsEmpty
+          ) { franchiseOrLettings =>
             val existingSections                                             = franchiseOrLettings.cateringOperationSections
             val requestedSection                                             = index.flatMap(existingSections.lift)
             val updatedSections: (Int, IndexedSeq[CateringOperationSection]) =
@@ -130,18 +117,16 @@ class CateringOperationDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session, maybeIndex: Option[Int]): Either[String, String] =
+  private def getBackLink(answers: Session, maybeIndex: Option[Int]): String =
     answers.forType match {
       case FOR6015 | FOR6016 =>
-        Right(controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url)
+        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
       case _                 =>
         maybeIndex match {
           case Some(index) if index > 0 =>
-            Right(
-              controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
-            )
+            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
           case _                        =>
-            Right(controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url)
+            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
         }
     }
 }
