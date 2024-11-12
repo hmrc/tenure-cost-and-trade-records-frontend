@@ -29,7 +29,7 @@ object IsGivenRentFreePeriodForm {
   val isGivenRentFreePeriodForm: Form[AnswersYesNo] =
     Form(
       single(
-        "isGivenRentFreePeriod" -> createYesNoType("error.isGivenRentFreePeriod.required")
+        "rentFreePeriod" -> createYesNoType("error.rentFreePeriod.required")
       )
     )
 
