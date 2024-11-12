@@ -34,8 +34,8 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers:
   }
 
   it should "serialize to encrypted JSON" in {
-    val encryptedValue          = SensitiveLettingHistory(clearValue)
-    val jsonValue               = Json.toJson(encryptedValue)
+    val encryptedValue = SensitiveLettingHistory(clearValue)
+    val jsonValue      = Json.toJson(encryptedValue)
 
     (jsonValue \ "hasPermanentResidents").as[String] mustBe "yes"
     val encryptedResidentDetail = (jsonValue \ "permanentResidents").head.as[SensitiveResidentDetail]
