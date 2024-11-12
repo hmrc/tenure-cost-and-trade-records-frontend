@@ -41,7 +41,7 @@ class ResidentDetailControllerSpec extends LettingHistorySpec:
         content                     should include("""name="name"""")
         content                     should include("""name="address"""")
       }
-      "be handling good POST /detail by replying 303 redirect to 'Residents List' page" in new FreshSessionFixture {
+      "be handling good POST /detail by replying 303 redirect to to 'Residents List' page" in new FreshSessionFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
           "name"    -> "Mr. Unknown",
           "address" -> "Neverland"

@@ -248,3 +248,6 @@ POST        /income                                                controllers.a
 
 GET         /fixed-costs                                           controllers.aboutthetradinghistory.FixedCosts6048Controller.show
 POST        /fixed-costs                                           controllers.aboutthetradinghistory.FixedCosts6048Controller.submit
+
+GET         /accounting-costs                                      controllers.aboutthetradinghistory.AccountingCosts6048Controller.show
+POST        /accounting-costs                                      controllers.aboutthetradinghistory.AccountingCosts6048Controller.submit
