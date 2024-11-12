@@ -2932,7 +2932,7 @@ fieldName.commercialLettingQuestion =  the {0} when property first become availa
 ################################
 
 commercialLettingAvailability.heading = Availability for commercial lettings - up to 28 nights
-commercialLettingAvailability.declare = Declare how many nights your property was available for letting commercially - in periods not longer than 28 nights - within the stated. This includes any nights when the property was vacant, even though it was open for commercial lettings.
+commercialLettingAvailability.declare = Declare how many nights your property was available for letting commercially - in periods not longer than 28 nights - within the stated timeframe. This includes any nights when the property was vacant, even though it was open for commercial lettings.
 commercialLettingAvailability.list = Do not include any parts of property:
 commercialLettingAvailability.list.p1 = used by family or friends
 commercialLettingAvailability.list.p2 = let out to staff or permanent residents
