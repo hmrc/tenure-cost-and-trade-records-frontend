@@ -45,7 +45,7 @@
  @layout(
  pageHeading = heading,
  showSection = true,
- showH1 = false,
+ showH1 = true,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = backlink,
@@ -53,7 +53,7 @@
 ) {
  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
 
-  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {"tradingNameFromPropertyHeadingLabel6048"} else {"tradingNameFromPropertyHeadingLabel"}, labelClasses = "govuk-!-font-weight-bold govuk-label--l")
+  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {"tradingNameFromPropertyHeadingLabel6048"} else {"tradingNameFromPropertyHeadingLabel"})
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }

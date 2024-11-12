@@ -295,8 +295,8 @@ hint.ownerTrustee = Select this if you own and occupy the property - you’re co
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
-label.tradingNameFromPropertyHeadingLabel = What is the trading name of the business or organisation operating from the property?
-label.tradingNameFromPropertyHeadingLabel6048 = What is the name of the person or company operating the self-catering business from the property?
+label.tradingNameFromPropertyHeadingLabel = Trading name
+label.tradingNameFromPropertyHeadingLabel6048 = Name
 tradingNameFromProperty.heading = What is the trading name of the business or organisation operating from the property?
 tradingNameFromProperty4068.heading = What is the name of the person or company operating the self-catering business from the property?
 error.tradingNameFromProperty.required = Enter the trading name of the business or organisation
