@@ -40,7 +40,7 @@ object CommercialLettingAvailabilityWelshForm {
   ): Mapping[LettingAvailability] =
     mapping(
       "financial-year-end"        -> ignored(LocalDate.EPOCH),
-      s"lettingAvailAbility-$idx" -> optional(text)
+      s"lettingAvailability-$idx" -> optional(text)
         .verifying(
           messages("error.commercialLettingAvailability.welsh.required", year),
           _.nonEmpty
