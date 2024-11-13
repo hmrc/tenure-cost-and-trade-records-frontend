@@ -1389,7 +1389,7 @@ error.addAnotherLetting.required = Select yes if you would like to add another l
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Additions or improvements
+tenantsAdditionsDisregarded.heading = Disregarded additions or improvements
 tenantsAdditionsDisregarded.p1 = If the rent is based on the market value of the property before any additions or improvements were made by the tenant, you must provide details.
 tenantsAdditionsDisregarded.p2 = Examples of additions or improvements could include, but are not limited to:
 tenantsAdditionsDisregarded.list1 = fitting out a shell
