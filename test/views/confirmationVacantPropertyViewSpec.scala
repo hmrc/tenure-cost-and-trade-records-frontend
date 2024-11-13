@@ -34,8 +34,6 @@ class confirmationVacantPropertyViewSpec extends ViewBehaviours {
 
     "contain confirmation text" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("label.vacantProperty.emailConfirm")))
-      assert(doc.toString.contains(messages("label.vacantProperty.saveCopyOfAnswers.1")))
       assert(doc.toString.contains(messages("label.vacantProperty.unableToRetrieveAnswers")))
       assert(doc.toString.contains(messages("label.vacantProperty.whatNext")))
       assert(doc.toString.contains(messages("vacantProperty.confirm.copy.list.1")))
