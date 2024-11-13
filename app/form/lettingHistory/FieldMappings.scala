@@ -17,10 +17,9 @@
 package form.lettingHistory
 
 import actions.SessionRequest
-import controllers.lettingHistory.FiscalYearSupport
 import form.DateMappings.requiredDateMapping
 import models.submissions.lettingHistory.LocalPeriod
-import play.api.data.Forms.{date, text}
+import play.api.data.Forms.text
 import play.api.data.validation.Constraints.nonEmpty
 import play.api.i18n.Messages
 import play.api.mvc.AnyContent

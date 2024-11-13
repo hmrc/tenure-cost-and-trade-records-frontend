@@ -32,19 +32,21 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the OccupierDetail controller" when {
     "the user session is fresh"                 should {
-      "be handling GET /detail by replying 200 with the form showing name and address fields" in new FreshSessionFixture {
+      "be handling GET by replying 200 with the form showing name and address fields" in new FreshSessionFixture {
         val result  = controller.show(maybeIndex = None)(fakeGetRequest)
         val content = contentAsString(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+        content                     should include(s"""${routes.CompletedLettingsController.show.url}" class="govuk-back-link"""")
+        content                     should include("""lettingHistory.occupierDetail.heading""")
         content                     should include("""name="name"""")
         content                     should include("""name="address.line1"""")
         content                     should include("""name="address.town"""")
         content                     should include("""name="address.county"""")
         content                     should include("""name="address.postcode"""")
       }
-      "be handling good POST /detail by replying 303 redirect to 'Rental Period' page" in new FreshSessionFixture {
+      "be handling good POST by replying 303 redirect to 'Rental Period' page" in new FreshSessionFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
           "name"             -> "Mr. Unknown",
           "address.line1"    -> "11, Fantasy Street",
@@ -71,8 +73,8 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
       }
     }
     "the user session is stale" when {
-      "regardless of the given number residents" should {
-        "be handling GET /detail?index=0 by replying 200 with the form pre-filled with name and address values" in new StaleSessionFixture(
+      "regardless of the given number residents"             should {
+        "be handling GET ?index=0 by replying 200 with the form pre-filled with name and address values" in new StaleSessionFixture(
           oneOccupier
         ) {
           val result  = controller.show(maybeIndex = Some(0))(fakeGetRequest)
@@ -83,7 +85,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           content                     should include("Mr. One")
           content                     should include("Address One")
         }
-        "be handling POST /detail?unknown by replying 303 redirect to 'Rental Period' page" in new StaleSessionFixture(
+        "be handling POST unknown by replying 303 redirect to 'Rental Period' page" in new StaleSessionFixture(
           oneOccupier
         ) {
           // Post an unknown resident detail and expect it to become the third resident
@@ -110,7 +112,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             postcode = "BN12 4AX"
           )
         }
-        "be handling POST /detail?overwrite by replying 303 redirect to 'Rental Period' page" in new StaleSessionFixture(
+        "be handling POST known by replying 303 redirect to 'Rental Period' page" in new StaleSessionFixture(
           twoOccupiers
         ) {
           // Post the second resident detail again and expect it to be changed
@@ -140,9 +142,18 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           completedLettingAt(data, index = 1).value.rental  shouldBe twoOccupiers.last.rental
         }
       }
+      "and the maximum number of occupiers has been reached" should {
+        "be handling GET by replying 303 redirect to the 'Occupiers List' page" in new StaleSessionFixture(
+          fiveOccupiers
+        ) {
+          val result = controller.show(maybeIndex = None)(fakeGetRequest)
+          status(result)                 shouldBe SEE_OTHER
+          redirectLocation(result).value shouldBe routes.OccupierListController.show.url
+        }
+      }
     }
     "the user session is either fresh or stale" should {
-      "be handling invalid POST /detail by replying 400 with error messages" in new FreshSessionFixture {
+      "be handling invalid POST by replying 400 with error messages" in new FreshSessionFixture {
         val result  = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "name"             -> "",

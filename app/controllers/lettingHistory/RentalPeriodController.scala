@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.RentPeriodForm.theForm
+import form.lettingHistory.RentalPeriodForm.theForm
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.byAddingOccupierRentalPeriod
 import models.submissions.lettingHistory.{LettingHistory, LocalPeriod}

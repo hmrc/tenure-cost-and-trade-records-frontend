@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.OccupierDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.byAddingOccupierNameAndAddress
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, byAddingOccupierNameAndAddress}
 import models.submissions.lettingHistory.OccupierDetail
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.OccupierDetailPageId
@@ -41,7 +41,7 @@ class OccupierDetailController @Inject (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with FiscalYearSupport
+    with RentalPeriodSupport
     with I18nSupport:
 
   def show(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply {
@@ -51,14 +51,17 @@ class OccupierDetailController @Inject (
         yield lettingHistory.completedLettings
       ).flatten
 
-      val freshForm  = theForm
-      val filledForm =
-        for
-          index          <- maybeIndex
-          occupierDetail <- completedLettings.lift(index)
-        yield freshForm.fill(occupierDetail)
+      if maybeIndex.isEmpty && completedLettings.size == MaxNumberOfCompletedLettings
+      then Redirect(routes.OccupierListController.show)
+      else
+        val freshForm  = theForm
+        val filledForm =
+          for
+            index          <- maybeIndex
+            occupierDetail <- completedLettings.lift(index)
+          yield freshForm.fill(occupierDetail)
 
-      Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
+        Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>

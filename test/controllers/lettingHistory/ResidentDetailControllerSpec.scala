@@ -38,6 +38,8 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+        content                     should include(s"""${routes.PermanentResidentsController.show.url}" class="govuk-back-link"""")
+        content                     should include("""lettingHistory.residentDetail.heading""")
         content                     should include("""name="name"""")
         content                     should include("""name="address"""")
       }
@@ -57,7 +59,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
       }
     }
     "the user session is stale" when {
-      "regardless of the given number residents" should {
+      "regardless of the given number residents"             should {
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled with name and address values" in new StaleSessionFixture(
           oneResident
         ) {
@@ -102,6 +104,15 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           permanentResidentAt(data, index = 0).value         shouldBe oneResident.head
           permanentResidentAt(data, index = 1).value.name    shouldBe "Mr. Two"
           permanentResidentAt(data, index = 1).value.address shouldBe "22, Different Street"
+        }
+      }
+      "and the maximum number of residents has been reached" should {
+        "be handling GET /detail by replying 303 redirect to the 'Residents List' page" in new StaleSessionFixture(
+          fiveResidents
+        ) {
+          val result = controller.show(maybeIndex = None)(fakeGetRequest)
+          status(result)                 shouldBe SEE_OTHER
+          redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         }
       }
     }

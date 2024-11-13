@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.LettingHistory
+import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -38,9 +38,9 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+        content                     should include(s"""${routes.PermanentResidentsController.show.url}" class="govuk-back-link"""")
         content                     should include("lettingHistory.completedLettings.heading")
         content                     should not include "checked"
-        content                     should include(s"""${routes.PermanentResidentsController.show.url}" class="govuk-back-link"""")
       }
       "be handling invalid POST hasCompletedLettings=null and reply 400 with error message" in new FreshSessionFixture {
         val result = controller.submit(
@@ -68,13 +68,13 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET and reply 200 with the HTML form having checked radios" in new StaleSessionFixture(
           hasCompletedLettings = AnswerYes
         ) {
-          val result  = controller.show(fakeGetRequest.withSession("from" -> "residentListPage"))
+          val result  = controller.show(fakeGetRequest)
           val content = contentAsString(result)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include("checked")
           content                     should include(s"""${routes.ResidentListController.show.url}" class="govuk-back-link"""")
+          content                     should include("checked")
         }
         "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'Occupier Detail' page" in new StaleSessionFixture(
           hasCompletedLettings = AnswerNo
@@ -85,7 +85,7 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value should beAnswerYes
         }
-        "be handling POST hasCompletedLettings='no' and reply 303 redirect to the 'How many nights' page" in new StaleSessionFixture(
+        "be handling POST hasCompletedLettings='no' and reply 303 redirect to the 'Letting intention' page" in new StaleSessionFixture(
           hasCompletedLettings = AnswerYes
         ) {
           // Answering 'no' will clear out all residents details
@@ -136,6 +136,10 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
+            hasPermanentResidents = Some(AnswerYes),
+            permanentResidents = List(
+              ResidentDetail(name = "Mr. One", address = "1, Street")
+            ),
             hasCompletedLettings = Some(hasCompletedLettings)
           )
         )
