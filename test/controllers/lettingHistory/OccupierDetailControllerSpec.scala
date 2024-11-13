@@ -19,6 +19,7 @@ package controllers.lettingHistory
 import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.lettingHistory.{Address, LettingHistory, OccupierDetail}
+import models.submissions.lettingHistory.LettingHistory._
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -56,10 +57,11 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           "address.postcode" -> "BN124AX"
         )
         val result  = controller.submit(request)
-        status(result)                            shouldBe SEE_OTHER
-        redirectLocation(result).value            shouldBe routes.RentalPeriodController.show(index = Some(0)).url
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.RentalPeriodController.show(index = Some(0)).url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        completedLettingAt(data, index = 0).value shouldBe OccupierDetail(
+        completedLettings(data)          should have size 1
+        completedLettings(data)(0)     shouldBe OccupierDetail(
           name = "Mr. Unknown",
           address = Address(
             line1 = "11, Fantasy Street",
@@ -98,13 +100,13 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.postcode" -> "BN124AX"
           )
           val result  = controller.submit(request)
-          status(result)                                    shouldBe SEE_OTHER
-          redirectLocation(result).value                    shouldBe routes.RentalPeriodController.show(index = Some(1)).url
+          status(result)                     shouldBe SEE_OTHER
+          redirectLocation(result).value     shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          completedLettings(data)                             should have size 2 // instead of 1
-          completedLettingAt(data, index = 0).value         shouldBe oneOccupier.head
-          completedLettingAt(data, index = 1).value.name    shouldBe "Mr. Unknown"
-          completedLettingAt(data, index = 1).value.address shouldBe Address(
+          completedLettings(data)              should have size 2 // instead of 1
+          completedLettings(data)(0)         shouldBe oneOccupier.head
+          completedLettings(data)(1).name    shouldBe "Mr. Unknown"
+          completedLettings(data)(1).address shouldBe Address(
             line1 = "11, Fantasy Street",
             line2 = None,
             town = "Neverland",
@@ -126,20 +128,20 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.postcode" -> "BN124AX"
           )
           val result  = controller.submit(request)
-          status(result)                                    shouldBe SEE_OTHER
-          redirectLocation(result).value                    shouldBe routes.RentalPeriodController.show(index = Some(1)).url
+          status(result)                     shouldBe SEE_OTHER
+          redirectLocation(result).value     shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          completedLettings(data)                             should have size 2 // the same as it was before sending the post request
-          completedLettingAt(data, index = 0).value         shouldBe oneOccupier.head
-          completedLettingAt(data, index = 1).value.name    shouldBe "Mr. Two"
-          completedLettingAt(data, index = 1).value.address shouldBe Address(
+          completedLettings(data)              should have size 2 // the same as it was before sending the post request
+          completedLettings(data)(0)         shouldBe oneOccupier.head
+          completedLettings(data)(1).name    shouldBe "Mr. Two"
+          completedLettings(data)(1).address shouldBe Address(
             line1 = "22, Different Street", // instead of "Address Two"
             line2 = None,
             town = "Neverland",
             county = Some("Nowhere"),
             postcode = "BN12 4AX"
           )
-          completedLettingAt(data, index = 1).value.rental  shouldBe twoOccupiers.last.rental
+          completedLettings(data)(1).rental  shouldBe twoOccupiers.last.rental
         }
       }
       "and the maximum number of occupiers has been reached" should {
@@ -197,7 +199,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasCompletedLettings = Some(if completedLettings.isEmpty then AnswerNo else AnswerYes),
+            hasCompletedLettings = Some(completedLettings.nonEmpty),
             completedLettings = completedLettings
           )
         )

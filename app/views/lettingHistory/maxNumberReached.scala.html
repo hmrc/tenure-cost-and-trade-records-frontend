@@ -1,0 +1,97 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.lettingHistory.routes
+@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents}
+@import play.api.data.Form
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+
+@this(layout: Layout, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton)
+
+@(theForm: Form[Boolean], alreadyChecked: Boolean, kind: String, backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+
+
+@maxNumberOfEntries = @{
+    kind match {
+        case "permanentResidents" => MaxNumberOfPermanentResidents
+        case "temporaryOccupiers" => MaxNumberOfCompletedLettings
+        case _ => 0
+    }
+}
+
+@checkOrUpdateCall = @{
+    kind match {
+        case "permanentResidents" => routes.ResidentListController.show
+        case "temporaryOccupiers" => routes.OccupierListController.show
+        case _ => Call("POST", "/unknown")
+    }
+}
+
+@headingMessage = @{
+    messages(
+        s"lettingHistory.maxNumberReached.$kind.heading",
+        maxNumberOfEntries.toString
+    )
+}
+
+@layout(
+    theForm = theForm,
+    summary = Some(request.sessionData.toSummary),
+    pageHeading = headingMessage,
+    backLinkUrl = backLink,
+    showSection = true,
+    sectionName = messages("label.section.lettingHistory"),
+) {
+
+    <p class="govuk-body">
+        @messages(
+            s"lettingHistory.maxNumberReached.$kind.paragraph.1",
+            s"${maxNumberOfEntries + 1}"
+        )
+    </p>
+
+    @formWithCSRF(action = routes.MaxNumberReachedController.submit(kind)) {
+
+        @govukCheckboxes(
+            Checkboxes(
+                fieldset = None,
+                hint = None,
+                name = "understood",
+                items = Seq(
+                    CheckboxItem(
+                        content = Text(messages("lettingHistory.maxNumberReached.understanding")),
+                        value = "true",
+                        checked = alreadyChecked
+                    )
+                )
+            )
+        )
+
+        <p class="govuk-body govuk-!-margin-bottom-8">
+            <a href="@checkOrUpdateCall.url">
+                @messages(
+                    s"lettingHistory.maxNumberReached.$kind.link.1",
+                    maxNumberOfEntries.toString
+                )
+            </a>
+        </p>
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}
