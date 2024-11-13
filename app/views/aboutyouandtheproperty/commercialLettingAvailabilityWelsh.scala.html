@@ -83,8 +83,8 @@
         TableRow(
          content = HtmlContent(
           govukInput(Input(
-           id = s"lettingAvailAbility-$idx",
-           name = s"lettingAvailAbility-$idx",
+           id = s"lettingAvailability-$idx",
+           name = s"lettingAvailability-$idx",
            value = theForm(s"lettingAvailAbility-$idx").value,
            classes = "govuk-input--width-5",
            attributes = Map(
@@ -93,7 +93,7 @@
            suffix = Some(PrefixOrSuffix(
             content = Text(messages("commercialLettingAvailability.label.nights"))
            ))
-          ).withFormField(theForm(s"lettingAvailAbility-$idx")))
+          ).withFormField(theForm(s"lettingAvailability-$idx")))
          ),
          classes = "govuk-!-width-one-third"
         )

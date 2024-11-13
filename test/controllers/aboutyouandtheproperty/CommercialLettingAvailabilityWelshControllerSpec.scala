@@ -34,7 +34,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
   private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
-      s"lettingAvailAbility-$idx" -> "100"
+      s"lettingAvailability-$idx" -> "100"
     )
 
   private def formData: Seq[(String, String)] =
@@ -98,12 +98,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
     "return 400 and error message for invalid character" in {
 
-      val formData = Map("lettingAvailAbility-0" -> "xxx")
+      val formData = Map("lettingAvailability-0" -> "xxx")
 
       val form =
         CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
       mustContainError(
-        "lettingAvailAbility-0",
+        "lettingAvailability-0",
         messages("error.commercialLettingAvailability.welsh.range", 2024.toString),
         form
       )
@@ -111,12 +111,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
     "return 400 and error message for empty input" in {
 
-      val formData = Map("lettingAvailAbility-1" -> "")
+      val formData = Map("lettingAvailability-1" -> "")
 
       val form =
         CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
       mustContainError(
-        "lettingAvailAbility-1",
+        "lettingAvailability-1",
         messages("error.commercialLettingAvailability.welsh.required", 2023.toString),
         form
       )
@@ -124,12 +124,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
     "return 400 and error message for invalid number" in {
 
-      val formData = Map("lettingAvailAbility-2" -> "366")
+      val formData = Map("lettingAvailability-2" -> "366")
 
       val form =
         CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
       mustContainError(
-        "lettingAvailAbility-2",
+        "lettingAvailability-2",
         messages("error.commercialLettingAvailability.welsh.range", 2022.toString),
         form
       )
