@@ -40,7 +40,7 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         content                     should include("lettingHistory.completedLettings.heading")
         content                     should not include "checked"
-        content                     should include("""/permanent-residents" class="govuk-back-link"""")
+        content                     should include(s"""${routes.PermanentResidentsController.show.url}" class="govuk-back-link"""")
       }
       "be handling invalid POST hasCompletedLettings=null and reply 400 with error message" in new FreshSessionFixture {
         val result = controller.submit(
@@ -74,7 +74,7 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
           content                     should include("checked")
-          content                     should include("""/resident-list" class="govuk-back-link"""")
+          content                     should include(s"""${routes.ResidentListController.show.url}" class="govuk-back-link"""")
         }
         "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'Occupier Detail' page" in new StaleSessionFixture(
           hasCompletedLettings = AnswerNo

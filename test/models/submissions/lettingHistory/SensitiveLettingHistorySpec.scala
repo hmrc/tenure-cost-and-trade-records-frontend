@@ -24,6 +24,7 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
 import play.api.Configuration
 import play.api.libs.json.{JsSuccess, Json}
+import java.time.LocalDate
 
 class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionValues:
 
@@ -38,12 +39,12 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
     val encryptedValue = SensitiveLettingHistory(clearLettingHistory)
     val jsonValue      = Json.toJson(encryptedValue)
 
-    (jsonValue \ "hasPermanentResidents").as[String] mustBe "yes"
+    (jsonValue \ "hasPermanentResidents").as[Boolean] mustBe true
     val encryptedResidentDetail = (jsonValue \ "permanentResidents").head.as[SensitiveResidentDetail]
     encryptedResidentDetail.name    must not be clearLettingHistory.permanentResidents.head.name
     encryptedResidentDetail.address must not be clearLettingHistory.permanentResidents.head.address
 
-    (jsonValue \ "hasCompletedLettings").as[String] mustBe "yes"
+    (jsonValue \ "hasCompletedLettings").as[Boolean] mustBe true
     val encryptedOccupierDetails = (jsonValue \ "completedLettings").head.as[SensitiveOccupierDetail]
     encryptedOccupierDetails.name                 must not be clearLettingHistory.completedLettings.head.name
     encryptedOccupierDetails.address.line1        must not be clearLettingHistory.completedLettings.head.address.line1
@@ -51,6 +52,9 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
     encryptedOccupierDetails.address.town         must not be clearLettingHistory.completedLettings.head.address.town
     encryptedOccupierDetails.address.county.value must not be clearLettingHistory.completedLettings.head.address.county.value
     encryptedOccupierDetails.address.postcode     must not be clearLettingHistory.completedLettings.head.address.postcode
+    encryptedOccupierDetails.rental.isDefined mustBe true
+    encryptedOccupierDetails.rental.value.fromDate mustBe clearLettingHistory.completedLettings.head.rental.value.fromDate
+    encryptedOccupierDetails.rental.value.toDate mustBe clearLettingHistory.completedLettings.head.rental.value.toDate
   }
 
   it should "deserialize from encrypted JSON" in {
@@ -77,6 +81,12 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
           town = "NeverTown",
           county = Some("Birds' Island"),
           postcode = "BN124AX"
+        ),
+        rental = Some(
+          LocalPeriod(
+            fromDate = LocalDate.of(2023, 4, 1),
+            toDate = LocalDate.of(2024, 3, 31)
+          )
         )
       )
     )

@@ -55,7 +55,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         )
         val result  = controller.submit(request)
         status(result)                            shouldBe SEE_OTHER
-        redirectLocation(result).value            shouldBe "/path/to/rental-period"
+        redirectLocation(result).value            shouldBe routes.RentalPeriodController.show(index = Some(0)).url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         completedLettingAt(data, index = 0).value shouldBe OccupierDetail(
           name = "Mr. Unknown",
@@ -65,7 +65,8 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             town = "Neverland",
             county = None,
             postcode = "BN12 4AX"
-          )
+          ),
+          rental = None
         )
       }
     }
@@ -96,7 +97,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           )
           val result  = controller.submit(request)
           status(result)                                    shouldBe SEE_OTHER
-          redirectLocation(result).value                    shouldBe "/path/to/rental-period"
+          redirectLocation(result).value                    shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           completedLettings(data)                             should have size 2 // instead of 1
           completedLettingAt(data, index = 0).value         shouldBe oneOccupier.head
@@ -124,7 +125,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           )
           val result  = controller.submit(request)
           status(result)                                    shouldBe SEE_OTHER
-          redirectLocation(result).value                    shouldBe "/path/to/rental-period"
+          redirectLocation(result).value                    shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           completedLettings(data)                             should have size 2 // the same as it was before sending the post request
           completedLettingAt(data, index = 0).value         shouldBe oneOccupier.head
@@ -136,6 +137,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             county = Some("Nowhere"),
             postcode = "BN12 4AX"
           )
+          completedLettingAt(data, index = 1).value.rental  shouldBe twoOccupiers.last.rental
         }
       }
     }

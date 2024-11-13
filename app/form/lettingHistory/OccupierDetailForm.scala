@@ -37,5 +37,8 @@ object OccupierDetailForm:
         "county"   -> optional(county),
         "postcode" -> postcode(requiredError = "error.postcodeAlternativeContact.required")
       )(Address.apply)(Address.unapply)
-    )(OccupierDetail.apply)(OccupierDetail.unapply)
+    )((name, address) => OccupierDetail.apply(name, address, rental = None)) { obj =>
+      val Some(name, address, _) = OccupierDetail.unapply(obj): @unchecked
+      Some((name, address))
+    }
   )
