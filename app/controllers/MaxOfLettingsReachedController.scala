@@ -83,7 +83,7 @@ class MaxOfLettingsReachedController @Inject() (
             updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
           case Some("lettings")          => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
           case Some("rentalIncome")      => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
-          case _ => request.sessionData
+          case _                         => request.sessionData
         }
         session
           .saveOrUpdate(updatedData)

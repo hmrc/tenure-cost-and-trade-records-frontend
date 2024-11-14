@@ -21,17 +21,20 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class AccountingCosts6048ControllerSpec extends TestBaseSpec {
+class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
+  private val previousPage = aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
 
-  private val nextPage = aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
+  private val nextPage =
+    aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+      .show()
+      .url // TODO: OperationalCosts6048Controller
 
   private val cyaPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def accountingCosts6048Controller =
-    new AccountingCosts6048Controller(
-      accountingCosts6048View,
+  def administrativeCosts6048Controller =
+    new AdministrativeCosts6048Controller(
+      administrativeCosts6048View,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6048),
@@ -43,12 +46,12 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = accountingCosts6048Controller.show(fakeRequest)
+      val result = administrativeCosts6048Controller.show(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = accountingCosts6048Controller.show(fakeRequest)
+      val result = administrativeCosts6048Controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -59,7 +62,7 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec {
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = accountingCosts6048Controller.show(fakeRequestFromCYA)
+      val result  = administrativeCosts6048Controller.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include(cyaPage)
       content should not include previousPage
@@ -87,7 +90,7 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
-      val res = accountingCosts6048Controller.submit(
+      val res = administrativeCosts6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
@@ -95,27 +98,27 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid form data - negative value" in {
-      val res = accountingCosts6048Controller.submit(
+      val res = administrativeCosts6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(
-        """<a href="#turnover[0].wagesAndNationalInsurance">error.turnover.6048.accountingCosts.wagesAndNationalInsurance.negative</a>"""
+        """<a href="#turnover[0].wagesAndNationalInsurance">error.turnover.6048.administrativeCosts.wagesAndNationalInsurance.negative</a>"""
       )
     }
 
     "return 400 and error message for invalid form data - missed value" in {
-      val res = accountingCosts6048Controller.submit(
+      val res = administrativeCosts6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormDataPerYear(2)*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(
-        """<a href="#turnover[0].wagesAndNationalInsurance">error.turnover.6048.accountingCosts.wagesAndNationalInsurance.required</a>"""
+        """<a href="#turnover[0].wagesAndNationalInsurance">error.turnover.6048.administrativeCosts.wagesAndNationalInsurance.required</a>"""
       )
     }
 
     "return 400 for empty turnoverSections" in {
-      val res = accountingCosts6048Controller.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = administrativeCosts6048Controller.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }
