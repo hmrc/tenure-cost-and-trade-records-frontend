@@ -36,11 +36,11 @@
 }
 
     @heading = @{
-        if(forType == FOR6076 || forType == FOR6048) messages("areYouThirdParty6076.heading") else messages("areYouThirdParty.heading")
+        if(forType == FOR6076 || forType == FOR6048 || forType == FOR6045 || forType == FOR6046) messages("areYouThirdParty6076.heading") else messages("areYouThirdParty.heading")
     }
 
     @showH1 = @{
-        if(forType == FOR6076 || forType == FOR6048) true else false
+        if(forType == FOR6076 || forType == FOR6048 || forType == FOR6045 || forType == FOR6046) true else false
     }
 
 @layout(
@@ -55,7 +55,7 @@
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
 
-      @if(forType == FOR6076 || forType == FOR6048) {
+      @if(forType == FOR6076 || forType == FOR6048 || forType == FOR6045 || forType == FOR6046) {
 
           <p class="govuk-body">@{
               messages("areYouThirdParty6076.p1", tradingName)
