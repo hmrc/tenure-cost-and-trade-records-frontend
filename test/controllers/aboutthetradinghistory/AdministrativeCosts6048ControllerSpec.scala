@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 
 class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
+  private val previousPage = aboutthetradinghistory.routes.AccountingCosts6048Controller.show.url
 
   private val nextPage =
     aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
@@ -71,11 +71,11 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
 
   private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
-      s"turnover[$idx].wagesAndNationalInsurance" -> (idx * 10).toString,
-      s"turnover[$idx].depreciationBuildings"     -> (idx * 100).toString,
-      s"turnover[$idx].depreciationContents"      -> (idx * 1000).toString,
-      s"turnover[$idx].bookkeepingOrAccountancy"  -> (idx * 22000).toString,
-      s"turnover[$idx].bankCharges"               -> (idx * 33000).toString
+      s"turnover[$idx].subscriptionsAndFees"                -> (idx * 10).toString,
+      s"turnover[$idx].telephoneBroadbandStationeryPostage" -> (idx * 100).toString,
+      s"turnover[$idx].bookingAgency"                       -> (idx * 1000).toString,
+      s"turnover[$idx].advertising"                         -> (idx * 22000).toString,
+      s"turnover[$idx].printing"                            -> (idx * 33000).toString
     )
 
   private def validFormData: Seq[(String, String)] =
@@ -103,7 +103,7 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(
-        """<a href="#turnover[0].wagesAndNationalInsurance">error.turnover.6048.administrativeCosts.wagesAndNationalInsurance.negative</a>"""
+        """<a href="#turnover[0].subscriptionsAndFees">error.turnover.6048.administrativeCosts.subscriptionsAndFees.negative</a>"""
       )
     }
 
@@ -113,7 +113,7 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(
-        """<a href="#turnover[0].wagesAndNationalInsurance">error.turnover.6048.administrativeCosts.wagesAndNationalInsurance.required</a>"""
+        """<a href="#turnover[0].subscriptionsAndFees">error.turnover.6048.administrativeCosts.subscriptionsAndFees.required</a>"""
       )
     }
 
