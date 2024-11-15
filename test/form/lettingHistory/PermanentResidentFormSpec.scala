@@ -22,7 +22,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues
 
-class PermanentResidentFormSpec extends AnyFlatSpec with Matchers with OptionValues:
+class PermanentResidentFormSpec extends FormSpec:
 
   it should "bind data as expected" in {
     val data  = Map(
@@ -42,7 +42,12 @@ class PermanentResidentFormSpec extends AnyFlatSpec with Matchers with OptionVal
   }
 
   it should "detect errors" in {
-    val bound = theForm.bind(Map.empty)
+    // When the form gets submitted before being filled
+    val bound = theForm.bind(
+      Map(
+        "hasPermanentResidents" -> ""
+      )
+    )
     bound.hasErrors mustBe true
     bound.errors must have size 1
     bound

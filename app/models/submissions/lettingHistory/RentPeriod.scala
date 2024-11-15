@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package models.submissions.lettingHistory
 
-import form.lettingHistory.FieldMappings.nonEmptyText
-import models.submissions.lettingHistory.ResidentDetail
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import java.time.LocalDate
 
-object ResidentDetailForm:
-  val theForm = Form(
-    mapping(
-      "name"    -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.name.required"),
-      "address" -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.address.required")
-    )(ResidentDetail.apply)(ResidentDetail.unapply)
-  )
+case class RentPeriod(
+  fromDate: LocalDate,
+  toDate: LocalDate
+)
+
+object RentPeriod:
+  def unapply(obj: RentPeriod): Option[(LocalDate, LocalDate)] = Some((obj.fromDate, obj.toDate))

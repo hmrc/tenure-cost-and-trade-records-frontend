@@ -21,8 +21,10 @@ import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.libs.json.{Format, Json}
 
 case class LettingHistory(
-  hasPermanentResidents: AnswersYesNo = AnswerNo,
-  permanentResidents: List[ResidentDetail] = Nil
+  hasPermanentResidents: Option[AnswersYesNo] = None,
+  permanentResidents: List[ResidentDetail] = Nil,
+  hasCompletedLettings: Option[AnswersYesNo] = None,
+  completedLettings: List[ResidentDetail] = Nil
 )
 
 object LettingHistory:
@@ -38,27 +40,29 @@ object LettingHistory:
       )
     )
 
-  def sessionWithPermanentResidents(hasPermanentResidents: AnswersYesNo)(using session: Session): Session =
+  def withPermanentResidents(hasPermanentResidents: AnswersYesNo)(using session: Session): Session =
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasPermanentResidents = hasPermanentResidents
+        hasPermanentResidents = Some(hasPermanentResidents)
       ),
       copyFunc = lettingHistory =>
         hasPermanentResidents match
           case AnswerYes =>
-            lettingHistory.copy(hasPermanentResidents = hasPermanentResidents)
+            lettingHistory.copy(hasPermanentResidents = Some(AnswerYes))
           case AnswerNo  =>
-            lettingHistory.copy(hasPermanentResidents = hasPermanentResidents, permanentResidents = Nil)
+            lettingHistory.copy(hasPermanentResidents = Some(AnswerNo), permanentResidents = Nil)
     )
 
   def hasPermanentResidents(session: Session): Option[AnswersYesNo] =
-    for lettingHistory <- session.lettingHistory
-    yield lettingHistory.hasPermanentResidents
+    for
+      lettingHistory        <- session.lettingHistory
+      hasPermanentResidents <- lettingHistory.hasPermanentResidents
+    yield hasPermanentResidents
 
-  def sessionByAddingPermanentResident(residentDetail: ResidentDetail)(using session: Session): Session =
+  def byAddingPermanentResident(residentDetail: ResidentDetail)(using session: Session): Session =
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasPermanentResidents = AnswerYes,
+        hasPermanentResidents = Some(AnswerYes),
         permanentResidents = List(residentDetail)
       ),
       copyFunc = { lettingHistory =>
@@ -79,10 +83,10 @@ object LettingHistory:
       }
     )
 
-  def sessionByRemovingPermanentResidentAt(index: Int)(using session: Session): Session =
+  def byRemovingPermanentResidentAt(index: Int)(using session: Session): Session =
     this.foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasPermanentResidents = AnswerYes,
+        hasPermanentResidents = Some(AnswerNo),
         permanentResidents = Nil
       ),
       copyFunc = { lettingHistory =>
@@ -95,5 +99,24 @@ object LettingHistory:
       lettingHistory     <- session.lettingHistory.toList
       permanentResidents <- lettingHistory.permanentResidents
     yield permanentResidents
+
+  def hasCompletedLettings(session: Session): Option[AnswersYesNo] =
+    for
+      lettingHistory       <- session.lettingHistory
+      hasCompletedLettings <- lettingHistory.hasCompletedLettings
+    yield hasCompletedLettings
+
+  def withCompletedLettings(hasCompletedLettings: AnswersYesNo)(using session: Session): Session =
+    this.foldLettingHistory(
+      ifEmpty = LettingHistory(
+        hasCompletedLettings = Some(hasCompletedLettings)
+      ),
+      copyFunc = lettingHistory =>
+        hasCompletedLettings match
+          case AnswerYes =>
+            lettingHistory.copy(hasCompletedLettings = Some(AnswerYes))
+          case AnswerNo  =>
+            lettingHistory.copy(hasCompletedLettings = Some(AnswerNo), completedLettings = Nil)
+    )
 
   given Format[LettingHistory] = Json.format

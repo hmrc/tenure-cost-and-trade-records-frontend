@@ -22,7 +22,7 @@ import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 
-class ResidentListFormSpec extends AnyFlatSpec with Matchers with OptionValues:
+class ResidentListFormSpec extends FormSpec:
 
   it should "bind data as expected" in {
     val data  = Map(
@@ -42,8 +42,13 @@ class ResidentListFormSpec extends AnyFlatSpec with Matchers with OptionValues:
   }
 
   it should "detect errors" in {
-    val bound = theForm.bind(Map.empty)
+    // When the form gets submitted before being filled
+    val bound = theForm.bind(
+      Map(
+        "hasMoreResidents" -> ""
+      )
+    )
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound.error("hasMoreResidents").value.message mustBe "lettingHistory.residentList.hasMoreResidents.error"
+    bound.error("hasMoreResidents").value.message mustBe "lettingHistory.residentList.hasMoreResidents.required"
   }

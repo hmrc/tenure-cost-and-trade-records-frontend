@@ -28,7 +28,7 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.residentDetail as ResidentDetailView
 
-class ResidentDetailControllerSpec extends LettingHistorySpec:
+class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the ResidentDetail controller" when {
     "the user session is fresh"                 should {
@@ -107,11 +107,16 @@ class ResidentDetailControllerSpec extends LettingHistorySpec:
     }
     "the user session is either fresh or stale" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new FreshSessionFixture {
-        val result  = controller.submit(fakePostRequest)
+        val result  = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "name"    -> "",
+            "address" -> ""
+          )
+        )
         val content = contentAsString(result)
         status(result) shouldBe BAD_REQUEST
-        content          should include("lettingHistory.residentDetail.name.error")
-        content          should include("lettingHistory.residentDetail.address.error")
+        content          should include("lettingHistory.residentDetail.name.required")
+        content          should include("lettingHistory.residentDetail.address.required")
       }
     }
   }
@@ -139,7 +144,7 @@ class ResidentDetailControllerSpec extends LettingHistorySpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasPermanentResidents = if permanentResidents.isEmpty then AnswerNo else AnswerYes,
+            hasPermanentResidents = Some(if permanentResidents.isEmpty then AnswerNo else AnswerYes),
             permanentResidents = permanentResidents
           )
         )

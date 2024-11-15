@@ -22,7 +22,7 @@ import form.lettingHistory.PermanentResidentsForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
 import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory.sessionWithPermanentResidents
+import models.submissions.lettingHistory.LettingHistory.withPermanentResidents
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.PermanentResidentsPageId
 import play.api.i18n.I18nSupport
@@ -47,8 +47,10 @@ class PermanentResidentsController @Inject() (
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     val freshForm  = theForm
     val filledForm =
-      for lettingHistory <- request.sessionData.lettingHistory
-      yield freshForm.fill(lettingHistory.hasPermanentResidents)
+      for
+        lettingHistory        <- request.sessionData.lettingHistory
+        hasPermanentResidents <- lettingHistory.hasPermanentResidents
+      yield freshForm.fill(hasPermanentResidents)
 
     Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
   }
@@ -59,7 +61,7 @@ class PermanentResidentsController @Inject() (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       hasPermanentResidents =>
         given Session = request.sessionData
-        for updatedSession <- repository.saveOrUpdateSession(sessionWithPermanentResidents(hasPermanentResidents))
+        for updatedSession <- repository.saveOrUpdateSession(withPermanentResidents(hasPermanentResidents))
         yield navigator.redirect(fromPage = PermanentResidentsPageId, updatedSession)
     )
   }

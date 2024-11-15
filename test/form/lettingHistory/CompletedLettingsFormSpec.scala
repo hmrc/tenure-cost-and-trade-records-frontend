@@ -16,34 +16,28 @@
 
 package form.lettingHistory
 
-import models.submissions.lettingHistory.ResidentDetail
-import form.lettingHistory.ResidentDetailForm.theForm
+import form.lettingHistory.CompletedLettingsForm.theForm
+import models.submissions.common.AnswerYes
+import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
 
-class ResidentDetailFormSpec extends FormSpec:
+class CompletedLettingsFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in {
+  it should "bind data as expected" in {
     val data  = Map(
-      "name"    -> "name",
-      "address" -> "address"
+      "hasCompletedLettings" -> "yes"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
   }
 
-  it should "unbind good data as expected" in {
-    val residentDetail = ResidentDetail(
-      name = "name",
-      address = "address"
-    )
-    val filled         = theForm.fill(residentDetail)
+  it should "unbind data as expected" in {
+    val filled = theForm.fill(AnswerYes)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "name"    -> "name",
-      "address" -> "address"
+      "hasCompletedLettings" -> "yes"
     )
   }
 
@@ -51,12 +45,13 @@ class ResidentDetailFormSpec extends FormSpec:
     // When the form gets submitted before being filled
     val bound = theForm.bind(
       Map(
-        "name"    -> "",
-        "address" -> ""
+        "hasCompletedLettings" -> ""
       )
     )
     bound.hasErrors mustBe true
-    bound.errors must have size 2
-    bound.error("name").value.message mustBe "lettingHistory.residentDetail.name.required"
-    bound.error("address").value.message mustBe "lettingHistory.residentDetail.address.required"
+    bound.errors must have size 1
+    bound
+      .error("hasCompletedLettings")
+      .value
+      .message mustBe "lettingHistory.hasCompletedLettings.required"
   }

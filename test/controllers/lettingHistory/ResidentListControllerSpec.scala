@@ -29,7 +29,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.residentList as ResidentListView
 
-class ResidentListControllerSpec extends LettingHistorySpec:
+class ResidentListControllerSpec extends LettingHistoryControllerSpec:
 
   "the ResidentList controller" when {
     "the user session is fresh"      should {
@@ -117,9 +117,13 @@ class ResidentListControllerSpec extends LettingHistorySpec:
         "be handling invalid POST /list by replying 400 with error messages" in new StaleSessionFixture(
           fiveResidents
         ) {
-          val result = controller.submit(fakePostRequest) // hasMoreResidents is missing
-          status(result)        shouldBe BAD_REQUEST
-          contentAsString(result) should include("lettingHistory.residentList.hasMoreResidents.error")
+          val result = controller.submit(
+            fakePostRequest.withFormUrlEncodedBody(
+              "hasMoreResidents" -> ""
+            )
+          )
+          status(result) shouldBe BAD_REQUEST
+          contentAsString(result) should include("lettingHistory.residentList.hasMoreResidents.required")
         }
         "be handling POST /list?hasMoreResidents=yes by replying redirect to the 'Max Number of Residents' page" in new StaleSessionFixture(
           fiveResidents
@@ -132,14 +136,18 @@ class ResidentListControllerSpec extends LettingHistorySpec:
     }
     "regardless of the user session" should {
       "be handling invalid POST /list by replying 400 with error messages" in new FreshSessionFixture {
-        val result = controller.submit(fakePostRequest) // hasMoreResidents is missing
-        status(result)        shouldBe BAD_REQUEST
-        contentAsString(result) should include("lettingHistory.residentList.hasMoreResidents.error")
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "hasMoreResidents" -> ""
+          )
+        )
+        status(result) shouldBe BAD_REQUEST
+        contentAsString(result) should include("lettingHistory.residentList.hasMoreResidents.required")
       }
       "be handling POST /list?hasMoreResidents=no by replying redirect to the 'Commercial Lettings' page" in new FreshSessionFixture {
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hasMoreResidents" -> "no"))
         status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/completed-lettings"
+        redirectLocation(result).value shouldBe routes.CompletedLettingsController.show.url
       }
     }
   }
@@ -169,7 +177,7 @@ class ResidentListControllerSpec extends LettingHistorySpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasPermanentResidents = if permanentResidents.isEmpty then AnswerNo else AnswerYes,
+            hasPermanentResidents = Some(if permanentResidents.isEmpty then AnswerNo else AnswerYes),
             permanentResidents = permanentResidents
           )
         )

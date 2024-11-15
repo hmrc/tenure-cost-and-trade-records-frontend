@@ -18,53 +18,53 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.ResidentDetailForm.theForm
-import models.Session
-import models.submissions.lettingHistory.LettingHistory.byAddingPermanentResident
-import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.ResidentDetailPageId
+import navigation.identifiers.CompletedLettingsPageId
+import form.lettingHistory.CompletedLettingsForm.theForm
+import models.Session
+import models.submissions.common.AnswersYesNo
+import models.submissions.lettingHistory.LettingHistory.withCompletedLettings
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.residentDetail as ResidentDetailView
+import views.html.lettingHistory.completedLettings as CompletedLettingsView
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future.successful
 
-class ResidentDetailController @Inject() (
+class CompletedLettingsController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: ResidentDetailView,
+  theView: CompletedLettingsView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with WelshJourneySupport
     with I18nSupport:
 
-  def show(index: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
+  def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     val freshForm  = theForm
     val filledForm =
       for
-        idx            <- index
-        lettingHistory <- request.sessionData.lettingHistory
-        residentDetail <- lettingHistory.permanentResidents.lift(idx)
-      yield freshForm.fill(residentDetail)
+        lettingHistory       <- request.sessionData.lettingHistory
+        hasCompletedLettings <- lettingHistory.hasCompletedLettings
+      yield freshForm.fill(hasCompletedLettings)
 
-    Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
+    Ok(theView(filledForm.getOrElse(freshForm), previousRentPeriod, backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ResidentDetail](
+    continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
-      residentDetail =>
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentPeriod, backLinkUrl))),
+      hasCompletedLettings =>
         given Session = request.sessionData
-        for updatedSession <- repository.saveOrUpdateSession(byAddingPermanentResident(residentDetail))
-        yield navigator.redirect(fromPage = ResidentDetailPageId, updatedSession)
+        for updatedSession <- repository.saveOrUpdateSession(withCompletedLettings(hasCompletedLettings))
+        yield navigator.redirect(fromPage = CompletedLettingsPageId, updatedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = ResidentDetailPageId)
+    navigator.backLinkUrl(ofPage = CompletedLettingsPageId)
