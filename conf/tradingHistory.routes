@@ -251,3 +251,6 @@ POST        /fixed-costs                                           controllers.a
 
 GET         /accounting-costs                                      controllers.aboutthetradinghistory.AccountingCosts6048Controller.show
 POST        /accounting-costs                                      controllers.aboutthetradinghistory.AccountingCosts6048Controller.submit
+
+GET         /administrative-costs                                  controllers.aboutthetradinghistory.AdministrativeCosts6048Controller.show
+POST        /administrative-costs                                  controllers.aboutthetradinghistory.AdministrativeCosts6048Controller.submit

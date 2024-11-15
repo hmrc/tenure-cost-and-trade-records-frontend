@@ -17,7 +17,7 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.mappingPerYear
-import models.submissions.aboutyouandtheproperty.{CompletedLettings, LettingAvailability}
+import models.submissions.aboutyouandtheproperty.CompletedLettings
 import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages

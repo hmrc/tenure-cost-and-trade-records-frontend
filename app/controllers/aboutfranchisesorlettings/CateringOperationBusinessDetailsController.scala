@@ -28,7 +28,6 @@ import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationBusinessPageId
 import play.api.i18n.I18nSupport
-import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
