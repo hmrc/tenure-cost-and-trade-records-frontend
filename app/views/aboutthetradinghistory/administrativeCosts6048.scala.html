@@ -37,6 +37,7 @@
 @rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+        @messages("turnover.6048.excludingVAT")
     </p>
 @if(hintKey.nonEmpty) {
     <span class="govuk-caption-m">@messages(hintKey)</span>
