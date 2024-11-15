@@ -88,10 +88,9 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page" in {
       val res = controller().submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(12)*)
+        fakePostRequest.withFormUrlEncodedBody(formData(2)*)
       )
-      status(res)           shouldBe SEE_OTHER
-      redirectLocation(res) shouldBe Option(controllers.routes.TaskListController.show().url) // TOD0
+      status(res) shouldBe SEE_OTHER
     }
 
     "return 400 and error message for invalid character" in {

@@ -16,27 +16,27 @@
 
 package controllers.aboutyouandtheproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.ThreeYearsConstructedForm.threeYearsConstructedForm
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import form.aboutyouandtheproperty.PartsUnavailableForm.partsUnavailableForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
-import navigation.identifiers.ThreeYearsConstructedPageId
+import navigation.identifiers.PartsUnavailableId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.threeYearsConstructed
+import views.html.aboutyouandtheproperty.partsUnavailable
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ThreeYearsConstructedController @Inject() (
+class PartsUnavailableController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYouAndThePropertyNavigator,
-  view: threeYearsConstructed,
+  view: partsUnavailable,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit val ec: ExecutionContext)
@@ -48,11 +48,11 @@ class ThreeYearsConstructedController @Inject() (
     Future.successful(
       Ok(
         view(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
-            case Some(tiedForGoods) => threeYearsConstructedForm.fill(tiedForGoods)
-            case _                  => threeYearsConstructedForm
+          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
+            case Some(tiedForGoods) => partsUnavailableForm.fill(tiedForGoods)
+            case _                  => partsUnavailableForm
           },
-          navigator.from,
+          calculateBackLink,
           request.sessionData.toSummary
         )
       )
@@ -61,22 +61,33 @@ class ThreeYearsConstructedController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      threeYearsConstructedForm,
+      partsUnavailableForm,
       formWithErrors =>
         BadRequest(
           view(
             formWithErrors,
-            navigator.from,
+            calculateBackLink,
             request.sessionData.toSummary
           )
         ),
       data => {
-        val updatedData = updateAboutYouAndTheProperty(_.copy(threeYearsConstructed = Some(data)))
+        val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(partsUnavailable = Some(data)))
         session
           .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(ThreeYearsConstructedPageId, updatedData).apply(updatedData)))
+          .map(_ => Redirect(navigator.nextPage(PartsUnavailableId, updatedData).apply(updatedData)))
       }
     )
   }
 
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]): String =
+    navigator.from match {
+      case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      case "TL"  => s"${controllers.routes.TaskListController.show().url}#family-usage"
+      case _     =>
+        if (request.sessionData.isWelsh) {
+          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
+        } else {
+          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
+        }
+    }
 }

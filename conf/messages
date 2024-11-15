@@ -2973,7 +2973,12 @@ error.commercialLettingAvailability.range = The number of nights must be a figur
 error.commercialLettingAvailability.welsh.required = State how many nights was the property available in the year ending {0}
 error.commercialLettingAvailability.welsh.range = Number of nights in the year ending {0} must be a number between 1 and 365
 
+#PARTS OF THE PROPERTY UNAVAILABLE TO RENT
 
+partsUnavailable.heading = Parts of the property unavailable for rent
+partsUnavailable.p = You must declare if parts of the property are unavailable for rent as they are occupied by you or your family. This includes any accommodation used as main residence or as a second home.
+partsUnavailable.label = Do you or your family occupy any part of the property as a main residence or a second home?
+error.partsUnavailable.required = Select yes  if you or your family occupy any part of the property
 
 #TYPE OF RENEWABLE PLANT
 renewablesPlant.heading = What type of renewables plant do you operate?
