@@ -118,6 +118,10 @@ case object CompletedCommercialLettingsWelshId extends Identifier {
   override def toString: String = "completedCommercialLettingsWelshPage"
 }
 
+case object PartsUnavailableId extends Identifier {
+  override def toString: String = "partsUnavailablePage"
+}
+
 case object PlantAndTechnologyId extends Identifier {
   override def toString: String = "plantAndTechnologyPage"
 }
