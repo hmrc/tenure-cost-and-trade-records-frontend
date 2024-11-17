@@ -751,21 +751,24 @@ trait FakeObjects {
         income = Income6048(1, 2, 3),
         fixedCosts = FixedCosts6048(1, 3, 3),
         accountingCosts = AccountingCosts6048(1, 1, 2, 2, 2),
-        administrativeCosts = AdministrativeCosts6048(1, 1, 1, 3, 3)
+        administrativeCosts = AdministrativeCosts6048(1, 1, 1, 3, 3),
+        operationalCosts = OperationalCosts6048(1, 1, 1, 1, 1, 1)
       ),
       TurnoverSection6048(
         today.minusYears(1),
         income = Income6048(10, 20, 30),
         fixedCosts = FixedCosts6048(10, 30, 30),
         accountingCosts = AccountingCosts6048(10, 10, 20, 20, 20),
-        administrativeCosts = AdministrativeCosts6048(10, 10, 10, 30, 30)
+        administrativeCosts = AdministrativeCosts6048(10, 10, 10, 30, 30),
+        operationalCosts = OperationalCosts6048(10, 10, 10, 10, 10, 10)
       ),
       TurnoverSection6048(
         today.minusYears(2),
         income = Income6048(100, 200, 300),
         fixedCosts = FixedCosts6048(100, 300, 300),
         accountingCosts = AccountingCosts6048(100, 100, 200, 200, 200),
-        administrativeCosts = AdministrativeCosts6048(100, 100, 100, 300, 300)
+        administrativeCosts = AdministrativeCosts6048(100, 100, 100, 300, 300),
+        operationalCosts = OperationalCosts6048(100, 100, 100, 100, 100, 100)
       )
     )
   )
