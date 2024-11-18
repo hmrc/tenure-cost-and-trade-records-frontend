@@ -25,7 +25,7 @@ import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.I18nSupport
 import play.api.mvc.*
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{confirmation, confirmationConnectionToProperty, confirmationNotConnected}
+import views.html.confirmation
 import views.html.feedback.{feedback, feedbackThx}
 
 import javax.inject.{Inject, Singleton}
@@ -37,8 +37,6 @@ class FeedbackController @Inject() (
   feedbackView: feedback,
   feedbackThxView: feedbackThx,
   confirmationConnectedView: confirmation,
-  confirmationNotConnectedView: confirmationNotConnected,
-  confirmationVacantProperty: confirmationConnectionToProperty,
   withSessionRefiner: WithSessionRefiner,
   audit: Audit
 ) extends FrontendController(mcc)
@@ -92,7 +90,7 @@ class FeedbackController @Inject() (
     }
   }
 
-  def feedbackConnectedSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def feedbackSinglePageSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -101,38 +99,24 @@ class FeedbackController @Inject() (
             BadRequest(confirmationConnectedView(formWithErrors))
           },
         feedbackForm => {
-          sendFeedback("PostSubmitFeedback", feedbackForm, request.sessionData)
-          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
-        }
-      )
-  }
+          val addressConnectionType  =
+            request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType.flatMap(_.name))
+          val vacantPropertySelected =
+            request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties.flatMap(_.vacantProperties.name))
 
-  def feedbackNotConnectedSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    feedbackForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful {
-            BadRequest(confirmationNotConnectedView(formWithErrors, request.sessionData))
-          },
-        feedbackForm => {
-          sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
-          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
-        }
-      )
-  }
-
-  def feedbackVacantPropertySubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    feedbackForm
-      .bindFromRequest()
-      .fold(
-        formWithErrors =>
-          Future.successful {
-            BadRequest(confirmationVacantProperty(formWithErrors))
-          },
-        feedbackForm => {
-          sendFeedback("VacantPropertyFeedback", feedbackForm, request.sessionData)
-          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+          if (addressConnectionType.contains("yes")) {
+            sendFeedback("PostSubmitFeedback", feedbackForm, request.sessionData)
+            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+          } else if (addressConnectionType.contains("no")) {
+            sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
+            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+          } else if (vacantPropertySelected.contains("yes")) {
+            sendFeedback("VacantPropertyFeedback", feedbackForm, request.sessionData)
+            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+          } else {
+            sendFeedback("PostSubmitFeedback", feedbackForm, request.sessionData)
+            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+          }
         }
       )
   }
