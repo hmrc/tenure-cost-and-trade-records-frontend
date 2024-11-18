@@ -73,7 +73,7 @@
     <span
     data-total-prefix="operationalCostsSeq.turnover[@idx]."
     data-total-items="energyBills,laundryCleaning,repairsRenewalsMaintenance,tvLicences,travellingAndMotorExpenses,other">
-    @form.value.flatMap(_.lift(idx)).fold("")(_.total.asMoney)
+    @form.value.flatMap(_._1.lift(idx)).fold("")(_.total.asMoney)
     </span>
 }
 
@@ -104,12 +104,12 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].energyBills", "turnover.6048.operationalCosts.energyBills", "turnover.6048.operationalCosts.energyBills.hint"),
-                            turnoverRow(s"turnover[$idx].laundryCleaning", "turnover.6048.operationalCosts.laundryCleaning"),
-                            turnoverRow(s"turnover[$idx].repairsRenewalsMaintenance", "turnover.6048.operationalCosts.repairsRenewalsMaintenance"),
-                            turnoverRow(s"turnover[$idx].tvLicences", "turnover.6048.operationalCosts.tvLicences", "turnover.6048.operationalCosts.tvLicences.hint", excludingVAT = false),
-                            turnoverRow(s"turnover[$idx].travellingAndMotorExpenses", "turnover.6048.operationalCosts.travellingAndMotorExpenses"),
-                            turnoverRow(s"turnover[$idx].other", "turnover.6048.operationalCosts.other", "turnover.6048.operationalCosts.other.hint"),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].energyBills", "turnover.6048.operationalCosts.energyBills", "turnover.6048.operationalCosts.energyBills.hint"),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].laundryCleaning", "turnover.6048.operationalCosts.laundryCleaning"),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].repairsRenewalsMaintenance", "turnover.6048.operationalCosts.repairsRenewalsMaintenance"),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].tvLicences", "turnover.6048.operationalCosts.tvLicences", "turnover.6048.operationalCosts.tvLicences.hint", excludingVAT = false),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].travellingAndMotorExpenses", "turnover.6048.operationalCosts.travellingAndMotorExpenses"),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].other", "turnover.6048.operationalCosts.other", "turnover.6048.operationalCosts.other.hint"),
                             Seq(
                                 TableRow(content = HtmlContent(rowLabel("turnover.6048.operationalCosts.total"))),
                                 TableRow(content = HtmlContent(totalContent(idx)))
