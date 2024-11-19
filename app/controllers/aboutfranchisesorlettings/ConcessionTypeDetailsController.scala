@@ -33,7 +33,6 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class ConcessionTypeDetailsController @Inject() (
   mcc: MessagesControllerComponents,
-  navigator: AboutFranchisesOrLettingsNavigator,
   view: concessionTypeDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo

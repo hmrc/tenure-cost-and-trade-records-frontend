@@ -17,6 +17,9 @@
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.OperationalCosts6048
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
@@ -28,6 +31,7 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
+        hmrcCharacterCount: HmrcCharacterCount,
         dateUtil: DateUtilLocalised
 )
 
@@ -67,6 +71,36 @@
             )
         )
     )
+}
+
+@columns = @{
+    request.sessionData.financialYearEndDates6048.size
+}
+
+@otherExpensesDetailsTextarea = @{
+    hmrcCharacterCount(
+        CharacterCount(
+            rows = 3,
+            maxLength = 2000,
+            label = Label(
+                content = Text(messages("turnover.6048.operationalCosts.other.details"))
+            )
+        ).withFormField(form("otherExpensesDetails"))
+    )
+}
+
+@otherExpensesDetailsContent(idx: Int) = {
+@if(columns == 1) {
+    @otherExpensesDetailsTextarea
+} else {
+    <div class="hmrc-overlap-columns-@columns-parent">
+    @if(idx == 0) {
+        <div class="hmrc-overlap-columns-@columns">
+        @otherExpensesDetailsTextarea
+        </div>
+    }
+    </div>
+}
 }
 
 @totalContent(idx: Int) = {
@@ -110,6 +144,10 @@
                             turnoverRow(s"operationalCostsSeq.turnover[$idx].tvLicences", "turnover.6048.operationalCosts.tvLicences", "turnover.6048.operationalCosts.tvLicences.hint", excludingVAT = false),
                             turnoverRow(s"operationalCostsSeq.turnover[$idx].travellingAndMotorExpenses", "turnover.6048.operationalCosts.travellingAndMotorExpenses"),
                             turnoverRow(s"operationalCostsSeq.turnover[$idx].other", "turnover.6048.operationalCosts.other", "turnover.6048.operationalCosts.other.hint"),
+                            Seq(
+                                TableRow(),
+                                TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))
+                            ),
                             Seq(
                                 TableRow(content = HtmlContent(rowLabel("turnover.6048.operationalCosts.total"))),
                                 TableRow(content = HtmlContent(totalContent(idx)))

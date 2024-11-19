@@ -357,8 +357,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     Income6048Id                                -> (_ => aboutthetradinghistory.routes.FixedCosts6048Controller.show),
     FixedCosts6048Id                            -> (_ => aboutthetradinghistory.routes.AccountingCosts6048Controller.show),
     AccountingCosts6048Id                       -> (_ => aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show),
-    AdministrativeCosts6048Id                   -> (_ =>
+    AdministrativeCosts6048Id                   -> (_ => aboutthetradinghistory.routes.OperationalCosts6048Controller.show),
+    OperationalCosts6048Id                      -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-    ) // TODO: OperationalCosts6048Controller
+    )
   )
 }

@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
 import form.MappingSupport.*
-import models.submissions.aboutthetradinghistory.{OperationalCosts6048, OperationalExpenses}
+import models.submissions.aboutthetradinghistory.OperationalCosts6048
 import play.api.data.Forms.{mapping, tuple}
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
