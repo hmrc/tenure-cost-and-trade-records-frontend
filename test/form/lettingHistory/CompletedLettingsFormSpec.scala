@@ -18,9 +18,6 @@ package form.lettingHistory
 
 import form.lettingHistory.CompletedLettingsForm.theForm
 import models.submissions.common.AnswerYes
-import org.scalatest.OptionValues
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.must.Matchers
 
 class CompletedLettingsFormSpec extends FormSpec:
 
