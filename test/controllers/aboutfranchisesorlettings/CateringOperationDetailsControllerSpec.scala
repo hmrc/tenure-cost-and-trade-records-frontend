@@ -23,7 +23,6 @@ import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.Identifier
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.mvc.{AnyContent, Call, Request}
