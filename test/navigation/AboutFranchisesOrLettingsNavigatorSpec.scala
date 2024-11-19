@@ -384,6 +384,15 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
             sessionAboutFranchiseOrLetting6045
           ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
       }
+
+      "return a function that goes to add another income page when  letting type included finished123" in {
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(LettingTypeIncludedId, sessionAboutFranchiseOrLetting6045)
+          .apply(
+            sessionAboutFranchiseOrLetting6045
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
+      }
     }
   }
 }

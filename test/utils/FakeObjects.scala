@@ -1322,14 +1322,16 @@ trait FakeObjects {
   val additionalInformationSession: Session =
     stillConnectedDetailsYesSession.copy(additionalInformation = Some(prefilledAdditionalInformation))
 
-  val prefilledFirstOccupy                      = MonthsYearDuration(2, 2000)
-  val prefilledFinancialYear                    = Some(DayMonthsDuration(2, 12))
-  val prefilledBigDecimal                       = BigDecimal(9999999)
-  val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
-  val prefilledCurrentRentPayableWithin12Months =
+  val prefilledFirstOccupy                       = MonthsYearDuration(2, 2000)
+  val prefilledFinancialYear                     = Some(DayMonthsDuration(2, 12))
+  val prefilledBigDecimal                        = BigDecimal(9999999)
+  val prefilledAnnualRent                        = AnnualRent(prefilledBigDecimal)
+  val prefilledCurrentRentPayableWithin12Months  =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, Some(prefilledDateInput))
-  val prefilledPropertyUseLeasebackArrangement  =
+  val prefilledPropertyUseLeasebackArrangement   =
     PropertyUseLeasebackArrangement(AnswerYes)
+  val prefilledPropertyUseLeasebackArrangementNo =
+    PropertyUseLeasebackArrangement(AnswerNo)
 
   val prefilledAboutTheLandlord =
     AboutTheLandlord(
@@ -1535,6 +1537,22 @@ trait FakeObjects {
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
   )
 
+  val prefilledAboutLeaseOrAgreement6030NoPropertyLeasebackRoute: AboutLeaseOrAgreementPartOne =
+    AboutLeaseOrAgreementPartOne(
+      Some(prefilledAboutTheLandlord),
+      Some(AnswerYes),
+      Some(prefilledConnectedToLandlordDetails),
+      Some(prefilledLeaseOrAgreementYearsDetails),
+      Some(prefilledCurrentRentPayableWithin12Months),
+      Some(prefilledPropertyUseLeasebackArrangementNo),
+      Some(prefilledAnnualRent),
+      rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+      rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+      rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),
+      whatIsYourCurrentRentBasedOnDetails =
+        Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
+    )
+
   val prefilledAboutLeaseOrAgreementPartOne: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     Some(AnswerYes),
@@ -1600,7 +1618,7 @@ trait FakeObjects {
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),
-    Some(prefilledPropertyUseLeasebackArrangement),
+    Some(prefilledPropertyUseLeasebackArrangementNo),
     Some(prefilledAnnualRent),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),

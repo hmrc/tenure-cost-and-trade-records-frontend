@@ -38,6 +38,10 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(FinancialYearEndDatesPageId.toString.equals("financialYearEndDatesPage"))
     }
 
+    "Identifier for financial year page page" in {
+      assert(FinancialYearsPageId.toString.equals("financialYearsPage"))
+    }
+
     "Identifier for turnover page" in {
       assert(TurnoverPageId.toString.equals("turnoverPage"))
     }
@@ -192,6 +196,14 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for check your answers about the trading history page" in {
       assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
+    }
+
+    "Identifier for change occupation and accounting page" in {
+      assert(ChangeOccupationAndAccountingId.toString.equals("changeOccupationAndAccountingPage"))
+    }
+
+    "Identifier for vat registered page" in {
+      assert(AreYouVATRegisteredId.toString.equals("areYouVATRegisteredPage"))
     }
 
     "Identifier for total fuel sold page" in {
