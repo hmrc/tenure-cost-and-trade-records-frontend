@@ -65,6 +65,105 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
     }
   }
 
+  "form is valid" when {
+    "request reference number feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val result = feedbackController().feedbackRequestReferenceNumber()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "in page feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val result = feedbackController().feedbackSubmit(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "SUBMIT vacant property feedback empty" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = feedbackController().feedbackSharedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+        status(res) shouldBe BAD_REQUEST
+      }
+    }
+
+    "main journey feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val result = feedbackController().feedbackSharedSubmit()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "not connected feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val controller = feedbackController(Some(prefilledStillConnectedDetailsNoToAll))
+        val result     = controller.feedbackSharedSubmit()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+
+    "vacant property feedback is posted to audit" should {
+      "return redirect to thx page SEE_OTHER" in {
+        val controller = feedbackController(Some(prefilledStillConnectedDetailsYesToAll))
+        val result     = controller.feedbackSharedSubmit()(
+          postRequest.withFormUrlEncodedBody(
+            "feedback-comments" -> comments,
+            "feedback-rating"   -> rating
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+      }
+    }
+  }
+
+  "feedbackSubmitWithoutSession" should {
+    "return BadRequest for invalid form submission" in {
+      val result = feedbackController().feedbackSubmitWithoutSession(
+        postRequest.withFormUrlEncodedBody(
+          "feedback-rating" -> ""
+        )
+      )
+      status(result) shouldBe BAD_REQUEST
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return Redirect to feedbackThx for valid form submission" in {
+      val result = feedbackController().feedbackSubmitWithoutSession(
+        postRequest.withFormUrlEncodedBody(
+          "feedback-comments" -> "Good feedback",
+          "feedback-rating"   -> "5"
+        )
+      )
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(controllers.routes.FeedbackController.feedbackThx.url)
+    }
+  }
+
   "form is invalid" when {
     "feedback-rating is missing" should {
       "fails with BAD_REQUEST" in {

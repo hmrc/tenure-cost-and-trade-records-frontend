@@ -95,7 +95,7 @@
     <div class="govuk-!-display-none-print">
 
         @formWithCSRF(
-            action = routes.FeedbackController.feedbackSinglePageSubmit,
+            action = routes.FeedbackController.feedbackSharedSubmit,
             args = Symbol("novalidate") -> "novalidate" ) {
 
             <hr>
