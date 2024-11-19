@@ -48,7 +48,7 @@
     <p class="govuk-body">@messages("label.feedback.p1")</p>
 
     @formWithCSRF(
-        action = routes.FeedbackController.feedbackSubmit,
+        action = routes.FeedbackController.feedbackSinglePageSubmit,
         args = Symbol("novalidate") -> "novalidate" ) {
 
         <div class="govuk-form-group">

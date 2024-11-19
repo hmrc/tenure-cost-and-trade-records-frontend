@@ -116,6 +116,12 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.TurnoverController.show()
     }
 
+    "return a function that goes the turnover page when financial-year-end has been completed 6020" in {
+      navigator
+        .nextPage(FinancialYearEndPageId, sessionAboutYou6020)
+        .apply(sessionAboutYou6020) shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show()
+    }
+
     "return a function that goes the total payroll costs page when about your cost of sales has been completed" in {
       navigator
         .nextPage(CostOfSalesId, sessionAboutYou)

@@ -77,6 +77,17 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
   )
 
+  val session6076NoLeaseback = Session(
+    "99996076004",
+    FOR6076,
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030NoPropertyLeasebackRoute),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo),
+    aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+  )
+
   val session6010No            = Session(
     "99996010004",
     FOR6010,
@@ -124,8 +135,10 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to current annual rent page when lease or agreement details with yes has been completed" in {
       navigator
-        .nextPage(LeaseOrAgreementDetailsPageId, session6010)
-        .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
+        .nextPage(LeaseOrAgreementDetailsPageId, session6076Full)
+        .apply(
+          session6076Full
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
         .show()
     }
 
@@ -430,6 +443,14 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .nextPage(PropertyUseLeasebackAgreementId, session6076Full)
         .apply(
           session6076Full
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
+    }
+
+    "return a function that goes to property use leaseback arrangement no when provide details of your lease has been completed" in {
+      navigator
+        .nextPage(PropertyUseLeasebackAgreementId, session6076NoLeaseback)
+        .apply(
+          session6076NoLeaseback
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
     }
 

@@ -84,8 +84,8 @@ GET         /confirmation                                       controllers.Form
 
 GET         /feedback                                           controllers.FeedbackController.feedback
 GET         /thankyou-for-your-feedback                         controllers.FeedbackController.feedbackThx
-POST        /feedback                                           controllers.FeedbackController.feedbackSubmit
-POST        /feedback-not-connected                             controllers.FeedbackController.feedbackNotConnectedSubmit
-POST        /feedback-connected                                 controllers.FeedbackController.feedbackConnectedSubmit
-POST        /feedback-vacant-property                           controllers.FeedbackController.feedbackVacantPropertySubmit
+POST        /feedback                                           controllers.FeedbackController.feedbackSinglePageSubmit
+#POST        /feedback-not-connected                             controllers.FeedbackController.feedbackNotConnectedSubmit
+#POST        /feedback-connected                                 controllers.FeedbackController.feedbackConnectedSubmit
+#POST        /feedback-vacant-property                           controllers.FeedbackController.feedbackVacantPropertySubmit
 POST        /feedback-request-reference-number                  controllers.FeedbackController.feedbackRequestReferenceNumber
