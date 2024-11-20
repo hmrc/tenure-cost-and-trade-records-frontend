@@ -26,8 +26,8 @@ import utils.TestBaseSpec
 class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6010Yes(
-                                                         aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-                                                       ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -36,8 +36,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyController6010No(
-                                                        aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-                                                      ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -54,8 +54,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyController6015Yes(
-                                                         aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-                                                       ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -64,8 +64,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyController6015No(
-                                                        aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-                                                      ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -82,8 +82,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyController6030Yes(
-                                                         aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-                                                       ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -92,8 +92,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyController6030No(
-                                                        aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-                                                      ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -110,8 +110,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyController6020(
-                                                      aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-                                                    ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -120,8 +120,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyController6076(
-                                                      aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-                                                    ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -130,8 +130,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyControllerYes6045(
-                                                         aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-                                                       ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -140,8 +140,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
   )
 
   def checkYourAnswersAboutThePropertyControllerNo6045(
-                                                        aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-                                                      ) = new CheckYourAnswersAboutThePropertyController(
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
+  ) = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -164,26 +164,26 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     }
     "return HTML" in {
       val result = checkYourAnswersAboutThePropertyController6010Yes().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
       )
     }
     "return 200 6010 about you and the property CYA with tied goods no in the session" in {
       val result = checkYourAnswersAboutThePropertyController6010No().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
       )
     }
     "return 200 6010 about you and the property CYA with no tied goods in the session" in {
       val result = checkYourAnswersAboutThePropertyController6010None().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.routes.TaskListController.show().url
       )
@@ -191,27 +191,27 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
     "return 200 6015 about you and the property CYA with premises license granted yes in the session" in {
       val result = checkYourAnswersAboutThePropertyController6015Yes().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
       )
     }
     "return 200 6015 about you and the property CYA with premises license granted no in the session" in {
       val result = checkYourAnswersAboutThePropertyController6015No().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
       )
     }
     "return 200 6015 about you and the property CYA with no premises license granted in the session" in {
       val result = checkYourAnswersAboutThePropertyController6015None().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.routes.TaskListController.show().url
       )
@@ -219,27 +219,27 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
     "return 200 6030 about you and the property CYA with charity question yes in the session" in {
       val result = checkYourAnswersAboutThePropertyController6030Yes().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.TradingActivityController.show().url
       )
     }
     "return 200 6030 about you and the property CYA with charity question no in the session" in {
       val result = checkYourAnswersAboutThePropertyController6030No().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url
       )
     }
     "return 200 6030 about you and the property CYA with no charity question in the session" in {
       val result = checkYourAnswersAboutThePropertyController6030None().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.routes.TaskListController.show().url
       )
@@ -247,9 +247,9 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
     "return 200 6020 about you and the property CYA with no in the session" in {
       val result = checkYourAnswersAboutThePropertyController6020().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
       )
@@ -257,9 +257,9 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
     "return 200 no about you and the property CYA in the session 6076" in {
       val result = checkYourAnswersAboutThePropertyController6076().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
       )
@@ -267,9 +267,9 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
     "return 200 no about you and the property CYA in the session 6045" in {
       val result = checkYourAnswersAboutThePropertyControllerYes6045().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
       )
@@ -277,30 +277,34 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
     "return 200 no about you and the property CYA in the session" in {
       val result = checkYourAnswersAboutThePropertyControllerNone().show(fakeRequest)
-      status(result) shouldBe Status.OK
-      contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
     "return correct backLinks for FOR6048" when {
       def controller(
-                      partTwo: AboutYouAndThePropertyPartTwo,
-                      isPossibleWelsh: Boolean
-                    ) = new CheckYourAnswersAboutThePropertyController(
+        partTwo: AboutYouAndThePropertyPartTwo,
+        isPossibleWelsh: Boolean
+      ) = new CheckYourAnswersAboutThePropertyController(
         stubMessagesControllerComponents(),
         aboutYouAndThePropertyNavigator,
         checkYourAnswersAboutThePropertyView,
-        preEnrichedActionRefiner(forType = FOR6048, aboutYouAndThePropertyPartTwo = Option(partTwo), isWelsh = isPossibleWelsh),
+        preEnrichedActionRefiner(
+          forType = FOR6048,
+          aboutYouAndThePropertyPartTwo = Option(partTwo),
+          isWelsh = isPossibleWelsh
+        ),
         mockSessionRepo
       )
 
       "canProceed is false and isWelsh is true" in {
         val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(false))
-        val result = controller(partTwo, isPossibleWelsh = true).show(fakeRequest)
+        val result  = controller(partTwo, isPossibleWelsh = true).show(fakeRequest)
 
-        status(result) shouldBe Status.OK
+        status(result)        shouldBe Status.OK
         contentAsString(result) should include(
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
         )
@@ -308,9 +312,9 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
       "canProceed is false and isWelsh is false" in {
         val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(false))
-        val result = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
+        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
 
-        status(result) shouldBe Status.OK
+        status(result)        shouldBe Status.OK
         contentAsString(result) should include(
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
         )
@@ -318,20 +322,19 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
       "canProceed is true" in {
         val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(true))
-        val result = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
+        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
 
-        status(result) shouldBe Status.OK
+        status(result)        shouldBe Status.OK
         contentAsString(result) should include(
           controllers.routes.TaskListController.show().url
         )
       }
     }
 
-
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = checkYourAnswersAboutThePropertyController6010Yes().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty *)
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST
       }
