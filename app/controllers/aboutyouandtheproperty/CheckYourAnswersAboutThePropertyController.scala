@@ -119,7 +119,17 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
       case FOR6020           => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
       case FOR6045 | FOR6046 =>
         controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
-      case FOR6076           => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
-      case _                 => controllers.routes.LoginController.show.url
+      case FOR6048           =>
+        if (!answers.aboutYouAndThePropertyPartTwo.flatMap(_.canProceed).getOrElse(false)) {
+          if (answers.isWelsh)
+            controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
+          else
+            controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
+        } else {
+          controllers.routes.TaskListController.show().url
+        }
+
+      case FOR6076 => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
+      case _       => controllers.routes.LoginController.show.url
     }
 }

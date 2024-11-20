@@ -26,8 +26,6 @@ import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redir
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-import scala.reflect.ClassManifestFactory.Any
-
 class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}

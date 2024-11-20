@@ -60,7 +60,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
     }
     "the user session is stale" when {
       "regardless of the given number residents"             should {
-        "be handling GET /list and reply 200 with the form showing the list of known residents" in new StaleSessionFixture(
+        "be handling GET /list and reply 200 by showing the list of known residents" in new StaleSessionFixture(
           oneResident
         ) {
           val result  = controller.show(fakeGetRequest)
@@ -68,8 +68,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include("Mr. One")
-          content                     should include("Address One")
+          content                     should include(oneResident.head.name)
         }
         "be handling GET /remove?index=0 by replying 200 with the 'Confirm remove' page" in new StaleSessionFixture(
           oneResident
@@ -119,7 +118,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
         ) {
           val result = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
-              "hasMoreResidents" -> ""
+              "hasMoreResidents" -> "" // yes or no is missing!
             )
           )
           status(result) shouldBe BAD_REQUEST
@@ -138,7 +137,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
       "be handling invalid POST /list by replying 400 with error messages" in new FreshSessionFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "hasMoreResidents" -> ""
+            "hasMoreResidents" -> "" // yes or no is missing
           )
         )
         status(result) shouldBe BAD_REQUEST

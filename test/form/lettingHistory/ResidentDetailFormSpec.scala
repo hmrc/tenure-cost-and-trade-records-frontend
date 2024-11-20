@@ -18,9 +18,6 @@ package form.lettingHistory
 
 import models.submissions.lettingHistory.ResidentDetail
 import form.lettingHistory.ResidentDetailForm.theForm
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
 
 class ResidentDetailFormSpec extends FormSpec:
 

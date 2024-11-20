@@ -39,7 +39,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     mockSubmissionConnector,
     checkYourAnswersNotConnectedView,
-    confirmationNotConnectedView,
+    confirmation,
     errorHandler,
     mockAudit,
     preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),

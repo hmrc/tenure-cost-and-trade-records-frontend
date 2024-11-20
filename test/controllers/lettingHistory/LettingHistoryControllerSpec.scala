@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
+import models.submissions.lettingHistory.{Address, LettingHistory, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
 import play.api.libs.json.Writes
 import repositories.SessionRepo
@@ -42,6 +42,35 @@ class LettingHistoryControllerSpec extends TestBaseSpec:
     ResidentDetail(name = "Mrs. Five", address = "Address Five")
   )
 
+  val oneOccupier = List(
+    OccupierDetail(
+      name = "Mr. One",
+      address = Address("Address One", None, "Neverland", None, "BN124AX")
+    )
+  )
+
+  val twoOccupiers = oneOccupier ++ List(
+    OccupierDetail(
+      name = "Mr. Two",
+      address = Address("Address Two", None, "Neverland", None, "BN124AX")
+    )
+  )
+
+  val fiveOccupiers = twoOccupiers ++ List(
+    OccupierDetail(
+      name = "Miss. Three",
+      address = Address("Address Three", None, "Neverland", None, "BN124AX")
+    ),
+    OccupierDetail(
+      name = "Mr. Four",
+      address = Address("Address Four", None, "Neverland", None, "BN124AX")
+    ),
+    OccupierDetail(
+      name = "Mrs. Five",
+      address = Address("Address Five", None, "Neverland", None, "BN124AX")
+    )
+  )
+
   trait MockRepositoryFixture:
     val repository = mock[SessionRepo]
     val data       = captor[Session]
@@ -59,3 +88,9 @@ class LettingHistoryControllerSpec extends TestBaseSpec:
 
     def hasCompletedLettings(session: ArgumentCaptor[Session]) =
       LettingHistory.hasCompletedLettings(session.getValue)
+
+    def completedLettingAt(session: ArgumentCaptor[Session], index: Integer): Option[OccupierDetail] =
+      LettingHistory.completedLettings(session.getValue).lift(index)
+
+    def completedLettings(session: ArgumentCaptor[Session]): List[OccupierDetail] =
+      LettingHistory.completedLettings(session.getValue)

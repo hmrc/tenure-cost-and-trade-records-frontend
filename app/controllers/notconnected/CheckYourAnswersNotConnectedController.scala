@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.notconnected.checkYourAnswersNotConnected
-import views.html.confirmationNotConnected
+import views.html.confirmation
 
 import java.time.Instant
 import javax.inject.{Inject, Named, Singleton}
@@ -41,7 +41,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   mcc: MessagesControllerComponents,
   submissionConnector: SubmissionConnector,
   checkYourAnswersNotConnectedView: checkYourAnswersNotConnected,
-  confirmationNotConnectedView: confirmationNotConnected,
+  confirmationView: confirmation,
   errorHandler: ErrorHandler,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
@@ -94,7 +94,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationNotConnectedView(feedbackForm, request.sessionData)))
+    Future(Ok(confirmationView(feedbackForm)))
   }
 
   private def submitToBackend(

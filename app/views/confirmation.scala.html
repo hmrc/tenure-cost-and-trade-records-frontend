@@ -38,6 +38,14 @@
 
 @(theForm: Form[Feedback])(implicit request: SessionRequest[?], messages: Messages)
 
+@needsBusinessRateBill = @{
+    request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType.flatMap(_.name))
+}
+
+    @isVacant = @{
+        request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties.flatMap(_.vacantProperties.name))
+    }
+
 @layout(
     pageHeading = messages("confirmation.heading"),
     summary = Some(request.sessionData.toSummary),
@@ -53,32 +61,41 @@
 
     @includes.printConfirmation()
 
+
+    <div class="govuk-!-display-none-print">
+        <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
+    </div>
+
     <div class="print-only">
         @answersAllSections()
     </div>
 
-    <div class="govuk-!-display-none-print">
-        <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>
+    @if(isVacant.contains("yes") || needsBusinessRateBill.contains("no")) {
+        <div class="govuk-!-display-none-print">
+            <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
+            <p class="govuk-body">@messages("confirmation.list.1")</p>
+            <p class="govuk-body">@messages("confirmation.list.2")</p>
+        </div>
+    } else {
+        <div class="govuk-!-display-none-print">
+            <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
+            <p class="govuk-body">@messages("confirmation.list.1")</p>
+            <p class="govuk-body">@messages("confirmation.list.2")</p>
 
-        <ul class="govuk-list govuk-list--bullet">
-            <li>@{messages("confirmation.unableToRetrieveAnswers.list.1")}</li>
-            <li>@{messages("confirmation.unableToRetrieveAnswers.list.2")}</li>
-            <li>@{messages("confirmation.unableToRetrieveAnswers.list.3")}</li>
-        </ul>
-
-        <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
-        <p class="govuk-body">@messages("confirmation.list.1")</p>
-        <p class="govuk-body">@messages("confirmation.list.2")</p>
-
-        <h2 class="govuk-heading-m">@messages("confirmation.businessRatesBill")</h2>
-        <p class="govuk-body">@{HtmlContent(messages("confirmation.businessRatesBill.list.1")).asHtml}</p>
-        <p class="govuk-body">@{HtmlContent(messages("confirmation.businessRatesBill.list.2")).asHtml}</p>
-    </div>
+            <h2 class="govuk-heading-m">@messages("confirmation.businessRatesBill")</h2>
+            <p class="govuk-body">@{
+                HtmlContent(messages("confirmation.businessRatesBill.list.1")).asHtml
+            }</p>
+            <p class="govuk-body">@{
+                HtmlContent(messages("confirmation.businessRatesBill.list.2")).asHtml
+            }</p>
+        </div>
+    }
 
     <div class="govuk-!-display-none-print">
 
         @formWithCSRF(
-            action = routes.FeedbackController.feedbackConnectedSubmit,
+            action = routes.FeedbackController.feedbackSharedSubmit,
             args = Symbol("novalidate") -> "novalidate" ) {
 
             <hr>

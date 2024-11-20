@@ -24,7 +24,7 @@ case class LettingHistory(
   hasPermanentResidents: Option[AnswersYesNo] = None,
   permanentResidents: List[ResidentDetail] = Nil,
   hasCompletedLettings: Option[AnswersYesNo] = None,
-  completedLettings: List[ResidentDetail] = Nil
+  completedLettings: List[OccupierDetail] = Nil
 )
 
 object LettingHistory:
@@ -118,5 +118,45 @@ object LettingHistory:
           case AnswerNo  =>
             lettingHistory.copy(hasCompletedLettings = Some(AnswerNo), completedLettings = Nil)
     )
+
+  def byAddingOccupierNameAndAddress(name: String, address: Address)(using session: Session): Session =
+    val occupierDetail = OccupierDetail(name, address)
+    val ifEmpty        =
+      LettingHistory(
+        hasCompletedLettings = Some(AnswerYes),
+        completedLettings = List(occupierDetail)
+      )
+
+    val copyFunc: LettingHistory => LettingHistory = { lettingHistory =>
+      lettingHistory.completedLettings.zipWithIndex
+        .find { (occupier, _) =>
+          // find the eventually existing resident by name (and more importantly its index)
+          occupier.name == name
+        }
+        .map { (_, foundIndex) =>
+          // patch the occupier detail if it exists at foundIndex
+          val patchedOccupier = lettingHistory
+            .completedLettings(foundIndex)
+            .copy(name = name, address = address)
+
+          val patchedCompletedLettings = lettingHistory.completedLettings.patch(foundIndex, List(patchedOccupier), 1)
+          val copiedLettingHistory     = lettingHistory.copy(completedLettings = patchedCompletedLettings)
+          copiedLettingHistory
+        }
+        .getOrElse {
+          // not found ... then append it to the list of completed lettings
+          val extendedCompletedLettings = lettingHistory.completedLettings.:+(occupierDetail)
+          val copiedLettingHistory      = lettingHistory.copy(completedLettings = extendedCompletedLettings)
+          copiedLettingHistory
+        }
+    }
+    val updatedSession                             = session.lettingHistory.fold(ifEmpty)(copyFunc)
+    session.copy(lettingHistory = Some(updatedSession))
+
+  def completedLettings(session: Session): List[OccupierDetail] =
+    for
+      lettingHistory    <- session.lettingHistory.toList
+      completedLettings <- lettingHistory.completedLettings
+    yield completedLettings
 
   given Format[LettingHistory] = Json.format

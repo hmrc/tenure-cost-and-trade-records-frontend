@@ -16,11 +16,8 @@
 
 package form.lettingHistory
 
-import models.submissions.common.AnswerYes
 import form.lettingHistory.ResidentListForm.theForm
-import org.scalatest.OptionValues
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.must.Matchers
+import models.submissions.common.AnswerYes
 
 class ResidentListFormSpec extends FormSpec:
 

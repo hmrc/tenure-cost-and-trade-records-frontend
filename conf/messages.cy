@@ -1584,6 +1584,22 @@ lettingHistory.residentList.heading.plural = You have added {0} residents
 lettingHistory.residentList.hasMoreResidents.label = Are any other parts of the property occupied by tenants or employees as their main residence?
 lettingHistory.residentList.hasMoreResidents.required = Select yes if the property has more occupiers
 
+lettingHistory.completedLettings.heading = Completed commercial lettings - 29 nights and longer
+lettingHistory.completedLettings.paragraph.1 = Declare if any parts of your property were let commercially - in periods of 29 nights and longer - within the stated timeframe.
+lettingHistory.completedLettings.paragraph.2 = Include student lets, long-term bookings, and any consecutive tenancies totalling 29 nights or more.
+lettingHistory.completedLettings.paragraph.3 = Do not include any parts of the property:
+lettingHistory.completedLettings.paragraph.3.point.1 = used by family and friends
+lettingHistory.completedLettings.paragraph.3.point.2 = let out to staff or permanent residents.
+lettingHistory.hasCompletedLettings.legend = Was any part of your property let in periods of 29 nights and longer between {0} and {1}.
+lettingHistory.hasCompletedLettings.required = Select yes if the property had any completed lettings in the period.
+
+lettingHistory.occupierDetail.heading = Temporary occupier''s details
+lettingHistory.occupierDetail.subheading = We need the contact details of each occupier who rented part of your property for 29 nights or more between {0} and {1}. Do not include any holiday lettings from this period. You will have the opportunity to add additional occupiers if required.
+label.lettingHistory.occupierDetail.name.label = Occupier''s name
+lettingHistory.occupierDetail.name.required = Enter the name of the temporary occupier
+lettingHistory.occupierDetail.address.legend = Occupier''s address
+lettingHistory.occupierDetail.address.hint = This should be the address they provided when they rented the property.
+
 
 # 6010 TYPES
 ##############################
@@ -3336,6 +3352,15 @@ checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action?
 checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
+
+checkYourAnswersAboutTheProperty.lettingAvailability.heading = Letting availability
+checkYourAnswersAboutTheProperty.firstAvailable = First available for commercial letting
+checkYourAnswersAboutTheProperty.availabilityCommercial = Availability for commercial lettings - up to 28 nights
+checkYourAnswersAboutTheProperty.completedCommercial = Completed commercial lettings - up to 28 nights
+checkYourAnswersAboutTheProperty.familyUse.heading = Family use
+checkYourAnswersAboutTheProperty.mainResidence = Main residence or second home not available for rent?
+checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
+
 checkYourAnswersAboutTheTradingHistory.heading = Gwiriwch eich atebion – hanes masnachu
 checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers – static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans

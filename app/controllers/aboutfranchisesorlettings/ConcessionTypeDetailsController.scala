@@ -19,8 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.ConcessionTypeDetailsForm.concessionTypeDetailsForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationBusinessDetails, ConcessionIncomeRecord}
-import navigation.AboutFranchisesOrLettingsNavigator
+import models.submissions.aboutfranchisesorlettings.*
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

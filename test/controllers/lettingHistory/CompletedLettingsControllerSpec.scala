@@ -58,7 +58,7 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/occupier-detail"
+        redirectLocation(result).value shouldBe routes.OccupierDetailController.show(index = None).url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         hasCompletedLettings(data).value should beAnswerYes
       }
@@ -81,7 +81,7 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         ) {
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hasCompletedLettings" -> "yes"))
           status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe "/path/to/occupier-detail"
+          redirectLocation(result).value shouldBe routes.OccupierDetailController.show(index = None).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value should beAnswerYes
         }
