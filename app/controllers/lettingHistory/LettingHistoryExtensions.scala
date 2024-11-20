@@ -22,9 +22,15 @@ import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future.{failed, successful}
 
 extension (repository: SessionRepo)
   def saveOrUpdateSession(
     session: Session
   )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[Session] =
     repository.saveOrUpdate(session).map(_ => session)
+
+extension (opt: Option[Boolean])
+  def toFuture = opt match
+    case Some(b) => successful(b)
+    case _       => failed(new Exception("undefined boolean"))

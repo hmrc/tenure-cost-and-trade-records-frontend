@@ -17,14 +17,14 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.completedLettings
 import models.submissions.lettingHistory.{LettingHistory, OccupierDetail}
+import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.occupierList as OccupierListView
@@ -151,7 +151,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
       "be handling POST /list?hadMoreOccupiers=no by replying redirect to the 'Letting intention' page" in new FreshSessionFixture {
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
         status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/intended-nights"
+        redirectLocation(result).value shouldBe routes.HowManyNightsController.show.url
       }
     }
   }

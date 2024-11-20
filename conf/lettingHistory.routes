@@ -28,3 +28,6 @@ POST        /letting-history/occupier-list                      controllers.lett
 
 GET         /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.show(kind: String)
 POST        /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.submit(kind: String)
+
+GET         /letting-history/how-many-nights                    controllers.lettingHistory.HowManyNightsController.show
+POST        /letting-history/how-many-nights                    controllers.lettingHistory.HowManyNightsController.submit

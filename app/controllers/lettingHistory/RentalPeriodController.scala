@@ -70,9 +70,8 @@ class RentalPeriodController @Inject (
         theForm,
         theFormWithErrors => successful(BadRequest(partiallyAppliedView.apply(theFormWithErrors))),
         rental =>
-          given Session      = request.sessionData
-          val updatedSession = byAddingOccupierRentalPeriod(index, rental)
-          for savedSession <- repository.saveOrUpdateSession(updatedSession)
+          given Session = request.sessionData
+          for savedSession <- repository.saveOrUpdateSession(byAddingOccupierRentalPeriod(index, rental))
           yield navigator.redirect(currentPage = RentalPeriodPageId, savedSession)
       )
     }

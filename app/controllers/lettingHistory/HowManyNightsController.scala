@@ -18,25 +18,24 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.CompletedLettingsForm.theForm
+import form.lettingHistory.HowManyNightsForm.theForm
 import models.Session
-import models.submissions.common.AnswersYesNo
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.*
+import navigation.identifiers.HowManyNightsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.completedLettings as CompletedLettingsView
+import views.html.lettingHistory.howManyNights as HowManyNightsView
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
-class CompletedLettingsController @Inject (
+class HowManyNightsController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: CompletedLettingsView,
+  theView: HowManyNightsView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
@@ -48,23 +47,24 @@ class CompletedLettingsController @Inject (
     val freshForm  = theForm
     val filledForm =
       for
-        lettingHistory       <- request.sessionData.lettingHistory
-        hasCompletedLettings <- lettingHistory.hasCompletedLettings
-      yield freshForm.fill(hasCompletedLettings.toAnswer)
+        lettingHistory   <- request.sessionData.lettingHistory
+        intendedLettings <- lettingHistory.intendedLettings
+        nights           <- intendedLettings.nights
+      yield freshForm.fill(nights)
 
-    Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
+    Ok(theView(filledForm.getOrElse(freshForm), currentRentalPeriod, backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
+    continueOrSaveAsDraft[Int](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
-      answer =>
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, currentRentalPeriod, backLinkUrl))),
+      nights =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withCompletedLettings(answer.toBoolean))
-        yield navigator.redirect(currentPage = CompletedLettingsPageId, savedSession)
+        for savedSession <- repository.saveOrUpdateSession(withNumberOfNights(nights))
+        yield navigator.redirect(currentPage = HowManyNightsPageId, savedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = CompletedLettingsPageId)
+    navigator.backLinkUrl(ofPage = HowManyNightsPageId)

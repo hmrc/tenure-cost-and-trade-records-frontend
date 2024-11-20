@@ -24,7 +24,8 @@ case class SensitiveLettingHistory(
   mayHaveMorePermanentResidents: Option[Boolean],
   hasCompletedLettings: Option[Boolean],
   completedLettings: List[SensitiveOccupierDetail],
-  mayHaveMoreCompletedLettings: Option[Boolean]
+  mayHaveMoreCompletedLettings: Option[Boolean],
+  intendedLettings: Option[IntendedLettings]
 ) extends Sensitive[LettingHistory]:
 
   override def decryptedValue: LettingHistory =
@@ -34,7 +35,8 @@ case class SensitiveLettingHistory(
       mayHaveMorePermanentResidents,
       hasCompletedLettings,
       completedLettings.map(_.decryptedValue),
-      mayHaveMoreCompletedLettings
+      mayHaveMoreCompletedLettings,
+      intendedLettings
     )
 
 object SensitiveLettingHistory:
@@ -50,5 +52,6 @@ object SensitiveLettingHistory:
       lettingHistory.mayHaveMorePermanentResidents,
       lettingHistory.hasCompletedLettings,
       lettingHistory.completedLettings.map(SensitiveOccupierDetail(_)),
-      lettingHistory.mayHaveMoreCompletedLettings
+      lettingHistory.mayHaveMoreCompletedLettings,
+      lettingHistory.intendedLettings
     )
