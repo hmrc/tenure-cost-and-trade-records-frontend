@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{Address, LettingHistory, LocalPeriod, OccupierDetail, ResidentDetail}
+import models.submissions.lettingHistory.{Address, LocalPeriod, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
 import play.api.libs.json.Writes
 import repositories.SessionRepo

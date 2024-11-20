@@ -1625,6 +1625,9 @@ lettingHistory.maxNumberReached.temporaryOccupiers.paragraph.1 = If you had {0} 
 lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
 lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
 
+lettingHistory.intendedLettings.heading = How many nights do you intend to let the property commercially between {0} and {1}?
+lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not intend to let the property.
+
 
 # 6010 TYPES
 ##############################

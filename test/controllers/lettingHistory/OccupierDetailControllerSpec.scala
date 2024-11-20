@@ -17,7 +17,6 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.lettingHistory.{Address, LettingHistory, OccupierDetail}
 import models.submissions.lettingHistory.LettingHistory._
 import navigation.LettingHistoryNavigator
@@ -25,7 +24,7 @@ import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.occupierDetail as OccupierDetailView
 

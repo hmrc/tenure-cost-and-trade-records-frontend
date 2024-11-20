@@ -1,0 +1,70 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import play.api.data.Form
+@import controllers.lettingHistory.routes
+@import models.submissions.lettingHistory.LocalPeriod
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import util.DateUtilLocalised
+
+@this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+
+@(theForm: Form[Int], fiscalPeriod: LocalPeriod, backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+
+@layout(
+    theForm = theForm,
+    summary = Some(request.sessionData.toSummary),
+    pageHeading = messages(
+        "lettingHistory.intendedLettings.heading",
+        dateUtil.formatDate(fiscalPeriod.fromDate),
+        dateUtil.formatDate(fiscalPeriod.toDate)
+    ),
+    backLinkUrl = backLink,
+    showSection = true,
+    sectionName = messages("label.section.lettingHistory"),
+) {
+
+    @formWithCSRF(action = routes.HowManyNightsController.submit) {
+        @govukInput(
+            Input(
+                id = "nights",
+                name = "nights",
+                hint = Some(Hint(
+                    content = Text(
+                        messages("lettingHistory.intendedLettings.nights.hint")
+                    )
+                )),
+                value = theForm.data.get("nights"),
+                classes = "govuk-input--width-2",
+                spellcheck = Some(false),
+                suffix = Some(PrefixOrSuffix(
+                    content = Text("nights")
+                )),
+                errorMessage = theForm.errors.asTextErrorMessageForField("nights")
+            )
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

@@ -167,8 +167,7 @@ class OccupiersDetailsListController @Inject() (
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     =>
         controllers.aboutyouandtheproperty.routes.OccupiersDetailsController
-          .show(
-            Option(
-              request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersListIndex).getOrElse(0))).url
+          .show(Option(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersListIndex).getOrElse(0)))
+          .url
     }
 }

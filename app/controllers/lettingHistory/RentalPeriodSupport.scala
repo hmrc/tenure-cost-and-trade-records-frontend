@@ -17,6 +17,7 @@
 package controllers.lettingHistory
 
 import actions.SessionRequest
+import models.Session
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.mvc.AnyContent
 
@@ -29,6 +30,12 @@ trait RentalPeriodSupport extends FiscalYearSupport:
     LocalPeriod(
       fromDate = LocalDate.of(previousFiscalYearEnd - numberOfYearsBack, APRIL, 1),
       toDate = LocalDate.of(previousFiscalYearEnd, MARCH, 31)
+    )
+
+  def currentRentalPeriod(using request: SessionRequest[AnyContent]) =
+    LocalPeriod(
+      fromDate = LocalDate.of(currentFiscalYearEnd - numberOfYearsBack, APRIL, 1),
+      toDate = LocalDate.of(currentFiscalYearEnd, MARCH, 31)
     )
 
   // The Welsh journey requires 3 years of data instead of 1 year
