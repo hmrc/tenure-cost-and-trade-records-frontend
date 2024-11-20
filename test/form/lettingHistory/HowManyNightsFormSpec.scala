@@ -16,14 +16,13 @@
 
 package form.lettingHistory
 
-import models.submissions.common.AnswerYes
-import form.lettingHistory.PermanentResidentsForm.theForm
+import form.lettingHistory.HowManyNightsForm.theForm
 
-class PermanentResidentFormSpec extends FormSpec:
+class HowManyNightsFormSpec extends FormSpec:
 
   it should "bind data as expected" in {
     val data  = Map(
-      "answer" -> "yes"
+      "nights" -> "12"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
@@ -31,10 +30,10 @@ class PermanentResidentFormSpec extends FormSpec:
   }
 
   it should "unbind data as expected" in {
-    val filled = theForm.fill(AnswerYes)
+    val filled = theForm.fill(34)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "answer" -> "yes"
+      "nights" -> "34"
     )
   }
 
@@ -42,13 +41,13 @@ class PermanentResidentFormSpec extends FormSpec:
     // When the form gets submitted before being filled
     val bound = theForm.bind(
       Map(
-        "answer" -> ""
+        "nights" -> "" // missing data
       )
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
     bound
-      .error("answer")
+      .error("nights")
       .value
-      .message mustBe "lettingHistory.hasPermanentResidents.required"
+      .message mustBe "error.number"
   }

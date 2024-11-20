@@ -54,7 +54,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait TestBaseSpec
     extends AnyWordSpec
     with Matchers
-    with CustomMatchers
+    with AnswerYesNoMatchers
     with FutureAwaits
     with DefaultAwaitTimeout
     with MockitoExtendedSugar

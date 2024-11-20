@@ -47,7 +47,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                         shouldBe "addAnotherLettingOtherPartOfProperty.heading"
         html.getElementById("addAnotherLettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
-        html.backLinkHref                                                  shouldBe routes.LettingOtherPartOfPropertyRentIncludesController.show(0).url
+        html.backLink                                                      shouldBe routes.LettingOtherPartOfPropertyRentIncludesController.show(0).url
       }
       "reply 200 with the pre-filled form if from=CYA" in new ControllerFixture {
         val result = controller.show(1)(fakeRequestFromCYA)
@@ -57,7 +57,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                           shouldBe "addAnotherLettingOtherPartOfProperty.heading"
         html.getElementById("addAnotherLettingOtherPartOfProperty-2").toString should include("""value="no" checked>""")
-        html.backLinkHref                                                    shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+        html.backLink                                                        shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
     "handling POST / requests"   should {

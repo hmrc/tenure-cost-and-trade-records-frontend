@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package models.submissions.lettingHistory
 
-import form.MappingSupport.createYesNoType as answerYesNo
-import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.libs.json.{Format, Json}
 
-object PermanentResidentsForm:
-  val theForm = Form[AnswersYesNo](
-    single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasPermanentResidents.required")
-    )
-  )
+case class IntendedLettings(
+  nights: Option[Int]
+)
+
+object IntendedLettings:
+  given Format[IntendedLettings]     = Json.format
+  def unapply(obj: IntendedLettings) =
+    Some(obj.nights)

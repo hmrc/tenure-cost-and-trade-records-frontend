@@ -45,7 +45,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
         html.getElementsByTag("h1").first().text()                                       shouldBe "feeReceived.heading"
         html.getElementById("feeReceivedPerYear.year[0].tradingPeriod").value            shouldBe "52"
         html.getElementById("feeReceivedPerYear.year[0].concessionOrFranchiseFee").value shouldBe "1000"
-        html.backLinkHref                                                                  should endWith(routes.CateringOperationBusinessDetailsController.show(Some(0)).url)
+        html.backLink                                                                      should endWith(routes.CateringOperationBusinessDetailsController.show(Some(0)).url)
       }
     }
     "handling POST / requests" should {

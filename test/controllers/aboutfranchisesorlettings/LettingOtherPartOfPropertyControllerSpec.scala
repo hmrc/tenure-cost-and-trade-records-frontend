@@ -65,7 +65,7 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()               shouldBe "lettingOtherPartOfProperty.heading"
         html.getElementById("lettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
-        html.backLinkHref                                        shouldBe routes.AddAnotherCateringOperationController.show(0).url
+        html.backLink                                            shouldBe routes.AddAnotherCateringOperationController.show(0).url
       }
       "reply 200 with the pre-filled form 6030" in new ControllerFixture(
         forType = FOR6030,
@@ -78,7 +78,7 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()               shouldBe "lettingOtherPartOfProperty.heading"
         html.getElementById("lettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
-        html.backLinkHref                                        shouldBe routes.AddAnotherCateringOperationController.show(0).url
+        html.backLink                                            shouldBe routes.AddAnotherCateringOperationController.show(0).url
       }
     }
     "handling POST / requests" should {
