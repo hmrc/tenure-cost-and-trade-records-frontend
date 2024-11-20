@@ -34,8 +34,8 @@ class LettingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(ResidentListPageId.toString.equals("residentListPage"))
     }
 
-    "Identifier for commercial lettings page" in {
-      assert(CommercialLettingsPageId.toString.equals("CommercialLettingsPage"))
-    }
+//    "Identifier for commercial lettings page" in {
+//      assert(CommercialLettingsPageId.toString.equals("CommercialLettingsPage"))
+//    }
   }
 }

@@ -90,7 +90,7 @@ class FeedbackController @Inject() (
     }
   }
 
-  def feedbackSinglePageSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def feedbackSharedSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     feedbackForm
       .bindFromRequest()
       .fold(
@@ -104,10 +104,7 @@ class FeedbackController @Inject() (
           val vacantPropertySelected =
             request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties.flatMap(_.vacantProperties.name))
 
-          if (addressConnectionType.contains("yes")) {
-            sendFeedback("PostSubmitFeedback", feedbackForm, request.sessionData)
-            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
-          } else if (addressConnectionType.contains("no")) {
+          if (addressConnectionType.contains("no")) {
             sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
             Future.successful(Redirect(routes.FeedbackController.feedbackThx))
           } else if (vacantPropertySelected.contains("yes")) {
