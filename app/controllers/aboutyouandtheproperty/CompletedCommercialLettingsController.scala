@@ -60,7 +60,19 @@ class CompletedCommercialLettingsController @Inject() (
       completedCommercialLettingsForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(completedCommercialLettings = Some(data)))
+        val currentAboutTheProperty = request.sessionData.aboutYouAndThePropertyPartTwo
+
+        val updatedCanProceed = (currentAboutTheProperty.flatMap(_.commercialLetAvailability), Option(data)) match {
+          case (Some(availability), Some(letCompleted)) if availability >= 140 && letCompleted >= 70 => Option(true)
+          case _                                                                                     => currentAboutTheProperty.flatMap(_.canProceed)
+        }
+
+        val updatedData = updateAboutYouAndThePropertyPartTwo(
+          _.copy(
+            completedCommercialLettings = Option(data),
+            canProceed = updatedCanProceed
+          )
+        )
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CompletedCommercialLettingsId, updatedData).apply(updatedData)))

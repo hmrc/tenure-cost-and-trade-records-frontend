@@ -3320,6 +3320,15 @@ checkYourAnswersAboutTheProperty.enforcementAction = Enforcement action?
 checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails = Description of enforcement
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
+
+checkYourAnswersAboutTheProperty.lettingAvailability.heading = Letting availability
+checkYourAnswersAboutTheProperty.firstAvailable = First available for commercial letting
+checkYourAnswersAboutTheProperty.availabilityCommercial = Availability for commercial lettings - up to 28 nights
+checkYourAnswersAboutTheProperty.completedCommercial = Completed commercial lettings - up to 28 nights
+checkYourAnswersAboutTheProperty.familyUse.heading = Family use
+checkYourAnswersAboutTheProperty.mainResidence = Main residence or second home not available for rent?
+checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
+
 checkYourAnswersAboutTheTradingHistory.heading = Gwiriwch eich atebion – hanes masnachu
 checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers – static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans
