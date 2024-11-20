@@ -44,6 +44,13 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
     encryptedResidentDetail.address must not be clearLettingHistory.permanentResidents.head.address
 
     (jsonValue \ "hasCompletedLettings").as[String] mustBe "yes"
+    val encryptedOccupierDetails = (jsonValue \ "completedLettings").head.as[SensitiveOccupierDetail]
+    encryptedOccupierDetails.name                 must not be clearLettingHistory.completedLettings.head.name
+    encryptedOccupierDetails.address.line1        must not be clearLettingHistory.completedLettings.head.address.line1
+    encryptedOccupierDetails.address.line2.value  must not be clearLettingHistory.completedLettings.head.address.line2.value
+    encryptedOccupierDetails.address.town         must not be clearLettingHistory.completedLettings.head.address.town
+    encryptedOccupierDetails.address.county.value must not be clearLettingHistory.completedLettings.head.address.county.value
+    encryptedOccupierDetails.address.postcode     must not be clearLettingHistory.completedLettings.head.address.postcode
   }
 
   it should "deserialize from encrypted JSON" in {
@@ -60,5 +67,17 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
         address = "20, Fantasy Street, Birds' Island, BIR067"
       )
     ),
-    hasCompletedLettings = Some(AnswerYes)
+    hasCompletedLettings = Some(AnswerYes),
+    completedLettings = List(
+      OccupierDetail(
+        name = "Miss Nobody",
+        address = Address(
+          line1 = "21, Somewhere Place",
+          line2 = Some("Basement"),
+          town = "NeverTown",
+          county = Some("Birds' Island"),
+          postcode = "BN124AX"
+        )
+      )
+    )
   )

@@ -61,8 +61,8 @@ class PermanentResidentsController @Inject() (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       hasPermanentResidents =>
         given Session = request.sessionData
-        for updatedSession <- repository.saveOrUpdateSession(withPermanentResidents(hasPermanentResidents))
-        yield navigator.redirect(fromPage = PermanentResidentsPageId, updatedSession)
+        for savedSession <- repository.saveOrUpdateSession(withPermanentResidents(hasPermanentResidents))
+        yield navigator.redirect(currentPage = PermanentResidentsPageId, savedSession)
     )
   }
 

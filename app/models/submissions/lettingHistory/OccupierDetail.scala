@@ -18,11 +18,12 @@ package models.submissions.lettingHistory
 
 import play.api.libs.json.{Format, Json}
 
-case class ResidentDetail(
+case class OccupierDetail(
   name: String,
-  address: String
+  address: Address
+  // TODO rental: RentalPeriod
 )
 
-object ResidentDetail:
-  def unapply(obj: ResidentDetail): Option[(String, String)] = Some(obj.name, obj.address)
-  given Format[ResidentDetail]                               = Json.format
+object OccupierDetail:
+  def unapply(obj: OccupierDetail): Option[(String, Address)] = Some(obj.name, obj.address)
+  given Format[OccupierDetail]                                = Json.format

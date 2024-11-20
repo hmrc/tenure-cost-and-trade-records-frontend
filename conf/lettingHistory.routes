@@ -13,3 +13,7 @@ POST        /letting-history/resident-list                      controllers.lett
 
 GET         /letting-history/commercial-lettings                controllers.lettingHistory.CompletedLettingsController.show
 POST        /letting-history/commercial-lettings                controllers.lettingHistory.CompletedLettingsController.submit
+
+
+GET         /letting-history/occupier-detail                    controllers.lettingHistory.OccupierDetailController.show(index: Option[Int] ?= None)
+POST        /letting-history/occupier-detail                    controllers.lettingHistory.OccupierDetailController.submit
