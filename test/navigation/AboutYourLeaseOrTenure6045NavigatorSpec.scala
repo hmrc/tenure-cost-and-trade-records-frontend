@@ -63,6 +63,20 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to Intervals Of Rent Review for 6045 when is Rent Under Review has been completed" in {
+      navigator
+        .nextPage(IsRentUnderReviewId, session6045)
+        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
+        .show()
+    }
+
+    "return a function that goes to IsRentUnderReviewController for 6045 when is methodToFixCurrentRent has been completed" in {
+      navigator
+        .nextPage(MethodToFixCurrentRentsId, session6045)
+        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController
+        .show()
+    }
+
     "return a function that goes to lease or agreement years page when about your landlord has been completed" in {
       navigator
         .nextPage(ConnectedToLandlordDetailsPageId, session6045)
@@ -145,6 +159,13 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(RentIncludeStructuresBuildingsDetailsId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+        .show()
+    }
+
+    "return a function that goes to lease surrendered early page when disregarded addition details has been completed " in {
+      navigator
+        .nextPage(TenantsAdditionsDisregardedDetailsId, session6045)
+        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController
         .show()
     }
 

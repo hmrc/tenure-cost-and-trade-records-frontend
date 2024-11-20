@@ -192,12 +192,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
             controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
           case _                           => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show()
         }
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for rent open market reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for open market reached routing")
+      case _           => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show()
     }
 
   private def payableGrossOrNetRouting: Session => Call = answers =>
@@ -206,17 +201,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
-      case Some("no")  =>
+      case _           =>
         answers.forType match {
           case FOR6010 =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
           case _       => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
         }
-      case _           =>
-        logger.warn(
-          s"Navigation for rent payable by gross or net turnover without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for rent payable by gross or net turnover routing")
     }
 
   private def payableGrossOrNetDetailsRouting: Session => Call = answers =>
@@ -233,12 +223,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show()
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for rent payable vary quantity of beer without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for rent payable vary quantity of beer routing")
+      case _           => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
     }
 
   private def methodToFixCurrentRentRouting: Session => Call =
@@ -279,12 +264,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       _.propertyUpdates.map(_.updates)
     ) match {
       case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show()
-      case Some(AnswerNo)  => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()
-      case _               =>
-        logger.warn(
-          s"Navigation for property updates reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for property updates routing")
+      case _               => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()
     }
 
   private def tenantsAdditionsDisregardedRouting: Session => Call = answers =>

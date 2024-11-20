@@ -64,8 +64,8 @@ trait FakeViews { this: Injecting =>
     inject[checkYourAnswersConnectionToProperty]
   lazy val checkYourAnswersConnectionToVacantProperty: checkYourAnswersConnectionToVacantProperty =
     inject[checkYourAnswersConnectionToVacantProperty]
-  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     = inject[confirmationConnectionToProperty]
-  lazy val confirmationVacantProperty: confirmationVacantProperty                                 = inject[confirmationVacantProperty]
+//  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     = inject[confirmationConnectionToProperty]
+//  lazy val confirmationVacantProperty: confirmationVacantProperty                                 = inject[confirmationVacantProperty]
   lazy val confirmation: confirmation                                                             = inject[confirmation]
   lazy val confirmationRequestReferenceNumber: confirmationRequestReferenceNumber                 =
     inject[confirmationRequestReferenceNumber]
@@ -86,7 +86,7 @@ trait FakeViews { this: Injecting =>
   val pastConnectionView: pastConnection                                                          = inject[pastConnection]
   val removeConnectionView: removeConnection                                                      = inject[removeConnection]
   val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected                              = inject[checkYourAnswersNotConnected]
-  val confirmationNotConnectedView: confirmationNotConnected                                      = inject[confirmationNotConnected]
+//  val confirmationNotConnectedView: confirmationNotConnected                                      = inject[confirmationNotConnected]
   val vacantPropertiesView: vacantProperties                                                      = inject[vacantProperties]
 
   // About you and the property
