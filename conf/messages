@@ -1604,22 +1604,31 @@ error.currentRentBasedOn.maxLength = Additional information must be 500 characte
 # ############################
 lettingHistory.permanentResidents.heading = Permanent residents
 lettingHistory.permanentResidents.subheading = You must declare if any part of the property is occupied by tenants or employees as their permanent residence. Include any commercial residential lettings and staff accommodation.
-lettingHistory.hasPermanentResidents.label = Is any part of the property used as a permanent residence by tenants or employees?
+lettingHistory.hasPermanentResidents.legend = Is any part of the property used as a permanent residence by tenants or employees?
 lettingHistory.hasPermanentResidents.hint = Include any commercial residential lettings and staff accommodation.
 lettingHistory.hasPermanentResidents.error = Select yes if the property is occupied as permanent residence.
 
 lettingHistory.residentDetail.heading = Resident''s details
 lettingHistory.residentDetail.subheading = We need the contact details of one person for each part of the property used as a main residence by a tenant or employee. You will have the opportunity to add additional households if required.
 label.lettingHistory.residentDetail.name.label = Resident''s name
-lettingHistory.residentDetail.name.error = Enter the resident''s name
+lettingHistory.residentDetail.name.required = Enter the name of the permanent resident
 lettingHistory.residentDetail.address.label = Resident''s address
-lettingHistory.residentDetail.address.error = Enter the resident''s address
+lettingHistory.residentDetail.address.required = Enter the address of the permanent resident
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
 
 lettingHistory.residentList.heading.singular = You have added {0} resident
 lettingHistory.residentList.heading.plural = You have added {0} residents
 lettingHistory.residentList.hasMoreResidents.label = Are any other parts of the property occupied by tenants or employees as their main residence?
-lettingHistory.residentList.hasMoreResidents.error = Select yes if the property has more occupiers
+lettingHistory.residentList.hasMoreResidents.required = Select yes if the property has more occupiers
+
+lettingHistory.completedLettings.heading = Completed commercial lettings - 29 nights and longer
+lettingHistory.completedLettings.paragraph.1 = Declare if any parts of your property were let commercially - in periods of 29 nights and longer - within the stated timeframe.
+lettingHistory.completedLettings.paragraph.2 = Include student lets, long-term bookings, and any consecutive tenancies totalling 29 nights or more.
+lettingHistory.completedLettings.paragraph.3 = Do not include any parts of the property:
+lettingHistory.completedLettings.paragraph.3.point.1 = used by family and friends
+lettingHistory.completedLettings.paragraph.3.point.2 = let out to staff or permanent residents.
+lettingHistory.hasCompletedLettings.legend = Was any part of your property let in periods of 29 nights and longer between {0} and {1}.
+lettingHistory.hasCompletedLettings.required = Select yes if the property had any completed lettings in the period.
 
 
 # 6010 TYPES
@@ -2122,6 +2131,32 @@ error.turnover.6048.accountingCosts.bookkeepingOrAccountancy.negative = Bookkeep
 error.turnover.6048.accountingCosts.bankCharges.required = Enter 0 if you did not have any bank charges in the year ending {0}
 error.turnover.6048.accountingCosts.bankCharges.range = Bank charges in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.accountingCosts.bankCharges.negative = Bank charges in the year ending {0} cannot be a negative number
+turnover.6048.administrativeCosts.heading = Administrative costs
+turnover.6048.administrativeCosts.subscriptionsAndFees = Subscriptions and fees
+turnover.6048.administrativeCosts.subscriptionsAndFees.hint = Trade associations, tourist board grading.
+turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage = Telephone, broadband, stationery and postage
+turnover.6048.administrativeCosts.bookingAgency = Booking agency costs
+turnover.6048.administrativeCosts.bookingAgency.hint = Letting agency or listing fees.
+turnover.6048.administrativeCosts.advertising = Advertising costs
+turnover.6048.administrativeCosts.advertising.hint = Including website.
+turnover.6048.administrativeCosts.printing = Printing costs
+turnover.6048.administrativeCosts.printing.hint = For example brochure, letterheads.
+turnover.6048.administrativeCosts.total = Total administrative costs
+error.turnover.6048.administrativeCosts.subscriptionsAndFees.required = Enter 0 if you did not have any subscriptions and fees in the year ending {0}
+error.turnover.6048.administrativeCosts.subscriptionsAndFees.range = Subscriptions and fees in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.subscriptionsAndFees.negative = Subscriptions and fees in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage.required = Enter 0 if you did not have any telephone, broadband, stationery or postage costs in the year ending {0}
+error.turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage.range = Telephone, broadband, stationery or postage costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage.negative = Telephone, broadband, stationery or postage costs in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.bookingAgency.required = Enter 0 if you did not have any booking agency costs in the year ending {0}
+error.turnover.6048.administrativeCosts.bookingAgency.range = Booking agency costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.bookingAgency.negative = Booking agency costs in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.advertising.required = Enter 0 if you did not have any advertising costs in the year ending {0}
+error.turnover.6048.administrativeCosts.advertising.range = Advertising costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.advertising.negative = Advertising costs in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.printing.required = Enter 0 if you did not have any printing costs in the year ending {0}
+error.turnover.6048.administrativeCosts.printing.range = Printing costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.printing.negative = Printing costs in the year ending {0} cannot be a negative number
 
 # TURNOVER 6076
 turnover.6076.heading = How much electricity did you generate?
@@ -2973,7 +3008,12 @@ error.commercialLettingAvailability.range = The number of nights must be a figur
 error.commercialLettingAvailability.welsh.required = State how many nights was the property available in the year ending {0}
 error.commercialLettingAvailability.welsh.range = Number of nights in the year ending {0} must be a number between 1 and 365
 
+#PARTS OF THE PROPERTY UNAVAILABLE TO RENT
 
+partsUnavailable.heading = Parts of the property unavailable for rent
+partsUnavailable.p = You must declare if parts of the property are unavailable for rent as they are occupied by you or your family. This includes any accommodation used as main residence or as a second home.
+partsUnavailable.label = Do you or your family occupy any part of the property as a main residence or a second home?
+error.partsUnavailable.required = Select yes  if you or your family occupy any part of the property
 
 #TYPE OF RENEWABLE PLANT
 renewablesPlant.heading = What type of renewables plant do you operate?

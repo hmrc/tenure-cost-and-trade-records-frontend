@@ -22,8 +22,8 @@ import controllers.lettingHistory.routes
 import models.Session
 import models.submissions.common.AnswerYes
 import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, hasPermanentResidents, permanentResidents}
-import navigation.identifiers.{Identifier, PermanentResidentsPageId, ResidentDetailPageId, ResidentListPageId}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, hasCompletedLettings, hasPermanentResidents, permanentResidents}
+import navigation.identifiers.{CompletedLettingsPageId, Identifier, PermanentResidentsPageId, ResidentDetailPageId, ResidentListPageId}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{AnyContent, Call, Result}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -51,6 +51,13 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
       if permanentResidents(currentSession).size < MaxNumberOfPermanentResidents
       then Some(routes.ResidentDetailController.show(index = None))
       else Some(routes.PermanentResidentsController.show)
+    },
+    CompletedLettingsPageId  -> { (_, navigationData) =>
+      for fromPage <- navigationData.get("from")
+      yield
+        if fromPage == PermanentResidentsPageId.toString
+        then routes.PermanentResidentsController.show
+        else routes.ResidentListController.show
     }
   )
 
@@ -89,8 +96,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
           else routes.ResidentListController.show
         else
           // AnswerNo
-          // TODO Introduce the controllers.lettingHistory.CompletedLettingsController
-          Call("GET", "/path/to/completed-lettings")
+          routes.CompletedLettingsController.show
     },
     ResidentDetailPageId     -> { (_, _) =>
       Some(routes.ResidentListController.show)
@@ -100,14 +106,25 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
       if navigationData("hasMoreResidents") == AnswerYes.toString
       then
         if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
-        then Some(routes.ResidentDetailController.show())
+        then Some(routes.ResidentDetailController.show(index = None))
         else
           // TODO Introduce the controllers.lettingHistory.MaxPermanentResidentsController
           Some(Call("GET", "/path/to/max-permanent-residents"))
       else
         // AnswerNo
-        // TODO Introduce the controllers.lettingHistory.CompletedLettingsController
-        Some(Call("GET", "/path/to/completed-lettings"))
+        Some(routes.CompletedLettingsController.show)
+    },
+    CompletedLettingsPageId  -> { (updatedSession, _) =>
+      for answer <- hasCompletedLettings(updatedSession)
+      yield
+        if answer == AnswerYes
+        then
+          // TODO Introduce the OccupierDetailController
+          Call("GET", "/path/to/occupier-detail")
+        else
+          // AnswerNo
+          // TODO Introduce the OccupierDetailController
+          Call("GET", "/path/to/how-many-nights")
     }
   )
 

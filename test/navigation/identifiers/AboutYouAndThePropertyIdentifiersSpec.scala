@@ -128,6 +128,10 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
       assert(CompletedCommercialLettingsWelshId.toString.equals("completedCommercialLettingsWelshPage"))
     }
 
+    "Identifier for  parts unavailable  page" in {
+      assert(PartsUnavailableId.toString.equals("partsUnavailablePage"))
+    }
+
     "Identifier generator capacity page" in {
       assert(GeneratorCapacityId.toString.equals("generatorCapacityPage"))
     }

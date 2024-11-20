@@ -36,6 +36,7 @@
 }
 
 @layout(
+    theForm = theForm,
     summary = Some(request.sessionData.toSummary),
     pageHeading = messages(pageHeadingMessageKey, residentsCount),
     backLinkUrl = backLink,
@@ -76,7 +77,7 @@
             govukRadios,
             theForm,
             name = "hasMoreResidents",
-            label = "lettingHistory.residentList.hasMoreResidents.label",
+            legendKey = "lettingHistory.residentList.hasMoreResidents.label",
             classes = "govuk-fieldset__legend--s",
             isHeading = true
         )

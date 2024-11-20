@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.sessionByAddingPermanentResident
+import models.submissions.lettingHistory.LettingHistory.byAddingPermanentResident
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.ResidentDetailPageId
@@ -61,7 +61,7 @@ class ResidentDetailController @Inject() (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       residentDetail =>
         given Session = request.sessionData
-        for updatedSession <- repository.saveOrUpdateSession(sessionByAddingPermanentResident(residentDetail))
+        for updatedSession <- repository.saveOrUpdateSession(byAddingPermanentResident(residentDetail))
         yield navigator.redirect(fromPage = ResidentDetailPageId, updatedSession)
     )
   }

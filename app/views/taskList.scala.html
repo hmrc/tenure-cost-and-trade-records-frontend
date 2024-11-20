@@ -174,10 +174,10 @@
       session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate),
       session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
      )
-     @includes.taskListItem("site-construction-details", "taskList.familyUse",
-      controllers.routes.TaskListController.show(), // TODO,
+     @includes.taskListItem("family-use", "taskList.familyUse",
+      controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
       section2Completed,
-      session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate), // TODO
+      session.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable),
       session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate).isEmpty
      )
     }

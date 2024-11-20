@@ -19,6 +19,7 @@ package models.submissions.aboutyouandtheproperty
 import actions.SessionRequest
 import models.Session
 import models.submissions.Form6010.MonthsYearDuration
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
@@ -33,7 +34,8 @@ case class AboutYouAndThePropertyPartTwo(
   commercialLetAvailabilityWelsh: Option[Seq[LettingAvailability]] = None,
   financialEndYearDates: Option[Seq[LocalDate]] = None,
   completedCommercialLettings: Option[Int] = None,
-  completedCommercialLettingsWelsh: Option[Seq[CompletedLettings]] = None
+  completedCommercialLettingsWelsh: Option[Seq[CompletedLettings]] = None,
+  partsUnavailable: Option[AnswersYesNo] = None
 )
 
 object AboutYouAndThePropertyPartTwo {

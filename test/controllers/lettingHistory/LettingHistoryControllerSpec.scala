@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.Future.successful
 
-class LettingHistorySpec extends TestBaseSpec:
+class LettingHistoryControllerSpec extends TestBaseSpec:
 
   val oneResident = List(
     ResidentDetail(name = "Mr. One", address = "Address One")
@@ -38,7 +38,7 @@ class LettingHistorySpec extends TestBaseSpec:
 
   val fiveResidents = twoResidents ++ List(
     ResidentDetail(name = "Miss Three", address = "Address Three"),
-    ResidentDetail(name = "Nr. Four", address = "Address Four"),
+    ResidentDetail(name = "Mr. Four", address = "Address Four"),
     ResidentDetail(name = "Mrs. Five", address = "Address Five")
   )
 
@@ -56,3 +56,6 @@ class LettingHistorySpec extends TestBaseSpec:
 
     def permanentResidents(session: ArgumentCaptor[Session]): List[ResidentDetail] =
       LettingHistory.permanentResidents(session.getValue)
+
+    def hasCompletedLettings(session: ArgumentCaptor[Session]) =
+      LettingHistory.hasCompletedLettings(session.getValue)

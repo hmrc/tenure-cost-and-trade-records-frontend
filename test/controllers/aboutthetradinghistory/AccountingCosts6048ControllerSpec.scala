@@ -25,10 +25,7 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec {
 
   private val previousPage = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
 
-  private val nextPage =
-    aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
-      .show()
-      .url // TODO: AdministrativeCosts6048Controller
+  private val nextPage = aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
 
   private val cyaPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 

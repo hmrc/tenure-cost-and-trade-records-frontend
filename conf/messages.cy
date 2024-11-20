@@ -1567,20 +1567,22 @@ error.currentRentBasedOn.maxLength = Additional information must be 500 characte
 # ############################
 lettingHistory.permanentResidents.heading = Permanent residents
 lettingHistory.permanentResidents.subheading = You must declare if any part of the property is occupied by tenants or employees as their permanent residence. Include any commercial residential lettings and staff accommodation.
-lettingHistory.hasPermanentResidents.label = Is any part of the property used as a permanent residence by tenants or employees?
+lettingHistory.hasPermanentResidents.legend = Is any part of the property used as a permanent residence by tenants or employees?
 lettingHistory.hasPermanentResidents.hint = Include any commercial residential lettings and staff accommodation.
 lettingHistory.hasPermanentResidents.error = Select yes if the property is used as permanent residence.
 
 lettingHistory.residentDetail.heading = Resident''s details
 lettingHistory.residentDetail.subheading = We need the contact details of one person for each part of the property used as a main residence by a tenant or employee. You will have the opportunity to add additional households if required.
 label.lettingHistory.residentDetail.name.label = Resident''s name
+lettingHistory.residentDetail.name.required = Enter the name of the permanent resident
 lettingHistory.residentDetail.address.label = Resident''s address
+lettingHistory.residentDetail.address.required = Enter the address of the permanent resident
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
 
 lettingHistory.residentList.heading.singular = You have added {0} resident
 lettingHistory.residentList.heading.plural = You have added {0} residents
 lettingHistory.residentList.hasMoreResidents.label = Are any other parts of the property occupied by tenants or employees as their main residence?
-lettingHistory.residentList.hasMoreResidents.error = Select yes if the property has more occupiers
+lettingHistory.residentList.hasMoreResidents.required = Select yes if the property has more occupiers
 
 
 # 6010 TYPES
@@ -2081,6 +2083,32 @@ error.turnover.6048.accountingCosts.bookkeepingOrAccountancy.negative = Bookkeep
 error.turnover.6048.accountingCosts.bankCharges.required = Enter 0 if you did not have any bank charges in the year ending {0}
 error.turnover.6048.accountingCosts.bankCharges.range = Bank charges in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.accountingCosts.bankCharges.negative = Bank charges in the year ending {0} cannot be a negative number
+turnover.6048.administrativeCosts.heading = Administrative costs
+turnover.6048.administrativeCosts.subscriptionsAndFees = Subscriptions and fees
+turnover.6048.administrativeCosts.subscriptionsAndFees.hint = Trade associations, tourist board grading.
+turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage = Telephone, broadband, stationery and postage
+turnover.6048.administrativeCosts.bookingAgency = Booking agency costs
+turnover.6048.administrativeCosts.bookingAgency.hint = Letting agency or listing fees.
+turnover.6048.administrativeCosts.advertising = Advertising costs
+turnover.6048.administrativeCosts.advertising.hint = Including website.
+turnover.6048.administrativeCosts.printing = Printing costs
+turnover.6048.administrativeCosts.printing.hint = For example brochure, letterheads.
+turnover.6048.administrativeCosts.total = Total administrative costs
+error.turnover.6048.administrativeCosts.subscriptionsAndFees.required = Enter 0 if you did not have any subscriptions and fees in the year ending {0}
+error.turnover.6048.administrativeCosts.subscriptionsAndFees.range = Subscriptions and fees in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.subscriptionsAndFees.negative = Subscriptions and fees in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage.required = Enter 0 if you did not have any telephone, broadband, stationery or postage costs in the year ending {0}
+error.turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage.range = Telephone, broadband, stationery or postage costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage.negative = Telephone, broadband, stationery or postage costs in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.bookingAgency.required = Enter 0 if you did not have any booking agency costs in the year ending {0}
+error.turnover.6048.administrativeCosts.bookingAgency.range = Booking agency costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.bookingAgency.negative = Booking agency costs in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.advertising.required = Enter 0 if you did not have any advertising costs in the year ending {0}
+error.turnover.6048.administrativeCosts.advertising.range = Advertising costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.advertising.negative = Advertising costs in the year ending {0} cannot be a negative number
+error.turnover.6048.administrativeCosts.printing.required = Enter 0 if you did not have any printing costs in the year ending {0}
+error.turnover.6048.administrativeCosts.printing.range = Printing costs in the year ending {0} must be a number, for example 100 or 100.00
+error.turnover.6048.administrativeCosts.printing.negative = Printing costs in the year ending {0} cannot be a negative number
 
 # TURNOVER 6076
 turnover.6076.heading = Faint o drydan a gynhyrchoch?

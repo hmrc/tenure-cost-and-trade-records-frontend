@@ -26,12 +26,13 @@
 @(govukRadios: GovukRadios,
         theForm: Form[?],
         name: String,
-        label: String,
+        legendKey: String,
         yesLabel: String = "label.yes",
         noLabel: String = "label.no",
         classes: String = "",
         hint: String = "",
-        isHeading: Boolean = false)(implicit messages: Messages)
+        isHeading: Boolean = false,
+        legend: Option[String] = None)(implicit messages: Messages)
 
 @govukRadios(
   Radios(
@@ -49,7 +50,7 @@
     errorMessage =  theForm.errors.asTextErrorMessageForField(s"$name"),
     fieldset = Option(Fieldset(
       legend = Option(Legend(
-        content = Text(messages(label)),
+        content = Text(legend.getOrElse(messages(legendKey))),
         isPageHeading = isHeading,
         classes = classes
       ))

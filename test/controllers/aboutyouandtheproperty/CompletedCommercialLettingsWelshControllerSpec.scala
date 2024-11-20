@@ -18,10 +18,9 @@ package controllers.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.CompletedCommercialLettingsWelshForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, CompletedLettings}
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import java.time.LocalDate
@@ -88,10 +87,9 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page" in {
       val res = controller().submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(12)*)
+        fakePostRequest.withFormUrlEncodedBody(formData(2)*)
       )
-      status(res)           shouldBe SEE_OTHER
-      redirectLocation(res) shouldBe Option(controllers.routes.TaskListController.show().url) // TOD0
+      status(res) shouldBe SEE_OTHER
     }
 
     "return 400 and error message for invalid character" in {

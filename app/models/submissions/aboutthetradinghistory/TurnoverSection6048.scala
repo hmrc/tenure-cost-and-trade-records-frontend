@@ -30,7 +30,8 @@ case class TurnoverSection6048(
   tradingPeriod: Int = 52,
   income: Option[Income6048] = None,
   fixedCosts: Option[FixedCosts6048] = None,
-  accountingCosts: Option[AccountingCosts6048] = None
+  accountingCosts: Option[AccountingCosts6048] = None,
+  administrativeCosts: Option[AdministrativeCosts6048] = None
 )
 
 object TurnoverSection6048 {

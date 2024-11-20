@@ -172,6 +172,43 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for alternative details question routing")
     }
 
+  private def completedCommercialLettingsRouting: Session => Call = answers => {
+    val canProceed: Boolean =
+      answers.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailability).getOrElse(0) >= 140 &&
+        answers.aboutYouAndThePropertyPartTwo.flatMap(_.completedCommercialLettings).getOrElse(0) >= 70
+    if canProceed then controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
+    else controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+  }
+
+  private def completedCommercialLettingsWelshRouting: Session => Call = answers => {
+    val canProceed: Boolean = {
+      val commercialLetNightsSum = answers.aboutYouAndThePropertyPartTwo
+        .flatMap(_.commercialLetAvailabilityWelsh)
+        .getOrElse(Seq.empty)
+        .map(_.numberOfNights)
+        .sum
+
+      val completedLettingsNightsSum = answers.aboutYouAndThePropertyPartTwo
+        .flatMap(_.completedCommercialLettingsWelsh)
+        .getOrElse(Seq.empty)
+        .map(_.numberOfNights)
+        .sum
+
+      commercialLetNightsSum >= 252 && completedLettingsNightsSum >= 182
+    }
+
+    if (canProceed)
+      controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
+    else
+      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+  }
+
+  private def partsUnavailableRouting: Session => Call = answers =>
+    answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
+      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO !!!
+      case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    }
+
   private def threeYearsConstructedRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
@@ -194,8 +231,9 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     CommercialLettingAvailabilityWelshId    -> (_ =>
       controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
     ),
-    CompletedCommercialLettingsId           -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
-    CompletedCommercialLettingsWelshId      -> (_ => controllers.routes.TaskListController.show()), // TODO!!!
+    CompletedCommercialLettingsId           -> completedCommercialLettingsRouting,
+    CompletedCommercialLettingsWelshId      -> completedCommercialLettingsWelshRouting,
+    PartsUnavailableId                      -> partsUnavailableRouting,
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,

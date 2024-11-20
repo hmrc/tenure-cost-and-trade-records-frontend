@@ -30,7 +30,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import utils.{MockitoExtendedSugar, TestBaseSpec}
 
 trait MaxOfLettingsReachedControllerBehaviours:
-  this: AnyWordSpecLike with Matchers with MockitoExtendedSugar with DefaultAwaitTimeout with OptionValues =>
+  this: AnyWordSpecLike & Matchers & MockitoExtendedSugar & DefaultAwaitTimeout & OptionValues =>
 
   def updatingStillConnectedDetails(
     src: String,

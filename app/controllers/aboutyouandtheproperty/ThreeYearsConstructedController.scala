@@ -29,16 +29,18 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.threeYearsConstructed
 
-import javax.inject.{Inject, Named}
-import scala.concurrent.Future
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class ThreeYearsConstructedController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYouAndThePropertyNavigator,
   view: threeYearsConstructed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -70,8 +72,9 @@ class ThreeYearsConstructedController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(threeYearsConstructed = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(ThreeYearsConstructedPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(ThreeYearsConstructedPageId, updatedData).apply(updatedData)))
       }
     )
   }

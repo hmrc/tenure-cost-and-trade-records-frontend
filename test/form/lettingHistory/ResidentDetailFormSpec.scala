@@ -18,11 +18,8 @@ package form.lettingHistory
 
 import models.submissions.lettingHistory.ResidentDetail
 import form.lettingHistory.ResidentDetailForm.theForm
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
 
-class ResidentDetailFormSpec extends AnyFlatSpec with Matchers with OptionValues:
+class ResidentDetailFormSpec extends FormSpec:
 
   it should "bind good data as expected" in {
     val data  = Map(
@@ -48,9 +45,15 @@ class ResidentDetailFormSpec extends AnyFlatSpec with Matchers with OptionValues
   }
 
   it should "detect errors" in {
-    val bound = theForm.bind(Map.empty)
+    // When the form gets submitted before being filled
+    val bound = theForm.bind(
+      Map(
+        "name"    -> "",
+        "address" -> ""
+      )
+    )
     bound.hasErrors mustBe true
     bound.errors must have size 2
-    bound.error("name").value.message mustBe "lettingHistory.residentDetail.name.error"
-    bound.error("address").value.message mustBe "lettingHistory.residentDetail.address.error"
+    bound.error("name").value.message mustBe "lettingHistory.residentDetail.name.required"
+    bound.error("address").value.message mustBe "lettingHistory.residentDetail.address.required"
   }
