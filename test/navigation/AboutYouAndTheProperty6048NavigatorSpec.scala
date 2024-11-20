@@ -146,7 +146,8 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
         aboutYouAndThePropertyPartTwo = Option(
           AboutYouAndThePropertyPartTwo(
             commercialLetAvailability = Option(200),
-            completedCommercialLettings = Option(200)
+            completedCommercialLettings = Option(200),
+            canProceed = Option(true)
           )
         )
       )
@@ -175,7 +176,8 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
                 CompletedLettings(LocalDate.of(2023, 3, 31), 200),
                 CompletedLettings(LocalDate.of(2022, 3, 31), 150)
               )
-            )
+            ),
+            canProceed = Option(true)
           )
         )
       )

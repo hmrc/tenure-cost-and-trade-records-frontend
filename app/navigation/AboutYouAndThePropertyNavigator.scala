@@ -172,36 +172,11 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         throw new RuntimeException("Invalid option exception for alternative details question routing")
     }
 
-  private def completedCommercialLettingsRouting: Session => Call = answers => {
-    val canProceed: Boolean =
-      answers.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailability).getOrElse(0) >= 140 &&
-        answers.aboutYouAndThePropertyPartTwo.flatMap(_.completedCommercialLettings).getOrElse(0) >= 70
-    if canProceed then controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
-    else controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-  }
-
-  private def completedCommercialLettingsWelshRouting: Session => Call = answers => {
-    val canProceed: Boolean = {
-      val commercialLetNightsSum = answers.aboutYouAndThePropertyPartTwo
-        .flatMap(_.commercialLetAvailabilityWelsh)
-        .getOrElse(Seq.empty)
-        .map(_.numberOfNights)
-        .sum
-
-      val completedLettingsNightsSum = answers.aboutYouAndThePropertyPartTwo
-        .flatMap(_.completedCommercialLettingsWelsh)
-        .getOrElse(Seq.empty)
-        .map(_.numberOfNights)
-        .sum
-
-      commercialLetNightsSum >= 252 && completedLettingsNightsSum >= 182
-    }
-
-    if (canProceed)
+  private def completedCommercialLettingsRouting: Session => Call = answers =>
+    if (answers.aboutYouAndThePropertyPartTwo.flatMap(_.canProceed).getOrElse(false))
       controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
     else
       controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-  }
 
   private def partsUnavailableRouting: Session => Call = answers =>
     answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
@@ -232,7 +207,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
     ),
     CompletedCommercialLettingsId           -> completedCommercialLettingsRouting,
-    CompletedCommercialLettingsWelshId      -> completedCommercialLettingsWelshRouting,
+    CompletedCommercialLettingsWelshId      -> completedCommercialLettingsRouting,
     PartsUnavailableId                      -> partsUnavailableRouting,
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),

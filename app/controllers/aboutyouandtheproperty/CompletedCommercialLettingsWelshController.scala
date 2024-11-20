@@ -59,10 +59,10 @@ class CompletedCommercialLettingsWelshController @Inject() (
       }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutYouAndThePropertyPartTwo
       .filter(_.commercialLetDate.isDefined)
-      .fold(Future(Redirect(routes.CommercialLettingQuestionController.show()))) { data =>
+      .fold(Future.successful(Redirect(routes.CommercialLettingQuestionController.show()))) { data =>
         continueOrSaveAsDraft[Seq[CompletedLettings]](
           completedCommercialLettingsWelshForm(years(data)),
           formWithErrors =>
@@ -77,9 +77,20 @@ class CompletedCommercialLettingsWelshController @Inject() (
               (success zip financialYearEndDates(data)).map { case (completedLettings, finYearEnd) =>
                 completedLettings.copy(financialYearEnd = finYearEnd)
               }
+            val updatedData        = updateAboutYouAndThePropertyPartTwo { partTwo =>
+              val commercialLetNightsSum = partTwo.commercialLetAvailabilityWelsh
+                .getOrElse(Seq.empty)
+                .map(_.numberOfNights)
+                .sum
 
-            val updatedData =
-              updateAboutYouAndThePropertyPartTwo(_.copy(completedCommercialLettingsWelsh = Some(updatedLettingData)))
+              val completedLettingsNightsSum = updatedLettingData.map(_.numberOfNights).sum
+
+              val updatedCanProceed = commercialLetNightsSum >= 252 && completedLettingsNightsSum >= 182
+              partTwo.copy(
+                completedCommercialLettingsWelsh = Option(updatedLettingData),
+                canProceed = Some(updatedCanProceed)
+              )
+            }
             session
               .saveOrUpdate(updatedData)
               .map(_ =>

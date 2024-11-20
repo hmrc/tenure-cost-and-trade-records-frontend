@@ -396,7 +396,8 @@ trait FakeObjects {
         LocalDate.of(2023, 3, 31),
         LocalDate.of(2022, 3, 31)
       )
-    )
+    ),
+    canProceed = None
   )
 
   val prefilledPropertyCurrentlyInUsed =
