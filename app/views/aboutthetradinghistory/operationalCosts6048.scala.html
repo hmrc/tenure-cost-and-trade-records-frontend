@@ -53,7 +53,7 @@
 @turnoverRow(formField: String, labelKey: String, hintKey: String = "", excludingVAT: Boolean = true) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty), excludingVAT))
         ),
         TableRow(
             content = HtmlContent(

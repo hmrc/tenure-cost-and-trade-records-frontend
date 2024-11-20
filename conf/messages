@@ -2183,20 +2183,20 @@ error.turnover.6048.operationalCosts.energyBills.negative = Energy bills in the 
 error.turnover.6048.operationalCosts.laundryCleaning.required = Enter 0 if you did not have any Laundry, dry cleaning, carpet cleaning costs in the year ending {0}
 error.turnover.6048.operationalCosts.laundryCleaning.range = Laundry, dry cleaning, carpet cleaning costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.operationalCosts.laundryCleaning.negative = Laundry, dry cleaning, carpet cleaning costs in the year ending {0} cannot be a negative number
-error.turnover.6048.operationalCosts.repairsRenewalsMaintenance.required = Enter 0 if you did not have any repairs, renewals and maintenance costs in the year ending {0}
+error.turnover.6048.operationalCosts.repairsRenewalsMaintenance.required = Enter 0 if you did not have any repairs, renewals or maintenance costs in the year ending {0}
 error.turnover.6048.operationalCosts.repairsRenewalsMaintenance.range = Repairs, renewals and maintenance costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.operationalCosts.repairsRenewalsMaintenance.negative = Repairs, renewals and maintenance costs in the year ending {0} cannot be a negative number
 error.turnover.6048.operationalCosts.tvLicences.required = Enter 0 if you did not have any TV licences costs in the year ending {0}
 error.turnover.6048.operationalCosts.tvLicences.range = TV licences costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.operationalCosts.tvLicences.negative = TV licences costs in the year ending {0} cannot be a negative number
-error.turnover.6048.operationalCosts.travellingAndMotorExpenses.required = Enter 0 if you did not have any travelling and motor expenses in the year ending {0}
+error.turnover.6048.operationalCosts.travellingAndMotorExpenses.required = Enter 0 if you did not have any travelling or motor expenses in the year ending {0}
 error.turnover.6048.operationalCosts.travellingAndMotorExpenses.range = Travelling and motor expenses in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.operationalCosts.travellingAndMotorExpenses.negative = Travelling and motor expenses in the year ending {0} cannot be a negative number
 error.turnover.6048.operationalCosts.other.required = Enter 0 if you did not have any other costs in the year ending {0}
 error.turnover.6048.operationalCosts.other.range = Other costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.operationalCosts.other.negative = Other costs in the year ending {0} cannot be a negative number
 error.turnover.6048.otherExpensesDetails.required = Enter a description of your other operational costs
-error.turnover.6048.otherExpensesDetails.maxLength = Description of your other operational costs must be {0} characters or fewer
+error.turnover.6048.otherExpensesDetails.maxLength = Description of other costs must be {0} characters or fewer
 
 # TURNOVER 6076
 turnover.6076.heading = How much electricity did you generate?
