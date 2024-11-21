@@ -146,4 +146,42 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
       "/send-trade-and-cost-information/letting-type-details?idx=0"
     )
   }
+  "redirect to MaxOfLettingsReachedController when rental income records exceed the limit for letting" in {
+    val maxRentalRecords = IndexedSeq.fill(5)(LettingIncomeRecord(sourceType = TypeLetting))
+    val controller       = typeOfIncomeController(
+      Option(
+        prefilledAboutFranchiseOrLettings6045.copy(
+          rentalIncome = Option(maxRentalRecords)
+        )
+      )
+    )
+
+    val request        = FakeRequest(POST, "/submit-path")
+      .withFormUrlEncodedBody("typeOfIncome" -> "typeLetting")
+    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6045, request)
+    val result         = controller.submit(None)(sessionRequest)
+
+    status(result)           shouldBe SEE_OTHER
+    redirectLocation(result) shouldBe Option("/send-trade-and-cost-information/max-lettings?src=typeOfIncome")
+
+  }
+
+  "redirect to MaxOfLettingsReachedController when rental income records exceed the limit for concession" in {
+    val maxRentalRecords = IndexedSeq.fill(5)(ConcessionIncomeRecord(sourceType = TypeConcessionOrFranchise))
+    val controller       = typeOfIncomeController(
+      Option(
+        prefilledAboutFranchiseOrLettings6045.copy(
+          rentalIncome = Option(maxRentalRecords)
+        )
+      )
+    )
+
+    val request        = FakeRequest(POST, "/submit-path")
+      .withFormUrlEncodedBody("typeOfIncome" -> "typeConcessionOrFranchise")
+    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6045, request)
+    val result         = controller.submit(None)(sessionRequest)
+
+    status(result)           shouldBe SEE_OTHER
+    redirectLocation(result) shouldBe Option("/send-trade-and-cost-information/max-lettings?src=typeOfIncome")
+  }
 }

@@ -61,7 +61,7 @@
  }
 }
 
-@link = @{
+@linkMsg = @{
  source match {
   case "rentalIncome" => messages("maxOf5Lettings.rentalIncome.link")
   case _ => messages("maxOf5Lettings.link")
@@ -81,6 +81,13 @@
    }
   case _                                     => messages("maxOf5Lettings.content")
  }
+}
+
+@link = @{
+  source match {
+   case "typeOfIncome" => controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(4).url
+   case _              => backLink
+  }
 }
 
 
@@ -114,7 +121,7 @@
    ).withFormField(form("maxOfLettings"))
   )
 
-  <p class="govuk-body"><a href="@backLink" class="govuk-link">@link</a></p>
+  <p class="govuk-body"><a href="@link" class="govuk-link">@linkMsg</a></p>
 
   <br>
   <br>
