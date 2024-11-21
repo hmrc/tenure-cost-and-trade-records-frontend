@@ -312,3 +312,7 @@ case object AccountingCosts6048Id extends Identifier {
 case object AdministrativeCosts6048Id extends Identifier {
   override def toString: String = "administrativeCostsPage"
 }
+
+case object OperationalCosts6048Id extends Identifier {
+  override def toString: String = "operationalCostsPage"
+}
