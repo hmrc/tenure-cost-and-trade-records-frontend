@@ -62,43 +62,53 @@ class TypeOfIncomeController @Inject() (
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[TypeOfIncome](
-      typeOfIncomeForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            index,
-            request.sessionData.toSummary,
-            getBackLink
-          )
-        ),
-      data => {
-        val newIncomeRecord       = createIncomeRecord(data)
-        val existingIncomeRecords =
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
 
-        index match {
-          case Some(idx) if idx >= 0 && idx < existingIncomeRecords.length =>
-            val existingRecord = existingIncomeRecords(idx)
-            if (existingRecord.getClass == newIncomeRecord.getClass && navigator.from == "CYA") {
-              Future.successful(
-                Redirect(
-                  controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+    val existingIncomeRecords =
+      request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
+
+    if (existingIncomeRecords.length >= 5 && index.isEmpty) {
+      Future.successful(
+        Redirect(controllers.routes.MaxOfLettingsReachedController.show(Option("typeOfIncome")))
+      )
+    } else {
+      continueOrSaveAsDraft[TypeOfIncome](
+        typeOfIncomeForm,
+        formWithErrors =>
+          BadRequest(
+            view(
+              formWithErrors,
+              index,
+              request.sessionData.toSummary,
+              getBackLink
+            )
+          ),
+        data => {
+          val newIncomeRecord       = createIncomeRecord(data)
+          val existingIncomeRecords =
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
+
+          index match {
+            case Some(idx) if idx >= 0 && idx < existingIncomeRecords.length =>
+              val existingRecord = existingIncomeRecords(idx)
+              if (existingRecord.getClass == newIncomeRecord.getClass && navigator.from == "CYA") {
+                Future.successful(
+                  Redirect {
+                    controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+                      .show()
+                  }
                 )
-              )
-            } else {
-              val updatedRecords = existingIncomeRecords.updated(idx, newIncomeRecord)
-              updateSessionAndRedirect(updatedRecords, data, index)
-            }
-          case _                                                           =>
-            val updatedData = existingIncomeRecords :+ newIncomeRecord
-            updateSessionAndRedirect(updatedData, data, index)
+              } else {
+                val updatedRecords = existingIncomeRecords.updated(idx, newIncomeRecord)
+                updateSessionAndRedirect(updatedRecords, data, index)
+              }
+            case _                                                           =>
+              val updatedData = existingIncomeRecords :+ newIncomeRecord
+              updateSessionAndRedirect(updatedData, data, index)
+          }
         }
-      }
-    )
+      )
+    }
   }
-
   private def updateSessionAndRedirect(
     updatedRecords: IndexedSeq[IncomeRecord],
     source: TypeOfIncome,
@@ -107,9 +117,9 @@ class TypeOfIncomeController @Inject() (
     val existingFranchisesOrLetting =
       request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
     val updatedSession              = request.sessionData.copy(
-      aboutFranchisesOrLettings = Some(
+      aboutFranchisesOrLettings = Option(
         existingFranchisesOrLetting.copy(
-          rentalIncome = Some(updatedRecords),
+          rentalIncome = Option(updatedRecords),
           rentalIncomeIndex = updatedIndex.getOrElse(0)
         )
       )

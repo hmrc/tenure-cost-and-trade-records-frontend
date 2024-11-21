@@ -16,18 +16,17 @@
 
 package form
 
-import models.submissions.MaxOfLettings
 import play.api.data.Form
 import play.api.i18n.Messages
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 
 object MaxOfLettingsForm {
-  def maxOfLettingsForm(implicit messages: Messages): Form[MaxOfLettings] =
+  def maxOfLettingsForm(implicit messages: Messages): Form[Boolean] =
     Form(
       mapping(
         "maxOfLettings" -> of[Boolean]
           .verifying(messages("maxOf5Lettings.error"), value => value)
-      )(MaxOfLettings.apply)(o => Some(o.maxOfLettings))
+      )(x => x)(b => Some(b))
     )
 }

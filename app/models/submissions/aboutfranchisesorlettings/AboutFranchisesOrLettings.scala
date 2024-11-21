@@ -18,7 +18,6 @@ package models.submissions.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.MaxOfLettings
 import models.submissions.common.AnswersYesNo
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -27,12 +26,12 @@ case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,
   cateringConcessionOrFranchise: Option[AnswersYesNo] = None,
   cateringOperationCurrentIndex: Int = 0,
-  cateringMaxOfLettings: Option[MaxOfLettings] = None,
+  cateringMaxOfLettings: Option[Boolean] = None,
   cateringOperationSections: IndexedSeq[CateringOperationSection] = IndexedSeq.empty,
   cateringOperationBusinessSections: Option[IndexedSeq[CateringOperationBusinessSection]] = None, // 6030 journey
   lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
   lettingCurrentIndex: Int = 0,
-  currentMaxOfLetting: Option[MaxOfLettings] = None,
+  currentMaxOfLetting: Option[Boolean] = None,
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
   checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
   fromCYA: Option[Boolean] = None,
@@ -40,7 +39,7 @@ case class AboutFranchisesOrLettings(
   lettings: Option[IndexedSeq[LettingPartOfProperty]] = None, // 6020 lettings
   rentalIncome: Option[IndexedSeq[IncomeRecord]] = None,
   rentalIncomeIndex: Int = 0,
-  rentalIncomeMax: Option[MaxOfLettings] = None
+  rentalIncomeMax: Option[Boolean] = None
 )
 
 object AboutFranchisesOrLettings {
@@ -49,12 +48,12 @@ object AboutFranchisesOrLettings {
     (__ \ "franchisesOrLettingsTiedToProperty").readNullable[AnswersYesNo] and
       (__ \ "cateringConcessionOrFranchise").readNullable[AnswersYesNo] and
       (__ \ "cateringOperationCurrentIndex").read[Int] and
-      (__ \ "cateringMaxOfLettings").readNullable[MaxOfLettings] and
+      (__ \ "cateringMaxOfLettings").readNullable[Boolean] and
       (__ \ "cateringOperationSections").read[IndexedSeq[CateringOperationSection]] and
       (__ \ "cateringOperationBusinessSections").readNullable[IndexedSeq[CateringOperationBusinessSection]] and
       (__ \ "lettingOtherPartOfProperty").readNullable[AnswersYesNo] and
       (__ \ "lettingCurrentIndex").read[Int] and
-      (__ \ "currentMaxOfLetting").readNullable[MaxOfLettings] and
+      (__ \ "currentMaxOfLetting").readNullable[Boolean] and
       (__ \ "lettingSections").read[IndexedSeq[LettingSection]] and
       (__ \ "checkYourAnswersAboutFranchiseOrLettings").readNullable[CheckYourAnswersAboutFranchiseOrLettings] and
       (__ \ "fromCYA").readNullable[Boolean] and
@@ -62,7 +61,7 @@ object AboutFranchisesOrLettings {
       (__ \ "lettings").readNullable[IndexedSeq[LettingPartOfProperty]] and
       (__ \ "rentalIncome").readNullable[IndexedSeq[IncomeRecord]] and
       (__ \ "rentalIncomeIndex").read[Int] and
-      (__ \ "rentalIncomeMax").readNullable[MaxOfLettings]
+      (__ \ "rentalIncomeMax").readNullable[Boolean]
   )(AboutFranchisesOrLettings.apply)
 
   implicit val format: Format[AboutFranchisesOrLettings] =
