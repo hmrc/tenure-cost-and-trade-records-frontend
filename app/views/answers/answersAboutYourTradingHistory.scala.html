@@ -580,6 +580,19 @@
     ))
 }
 
+@if(forType == FOR6048) {
+
+    @pageAnswers("turnover.6048.income.heading",
+        aboutthetradinghistory.routes.Income6048Controller.show,
+        answer6048("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
+        answer6048("turnover.6048.income.letting", _.income.flatMap(_.letting)),
+        answer6048("checkYourAnswersAboutTheTradingHistory.income.serviceProvision", _.income.flatMap(_.serviceProvision)),
+        answer6048("turnover.6048.income.other", _.income.flatMap(_.other)),
+        answer6048("turnover.6048.income.total", _.income.flatMap(_.total))
+    )
+
+}
+
 @if(forType == FOR6045 || forType == FOR6046) {
 
     <h2 class="govuk-heading-l">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.section")</h2>

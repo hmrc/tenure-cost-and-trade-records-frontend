@@ -3454,6 +3454,8 @@ checkYourAnswersAboutTheTradingHistory.totalCosts = Cyfanswm y costau
 checkYourAnswersAboutTheTradingHistory.rent = Rhent
 checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
 checkYourAnswersAboutTheTradingHistory.otherExpenses = Treuliau eraill
+# CYA TRADING HISTORY 6048
+checkYourAnswersAboutTheTradingHistory.income.serviceProvision = Income from services
 # CYA OTHER HOLIDAY ACCOMMODATION 6045/46
 checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation
