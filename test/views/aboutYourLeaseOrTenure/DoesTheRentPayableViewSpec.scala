@@ -35,6 +35,16 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
   def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
     doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
 
+  def createView6045 = () => doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(fakeRequest, messages)
+
+  def createViewUsingForm6045 = (form: Form[DoesTheRentPayable]) =>
+    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(fakeRequest, messages)
+
+  def createView6048 = () => doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(fakeRequest, messages)
+
+  def createViewUsingForm6048 = (form: Form[DoesTheRentPayable]) =>
+    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(fakeRequest, messages)
+
   "Rent payable view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
@@ -51,6 +61,34 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
+    "has a link marked with back.link.label leading to the task list Page 6048" in {
+      val doc          = asDocument(createView6048())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+    }
+
+    "Section heading is visible 6045" in {
+      val doc         = asDocument(createViewUsingForm6045(form))
+      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
+      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
+    "has a link marked with back.link.label leading to the task list Page 6045" in {
+      val doc          = asDocument(createView6045())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+      backlinkText shouldBe messages("back.link.label")
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+    }
+
+    "Section heading is visible 6048" in {
+      val doc         = asDocument(createViewUsingForm6048(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
@@ -83,6 +121,12 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
       val doc = asDocument(createViewUsingForm(form))
       assertContainsCheckBox(doc, "shellUnit", "rentPayable[]", "shellUnit", false)
       assertContainsText(doc, messages("checkbox.rentPayable.shellUnit"))
+    }
+
+    "contain checkbox for the parkingSpacesGarages" in {
+      val doc = asDocument(createViewUsingForm6048(form))
+      assertContainsCheckBox(doc, "parkingSpaceGarage", "rentPayable[]", "parkingSpaceGarage", false)
+      assertContainsText(doc, messages("checkbox.rentPayable.parkingSpaceGarage"))
     }
 
     "contain checkbox for the none" in {

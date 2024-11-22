@@ -949,6 +949,7 @@ checkbox.rentPayable.otherProperty = Eiddo arall
 checkbox.rentPayable.onlyPart = Dim ond rhan o’r eiddo
 checkbox.rentPayable.onlyLand = I dir yn unig (ac eithrio adeiladau)
 checkbox.rentPayable.shellUnit = Uned ‘gragen’ roedd yn rhaid i chi ei gosod eich hun
+checkbox.rentPayable.parkingSpaceGarage = Parking spaces or garages
 checkbox.rentPayable.noneOfThese = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
 checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
 checkbox.rentPayable.none = None

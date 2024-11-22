@@ -956,6 +956,7 @@ checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
 checkbox.rentPayable.shellUnit = A ‘shell’ unit you had to fit out yourself
+checkbox.rentPayable.parkingSpaceGarage = Parking spaces or garages
 checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of these options
 checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
 checkbox.rentPayable.none = None
