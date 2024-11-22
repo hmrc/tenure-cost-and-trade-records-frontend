@@ -161,6 +161,15 @@ class AboutYouAndTheProperty6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to CYA page when licence granted details page has been completed" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6010YesSession)
+        .apply(
+          aboutYouAndTheProperty6010YesSession
+        ) shouldBe controllers.aboutyouandtheproperty.routes.LicensableActivitiesController
+        .show()
+    }
+
     "return a function that goes to tied for goods details page when tied for goods page has been completed with yes" in {
       aboutYouAndThePropertyNavigator
         .nextPage(TiedForGoodsPageId, aboutYouAndTheProperty6010YesSession)

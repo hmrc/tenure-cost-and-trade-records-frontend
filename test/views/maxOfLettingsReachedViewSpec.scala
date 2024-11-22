@@ -19,7 +19,6 @@ package views
 import actions.SessionRequest
 import form.MaxOfLettingsForm
 import models.pages.Summary
-import models.submissions.MaxOfLettings
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
@@ -55,7 +54,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
     )(sessionRequest, messages)
   }
 
-  def createViewUsingForm = (form: Form[MaxOfLettings]) =>
+  def createViewUsingForm = (form: Form[Boolean]) =>
     maxOfLettingsReachedView(
       form,
       "backLink",

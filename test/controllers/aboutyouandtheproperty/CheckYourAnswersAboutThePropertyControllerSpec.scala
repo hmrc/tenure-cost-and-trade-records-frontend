@@ -17,10 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import models.ForType.*
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
@@ -34,6 +34,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
+
   def checkYourAnswersAboutThePropertyController6010No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
   ) = new CheckYourAnswersAboutThePropertyController(
@@ -43,6 +44,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
+
   def checkYourAnswersAboutThePropertyController6010None() = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
@@ -60,6 +62,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
+
   def checkYourAnswersAboutThePropertyController6015No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
   ) = new CheckYourAnswersAboutThePropertyController(
@@ -69,6 +72,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
+
   def checkYourAnswersAboutThePropertyController6015None() = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
@@ -86,6 +90,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
+
   def checkYourAnswersAboutThePropertyController6030No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
   ) = new CheckYourAnswersAboutThePropertyController(
@@ -95,6 +100,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
+
   def checkYourAnswersAboutThePropertyController6030None() = new CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
@@ -278,14 +284,60 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
-  }
-
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = checkYourAnswersAboutThePropertyController6010Yes().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+    "return correct backLinks for FOR6048" when {
+      def controller(
+        partTwo: AboutYouAndThePropertyPartTwo,
+        isPossibleWelsh: Boolean
+      ) = new CheckYourAnswersAboutThePropertyController(
+        stubMessagesControllerComponents(),
+        aboutYouAndThePropertyNavigator,
+        checkYourAnswersAboutThePropertyView,
+        preEnrichedActionRefiner(
+          forType = FOR6048,
+          aboutYouAndThePropertyPartTwo = Option(partTwo),
+          isWelsh = isPossibleWelsh
+        ),
+        mockSessionRepo
       )
-      status(res) shouldBe BAD_REQUEST
+
+      "canProceed is false and isWelsh is true" in {
+        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(false))
+        val result  = controller(partTwo, isPossibleWelsh = true).show(fakeRequest)
+
+        status(result)        shouldBe Status.OK
+        contentAsString(result) should include(
+          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
+        )
+      }
+
+      "canProceed is false and isWelsh is false" in {
+        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(false))
+        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
+
+        status(result)        shouldBe Status.OK
+        contentAsString(result) should include(
+          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
+        )
+      }
+
+      "canProceed is true" in {
+        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(true))
+        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
+
+        status(result)        shouldBe Status.OK
+        contentAsString(result) should include(
+          controllers.routes.TaskListController.show().url
+        )
+      }
+    }
+
+    "SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
+        val res = checkYourAnswersAboutThePropertyController6010Yes().submit(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
     }
   }
 }

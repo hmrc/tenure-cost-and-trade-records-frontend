@@ -14,30 +14,31 @@
  * limitations under the License.
  */
 
-package views
+package views.connectiontoproperty
 
 import actions.SessionRequest
 import controllers.FeedbackFormMapper
 import views.behaviours.ViewBehaviours
 
-class confirmationVacantPropertyViewSpec extends ViewBehaviours {
+class confirmationViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "label.vacantProperty.confirm"
+  val messageKeyPrefix = "confirmation"
   val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val form       = FeedbackFormMapper.feedbackForm
-  def createView = () => confirmationVacantProperty(form)(sessionRequest, messages)
+  def createView = () => confirmation(form)(sessionRequest, messages)
 
-  "confirmation vacant property view" must {
+  "confirmation view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
 
     "contain confirmation text" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("label.vacantProperty.unableToRetrieveAnswers")))
-      assert(doc.toString.contains(messages("label.vacantProperty.whatNext")))
-      assert(doc.toString.contains(messages("vacantProperty.confirm.copy.list.1")))
-      assert(doc.toString.contains(messages("vacantProperty.confirm.copy.list.2")))
+      assert(doc.toString.contains(messages("confirmation.emailConfirm")))
+      assert(doc.toString.contains(messages("confirmation.unableToRetrieveAnswers")))
+      assert(doc.toString.contains(messages("confirmation.whatNext")))
+      assert(doc.toString.contains(messages("confirmation.list.1")))
+      assert(doc.toString.contains(messages("confirmation.list.2")))
     }
   }
 }

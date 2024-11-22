@@ -35,7 +35,8 @@ case class AboutYouAndThePropertyPartTwo(
   financialEndYearDates: Option[Seq[LocalDate]] = None,
   completedCommercialLettings: Option[Int] = None,
   completedCommercialLettingsWelsh: Option[Seq[CompletedLettings]] = None,
-  partsUnavailable: Option[AnswersYesNo] = None
+  partsUnavailable: Option[AnswersYesNo] = None,
+  canProceed: Option[Boolean] = None
 )
 
 object AboutYouAndThePropertyPartTwo {

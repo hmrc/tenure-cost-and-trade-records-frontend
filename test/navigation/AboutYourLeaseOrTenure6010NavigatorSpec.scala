@@ -54,6 +54,15 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
+  val session6010NoLeaseback   = Session(
+    "99996010004",
+    FOR6010,
+    prefilledAddress,
+    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
+    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
+    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+  )
   val session6010PayNavigation = Session(
     "99996010004",
     FOR6010,
@@ -439,6 +448,14 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .apply(
           session6010
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
+    }
+
+    "return a function that goes to property use leaseback arrangement no when provide details of your lease has been completed" in {
+      navigator
+        .nextPage(PropertyUseLeasebackAgreementId, session6010NoLeaseback)
+        .apply(
+          session6010NoLeaseback
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
     "return a function that goes to CYA page when legal or planning restrictions with no has been completed" in {

@@ -64,8 +64,8 @@ trait FakeViews { this: Injecting =>
     inject[checkYourAnswersConnectionToProperty]
   lazy val checkYourAnswersConnectionToVacantProperty: checkYourAnswersConnectionToVacantProperty =
     inject[checkYourAnswersConnectionToVacantProperty]
-  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     = inject[confirmationConnectionToProperty]
-  lazy val confirmationVacantProperty: confirmationVacantProperty                                 = inject[confirmationVacantProperty]
+//  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     = inject[confirmationConnectionToProperty]
+//  lazy val confirmationVacantProperty: confirmationVacantProperty                                 = inject[confirmationVacantProperty]
   lazy val confirmation: confirmation                                                             = inject[confirmation]
   lazy val confirmationRequestReferenceNumber: confirmationRequestReferenceNumber                 =
     inject[confirmationRequestReferenceNumber]
@@ -86,7 +86,7 @@ trait FakeViews { this: Injecting =>
   val pastConnectionView: pastConnection                                                          = inject[pastConnection]
   val removeConnectionView: removeConnection                                                      = inject[removeConnection]
   val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected                              = inject[checkYourAnswersNotConnected]
-  val confirmationNotConnectedView: confirmationNotConnected                                      = inject[confirmationNotConnected]
+//  val confirmationNotConnectedView: confirmationNotConnected                                      = inject[confirmationNotConnected]
   val vacantPropertiesView: vacantProperties                                                      = inject[vacantProperties]
 
   // About you and the property
@@ -163,6 +163,7 @@ trait FakeViews { this: Injecting =>
   lazy val fixedCosts6048View: fixedCosts6048                                                       = inject[fixedCosts6048]
   lazy val accountingCosts6048View: accountingCosts6048                                             = inject[accountingCosts6048]
   lazy val administrativeCosts6048View: administrativeCosts6048                                     = inject[administrativeCosts6048]
+  lazy val operationalCosts6048View: operationalCosts6048                                           = inject[operationalCosts6048]
   lazy val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                                 = inject[lowMarginFuelCardsDetails]
   lazy val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails              =
     inject[addAnotherLowMarginFuelCardDetails]

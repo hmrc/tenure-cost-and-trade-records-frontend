@@ -396,7 +396,8 @@ trait FakeObjects {
         LocalDate.of(2023, 3, 31),
         LocalDate.of(2022, 3, 31)
       )
-    )
+    ),
+    canProceed = None
   )
 
   val prefilledPropertyCurrentlyInUsed =
@@ -751,21 +752,24 @@ trait FakeObjects {
         income = Income6048(1, 2, 3),
         fixedCosts = FixedCosts6048(1, 3, 3),
         accountingCosts = AccountingCosts6048(1, 1, 2, 2, 2),
-        administrativeCosts = AdministrativeCosts6048(1, 1, 1, 3, 3)
+        administrativeCosts = AdministrativeCosts6048(1, 1, 1, 3, 3),
+        operationalCosts = OperationalCosts6048(1, 1, 1, 1, 1, 1)
       ),
       TurnoverSection6048(
         today.minusYears(1),
         income = Income6048(10, 20, 30),
         fixedCosts = FixedCosts6048(10, 30, 30),
         accountingCosts = AccountingCosts6048(10, 10, 20, 20, 20),
-        administrativeCosts = AdministrativeCosts6048(10, 10, 10, 30, 30)
+        administrativeCosts = AdministrativeCosts6048(10, 10, 10, 30, 30),
+        operationalCosts = OperationalCosts6048(10, 10, 10, 10, 10, 10)
       ),
       TurnoverSection6048(
         today.minusYears(2),
         income = Income6048(100, 200, 300),
         fixedCosts = FixedCosts6048(100, 300, 300),
         accountingCosts = AccountingCosts6048(100, 100, 200, 200, 200),
-        administrativeCosts = AdministrativeCosts6048(100, 100, 100, 300, 300)
+        administrativeCosts = AdministrativeCosts6048(100, 100, 100, 300, 300),
+        operationalCosts = OperationalCosts6048(100, 100, 100, 100, 100, 100)
       )
     )
   )
@@ -1325,14 +1329,16 @@ trait FakeObjects {
   val additionalInformationSession: Session =
     stillConnectedDetailsYesSession.copy(additionalInformation = Some(prefilledAdditionalInformation))
 
-  val prefilledFirstOccupy                      = MonthsYearDuration(2, 2000)
-  val prefilledFinancialYear                    = Some(DayMonthsDuration(2, 12))
-  val prefilledBigDecimal                       = BigDecimal(9999999)
-  val prefilledAnnualRent                       = AnnualRent(prefilledBigDecimal)
-  val prefilledCurrentRentPayableWithin12Months =
+  val prefilledFirstOccupy                       = MonthsYearDuration(2, 2000)
+  val prefilledFinancialYear                     = Some(DayMonthsDuration(2, 12))
+  val prefilledBigDecimal                        = BigDecimal(9999999)
+  val prefilledAnnualRent                        = AnnualRent(prefilledBigDecimal)
+  val prefilledCurrentRentPayableWithin12Months  =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, Some(prefilledDateInput))
-  val prefilledPropertyUseLeasebackArrangement  =
+  val prefilledPropertyUseLeasebackArrangement   =
     PropertyUseLeasebackArrangement(AnswerYes)
+  val prefilledPropertyUseLeasebackArrangementNo =
+    PropertyUseLeasebackArrangement(AnswerNo)
 
   val prefilledAboutTheLandlord =
     AboutTheLandlord(
@@ -1538,6 +1544,22 @@ trait FakeObjects {
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
   )
 
+  val prefilledAboutLeaseOrAgreement6030NoPropertyLeasebackRoute: AboutLeaseOrAgreementPartOne =
+    AboutLeaseOrAgreementPartOne(
+      Some(prefilledAboutTheLandlord),
+      Some(AnswerYes),
+      Some(prefilledConnectedToLandlordDetails),
+      Some(prefilledLeaseOrAgreementYearsDetails),
+      Some(prefilledCurrentRentPayableWithin12Months),
+      Some(prefilledPropertyUseLeasebackArrangementNo),
+      Some(prefilledAnnualRent),
+      rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
+      rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerYes)),
+      rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)),
+      whatIsYourCurrentRentBasedOnDetails =
+        Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnIndexedToRPI, Some("Test")))
+    )
+
   val prefilledAboutLeaseOrAgreementPartOne: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     Some(prefilledAboutTheLandlord),
     Some(AnswerYes),
@@ -1603,7 +1625,7 @@ trait FakeObjects {
     Some(prefilledConnectedToLandlordDetails),
     Some(prefilledLeaseOrAgreementYearsDetailsNo),
     Some(prefilledCurrentRentPayableWithin12Months),
-    Some(prefilledPropertyUseLeasebackArrangement),
+    Some(prefilledPropertyUseLeasebackArrangementNo),
     Some(prefilledAnnualRent),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerNo)),
     rentIncludeFixturesAndFittingsDetails = Some(RentIncludeFixturesAndFittingsDetails(AnswerNo)),

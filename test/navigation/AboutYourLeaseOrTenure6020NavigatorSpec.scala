@@ -20,7 +20,7 @@ import utils.TestBaseSpec
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentIncludeTradeServicesInformationDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
 import navigation.identifiers._
 import play.api.libs.json.JsObject
@@ -91,6 +91,48 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(LeaseSurrenderedEarlyId, session6020)
         .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show()
+    }
+
+    "return a function that goes to connected to landlord details page when connected to landlord and answer is 'no'" in {
+      val answers = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerNo)))
+      )
+      val result  = navigator.connectedToLandlordRouting(answers)
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
+
+    }
+
+    "return a function that goes to trade services description page when include trade services with yes has been completed" in {
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6020.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(rentIncludeTradeServicesDetails =
+              Some(RentIncludeTradeServicesDetails(AnswerYes))
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(RentIncludeTradeServicesPageId, session)
+        .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
+    }
+
+    "return a function that goes to trade services description page when include trade services with no has been completed" in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6020.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(rentIncludeTradeServicesDetails =
+              Some(RentIncludeTradeServicesDetails(AnswerNo))
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(RentIncludeTradeServicesPageId, session)
+        .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
     }
 
     "return a function that goes to benefits given detail page when benefits given has been completed for yes answer " in {
@@ -260,22 +302,12 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
-
-      val session = session6020.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
-          session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleInsideRepairs =
-              Some(UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, Some("test")))
-            )
-          )
-        )
-      )
+    "return a function that goes to fixture and fittings details page when fixture and fittings with yes has been completed" in {
       navigator
-        .nextPage(UltimatelyResponsibleInsideRepairsPageId, session)
+        .nextPage(RentFixtureAndFittingsPageId, session6020)
         .apply(
-          session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
+          session6020
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller
         .show()
     }
 
@@ -295,6 +327,13 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .apply(
           session
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
+        .show()
+    }
+
+    "return a function that goes to incentives payment when can rent be reduced has been completed" in {
+      navigator
+        .nextPage(CanRentBeReducedOnReviewId, session6020)
+        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController
         .show()
     }
 
@@ -352,6 +391,14 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to ultimately responsible outside when included in your rent has been completed" in {
+      navigator
+        .nextPage(IncludedInYourRentPageId, session6020)
+        .apply(
+          session6020
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+        .show()
+    }
   }
 
 }
