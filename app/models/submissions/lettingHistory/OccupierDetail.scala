@@ -20,10 +20,11 @@ import play.api.libs.json.{Format, Json}
 
 case class OccupierDetail(
   name: String,
-  address: Address
-  // TODO rental: RentalPeriod
+  address: Address,
+  rental: Option[LocalPeriod]
 )
 
 object OccupierDetail:
-  def unapply(obj: OccupierDetail): Option[(String, Address)] = Some(obj.name, obj.address)
-  given Format[OccupierDetail]                                = Json.format
+  def unapply(obj: OccupierDetail): Option[(String, Address, Option[LocalPeriod])] =
+    Some(obj.name, obj.address, obj.rental)
+  given Format[OccupierDetail]                                                     = Json.format

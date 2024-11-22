@@ -96,6 +96,8 @@ label.change = Newid
 label.liter = liter
 label.litres = litr
 label.percent = %
+label.fromDate = From date
+label.toDate = To date
 
 # COMMON HINTS
 ##############
@@ -949,6 +951,7 @@ checkbox.rentPayable.otherProperty = Eiddo arall
 checkbox.rentPayable.onlyPart = Dim ond rhan o’r eiddo
 checkbox.rentPayable.onlyLand = I dir yn unig (ac eithrio adeiladau)
 checkbox.rentPayable.shellUnit = Uned ‘gragen’ roedd yn rhaid i chi ei gosod eich hun
+checkbox.rentPayable.parkingSpaceGarage = Parking spaces or garages
 checkbox.rentPayable.noneOfThese = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
 checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
 checkbox.rentPayable.none = None
@@ -1599,6 +1602,13 @@ label.lettingHistory.occupierDetail.name.label = Occupier''s name
 lettingHistory.occupierDetail.name.required = Enter the name of the temporary occupier
 lettingHistory.occupierDetail.address.legend = Occupier''s address
 lettingHistory.occupierDetail.address.hint = This should be the address they provided when they rented the property.
+
+lettingHistory.rentalPeriod.heading = When did {0} rent part of your property?
+fieldName.lettingHistory.fromDate = from date
+lettingHistory.rentalPeriod.fromDate.error = The "from date" must be greater than or equal to {0}
+fieldName.lettingHistory.toDate = to date
+lettingHistory.rentalPeriod.toDate.error = The "to date" must be less than or equal to {0}
+lettingHistory.rentalPeriod.error = The "from date" must be less than or equal to the "to date"
 
 
 # 6010 TYPES

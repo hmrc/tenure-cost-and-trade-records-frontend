@@ -15,9 +15,8 @@
  *@
 
 @import actions.SessionRequest
-@import models.pages.Summary
 @import models.submissions.lettingHistory.OccupierDetail
-@import models.submissions.lettingHistory.RentalPeriod as FiscalPeriod
+@import models.submissions.lettingHistory.LocalPeriod as FiscalPeriod
 @import controllers.lettingHistory.routes
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukFieldset, GovukHint, GovukButton, GovukInput}
 @import util.DateUtilLocalised
@@ -38,8 +37,8 @@
     <p class="govuk-body">
     @messages(
         "lettingHistory.occupierDetail.subheading",
-        dateUtil.formatDayMonthAbbrYear(fiscalPeriod.fromDate),
-        dateUtil.formatDayMonthAbbrYear(fiscalPeriod.toDate)
+        dateUtil.formatDate(fiscalPeriod.fromDate),
+        dateUtil.formatDate(fiscalPeriod.toDate)
     )
     </p>
 

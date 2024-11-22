@@ -16,9 +16,35 @@
 
 package form.lettingHistory
 
-import play.api.data.Forms.text
+import actions.SessionRequest
+import controllers.lettingHistory.FiscalYearSupport
+import form.DateMappings.requiredDateMapping
+import models.submissions.lettingHistory.LocalPeriod
+import play.api.data.Forms.{date, text}
 import play.api.data.validation.Constraints.nonEmpty
+import play.api.i18n.Messages
+import play.api.mvc.AnyContent
+import util.DateUtilLocalised
 
 object FieldMappings:
 
-  def nonEmptyText(errorMessage: String) = text.verifying(nonEmpty(errorMessage = errorMessage))
+  def nonEmptyText(errorMessage: String) =
+    text.verifying(nonEmpty(errorMessage = errorMessage))
+
+  def constrainedLocalDate(field: String, period: LocalPeriod)(using
+    request: SessionRequest[AnyContent],
+    messages: Messages,
+    dateUtil: DateUtilLocalised
+  ) =
+    val mapping = requiredDateMapping(fieldNameKey = s"lettingHistory.$field", allowPastDates = true)
+    if field == "fromDate" then
+      mapping.verifying(
+        error = messages(s"lettingHistory.rentalPeriod.$field.error", dateUtil.formatDate(period.fromDate)),
+        constraint = { d => d.isAfter(period.fromDate) || d.isEqual(period.fromDate) }
+      )
+    else if field == "toDate" then
+      mapping.verifying(
+        error = messages(s"lettingHistory.rentalPeriod.$field.error", dateUtil.formatDate(period.toDate)),
+        constraint = { d => d.isBefore(period.toDate) || d.isEqual(period.toDate) }
+      )
+    else /* unconstrained */ mapping

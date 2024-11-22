@@ -41,7 +41,7 @@ class OccupierDetailController @Inject (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with WelshJourneySupport
+    with FiscalYearSupport
     with I18nSupport:
 
   def show(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply {
@@ -66,10 +66,13 @@ class OccupierDetailController @Inject (
       theForm,
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
       occupierDetail =>
-        given Session      = request.sessionData
-        val updatedSession = byAddingOccupierNameAndAddress(occupierDetail.name, occupierDetail.address)
-        for savedSession <- repository.saveOrUpdateSession(updatedSession)
-        yield navigator.redirect(currentPage = OccupierDetailPageId, savedSession)
+        given Session                       = request.sessionData
+        val (occupierIndex, updatedSession) =
+          byAddingOccupierNameAndAddress(occupierDetail.name, occupierDetail.address)
+        for
+          savedSession  <- repository.saveOrUpdateSession(updatedSession)
+          navigationData = Map("index" -> occupierIndex.toString)
+        yield navigator.redirect(currentPage = OccupierDetailPageId, savedSession, navigationData)
     )
   }
 
