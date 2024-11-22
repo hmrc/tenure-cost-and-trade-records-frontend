@@ -119,15 +119,18 @@ object LettingHistory:
             lettingHistory.copy(hasCompletedLettings = Some(AnswerNo), completedLettings = Nil)
     )
 
-  def byAddingOccupierNameAndAddress(name: String, address: Address)(using session: Session): Session =
-    val occupierDetail = OccupierDetail(name, address)
-    val ifEmpty        =
-      LettingHistory(
-        hasCompletedLettings = Some(AnswerYes),
-        completedLettings = List(occupierDetail)
+  def byAddingOccupierNameAndAddress(name: String, address: Address)(using session: Session): (Int, Session) =
+    val occupierDetail                 = OccupierDetail(name, address, rental = None)
+    val ifEmpty: (Int, LettingHistory) =
+      (
+        /* index = */ 0,
+        LettingHistory(
+          hasCompletedLettings = Some(AnswerYes),
+          completedLettings = List(occupierDetail)
+        )
       )
 
-    val copyFunc: LettingHistory => LettingHistory = { lettingHistory =>
+    val copyFunc: LettingHistory => (Int, LettingHistory) = { lettingHistory =>
       lettingHistory.completedLettings.zipWithIndex
         .find { (occupier, _) =>
           // find the eventually existing resident by name (and more importantly its index)
@@ -141,17 +144,35 @@ object LettingHistory:
 
           val patchedCompletedLettings = lettingHistory.completedLettings.patch(foundIndex, List(patchedOccupier), 1)
           val copiedLettingHistory     = lettingHistory.copy(completedLettings = patchedCompletedLettings)
-          copiedLettingHistory
+          (foundIndex, copiedLettingHistory)
         }
         .getOrElse {
           // not found ... then append it to the list of completed lettings
+          val lastIndex                 = lettingHistory.completedLettings.size
           val extendedCompletedLettings = lettingHistory.completedLettings.:+(occupierDetail)
           val copiedLettingHistory      = lettingHistory.copy(completedLettings = extendedCompletedLettings)
-          copiedLettingHistory
+          (lastIndex, copiedLettingHistory)
         }
     }
-    val updatedSession                             = session.lettingHistory.fold(ifEmpty)(copyFunc)
-    session.copy(lettingHistory = Some(updatedSession))
+    val (updatedIndex, updatedSession)                    = session.lettingHistory.fold(ifEmpty)(copyFunc)
+    (updatedIndex, session.copy(lettingHistory = Some(updatedSession)))
+
+  def byAddingOccupierRentalPeriod(index: Int, rentalPeriod: LocalPeriod)(using session: Session): Session =
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        hasCompletedLettings = Some(AnswerYes),
+        completedLettings = Nil
+      ),
+      copyFunc = lettingHistory =>
+        val maybeUpdatedOccupierDetails =
+          for occupierDetail <- lettingHistory.completedLettings.lift(index)
+          yield occupierDetail.copy(rental = Some(rentalPeriod))
+
+        val patchedCompletedLettings =
+          lettingHistory.completedLettings.patch(index, maybeUpdatedOccupierDetails.toList, 1)
+
+        lettingHistory.copy(completedLettings = patchedCompletedLettings)
+    )
 
   def completedLettings(session: Session): List[OccupierDetail] =
     for

@@ -20,11 +20,11 @@ import play.api.libs.json.{Format, Json}
 
 import java.time.LocalDate
 
-case class RentalPeriod(
+case class LocalPeriod(
   fromDate: LocalDate,
   toDate: LocalDate
 )
 
-object RentalPeriod:
-  def unapply(obj: RentalPeriod): Option[(LocalDate, LocalDate)] = Some((obj.fromDate, obj.toDate))
-  given Format[RentalPeriod]                                     = Json.format
+object LocalPeriod:
+  def unapply(obj: LocalPeriod): Option[(LocalDate, LocalDate)] = Some((obj.fromDate, obj.toDate))
+  given Format[LocalPeriod]                                     = Json.format

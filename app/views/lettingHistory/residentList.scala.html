@@ -18,6 +18,7 @@
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.lettingHistory.ResidentDetail
+@import navigation.identifiers.{asPageIdentifier, ResidentRemovePageId}
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
@@ -26,12 +27,12 @@
 
 @(theForm: Form[AnswersYesNo], permanentResidents: List[ResidentDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
-@fromPage = @{ request.session.get("from") }
+@fromPage = @{ request.session.get("from").map(_.asPageIdentifier).flatten }
 
 @residentsCount = @{ permanentResidents.length }
 
 @pageHeadingMessageKey = @{
-    if (residentsCount == 0 && fromPage == Some("residentRemovePage")) "lettingHistory.residentList.heading.removed"
+    if (residentsCount == 0 && fromPage == Some(ResidentRemovePageId)) "lettingHistory.residentList.heading.removed"
     else if (residentsCount == 1) "lettingHistory.residentList.heading.singular"
     else "lettingHistory.residentList.heading.plural"
 }

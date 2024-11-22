@@ -17,13 +17,14 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{Address, LettingHistory, OccupierDetail, ResidentDetail}
+import models.submissions.lettingHistory.{Address, LettingHistory, LocalPeriod, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
 import play.api.libs.json.Writes
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 
+import java.time.LocalDate
 import scala.concurrent.Future.successful
 
 class LettingHistoryControllerSpec extends TestBaseSpec:
@@ -45,29 +46,39 @@ class LettingHistoryControllerSpec extends TestBaseSpec:
   val oneOccupier = List(
     OccupierDetail(
       name = "Mr. One",
-      address = Address("Address One", None, "Neverland", None, "BN124AX")
+      address = Address("Address One", None, "Neverland", None, "BN124AX"),
+      rental = None
     )
   )
 
   val twoOccupiers = oneOccupier ++ List(
     OccupierDetail(
       name = "Mr. Two",
-      address = Address("Address Two", None, "Neverland", None, "BN124AX")
+      address = Address("Address Two", None, "Neverland", None, "BN124AX"),
+      rental = Some(
+        LocalPeriod(
+          fromDate = LocalDate.of(2023, 4, 2),
+          toDate = LocalDate.of(2024, 3, 30)
+        )
+      )
     )
   )
 
   val fiveOccupiers = twoOccupiers ++ List(
     OccupierDetail(
       name = "Miss. Three",
-      address = Address("Address Three", None, "Neverland", None, "BN124AX")
+      address = Address("Address Three", None, "Neverland", None, "BN124AX"),
+      rental = None
     ),
     OccupierDetail(
       name = "Mr. Four",
-      address = Address("Address Four", None, "Neverland", None, "BN124AX")
+      address = Address("Address Four", None, "Neverland", None, "BN124AX"),
+      rental = None
     ),
     OccupierDetail(
       name = "Mrs. Five",
-      address = Address("Address Five", None, "Neverland", None, "BN124AX")
+      address = Address("Address Five", None, "Neverland", None, "BN124AX"),
+      rental = None
     )
   )
 

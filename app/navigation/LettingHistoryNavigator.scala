@@ -23,7 +23,7 @@ import models.Session
 import models.submissions.common.AnswerYes
 import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, hasCompletedLettings, hasPermanentResidents, permanentResidents}
-import navigation.identifiers.{CompletedLettingsPageId, Identifier, OccupierDetailPageId, PermanentResidentsPageId, ResidentDetailPageId, ResidentListPageId, ResidentRemovePageId}
+import navigation.identifiers.{CompletedLettingsPageId, Identifier, OccupierDetailPageId, PermanentResidentsPageId, RentalPeriodPageId, ResidentDetailPageId, ResidentListPageId, ResidentRemovePageId, asPageIdentifier}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{AnyContent, Call, Result}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -53,14 +53,19 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
       else Some(routes.PermanentResidentsController.show)
     },
     CompletedLettingsPageId  -> { (_, navigationData) =>
-      for fromPage <- navigationData.get("from")
+      for
+        from       <- navigationData.get("from")
+        fromPageId <- from.asPageIdentifier
       yield
-        if fromPage == PermanentResidentsPageId.toString
+        if fromPageId == PermanentResidentsPageId
         then routes.PermanentResidentsController.show
         else routes.ResidentListController.show
     },
     OccupierDetailPageId     -> { (_, _) =>
       Some(routes.CompletedLettingsController.show)
+    },
+    RentalPeriodPageId       -> { (_, navigationData) =>
+      Some(routes.OccupierDetailController.show(navigationData.get("index").map(_.toInt)))
     }
   )
 
@@ -109,9 +114,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
     },
     ResidentListPageId       -> { (updatedSession, navigationData) =>
       // assert(navigationData.isDefinedAt("hasMoreResidents"))
-      for answer <- Some(navigationData("hasMoreResidents"))
+      for answerString <- Some(navigationData("hasMoreResidents"))
       yield
-        if answer == AnswerYes.toString
+        if answerString == AnswerYes.toString
         then
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
@@ -132,9 +137,12 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
           // TODO Introduce the HowManyNightsController
           Call("GET", "/path/to/how-many-nights")
     },
-    OccupierDetailPageId     -> { (_, _) =>
-      // TODO Introduce the RentalPeriodController
-      Some(Call("GET", "/path/to/rental-period"))
+    OccupierDetailPageId     -> { (_, navigationData) =>
+      Some(routes.RentalPeriodController.show(index = Some(navigationData("index").toInt)))
+    },
+    RentalPeriodPageId       -> { (_, _) =>
+      // TODO Introduce the OccupiersListController
+      Some(Call("GET", "/path/to/occupiers-list"))
     }
   )
 

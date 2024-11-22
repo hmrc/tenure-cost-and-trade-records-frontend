@@ -16,21 +16,21 @@
 
 package models.submissions.lettingHistory
 
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveLettingHistory(
-  hasPermanentResidents: Option[AnswersYesNo],
+  hasPermanentResidents: Option[Boolean],
   permanentResidents: List[SensitiveResidentDetail],
-  hasCompletedLettings: Option[AnswersYesNo],
+  hasCompletedLettings: Option[Boolean],
   completedLettings: List[SensitiveOccupierDetail]
 ) extends Sensitive[LettingHistory]:
 
   override def decryptedValue: LettingHistory =
     LettingHistory(
-      hasPermanentResidents,
+      hasPermanentResidents.map(toAnswer),
       permanentResidents.map(_.decryptedValue),
-      hasCompletedLettings,
+      hasCompletedLettings.map(toAnswer),
       completedLettings.map(_.decryptedValue)
     )
 
@@ -42,8 +42,12 @@ object SensitiveLettingHistory:
   // encryption method
   def apply(lettingHistory: LettingHistory): SensitiveLettingHistory =
     SensitiveLettingHistory(
-      lettingHistory.hasPermanentResidents,
+      lettingHistory.hasPermanentResidents.map(asBoolean),
       lettingHistory.permanentResidents.map(SensitiveResidentDetail(_)),
-      lettingHistory.hasCompletedLettings,
+      lettingHistory.hasCompletedLettings.map(asBoolean),
       lettingHistory.completedLettings.map(SensitiveOccupierDetail(_))
     )
+
+extension (answer: AnswersYesNo) def asBoolean = answer == AnswerYes
+
+extension (bool: Boolean) def toAnswer = if bool then AnswerYes else AnswerNo
