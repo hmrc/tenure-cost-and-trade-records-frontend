@@ -21,7 +21,7 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentIncludeTradeServicesInformationDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
-import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
+import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, OutsideRepairsLandlord}
 import navigation.identifiers._
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
