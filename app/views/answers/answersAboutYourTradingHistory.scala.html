@@ -591,6 +591,24 @@
         answer6048("turnover.6048.income.total", _.income.flatMap(_.total))
     )
 
+    @pageAnswers("turnover.6048.fixedCosts.heading",
+        aboutthetradinghistory.routes.FixedCosts6048Controller.show,
+        answer6048("turnover.6048.fixedCosts.insurance", _.fixedCosts.flatMap(_.insurance)),
+        answer6048("checkYourAnswersAboutTheTradingHistory.fixedCosts.businessRatesOrCouncilTax", _.fixedCosts.flatMap(_.businessRatesOrCouncilTax)),
+        answer6048("turnover.6048.fixedCosts.rent", _.fixedCosts.flatMap(_.rent)),
+        answer6048("turnover.6048.fixedCosts.total", _.fixedCosts.flatMap(_.total))
+    )
+
+    @pageAnswers("turnover.6048.accountingCosts.heading",
+        aboutthetradinghistory.routes.AccountingCosts6048Controller.show,
+        answer6048("turnover.6048.accountingCosts.wagesAndNationalInsurance", _.accountingCosts.flatMap(_.wagesAndNationalInsurance)),
+        answer6048("checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationBuildings", _.accountingCosts.flatMap(_.depreciationBuildings)),
+        answer6048("checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents", _.accountingCosts.flatMap(_.depreciationContents)),
+        answer6048("turnover.6048.accountingCosts.bookkeepingOrAccountancy", _.accountingCosts.flatMap(_.bookkeepingOrAccountancy)),
+        answer6048("turnover.6048.accountingCosts.bankCharges", _.accountingCosts.flatMap(_.bankCharges)),
+        answer6048("turnover.6048.accountingCosts.total", _.accountingCosts.flatMap(_.total))
+    )
+
 }
 
 @if(forType == FOR6045 || forType == FOR6046) {
