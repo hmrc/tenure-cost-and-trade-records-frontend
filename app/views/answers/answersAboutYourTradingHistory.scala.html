@@ -609,6 +609,29 @@
         answer6048("turnover.6048.accountingCosts.total", _.accountingCosts.flatMap(_.total))
     )
 
+    @pageAnswers("turnover.6048.administrativeCosts.heading",
+        aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show,
+        answer6048("checkYourAnswersAboutTheTradingHistory.administrativeCosts.subscriptionsAndFees", _.administrativeCosts.flatMap(_.subscriptionsAndFees)),
+        answer6048("checkYourAnswersAboutTheTradingHistory.administrativeCosts.telephoneBroadbandStationeryPostage", _.administrativeCosts.flatMap(_.telephoneBroadbandStationeryPostage)),
+        answer6048("turnover.6048.administrativeCosts.bookingAgency", _.administrativeCosts.flatMap(_.bookingAgency)),
+        answer6048("turnover.6048.administrativeCosts.advertising", _.administrativeCosts.flatMap(_.advertising)),
+        answer6048("turnover.6048.administrativeCosts.printing", _.administrativeCosts.flatMap(_.printing)),
+        answer6048("turnover.6048.administrativeCosts.total", _.administrativeCosts.flatMap(_.total))
+    )
+
+    @pageAnswers("turnover.6048.operationalCosts.heading",
+        aboutthetradinghistory.routes.OperationalCosts6048Controller.show,
+        answer6048("turnover.6048.operationalCosts.energyBills", _.operationalCosts.flatMap(_.energyBills)),
+        answer6048("turnover.6048.operationalCosts.laundryCleaning", _.operationalCosts.flatMap(_.laundryCleaning)),
+        answer6048("turnover.6048.operationalCosts.repairsRenewalsMaintenance", _.operationalCosts.flatMap(_.repairsRenewalsMaintenance)),
+        answer6048("turnover.6048.operationalCosts.tvLicences", _.operationalCosts.flatMap(_.tvLicences)),
+        answer6048("turnover.6048.operationalCosts.travellingAndMotorExpenses", _.operationalCosts.flatMap(_.travellingAndMotorExpenses)),
+        answer6048("turnover.6048.operationalCosts.other",
+            _.operationalCosts.flatMap(_.other),
+            sectionAnswers1.answers.flatMap(_.otherOperationalExpensesDetails)),
+        answer6048("turnover.6048.operationalCosts.total", _.operationalCosts.flatMap(_.total))
+    )
+
 }
 
 @if(forType == FOR6045 || forType == FOR6046) {
