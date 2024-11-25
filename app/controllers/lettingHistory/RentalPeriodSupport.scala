@@ -17,7 +17,6 @@
 package controllers.lettingHistory
 
 import actions.SessionRequest
-import models.Session
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.mvc.AnyContent
 
