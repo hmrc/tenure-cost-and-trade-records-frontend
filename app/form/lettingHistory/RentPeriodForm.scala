@@ -17,7 +17,7 @@
 package form.lettingHistory
 
 import actions.SessionRequest
-import controllers.lettingHistory.FiscalYearSupport
+import controllers.lettingHistory.RentalPeriodSupport
 import form.lettingHistory.FieldMappings.constrainedLocalDate
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.data.Form
@@ -26,7 +26,7 @@ import play.api.i18n.Messages
 import play.api.mvc.AnyContent
 import util.DateUtilLocalised
 
-object RentPeriodForm extends Object with FiscalYearSupport:
+object RentalPeriodForm extends Object with RentalPeriodSupport:
 
   def theForm(using request: SessionRequest[AnyContent], messages: Messages, dateUtil: DateUtilLocalised) =
     Form[LocalPeriod](

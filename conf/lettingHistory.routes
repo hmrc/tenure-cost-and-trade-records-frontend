@@ -11,8 +11,8 @@ GET         /letting-history/resident-remove                    controllers.lett
 POST        /letting-history/resident-remove                    controllers.lettingHistory.ResidentListController.performRemove(index: Int)
 POST        /letting-history/resident-list                      controllers.lettingHistory.ResidentListController.submit
 
-GET         /letting-history/commercial-lettings                controllers.lettingHistory.CompletedLettingsController.show
-POST        /letting-history/commercial-lettings                controllers.lettingHistory.CompletedLettingsController.submit
+GET         /letting-history/completed-lettings                 controllers.lettingHistory.CompletedLettingsController.show
+POST        /letting-history/completed-lettings                 controllers.lettingHistory.CompletedLettingsController.submit
 
 
 GET         /letting-history/occupier-detail                    controllers.lettingHistory.OccupierDetailController.show(index: Option[Int] ?= None)
@@ -20,3 +20,8 @@ POST        /letting-history/occupier-detail                    controllers.lett
 
 GET         /letting-history/rental-period                      controllers.lettingHistory.RentalPeriodController.show(index: Option[Int] ?= None)
 POST        /letting-history/rental-period                      controllers.lettingHistory.RentalPeriodController.submit(index: Option[Int] ?= None)
+
+GET         /letting-history/occupier-list                      controllers.lettingHistory.OccupierListController.show
+GET         /letting-history/occupier-remove                    controllers.lettingHistory.OccupierListController.remove(index: Int)
+POST        /letting-history/occupier-remove                    controllers.lettingHistory.OccupierListController.performRemove(index: Int)
+POST        /letting-history/occupier-list                      controllers.lettingHistory.OccupierListController.submit

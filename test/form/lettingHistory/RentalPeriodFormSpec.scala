@@ -18,7 +18,7 @@ package form.lettingHistory
 
 import actions.SessionRequest
 import controllers.lettingHistory.FiscalYearSupport
-import form.lettingHistory.RentPeriodForm.theForm
+import form.lettingHistory.RentalPeriodForm.theForm
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.mvc.AnyContent
 

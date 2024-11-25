@@ -1,0 +1,106 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.lettingHistory.routes
+@import models.submissions.common.AnswersYesNo
+@import models.submissions.lettingHistory.OccupierDetail
+@import models.submissions.lettingHistory.LocalPeriod
+@import navigation.identifiers.{asPageIdentifier, OccupierRemovePageId}
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
+@import util.DateUtilLocalised
+
+@this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+
+@(theForm: Form[AnswersYesNo], fiscalPeriod: LocalPeriod, completedLettings: List[OccupierDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+
+@fromPage = @{ request.session.get("from").map(_.asPageIdentifier).flatten }
+
+@occupiersCount = @{ completedLettings.length }
+
+@pageHeadingMessageKey = @{
+    if (occupiersCount == 0 && fromPage == Some(OccupierRemovePageId)) "lettingHistory.occupierList.heading.removed"
+    else if (occupiersCount == 1) "lettingHistory.occupierList.heading.singular"
+    else "lettingHistory.occupierList.heading.plural"
+}
+
+@rentalPeriodOf(occupier: OccupierDetail) = @{
+    occupier.rental.map { r =>
+        messages(
+            "lettingHistory.occupierList.rentalPeriod.text",
+            dateUtil.formatDate(r.fromDate),
+            dateUtil.formatDate(r.toDate)
+        )
+    }
+    .getOrElse("")
+}
+
+@layout(
+    summary = Some(request.sessionData.toSummary),
+    pageHeading = messages(pageHeadingMessageKey, occupiersCount),
+    backLinkUrl = backLink,
+    showSection = true,
+    sectionName = messages("label.section.lettingHistory"),
+    theForm = theForm
+) {
+
+    @govukSummaryList(SummaryList(
+        rows = completedLettings.zipWithIndex.map { (occupier, index) =>
+            SummaryListRow(
+                key = Key(
+                    content = Text(occupier.name),
+                    classes = "govuk-!-font-weight-regular"
+                ),
+                value = Value(
+                    content = Text(rentalPeriodOf(occupier)),
+                    classes = "govuk-!-font-size-14"
+                ),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = s"${routes.OccupierDetailController.show(index).url}",
+                            content = Text("Change")
+                        ),
+                        ActionItem(
+                            href = s"${routes.OccupierListController.remove(index).url}",
+                            content = Text("Remove")
+                        )
+                    ),
+                    classes = "govuk-!-font-size-14"
+                ))
+            )
+        }
+    ))
+    @formWithCSRF(action = routes.OccupierListController.submit) {
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            name = "hadMoreOccupiers",
+            legend = messages(
+                "lettingHistory.occupiersList.hadMoreOccupiers.label",
+                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.fromDate),
+                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.toDate)
+            ),
+            legendKey = "", // ignored!
+            classes = "govuk-fieldset__legend--s",
+            isHeading = true
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

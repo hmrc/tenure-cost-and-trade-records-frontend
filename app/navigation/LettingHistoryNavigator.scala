@@ -22,8 +22,8 @@ import controllers.lettingHistory.routes
 import models.Session
 import models.submissions.common.AnswerYes
 import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, hasCompletedLettings, hasPermanentResidents, permanentResidents}
-import navigation.identifiers.{CompletedLettingsPageId, Identifier, OccupierDetailPageId, PermanentResidentsPageId, RentalPeriodPageId, ResidentDetailPageId, ResidentListPageId, ResidentRemovePageId, asPageIdentifier}
+import models.submissions.lettingHistory.LettingHistory._
+import navigation.identifiers._
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{AnyContent, Call, Result}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -48,24 +48,27 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
       Some(routes.PermanentResidentsController.show)
     },
     ResidentListPageId       -> { (currentSession, _) =>
-      if permanentResidents(currentSession).size < MaxNumberOfPermanentResidents
-      then Some(routes.ResidentDetailController.show(index = None))
-      else Some(routes.PermanentResidentsController.show)
+      Some(routes.ResidentDetailController.show(index = None))
     },
-    CompletedLettingsPageId  -> { (_, navigationData) =>
-      for
-        from       <- navigationData.get("from")
-        fromPageId <- from.asPageIdentifier
+    CompletedLettingsPageId  -> { (currentSession, _) =>
+      for size <- Some(permanentResidents(currentSession).size)
       yield
-        if fromPageId == PermanentResidentsPageId
-        then routes.PermanentResidentsController.show
-        else routes.ResidentListController.show
+        if size > 0 then routes.ResidentListController.show
+        else {
+          val maybePermanentResidents = hasPermanentResidents(currentSession)
+          if maybePermanentResidents.isDefined && maybePermanentResidents.get == AnswerYes
+          then routes.ResidentDetailController.show(index = None)
+          else routes.PermanentResidentsController.show
+        }
     },
     OccupierDetailPageId     -> { (_, _) =>
       Some(routes.CompletedLettingsController.show)
     },
     RentalPeriodPageId       -> { (_, navigationData) =>
       Some(routes.OccupierDetailController.show(navigationData.get("index").map(_.toInt)))
+    },
+    OccupierListPageId       -> { (currentSession, _) =>
+      Some(routes.OccupierDetailController.show(index = None))
     }
   )
 
@@ -121,7 +124,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
           else
-            // TODO Introduce the controllers.lettingHistory.MaxPermanentResidentsController
+            // TODO Introduce the controllers.lettingHistory.MaxNumberReachedController
             Call("GET", "/path/to/max-permanent-residents")
         else
           // AnswerNo
@@ -141,12 +144,33 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
       Some(routes.RentalPeriodController.show(index = Some(navigationData("index").toInt)))
     },
     RentalPeriodPageId       -> { (_, _) =>
-      // TODO Introduce the OccupiersListController
-      Some(Call("GET", "/path/to/occupiers-list"))
+      Some(routes.OccupierListController.show)
+    },
+    OccupierRemovePageId     -> { (_, _) =>
+      Some(routes.OccupierListController.show)
+    },
+    OccupierListPageId       -> { (updatedSession, navigationData) =>
+      // Note that navigationData.isDefinedAt("hadMoreOccupiers") is certainly true!
+      // See ResidentListController.submit()
+      for answerString <- Some(navigationData("hadMoreOccupiers"))
+      yield
+        if answerString == AnswerYes.toString
+        then
+          if completedLettings(updatedSession).size < MaxNumberOfCompletedLettings
+          then routes.OccupierDetailController.show(index = None)
+          else
+            // TODO Introduce the controllers.lettingHistory.MaxNumberReachedController
+            Call("GET", "/path/to/max-completed-lettings")
+        else
+          // AnswerNo
+          // TODO Introduce the HowManyNightsController
+          Call("GET", "/path/to/how-many-nights")
     }
   )
 
-  @deprecated
+  @deprecated(message =
+    "Having two navigation maps, such as forward and backward navigation, is better than having just one"
+  )
   override val routeMap: Map[Identifier, Session => Call] = Map.empty
 
   def redirect(currentPage: Identifier, updatedSession: Session, navigationData: Map[String, String] = Map.empty)(using
