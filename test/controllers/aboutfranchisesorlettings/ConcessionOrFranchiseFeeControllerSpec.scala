@@ -16,41 +16,96 @@
 
 package controllers.aboutfranchisesorlettings
 
-import navigation.AboutFranchisesOrLettingsNavigator
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import models.Session
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import play.api.libs.json.Writes
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.test.Helpers.*
+import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
+import utils.JsoupHelpers.*
 import utils.TestBaseSpec
 
-class ConcessionOrFranchiseFeeControllerSpec extends TestBaseSpec {
+import scala.concurrent.Future.successful
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+class ConcessionOrFranchiseFeeControllerSpec extends TestBaseSpec:
 
-  val concessionOrFranchiseFeeController = new ConcessionOrFranchiseFeeController(
-    stubMessagesControllerComponents(),
-    mockAboutFranchisesOrLettingsNavigator,
-    cateringOperationView,
-    preFilledSession,
-    mockSessionRepo
-  )
+  "the ConcessionOrFranchiseFee controller" when {
+    "handling GET / requests"  should {
+      "reply 200 with a fresh HTML form and expected backLink" in new ControllerFixture {
+        val result = controller.show(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = contentAsJsoup(result)
+        html.getElementsByTag("h1").first().text() shouldBe "concessionOrFranchiseFee.heading"
+        html.backLinkHref                            should endWith(routes.FranchiseOrLettingsTiedToPropertyController.show().url)
 
-  "GET /" should {
-    "return 200" in {
-      val result = concessionOrFranchiseFeeController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      }
+      "reply 200 with a pre-filled HTML form and expected backLink" in new ControllerFixture(
+        Some(prefilledAboutFranchiseOrLettings)
+      ) {
+        val result = controller.show(fakeRequest.withFormUrlEncodedBody("from" -> "TL"))
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = contentAsJsoup(result)
+        html.getElementsByTag("h1").first().text() shouldBe "concessionOrFranchiseFee.heading"
+        html.backLinkHref                            should include(controllers.routes.TaskListController.show().url)
+      }
     }
-
-    "return HTML" in {
-      val result = concessionOrFranchiseFeeController.show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "handling POST / requests" should {
+      "reply 400 and error messages if the form is submitted with invalid data" in new ControllerFixture {
+        val result  = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "concessionOrFranchiseFee" -> "" // missing
+          )
+        )
+        val content = contentAsString(result)
+        status(result) shouldBe BAD_REQUEST
+        content          should include("error.concessionOrFranchiseFee.missing")
+        reset(repository)
+      }
+      "reply 303 when the form is submitted with 'no', and there were no pre-existing data" in new ControllerFixture {
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "concessionOrFranchiseFee" -> "no"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value                                           shouldBe routes.LettingOtherPartOfPropertyController.show().url
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        data.getValue.aboutFranchisesOrLettings.value.cateringOrFranchiseFee.value should beAnswerNo
+        reset(repository)
+      }
+      "reply 303 when the form is submitted with 'no', and coming from CYA" in new ControllerFixture {
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "concessionOrFranchiseFee" -> "yes",
+            "from"                     -> "CYA"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value                                           shouldBe routes.AddAnotherCateringOperationController.show(0).url
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        data.getValue.aboutFranchisesOrLettings.value.cateringOrFranchiseFee.value should beAnswerYes
+        reset(repository)
+      }
     }
   }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = concessionOrFranchiseFeeController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
-}
+  trait ControllerFixture(aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None):
+    val repository = mock[SessionRepo]
+    val data       = captor[Session]
+    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+
+    val controller = new ConcessionOrFranchiseFeeController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      cateringOperationView,
+      preEnrichedActionRefiner(
+        aboutFranchisesOrLettings = aboutFranchisesOrLettings
+      ),
+      repository
+    )
