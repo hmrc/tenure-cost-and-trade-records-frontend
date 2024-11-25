@@ -41,7 +41,7 @@ class CompletedLettingsController @Inject (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with FiscalYearSupport
+    with RentalPeriodSupport
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>

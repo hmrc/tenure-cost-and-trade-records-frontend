@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package controllers.lettingHistory
+package form.lettingHistory
 
-import models.submissions.lettingHistory.LocalPeriod
+import form.MappingSupport.createYesNoType as answerYesNo
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
 
-import java.time.LocalDate
-import java.time.Month.{APRIL, MARCH}
-
-trait FiscalYearSupport:
-
-  def previousFiscalYearEnd =
-    val now = LocalDate.now()
-    if now.getMonth.getValue > 3
-    then now.getYear
-    else now.getYear - 1
+object OccupierListForm:
+  val theForm = Form[AnswersYesNo](
+    single(
+      "hadMoreOccupiers" -> answerYesNo(errorMessage = "lettingHistory.occupierList.hadMoreOccupiers.required")
+    )
+  )

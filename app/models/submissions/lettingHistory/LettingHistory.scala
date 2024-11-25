@@ -30,6 +30,7 @@ case class LettingHistory(
 object LettingHistory:
 
   val MaxNumberOfPermanentResidents = 5
+  val MaxNumberOfCompletedLettings  = 5
 
   private def foldLettingHistory(ifEmpty: LettingHistory, copyFunc: LettingHistory => LettingHistory)(using
     session: Session
@@ -50,7 +51,10 @@ object LettingHistory:
           case AnswerYes =>
             lettingHistory.copy(hasPermanentResidents = Some(AnswerYes))
           case AnswerNo  =>
-            lettingHistory.copy(hasPermanentResidents = Some(AnswerNo), permanentResidents = Nil)
+            lettingHistory.copy(
+              hasPermanentResidents = Some(AnswerNo),
+              permanentResidents = Nil
+            )
     )
 
   def hasPermanentResidents(session: Session): Option[AnswersYesNo] =
@@ -67,14 +71,14 @@ object LettingHistory:
       ),
       copyFunc = { lettingHistory =>
         lettingHistory.permanentResidents.zipWithIndex
-          .find { (r, _) =>
-            // find the eventually existing resident by name
-            r.name == residentDetail.name
+          .find { (existingResident, _) =>
+            // We may want to find the eventually existing resident by name
+            existingResident.name == residentDetail.name
           }
-          .map { (_, index) =>
+          .map { (_, foundIndex) =>
             // patch the resident detail if found as existing
             lettingHistory
-              .copy(permanentResidents = lettingHistory.permanentResidents.patch(index, List(residentDetail), 1))
+              .copy(permanentResidents = lettingHistory.permanentResidents.patch(foundIndex, List(residentDetail), 1))
           }
           .getOrElse {
             // not found ... then append it
@@ -116,7 +120,10 @@ object LettingHistory:
           case AnswerYes =>
             lettingHistory.copy(hasCompletedLettings = Some(AnswerYes))
           case AnswerNo  =>
-            lettingHistory.copy(hasCompletedLettings = Some(AnswerNo), completedLettings = Nil)
+            lettingHistory.copy(
+              hasCompletedLettings = Some(AnswerNo),
+              completedLettings = Nil
+            )
     )
 
   def byAddingOccupierNameAndAddress(name: String, address: Address)(using session: Session): (Int, Session) =
@@ -132,12 +139,12 @@ object LettingHistory:
 
     val copyFunc: LettingHistory => (Int, LettingHistory) = { lettingHistory =>
       lettingHistory.completedLettings.zipWithIndex
-        .find { (occupier, _) =>
-          // find the eventually existing resident by name (and more importantly its index)
-          occupier.name == name
+        .find { (existingOccupier, _) =>
+          // We may want to find the eventually existing occupier by name
+          existingOccupier.name == name
         }
         .map { (_, foundIndex) =>
-          // patch the occupier detail if it exists at foundIndex
+          // patch the occupier detail if found as existing
           val patchedOccupier = lettingHistory
             .completedLettings(foundIndex)
             .copy(name = name, address = address)
@@ -172,6 +179,17 @@ object LettingHistory:
           lettingHistory.completedLettings.patch(index, maybeUpdatedOccupierDetails.toList, 1)
 
         lettingHistory.copy(completedLettings = patchedCompletedLettings)
+    )
+
+  def byRemovingPermanentOccupierAt(index: Int)(using session: Session): Session =
+    this.foldLettingHistory(
+      ifEmpty = LettingHistory(
+        hasCompletedLettings = Some(AnswerNo),
+        completedLettings = Nil
+      ),
+      copyFunc = { lettingHistory =>
+        lettingHistory.copy(completedLettings = lettingHistory.completedLettings.patch(index, Nil, 1))
+      }
     )
 
   def completedLettings(session: Session): List[OccupierDetail] =

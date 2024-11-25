@@ -17,13 +17,13 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
-@import models.submissions.lettingHistory.LocalPeriod as FiscalPeriod
+@import models.submissions.lettingHistory.LocalPeriod
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import util.DateUtilLocalised
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
-@(theForm: Form[AnswersYesNo], fiscalPeriod: FiscalPeriod, backLink: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
+@(theForm: Form[AnswersYesNo], fiscalPeriod: LocalPeriod, backLink: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 
 @layout(

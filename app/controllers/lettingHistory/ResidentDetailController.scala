@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.byAddingPermanentResident
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, byAddingPermanentResident}
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.ResidentDetailPageId
@@ -50,14 +50,17 @@ class ResidentDetailController @Inject() (
         yield lettingHistory.permanentResidents
       ).flatten
 
-      val freshForm  = theForm
-      val filledForm =
-        for
-          index          <- maybeIndex
-          residentDetail <- permanentResidents.lift(index)
-        yield freshForm.fill(residentDetail)
+      if maybeIndex.isEmpty && permanentResidents.size == MaxNumberOfPermanentResidents
+      then Redirect(routes.ResidentListController.show)
+      else
+        val freshForm  = theForm
+        val filledForm =
+          for
+            index          <- maybeIndex
+            residentDetail <- permanentResidents.lift(index)
+          yield freshForm.fill(residentDetail)
 
-      Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
+        Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>

@@ -41,13 +41,14 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+        content                     should include(s"""${routes.OccupierDetailController.show(Some(0)).url}" class="govuk-back-link"""")
+        content                     should include("lettingHistory.rentalPeriod.heading")
         content                     should include("""name="fromDate.day"""")
         content                     should include("""name="fromDate.month"""")
         content                     should include("""name="fromDate.year"""")
         content                     should include("""name="toDate.day"""")
         content                     should include("""name="toDate.month"""")
         content                     should include("""name="toDate.year"""")
-        content                     should include(routes.OccupierDetailController.show(index = Some(0)).url)
       }
       "be handling POST /rental-period?index=0 by replying 303 redirect to 'Occupier List' page" in new StaleSessionFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
@@ -60,7 +61,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         )
         val result  = controller.submit(index = Some(0))(request)
         status(result)                                     shouldBe SEE_OTHER
-        redirectLocation(result).value                     shouldBe "/path/to/occupiers-list"
+        redirectLocation(result).value                     shouldBe routes.OccupierListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         completedLettings(data)                              should have size 1
         completedLettings(data).head.rental.value.fromDate shouldBe LocalDate.of(previousFiscalYearEnd - 1, 4, 1)

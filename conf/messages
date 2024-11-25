@@ -1648,6 +1648,13 @@ fieldName.lettingHistory.toDate = to date
 lettingHistory.rentalPeriod.toDate.error = The "to date" must be less than or equal to {0}
 lettingHistory.rentalPeriod.error = The "from date" must be less than or equal to the "to date"
 
+lettingHistory.occupierList.heading.removed = You have removed all temporary occupiers of the property
+lettingHistory.occupierList.heading.singular = You have added {0} temporary occupier
+lettingHistory.occupierList.heading.plural = You have added {0} temporary occupiers
+lettingHistory.occupierList.rentalPeriod.text = {0} to {1}
+lettingHistory.occupiersList.hadMoreOccupiers.label = Did any other occupants rent part of your property for 29 nights or more between {0} and {1}?
+lettingHistory.occupierList.hadMoreOccupiers.required = Select yes if the property had more occupiers
+
 
 # 6010 TYPES
 ##############################

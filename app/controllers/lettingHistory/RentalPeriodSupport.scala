@@ -16,15 +16,20 @@
 
 package controllers.lettingHistory
 
+import actions.SessionRequest
+import models.Session
 import models.submissions.lettingHistory.LocalPeriod
+import play.api.mvc.AnyContent
 
 import java.time.LocalDate
 import java.time.Month.{APRIL, MARCH}
 
-trait FiscalYearSupport:
+trait RentalPeriodSupport extends FiscalYearSupport:
 
-  def previousFiscalYearEnd =
-    val now = LocalDate.now()
-    if now.getMonth.getValue > 3
-    then now.getYear
-    else now.getYear - 1
+  // The Welsh journey requires 3 years of data instead of 1 year
+  def previousRentalPeriod(using request: SessionRequest[AnyContent]) =
+    val numberOfYearsBack = if request.sessionData.isWelsh then 3 else 1
+    LocalPeriod(
+      fromDate = LocalDate.of(previousFiscalYearEnd - numberOfYearsBack, APRIL, 1),
+      toDate = LocalDate.of(previousFiscalYearEnd, MARCH, 31)
+    )

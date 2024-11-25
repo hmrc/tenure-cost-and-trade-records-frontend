@@ -38,6 +38,10 @@ class PermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+        content                     should include(s"""${controllers.routes.TaskListController
+            .show()
+            .withFragment("lettingHistory")
+            .toString}" class="govuk-back-link"""")
         content                     should include("lettingHistory.permanentResidents.heading")
         content                     should not include "checked"
       }
