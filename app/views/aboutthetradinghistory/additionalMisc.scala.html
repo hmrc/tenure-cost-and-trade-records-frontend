@@ -105,7 +105,7 @@
             rows = 3,
             maxLength = 1000,
             errorMessage = form.errors.asTextErrorMessageForField(formField),
-            label = Label(content = Text(messages("additionalMisc.giveDetails")))
+            label = Label(content = Text(messages("additionalMisc.giveDetailsLeisure")))
         ).withFormField(form(formField))
     )
 }
@@ -124,6 +124,45 @@
     }
 }
 
+    @turnoverRowDetailsOtherActivities(idx: Int, formField: String, labelKey: String) = @{
+        Seq(
+            TableRow(
+                content = HtmlContent(rowLabelWithHint(labelKey)),
+                classes = "govuk-!-padding-bottom-0"
+            ),
+            TableRow(
+                content = HtmlContent(
+                    otherExpensesDetailsContentOtherActivities(idx,labelKey,formField)),
+                classes = "govuk-!-padding-bottom-0"
+            )
+        )
+    }
+
+    @otherExpensesDetailsTextareaOtherActivities(formField: String) = @{
+        hmrcCharacterCount(
+            CharacterCount(
+                rows = 3,
+                maxLength = 1000,
+                errorMessage = form.errors.asTextErrorMessageForField(formField),
+                label = Label(content = Text(messages("additionalMisc.giveDetailsOther")))
+            ).withFormField(form(formField))
+        )
+    }
+
+    @otherExpensesDetailsContentOtherActivities(idx: Int, labelKey: String, formField: String) = {
+    @if(columns == 1) {
+        @otherExpensesDetailsTextareaOtherActivities(formField)
+    } else {
+        <div class="hmrc-overlap-columns-@columns-parent">
+        @if(idx == 0) {
+            <div class="hmrc-overlap-columns-@columns govuk-!-margin-bottom-0">
+            @otherExpensesDetailsTextareaOtherActivities(formField)
+            </div>
+        }
+        </div>
+    }
+    }
+
 @layout(
     pageHeading = messages("additionalMisc.heading"),
     showSection = true,
@@ -140,8 +179,6 @@
     @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalMiscController.submit()) {
-
-
 
 
 
@@ -198,7 +235,7 @@
                                 s"additionalMisc.[$idx].otherActivitiesReceipts",
                                 "additionalMisc.otherActivitiesReceipts.label",
                                 classes = "no-border-bottom"),
-                          turnoverRowDetails(
+                          turnoverRowDetailsOtherActivities(
                               idx,
                               "details.otherActivitiesReceiptsDetails",
                               "additionalMisc.otherActivitiesReceipts.hint"

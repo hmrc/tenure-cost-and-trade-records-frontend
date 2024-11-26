@@ -36,6 +36,8 @@
 
 @(form: Form[?], idx: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@forType = @{request.sessionData.forType}
+
 @dataForType = @{
   request.sessionData.forType match {
       case FOR6046 | FOR6045 => request.sessionData.financialYearEndDates6045
@@ -50,11 +52,17 @@
     }
 }
 
+@label =@{
+    if(forType == FOR6045) messages("label.section.aboutTheConcessionsFranchisesLettings")  else {
+        messages("label.section.aboutTheFranchiseLettings")
+    }
+}
+
 @layout(
     pageHeading = messages("feeReceived.heading", operatorName),
     showSection = true,
     summary = Some(request.sessionData.toSummary),
-    sectionName = messages("label.section.aboutTheFranchiseLettings"),
+    sectionName = label,
     backLinkUrl = backLink,
     fullWidth = true,
     theForm = form
