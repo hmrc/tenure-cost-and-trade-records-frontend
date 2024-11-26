@@ -27,6 +27,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.ExclusiveCheckbox
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
 @import models.pages.Summary
 
@@ -37,13 +38,14 @@
         formWithCSRF: FormWithCSRF
 )
 
+
 @(theForm: Form[DoesTheRentPayable], forType: ForType, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @pageHeader = @{if(forType == FOR6045 || forType == FOR6046 || forType == FOR6048) messages("rentPayable6045.heading") else messages("rentPayable.heading")}
 
 @layout(
     pageHeading = pageHeader,
-    showH1 = true,
+    showH1 = false,
     showSection = true,
     summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -61,10 +63,12 @@
                     name = "rentPayable[]",
                     fieldset = Fieldset(
                         legend = Legend(
-                            content = Text(messages("hint.select.all")),
-                            classes = "govuk-fieldset__legend--s"
+                            content = Text(messages(pageHeader)),
+                            classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--l",
+                            isPageHeading = true
                         )
                     ),
+                    hint = Some(Hint(content = Text(messages("hint.select.all")))),
                     items = Seq(
                         CheckboxItem(
                             id = "otherProperty",
@@ -108,10 +112,12 @@
                         name = "rentPayable[]",
                         fieldset = Fieldset(
                             legend = Legend(
-                                content = Text(messages("hint.select.all")),
-                                classes = "govuk-fieldset__legend--s"
+                                content = Text(messages(pageHeader)),
+                                classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--l",
+                                isPageHeading = true
                             )
                         ),
+                        hint = Some(Hint(content = Text(messages("hint.select.all")))),
                         items = Seq(
                             CheckboxItem(
                                 id = "otherProperty",
@@ -149,10 +155,12 @@
                         name = "rentPayable[]",
                         fieldset = Fieldset(
                             legend = Legend(
-                                content = Text(messages("hint.select.all")),
-                                classes = "govuk-fieldset__legend--s"
+                                content = Text(messages(pageHeader)),
+                                classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--l",
+                                isPageHeading = true
                             )
                         ),
+                        hint = Some(Hint(content = Text(messages("hint.select.all")))),
                         items = Seq(
                             CheckboxItem(
                                 id = "proprietor",

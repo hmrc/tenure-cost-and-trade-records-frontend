@@ -729,7 +729,7 @@ rentalIncomeList.plural.heading = You have added {0} sources of rental income
 label.rentalIncomeList.letting = Do you need to add another letting?
 label.rentalIncomeList.concession = Do you need to add another separate concession or franchise?
 label.rentalIncomeList.income = Do you need to add another source of rental income?
-rentalIncomeList.zeroLetting.heading = You have removed all your rental incomes
+rentalIncomeList.zeroLetting.heading = You have removed all your sources of rental income
 error.rentalIncomeList.required = Select yes if you would lke to add another source of income
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
@@ -1842,7 +1842,7 @@ error.caravans.twin.ownedByOperator.vans.nonNumeric = The number of vans in the 
 error.caravans.twin.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 turnover.6045.caravans.twin.subletByOperator.heading = Twin-unit caravans sub-let to holidaymakers by the operator on behalf of private owners as fleet hire
 turnover.6045.caravans.twin.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.caravans.twin.subletByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.caravans.twin.subletByOperator.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans sub-let in the year ending {0}
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
@@ -2019,7 +2019,7 @@ turnover.6045.lettingUnits.grossReceipts.heading = Letting units owned by site o
 turnover.6045.lettingUnits.p1.beginning = Enter your gross receipts from any of these units which are
 turnover.6045.lettingUnits.p1.bold = owned by the site operator.
 turnover.6045.lettingUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.lettingUnits.grossReceipts.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+turnover.6045.lettingUnits.grossReceipts.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
 turnover.6045.lettingUnits.grossReceipts = Gross receipts
 turnover.6045.lettingUnits.grossReceipts.hint = Inclusive of electricity changes and gas supplied if any.
 turnover.6045.lettingUnits.numberOfUnits = Number of units
@@ -2645,7 +2645,7 @@ error.otherHolidayAccommodation.required =  Select yes if there are other holida
 ####################################
 totalSiteCapacity.heading = Total site capacity - other holiday accommodation
 totalSiteCapacity.p1 = You must declare how many units of other holiday accommodation you have in each of the listed categories. This must be the units that are on site today, or will be on site when you submit this declaration.
-totalSiteCapacity.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+totalSiteCapacity.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
 totalSiteCapacity.category = Category
 totalSiteCapacity.numberOfUnits = Number of units
 totalSiteCapacity.availableForLetting = Owned by the site operator and available for letting
@@ -2885,7 +2885,7 @@ error.additionalMisc.bottledGasReceipts.range    = Receipts from sale of bottled
 error.additionalMisc.bottledGasReceipts.negative = Receipts from sale of bottled gas in the year ending {0} cannot be a negative number
 
 # COMMON ADDITIONAL ACTIVITIES 6045
-additionalActivities.common.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
+additionalActivities.common.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
 additionalActivities.common.tradingPeriod = Trading period
 additionalActivities.common.financialYear = Financial year
 additionalActivities.common.grossReceipts = Gross receipts

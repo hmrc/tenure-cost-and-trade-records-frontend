@@ -171,7 +171,7 @@
                     SummaryListRow(
                         Key(Text(messages(addRentalIncomeMessage(request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length))), classes = "govuk-heading-m govuk-!-width-three-quarters"),
                         actions = Some(Actions(items = List(ActionItem(controllers.aboutfranchisesorlettings.routes.RentDetailsController.show(if(numberOfIncomeRecords > 0) numberOfIncomeRecords - 1 else numberOfIncomeRecords).url + "&from=CYA",
-                            Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting")))), classes = "govuk-!-width-one-third"))),
+                            Text(messages("checkYourAnswersAboutFranchiseOrLettings.addRemove")))), classes = "govuk-!-width-one-third"))),
                 )
         )
         )
