@@ -49,6 +49,9 @@ case object OccupierListPageId extends Identifier:
 case object HowManyNightsPageId extends Identifier:
   override def toString: String = "howManyNightsPage"
 
+case object HasStoppedLettingPageId extends Identifier:
+  override def toString: String = "hasStoppedLettingPage"
+
 case object AdvertisingOnlinePageId extends Identifier:
   override def toString: String = "advertisingOnlinePage"
 
@@ -68,6 +71,7 @@ extension (string: String)
     case "occupierRemovePage"           => Some(OccupierRemovePageId)
     case "occupierListPage"             => Some(OccupierListPageId)
     case "howManyNightsPage"            => Some(HowManyNightsPageId)
+    case "hasStoppedLettingPage"        => Some(HasStoppedLettingPageId)
     case "advertisingOnlinePage"        => Some(AdvertisingOnlinePageId)
     case "advertisingOnlineDetailsPage" => Some(AdvertisingOnlineDetailsPageId)
     case _                              => None

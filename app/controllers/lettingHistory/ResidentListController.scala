@@ -28,8 +28,10 @@ import navigation.LettingHistoryNavigator
 import navigation.identifiers.{ResidentListPageId, ResidentRemovePageId}
 import play.api.data.Form
 import play.api.i18n.I18nSupport
+import play.api.libs.json.Writes
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.residentList as ResidentListView
 
@@ -91,15 +93,21 @@ class ResidentListController @Inject() (
           )
         ),
       answer =>
-        successful(
-          navigator.redirect(
-            currentPage = ResidentListPageId,
-            updatedSession = request.sessionData,
-            navigationData = Map("hasMoreResidents" -> answer.toBoolean.toString)
-          )
-        )
+        val answerBool = answer.toBoolean
+        given Session  = request.sessionData
+        for
+          savedSession  <- eventuallySaveOrUpdateSessionWith(hasMoreResidents = answerBool)
+          navigationData = Map("hasMoreResidents" -> answerBool)
+        yield navigator.redirect(currentPage = ResidentListPageId, savedSession, navigationData)
     )
   }
+
+  private def eventuallySaveOrUpdateSessionWith(
+    hasMoreResidents: Boolean
+  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext) =
+    if !hasMoreResidents && permanentResidents(session).isEmpty
+    then repository.saveOrUpdateSession(withPermanentResidents(false))
+    else successful(session)
 
   private def withResidentDetailAt(
     index: Int

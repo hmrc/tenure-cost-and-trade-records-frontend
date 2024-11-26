@@ -18,53 +18,57 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.HasCompletedLettingsForm.theForm
+import form.lettingHistory.HasStoppedLettingForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.*
+import navigation.identifiers.HasStoppedLettingPageId
 import play.api.i18n.I18nSupport
+import play.api.libs.json.Writes
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
+import uk.gov.hmrc.http.HeaderCarrier
+import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future.successful
 
-class HasCompletedLettingsController @Inject (
+class HasStoppedLettingController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: HasCompletedLettingsView,
+  theView: HasStoppedLettingView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with RentalPeriodSupport
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     val freshForm  = theForm
     val filledForm =
       for
-        lettingHistory       <- request.sessionData.lettingHistory
-        hasCompletedLettings <- lettingHistory.hasCompletedLettings
-      yield freshForm.fill(hasCompletedLettings.toAnswer)
+        lettingHistory   <- request.sessionData.lettingHistory
+        intendedLettings <- lettingHistory.intendedLettings
+        hasStopped       <- intendedLettings.hasStopped
+      yield freshForm.fill(hasStopped.toAnswer)
 
-    Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
+    Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withCompletedLettings(answer.toBoolean))
-        yield navigator.redirect(currentPage = CompletedLettingsPageId, savedSession)
+        for
+          savedSession  <- repository.saveOrUpdateSession(withHasStopped(answer.toBoolean))
+          navigationData = Map("hasStopped" -> answer.toBoolean)
+        yield navigator.redirect(currentPage = HasStoppedLettingPageId, savedSession, navigationData)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = CompletedLettingsPageId)
+    navigator.backLinkUrl(ofPage = HasStoppedLettingPageId)
