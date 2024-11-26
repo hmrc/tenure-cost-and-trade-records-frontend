@@ -16,42 +16,80 @@
 
 package controllers.aboutfranchisesorlettings
 
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import models.Session
+import play.api.libs.json.Writes
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.test.Helpers.*
+import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
+import utils.JsoupHelpers.*
 import utils.TestBaseSpec
+
+import scala.concurrent.Future.successful
 
 class FeeReceivedControllerSpec extends TestBaseSpec {
 
-  def feeReceivedController =
-    new FeeReceivedController(
-      stubMessagesControllerComponents(),
-      aboutFranchisesOrLettingsNavigator,
-      feeReceivedView,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
-      val result = feeReceivedController.show(0)(fakeRequest)
-      status(result) shouldBe OK
+  "the FeeReceived controller" when {
+    "handling GET / requests"  should {
+      "reply 303 redirect if the given index does not exist" in new ControllerFixture {
+        val result = controller.show(3)(fakeRequest)
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.CateringOperationBusinessDetailsController.show(Some(3)).url
+      }
+      "reply 200 and the pre-filled form if given index exists" in new ControllerFixture {
+        val result = controller.show(0)(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = contentAsJsoup(result)
+        html.getElementsByTag("h1").first().text()                                       shouldBe "feeReceived.heading"
+        html.getElementById("feeReceivedPerYear.year[0].tradingPeriod").value            shouldBe "52"
+        html.getElementById("feeReceivedPerYear.year[0].concessionOrFranchiseFee").value shouldBe "1000"
+        html.backLinkHref                                                                  should endWith(routes.CateringOperationBusinessDetailsController.show(Some(0)).url)
+      }
     }
-
-    "return HTML" in {
-      val result = feeReceivedController.show(0)(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+    "handling POST / requests" should {
+      "reply 400 and error messages if the form is submitted with invalid data" in new ControllerFixture {
+        val result  = controller.submit(0)(fakePostRequest)
+        val content = contentAsString(result)
+        status(result) shouldBe BAD_REQUEST
+        content          should include("error.weeksMapping.blank")
+        content          should include("error.feeReceived.concessionOrFranchiseFee.required")
+        reset(repository)
+      }
+      "reply 303 when the form is submitted with good data and index=0" in new ControllerFixture {
+        val result = controller.submit(0)(
+          fakePostRequest.withFormUrlEncodedBody(
+            "feeReceivedPerYear.year[0].tradingPeriod"            -> "24",
+            "feeReceivedPerYear.year[0].concessionOrFranchiseFee" -> "500"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.AddAnotherCateringOperationController.show(0).url
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        val feeReceivedPerYear =
+          data.getValue.aboutFranchisesOrLettings.value.cateringOperationBusinessSections.value.head.feeReceived.value.feeReceivedPerYear.head
+        feeReceivedPerYear.tradingPeriod                  shouldBe 24
+        feeReceivedPerYear.concessionOrFranchiseFee.value shouldBe 500
+        reset(repository)
+      }
     }
   }
 
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST on empty form submission" in {
+  trait ControllerFixture:
+    val repository = mock[SessionRepo]
+    val data       = captor[Session]
+    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
 
-      val res = feeReceivedController.submit(0)(
-        FakeRequest().withFormUrlEncodedBody()
+    val controller =
+      new FeeReceivedController(
+        stubMessagesControllerComponents(),
+        aboutFranchisesOrLettingsNavigator,
+        feeReceivedView,
+        preEnrichedActionRefiner(
+          aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
+        ),
+        repository
       )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
 
 }

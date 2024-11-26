@@ -19,29 +19,28 @@ package controllers.aboutfranchisesorlettings
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.{ForType, Session}
-import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.Identifier
-import org.jsoup.Jsoup
-import org.jsoup.nodes.{Document, Element}
+import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.mvc.{AnyContent, Call, Request}
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
+import utils.JsoupHelpers.*
 import utils.TestBaseSpec
+
+import scala.concurrent.Future.successful
 
 class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
 
   "the CateringOperationBusinessDetails controller" when {
     "handling GET / requests"  should {
-      "reply 200 with a fresh HTML form 6010 and backLink to /catering-operation-or-letting-accommodation" in new ControllerFixture(
+      "reply 200 with a fresh HTML form 6010 and expected backLink" in new ControllerFixture(
         FOR6010
       ) {
         val result = controller.show(index = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val html = Jsoup.parse(contentAsString(result))
+        val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value                       shouldBe ""
         html.getElementById("typeOfBusiness").value                     shouldBe ""
@@ -50,39 +49,40 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         html.getElementById("cateringAddress.town").value               shouldBe ""
         html.getElementById("cateringAddress.county").value             shouldBe ""
         html.getElementById("cateringAddress.postcode").value           shouldBe ""
-        html.backLinkHref                                                 should endWith("/catering-operation-or-letting-accommodation")
+        html.backLinkHref                                                 should endWith(routes.CateringOperationController.show().url)
+
       }
       "reply 200 with a pre-filled HTML form 6010" in new ControllerFixture(FOR6010) {
         val result = controller.show(index = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val html = Jsoup.parse(contentAsString(result))
+        val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()  shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value   shouldBe "Operator Name"
         html.getElementById("typeOfBusiness").value shouldBe "Type of Business"
       }
-      "reply 200 with a fresh HTML form 6030 and backLink to /concession-or-franchise" in new ControllerFixture(
+      "reply 200 with a fresh HTML form 6030 and expected backLink" in new ControllerFixture(
         FOR6015
       ) {
         val result = controller.show(index = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val html = Jsoup.parse(contentAsString(result))
+        val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()  shouldBe "concessionDetails.heading"
         html.getElementById("operatorName").value   shouldBe ""
         html.getElementById("typeOfBusiness").value shouldBe ""
-        html.backLinkHref                             should endWith("/concession-or-franchise")
+        html.backLinkHref                             should endWith(routes.ConcessionOrFranchiseController.show().url)
       }
-      "reply 200 with a pre-filled HTML form 6010 and backLink to /add-another-catering-operation" in new ControllerFixture(
+      "reply 200 with a pre-filled HTML form 6010 and expected backLink" in new ControllerFixture(
         FOR6010
       ) {
         val result = controller.show(index = Some(2))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val html = Jsoup.parse(contentAsString(result))
+        val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value                       shouldBe ""
         html.getElementById("typeOfBusiness").value                     shouldBe ""
@@ -91,7 +91,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         html.getElementById("cateringAddress.town").value               shouldBe ""
         html.getElementById("cateringAddress.county").value             shouldBe ""
         html.getElementById("cateringAddress.postcode").value           shouldBe ""
-        html.backLinkHref                                                 should endWith("/add-another-catering-operation?idx=1")
+        html.backLinkHref                                                 should endWith(routes.AddAnotherCateringOperationController.show(1).url)
       }
     }
     "handling POST / requests" should {
@@ -113,10 +113,10 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/anywhere"
-        // verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         // val updatedCateringOperationDetails = data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
-        // updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
+        // updatedCateringOperationDetails.operatorName shouldBe "Another Operator" // instead of "Operator Name"
         // updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
         // reset(repository)
       }
@@ -129,8 +129,8 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/anywhere"
-        // verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        redirectLocation(result).value shouldBe routes.FeeReceivedController.show(1).url
+        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         // val updatedCateringOperationDetails = data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         // updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
         // updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
@@ -140,27 +140,18 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
   }
 
   trait ControllerFixture(givenForType: ForType = FOR6010):
-    extension (el: Element) def value = Option(el.`val`()).get
-    extension (d: Document)
-      def backLinkHref                = d.getElementsByClass("govuk-back-link").first().attribute("href").getValue
-
-    val navigator     = mock[AboutFranchisesOrLettingsNavigator]
-    val SessionToCall = (_: Session) => Call("GET", "/path/to/anywhere")
-    when(navigator.nextPage(any[Identifier], any[Session])(any[HeaderCarrier], any[Request[AnyContent]]))
-      .thenReturn(SessionToCall)
-
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    // when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
 
     val controller =
       new CateringOperationBusinessDetailsController(
         stubMessagesControllerComponents(),
-        navigator,
+        aboutFranchisesOrLettingsNavigator,
         cateringOperationDetailsView,
         preEnrichedActionRefiner(
           forType = givenForType,
           aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
         ),
-        mockSessionRepo
+        repository
       )
