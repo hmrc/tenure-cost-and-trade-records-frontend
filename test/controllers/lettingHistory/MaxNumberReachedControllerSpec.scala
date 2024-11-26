@@ -108,7 +108,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
               .withFormUrlEncodedBody("understood" -> "false")
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value           shouldBe "/path/to/how-many-nights"
+          redirectLocation(result).value           shouldBe routes.HowManyNightsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           mayHaveMoreCompletedLettings(data).value shouldBe false
         }

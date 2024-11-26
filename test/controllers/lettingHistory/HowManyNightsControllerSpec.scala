@@ -17,14 +17,14 @@
 package controllers.lettingHistory
 
 import models.Session
+import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
-import models.submissions.lettingHistory.LettingHistory.{hasCompletedLettings, intendedLettings}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.howManyNights as HowManyNightsView
 
@@ -32,7 +32,9 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
 
   "the IntendedLettingNights controller" when {
     "the user has not specified any number of nights yet"     should {
-      "be handling GET requests by replying 200 with the form showing just the nights field" in new ControllerFixture {
+      "be handling GET requests by replying 200 with the form showing just the nights field" in new ControllerFixture(
+        hasCompletedLettings = Some(false)
+      ) {
         val result  = controller.show()(fakeGetRequest)
         val content = contentAsString(result)
         status(result)            shouldBe OK
@@ -42,42 +44,51 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         content                     should include("""lettingHistory.intendedLettings.heading""")
         content                     should include("""name="nights"""")
       }
-      "be handling good POST by replying 303 redirect to the 'Yearly availability' page" in new ControllerFixture {
+      "be handling good POST by replying 303 redirect to the 'Yearly availability' page" in new ControllerFixture(
+        isWelsh = false,
+        hasStopped = Some(true)
+      ) {
         val request = fakePostRequest.withFormUrlEncodedBody(
-          "nights" -> "140"
+          "nights" -> "140" // meets criteria (England)
         )
         val result  = controller.submit(request)
         status(result)                            shouldBe SEE_OTHER
         redirectLocation(result).value            shouldBe "/path/to/is-yearly-available"
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.nights.value shouldBe 140
+        intendedLettings(data).value.hasStopped   shouldBe None
       }
     }
     "the user has already specified a given number of nights" should {
       "be handling GET by replying 200 with the form pre-filled with the nights" in new ControllerFixture(
         isWelsh = true,
-        nights = Some(252)
+        hasCompletedLettings = Some(true),
+        nights = Some(100),
+        hasStopped = Some(false)
       ) {
         val result  = controller.show(fakeGetRequest)
         val content = contentAsString(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+        content                     should include(s"""${routes.OccupierListController.show.url}" class="govuk-back-link"""")
         content                     should include("""name="nights" type="text"  spellcheck="false"
-                                                     |      value="252"""".stripMargin)
+                                                     |      value="100"""".stripMargin)
       }
       "be handling good POST by replying 303 redirect to the 'Has stopped letting?' page" in new ControllerFixture(
         isWelsh = true,
-        nights = Some(252)
+        nights = Some(100),
+        hasStopped = Some(false)
       ) {
         val request = fakePostRequest.withFormUrlEncodedBody(
-          "nights" -> "140"
+          "nights" -> "251" // still does NOT meet criteria (in Wales)
         )
         val result  = controller.submit(request)
-        status(result)                            shouldBe SEE_OTHER
-        redirectLocation(result).value            shouldBe "/path/to/letting-stopped"
+        status(result)                                shouldBe SEE_OTHER
+        redirectLocation(result).value                shouldBe routes.HasStoppedLettingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        intendedLettings(data).value.nights.value shouldBe 140
+        intendedLettings(data).value.nights.value     shouldBe 251
+        intendedLettings(data).value.hasStopped.value shouldBe false
       }
     }
     "the user session is either fresh or stale"               should {
@@ -95,8 +106,10 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
   }
 
   trait ControllerFixture(
+    isWelsh: Boolean = false,
+    hasCompletedLettings: Option[Boolean] = None,
     nights: Option[Int] = None,
-    isWelsh: Boolean = false
+    hasStopped: Option[Boolean] = None
   ) extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new HowManyNightsController(
@@ -106,10 +119,11 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasCompletedLettings = Some(false),
+            hasCompletedLettings = hasCompletedLettings,
             intendedLettings = Some(
               IntendedLettings(
-                nights = nights
+                nights = nights,
+                hasStopped = hasStopped
               )
             )
           )
