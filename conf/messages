@@ -1678,6 +1678,9 @@ lettingHistory.maxNumberReached.understanding.required = You are required to con
 lettingHistory.intendedLettings.heading = How many nights do you intend to let the property commercially between {0} and {1}?
 lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not intend to let the property.
 
+lettingHistory.hasStoppedLetting.heading = Have you already stopped letting the property commercially?
+lettingHistory.hasStoppedLetting.required = Select yes if you have stopped letting the property.
+
 # ACCOMMODATION DETAILS 6048
 # ############################
 label.section.accommodation = Accommodation details

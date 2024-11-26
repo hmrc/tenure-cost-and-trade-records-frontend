@@ -28,8 +28,10 @@ import navigation.LettingHistoryNavigator
 import navigation.identifiers.{OccupierListPageId, OccupierRemovePageId}
 import play.api.data.Form
 import play.api.i18n.I18nSupport
+import play.api.libs.json.Writes
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.occupierList as OccupierListView
 
@@ -91,16 +93,22 @@ class OccupierListController @Inject() (
             theListView(theFormWithErrors, previousRentalPeriod, completedLettings(request.sessionData), backLinkUrl)
           )
         ),
-      hadMoreOccupiers =>
-        successful(
-          navigator.redirect(
-            currentPage = OccupierListPageId,
-            updatedSession = request.sessionData,
-            navigationData = Map("hadMoreOccupiers" -> hadMoreOccupiers.toBoolean.toString)
-          )
-        )
+      answer =>
+        val answerBool = answer.toBoolean
+        given Session  = request.sessionData
+        for
+          savedSession  <- eventuallySaveOrUpdateSessionWith(hadMoreOccupier = answerBool)
+          navigationData = Map("hadMoreOccupiers" -> answerBool)
+        yield navigator.redirect(currentPage = OccupierListPageId, savedSession, navigationData)
     )
   }
+
+  private def eventuallySaveOrUpdateSessionWith(
+    hadMoreOccupier: Boolean
+  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext) =
+    if !hadMoreOccupier && completedLettings(session).isEmpty
+    then repository.saveOrUpdateSession(withCompletedLettings(false))
+    else successful(session)
 
   private def renderTheConfirmationViewWith(theForm: Form[AnswersYesNo], occupierDetail: OccupierDetail, index: Int)(
     using request: SessionRequest[AnyContent]

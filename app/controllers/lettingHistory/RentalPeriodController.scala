@@ -96,5 +96,5 @@ class RentalPeriodController @Inject (
   }
 
   private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
-    val navigationData = Map("index" -> index.toString)
+    val navigationData = Map("index" -> index)
     navigator.backLinkUrl(ofPage = RentalPeriodPageId, navigationData)
