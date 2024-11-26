@@ -94,6 +94,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
         if doesHaveCompletedLettings
         then routes.OccupierListController.show
         else routes.CompletedLettingsController.show
+    },
+    HasStoppedLettingPageId  -> { (_, _) =>
+      Some(routes.HowManyNightsController.show)
     }
   )
 
@@ -153,7 +156,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       for kind <- Some(navigationData("kind"))
       yield
         if kind == "permanentResidents" then routes.CompletedLettingsController.show
-        else if kind == "temporaryOccupiers" then Call("GET", "/path/to/how-many-nights")
+        else if kind == "temporaryOccupiers" then routes.HowManyNightsController.show
         else controllers.routes.TaskListController.show().withFragment("lettingHistory")
     },
     CompletedLettingsPageId  -> { (updatedSession, _) =>
@@ -189,7 +192,15 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       yield
         if meetsCriteria
         then Call("GET", "/path/to/is-yearly-available")
-        else Call("GET", "/path/to/letting-stopped")
+        else routes.HasStoppedLettingController.show
+    },
+    HasStoppedLettingPageId  -> { (_, navigationData) =>
+      // assert navigationData.isDefinedAt("hasStopped"))
+      for hasStopped <- navigationData.get("hasStopped").map(_.toBoolean)
+      yield
+        if hasStopped
+        then Call("GET", "/path/to/last-rent")
+        else Call("GET", "/path/to/is-yearly-available")
     }
   )
 

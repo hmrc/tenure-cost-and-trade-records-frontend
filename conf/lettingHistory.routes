@@ -31,3 +31,6 @@ POST        /letting-history/max-number-reached                 controllers.lett
 
 GET         /letting-history/how-many-nights                    controllers.lettingHistory.HowManyNightsController.show
 POST        /letting-history/how-many-nights                    controllers.lettingHistory.HowManyNightsController.submit
+
+GET         /letting-history/has-stopped-letting                controllers.lettingHistory.HasStoppedLettingController.show
+POST        /letting-history/has-stopped-letting                controllers.lettingHistory.HasStoppedLettingController.submit

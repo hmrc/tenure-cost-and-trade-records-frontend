@@ -237,33 +237,66 @@ object LettingHistory:
     yield intendedLettings
 
   def withNumberOfNights(nights: Int)(using session: Session): Session =
-    val someLettingIntention = Some(
+    val someIntendedLettings = Some(
       IntendedLettings(
-        nights = Some(nights)
+        nights = Some(nights),
+        hasStopped = None
       )
     )
     foldLettingHistory(
       ifEmpty = LettingHistory(
-        intendedLettings = someLettingIntention
+        intendedLettings = someIntendedLettings
       ),
       copyFunc = { lettingHistory =>
         lettingHistory.copy(intendedLettings =
           lettingHistory.intendedLettings.fold(
-            ifEmpty = someLettingIntention
-          ) { intention =>
-            Some(intention.copy(nights = Some(nights)))
+            ifEmpty = someIntendedLettings
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(nights = Some(nights))
+                .copy(hasStopped =
+                  if isAboveThreshold(nights, session.isWelsh) then None else intendedLettings.hasStopped
+                )
+            )
           }
         )
       }
     )
 
   def doesMeetLettingCriteria(session: Session): Option[Boolean] =
-    val threshold = if session.isWelsh then 252 else 140
     for
       lettingHistory   <- session.lettingHistory
       intendedLettings <- lettingHistory.intendedLettings
       nights           <- intendedLettings.nights
-    yield nights >= threshold
+    yield isAboveThreshold(nights, session.isWelsh)
+
+  private def isAboveThreshold(nights: Int, isWelsh: Boolean): Boolean =
+    if isWelsh then nights >= 252 else nights >= 140
+
+  def withHasStopped(hasStopped: Option[Boolean])(using session: Session): Session =
+    val someIntendedLettings = Some(
+      IntendedLettings(
+        nights = None,
+        hasStopped = hasStopped
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLettings
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLettings
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(hasStopped = hasStopped)
+            )
+          }
+        )
+    )
 
   given Format[LettingHistory]                   = Json.format
   extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes
