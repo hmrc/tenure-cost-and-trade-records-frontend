@@ -3461,6 +3461,13 @@ checkYourAnswersAboutTheTradingHistory.totalCosts = Cyfanswm y costau
 checkYourAnswersAboutTheTradingHistory.rent = Rhent
 checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
 checkYourAnswersAboutTheTradingHistory.otherExpenses = Treuliau eraill
+# CYA TRADING HISTORY 6048
+checkYourAnswersAboutTheTradingHistory.income.serviceProvision = Income from services
+checkYourAnswersAboutTheTradingHistory.fixedCosts.businessRatesOrCouncilTax = Business rates or Council Tax
+checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationBuildings = Depreciation - buildings
+checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents = Depreciation - contents, fixtures and fittings
+checkYourAnswersAboutTheTradingHistory.administrativeCosts.subscriptionsAndFees = Subscriptions, fees
+checkYourAnswersAboutTheTradingHistory.administrativeCosts.telephoneBroadbandStationeryPostage = Telephone, broadband, stationery, postage
 # CYA OTHER HOLIDAY ACCOMMODATION 6045/46
 checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
 checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation

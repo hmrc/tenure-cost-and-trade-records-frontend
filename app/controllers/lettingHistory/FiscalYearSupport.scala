@@ -16,10 +16,7 @@
 
 package controllers.lettingHistory
 
-import models.submissions.lettingHistory.LocalPeriod
-
 import java.time.LocalDate
-import java.time.Month.{APRIL, MARCH}
 
 trait FiscalYearSupport:
 

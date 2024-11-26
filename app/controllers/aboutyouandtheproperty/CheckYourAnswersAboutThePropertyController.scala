@@ -130,6 +130,5 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
         }
 
       case FOR6076 => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
-      case _       => controllers.routes.LoginController.show.url
     }
 }
