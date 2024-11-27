@@ -36,6 +36,7 @@
   CharacterCount(
     id = name,
     name = name,
+    classes = if (theForm(name).hasErrors) "govuk-input--error" else "" ,
     value = theForm(name).value,
     attributes = Map("autocomplete" -> "on"),
     hint = Some(Hint(content = Text(messages(hint)))),

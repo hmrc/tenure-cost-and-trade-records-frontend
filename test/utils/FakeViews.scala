@@ -90,43 +90,43 @@ trait FakeViews { this: Injecting =>
   val vacantPropertiesView: vacantProperties                                                      = inject[vacantProperties]
 
   // About you and the property
-  lazy val aboutYouView: aboutYou                                                     = inject[aboutYou]
-  lazy val aboutThePropertyView: aboutTheProperty                                     = inject[aboutTheProperty]
-  lazy val aboutThePropertyStringView: aboutThePropertyString                         = inject[aboutThePropertyString]
-  lazy val propertyCurrentlyUsedView: propertyCurrentlyUsed                           = inject[propertyCurrentlyUsed]
-  lazy val websiteForPropertyView: websiteForProperty                                 = inject[websiteForProperty]
-  lazy val premisesLicenceGrantedView: premisesLicenseGranted                         = inject[premisesLicenseGranted]
-  lazy val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails           = inject[premisesLicenseGrantedDetails]
-  lazy val licensableActivitiesView: licensableActivities                             = inject[licensableActivities]
-  lazy val licensableActivitiesDetailsView: licensableActivitiesDetails               = inject[licensableActivitiesDetails]
-  lazy val premisesLicensableView: premisesLicenseConditions                          = inject[premisesLicenseConditions]
-  lazy val premisesLicenceConditionsDetailsView: premisesLicenseConditionsDetails     =
+  lazy val aboutYouView: aboutYou                                                                   = inject[aboutYou]
+  lazy val aboutThePropertyView: aboutTheProperty                                                   = inject[aboutTheProperty]
+  lazy val aboutThePropertyStringView: aboutThePropertyString                                       = inject[aboutThePropertyString]
+  lazy val propertyCurrentlyUsedView: propertyCurrentlyUsed                                         = inject[propertyCurrentlyUsed]
+  lazy val websiteForPropertyView: websiteForProperty                                               = inject[websiteForProperty]
+  lazy val premisesLicenceGrantedView: premisesLicenseGranted                                       = inject[premisesLicenseGranted]
+  lazy val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails                         = inject[premisesLicenseGrantedDetails]
+  lazy val licensableActivitiesView: licensableActivities                                           = inject[licensableActivities]
+  lazy val licensableActivitiesDetailsView: licensableActivitiesDetails                             = inject[licensableActivitiesDetails]
+  lazy val premisesLicensableView: premisesLicenseConditions                                        = inject[premisesLicenseConditions]
+  lazy val premisesLicenceConditionsDetailsView: premisesLicenseConditionsDetails                   =
     inject[premisesLicenseConditionsDetails]
-  lazy val enforcementActionsTakenView: enforcementActionBeenTaken                    = inject[enforcementActionBeenTaken]
-  lazy val enforcemenntActionBeenTakenDetailsView: enforcementActionBeenTakenDetails  =
+  lazy val enforcementActionsTakenView: enforcementActionBeenTaken                                  = inject[enforcementActionBeenTaken]
+  lazy val enforcemenntActionBeenTakenDetailsView: enforcementActionBeenTakenDetails                =
     inject[enforcementActionBeenTakenDetails]
-  lazy val tiedForGoodsView: tiedForGoods                                             = inject[tiedForGoods]
-  lazy val tiedForGoodsDetailsView: tiedForGoodsDetails                               = inject[tiedForGoodsDetails]
-  lazy val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty     =
+  lazy val tiedForGoodsView: tiedForGoods                                                           = inject[tiedForGoods]
+  lazy val tiedForGoodsDetailsView: tiedForGoodsDetails                                             = inject[tiedForGoodsDetails]
+  lazy val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty                   =
     inject[checkYourAnswersAboutTheProperty]
-  lazy val charityQuestionView: charityQuestion                                       = inject[charityQuestion]
-  lazy val tradingActivityView: tradingActivity                                       = inject[tradingActivity]
-  lazy val renewablesPlantView: renewablesPlant                                       = inject[renewablesPlant]
-  lazy val threeYearsConstructedView: threeYearsConstructed                           = inject[threeYearsConstructed]
-  lazy val costsBreakdownView: costsBreakdown                                         = inject[costsBreakdown]
-  lazy val plantAndTechnologyView: plantAndTechnology                                 = inject[plantAndTechnology]
-  lazy val generatorCapacityView: generatorCapacity                                   = inject[generatorCapacity]
-  lazy val batteriesCapacityView: batteriesCapacity                                   = inject[batteriesCapacity]
+  lazy val charityQuestionView: charityQuestion                                                     = inject[charityQuestion]
+  lazy val tradingActivityView: tradingActivity                                                     = inject[tradingActivity]
+  lazy val renewablesPlantView: renewablesPlant                                                     = inject[renewablesPlant]
+  lazy val threeYearsConstructedView: threeYearsConstructed                                         = inject[threeYearsConstructed]
+  lazy val costsBreakdownView: costsBreakdown                                                       = inject[costsBreakdown]
+  lazy val plantAndTechnologyView: plantAndTechnology                                               = inject[plantAndTechnology]
+  lazy val generatorCapacityView: generatorCapacity                                                 = inject[generatorCapacity]
+  lazy val batteriesCapacityView: batteriesCapacity                                                 = inject[batteriesCapacity]
   //  6048
-  lazy val commercialLettingQuestionView: commercialLettingQuestion                   = inject[commercialLettingQuestion]
-  lazy val commercialLettingAvailabilityView: commercialLettingAvailability           = inject[commercialLettingAvailability]
-  lazy val commercialLettingAvailabilityWelshView: commercialLettingAvailabilityWelsh =
+  lazy val commercialLettingQuestionView: commercialLettingQuestion                                 = inject[commercialLettingQuestion]
+  lazy val commercialLettingAvailabilityView: commercialLettingAvailability                         = inject[commercialLettingAvailability]
+  lazy val commercialLettingAvailabilityWelshView: commercialLettingAvailabilityWelsh               =
     inject[commercialLettingAvailabilityWelsh]
-  lazy val completedCommercialLettingsView: completedCommercialLettings               = inject[completedCommercialLettings]
-  lazy val completedCommercialLettingsWelshView: completedCommercialLettingsWelsh     =
+  lazy val completedCommercialLettingsView: completedCommercialLettings                             = inject[completedCommercialLettings]
+  lazy val completedCommercialLettingsWelshView: completedCommercialLettingsWelsh                   =
     inject[completedCommercialLettingsWelsh]
-  lazy val partsUnavailableView: partsUnavailable                                     = inject[partsUnavailable]
-
+  lazy val partsUnavailableView: partsUnavailable                                                   = inject[partsUnavailable]
+  lazy val occupiersDetailsView: occupiersDetails                                                   = inject[occupiersDetails]
   // About your trading history
   lazy val aboutYourTradingHistoryView: aboutYourTradingHistory                                     = inject[aboutYourTradingHistory]
   lazy val financialYearEndView: financialYearEnd                                                   = inject[financialYearEnd]

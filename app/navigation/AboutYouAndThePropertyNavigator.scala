@@ -180,7 +180,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
 
   private def partsUnavailableRouting: Session => Call = answers =>
     answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
-      case Some(AnswerYes) => controllers.routes.TaskListController.show() // TODO !!!
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
 
@@ -209,6 +209,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     CompletedCommercialLettingsId           -> completedCommercialLettingsRouting,
     CompletedCommercialLettingsWelshId      -> completedCommercialLettingsRouting,
     PartsUnavailableId                      -> partsUnavailableRouting,
+    OccupiersDetailsId                      -> (_ => controllers.routes.TaskListController.show()),
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
