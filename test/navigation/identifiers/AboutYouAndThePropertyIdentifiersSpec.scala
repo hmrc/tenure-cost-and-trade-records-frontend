@@ -119,6 +119,9 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
     "Identifier for commercial letting availability welsh  page" in {
       assert(CommercialLettingAvailabilityWelshId.toString.equals("commercialLettingAvailabilityWelshPage"))
     }
+    "Identifier for  Occupiers Details  page" in {
+      assert( OccupiersDetailsId.toString.equals("occupiersDetailsPage"))
+    }
 
     "Identifier for completed lettings page" in {
       assert(CompletedCommercialLettingsId.toString.equals("completedCommercialLettingsPage"))

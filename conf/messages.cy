@@ -2997,6 +2997,24 @@ error.commercialLettingAvailability.range = The number of nights must be a figur
 error.commercialLettingAvailability.welsh.required = State how many nights was the property available in the year ending {0}
 error.commercialLettingAvailability.welsh.range = Number of nights in the year ending {0} must be a number between 0 and 365
 
+#PARTS OF THE PROPERTY UNAVAILABLE TO RENT
+
+partsUnavailable.heading = Parts of the property unavailable for rent
+partsUnavailable.p = You must declare if parts of the property are unavailable for rent as they are occupied by you or your family. This includes any accommodation used as main residence or as a second home.
+partsUnavailable.label = Do you or your family occupy any part of the property as a main residence or a second home?
+error.partsUnavailable.required = Select yes  if you or your family occupy any part of the property
+
+#OCCUPIERS DETAILS
+aboutYou.occupiersDetails.heading = Occupier’s details
+aboutYou.occupiersDetails.paragraph = We need the contact details for the person for each part of the property used as main residence, or a second home. You will have the opportunity to add additional households if required.
+label.aboutYou.occupiersDetails.name= Occupier’s name
+aboutYou.occupiersDetails.address.label = Occupier’s address
+aboutYou.occupiersDetails.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy
+error.aboutYou.occupiersDetails.required = Enter the occupier’s  name
+error.aboutYou.occupiersDetails.maxLength = Occupier’s name should be 100 characters or fewer
+error.aboutYou.occupiersDetails.required = Enter the occupier’s address
+error.aboutYou.occupiersDetails.maxLength = Occupier’s address should be 1000 characters or fewer
+
 
 #TYPE OF RENEWABLES PLANT
 #################################
