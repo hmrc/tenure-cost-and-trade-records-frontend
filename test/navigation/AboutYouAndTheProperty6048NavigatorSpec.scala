@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, CompletedLettings, ContactDetailsQuestion, LettingAvailability}
 import models.submissions.common.{AnswerNo, AnswerYes}
-import navigation.identifiers.{AlternativeContactDetailsId, CommercialLettingAvailabilityId, CommercialLettingAvailabilityWelshId, CommercialLettingQuestionId, CompletedCommercialLettingsId, CompletedCommercialLettingsWelshId, ContactDetailsQuestionId, PartsUnavailableId}
+import navigation.identifiers.{AlternativeContactDetailsId, CommercialLettingAvailabilityId, CommercialLettingAvailabilityWelshId, CommercialLettingQuestionId, CompletedCommercialLettingsId, CompletedCommercialLettingsWelshId, ContactDetailsQuestionId, OccupiersDetailsId, PartsUnavailableId}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -209,6 +209,15 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
         .nextPage(PartsUnavailableId, answers)
         .apply(
           answers
+        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
+    }
+
+    "return a function that goes to occupiers details list when parts occupiers details completed " in {
+
+      aboutYouAndThePropertyNavigator
+        .nextPage(OccupiersDetailsId, baseFilled6048Session)
+        .apply(
+          baseFilled6048Session
         ) shouldBe controllers.routes.TaskListController.show() // TODO !!!
     }
   }

@@ -30,31 +30,29 @@ import views.html.aboutyouandtheproperty.occupiersDetails
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-
 @Singleton
 class OccupiersDetailsController @Inject() (
-                                     mcc: MessagesControllerComponents,
-                                     navigator: AboutYouAndThePropertyNavigator,
-                                     view: occupiersDetails,
-                                     withSessionRefiner: WithSessionRefiner,
-                                     @Named("session") val session: SessionRepo
-                                   )(implicit ec: ExecutionContext) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  mcc: MessagesControllerComponents,
+  navigator: AboutYouAndThePropertyNavigator,
+  view: occupiersDetails,
+  withSessionRefiner: WithSessionRefiner,
+  @Named("session") val session: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
+    with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingDetails: Option[OccupiersDetails] =
       for {
-      requestedIndex      <- index
-      occupiers           <-
-        request.sessionData.aboutYouAndThePropertyPartTwo.map(_.occupiersList.getOrElse(IndexedSeq.empty))
-      requestedData       <- occupiers .lift(requestedIndex)
-    }
-      yield
-        requestedData
+        requestedIndex <- index
+        occupiers      <-
+          request.sessionData.aboutYouAndThePropertyPartTwo.map(_.occupiersList.getOrElse(IndexedSeq.empty))
+        requestedData  <- occupiers.lift(requestedIndex)
+      } yield requestedData
     Future.successful(
       Ok(
         view(
-          existingDetails.fold(occupiersDetailsForm)( occupiersDetailsForm.fill),
+          existingDetails.fold(occupiersDetailsForm)(occupiersDetailsForm.fill),
           index,
           request.sessionData.toSummary
         )
@@ -65,32 +63,34 @@ class OccupiersDetailsController @Inject() (
   def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OccupiersDetails](
       occupiersDetailsForm,
-      formWithErrors => Future.successful(
-        BadRequest(
-          view(
-            formWithErrors,
-            index,
-            request.sessionData.toSummary
+      formWithErrors =>
+        Future.successful(
+          BadRequest(
+            view(
+              formWithErrors,
+              index,
+              request.sessionData.toSummary
+            )
           )
-        )
-      ),
+        ),
       data => {
         val ifOccupiersListEmpty = AboutYouAndThePropertyPartTwo(occupiersList = Option(Seq(data)))
 
-        val updatedAboutYouAndTheProperty = request.sessionData.aboutYouAndThePropertyPartTwo.fold(ifOccupiersListEmpty) { aboutProperty =>
-          val existingOccupiersList = aboutProperty.occupiersList.getOrElse(Seq.empty)
+        val updatedAboutYouAndTheProperty =
+          request.sessionData.aboutYouAndThePropertyPartTwo.fold(ifOccupiersListEmpty) { aboutProperty =>
+            val existingOccupiersList = aboutProperty.occupiersList.getOrElse(Seq.empty)
 
-          val updatedList = index match {
-            case Some(index) if existingOccupiersList.isDefinedAt(index) =>
-              existingOccupiersList.updated(index, data)
-            case _ => existingOccupiersList :+ data
+            val updatedList = index match {
+              case Some(index) if existingOccupiersList.isDefinedAt(index) =>
+                existingOccupiersList.updated(index, data)
+              case _                                                       => existingOccupiersList :+ data
+            }
+
+            aboutProperty.copy(occupiersList = Option(updatedList))
           }
 
-          aboutProperty.copy(occupiersList = Option(updatedList))
-        }
-
-        val updatedSessionData = request.sessionData.copy(aboutYouAndThePropertyPartTwo = Option(updatedAboutYouAndTheProperty)
-        )
+        val updatedSessionData =
+          request.sessionData.copy(aboutYouAndThePropertyPartTwo = Option(updatedAboutYouAndTheProperty))
 
         session.saveOrUpdate(updatedSessionData).map { _ =>
           Redirect(navigator.nextPage(OccupiersDetailsId, updatedSessionData).apply(updatedSessionData))

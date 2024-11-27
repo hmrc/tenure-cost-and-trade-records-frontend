@@ -21,21 +21,18 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
+object OccupiersDetailsForm {
 
-  object OccupiersDetailsForm {
-
-    val occupiersDetailsForm: Form[OccupiersDetails] = Form(
-      mapping(
-        "occupiersDetailsName" -> default(text, "").verifying(
-          nonEmpty(errorMessage = "error.aboutYou.occupiersDetails.name.required"),
-          maxLength(100, "error.aboutYou.occupiersDetails.name.maxLength")
-        ),
-        "occupiersDetailsAddress" -> default(text, "").verifying(
-          nonEmpty(errorMessage = "error.aboutYou.occupiersDetails.address.required"),
-          maxLength(1000, "error.aboutYou.occupiersDetails.address.maxLength")
-        )
-      )(OccupiersDetails.apply)(occupiersDetails => Option((occupiersDetails.name, occupiersDetails.address)))
-    )
-  }
-
-
+  val occupiersDetailsForm: Form[OccupiersDetails] = Form(
+    mapping(
+      "occupiersDetailsName"    -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.aboutYou.occupiersDetails.name.required"),
+        maxLength(100, "error.aboutYou.occupiersDetails.name.maxLength")
+      ),
+      "occupiersDetailsAddress" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.aboutYou.occupiersDetails.address.required"),
+        maxLength(1000, "error.aboutYou.occupiersDetails.address.maxLength")
+      )
+    )(OccupiersDetails.apply)(occupiersDetails => Option((occupiersDetails.name, occupiersDetails.address)))
+  )
+}

@@ -19,10 +19,9 @@ package models.submissions.aboutyouandtheproperty
 import play.api.libs.json.{Json, OFormat}
 
 case class OccupiersDetails(
-                             name: String,
-                             address: String
-                           )
+  name: String,
+  address: String
+)
 object OccupiersDetails {
   implicit val format: OFormat[OccupiersDetails] = Json.format[OccupiersDetails]
 }
-

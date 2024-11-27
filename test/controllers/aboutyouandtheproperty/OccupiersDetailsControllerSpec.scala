@@ -31,8 +31,10 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
   import TestData._
 
   def controller(
-                  aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(prefilledAboutYouAndThePropertyPartTwo6048)
-                ) = new OccupiersDetailsController(
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
+      prefilledAboutYouAndThePropertyPartTwo6048
+    )
+  ) = new OccupiersDetailsController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     occupiersDetailsView,
@@ -57,31 +59,29 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
     "GET / return HTML" in {
       val result = controller().show(None)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 no about you in the session" in {
       val result = controller().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
-      charset(result) shouldBe Some("utf-8")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = controller().submit(None)(FakeRequest().withFormUrlEncodedBody(Seq.empty *))
+        val res = controller().submit(None)(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
       "update session data correctly on successful form submission" in {
 
-        val request = FakeRequest(POST, "/submit-path")
-          .withFormUrlEncodedBody(
-            "occupiersDetailsName" -> "John Doe",
-            "occupiersDetailsAddress" -> "123 Test Street")
+        val request        = FakeRequest(POST, "/submit-path")
+          .withFormUrlEncodedBody("occupiersDetailsName" -> "John Doe", "occupiersDetailsAddress" -> "123 Test Street")
         val sessionRequest = SessionRequest(baseFilled6048Session, request)
-        val result = controller().submit(Option(0))(sessionRequest)
+        val result         = controller().submit(Option(0))(sessionRequest)
 
-        status(result) shouldBe SEE_OTHER
+        status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/task-list")
 
       }
@@ -92,25 +92,25 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
 
       "error if occupiers name is missing" in {
         val formData = baseFormData - errorKey.name
-        val form = occupiersDetailsForm.bind(formData)
+        val form     = occupiersDetailsForm.bind(formData)
         mustContainError(errorKey.name, "error.aboutYou.occupiersDetails.name.required", form)
       }
 
       "error if occupiers address is missing" in {
         val formData = baseFormData - errorKey.address
-        val form = occupiersDetailsForm.bind(formData)
+        val form     = occupiersDetailsForm.bind(formData)
         mustContainError(errorKey.address, "error.aboutYou.occupiersDetails.address.required", form)
       }
 
       "error if occupiers name exceeds max length" in {
         val invalidFormData = baseFormData.updated(errorKey.name, "A" * 101)
-        val form = occupiersDetailsForm.bind(invalidFormData)
+        val form            = occupiersDetailsForm.bind(invalidFormData)
         mustContainError(errorKey.name, "error.aboutYou.occupiersDetails.name.maxLength", form)
       }
 
       "error if occupiers address exceeds max length" in {
         val invalidFormData = baseFormData.updated(errorKey.address, "B" * 1001)
-        val form = occupiersDetailsForm.bind(invalidFormData)
+        val form            = occupiersDetailsForm.bind(invalidFormData)
         mustContainError(errorKey.address, "error.aboutYou.occupiersDetails.address.maxLength", form)
       }
     }
@@ -120,13 +120,12 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
-      val name: String = "occupiersDetailsName"
+      val name: String    = "occupiersDetailsName"
       val address: String = "occupiersDetailsAddress"
     }
 
-
     val baseFormData: Map[String, String] = Map(
-      errorKey.name -> "Mr Brown",
+      errorKey.name    -> "Mr Brown",
       errorKey.address -> "123 Bristol"
     )
   }
