@@ -95,6 +95,13 @@ class LegalOrPlanningRestrictionsController @Inject() (
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }
+      case FOR6048           =>
+        request.sessionData.aboutLeaseOrAgreementPartTwo
+          .flatMap(_.payACapitalSumDetails)
+          .map(_.capitalSumOrPremium) match {
+          case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show().url
+          case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+        }
       case _                 => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
     }
 

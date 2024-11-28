@@ -332,13 +332,31 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case FOR6030           => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
           case FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
+          case FOR6048           => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show()
           case _                 => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
       case _           =>
         answers.forType match {
-          case FOR6020 | FOR6045 | FOR6046 =>
+          case FOR6020 | FOR6045 | FOR6046 | FOR6048 =>
             controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
-          case _                           => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+          case _                                     => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+        }
+    }
+
+  private def payCapitalSumDetailsRouting: Session => Call = answers =>
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(
+      _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
+    ) match {
+      case Some("yes") =>
+        answers.forType match {
+          case FOR6048 => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
+          case _       => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+        }
+      case _           =>
+        answers.forType match {
+          case FOR6048 =>
+            controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
+          case _       => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
     }
 
@@ -577,7 +595,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     IsGivenRentFreePeriodId                       -> isGivenRentFreePeriodIdRouting,
     RentFreePeriodDetailsId                       -> (_ => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()),
     PayCapitalSumId                               -> payCapitalSumRouting,
-    PayCapitalSumDetailsId                        -> (_ => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()),
+    PayCapitalSumAmountDetailsId                  -> payCapitalSumDetailsRouting,
+    PayCapitalSumDetailsId                        -> payCapitalSumDetailsRouting,
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     LegalOrPlanningRestrictionId                  -> legalOrPlanningRestrictionRouting,
     LegalOrPlanningRestrictionDetailsId           -> (_ =>
