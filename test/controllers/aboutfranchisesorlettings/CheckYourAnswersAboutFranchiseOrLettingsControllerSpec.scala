@@ -19,11 +19,13 @@ package controllers.aboutfranchisesorlettings
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec {
@@ -31,7 +33,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
   import TestData._
 
   def checkYourAnswersAboutFranchiseOrLettingsController6045(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
   ) =
     new CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
@@ -116,6 +118,16 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "Render the add-remove-rental-income link correctly for 6045 form" in {
+      val result        = checkYourAnswersAboutFranchiseOrLettingsController6045().show(fakeRequest)
+      val html          = Jsoup.parse(contentAsString(result))
+      val addRemoveLink = html.getElementById("add-remove-rental-income")
+
+      addRemoveLink.attr("href") should include(
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(1).url
+      )
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
