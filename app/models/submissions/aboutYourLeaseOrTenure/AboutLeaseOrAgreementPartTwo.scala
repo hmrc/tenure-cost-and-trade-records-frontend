@@ -37,6 +37,7 @@ case class AboutLeaseOrAgreementPartTwo(
   tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
   payACapitalSumDetails: Option[PayACapitalSumDetails] = None,
   payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, // Added Feb 2024 - 6030 Journey
+  payACapitalSumAmountDetails: Option[PayACapitalSumAmountDetails] = None, // Added Nov 2024 - 6048 Journey
   capitalSumDescription: Option[CapitalSumDescription] = None, // 6020
   paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
   tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,

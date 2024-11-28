@@ -146,6 +146,9 @@ case object TenantsAdditionsDisregardedDetailsId extends Identifier {
 
 case object PayCapitalSumId extends Identifier { override def toString: String = "payCapitalSumPage" }
 case object PayCapitalSumDetailsId extends Identifier { override def toString: String = "payCapitalSumDetailsPage" }
+case object PayCapitalSumAmountDetailsId extends Identifier {
+  override def toString: String = "payCapitalSumAmountDetailsPage"
+}
 
 case object PayWhenLeaseGrantedId extends Identifier { override def toString: String = "payWhenLeaseGrantedPage" }
 

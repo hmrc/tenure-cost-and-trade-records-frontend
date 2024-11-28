@@ -145,6 +145,9 @@ POST        /pay-a-capital-sum                                          controll
 GET         /pay-a-capital-sum-details                                  controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.show()
 POST        /pay-a-capital-sum-details                                  controllers.aboutYourLeaseOrTenure.PayACapitalSumDetailsController.submit()
 
+GET         /pay-a-capital-sum-amount-details                           controllers.aboutYourLeaseOrTenure.PayACapitalSumAmountDetailsController.show()
+POST        /pay-a-capital-sum-amount-details                           controllers.aboutYourLeaseOrTenure.PayACapitalSumAmountDetailsController.submit()
+
 GET         /receive-payment-when-lease-granted                         controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.show()
 POST        /receive-payment-when-lease-granted                         controllers.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedController.submit()
 

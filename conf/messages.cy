@@ -1226,6 +1226,7 @@ error.payACapitalSum.missing = Dewiswch ‘do’ os gwnaethoch dalu swm cyfalaf 
 # PAY A CAPITAL SUM DETAILS
 ##################
 capitalSumPaidDetails.heading = Provide details of the capital sum paid
+capitalSumPaidDetails6048.heading = What was the capital sum or premium paid for the lease or agreement?
 capitalSumPaidDetails.p1 = You do not have to provide details if the rent has been reviewed since the payment was made.
 label.capitalSumPaidDetails = How much did you pay for your lease or agreement?
 label.capitalSumPaidDetailsDateInput = When was this sum paid?

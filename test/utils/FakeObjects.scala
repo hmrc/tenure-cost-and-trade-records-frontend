@@ -1658,6 +1658,7 @@ trait FakeObjects {
     legalOrPlanningRestrictionsDetails = Some(LegalOrPlanningRestrictionsDetails("Legal planning restrictions")),
     capitalSumDescription = Some(CapitalSumDescription("capital Sum Description")),
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes)),
+    payACapitalSumAmountDetails = Some(PayACapitalSumAmountDetails(123.12)),
     payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput))),
     paymentWhenLeaseIsGrantedDetails = Some(PaymentWhenLeaseIsGrantedDetails(AnswerYes)),
     tenancyLeaseAgreementExpire = Some(TenancyLeaseAgreementExpire(prefilledDateInput)),
