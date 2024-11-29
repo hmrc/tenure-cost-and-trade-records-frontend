@@ -392,6 +392,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     FeeReceivedPageId                          -> (answers =>
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
     ),
+    ConcessionTypeDetailsId                    -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
+    ),
     ConcessionTypeFeesId                       -> (answers =>
       controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),

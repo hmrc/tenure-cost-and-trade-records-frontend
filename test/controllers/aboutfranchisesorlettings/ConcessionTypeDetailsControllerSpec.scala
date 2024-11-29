@@ -30,6 +30,7 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
   ) =
     new ConcessionTypeDetailsController(
       stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
       concessionTypeDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo

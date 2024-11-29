@@ -20,6 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.ConcessionTypeDetailsForm.concessionTypeDetailsForm
 import models.submissions.aboutfranchisesorlettings.*
+import navigation.AboutFranchisesOrLettingsNavigator
+import navigation.identifiers.{ConcessionTypeDetailsId, ConcessionTypeFeesId}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -32,6 +34,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class ConcessionTypeDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  navigator: AboutFranchisesOrLettingsNavigator,
   view: concessionTypeDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
@@ -88,7 +91,7 @@ class ConcessionTypeDetailsController @Inject() (
         }(request)
 
         session.saveOrUpdate(updatedSession).map { _ =>
-          Redirect(controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(idx))
+          Redirect(navigator.nextPage(ConcessionTypeDetailsId, updatedSession).apply(updatedSession))
         }
       }
     )
