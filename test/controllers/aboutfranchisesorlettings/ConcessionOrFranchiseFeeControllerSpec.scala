@@ -20,7 +20,6 @@ import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
