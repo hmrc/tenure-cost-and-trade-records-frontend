@@ -98,6 +98,8 @@ class HowIsCurrentRentFixedController @Inject() (
             logger.warn(s"Back link for 6020 rent open market value page reached with unknown value")
             controllers.routes.TaskListController.show().url
         }
+      case FOR6048                     =>
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
       case _                           =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
           _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
