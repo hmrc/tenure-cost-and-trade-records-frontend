@@ -32,20 +32,19 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm
-import form.aboutYourLeaseOrTenure.PayACapitalSumDetailsForm.payACapitalSumDetailsForm
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.{PayACapitalSumAmountDetails, PayACapitalSumInformationDetails}
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.{PayCapitalSumAmountDetailsId, PayCapitalSumDetailsId}
+import navigation.identifiers.PayCapitalSumAmountDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.{payACapitalSumAmountDetails, payACapitalSumDetails}
+import views.html.aboutYourLeaseOrTenure.payACapitalSumAmountDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
