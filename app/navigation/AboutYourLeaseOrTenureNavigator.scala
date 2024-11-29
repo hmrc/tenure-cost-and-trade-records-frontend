@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package navigation
 
 import connectors.Audit
@@ -471,6 +487,14 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
     }
 
+  private def ultimatelyResponsibleBuildingInsuranceRouting: Session => Call = answers =>
+    answers.forType match {
+      case FOR6048 =>
+        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+      case _       =>
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
+    }
+
   private def propertyUseLeasebackAgreementRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(
       _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name)
@@ -510,9 +534,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
-          case FOR6045 | FOR6046 =>
+          case FOR6045 | FOR6046 | FOR6048 =>
             controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show()
-          case _                 => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+          case _                           => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
         }
       case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
       case _           =>
@@ -559,9 +583,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     UltimatelyResponsibleOutsideRepairsPageId     -> (_ =>
       aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
     ),
-    UltimatelyResponsibleBusinessInsurancePageId  -> (_ =>
-      aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show()
-    ),
+    UltimatelyResponsibleBusinessInsurancePageId  -> ultimatelyResponsibleBuildingInsuranceRouting,
     RentIncludeTradeServicesPageId                -> rentIncludeTradeServicesRouting,
     RentIncludeTradeServicesDetailsPageId         -> (_ =>
       aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
