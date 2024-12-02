@@ -18,33 +18,38 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.StoppedLettingForm.theForm
+import form.lettingHistory.WhenWasLastLetForm.theForm
 import models.Session
-import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory._
+import models.submissions.lettingHistory.LettingHistory
+import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.HasStoppedLettingPageId
+import navigation.identifiers.LastRentalPageId
 import play.api.i18n.I18nSupport
 import play.api.libs.json.Writes
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
+import util.DateUtilLocalised
+import views.html.lettingHistory.whenWasLastLet as WhenWasLastLetView
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named}
-import scala.concurrent.ExecutionContext
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.Future.successful
 
-class HasStoppedLettingController @Inject (
+class WhenWasLastLetController @Inject(
   mcc: MessagesControllerComponents,
+  dateUtil: DateUtilLocalised,
   navigator: LettingHistoryNavigator,
-  theView: HasStoppedLettingView,
+  theView: WhenWasLastLetView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport:
+
+  given DateUtilLocalised = dateUtil
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     val freshForm  = theForm
@@ -52,24 +57,28 @@ class HasStoppedLettingController @Inject (
       for
         lettingHistory   <- request.sessionData.lettingHistory
         intendedLettings <- lettingHistory.intendedLettings
-        hasStopped       <- intendedLettings.hasStopped
-      yield freshForm.fill(hasStopped.toAnswer)
+        whenWasLastLet       <- intendedLettings.whenWasLastLet
+      yield theForm.fill(whenWasLastLet)
 
     Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
+    continueOrSaveAsDraft[LocalDate](
       theForm,
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
-      answer =>
-        given Session = request.sessionData
-        for
-          savedSession  <- repository.saveOrUpdateSession(withHasStopped(answer.toBoolean))
-          navigationData = Map("hasStopped" -> answer.toBoolean.toString)
-        yield navigator.redirect(currentPage = HasStoppedLettingPageId, savedSession, navigationData)
+      date =>
+        for savedSession <- saveOrUpdateWithWhenWasLastLet(Some(date), request.sessionData)
+        yield navigator.redirect(currentPage = LastRentalPageId, savedSession)
     )
   }
 
+  private def saveOrUpdateWithWhenWasLastLet(
+    date: Option[LocalDate],
+    session: Session,
+  )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[Session] =
+    given Session = session
+    repository.saveOrUpdateSession(withWhenWasLastLet(date))
+
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = HasStoppedLettingPageId)
+    navigator.backLinkUrl(ofPage = LastRentalPageId)

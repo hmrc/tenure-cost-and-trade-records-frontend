@@ -24,7 +24,7 @@ import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
@@ -58,7 +58,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                shouldBe "/path/to/last-rent"
+        redirectLocation(result).value                shouldBe routes.WhenWasLastLetController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.hasStopped.value shouldBe true
       }

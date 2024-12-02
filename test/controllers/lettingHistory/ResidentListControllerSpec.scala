@@ -24,7 +24,7 @@ import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.residentList as ResidentListView
