@@ -3412,6 +3412,7 @@ checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Rent reviews: fre
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = Can rent be reduced?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Former lease surrendered early?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Details of former lease
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048 = Details of the surrendered lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months = Term remaining {0} months
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Disregarded additions or improvements?
