@@ -20,6 +20,8 @@ import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.libs.json.{Format, Json}
 
+import java.time.LocalDate
+
 case class LettingHistory(
   hasPermanentResidents: Option[Boolean] = None,
   permanentResidents: List[ResidentDetail] = Nil,
@@ -239,8 +241,7 @@ object LettingHistory:
   def withNumberOfNights(nights: Int)(using session: Session): Session =
     val someIntendedLettings = Some(
       IntendedLettings(
-        nights = Some(nights),
-        hasStopped = None
+        nights = Some(nights)
       )
     )
     foldLettingHistory(
@@ -252,12 +253,12 @@ object LettingHistory:
           lettingHistory.intendedLettings.fold(
             ifEmpty = someIntendedLettings
           ) { intendedLettings =>
+            val meetsCriteria = isAboveThreshold(nights, session.isWelsh)
             Some(
               intendedLettings
                 .copy(nights = Some(nights))
-                .copy(hasStopped =
-                  if isAboveThreshold(nights, session.isWelsh) then None else intendedLettings.hasStopped
-                )
+                .copy(hasStopped = if meetsCriteria then None else intendedLettings.hasStopped)
+                .copy(whenWasLastLet = if meetsCriteria then None else intendedLettings.whenWasLastLet)
             )
           }
         )
@@ -274,11 +275,10 @@ object LettingHistory:
   private def isAboveThreshold(nights: Int, isWelsh: Boolean): Boolean =
     if isWelsh then nights >= 252 else nights >= 140
 
-  def withHasStopped(hasStopped: Option[Boolean])(using session: Session): Session =
+  def withHasStopped(hasStopped: Boolean)(using session: Session): Session =
     val someIntendedLettings = Some(
       IntendedLettings(
-        nights = None,
-        hasStopped = hasStopped
+        hasStopped = Some(hasStopped),
       )
     )
     foldLettingHistory(
@@ -292,8 +292,29 @@ object LettingHistory:
           ) { intendedLettings =>
             Some(
               intendedLettings
-                .copy(hasStopped = hasStopped)
+                .copy(hasStopped = Some(hasStopped))
+                .copy(whenWasLastLet = if hasStopped then intendedLettings.whenWasLastLet else None)
             )
+          }
+        )
+    )
+
+  def withWhenWasLastLet(whenWasLastLet: Option[LocalDate])(using session: Session): Session =
+    val someIntendedLetting = Some(
+      IntendedLettings(
+        whenWasLastLet = whenWasLastLet
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLetting
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLetting
+          ) { intendedLettings =>
+            Some(intendedLettings.copy(whenWasLastLet = whenWasLastLet))
           }
         )
     )

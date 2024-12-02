@@ -16,13 +16,16 @@
 
 package models.submissions.lettingHistory
 
+import java.time.LocalDate
 import play.api.libs.json.{Format, Json}
 
 case class IntendedLettings(
   nights: Option[Int] = None,
-  hasStopped: Option[Boolean] = None
+  hasStopped: Option[Boolean] = None,
+  whenWasLastLet: Option[LocalDate] = None
 )
 
 object IntendedLettings:
-  def unapply(obj: IntendedLettings): Option[(Option[Int], Option[Boolean])] = Some(obj.nights, obj.hasStopped)
-  given Format[IntendedLettings]                                             = Json.format
+  def unapply(obj: IntendedLettings): Option[(Option[Int], Option[Boolean], Option[LocalDate])] =
+    Some(obj.nights, obj.hasStopped, obj.whenWasLastLet)
+  given Format[IntendedLettings]                                                                = Json.format

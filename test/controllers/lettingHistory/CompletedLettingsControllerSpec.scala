@@ -109,7 +109,7 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           pending
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                   shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe "/path/to/occupier-list"
+          redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true
           // TODO completedLettings(data) should have size 5
