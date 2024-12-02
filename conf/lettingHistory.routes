@@ -35,6 +35,9 @@ POST        /letting-history-how-many-nights                    controllers.lett
 GET         /letting-history-has-stopped                        controllers.lettingHistory.HasStoppedLettingController.show
 POST        /letting-history-has-stopped                        controllers.lettingHistory.HasStoppedLettingController.submit
 
+GET         /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.show
+POST        /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.submit
+
 GET         /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.show
 POST        /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.submit
 

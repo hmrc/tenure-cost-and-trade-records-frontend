@@ -101,6 +101,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     HasStoppedLettingPageId        -> { (_, _) =>
       Some(routes.HowManyNightsController.show)
     },
+    WhenWasLastLetPageId           -> { (_, _) =>
+      Some(routes.HasStoppedLettingController.show)
+    },
     AdvertisingOnlinePageId        -> { (_, _) =>
       Some(controllers.routes.TaskListController.show())
     },
@@ -206,6 +209,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
         if hasStopped
         then Call("GET", "/path/to/last-rent")
         else Call("GET", "/path/to/is-yearly-available")
+    },
+    WhenWasLastLetPageId           -> { (_, _) =>
+      Some(Call("GET", "/path/to/is-yearly-available"))
     },
     AdvertisingOnlinePageId        -> { (currentSession, _) =>
       hasOnlineAdvertising(currentSession) match
