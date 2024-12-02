@@ -59,7 +59,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                shouldBe "/path/to/last-rent"
+        redirectLocation(result).value                shouldBe routes.WhenWasLastLetController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.hasStopped.value shouldBe true
       }
