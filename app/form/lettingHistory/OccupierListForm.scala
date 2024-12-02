@@ -24,6 +24,6 @@ import play.api.data.Forms.single
 object OccupierListForm:
   val theForm = Form[AnswersYesNo](
     single(
-      "hadMoreOccupiers" -> answerYesNo(errorMessage = "lettingHistory.occupierList.hadMoreOccupiers.required")
+      "answer" -> answerYesNo(errorMessage = "lettingHistory.occupierList.hadMoreOccupiers.required")
     )
   )

@@ -19,6 +19,7 @@ package controllers.lettingHistory
 import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
+import models.submissions.lettingHistory.LettingHistory.{hasPermanentResidents, permanentResidents}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -48,18 +49,18 @@ class PermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
       "be handling invalid POST hasPermanentResidents=null and reply 400 with error message" in new FreshSessionFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "hasPermanentResidents" -> ""
+            "answer" -> ""
           )
         )
         status(result) shouldBe BAD_REQUEST
         contentAsString(result) should include("lettingHistory.hasPermanentResidents.error")
       }
       "be handling POST hasPermanentResidents='yes' and reply 303 redirect to the 'Residents Details' page" in new FreshSessionFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hasPermanentResidents" -> "yes"))
-        status(result)                  shouldBe SEE_OTHER
-        redirectLocation(result).value  shouldBe routes.ResidentDetailController.show().url
+        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+        status(result)                    shouldBe SEE_OTHER
+        redirectLocation(result).value    shouldBe routes.ResidentDetailController.show().url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        hasPermanentResidents(data).value should beAnswerYes
+        hasPermanentResidents(data).value shouldBe true
       }
     }
     "the user session is stale" should {
@@ -76,34 +77,34 @@ class PermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         "be handling POST hasPermanentResidents='yes' and reply 303 redirect to the 'Resident Detail' page" in new StaleSessionFixture(
           oneResident
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hasPermanentResidents" -> "yes"))
-          status(result)                  shouldBe SEE_OTHER
-          redirectLocation(result).value  shouldBe routes.ResidentDetailController.show().url
+          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+          status(result)                    shouldBe SEE_OTHER
+          redirectLocation(result).value    shouldBe routes.ResidentDetailController.show().url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          hasPermanentResidents(data).value should beAnswerYes
+          hasPermanentResidents(data).value shouldBe true
         }
         "be handling POST hasPermanentResidents='no' and reply 303 redirect to the 'Commercial Lettings' page" in new StaleSessionFixture(
           oneResident
         ) {
           // Answering 'no' will clear out all residents details
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hasPermanentResidents" -> "no"))
-          status(result)                  shouldBe SEE_OTHER
-          redirectLocation(result).value  shouldBe routes.CompletedLettingsController.show.url
+          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
+          status(result)                    shouldBe SEE_OTHER
+          redirectLocation(result).value    shouldBe routes.CompletedLettingsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          hasPermanentResidents(data).value should beAnswerNo
-          permanentResidents(data)        shouldBe Nil
+          hasPermanentResidents(data).value shouldBe false
+          permanentResidents(data)          shouldBe Nil
         }
       }
       "and the maximum number of residents has been reached" should {
         "be handling POST hasPermanentResidents='yes' and reply 303 redirect to the 'Resident List' page" in new StaleSessionFixture(
           fiveResidents
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hasPermanentResidents" -> "yes"))
-          status(result)                  shouldBe SEE_OTHER
-          redirectLocation(result).value  shouldBe routes.ResidentListController.show.url
+          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+          status(result)                    shouldBe SEE_OTHER
+          redirectLocation(result).value    shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          hasPermanentResidents(data).value should beAnswerYes
-          permanentResidents(data)          should have size 5
+          hasPermanentResidents(data).value shouldBe true
+          permanentResidents(data)            should have size 5
         }
       }
     }
@@ -132,7 +133,7 @@ class PermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasPermanentResidents = Some(if permanentResidents.isEmpty then AnswerNo else AnswerYes),
+            hasPermanentResidents = Some(permanentResidents.nonEmpty),
             permanentResidents = permanentResidents
           )
         )

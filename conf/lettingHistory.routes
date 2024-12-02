@@ -25,3 +25,6 @@ GET         /letting-history/occupier-list                      controllers.lett
 GET         /letting-history/occupier-remove                    controllers.lettingHistory.OccupierListController.remove(index: Int)
 POST        /letting-history/occupier-remove                    controllers.lettingHistory.OccupierListController.performRemove(index: Int)
 POST        /letting-history/occupier-list                      controllers.lettingHistory.OccupierListController.submit
+
+GET         /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.show(kind: String)
+POST        /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.submit(kind: String)

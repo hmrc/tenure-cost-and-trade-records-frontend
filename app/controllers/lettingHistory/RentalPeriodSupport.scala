@@ -25,10 +25,13 @@ import java.time.Month.{APRIL, MARCH}
 
 trait RentalPeriodSupport extends FiscalYearSupport:
 
-  // The Welsh journey requires 3 years of data instead of 1 year
   def previousRentalPeriod(using request: SessionRequest[AnyContent]) =
-    val numberOfYearsBack = if request.sessionData.isWelsh then 3 else 1
     LocalPeriod(
       fromDate = LocalDate.of(previousFiscalYearEnd - numberOfYearsBack, APRIL, 1),
       toDate = LocalDate.of(previousFiscalYearEnd, MARCH, 31)
     )
+
+  // The Welsh journey requires 3 years of data instead of 1 year
+  private def numberOfYearsBack(using request: SessionRequest[AnyContent]) =
+    val numberOfYearsBack = if request.sessionData.isWelsh then 3 else 1
+    numberOfYearsBack

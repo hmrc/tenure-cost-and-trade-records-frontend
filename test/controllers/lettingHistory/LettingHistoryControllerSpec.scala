@@ -88,20 +88,5 @@ class LettingHistoryControllerSpec extends TestBaseSpec:
     when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
 
   trait SessionCapturingFixture:
-    def hasPermanentResidents(session: ArgumentCaptor[Session]) =
-      LettingHistory.hasPermanentResidents(session.getValue)
-
-    def permanentResidentAt(session: ArgumentCaptor[Session], index: Integer): Option[ResidentDetail] =
-      LettingHistory.permanentResidents(session.getValue).lift(index)
-
-    def permanentResidents(session: ArgumentCaptor[Session]): List[ResidentDetail] =
-      LettingHistory.permanentResidents(session.getValue)
-
-    def hasCompletedLettings(session: ArgumentCaptor[Session]) =
-      LettingHistory.hasCompletedLettings(session.getValue)
-
-    def completedLettingAt(session: ArgumentCaptor[Session], index: Integer): Option[OccupierDetail] =
-      LettingHistory.completedLettings(session.getValue).lift(index)
-
-    def completedLettings(session: ArgumentCaptor[Session]): List[OccupierDetail] =
-      LettingHistory.completedLettings(session.getValue)
+    given argumentCaptorToSession: Conversion[ArgumentCaptor[Session], Session] with
+      def apply(c: ArgumentCaptor[Session]) = c.getValue

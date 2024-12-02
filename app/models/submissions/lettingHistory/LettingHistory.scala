@@ -21,10 +21,12 @@ import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.libs.json.{Format, Json}
 
 case class LettingHistory(
-  hasPermanentResidents: Option[AnswersYesNo] = None,
+  hasPermanentResidents: Option[Boolean] = None,
   permanentResidents: List[ResidentDetail] = Nil,
-  hasCompletedLettings: Option[AnswersYesNo] = None,
-  completedLettings: List[OccupierDetail] = Nil
+  mayHaveMorePermanentResidents: Option[Boolean] = None,
+  hasCompletedLettings: Option[Boolean] = None,
+  completedLettings: List[OccupierDetail] = Nil,
+  mayHaveMoreCompletedLettings: Option[Boolean] = None
 )
 
 object LettingHistory:
@@ -41,32 +43,32 @@ object LettingHistory:
       )
     )
 
-  def withPermanentResidents(hasPermanentResidents: AnswersYesNo)(using session: Session): Session =
-    this.foldLettingHistory(
+  def withPermanentResidents(hasPermanentResidents: Boolean)(using session: Session): Session =
+    foldLettingHistory(
       ifEmpty = LettingHistory(
         hasPermanentResidents = Some(hasPermanentResidents)
       ),
       copyFunc = lettingHistory =>
-        hasPermanentResidents match
-          case AnswerYes =>
-            lettingHistory.copy(hasPermanentResidents = Some(AnswerYes))
-          case AnswerNo  =>
-            lettingHistory.copy(
-              hasPermanentResidents = Some(AnswerNo),
-              permanentResidents = Nil
-            )
+        if hasPermanentResidents
+        then lettingHistory.copy(hasPermanentResidents = Some(true))
+        else
+          lettingHistory.copy(
+            hasPermanentResidents = Some(false),
+            permanentResidents = Nil,
+            mayHaveMorePermanentResidents = None
+          )
     )
 
-  def hasPermanentResidents(session: Session): Option[AnswersYesNo] =
+  def hasPermanentResidents(session: Session): Option[Boolean] =
     for
       lettingHistory        <- session.lettingHistory
       hasPermanentResidents <- lettingHistory.hasPermanentResidents
     yield hasPermanentResidents
 
   def byAddingPermanentResident(residentDetail: ResidentDetail)(using session: Session): Session =
-    this.foldLettingHistory(
+    foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasPermanentResidents = Some(AnswerYes),
+        hasPermanentResidents = Some(true),
         permanentResidents = List(residentDetail)
       ),
       copyFunc = { lettingHistory =>
@@ -88,13 +90,15 @@ object LettingHistory:
     )
 
   def byRemovingPermanentResidentAt(index: Int)(using session: Session): Session =
-    this.foldLettingHistory(
+    foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasPermanentResidents = Some(AnswerNo),
+        hasPermanentResidents = Some(false),
         permanentResidents = Nil
       ),
       copyFunc = { lettingHistory =>
-        lettingHistory.copy(permanentResidents = lettingHistory.permanentResidents.patch(index, Nil, 1))
+        lettingHistory.copy(
+          permanentResidents = lettingHistory.permanentResidents.patch(index, Nil, 1)
+        )
       }
     )
 
@@ -104,26 +108,26 @@ object LettingHistory:
       permanentResidents <- lettingHistory.permanentResidents
     yield permanentResidents
 
-  def hasCompletedLettings(session: Session): Option[AnswersYesNo] =
+  def hasCompletedLettings(session: Session): Option[Boolean] =
     for
       lettingHistory       <- session.lettingHistory
       hasCompletedLettings <- lettingHistory.hasCompletedLettings
     yield hasCompletedLettings
 
-  def withCompletedLettings(hasCompletedLettings: AnswersYesNo)(using session: Session): Session =
-    this.foldLettingHistory(
+  def withCompletedLettings(hasCompletedLettings: Boolean)(using session: Session): Session =
+    foldLettingHistory(
       ifEmpty = LettingHistory(
         hasCompletedLettings = Some(hasCompletedLettings)
       ),
       copyFunc = lettingHistory =>
-        hasCompletedLettings match
-          case AnswerYes =>
-            lettingHistory.copy(hasCompletedLettings = Some(AnswerYes))
-          case AnswerNo  =>
-            lettingHistory.copy(
-              hasCompletedLettings = Some(AnswerNo),
-              completedLettings = Nil
-            )
+        if hasCompletedLettings
+        then lettingHistory.copy(hasCompletedLettings = Some(true))
+        else
+          lettingHistory.copy(
+            hasCompletedLettings = Some(false),
+            completedLettings = Nil,
+            mayHaveMoreCompletedLettings = None
+          )
     )
 
   def byAddingOccupierNameAndAddress(name: String, address: Address)(using session: Session): (Int, Session) =
@@ -132,7 +136,7 @@ object LettingHistory:
       (
         /* index = */ 0,
         LettingHistory(
-          hasCompletedLettings = Some(AnswerYes),
+          hasCompletedLettings = Some(true),
           completedLettings = List(occupierDetail)
         )
       )
@@ -167,7 +171,7 @@ object LettingHistory:
   def byAddingOccupierRentalPeriod(index: Int, rentalPeriod: LocalPeriod)(using session: Session): Session =
     foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasCompletedLettings = Some(AnswerYes),
+        hasCompletedLettings = Some(true),
         completedLettings = Nil
       ),
       copyFunc = lettingHistory =>
@@ -182,9 +186,9 @@ object LettingHistory:
     )
 
   def byRemovingPermanentOccupierAt(index: Int)(using session: Session): Session =
-    this.foldLettingHistory(
+    foldLettingHistory(
       ifEmpty = LettingHistory(
-        hasCompletedLettings = Some(AnswerNo),
+        hasCompletedLettings = Some(false),
         completedLettings = Nil
       ),
       copyFunc = { lettingHistory =>
@@ -198,4 +202,33 @@ object LettingHistory:
       completedLettings <- lettingHistory.completedLettings
     yield completedLettings
 
-  given Format[LettingHistory] = Json.format
+  def withMayHaveMoreOf(kind: String, understand: Boolean)(using session: Session): Session =
+    foldLettingHistory(
+      ifEmpty = LettingHistory(),
+      copyFunc = { lettingHistory =>
+        kind match {
+          case "permanentResidents" =>
+            lettingHistory.copy(mayHaveMorePermanentResidents = Some(understand))
+          case "temporaryOccupiers" =>
+            lettingHistory.copy(mayHaveMoreCompletedLettings = Some(understand))
+          case _                    =>
+            lettingHistory
+        }
+      }
+    )
+
+  def mayHaveMorePermanentResidents(session: Session): Option[Boolean] =
+    for
+      lettingHistory <- session.lettingHistory
+      hasEvenMore    <- lettingHistory.mayHaveMorePermanentResidents
+    yield hasEvenMore
+
+  def mayHaveMoreCompletedLettings(session: Session): Option[Boolean] =
+    for
+      lettingHistory <- session.lettingHistory
+      hasEvenMore    <- lettingHistory.mayHaveMoreCompletedLettings
+    yield hasEvenMore
+
+  given Format[LettingHistory]                   = Json.format
+  extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes
+  extension (bool: Boolean) def toAnswer         = if bool then AnswerYes else AnswerNo

@@ -22,7 +22,7 @@ import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmation
 import form.lettingHistory.OccupierListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.LettingHistory.{byRemovingPermanentOccupierAt, completedLettings}
+import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, OccupierDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{OccupierListPageId, OccupierRemovePageId}
@@ -34,8 +34,8 @@ import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.occupierList as OccupierListView
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.Future.successful
+import scala.concurrent.{ExecutionContext, Future}
 
 class OccupierListController @Inject() (
   mcc: MessagesControllerComponents,
@@ -96,7 +96,7 @@ class OccupierListController @Inject() (
           navigator.redirect(
             currentPage = OccupierListPageId,
             updatedSession = request.sessionData,
-            navigationData = Map("hadMoreOccupiers" -> hadMoreOccupiers.toString)
+            navigationData = Map("hadMoreOccupiers" -> hadMoreOccupiers.toBoolean.toString)
           )
         )
     )
