@@ -100,6 +100,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     HasStoppedLettingPageId  -> { (_, _) =>
       Some(routes.HowManyNightsController.show)
+    },
+    LastRentalPageId         -> { (_, _) =>
+      Some(routes.HasStoppedLettingController.show)
     }
   )
 
@@ -198,8 +201,11 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       for case hasStopped: Boolean <- navigationData.get("hasStopped")
       yield
         if hasStopped
-        then Call("GET", "/path/to/last-rent")
+        then routes.WhenWasLastLetController.show
         else Call("GET", "/path/to/is-yearly-available")
+    },
+    LastRentalPageId         -> { (_, _) =>
+      Some(Call("GET", "/path/to/is-yearly-available"))
     }
   )
 
