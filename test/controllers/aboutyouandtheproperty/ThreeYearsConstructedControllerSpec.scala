@@ -20,9 +20,10 @@ import form.aboutyouandtheproperty.ThreeYearsConstructedForm.threeYearsConstruct
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._
 import play.api.test.{FakeRequest, Helpers}
-import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import uk.gov.hmrc.http.HttpVerbs.GET
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
@@ -87,6 +88,15 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data submitted" in {
+        val res = threeYearsConstructedController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "threeYearsConstructed" -> "yes"
+          )
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
   }

@@ -315,13 +315,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       _.benefitsGiven.map(_.benefitsGiven)
     ) match {
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show()
-      case Some(AnswerNo)  =>
-        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
       case _               =>
-        logger.warn(
-          s"Navigation for benefits given page reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for legal or benefits given routing")
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     }
 
   private def legalOrPlanningRestrictionRouting: Session => Call = answers =>
@@ -329,13 +324,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
     ) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
-      case Some("no")  =>
-        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
       case _           =>
-        logger.warn(
-          s"Navigation for legal or planning restriction without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for legal or planning restriction routing")
+        controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
 
   private def payCapitalSumRouting: Session => Call = answers =>

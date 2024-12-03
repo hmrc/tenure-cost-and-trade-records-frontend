@@ -18,13 +18,14 @@ package controllers.aboutyouandtheproperty
 import form.Errors
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
+import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
 import models.submissions.common.{AnswerNo, AnswerYes}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class RenewablesPlanControllerSpec extends TestBaseSpec {
@@ -115,6 +116,15 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = renewablesPlantController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data submitted" in {
+        val res = renewablesPlantController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "renewablesPlant" -> "intermittent"
+          )
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
   }

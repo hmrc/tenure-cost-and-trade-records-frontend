@@ -92,12 +92,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   private def isPropertyVacant: Session => Call = answers =>
     answers.stillConnectedDetails.flatMap(_.vacantProperties.map(_.vacantProperties.name)) match {
       case Some("yes") => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
-      case Some("no")  => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for is property vacant reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for is property vacant conditions routing")
+      case _           => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
     }
 
   private def isAnyRentReceived: Session => Call                          = answers =>
@@ -115,22 +110,12 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
                 controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx)
             }
         }
-      case Some("no")  => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for is any rent received without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for is any rent received conditions routing")
+      case _           => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
     }
   private def tradingNameOwnTheProperty: Session => Call                  = answers =>
     answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
       case Some("yes") => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
-      case Some("no")  => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for trading name own the property without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for trading name own the property conditions routing")
+      case _           => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
     }
   private def getLettingPartOfPropertyDetailsIndex(session: Session): Int =
     session.stillConnectedDetails.map(_.lettingPartOfPropertyDetailsIndex).getOrElse(0)

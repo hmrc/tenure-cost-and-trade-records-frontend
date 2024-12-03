@@ -72,6 +72,15 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
           enforcementActionBeenTakenDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
+
+      "Redirect when form data submitted" in {
+        val res = enforcementActionBeenTakenDetailsController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "enforcementActionHasBeenTakenDetails" -> "Test content"
+          )
+        )
+        status(res) shouldBe SEE_OTHER
+      }
     }
   }
 

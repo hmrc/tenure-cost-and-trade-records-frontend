@@ -1668,6 +1668,10 @@ trait FakeObjects {
       Some(UltimatelyResponsibleBuildingInsurance(BuildingInsuranceBoth, Some("Both")))
   )
 
+  val prefilledAboutLeaseOrAgreementPartTwoNoPremiumSum: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
+    payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerNo))
+  )
+
   val prefilledAboutLeaseOrAgreementPartTwoNoDate: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),

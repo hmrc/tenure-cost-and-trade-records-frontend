@@ -107,12 +107,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   private def bunkeredFuelQuestionRouting: Session => Call = answers =>
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.BunkeredFuelSoldController.show()
-      case Some(AnswerNo)  => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()
-      case _               =>
-        logger.warn(
-          s"Navigation for bunkered fuel question reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for bunkered fuel question")
+      case _               => aboutthetradinghistory.routes.CustomerCreditAccountsController.show()
     }
 
   private def financialYearEndDatesRouting: Session => Call =
@@ -189,12 +184,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)
     ) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show()
-      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
-      case _               =>
-        logger.warn(
-          s"Navigation for other holiday accommodation reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for other holiday accommodation")
+      case _               => aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
     }
 
   private def tentingPitchesOnSiteRouting(answers: Session): Call =
@@ -202,12 +192,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
     ) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
-      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
-      case _               =>
-        logger.warn(
-          s"Navigation for tenting pitches on site reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for tenting pitches all year")
+      case _               => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
     }
 
   private def additionalActivitiesOnSiteRouting(answers: Session): Call =
@@ -215,36 +200,21 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
     ) match {
       case Some(AnswerYes) => aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show()
-      case Some(AnswerNo)  => aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
-      case _               =>
-        logger.warn(
-          s"Navigation for additional activities on site reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for additional activities all year")
+      case _               => aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
     }
 
   private def intermittentRouting: Session => Call = answers =>
     val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
     intermittent match {
       case Some("intermittent") => aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show()
-      case Some("baseload")     => aboutthetradinghistory.routes.CostOfSales6076Controller.show()
-      case _                    =>
-        logger.warn(
-          s"Navigation for intermittent routing reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for intermittent routing")
+      case _                    => aboutthetradinghistory.routes.CostOfSales6076Controller.show()
     }
 
   private def grossReceiptsRouting: Session => Call = answers =>
     val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
     intermittent match {
       case Some("intermittent") => aboutthetradinghistory.routes.OtherIncomeController.show()
-      case Some("baseload")     => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()
-      case _                    =>
-        logger.warn(
-          s"Navigation for gross receipts reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for gross receipts all year")
+      case _                    => aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show()
     }
 
   private def whatYouWillNeedRouting: Session => Call =
