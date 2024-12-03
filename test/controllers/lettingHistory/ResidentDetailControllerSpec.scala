@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.lettingHistory.LettingHistory.permanentResidents
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
@@ -49,10 +49,11 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           "address" -> "Neverland"
         )
         val result  = controller.submit(request)
-        status(result)                             shouldBe SEE_OTHER
-        redirectLocation(result).value             shouldBe routes.ResidentListController.show.url
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        permanentResidentAt(data, index = 0).value shouldBe ResidentDetail(
+        permanentResidents(data)         should have size 1
+        permanentResidents(data)(0)    shouldBe ResidentDetail(
           name = "Mr. Unknown",
           address = "Neverland"
         )
@@ -80,13 +81,13 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
             "address" -> "Neverland"
           )
           val result  = controller.submit(request)
-          status(result)                                     shouldBe SEE_OTHER
-          redirectLocation(result).value                     shouldBe routes.ResidentListController.show.url
+          status(result)                      shouldBe SEE_OTHER
+          redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          permanentResidents(data)                             should have size 2 // instead of 1
-          permanentResidentAt(data, index = 0).value         shouldBe oneResident.head
-          permanentResidentAt(data, index = 1).value.name    shouldBe "Mr. Unknown"
-          permanentResidentAt(data, index = 1).value.address shouldBe "Neverland"
+          permanentResidents(data)              should have size 2 // instead of 1
+          permanentResidents(data)(0)         shouldBe oneResident.head
+          permanentResidents(data)(1).name    shouldBe "Mr. Unknown"
+          permanentResidents(data)(1).address shouldBe "Neverland"
         }
         "be handling POST /detail?overwrite by replying 303 redirect to 'Residents List' page" in new StaleSessionFixture(
           twoResidents
@@ -97,13 +98,13 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
             "address" -> "22, Different Street"
           )
           val result  = controller.submit(request)
-          status(result)                                     shouldBe SEE_OTHER
-          redirectLocation(result).value                     shouldBe routes.ResidentListController.show.url
+          status(result)                      shouldBe SEE_OTHER
+          redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          permanentResidents(data)                             should have size 2 // the same as it was before sending the post request
-          permanentResidentAt(data, index = 0).value         shouldBe oneResident.head
-          permanentResidentAt(data, index = 1).value.name    shouldBe "Mr. Two"
-          permanentResidentAt(data, index = 1).value.address shouldBe "22, Different Street"
+          permanentResidents(data)              should have size 2 // the same as it was before sending the post request
+          permanentResidents(data)(0)         shouldBe oneResident.head
+          permanentResidents(data)(1).name    shouldBe "Mr. Two"
+          permanentResidents(data)(1).address shouldBe "22, Different Street"
         }
       }
       "and the maximum number of residents has been reached" should {
@@ -155,7 +156,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasPermanentResidents = Some(if permanentResidents.isEmpty then AnswerNo else AnswerYes),
+            hasPermanentResidents = Some(permanentResidents.nonEmpty),
             permanentResidents = permanentResidents
           )
         )

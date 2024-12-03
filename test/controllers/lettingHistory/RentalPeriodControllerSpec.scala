@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.common.AnswerYes
+import models.submissions.lettingHistory.LettingHistory.completedLettings
 import models.submissions.lettingHistory.{Address, LettingHistory, LocalPeriod, OccupierDetail}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
@@ -131,7 +131,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasCompletedLettings = Some(AnswerYes),
+            hasCompletedLettings = Some(true),
             completedLettings = List(
               OccupierDetail(
                 name = "Somebody",

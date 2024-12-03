@@ -23,7 +23,7 @@ class PermanentResidentFormSpec extends FormSpec:
 
   it should "bind data as expected" in {
     val data  = Map(
-      "hasPermanentResidents" -> "yes"
+      "answer" -> "yes"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
@@ -34,7 +34,7 @@ class PermanentResidentFormSpec extends FormSpec:
     val filled = theForm.fill(AnswerYes)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "hasPermanentResidents" -> "yes"
+      "answer" -> "yes"
     )
   }
 
@@ -42,13 +42,13 @@ class PermanentResidentFormSpec extends FormSpec:
     // When the form gets submitted before being filled
     val bound = theForm.bind(
       Map(
-        "hasPermanentResidents" -> ""
+        "answer" -> ""
       )
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
     bound
-      .error("hasPermanentResidents")
+      .error("answer")
       .value
       .message mustBe "lettingHistory.hasPermanentResidents.error"
   }
