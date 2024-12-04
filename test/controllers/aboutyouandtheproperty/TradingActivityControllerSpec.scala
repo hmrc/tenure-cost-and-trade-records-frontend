@@ -20,7 +20,7 @@ import form.aboutyouandtheproperty.TradingActivityForm.tradingActivityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
@@ -70,6 +70,14 @@ class TradingActivityControllerSpec extends TestBaseSpec {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = tradingActivityController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data submitted" in {
+        val res = tradingActivityController().submit(
+          FakeRequest(POST, "/")
+            .withFormUrlEncodedBody("tradingActivityQuestion" -> "yes", "tradingActivityDetails" -> "test")
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
   }

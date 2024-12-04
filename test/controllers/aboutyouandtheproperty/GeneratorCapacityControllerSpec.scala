@@ -19,10 +19,11 @@ package controllers.aboutyouandtheproperty
 import form.aboutyouandtheproperty.GeneratorCapacityForm.generatorCapacityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
+import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class GeneratorCapacityControllerSpec extends TestBaseSpec {
@@ -74,6 +75,15 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(result) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = generatorCapacityController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "generatorCapacity" -> "test capacity"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

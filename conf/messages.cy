@@ -3348,6 +3348,7 @@ checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Adolygiadau rhent
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = A ellir gostwng y rhent?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Prydles flaenorol wedi’i hildio’n gynnar?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Details of former lease
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048 = Details of the surrendered lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months = Term remaining {0} months
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Wedi diystyru ychwanegiadau neu welliannau?
