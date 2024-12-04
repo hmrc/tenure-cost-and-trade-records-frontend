@@ -68,7 +68,7 @@
           )),
           hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
           autocomplete = Some("off"),
-      ).withFormField(theForm(s"capitalSumPaidDetails")))
+      ).withFormField(theForm("capitalSumPaidDetails")))
 
       @includes.dateFields(
           form = theForm,

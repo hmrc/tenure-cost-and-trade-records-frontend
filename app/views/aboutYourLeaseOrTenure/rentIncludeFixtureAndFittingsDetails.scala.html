@@ -24,8 +24,12 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 
 @this(layout: Layout,
+        govukInput: GovukInput,
         govukButton: GovukButton,
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
@@ -46,22 +50,22 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.submit()) {
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "rentIncludeFixturesAndFittingsDetails",
-    name = "rentIncludeFixturesAndFittingsDetails",
-    value = theForm("rentIncludeFixturesAndFittingsDetails").value,
-    classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     content = Text(messages("rentIncludeFixturesAndFittingsDetails.heading")),
-     classes = "govuk-label--l",
-     isPageHeading = true
-    ),
-    autocomplete = Some("off"),
-    errorMessage =   theForm.errors.asTextErrorMessageForField("rentIncludeFixturesAndFittingsDetails"),
-    hint = Some(Hint(content = Text(messages("rentIncludeFixturesAndFittingsDetails.hint"))))
-   )
-  )
+  @govukInput(Input(
+   id = "rentIncludeFixturesAndFittingsDetails",
+   name = "rentIncludeFixturesAndFittingsDetails",
+   value = theForm("rentIncludeFixturesAndFittingsDetails").value,
+   classes = "govuk-input--width-10 total-annual-rent",
+   label = Label(
+    content = Text(messages("rentIncludeFixturesAndFittingsDetails.heading")),
+    classes = "govuk-label--l",
+    isPageHeading = true
+   ),
+   prefix = Some(PrefixOrSuffix(
+    content = Text(messages("label.pound"))
+   )),
+   hint = Some(Hint(content = Text(messages("rentIncludeFixturesAndFittingsDetails.hint")))),
+   autocomplete = Some("off"),
+  ).withFormField(theForm("rentIncludeFixturesAndFittingsDetails")))
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
