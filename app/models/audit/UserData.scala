@@ -21,6 +21,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
+import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -51,7 +52,8 @@ case class UserData(
   aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour],
   requestReferenceNumber: Option[RequestReferenceNumberDetails],
   downloadPDFDetails: Option[DownloadPDFDetails],
-  lettingHistory: Option[LettingHistory]
+  lettingHistory: Option[LettingHistory],
+  accommodationDetails: Option[AccommodationDetails]
 )
 
 object UserData {

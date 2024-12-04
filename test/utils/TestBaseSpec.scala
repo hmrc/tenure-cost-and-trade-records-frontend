@@ -26,6 +26,7 @@ import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.ForType.*
+import models.submissions.accommodation.AccommodationDetails
 import models.{ForType, Session}
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.lettingHistory.LettingHistory
@@ -193,7 +194,8 @@ trait TestBaseSpec
     ),
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA),
     downloadPDFDetails: Option[DownloadPDFDetails] = None,
-    lettingHistory: Option[LettingHistory] = None
+    lettingHistory: Option[LettingHistory] = None,
+    accommodationDetails: Option[AccommodationDetails] = None
   ): WithSessionRefiner =
     new WithSessionRefiner(mockSessionRepository) {
 
@@ -221,7 +223,8 @@ trait TestBaseSpec
                 aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour,
                 requestReferenceNumberDetails = requestReferenceNumberDetails,
                 downloadPDFDetails = downloadPDFDetails,
-                lettingHistory = lettingHistory
+                lettingHistory = lettingHistory,
+                accommodationDetails = accommodationDetails
               ),
               request = request
             )

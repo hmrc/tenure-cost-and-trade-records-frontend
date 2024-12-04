@@ -22,6 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, 
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -50,6 +51,7 @@ case class ConnectedSubmission(
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
   downloadPDFDetails: Option[DownloadPDFDetails] = None,
+  accommodationDetails: Option[AccommodationDetails] = None,
   createdAt: Instant
 )
 
@@ -75,6 +77,7 @@ object ConnectedSubmission {
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails,
     session.downloadPDFDetails,
+    session.accommodationDetails,
     Instant.now()
   )
 }
