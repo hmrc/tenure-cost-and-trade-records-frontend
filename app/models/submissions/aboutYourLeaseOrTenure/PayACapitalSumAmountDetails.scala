@@ -18,8 +18,6 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import play.api.libs.json.{Json, OFormat}
 
-import java.time.LocalDate
-
 case class PayACapitalSumAmountDetails(
   capitalSumPaidAmountDetails: BigDecimal
 )

@@ -1621,8 +1621,8 @@ lettingHistory.residentDetail.address.required = Enter the address of the perman
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
 
 lettingHistory.residentList.heading.removed = You have removed all permanent residents of the property
-lettingHistory.residentList.heading.singular = You have added {0} resident
-lettingHistory.residentList.heading.plural = You have added {0} residents
+lettingHistory.residentList.heading.singular = You have added {0} permanent resident
+lettingHistory.residentList.heading.plural = You have added {0} permanent residents
 lettingHistory.residentList.hasMoreResidents.label = Are any other parts of the property occupied by tenants or employees as their main residence?
 lettingHistory.residentList.hasMoreResidents.required = Select yes if the property has more occupiers
 
@@ -1655,6 +1655,16 @@ lettingHistory.occupierList.heading.plural = You have added {0} temporary occupi
 lettingHistory.occupierList.rentalPeriod.text = {0} to {1}
 lettingHistory.occupiersList.hadMoreOccupiers.label = Did any other occupants rent part of your property for 29 nights or more between {0} and {1}?
 lettingHistory.occupierList.hadMoreOccupiers.required = Select yes if the property had more occupiers
+
+lettingHistory.maxNumberReached.permanentResidents.heading = You have added the maximum of {0} permanent residents
+lettingHistory.maxNumberReached.permanentResidents.paragraph.1 = If you had {0} or more permanent residents during the specified time range, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.permanentResidents.link.1 = Check or update the {0} permanent residents
+lettingHistory.maxNumberReached.temporaryOccupiers.heading = You have added the maximum of {0} temporary occupiers
+lettingHistory.maxNumberReached.temporaryOccupiers.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.temporaryOccupiers.link.1 = Check or update the {0} temporary occupiers
+lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
+lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
+
 
 
 # 6010 TYPES
@@ -3412,6 +3422,7 @@ checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Rent reviews: fre
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = Can rent be reduced?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Former lease surrendered early?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Details of former lease
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048 = Details of the surrendered lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months = Term remaining {0} months
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Disregarded additions or improvements?

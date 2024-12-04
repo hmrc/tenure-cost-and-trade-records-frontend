@@ -18,20 +18,20 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import navigation.LettingHistoryNavigator
-import navigation.identifiers.CompletedLettingsPageId
 import form.lettingHistory.CompletedLettingsForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory.withCompletedLettings
+import models.submissions.lettingHistory.LettingHistory.*
+import navigation.LettingHistoryNavigator
+import navigation.identifiers.CompletedLettingsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.completedLettings as CompletedLettingsView
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.Future.successful
+import scala.concurrent.{ExecutionContext, Future}
 
 class CompletedLettingsController @Inject (
   mcc: MessagesControllerComponents,
@@ -50,7 +50,7 @@ class CompletedLettingsController @Inject (
       for
         lettingHistory       <- request.sessionData.lettingHistory
         hasCompletedLettings <- lettingHistory.hasCompletedLettings
-      yield freshForm.fill(hasCompletedLettings)
+      yield freshForm.fill(hasCompletedLettings.toAnswer)
 
     Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
   }
@@ -59,9 +59,9 @@ class CompletedLettingsController @Inject (
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
-      hasCompletedLettings =>
+      answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withCompletedLettings(hasCompletedLettings))
+        for savedSession <- repository.saveOrUpdateSession(withCompletedLettings(answer.toBoolean))
         yield navigator.redirect(currentPage = CompletedLettingsPageId, savedSession)
     )
   }

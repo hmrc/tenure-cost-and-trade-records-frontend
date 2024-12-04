@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package form.aboutYourLeaseOrTenure
+package form.lettingHistory
 
-import form.MappingSupport.currencyMapping
-import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumAmountDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
-import play.api.i18n.Messages
+import play.api.data.Forms.{boolean, single}
 
-object PayACapitalSumAmountDetailsForm {
-  def payACapitalSumAmountDetailsForm(implicit messages: Messages): Form[PayACapitalSumAmountDetails] =
-    Form(
-      mapping(
-        "capitalSumPaidDetails" -> currencyMapping(".capitalSumPaidDetails")
-      )(PayACapitalSumAmountDetails.apply)(o => Some(o.capitalSumPaidAmountDetails))
+object MaxNumberReachedForm {
+  val theForm = Form[Boolean](
+    single(
+      "understood" -> boolean
+      // .verifying("lettingHistory.maxNumberReached.understanding.required", understand => understand == true)
     )
+  )
 }

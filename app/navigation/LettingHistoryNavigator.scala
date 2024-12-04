@@ -18,19 +18,18 @@ package navigation
 
 import actions.SessionRequest
 import connectors.Audit
-import controllers.lettingHistory.routes
+import controllers.lettingHistory.{RentalPeriodSupport, routes}
 import models.Session
-import models.submissions.common.AnswerYes
 import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory._
-import navigation.identifiers._
+import models.submissions.lettingHistory.LettingHistory.*
+import navigation.identifiers.*
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{AnyContent, Call, Result}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
 
-class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
+class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) with RentalPeriodSupport:
 
   private type NavigationData     = Map[String, String]
   private type NavigationFunction = (Session, NavigationData) => Option[Call]
@@ -48,18 +47,30 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
       Some(routes.PermanentResidentsController.show)
     },
     ResidentListPageId       -> { (currentSession, _) =>
-      Some(routes.ResidentDetailController.show(index = None))
+      for size <- Some(permanentResidents(currentSession).size)
+      yield
+        if size > 0
+        then
+          if size < MaxNumberOfPermanentResidents
+          then routes.ResidentDetailController.show(index = None)
+          else routes.MaxNumberReachedController.show(kind = "permanentResidents")
+        else routes.PermanentResidentsController.show
+    },
+    MaxNumberReachedPageId   -> { (_, navigationData) =>
+      for kind <- navigationData.get("kind")
+      yield
+        if kind == "permanentResidents" then routes.ResidentListController.show
+        else if kind == "temporaryOccupiers" then routes.OccupierListController.show
+        else controllers.routes.TaskListController.show().withFragment("lettingHistory")
     },
     CompletedLettingsPageId  -> { (currentSession, _) =>
       for size <- Some(permanentResidents(currentSession).size)
       yield
         if size > 0 then routes.ResidentListController.show
-        else {
-          val maybePermanentResidents = hasPermanentResidents(currentSession)
-          if maybePermanentResidents.isDefined && maybePermanentResidents.get == AnswerYes
-          then routes.ResidentDetailController.show(index = None)
-          else routes.PermanentResidentsController.show
-        }
+        else
+          hasPermanentResidents(currentSession) match
+            case Some(true) => routes.ResidentDetailController.show(index = None)
+            case _          => routes.PermanentResidentsController.show
     },
     OccupierDetailPageId     -> { (_, _) =>
       Some(routes.CompletedLettingsController.show)
@@ -68,8 +79,16 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
       Some(routes.OccupierDetailController.show(navigationData.get("index").map(_.toInt)))
     },
     OccupierListPageId       -> { (currentSession, _) =>
-      Some(routes.OccupierDetailController.show(index = None))
+      for size <- Some(completedLettings(currentSession).size)
+      yield
+        if size > 0
+        then
+          if size < MaxNumberOfCompletedLettings
+          then routes.OccupierDetailController.show(index = None)
+          else routes.MaxNumberReachedController.show(kind = "temporaryOccupiers")
+        else routes.CompletedLettingsController.show
     }
+    // TODO IntendedLettingNightsPageId ... either CompletedLettings or OccupierList
   )
 
   def backLinkUrl(ofPage: Identifier, navigationData: Map[String, String] = Map.empty)(using
@@ -98,9 +117,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
    */
   private val forwardNavigationMap = Map[Identifier, NavigationFunction](
     PermanentResidentsPageId -> { (updatedSession, _) =>
-      for answer <- hasPermanentResidents(updatedSession)
+      for answeredYes <- hasPermanentResidents(updatedSession)
       yield
-        if answer == AnswerYes
+        if answeredYes
         then
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
@@ -117,28 +136,33 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
     },
     ResidentListPageId       -> { (updatedSession, navigationData) =>
       // assert(navigationData.isDefinedAt("hasMoreResidents"))
-      for answerString <- Some(navigationData("hasMoreResidents"))
+      for hasMoreResidents <- navigationData.get("hasMoreResidents").map(_.toBoolean)
       yield
-        if answerString == AnswerYes.toString
+        if hasMoreResidents
         then
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
-          else
-            // TODO Introduce the controllers.lettingHistory.MaxNumberReachedController
-            Call("GET", "/path/to/max-permanent-residents")
+          else routes.MaxNumberReachedController.show(kind = "permanentResidents")
         else
           // AnswerNo
           routes.CompletedLettingsController.show
     },
-    CompletedLettingsPageId  -> { (updatedSession, _) =>
-      for answer <- hasCompletedLettings(updatedSession)
+    MaxNumberReachedPageId   -> { (_, navigationData) =>
+      for kind <- Some(navigationData("kind"))
       yield
-        if answer == AnswerYes
+        if kind == "permanentResidents" then routes.CompletedLettingsController.show
+        else if kind == "temporaryOccupiers" then Call("GET", "/path/to/intended-nights")
+        else controllers.routes.TaskListController.show().withFragment("lettingHistory")
+    },
+    CompletedLettingsPageId  -> { (updatedSession, _) =>
+      for answeredYes <- hasCompletedLettings(updatedSession)
+      yield
+        if answeredYes
         then routes.OccupierDetailController.show(index = None)
         else
           // AnswerNo
           // TODO Introduce the HowManyNightsController
-          Call("GET", "/path/to/how-many-nights")
+          Call("GET", "/path/to/intended-nights")
     },
     OccupierDetailPageId     -> { (_, navigationData) =>
       Some(routes.RentalPeriodController.show(index = Some(navigationData("index").toInt)))
@@ -152,19 +176,17 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit):
     OccupierListPageId       -> { (updatedSession, navigationData) =>
       // Note that navigationData.isDefinedAt("hadMoreOccupiers") is certainly true!
       // See ResidentListController.submit()
-      for answerString <- Some(navigationData("hadMoreOccupiers"))
+      for hadMoreOccupiers <- navigationData.get("hadMoreOccupiers").map(_.toBoolean)
       yield
-        if answerString == AnswerYes.toString
+        if hadMoreOccupiers
         then
           if completedLettings(updatedSession).size < MaxNumberOfCompletedLettings
           then routes.OccupierDetailController.show(index = None)
-          else
-            // TODO Introduce the controllers.lettingHistory.MaxNumberReachedController
-            Call("GET", "/path/to/max-completed-lettings")
+          else routes.MaxNumberReachedController.show(kind = "temporaryOccupiers")
         else
           // AnswerNo
-          // TODO Introduce the HowManyNightsController
-          Call("GET", "/path/to/how-many-nights")
+          // TODO Introduce the IntendedLettingsNightsController
+          Call("GET", "/path/to/intended-nights")
     }
   )
 

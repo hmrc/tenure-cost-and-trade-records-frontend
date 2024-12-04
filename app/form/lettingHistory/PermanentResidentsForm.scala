@@ -24,6 +24,6 @@ import play.api.data.Forms.single
 object PermanentResidentsForm:
   val theForm = Form[AnswersYesNo](
     single(
-      "hasPermanentResidents" -> answerYesNo(errorMessage = "lettingHistory.hasPermanentResidents.error")
+      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasPermanentResidents.error")
     )
   )

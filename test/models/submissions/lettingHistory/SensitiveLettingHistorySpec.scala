@@ -64,14 +64,14 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
   }
 
   val clearLettingHistory = LettingHistory(
-    hasPermanentResidents = Some(AnswerYes),
+    hasPermanentResidents = Some(true),
     permanentResidents = List(
       ResidentDetail(
         name = "Mr. Peter Pan",
         address = "20, Fantasy Street, Birds' Island, BIR067"
       )
     ),
-    hasCompletedLettings = Some(AnswerYes),
+    hasCompletedLettings = Some(true),
     completedLettings = List(
       OccupierDetail(
         name = "Miss Nobody",

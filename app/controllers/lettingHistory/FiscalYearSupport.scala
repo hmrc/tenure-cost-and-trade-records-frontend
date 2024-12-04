@@ -25,3 +25,5 @@ trait FiscalYearSupport:
     if now.getMonth.getValue > 3
     then now.getYear
     else now.getYear - 1
+
+  def currentFiscalYearEnd = previousFiscalYearEnd + 1

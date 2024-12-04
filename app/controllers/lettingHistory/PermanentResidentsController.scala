@@ -21,8 +21,7 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.PermanentResidentsForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory.withPermanentResidents
+import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.PermanentResidentsPageId
 import play.api.i18n.I18nSupport
@@ -50,7 +49,7 @@ class PermanentResidentsController @Inject() (
       for
         lettingHistory        <- request.sessionData.lettingHistory
         hasPermanentResidents <- lettingHistory.hasPermanentResidents
-      yield freshForm.fill(hasPermanentResidents)
+      yield freshForm.fill(hasPermanentResidents.toAnswer)
 
     Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
   }
@@ -59,9 +58,9 @@ class PermanentResidentsController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
-      hasPermanentResidents =>
+      answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withPermanentResidents(hasPermanentResidents))
+        for savedSession <- repository.saveOrUpdateSession(withPermanentResidents(answer.toBoolean))
         yield navigator.redirect(currentPage = PermanentResidentsPageId, savedSession)
     )
   }

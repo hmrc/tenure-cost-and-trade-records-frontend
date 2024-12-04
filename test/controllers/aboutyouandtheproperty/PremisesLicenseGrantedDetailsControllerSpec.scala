@@ -72,6 +72,15 @@ class PremisesLicenseGrantedDetailsControllerSpec extends TestBaseSpec {
         status(res) shouldBe BAD_REQUEST
       }
     }
+
+    "Redirect when form data submitted" in {
+      val res = premisesLicenseGrantedDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "premisesLicenseGrantedInformation" -> "test"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "Premises licence granted details form" should {

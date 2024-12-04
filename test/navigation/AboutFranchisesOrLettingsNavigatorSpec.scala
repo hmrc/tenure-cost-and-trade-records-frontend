@@ -366,6 +366,16 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           .show()
       }
 
+      "return a function that goes to concession type fees page when  concession type details finished" in {
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(ConcessionTypeDetailsId, sessionAboutFranchiseOrLetting6045)
+          .apply(
+            sessionAboutFranchiseOrLetting6045
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(0)
+
+      }
+
       "return a function that goes to add another income page when  concession type fees finished" in {
 
         aboutFranchisesOrLettingsNavigator
@@ -377,15 +387,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
 
       "return a function that goes to add another income page when  letting type included finished" in {
-
-        aboutFranchisesOrLettingsNavigator
-          .nextPage(LettingTypeIncludedId, sessionAboutFranchiseOrLetting6045)
-          .apply(
-            sessionAboutFranchiseOrLetting6045
-          ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
-      }
-
-      "return a function that goes to add another income page when  letting type included finished123" in {
 
         aboutFranchisesOrLettingsNavigator
           .nextPage(LettingTypeIncludedId, sessionAboutFranchiseOrLetting6045)

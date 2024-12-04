@@ -317,6 +317,39 @@
 
     }
 
+    @if(forType == FOR6048) {
+     @includes.taskListItem("income", "turnover.6048.income.heading",
+      controllers.aboutthetradinghistory.routes.Income6048Controller.show,
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.income),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.isFinancialYearsCorrect).isEmpty
+     )
+     @includes.taskListItem("fixed-costs", "turnover.6048.fixedCosts.heading",
+      controllers.aboutthetradinghistory.routes.FixedCosts6048Controller.show,
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.fixedCosts),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.income).isEmpty
+     )
+     @includes.taskListItem("accounting-costs", "turnover.6048.accountingCosts.heading",
+      controllers.aboutthetradinghistory.routes.AccountingCosts6048Controller.show,
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.accountingCosts),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.fixedCosts).isEmpty
+     )
+     @includes.taskListItem("administrative-costs", "turnover.6048.administrativeCosts.heading",
+      controllers.aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show,
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.administrativeCosts),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.accountingCosts).isEmpty
+     )
+     @includes.taskListItem("operational-costs", "turnover.6048.operationalCosts.heading",
+      controllers.aboutthetradinghistory.routes.OperationalCosts6048Controller.show,
+      section3Completed,
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.operationalCosts),
+      session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.administrativeCosts).isEmpty
+     )
+    }
+
     @if(forType == FOR6076) {
      @includes.taskListItem("electricity-generated", "taskList.6076.powerGenerated",
       controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
@@ -568,7 +601,7 @@
     </h2>
     <ul class="app-task-list__items">
      @if(forType == FOR6020) {
-      @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading",
+      @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading ",
        controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(),
        section5Completed,
        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
@@ -610,7 +643,7 @@
       )
      }
 
-     @if(forType == FOR6010 || forType == FOR6015 || forType == FOR6016 || forType == FOR6030 || forType == FOR6045 || forType == FOR6046 || forType == FOR6076) {
+     @if(forType == FOR6010 || forType == FOR6015 || forType == FOR6016 || forType == FOR6030 || forType == FOR6045 || forType == FOR6046 || forType == FOR6048  || forType == FOR6076) {
       @includes.taskListItem(
        "leaseback-arrangement", if(forType == FOR6076){"checkYourAnswersAboutYourLeaseOrTenure.yourLease.heading"} else {"checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading"},
        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(),
@@ -639,7 +672,7 @@
       )
      }
 
-     @if(forType == FOR6010 || forType == FOR6015 || forType == FOR6016 || forType == FOR6020 || forType == FOR6030 || forType == FOR6045 || forType == FOR6045) {
+     @if(forType == FOR6010 || forType == FOR6015 || forType == FOR6016 || forType == FOR6020 || forType == FOR6030 || forType == FOR6045 || forType == FOR6046 || forType == FOR6048) {
       @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
        controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
        section5Completed,
@@ -648,9 +681,9 @@
       )
 
       @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
-       controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(),
+       if(forType == FOR6048){controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()} else {controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()},
        section5Completed,
-       session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails),
+       if(forType == FOR6048){session.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed)} else {session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails)},
        session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
       )
 

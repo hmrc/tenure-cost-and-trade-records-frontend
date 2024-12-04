@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.PayACapitalSumAmountDetailsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{PayACapitalSumAmountDetails, PayACapitalSumInformationDetails}
+import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumAmountDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 

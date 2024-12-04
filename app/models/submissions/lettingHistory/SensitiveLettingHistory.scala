@@ -16,22 +16,25 @@
 
 package models.submissions.lettingHistory
 
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveLettingHistory(
   hasPermanentResidents: Option[Boolean],
   permanentResidents: List[SensitiveResidentDetail],
+  mayHaveMorePermanentResidents: Option[Boolean],
   hasCompletedLettings: Option[Boolean],
-  completedLettings: List[SensitiveOccupierDetail]
+  completedLettings: List[SensitiveOccupierDetail],
+  mayHaveMoreCompletedLettings: Option[Boolean]
 ) extends Sensitive[LettingHistory]:
 
   override def decryptedValue: LettingHistory =
     LettingHistory(
-      hasPermanentResidents.map(toAnswer),
+      hasPermanentResidents,
       permanentResidents.map(_.decryptedValue),
-      hasCompletedLettings.map(toAnswer),
-      completedLettings.map(_.decryptedValue)
+      mayHaveMorePermanentResidents,
+      hasCompletedLettings,
+      completedLettings.map(_.decryptedValue),
+      mayHaveMoreCompletedLettings
     )
 
 object SensitiveLettingHistory:
@@ -42,12 +45,10 @@ object SensitiveLettingHistory:
   // encryption method
   def apply(lettingHistory: LettingHistory): SensitiveLettingHistory =
     SensitiveLettingHistory(
-      lettingHistory.hasPermanentResidents.map(asBoolean),
+      lettingHistory.hasPermanentResidents,
       lettingHistory.permanentResidents.map(SensitiveResidentDetail(_)),
-      lettingHistory.hasCompletedLettings.map(asBoolean),
-      lettingHistory.completedLettings.map(SensitiveOccupierDetail(_))
+      lettingHistory.mayHaveMorePermanentResidents,
+      lettingHistory.hasCompletedLettings,
+      lettingHistory.completedLettings.map(SensitiveOccupierDetail(_)),
+      lettingHistory.mayHaveMoreCompletedLettings
     )
-
-extension (answer: AnswersYesNo) def asBoolean = answer == AnswerYes
-
-extension (bool: Boolean) def toAnswer = if bool then AnswerYes else AnswerNo

@@ -78,13 +78,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
           case _                 =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
         }
-      case Some("no")  =>
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
       case _           =>
-        logger.warn(
-          s"Navigation for franchise or letting reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for franchise or letting conditions routing")
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
 
   private def concessionOrFranchiseFeeRouting: Session => Call = answers =>
@@ -127,12 +122,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
             )
         }
 
-      case Some("no") => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-      case _          =>
-        logger.warn(
-          s"Navigation for catering operations reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for catering operations conditions routing")
+      case _ => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
   private def getCateringOperationsIndex(session: Session): Int =
@@ -305,12 +295,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   private def rentForConcessionsRouting: Session => Call = answers =>
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
       case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
-      case Some("no")  => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for catering operations reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for catering operations conditions routing")
+      case _           => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
   private def lettingAccommodationConditionsRouting: Session => Call = answers =>
@@ -391,6 +376,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     ),
     FeeReceivedPageId                          -> (answers =>
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
+    ),
+    ConcessionTypeDetailsId                    -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
     ),
     ConcessionTypeFeesId                       -> (answers =>
       controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
