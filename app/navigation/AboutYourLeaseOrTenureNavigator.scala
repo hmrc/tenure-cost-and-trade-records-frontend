@@ -94,7 +94,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         answers.forType match {
           case FOR6011                               =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
-          case FOR6020 | FOR6076 | FOR6045 | FOR6046 =>
+          case FOR6020 | FOR6076 | FOR6045 | FOR6046 | FOR6048 =>
             controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
           case _                                     => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
         }
