@@ -24,10 +24,14 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 
 @import models.pages.Summary
 
 @this(layout: Layout,
+        govukInput: GovukInput,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
         hmrcCurrencyInput : HmrcCurrencyInput,
@@ -50,22 +54,21 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.submit()) {
 
-      @hmrcCurrencyInput(
-          CurrencyInput(
-              id = "capitalSumPaidDetails",
-              name = "capitalSumPaidDetails",
-              value = theForm("capitalSumPaidDetails").value,
-              classes = "govuk-input--width-10",
-              label = Label(
-                  content = Text(messages("label.capitalSumPaidDetails")),
-                  classes = "govuk-!-font-weight-bold"
-              ),
-              autocomplete = Some("off"),
-              errorMessage = theForm.errors.asTextErrorMessageForField("capitalSumPaidDetails"),
-              hint = Some(Hint(content = Text(messages("hint.currentAnnualRent"))))
-
-          )
-      )
+      @govukInput(Input(
+          id = "capitalSumPaidDetails",
+          name = "capitalSumPaidDetails",
+          value = theForm("capitalSumPaidDetails").value,
+          classes = "govuk-input--width-10",
+          label = Label(
+              content = Text(messages("label.capitalSumPaidDetails")),
+              classes = "govuk-!-font-weight-bold"
+          ),
+          prefix = Some(PrefixOrSuffix(
+              content = Text(messages("label.pound"))
+          )),
+          hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
+          autocomplete = Some("off"),
+      ).withFormField(theForm(s"capitalSumPaidDetails")))
 
       @includes.dateFields(
           form = theForm,
