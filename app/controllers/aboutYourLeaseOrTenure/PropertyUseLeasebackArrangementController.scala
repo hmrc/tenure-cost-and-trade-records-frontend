@@ -96,7 +96,7 @@ class PropertyUseLeasebackArrangementController @Inject() (
               case Some("yes") => aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
               case _           => aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
             }
-          case _                                     => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+          case _                                               => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
         }
     }
 

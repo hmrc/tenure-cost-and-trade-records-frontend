@@ -3023,6 +3023,13 @@ error.aboutYou.occupiersDetails.maxLength = Occupier’s name should be 100 char
 error.aboutYou.occupiersDetails.required = Enter the occupier’s address
 error.aboutYou.occupiersDetails.maxLength = Occupier’s address should be 1000 characters or fewer
 
+# OCCUPIERS DETAILS LIST
+occupiersDetailsList.heading = You have added {0} part{1} of your property for family use
+occupiersDetailsList.zeroDetails.heading = You have removed all parts of the property unavailable for rent
+occupiersDetailsList.label = Are any other parts of the property occupied by your family as a main residence or a second home?
+error.occupiersDetailsList.required = Select yes if any other parts of the property are occupied by your family as a main residence or a second home
+
+
 
 #TYPE OF RENEWABLES PLANT
 #################################

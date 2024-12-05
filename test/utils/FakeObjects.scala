@@ -397,8 +397,9 @@ trait FakeObjects {
         LocalDate.of(2022, 3, 31)
       )
     ),
+    partsUnavailable = Some(AnswerYes),
     canProceed = None,
-    occupiersList = None
+    occupiersList = IndexedSeq.empty
   )
 
   val prefilledPropertyCurrentlyInUsed =

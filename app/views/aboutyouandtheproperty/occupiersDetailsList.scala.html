@@ -1,0 +1,118 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
+@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.pages.Summary
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukSummaryList: GovukSummaryList,
+        formWithCSRF: FormWithCSRF
+)
+
+@(theForm: Form[?], index: Int, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+
+@pluralSuffix = @{ if (occupiersDetails.sizeIs > 1) "s" else "" }
+
+@occupiersDetails = @{
+    request.sessionData.aboutYouAndThePropertyPartTwo.fold(Seq.empty[String]) {
+        data => data.occupiersList.map(_.name)
+    }
+}
+
+@layout(
+    pageHeading = messages(if  (occupiersDetails.isEmpty)  "occupiersDetailsList.zeroDetails.heading" else "occupiersDetailsList.heading",occupiersDetails.size, pluralSuffix),
+    showSection = true,
+    summary = Option(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
+) {
+
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.submit(index)) {
+
+        @govukSummaryList(
+            SummaryList(
+                rows = occupiersDetails.zipWithIndex.map { case (cardName, idx) =>
+                    SummaryListRow(
+                        key = Key(Text(cardName), classes = "govuk-!-font-weight-regular"),
+                        actions = Actions(
+                            items = Seq(
+                                ActionItem(
+                                    href =
+                                        controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(idx).url,
+                                    content = Text("Change")),
+                                ActionItem(
+                                    controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.remove(idx).url,
+                                    content = Text("Remove"))
+                            ),
+                            classes = "hmrc-summary-list__actions"
+                        )
+                    )
+                },
+                classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+            )
+        )
+
+        @govukRadios(
+            Radios(
+                name = s"occupiersDetailsList",
+                idPrefix = Option("occupiersDetailsList"),
+                classes = "govuk-radios--inline",
+                items = Seq(
+                    "yes" -> messages("label.yes"),
+                    "no" -> messages("label.no")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm("occupiersDetailsList").value.getOrElse("")),
+                    value = Option(radioItem._1)
+                )
+                ),
+                errorMessage =  theForm.errors.asTextErrorMessageForField("occupiersDetailsList"),
+                fieldset = Option(
+                    Fieldset(
+                        legend = Option(
+                            Legend(
+                                content = Text(messages("occupiersDetailsList.label")),
+                                classes = "govuk-!-font-weight-bold"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+}

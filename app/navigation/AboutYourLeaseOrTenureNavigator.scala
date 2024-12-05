@@ -92,11 +92,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
       case Some("no")  =>
         answers.forType match {
-          case FOR6011                               =>
+          case FOR6011                                         =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
           case FOR6020 | FOR6076 | FOR6045 | FOR6046 | FOR6048 =>
             controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-          case _                                     => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
+          case _                                               => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
         }
       case _           =>
         logger.warn(

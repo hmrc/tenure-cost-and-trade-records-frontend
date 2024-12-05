@@ -150,6 +150,17 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
 
+  private def getOccupiersIndex: Session => Int = answers =>
+    answers.aboutYouAndThePropertyPartTwo.fold(0)(_.occupiersListIndex)
+
+  private def occupiersDetailsLRouting: Session => Call = answers =>
+    controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(getOccupiersIndex(answers))
+
+  private def occupiersDetailsListRouting: Session => Call = answers =>
+    answers.aboutYouAndThePropertyPartTwo.flatMap(_.addAnotherPaidService) match
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
+      case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+
   private def threeYearsConstructedRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
@@ -170,7 +181,8 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     CompletedCommercialLettingsId           -> completedCommercialLettingsRouting,
     CompletedCommercialLettingsWelshId      -> completedCommercialLettingsRouting,
     PartsUnavailableId                      -> partsUnavailableRouting,
-    OccupiersDetailsId                      -> (_ => controllers.routes.TaskListController.show()),
+    OccupiersDetailsId                      -> occupiersDetailsLRouting,
+    OccupiersDetailsListId                  -> occupiersDetailsListRouting,
     AboutThePropertyPageId                  -> aboutThePropertyDescriptionRouting,
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,

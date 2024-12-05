@@ -67,6 +67,12 @@ POST        /parts-unavailable                            controllers.aboutyouan
 GET         /occupiers-details                            controllers.aboutyouandtheproperty.OccupiersDetailsController.show(idx: Option[Int] ?= None)
 POST        /occupiers-details                            controllers.aboutyouandtheproperty.OccupiersDetailsController.submit(idx: Option[Int])
 
+GET         /occupiers-details-list                       controllers.aboutyouandtheproperty.OccupiersDetailsListController.show(idx: Int)
+POST        /occupiers-details-list                       controllers.aboutyouandtheproperty.OccupiersDetailsListController.submit(idx: Int)
+
+GET         /occupiers-details-list-remove                controllers.aboutyouandtheproperty.OccupiersDetailsListController.remove(idx: Int)
+POST        /occupiers-details-list-remove                controllers.aboutyouandtheproperty.OccupiersDetailsListController.performRemove(idx: Int)
+
 # About you and the property 6076
 
 GET         /renewables-plants                            controllers.aboutyouandtheproperty.RenewablesPlantController.show()
