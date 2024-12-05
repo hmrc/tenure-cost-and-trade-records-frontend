@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.RentalPeriodForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.byAddingOccupierRentalPeriod
+import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, LocalPeriod}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.RentalPeriodPageId
@@ -55,7 +55,7 @@ class RentalPeriodController @Inject (
     val filledForm =
       for
         index            <- maybeIndex
-        completedLetting <- LettingHistory.completedLettings(request.sessionData).lift(index)
+        completedLetting <- completedLettings(request.sessionData).lift(index)
         rentalPeriod     <- completedLetting.rental
       yield theForm.fill(rentalPeriod)
 
@@ -87,13 +87,13 @@ class RentalPeriodController @Inject (
     val result =
       for
         index          <- maybeIndex
-        occupierDetail <- LettingHistory.completedLettings(request.sessionData).lift(index)
+        occupierDetail <- completedLettings(request.sessionData).lift(index)
       yield {
         val partiallyAppliedView = theView.apply(_, occupierDetail.name, index, backLinkUrl(index))
         generateResult.apply(partiallyAppliedView, index)
       }
 
-    result.getOrElse(successful(Redirect("/path/to/occupiers-list")))
+    result.getOrElse(successful(Redirect(routes.OccupierListController.show)))
   }
 
   private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
