@@ -100,6 +100,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     LastRentalPageId         -> { (_, _) =>
       Some(routes.HasStoppedLettingController.show)
+    },
+    IsYearlyAvailablePageId  -> { (currentSession, _) =>
+      ???
     }
   )
 
@@ -208,6 +211,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     LastRentalPageId         -> { (_, _) =>
       Some(Call("GET", "/path/to/is-yearly-available"))
+    },
+    IsYearlyAvailablePageId  -> { (_, _) =>
+      ???
     }
   )
 

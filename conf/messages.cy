@@ -1634,6 +1634,8 @@ lettingHistory.hasStoppedLetting.required = Select yes if you have stopped letti
 lettingHistory.whenWasLastLet.heading = On which date was the property last commercially let?
 fieldName.lettingHistory.date = the date
 
+lettingHistory.isYearlyAvailable.heading = Is the property available for commercial letting all year around?
+
 
 # 6010 TYPES
 ##############################
