@@ -17,7 +17,6 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import models.submissions.lettingHistory.LettingHistory.{hasPermanentResidents, permanentResidents}
 import navigation.LettingHistoryNavigator

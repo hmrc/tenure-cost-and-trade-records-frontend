@@ -47,7 +47,7 @@
 
 @tableRow(values: Seq[String]) = {@values.map { value => <div class="hmrc-turnover-table-column"> @value </div> }}
 
-@recordIndex(rentalIncome: IndexedSeq[IncomeRecord], currentIdx: Int, recordType: Class[_ <: IncomeRecord]) = @{
+@recordIndex(rentalIncome: IndexedSeq[IncomeRecord], currentIdx: Int, recordType: Class[? <: IncomeRecord]) = @{
     rentalIncome.take(currentIdx).count(recordType.isInstance) + 1
 }
 

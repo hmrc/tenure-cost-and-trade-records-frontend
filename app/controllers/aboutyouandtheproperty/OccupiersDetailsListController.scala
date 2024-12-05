@@ -52,7 +52,7 @@ class OccupiersDetailsListController @Inject() (
         view(
           occupiersDetailsListForm,
           index,
-          getBackLink(index)
+          getBackLink
         )
       )
     )
@@ -66,7 +66,7 @@ class OccupiersDetailsListController @Inject() (
           view(
             formWithErrors,
             index,
-            getBackLink(index)
+            getBackLink
           )
         ),
       data =>
@@ -161,14 +161,13 @@ class OccupiersDetailsListController @Inject() (
     )
   }
 
-  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     =>
         controllers.aboutyouandtheproperty.routes.OccupiersDetailsController
-          .show(
-            Option(
-              request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersListIndex).getOrElse(0))).url
+          .show(Option(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersListIndex).getOrElse(0)))
+          .url
     }
 }
