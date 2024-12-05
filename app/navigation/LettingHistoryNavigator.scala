@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.lettingHistory.{RentalPeriodSupport, routes}
 import models.Session
 import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory.*
+import models.submissions.lettingHistory.LettingHistory.{intendedLettings, *}
 import navigation.identifiers.*
 import navigation.identifiers.Identifier as PageIdentifier
 import play.api.mvc.Results.Redirect
@@ -101,8 +101,21 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     HasStoppedLettingPageId  -> { (_, _) =>
       Some(routes.HowManyNightsController.show)
     },
-    LastRentalPageId         -> { (_, _) =>
+    WhenWasLastLetPageId     -> { (_, _) =>
       Some(routes.HasStoppedLettingController.show)
+    },
+    IsYearlyAvailablePageId  -> { (currentSession, _) =>
+      for {
+        intendedLettings <- intendedLettings(currentSession)
+      } yield
+        if intendedLettings.hasStopped.isEmpty
+        then routes.HowManyNightsController.show
+        else
+          intendedLettings.hasStopped.map { hasStopped =>
+            if hasStopped
+            then routes.WhenWasLastLetController.show
+            else routes.HasStoppedLettingController.show
+          }.get
     }
   )
 
@@ -193,7 +206,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       for meetsCriteria <- doesMeetLettingCriteria(currentSession)
       yield
         if meetsCriteria
-        then Call("GET", "/path/to/is-yearly-available")
+        then routes.IsYearlyAvailableController.show
         else routes.HasStoppedLettingController.show
     },
     HasStoppedLettingPageId  -> { (_, navigationData) =>
@@ -202,10 +215,19 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       yield
         if hasStopped
         then routes.WhenWasLastLetController.show
-        else Call("GET", "/path/to/is-yearly-available")
+        else routes.IsYearlyAvailableController.show
     },
-    LastRentalPageId         -> { (_, _) =>
-      Some(Call("GET", "/path/to/is-yearly-available"))
+    WhenWasLastLetPageId     -> { (_, _) =>
+      Some(routes.IsYearlyAvailableController.show)
+    },
+    IsYearlyAvailablePageId  -> { (currentSession, _) =>
+      for
+        intendedLettings  <- intendedLettings(currentSession)
+        isYearlyAvailable <- intendedLettings.isYearlyAvailable
+      yield
+        if isYearlyAvailable
+        then Call("GET", "/path/to/do-you-advert-online")
+        else Call("GET", "/path/to/length-of-trading-session")
     }
   )
 

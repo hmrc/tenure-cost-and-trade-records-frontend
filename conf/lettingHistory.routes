@@ -37,3 +37,6 @@ POST        /letting-history/has-stopped-letting                controllers.lett
 
 GET         /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.show
 POST        /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.submit
+
+GET         /letting-history/is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.show
+POST        /letting-history/is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.submit
