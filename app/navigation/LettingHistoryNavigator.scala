@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.lettingHistory.{RentalPeriodSupport, routes}
 import models.Session
 import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory.*
+import models.submissions.lettingHistory.LettingHistory.{intendedLettings, *}
 import navigation.identifiers.*
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{AnyContent, Call, Result}
@@ -100,6 +100,15 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     LastRentalPageId         -> { (_, _) =>
       Some(routes.HasStoppedLettingController.show)
+    },
+    IsYearlyAvailablePageId  -> { (currentSession, _) =>
+      for {
+        intendedLettings <- intendedLettings(currentSession)
+        hasStopped <- intendedLettings.hasStopped
+      }
+      yield
+        // routes.HowManyNightsController.show
+        ???
     }
   )
 
@@ -194,7 +203,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       for meetsCriteria <- doesMeetLettingCriteria(currentSession)
       yield
         if meetsCriteria
-        then Call("GET", "/path/to/is-yearly-available")
+        then routes.IsYearlyAvailableController.show
         else routes.HasStoppedLettingController.show
     },
     HasStoppedLettingPageId  -> { (_, navigationData) =>
@@ -207,6 +216,9 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     LastRentalPageId         -> { (_, _) =>
       Some(Call("GET", "/path/to/is-yearly-available"))
+    },
+    IsYearlyAvailablePageId  -> { (_, _) =>
+      ???
     }
   )
 
