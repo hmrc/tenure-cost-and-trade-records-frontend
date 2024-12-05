@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package models.submissions.lettingHistory
+package form.lettingHistory
 
-import java.time.LocalDate
-import play.api.libs.json.{Format, Json}
+import form.MappingSupport.createYesNoType as answerYesNo
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
 
-case class IntendedLettings(
-  nights: Option[Int] = None,
-  hasStopped: Option[Boolean] = None,
-  whenWasLastLet: Option[LocalDate] = None,
-  isYearlyAvailable: Option[Boolean] = None
-)
-
-object IntendedLettings:
-  given Format[IntendedLettings]     = Json.format
-  def unapply(obj: IntendedLettings) =
-    Some(obj.nights, obj.hasStopped, obj.whenWasLastLet, obj.isYearlyAvailable)
+object IsYearlyAvailableForm:
+  val theForm = Form[AnswersYesNo](
+    single(
+      "answer" -> answerYesNo(errorMessage = "lettingHistory.isYearlyAvailable.required")
+    )
+  )

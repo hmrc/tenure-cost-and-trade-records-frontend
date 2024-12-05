@@ -36,16 +36,16 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
   "the LastRental controller" when {
     "the user has not entered any date yet"         should {
       "be handling GET / by replying 200 with the form showing the date field" in new ControllerFixture {
-        val result  = controller.show(fakeGetRequest)
-        val content = contentAsString(result)
+        val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include(s"""${routes.HasStoppedLettingController.show.url}" class="govuk-back-link"""")
-        content                     should include("lettingHistory.whenWasLastLet.heading")
-        content                     should include("""name="date.day"""")
-        content                     should include("""name="date.month"""")
-        content                     should include("""name="date.year"""")
+        val page = contentAsJsoup(result)
+        page.heading           shouldBe "lettingHistory.whenWasLastLet.heading"
+        page.backLink          shouldBe routes.HasStoppedLettingController.show.url
+        page.input("date.day")   should beEmpty
+        page.input("date.month") should beEmpty
+        page.input("date.year")  should beEmpty
       }
       "be handling POST / by replying 303 redirect to the 'Yearly Available' page" in new ControllerFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
@@ -55,7 +55,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         )
         val result  = controller.submit(request)
         status(result)                                    shouldBe SEE_OTHER
-        redirectLocation(result).value                    shouldBe "/path/to/is-yearly-available"
+        redirectLocation(result).value                    shouldBe routes.IsYearlyAvailableController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.whenWasLastLet.value shouldBe LocalDate.of(2024, 4, 1)
       }
@@ -64,30 +64,30 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
       "be handling GET / by replying 200 with the pre-filled form showing the date value" in new ControllerFixture(
         whenWasLastLet = Some(LocalDate.of(2024, 12, 25))
       ) {
-        val result  = controller.show(fakeGetRequest)
-        val content = contentAsString(result)
+        val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include(s"""${routes.HasStoppedLettingController.show.url}" class="govuk-back-link"""")
-        content                     should include("lettingHistory.whenWasLastLet.heading")
-        content                     should include("""name="date.day" type="text"   value="25""")
-        content                     should include("""name="date.month" type="text"   value="12"""")
-        content                     should include("""name="date.year" type="text"   value="2024"""")
+        val page = contentAsJsoup(result)
+        page.heading           shouldBe "lettingHistory.whenWasLastLet.heading"
+        page.backLink          shouldBe routes.HasStoppedLettingController.show.url
+        page.input("date.day")   should haveValue("25")
+        page.input("date.month") should haveValue("12")
+        page.input("date.year")  should haveValue("2024")
       }
     }
     "regardless the user had entered a date or not" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
-        val result  = controller.submit(
+        val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "date.day"   -> "",
             "date.month" -> "",
             "date.year"  -> ""
           )
         )
-        val content = contentAsString(result)
         status(result) shouldBe BAD_REQUEST
-        content          should include("error.date.required")
+        val page   = contentAsJsoup(result)
+        page.error("date.day") shouldBe "error.date.required"
       }
     }
   }
