@@ -218,7 +218,16 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
         .nextPage(OccupiersDetailsId, baseFilled6048Session)
         .apply(
           baseFilled6048Session
-        ) shouldBe controllers.routes.TaskListController.show() // TODO !!!
+        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0)
+    }
+
+    "return a function that goes to when parts occupiers details list completed " in {
+
+      aboutYouAndThePropertyNavigator
+        .nextPage(OccupiersDetailsId, baseFilled6048Session)
+        .apply(
+          baseFilled6048Session
+        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0)
     }
   }
 }

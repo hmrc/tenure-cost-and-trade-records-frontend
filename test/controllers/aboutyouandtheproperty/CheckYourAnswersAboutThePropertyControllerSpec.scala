@@ -18,6 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import models.ForType.*
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
+import models.submissions.common.{AnswerNo, AnswerYes}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -320,15 +321,31 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
         )
       }
 
-      "canProceed is true" in {
-        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(true))
+      "some occupiers - family members in the property" in {
+        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
+          canProceed = Option(true),
+          partsUnavailable = Option(AnswerYes)
+        )
         val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
 
         status(result)        shouldBe Status.OK
         contentAsString(result) should include(
-          controllers.routes.TaskListController.show().url
+          controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0).url
         )
       }
+      "no occupiers  - family members in the property" in {
+        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
+          canProceed = Option(true),
+          partsUnavailable = Option(AnswerNo)
+        )
+        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
+
+        status(result)        shouldBe Status.OK
+        contentAsString(result) should include(
+          controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
+        )
+      }
+
     }
 
     "SUBMIT /" should {

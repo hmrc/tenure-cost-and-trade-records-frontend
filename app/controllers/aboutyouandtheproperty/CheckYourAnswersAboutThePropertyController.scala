@@ -23,6 +23,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAb
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import models.ForType.*
 import models.Session
+import models.submissions.common.AnswerYes
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import play.api.Logging
@@ -126,7 +127,13 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
           else
             controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
         } else {
-          controllers.routes.TaskListController.show().url
+          answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match
+            case Some(AnswerYes) =>
+              controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController
+                .show(answers.aboutYouAndThePropertyPartTwo.fold(0)(_.occupiersListIndex))
+                .url
+            case _               =>
+              controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
         }
 
       case FOR6076 => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url

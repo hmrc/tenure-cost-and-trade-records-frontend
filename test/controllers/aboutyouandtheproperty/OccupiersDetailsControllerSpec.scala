@@ -82,7 +82,7 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
         val result         = controller().submit(Option(0))(sessionRequest)
 
         status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/task-list")
+        redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/occupiers-details-list?idx=0")
 
       }
 
