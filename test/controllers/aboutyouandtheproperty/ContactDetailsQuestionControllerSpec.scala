@@ -18,10 +18,11 @@ package controllers.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status.{BAD_REQUEST, OK}
-import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
@@ -74,6 +75,15 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
         )
         status(res) shouldBe BAD_REQUEST
       }
+    }
+
+    "Redirect when form data submitted" in {
+      val res = contactDetailsQuestionController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "contactDetailsQuestion" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

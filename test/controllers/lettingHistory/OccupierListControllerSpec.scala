@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.lettingHistory.LettingHistory.completedLettings
 import models.submissions.lettingHistory.{LettingHistory, OccupierDetail}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
@@ -39,7 +39,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include(s"""${routes.OccupierDetailController.show().url}" class="govuk-back-link"""")
+        content                     should include(s"""${routes.CompletedLettingsController.show.url}" class="govuk-back-link"""")
         content                     should include("""lettingHistory.occupierList.heading.plural""")
         content                     should include("""  <dl class="govuk-summary-list">
             |  </dl>""".stripMargin)
@@ -56,7 +56,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
       }
       "be handling POST /list?hadMoreOccupiers=yes by replying redirect to the 'Occupiers Detail' page" in new FreshSessionFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hadMoreOccupiers" -> "yes"))
+        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierDetailController.show().url
       }
@@ -121,7 +121,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         ) {
           val result = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
-              "hadMoreOccupiers" -> "" // yer or no is missing!
+              "answer" -> "" // yer or no is missing!
             )
           )
           status(result) shouldBe BAD_REQUEST
@@ -130,9 +130,11 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         "be handling POST /list?hadMoreOccupiers=yes by replying redirect to the 'Max Number of Occupiers' page" in new StaleSessionFixture(
           fiveOccupiers
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hadMoreOccupiers" -> "yes"))
+          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe "/path/to/max-completed-lettings"
+          redirectLocation(result).value shouldBe routes.MaxNumberReachedController
+            .show(kind = "temporaryOccupiers")
+            .url
         }
       }
     }
@@ -140,16 +142,16 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
       "be handling invalid POST /list by replying 400 with error messages" in new FreshSessionFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "hadMoreOccupiers" -> "" // yes or no is missing
+            "answer" -> "" // yes or no is missing
           )
         )
         status(result) shouldBe BAD_REQUEST
         contentAsString(result) should include("lettingHistory.occupierList.hadMoreOccupiers.required")
       }
       "be handling POST /list?hadMoreOccupiers=no by replying redirect to the 'Letting intention' page" in new FreshSessionFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("hadMoreOccupiers" -> "no"))
+        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
         status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/how-many-nights"
+        redirectLocation(result).value shouldBe "/path/to/intended-nights"
       }
     }
   }
@@ -179,7 +181,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasCompletedLettings = Some(if completedLettings.isEmpty then AnswerNo else AnswerYes),
+            hasCompletedLettings = Some(completedLettings.nonEmpty),
             completedLettings = completedLettings
           )
         )

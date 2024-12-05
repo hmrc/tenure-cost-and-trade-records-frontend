@@ -26,9 +26,12 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 
 @this(layout: Layout,
+        govukInput: GovukInput,
         govukButton: GovukButton,
         govukCheckboxes: GovukCheckboxes,
         hmrcCurrencyInput : HmrcCurrencyInput,
@@ -51,20 +54,21 @@
 
             <h1 class="govuk-heading-l">@messages("rent.received.from.heading", operatorName)</h1>
 
-        @hmrcCurrencyInput(
-            CurrencyInput(
-                id = "annualRent",
-                name = "annualRent",
-                value = theForm("annualRent").value,
-                classes = "govuk-input--width-10 total-annual-rent",
-                label = Label(
-                    content = Text(messages("rent.received.from.excluding.VAT")),
-                    classes = "govuk-!-font-weight-bold"
-                ),
-                autocomplete = Some("off"),
-                errorMessage = theForm.errors.asTextErrorMessageForField("annualRent"),
-            )
-        )
+        @govukInput(Input(
+            id = "annualRent",
+            name = "annualRent",
+            value = theForm("annualRent").value,
+            classes = "govuk-input--width-10 total-annual-rent",
+            label = Label(
+                content = Text(messages("rent.received.from.excluding.VAT")),
+                classes = "govuk-!-font-weight-bold"
+            ),
+            prefix = Some(PrefixOrSuffix(
+                content = Text(messages("label.pound"))
+            )),
+            autocomplete = Some("off"),
+        ).withFormField(theForm("annualRent")))
+
         <br>
         <br>
 

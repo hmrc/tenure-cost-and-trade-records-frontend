@@ -311,6 +311,15 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to rent vary on quantity of beer page when rent by gross or net turnover with no has been completed" in {
+      navigator
+        .nextPage(RentPayableVaryAccordingToGrossOrNetId, session6020)
+        .apply(
+          session6020
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
     "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
 
       val session = session6020.copy(

@@ -35,6 +35,19 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def payACapitalSumAmountDetailsNoPremiumController(
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
+      prefilledAboutLeaseOrAgreementPartTwoNoPremiumSum
+    )
+  ) =
+    new PayACapitalSumAmountDetailsController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      payACapitalSumAmountDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
+
   "payACapitalSumAmountDetailsController GET /" should {
     "return 200 and HTML with pay a capital sum amount in the session" in {
       val result = payACapitalSumAmountDetailsController().show(fakeRequest)
@@ -43,6 +56,17 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+      )
+    }
+
+    "return 200 and HTML method fix current rent is none in the session" in {
+      val controller = payACapitalSumAmountDetailsNoPremiumController()
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
       )
     }
 

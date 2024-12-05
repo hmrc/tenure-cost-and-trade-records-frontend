@@ -71,6 +71,15 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
         val res = licensableActivitiesDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
+
+      "Redirect when form data submitted" in {
+        val res = licensableActivitiesDetailsController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "licensableActivitiesDetails" -> "Test content"
+          )
+        )
+        status(res) shouldBe SEE_OTHER
+      }
     }
   }
 

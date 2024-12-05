@@ -18,10 +18,11 @@ package controllers.aboutyouandtheproperty
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.CostsBreakdownForm.costsBreakdownForm
 import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
+import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class CostsBreakdownControllerSpec extends TestBaseSpec {
@@ -73,6 +74,15 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(result) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = costsBreakdownController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "costsBreakdown" -> "xxx"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

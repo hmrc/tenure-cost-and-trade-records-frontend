@@ -1583,8 +1583,8 @@ lettingHistory.residentDetail.address.label = Resident''s address
 lettingHistory.residentDetail.address.required = Enter the address of the permanent resident
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
 
-lettingHistory.residentList.heading.singular = You have added {0} resident
-lettingHistory.residentList.heading.plural = You have added {0} residents
+lettingHistory.residentList.heading.singular = You have added {0} permanent resident
+lettingHistory.residentList.heading.plural = You have added {0} permanent residents
 lettingHistory.residentList.hasMoreResidents.label = Are any other parts of the property occupied by tenants or employees as their main residence?
 lettingHistory.residentList.hasMoreResidents.required = Select yes if the property has more occupiers
 
@@ -1617,6 +1617,13 @@ lettingHistory.occupierList.heading.plural = You have added {0} temporary occupi
 lettingHistory.occupierList.rentalPeriod.text = {0} to {1}
 lettingHistory.occupiersList.hadMoreOccupiers.label = Did any other occupants rent part of your property for 29 nights or more between {0} and {1}?
 lettingHistory.occupierList.hadMoreOccupiers.required = Select yes if the property had more occupiers
+
+lettingHistory.maxNumberReached.permanentResidents.heading = You have added the maximum of {0} permanent residents
+lettingHistory.maxNumberReached.permanentResidents.paragraph.1 = If you had {0} or more permanent residents during the specified time range, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.temporaryOccupiers.heading = You have added the maximum of {0} temporary occupiers
+lettingHistory.maxNumberReached.temporaryOccupiers.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
+lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
 
 
 # 6010 TYPES
@@ -3016,6 +3023,13 @@ error.aboutYou.occupiersDetails.maxLength = Occupier’s name should be 100 char
 error.aboutYou.occupiersDetails.required = Enter the occupier’s address
 error.aboutYou.occupiersDetails.maxLength = Occupier’s address should be 1000 characters or fewer
 
+# OCCUPIERS DETAILS LIST
+occupiersDetailsList.heading = You have added {0} part{1} of your property for family use
+occupiersDetailsList.zeroDetails.heading = You have removed all parts of the property unavailable for rent
+occupiersDetailsList.label = Are any other parts of the property occupied by your family as a main residence or a second home?
+error.occupiersDetailsList.required = Select yes if any other parts of the property are occupied by your family as a main residence or a second home
+
+
 
 #TYPE OF RENEWABLES PLANT
 #################################
@@ -3341,6 +3355,7 @@ checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Adolygiadau rhent
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = A ellir gostwng y rhent?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Prydles flaenorol wedi’i hildio’n gynnar?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Details of former lease
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048 = Details of the surrendered lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months = Term remaining {0} months
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Wedi diystyru ychwanegiadau neu welliannau?

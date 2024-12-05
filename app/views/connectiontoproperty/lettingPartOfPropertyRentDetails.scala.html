@@ -22,9 +22,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 @import models.pages.Summary
 
 @this(layout: Layout,
+        govukInput: GovukInput,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
         hmrcCurrencyInput : HmrcCurrencyInput,
@@ -46,20 +50,20 @@
 
         <p class="govuk-heading-l">@messages("lettingPartOfPropertyRentDetails.title", tenantName)</p>
 
-        @hmrcCurrencyInput(
-            CurrencyInput(
-                id = "annualRent",
-                name = "annualRent",
-                value = theForm("annualRent").value,
-                classes = "govuk-input--width-10 total-annual-rent",
-                label = Label(
-                    content = Text(messages("label.annualRent")),
-                    classes = "govuk-!-font-weight-bold"
-                ),
-                autocomplete = Some("off"),
-                errorMessage = theForm.errors.asTextErrorMessageForField("annualRent"),
-            )
-        )
+        @govukInput(Input(
+            id = "annualRent",
+            name = "annualRent",
+            value = theForm("annualRent").value,
+            classes = "govuk-input--width-10 total-annual-rent",
+            label = Label(
+                content = Text(messages("label.annualRent")),
+                classes = "govuk-!-font-weight-bold"
+            ),
+            prefix = Some(PrefixOrSuffix(
+                content = Text(messages("label.pound"))
+            )),
+            autocomplete = Some("off"),
+        ).withFormField(theForm("annualRent")))
 
         @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)
 

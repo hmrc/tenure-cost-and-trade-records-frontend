@@ -45,6 +45,10 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
     "Identifier for fee received page" in {
       assert(FeeReceivedPageId.toString.equals("feeReceivedPage"))
     }
+
+    "Identifier for concession type  details received page" in {
+      assert(ConcessionTypeDetailsId.toString.equals("concessionTypeDetailsPage"))
+    }
     "Identifier for concession type  fee received page" in {
       assert(ConcessionTypeFeesId.toString.equals("concessionTypeFeesPage"))
     }

@@ -22,7 +22,7 @@ import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmation
 import form.lettingHistory.ResidentListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.LettingHistory.{byRemovingPermanentResidentAt, permanentResidents}
+import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{ResidentListPageId, ResidentRemovePageId}
@@ -90,12 +90,12 @@ class ResidentListController @Inject() (
             theListView(theFormWithErrors, permanentResidents(request.sessionData), backLinkUrl)
           )
         ),
-      hasMoreResidents =>
+      answer =>
         successful(
           navigator.redirect(
             currentPage = ResidentListPageId,
             updatedSession = request.sessionData,
-            navigationData = Map("hasMoreResidents" -> hasMoreResidents.toString)
+            navigationData = Map("hasMoreResidents" -> answer.toBoolean.toString)
           )
         )
     )

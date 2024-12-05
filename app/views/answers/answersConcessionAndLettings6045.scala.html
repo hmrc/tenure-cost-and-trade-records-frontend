@@ -47,11 +47,20 @@
 
 @tableRow(values: Seq[String]) = {@values.map { value => <div class="hmrc-turnover-table-column"> @value </div> }}
 
+@recordIndex(rentalIncome: IndexedSeq[IncomeRecord], currentIdx: Int, recordType: Class[_ <: IncomeRecord]) = @{
+    rentalIncome.take(currentIdx).count(recordType.isInstance) + 1
+}
 
 @concessionEntry(concession:ConcessionIncomeRecord, index: Int) = {
 
-    <h2 class="govuk-heading-m">@messages("cya.concessionOrFranchise.operatorNumber", index + 1)</h2>
-
+    <h2 class="govuk-heading-m" id="rental-income-entry-@index">@messages(
+        "cya.concessionOrFranchise.operatorNumber",
+        recordIndex(
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty),
+            index,
+            classOf[ConcessionIncomeRecord]
+        ))
+    </h2>
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("cya.concessionOrFranchise.operatorDetails",
@@ -110,7 +119,13 @@
 }
 }
 @lettingEntry(letting:LettingIncomeRecord, index: Int) = {
-    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber", index + 1)</h2>
+    <h2 class="govuk-heading-m" id="rental-income-entry-@index>@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",
+        recordIndex(
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty),
+            index,
+            classOf[LettingIncomeRecord]
+        ))
+    </h2>
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",

@@ -23,7 +23,7 @@ class OccupierListFormSpec extends FormSpec:
 
   it should "bind data as expected" in {
     val data  = Map(
-      "hadMoreOccupiers" -> "yes"
+      "answer" -> "yes"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
@@ -34,7 +34,7 @@ class OccupierListFormSpec extends FormSpec:
     val filled = theForm.fill(AnswerYes)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "hadMoreOccupiers" -> "yes"
+      "answer" -> "yes"
     )
   }
 
@@ -42,10 +42,10 @@ class OccupierListFormSpec extends FormSpec:
     // When the form gets submitted before being filled
     val bound = theForm.bind(
       Map(
-        "hadMoreOccupiers" -> ""
+        "answer" -> ""
       )
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound.error("hadMoreOccupiers").value.message mustBe "lettingHistory.occupierList.hadMoreOccupiers.required"
+    bound.error("answer").value.message mustBe "lettingHistory.occupierList.hadMoreOccupiers.required"
   }

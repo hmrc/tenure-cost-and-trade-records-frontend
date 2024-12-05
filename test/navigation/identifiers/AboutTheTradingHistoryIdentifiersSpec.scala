@@ -286,5 +286,26 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for caravansAnnualPitchFeePage" in {
       assert(CaravansAnnualPitchFeeId.toString.equals("caravansAnnualPitchFeePage"))
     }
+
+    "Identifier for income6048Page" in {
+      assert(Income6048Id.toString.equals("income6048Page"))
+    }
+
+    "Identifier for fixedCostsPage" in {
+      assert(FixedCosts6048Id.toString.equals("fixedCostsPage"))
+    }
+
+    "Identifier for accountingCostsPage" in {
+      assert(AccountingCosts6048Id.toString.equals("accountingCostsPage"))
+    }
+
+    "Identifier for administrativeCostsPage" in {
+      assert(AdministrativeCosts6048Id.toString.equals("administrativeCostsPage"))
+    }
+
+    "Identifier for operationalCostsPage" in {
+      assert(OperationalCosts6048Id.toString.equals("operationalCostsPage"))
+    }
+
   }
 }

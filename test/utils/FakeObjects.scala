@@ -398,8 +398,9 @@ trait FakeObjects {
         LocalDate.of(2022, 3, 31)
       )
     ),
+    partsUnavailable = Some(AnswerYes),
     canProceed = None,
-    occupiersList = None
+    occupiersList = IndexedSeq.empty
   )
 
   val prefilledPropertyCurrentlyInUsed =
@@ -1667,6 +1668,10 @@ trait FakeObjects {
     ultimatelyResponsibleOutsideRepairs = Some(UltimatelyResponsibleOutsideRepairs(OutsideRepairsTenant, None)),
     ultimatelyResponsibleBuildingInsurance =
       Some(UltimatelyResponsibleBuildingInsurance(BuildingInsuranceBoth, Some("Both")))
+  )
+
+  val prefilledAboutLeaseOrAgreementPartTwoNoPremiumSum: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
+    payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerNo))
   )
 
   val prefilledAboutLeaseOrAgreementPartTwoNoDate: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(

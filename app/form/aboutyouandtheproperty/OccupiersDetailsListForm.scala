@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package form.aboutyouandtheproperty
 
-import form.MappingSupport.createYesNoType as answerYesNo
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.data.Forms.mapping
 
-object PermanentResidentsForm:
-  val theForm = Form[AnswersYesNo](
-    single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasPermanentResidents.error")
-    )
+object OccupiersDetailsListForm {
+
+  val occupiersDetailsListForm: Form[AnswersYesNo] = Form(
+    mapping(
+      "occupiersDetailsList" -> createYesNoType("error.occupiersDetailsList.required")
+    )(x => x)(b => Option(b))
   )
+}

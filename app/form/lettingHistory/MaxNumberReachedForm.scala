@@ -16,14 +16,14 @@
 
 package form.lettingHistory
 
-import form.MappingSupport.createYesNoType as answerYesNo
-import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.data.Forms.{boolean, single}
 
-object PermanentResidentsForm:
-  val theForm = Form[AnswersYesNo](
+object MaxNumberReachedForm {
+  val theForm = Form[Boolean](
     single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasPermanentResidents.error")
+      "understood" -> boolean
+      // .verifying("lettingHistory.maxNumberReached.understanding.required", understand => understand == true)
     )
   )
+}

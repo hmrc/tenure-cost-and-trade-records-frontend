@@ -46,7 +46,7 @@ class OccupiersDetailsController @Inject() (
       for {
         requestedIndex <- index
         occupiers      <-
-          request.sessionData.aboutYouAndThePropertyPartTwo.map(_.occupiersList.getOrElse(IndexedSeq.empty))
+          request.sessionData.aboutYouAndThePropertyPartTwo.map(_.occupiersList)
         requestedData  <- occupiers.lift(requestedIndex)
       } yield requestedData
     Future.successful(
@@ -74,11 +74,11 @@ class OccupiersDetailsController @Inject() (
           )
         ),
       data => {
-        val ifOccupiersListEmpty = AboutYouAndThePropertyPartTwo(occupiersList = Option(Seq(data)))
-
         val updatedAboutYouAndTheProperty =
-          request.sessionData.aboutYouAndThePropertyPartTwo.fold(ifOccupiersListEmpty) { aboutProperty =>
-            val existingOccupiersList = aboutProperty.occupiersList.getOrElse(Seq.empty)
+          request.sessionData.aboutYouAndThePropertyPartTwo.fold(
+            AboutYouAndThePropertyPartTwo(occupiersList = IndexedSeq(data))
+          ) { aboutProperty =>
+            val existingOccupiersList = aboutProperty.occupiersList
 
             val updatedList = index match {
               case Some(index) if existingOccupiersList.isDefinedAt(index) =>
@@ -86,7 +86,7 @@ class OccupiersDetailsController @Inject() (
               case _                                                       => existingOccupiersList :+ data
             }
 
-            aboutProperty.copy(occupiersList = Option(updatedList))
+            aboutProperty.copy(occupiersList = updatedList, occupiersListIndex = updatedList.length - 1)
           }
 
         val updatedSessionData =

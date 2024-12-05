@@ -77,6 +77,39 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def tradingNameOperatingFromProperty6048Controller(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  def tradingNameOperatingFromProperty6048ChangeAddressController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesEditCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
+  def tradingNameOperatingFromProperty6048NoController(
+    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesNoCYA)
+  ) =
+    new TradingNameOperatingFromPropertyController(
+      stubMessagesControllerComponents(),
+      connectedToPropertyNavigator,
+      tradingNameOperatingFromProperty,
+      preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
+
   def tradingNameOperatingFromPropertyControllerNoTradingName(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
   ) =
@@ -149,6 +182,11 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.EditAddressController.show().url
       )
+    }
+
+    "return 200 when trading name present in session 6048" in {
+      val result = tradingNameOperatingFromProperty6048Controller().show(fakeRequest)
+      status(result) shouldBe Status.OK
     }
 
     "return 200 when trading name present is not session" in {
@@ -227,6 +265,13 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   "TradingNameOperatingFromPropertyController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tradingNameOperatingFromPropertyController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "throw a BAD_REQUEST if an empty form is submitted 6048" in {
+      val res = tradingNameOperatingFromProperty6048Controller().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST

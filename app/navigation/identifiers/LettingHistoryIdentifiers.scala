@@ -28,6 +28,9 @@ case object ResidentRemovePageId extends Identifier:
 case object ResidentListPageId extends Identifier:
   override def toString: String = "residentListPage"
 
+case object MaxNumberReachedPageId extends Identifier:
+  override def toString: String = "maxNumberReachedPage"
+
 case object CompletedLettingsPageId extends Identifier:
   override def toString: String = "commercialLettingsPage"
 
@@ -49,6 +52,7 @@ extension (string: String)
     case "residentDetailPage"     => Some(ResidentDetailPageId)
     case "residentRemovePage"     => Some(ResidentRemovePageId)
     case "residentListPage"       => Some(ResidentListPageId)
+    case "maxNumberReachedPage"   => Some(MaxNumberReachedPageId)
     case "completedLettingsPage"  => Some(CompletedLettingsPageId)
     case "occupierDetailPage"     => Some(OccupierDetailPageId)
     case "rentalPeriodPage"       => Some(RentalPeriodPageId)
