@@ -95,12 +95,12 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
       "be handling GET /rental-period missing index by replying 303 redirect to 'Occupiers List' page" in new StaleSessionFixture {
         val result = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/occupiers-list"
+        redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
       "be handling GET /rental-period unknown index by replying 303 redirect to 'Occupiers List' page" in new StaleSessionFixture {
         val result = controller.show(maybeIndex = Some(99))(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/path/to/occupiers-list"
+        redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
       "be handling invalid POST /detail by replying 400 with error messages" in new StaleSessionFixture {
         val result  = controller.submit(index = Some(0))(
