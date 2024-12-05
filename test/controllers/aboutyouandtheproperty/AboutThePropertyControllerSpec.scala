@@ -103,6 +103,15 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       val res = aboutThePropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = aboutThePropertyController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "propertyCurrentlyUsed" -> CurrentPropertyHotel.name
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "About the property form" should {

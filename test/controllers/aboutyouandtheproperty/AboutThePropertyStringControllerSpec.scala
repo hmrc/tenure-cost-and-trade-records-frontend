@@ -103,6 +103,16 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
       val res = aboutThePropertyStringController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = aboutThePropertyStringController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "propertyCurrentlyUsedString" -> "Test content"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
   }
 
   "property currently used string form" should {
