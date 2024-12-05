@@ -97,7 +97,6 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
     }
 
-
     "handle form submission with 'Yes' and perform removal" in {
       val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")

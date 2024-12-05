@@ -94,8 +94,9 @@ class OccupiersDetailsListController @Inject() (
                 addAnotherPaidService = data
               )
             )
-            session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
+            session.saveOrUpdate(updatedData).map { _ =>
+              Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
+            }
           }
     )
   }
@@ -168,9 +169,6 @@ class OccupiersDetailsListController @Inject() (
         controllers.aboutyouandtheproperty.routes.OccupiersDetailsController
           .show(
             Option(
-              request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersListIndex).getOrElse(0)
-            )
-          )
-          .url
+              request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersListIndex).getOrElse(0))).url
     }
 }
