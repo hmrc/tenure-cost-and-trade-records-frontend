@@ -14,21 +14,22 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
 @import uk.gov.hmrc.hmrcfrontend.views.html.components._
-
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.hmrcfrontend.views.Aliases.CurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 
 @import models.pages.Summary
 
 @this(layout: Layout,
+        govukInput: GovukInput,
         govukButton: GovukButton,
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
@@ -49,22 +50,23 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.submit()) {
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "currentAnnualRent",
-    name = "currentAnnualRent",
-    value = theForm("currentAnnualRent").value,
-    classes = "govuk-input--width-10 total-annual-rent",
-    label = Label(
-     content = Text(messages("currentAnnualRent.heading")),
-     classes = "govuk-label--l",
-     isPageHeading = true
-    ),
-    hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
-    autocomplete = Some("off"),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("currentAnnualRent"),
-   )
-  )
+
+  @govukInput(Input(
+   id = "currentAnnualRent",
+   name = "currentAnnualRent",
+   value = theForm("currentAnnualRent").value,
+   classes = "govuk-input--width-10 total-annual-rent",
+   label = Label(
+    content = Text(messages("currentAnnualRent.heading")),
+    classes = "govuk-label--l",
+    isPageHeading = true
+   ),
+   prefix = Some(PrefixOrSuffix(
+    content = Text(messages("label.pound"))
+   )),
+   hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
+   autocomplete = Some("off"),
+  ).withFormField(theForm(s"currentAnnualRent")))
 
   @includes.continueSaveAsDraftButtons(govukButton)
 

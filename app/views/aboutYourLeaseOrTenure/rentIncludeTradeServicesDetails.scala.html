@@ -25,9 +25,14 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
+
 @import models.pages.Summary
 
 @this(layout: Layout,
+        govukInput: GovukInput,
         govukButton: GovukButton,
         govukCharacterCount: GovukCharacterCount,
         hmrcCurrencyInput : HmrcCurrencyInput,
@@ -49,20 +54,20 @@
 
   <p class="govuk-heading-m">@messages("rentIncludeTradeServicesDetails.title")</p>
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "sumIncludedInRent",
-    name = "sumIncludedInRent",
-    value = theForm("sumIncludedInRent").value,
-    classes = "govuk-input--width-10 total-annual-rent",
-    autocomplete = Some("off"),
-    attributes = Map(
-     "aria-label" -> messages("rentIncludeTradeServicesDetails.title")
-    ),
-    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint")))),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("sumIncludedInRent")
-   )
-  )
+  @govukInput(Input(
+   id = "sumIncludedInRent",
+   name = "sumIncludedInRent",
+   value = theForm("sumIncludedInRent").value,
+   classes = "govuk-input--width-10 total-annual-rent",
+   attributes = Map(
+    "aria-label" -> messages("rentIncludeTradeServicesDetails.title")
+   ),
+   prefix = Some(PrefixOrSuffix(
+    content = Text(messages("label.pound"))
+   )),
+   hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
+   autocomplete = Some("off"),
+  ).withFormField(theForm("capitalSumPaidDetails")))
 
 <div class="govuk-!-margin-top-8">
   @govukCharacterCount(

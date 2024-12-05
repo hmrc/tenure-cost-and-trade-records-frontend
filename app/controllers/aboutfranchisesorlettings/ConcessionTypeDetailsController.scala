@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.ConcessionTypeDetailsForm.concessionTypeDetailsForm
 import models.submissions.aboutfranchisesorlettings.*
 import navigation.AboutFranchisesOrLettingsNavigator
-import navigation.identifiers.{ConcessionTypeDetailsId, ConcessionTypeFeesId}
+import navigation.identifiers.ConcessionTypeDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

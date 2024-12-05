@@ -16,12 +16,17 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCurrencyInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.currencyinput.CurrencyInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
+@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 @import models.pages.Summary
 
 @this(layout: Layout,
+        govukInput: GovukInput,
         govukButton: GovukButton,
         hmrcCurrencyInput : HmrcCurrencyInput,
         formWithCSRF: FormWithCSRF
@@ -40,15 +45,15 @@
 ) {
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.submit(index)) {
 
-        @hmrcCurrencyInput(
-            CurrencyInput(
-                id = "annualCharge",
-                name = "annualCharge",
-                value = theForm("annualCharge").value,
-                classes = "govuk-input--width-10 total-annual-rent",
-                errorMessage = theForm.errors.asTextErrorMessageForField("annualRent"),
-            )
-        )
+        @govukInput(Input(
+            id = "annualCharge",
+            name = "annualCharge",
+            value = theForm("annualCharge").value,
+            classes = "govuk-input--width-10 total-annual-rent",
+            prefix = Some(PrefixOrSuffix(
+                content = Text(messages("label.pound"))
+            )),
+        ).withFormField(theForm("annualRent")))
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

@@ -44,19 +44,18 @@
 
   <p class="govuk-heading-m">@messages("surrenderedLeaseAgreement.title")</p>
 
-  @hmrcCurrencyInput(
-   CurrencyInput(
-    id = "surrenderedLeaseAgreementAmount",
-    name = "surrenderedLeaseAgreementAmount",
-    value = theForm("surrenderedLeaseAgreementAmount").value,
-    classes = "govuk-input--width-10 total-annual-rent",
-    autocomplete = Some("off"),
-    attributes = Map(
-     "aria-label" -> messages("surrenderedLeaseAgreementAmount.title")
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("surrenderedLeaseAgreementAmount")
-   )
-  )
+  @govukInput(Input(
+   id = "surrenderedLeaseAgreementAmount",
+   name = "surrenderedLeaseAgreementAmount",
+   value = theForm("surrenderedLeaseAgreementAmount").value,
+   classes = "govuk-input--width-10 total-annual-rent",
+   attributes = Map(
+    "aria-label" -> messages("surrenderedLeaseAgreementAmount.title")
+   ),
+   prefix = Some(PrefixOrSuffix(
+    content = Text(messages("label.pound"))
+   ))
+  ).withFormField(theForm("surrenderedLeaseAgreementAmount")))
 
   @govukInput(Input(
    id = "surrenderedLeaseAgreementMonths",
