@@ -25,11 +25,15 @@ import play.api.mvc.Result
 import play.api.test.Helpers.contentAsString
 
 import scala.concurrent.Future
+import scala.jdk.CollectionConverters.*
 
 trait JsoupHelpers:
-  extension (el: Element) def value        = Option(el.`val`()).get
-  extension (d: Document) def backLinkHref = d.getElementsByClass("govuk-back-link").first().attribute("href").getValue
-  // extension (d: Document) def h1           = Option(d.getElementsByTag("h1").first()).map(_.`val`())
+  extension (el: Element) def value = Option(el.`val`()).get
+  extension (d: Document)
+    def heading           = d.select("h1.govuk-heading-l").first().text().trim
+    def backLink          = d.select("a.govuk-back-link").first().attribute("href").getValue
+    def error(id: String) = d.select(s"""p.govuk-error-message[id="$id-error"]""").textNodes().asScala.last.text().trim
+    def radio(v: String)  = d.select(s"""input.govuk-radios__input[value="$v"]""")
 
   def contentAsJsoup(result: Future[Result])(using timeout: Timeout, mat: Materializer = NoMaterializer): Document =
     Jsoup.parse(contentAsString(result))

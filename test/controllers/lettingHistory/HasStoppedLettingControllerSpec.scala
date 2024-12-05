@@ -24,13 +24,13 @@ import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
 class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
 
-  "the StoppedLetting controller" when {
+  "the HasStoppedLetting controller" when {
     "the user session is fresh" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
         val result  = controller.show(fakeGetRequest.withSession("from" -> "permanentResidentsPage"))
@@ -45,7 +45,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "answer" -> ""
+            "answer" -> "" // missing answer!
           )
         )
         status(result) shouldBe BAD_REQUEST
