@@ -16,6 +16,8 @@
 
 package models.submissions.accommodation
 
+import actions.SessionRequest
+import models.Session
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
@@ -29,3 +31,25 @@ case class AccommodationDetails(
 
 object AccommodationDetails:
   implicit val format: OFormat[AccommodationDetails] = Json.format
+
+  private val initialAccommodationDetails = AccommodationDetails(List(AccommodationUnit("", "")))
+
+  def updateAccommodationDetails(
+    copy: AccommodationDetails => AccommodationDetails
+  )(implicit sessionRequest: SessionRequest[?]): Session =
+    val accommodationDetails = copy(
+      sessionRequest.sessionData.accommodationDetails.getOrElse(initialAccommodationDetails)
+    )
+    sessionRequest.sessionData.copy(accommodationDetails = Some(accommodationDetails))
+
+  def updateAccommodationUnit(
+    idx: Int,
+    update: AccommodationUnit => AccommodationUnit
+  )(implicit sessionRequest: SessionRequest[?]): Session =
+    updateAccommodationDetails { accommodationDetails =>
+      val accommodationUnit = update(accommodationDetails.accommodationUnits(idx))
+
+      accommodationDetails.copy(accommodationUnits =
+        accommodationDetails.accommodationUnits.updated(idx, accommodationUnit)
+      )
+    }

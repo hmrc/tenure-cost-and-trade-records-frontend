@@ -32,5 +32,6 @@ trait FakeNavigation { this: Injecting =>
   lazy val aboutFranchisesOrLettingsNavigator = inject[AboutFranchisesOrLettingsNavigator]
   lazy val aboutYourLeaseOrTenureNavigator    = inject[AboutYourLeaseOrTenureNavigator]
   lazy val additionalInformationNavigator     = inject[AdditionalInformationNavigator]
+  lazy val accommodationNavigator             = inject[AccommodationNavigator]
 
 }

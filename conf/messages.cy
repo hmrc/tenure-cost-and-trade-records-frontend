@@ -1626,6 +1626,18 @@ lettingHistory.maxNumberReached.understanding = I understand that the VOA will c
 lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
 
 
+# ACCOMMODATION DETAILS 6048
+# ############################
+label.section.accommodation = Accommodation details
+accommodation.unit.heading = Accommodation unit
+accommodation.unit.p1 = Provide details of all accommodation units available for commercial letting. You will have the opportunity to add multiple units.
+label.accommodation.unitName = Unit name
+label.accommodation.unitType = Unit type
+hint.accommodation.unitType = For example, character cottage or barn
+error.accommodation.unitName.required = Enter the name of the accommodation unit
+error.accommodation.unitName.maxLength = The unit name must be {0} characters or fewer
+error.accommodation.unitType.maxLength = The unit type must be {0} characters or fewer
+
 # 6010 TYPES
 ##############################
 userType.occupierTrustee = Occupier or trustee for occupier

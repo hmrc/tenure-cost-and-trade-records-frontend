@@ -22,6 +22,7 @@ import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutthetradinghistory.{whatYouWillNeed, _}
 import views.html.aboutyouandtheproperty._
+import views.html.accommodation._
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
 import views.html.connectiontoproperty._
 import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
@@ -128,6 +129,9 @@ trait FakeViews { this: Injecting =>
   lazy val partsUnavailableView: partsUnavailable                                     = inject[partsUnavailable]
   lazy val occupiersDetailsView: occupiersDetails                                     = inject[occupiersDetails]
   lazy val occupiersDetailsListView: occupiersDetailsList                             = inject[occupiersDetailsList]
+
+  // Accommodation details
+  lazy val accommodationUnitView: accommodationUnit6048 = inject[accommodationUnit6048]
 
   // About your trading history
   lazy val aboutYourTradingHistoryView: aboutYourTradingHistory                                     = inject[aboutYourTradingHistory]
