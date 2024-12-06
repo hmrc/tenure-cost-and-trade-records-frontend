@@ -82,6 +82,14 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
     }
 
+    "return a function that goes to catering operation page when franchise page has been completed yes 6015123" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6020Session)
+        .apply(
+          sessionAboutFranchiseOrLetting6020Session
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(4))
+    }
+
     "return a function that goes to rent received from page when catering operation page has been completed yes 6015" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CateringOperationDetailsPageId, sessionAboutFranchiseOrLetting6015YesSession)

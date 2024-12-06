@@ -240,17 +240,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
           case "yes" =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
               .show(getLastCateringOperationIndex(answers))
-          case "no"  =>
+          case _     =>
             if (fromCYA == true) {
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
             } else {
               controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
             }
-          case _     =>
-            logger.warn(
-              s"Navigation for add another catering operation reached without correct selection of conditions by controller"
-            )
-            throw new RuntimeException("Invalid option exception for add another catering operation conditions routing")
         }
     }
   }
@@ -277,17 +272,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
           case "yes" =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
               .show(getLastCateringOperationConcessionIndex(answers))
-          case "no"  =>
+          case _     =>
             if (fromCYA == true) {
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
             } else {
               controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
             }
-          case _     =>
-            logger.warn(
-              s"Navigation for add another catering operation reached without correct selection of conditions by controller"
-            )
-            throw new RuntimeException("Invalid option exception for add another catering operation conditions routing")
         }
     }
   }
@@ -309,13 +299,8 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
           case _                                                                    =>
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
         }
-      case Some("no")  =>
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
       case _           =>
-        logger.warn(
-          s"Navigation for lettings reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for lettings conditions routing")
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
 
   private def getLettingsIndex(session: Session): Int =
@@ -352,17 +337,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
           case "yes" =>
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
               .show(getLastLettingIndex(answers))
-          case "no"  =>
+          case _     =>
             if (fromCYA == true) {
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
             } else {
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
             }
-          case _     =>
-            logger.warn(
-              s"123Navigation for add another letting reached without correct selection of conditions by controller"
-            )
-            throw new RuntimeException("123Invalid option exception for add another letting conditions routing")
         }
     }
   }

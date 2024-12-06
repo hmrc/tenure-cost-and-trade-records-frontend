@@ -73,12 +73,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
             controllers.connectiontoproperty.routes.VacantPropertiesController.show()
         }
       case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
-      case Some("no")                 => controllers.notconnected.routes.PastConnectionController.show()
-      case _                          =>
-        logger.warn(
-          s"Navigation for are you still connected reached without correct selection of are you connected by controller"
-        )
-        throw new RuntimeException("Invalid option exception for are you connected routing")
+      case _                          => controllers.notconnected.routes.PastConnectionController.show()
     }
 
   private def editAddressRouting: Session => Call = answers =>
