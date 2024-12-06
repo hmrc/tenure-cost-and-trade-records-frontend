@@ -61,7 +61,6 @@
             classOf[ConcessionIncomeRecord]
         ))
     </h2>
-
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("cya.concessionOrFranchise.operatorDetails",
         _ => Option(concession.businessDetails.flatMap(_.operatorName).getOrElse(""))
@@ -118,15 +117,15 @@
     }
 }
 }
-@lettingEntry(letting:LettingIncomeRecord, index: Int) = {
-    <h2 class="govuk-heading-m" id="rental-income-entry-@index>@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",
+@lettingEntry(letting :LettingIncomeRecord, index: Int) = {
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0" id="rental-income-entry-@index">@messages(
+        "checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",
         recordIndex(
             request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty),
             index,
             classOf[LettingIncomeRecord]
         ))
-    </h2>
-
+        <h2/>
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
         _ => Option(
