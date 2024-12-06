@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import controllers.aboutthetradinghistory
 import controllers.aboutthetradinghistory.routes
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswerYes
 import models.ForType.*
 import models.Session
 import navigation.identifiers.*

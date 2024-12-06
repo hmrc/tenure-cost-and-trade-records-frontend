@@ -18,7 +18,6 @@ package models.submissions.lettingHistory
 
 import com.typesafe.config.ConfigFactory
 import crypto.MongoCrypto
-import models.submissions.common.AnswerYes
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.OptionValues

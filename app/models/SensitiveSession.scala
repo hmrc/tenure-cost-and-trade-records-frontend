@@ -21,6 +21,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, SensitiveAboutYouAndTheProperty}
+import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
@@ -53,7 +54,8 @@ case class SensitiveSession(
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber],
   downloadPDFDetails: Option[DownloadPDFDetails] = None,
-  lettingHistory: Option[SensitiveLettingHistory] = None
+  lettingHistory: Option[SensitiveLettingHistory] = None,
+  accommodationDetails: Option[AccommodationDetails] = None
   // Also add more properties to both this.decryptedValue and SensitiveSession.apply methods (see below)
 ) extends Sensitive[Session] {
 
@@ -79,7 +81,8 @@ case class SensitiveSession(
     lastCYAPageUrl,
     requestReferenceNumberDetails.map(_.decryptedValue),
     downloadPDFDetails,
-    lettingHistory.map(_.decryptedValue)
+    lettingHistory.map(_.decryptedValue),
+    accommodationDetails
     // Add more properties here ...
   )
 }
@@ -110,6 +113,8 @@ object SensitiveSession {
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_)),
     session.downloadPDFDetails,
-    session.lettingHistory.map(SensitiveLettingHistory(_))
+    session.lettingHistory.map(SensitiveLettingHistory(_)),
+    session.accommodationDetails
   )
+
 }

@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswerYes
 import models.ForType.*
 import models.Session
 import navigation.identifiers._

@@ -23,6 +23,7 @@ import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 import models.submissions.aboutyouandtheproperty.*
+import models.submissions.accommodation.*
 import models.submissions.additionalinformation.*
 import models.submissions.common.*
 import models.submissions.connectiontoproperty.*
@@ -1815,4 +1816,11 @@ trait FakeObjects {
     aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreementPartOne,
     aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwo6030
   )
+
+  val prefilledAccommodationDetails: AccommodationDetails = AccommodationDetails(
+    List(
+      AccommodationUnit("Unit Name", "unit type")
+    )
+  )
+
 }

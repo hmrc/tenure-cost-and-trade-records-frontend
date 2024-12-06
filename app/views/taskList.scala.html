@@ -67,13 +67,15 @@
 @section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure.map(_.checkYourAnswersAboutYourLeaseOrTenure)) }
 @section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
 
+@section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted).map(_.name)}
+
 @completedSections = @{
  (forType match {
   case FOR6048 => Seq(
    section1Completed, // 1. Connection to the property
    section2Completed, // 2. About you and the property
    section4Completed, // 3. Letting history
-   section3point1Completed, // 4. Accommodation details
+   section4AccommodationCompleted, // 4. Accommodation details
    section3Completed, // 5. Trading history
    section5Completed, // 6. Your lease or agreement
    section6Completed // 7. Additional information
@@ -261,7 +263,7 @@
     <ul class="app-task-list__items">
     @includes.taskListItem("residential-tenants", "checkYourAnswersLettingHistory.residentialTenants",
      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), // TODO: ResidentialTenantsController
-     section4Completed,
+     section4Completed, // TODO: 3. Letting history
      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation), // TODO: data saved by ResidentialTenantsController
      section2Completed.isEmpty
     )
@@ -274,10 +276,10 @@
     </h2>
     <ul class="app-task-list__items">
     @includes.taskListItem("accommodation-details", "checkYourAnswersAccommodation.accommodationDetails",
-     controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), // TODO: AccommodationDetailsController
-     section3point1Completed,
-     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation), // TODO: data saved by AccommodationDetailsController
-     section4Completed.isEmpty
+     controllers.accommodation.routes.AccommodationUnit6048Controller.show,
+     section4AccommodationCompleted,
+     session.accommodationDetails,
+     section4Completed.isEmpty // TODO: 3. Letting history
     )
     </ul>
    </li>
@@ -295,7 +297,7 @@
      } else { controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show() },
      section3Completed,
      session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation),
-     if(forType == FOR6048) section3point1Completed.isEmpty else section2Completed.isEmpty
+     if(forType == FOR6048) section4AccommodationCompleted.isEmpty else section2Completed.isEmpty
     )
 
     @if(!(Seq(FOR6020, FOR6076, FOR6045, FOR6046, FOR6048) contains forType)) {

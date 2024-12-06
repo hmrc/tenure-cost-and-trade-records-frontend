@@ -249,7 +249,8 @@ class LoginControllerSpec extends TestBaseSpec {
             aboutLeaseOrAgreementPartFour = Some(prefilledAboutLeaseOrAgreementPartFour),
             requestReferenceNumber = Some(prefilledRequestRefNumCYA),
             downloadPDFDetails = None,
-            lettingHistory = None
+            lettingHistory = None,
+            accommodationDetails = None
           )
         )
       )(

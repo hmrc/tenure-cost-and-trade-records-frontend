@@ -1,0 +1,4 @@
+# 6048 Accommodation details
+
+GET         /accommodation-unit                             controllers.accommodation.AccommodationUnit6048Controller.show
+POST        /accommodation-unit                             controllers.accommodation.AccommodationUnit6048Controller.submit
