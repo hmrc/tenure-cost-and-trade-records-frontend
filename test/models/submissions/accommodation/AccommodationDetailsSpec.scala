@@ -16,16 +16,17 @@
 
 package models.submissions.accommodation
 
-import play.api.libs.json.{Json, OFormat}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.Json
+import utils.FakeObjects
 
 /**
   * @author Yuriy Tumakha
   */
-case class AccommodationUnit(
-  unitName: String,
-  unitType: String,
-  availableRooms: Option[AvailableRooms] = None
-)
+class AccommodationDetailsSpec extends AnyFlatSpec with Matchers with FakeObjects:
 
-object AccommodationUnit:
-  implicit val format: OFormat[AccommodationUnit] = Json.format
+  "AccommodationDetails" should "be serialized/deserialized from JSON" in {
+    val json = Json.toJson(prefilledAccommodationDetails)
+    json.as[AccommodationDetails] shouldBe prefilledAccommodationDetails
+  }

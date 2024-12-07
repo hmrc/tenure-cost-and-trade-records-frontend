@@ -1637,6 +1637,27 @@ hint.accommodation.unitType = For example, character cottage or barn
 error.accommodation.unitName.required = Enter the name of the accommodation unit
 error.accommodation.unitName.maxLength = The unit name must be {0} characters or fewer
 error.accommodation.unitType.maxLength = The unit type must be {0} characters or fewer
+accommodation.availableRooms.heading = Available rooms in {0}
+accommodation.availableRooms.p1 = You must declare the number of rooms for let in {0}
+accommodation.singleBedrooms = Single bedrooms
+accommodation.doubleBedrooms = Double bedrooms
+accommodation.bathrooms = Bathrooms
+accommodation.maxGuestsNumber = Maximum number of guests
+label.otherAccommodationDescription = Other accommodation
+hint.otherAccommodationDescription = For example, games rooms.
+error.accommodation.singleBedrooms.required = Enter 0 if you do not have any single bedrooms in the accommodation unit
+error.accommodation.singleBedrooms.nonNumeric = The amount of single bedrooms must be a number
+error.accommodation.singleBedrooms.negative = The amount of single bedrooms cannot be a negative number
+error.accommodation.doubleBedrooms.required = Enter 0 if you do not have any double bedrooms in the accommodation unit
+error.accommodation.doubleBedrooms.nonNumeric = The amount of double bedrooms must be a number
+error.accommodation.doubleBedrooms.negative = The amount of double bedrooms cannot be a negative number
+error.accommodation.bathrooms.required = Enter 0 if you do not have any bathrooms in the accommodation unit
+error.accommodation.bathrooms.nonNumeric = The amount of bathrooms must be a number
+error.accommodation.bathrooms.negative = The amount of bathrooms cannot be a negative number
+error.accommodation.maxGuestsNumber.required = Enter 0 if there are no capacity for guests
+error.accommodation.maxGuestsNumber.nonNumeric = The maximum number of guests must be a number
+error.accommodation.maxGuestsNumber.negative = The maximum number of guests cannot be a negative number
+error.accommodation.otherAccommodationDescription.maxLength = Description of other accommodation must be {0} characters or fewer
 
 # 6010 TYPES
 ##############################

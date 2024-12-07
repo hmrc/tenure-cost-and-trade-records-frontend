@@ -21,11 +21,13 @@ import play.api.libs.json.{Json, OFormat}
 /**
   * @author Yuriy Tumakha
   */
-case class AccommodationUnit(
-  unitName: String,
-  unitType: String,
-  availableRooms: Option[AvailableRooms] = None
+case class AvailableRooms(
+  singleBedrooms: Int = 0,
+  doubleBedrooms: Int = 0,
+  bathrooms: Int = 0,
+  otherAccommodationDescription: Option[String] = None,
+  maxGuestsNumber: Int = 0
 )
 
-object AccommodationUnit:
-  implicit val format: OFormat[AccommodationUnit] = Json.format
+object AvailableRooms:
+  implicit val format: OFormat[AvailableRooms] = Json.format
