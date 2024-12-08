@@ -26,7 +26,14 @@
          .getOrElse("")
 }
 
+@idx = @{
+ request.queryString.get("idx").flatMap(_.headOption)
+ .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("idx").flatMap(_.headOption)))
+ .fold(0)(_.toInt)
+}
+
 <input type="hidden" name="from" value="@from" />
+<input type="hidden" name="idx" value="@idx"/>
 
 <div class="govuk-button-group">
  @govukButton(

@@ -23,13 +23,14 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationUnit6048ControllerSpec extends TestBaseSpec {
+class AvailableRooms6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage = controllers.accommodation.routes.AvailableRooms6048Controller.show(0).url
+  private val nextPage =
+    "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: Letting history English/Welsh
 
-  def accommodationUnit6048Controller =
-    new AccommodationUnit6048Controller(
-      accommodationUnitView,
+  def availableRooms6048Controller =
+    new AvailableRooms6048Controller(
+      availableRoomsView,
       accommodationNavigator,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
       mockSessionRepo,
@@ -38,27 +39,30 @@ class AccommodationUnit6048ControllerSpec extends TestBaseSpec {
 
   private def validFormData: Seq[(String, String)] =
     Seq(
-      "unitName" -> "Accommodation unit name",
-      "unitType" -> "Unit type"
+      "singleBedrooms"                -> "2",
+      "doubleBedrooms"                -> "4",
+      "bathrooms"                     -> "6",
+      "otherAccommodationDescription" -> "",
+      "maxGuestsNumber"               -> "10"
     )
 
   "GET /" should {
     "return 200" in {
-      val result = accommodationUnit6048Controller.show(0)(fakeRequest)
+      val result = availableRooms6048Controller.show(0)(fakeRequest)
       status(result) shouldBe OK
     }
   }
 
   "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = accommodationUnit6048Controller.submit(
+      val res = availableRooms6048Controller.submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "save the form data and redirect to the next page" in {
-      val res = accommodationUnit6048Controller.submit(
+      val res = availableRooms6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER

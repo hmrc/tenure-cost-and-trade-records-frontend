@@ -26,7 +26,7 @@
 )
 
 
-@(form: Form[AvailableRooms], unitName: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[AvailableRooms], unitName: String, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @numberInput(formField: String, labelKey: String) = @{
     govukInput(
@@ -48,7 +48,7 @@
     showSection = true,
     summary = request.sessionData.toSummary,
     sectionName = messages("label.section.accommodation"),
-    backLinkUrl = controllers.accommodation.routes.AccommodationUnit6048Controller.show.url,
+    backLinkUrl = backLink,
     theForm = form
 ) {
 

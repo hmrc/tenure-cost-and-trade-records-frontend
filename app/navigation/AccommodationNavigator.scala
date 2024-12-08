@@ -17,6 +17,7 @@
 package navigation
 
 import connectors.Audit
+import controllers.accommodation
 import models.Session
 import navigation.identifiers.*
 import play.api.mvc.Call
@@ -26,7 +27,9 @@ import javax.inject.Inject
 class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AccommodationUnitPageId -> (_ =>
+    AccommodationUnitPageId -> (_ => accommodation.routes.AvailableRooms6048Controller.show(99)),
+    AvailableRoomsPageId    -> (_ =>
       controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ) // TODO: AvailableRooms6048Controller
+    ) // TODO: Letting history English/Welsh
+
   )
