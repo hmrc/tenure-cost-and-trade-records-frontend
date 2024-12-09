@@ -3424,7 +3424,8 @@ checkYourAnswersAboutTheProperty.familyUse.heading = Family use
 checkYourAnswersAboutTheProperty.mainResidence = Main residence or second home not available for rent?
 checkYourAnswersAboutTheProperty.occupiersLabel= Occupier {0}
 checkYourAnswersAboutTheProperty.occupiersDetails = Occupier''s details
-checkYourAnswersAboutTheProperty.occupiersCount = You have added {0} occupier
+checkYourAnswersAboutTheProperty.occupierCount = You have added {0} occupier
+checkYourAnswersAboutTheProperty.occupiersCount = You have added {0} occupiers
 checkYourAnswersAboutTheProperty.occupiersAdd = Add or remove an occupier
 checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
 
