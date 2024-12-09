@@ -19,9 +19,10 @@ import actions.SessionRequest
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
 import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.test.FakeRequest
 import play.api.test.Helpers
-import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
@@ -66,6 +67,16 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
       val result = createAddAnotherBunkerFuelCardsDetailsController().submit(1)(fakeRequest)
       status(result) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = createAddAnotherBunkerFuelCardsDetailsController().submit(1)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "addAnotherBunkerFuelCardsDetails" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
   }
 
   "Add another card details form" should {

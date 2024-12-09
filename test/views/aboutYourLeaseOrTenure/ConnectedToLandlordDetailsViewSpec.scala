@@ -16,11 +16,13 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
+import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
 class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[ConnectedToLandlordInformationDetails] {
@@ -28,6 +30,9 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[Connecte
   val messageKeyPrefix = "connectedToLandlordDetails"
 
   override val form = ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
+
+  val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
+    SessionRequest(prefilledFull6020Session, fakeRequest)
 
   def createView = () => connectedToLandlordDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
 

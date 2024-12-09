@@ -16,9 +16,9 @@
 
 package controllers.aboutthetradinghistory
 
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.{FakeRequest, Helpers}
-import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
@@ -62,6 +62,15 @@ class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = bunkeredFuelQuestionController.submit()(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "bunkeredFuelQuestion" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

@@ -18,9 +18,9 @@ package controllers.aboutthetradinghistory
 
 import form.aboutthetradinghistory.AdditionalActivitiesOnSiteForm.additionalActivitiesOnSiteForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
@@ -76,6 +76,15 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = additionalActivitiesOnSiteController().submit()(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "additionalActivitiesOnSite" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

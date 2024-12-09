@@ -20,10 +20,10 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAnotherLowMarginFuelCardsDetailsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers
-import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
@@ -72,6 +72,15 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = createAddAnotherLowMarginFuelCardsDetailsController().submit(1)(fakeRequest)
       status(result) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = createAddAnotherLowMarginFuelCardsDetailsController().submit(1)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "addAnotherLowMarginFuelCardsDetails" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
