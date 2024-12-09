@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package navigation
+package models.submissions.accommodation
 
-import connectors.Audit
-import controllers.accommodation
-import models.Session
-import navigation.identifiers.*
-import play.api.mvc.Call
+import play.api.libs.json.{Json, OFormat}
 
-import javax.inject.Inject
+/**
+  * @author Yuriy Tumakha
+  */
+case class AvailableRooms(
+  singleBedrooms: Int = 0,
+  doubleBedrooms: Int = 0,
+  bathrooms: Int = 0,
+  otherAccommodationDescription: Option[String] = None,
+  maxGuestsNumber: Int = 0
+)
 
-class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
-
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    AccommodationUnitPageId -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
-    AvailableRoomsPageId    -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ) // TODO: Letting history English/Welsh
-
-  )
+object AvailableRooms:
+  implicit val format: OFormat[AvailableRooms] = Json.format

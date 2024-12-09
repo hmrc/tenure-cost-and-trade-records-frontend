@@ -23,7 +23,8 @@ import play.api.libs.json.{Json, OFormat}
   */
 case class AccommodationUnit(
   unitName: String,
-  unitType: String
+  unitType: String,
+  availableRooms: Option[AvailableRooms] = None
 )
 
 object AccommodationUnit:

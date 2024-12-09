@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package navigation
+package models.submissions.accommodation
 
-import connectors.Audit
-import controllers.accommodation
-import models.Session
-import navigation.identifiers.*
-import play.api.mvc.Call
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.Json
+import utils.FakeObjects
 
-import javax.inject.Inject
+/**
+  * @author Yuriy Tumakha
+  */
+class AccommodationDetailsSpec extends AnyFlatSpec with Matchers with FakeObjects:
 
-class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
-
-  override val routeMap: Map[Identifier, Session => Call] = Map(
-    AccommodationUnitPageId -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
-    AvailableRoomsPageId    -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ) // TODO: Letting history English/Welsh
-
-  )
+  "AccommodationDetails" should "be serialized/deserialized from JSON" in {
+    val json = Json.toJson(prefilledAccommodationDetails)
+    json.as[AccommodationDetails] shouldBe prefilledAccommodationDetails
+  }

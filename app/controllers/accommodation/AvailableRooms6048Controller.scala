@@ -18,16 +18,16 @@ package controllers.accommodation
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.accommodation.AccommodationUnit6048Form.accommodationUnit6048Form
+import form.accommodation.AvailableRooms6048Form.availableRooms6048Form
+import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms}
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
-import models.submissions.accommodation.AccommodationDetails
 import navigation.AccommodationNavigator
-import navigation.identifiers.AccommodationUnitPageId
+import navigation.identifiers.AvailableRoomsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.accommodation.accommodationUnit6048
+import views.html.accommodation.availableRooms6048
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -36,8 +36,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class AccommodationUnit6048Controller @Inject() (
-  accommodationUnitView: accommodationUnit6048,
+class AvailableRooms6048Controller @Inject() (
+  availableRoomsView: availableRooms6048,
   navigator: AccommodationNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,25 +49,25 @@ class AccommodationUnit6048Controller @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      accommodationUnitView(
-        accommodationDetails
-          .flatMap(_.accommodationUnits.lift(navigator.idx))
-          .map(accommodation => (accommodation.unitName, accommodation.unitType))
-          .fold(accommodationUnit6048Form)(accommodationUnit6048Form.fill)
+      availableRoomsView(
+        currentUnit
+          .flatMap(_.availableRooms)
+          .fold(availableRooms6048Form)(availableRooms6048Form.fill),
+        currentUnitName,
+        backLink
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[(String, String)](
-      accommodationUnit6048Form,
-      formWithErrors => BadRequest(accommodationUnitView(formWithErrors)),
+    continueOrSaveAsDraft[AvailableRooms](
+      availableRooms6048Form,
+      formWithErrors => BadRequest(availableRoomsView(formWithErrors, currentUnitName, backLink)),
       data => {
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
-            unitName = data._1,
-            unitType = data._2
+            availableRooms = Some(data)
           )
         )
 
@@ -75,7 +75,10 @@ class AccommodationUnit6048Controller @Inject() (
           .saveOrUpdate(updatedData)
           .map { _ =>
             Redirect(
-              navigator.nextPageWithParam(AccommodationUnitPageId, updatedData, s"idx=${navigator.idx}")
+              navigator
+                .nextPage(AvailableRoomsPageId, updatedData)
+                .apply(updatedData)
+                // TODO: navigator.nextPageWithParam(AvailableRoomsPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
       }
@@ -85,5 +88,21 @@ class AccommodationUnit6048Controller @Inject() (
   private def accommodationDetails(implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+
+  private def currentUnit(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[AccommodationUnit] =
+    accommodationDetails
+      .flatMap(_.accommodationUnits.lift(navigator.idx))
+
+  private def currentUnitName(implicit
+    request: SessionRequest[AnyContent]
+  ): String =
+    currentUnit.fold("")(_.unitName)
+
+  private def backLink(implicit
+    request: SessionRequest[AnyContent]
+  ): String =
+    s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
 
 }

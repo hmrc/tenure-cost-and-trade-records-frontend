@@ -1819,7 +1819,9 @@ trait FakeObjects {
 
   val prefilledAccommodationDetails: AccommodationDetails = AccommodationDetails(
     List(
-      AccommodationUnit("Unit Name", "unit type")
+      AccommodationUnit("Unit 1", "unit type", AvailableRooms(2, 4, 6, "Game room", 10)),
+      AccommodationUnit("Unit 2", "", AvailableRooms()),
+      AccommodationUnit("Unit 3", "")
     )
   )
 
