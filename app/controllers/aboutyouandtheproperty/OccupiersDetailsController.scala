@@ -16,7 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.OccupiersDetailsForm.occupiersDetailsForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, OccupiersDetails}
@@ -54,6 +54,7 @@ class OccupiersDetailsController @Inject() (
         view(
           existingDetails.fold(occupiersDetailsForm)(occupiersDetailsForm.fill),
           index,
+          getBackLink,
           request.sessionData.toSummary
         )
       )
@@ -69,6 +70,7 @@ class OccupiersDetailsController @Inject() (
             view(
               formWithErrors,
               index,
+              getBackLink,
               request.sessionData.toSummary
             )
           )
@@ -98,4 +100,12 @@ class OccupiersDetailsController @Inject() (
       }
     )
   }
+
+  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      case _     =>
+        controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
+    }
 }

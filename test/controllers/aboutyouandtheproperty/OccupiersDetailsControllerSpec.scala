@@ -22,7 +22,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -67,6 +67,20 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=CYA' query param is present" in {
+      val result = controller().show(None)(fakeRequestFromCYA)
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      )
+    }
+
+    "return correct backLink when 'from=CYA' query param is not present" in {
+      val result = controller().show(None)(fakeRequest)
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
+      )
     }
 
     "SUBMIT /" should {
