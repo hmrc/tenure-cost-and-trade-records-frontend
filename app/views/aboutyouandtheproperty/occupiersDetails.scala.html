@@ -29,11 +29,11 @@
 )
 
 
-@(theForm: Form[OccupiersDetails], index: Option[Int], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[OccupiersDetails], index: Option[Int], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("aboutYou.occupiersDetails.heading"),
-    backLinkUrl = controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url,
+    backLinkUrl = backLink,
     showSection = true,
     summary = Option(summary),
     sectionName = messages("label.section.aboutTheProperty"),

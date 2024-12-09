@@ -36,6 +36,13 @@
     SectionAnswersRowBuilder(request.sessionData.aboutYouAndThePropertyPartTwo)
 }
 
+@occupiersListSize = @{
+    request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersList).fold(0)(_.length)
+}
+
+@occupiersCountMessage = @{
+    if (occupiersListSize <= 1) messages("checkYourAnswersAboutTheProperty.occupierCount", occupiersListSize) else messages("checkYourAnswersAboutTheProperty.occupiersCount", occupiersListSize)
+}
 @forType = @{
     request.sessionData.forType
 }
@@ -162,17 +169,48 @@
                         ("valueAsHtml", _ => None)
                     )))
     }
- @if(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.canProceed).getOrElse(false)){
-    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.familyUse.heading")</h2>
+ @if(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.canProceed).getOrElse(false)) {
+     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.familyUse.heading")</h2>
 
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswersPartTwo.row(
-            "checkYourAnswersAboutTheProperty.mainResidence",
-            _.partsUnavailable.map(x => x.name.capitalize),
-            aboutyouandtheproperty.routes.PartsUnavailableController.show(),
-            "partsUnavailable",
-            ("valueAsHtml", _ => None))
-    ))
+     @govukSummaryList(SummaryList(rows =
+         sectionAnswersPartTwo.row(
+             "checkYourAnswersAboutTheProperty.mainResidence",
+             _.partsUnavailable.map(x => x.name.capitalize),
+             aboutyouandtheproperty.routes.PartsUnavailableController.show(),
+             "partsUnavailable",
+             ("valueAsHtml", _ => None))
+     ))
+
+     @if(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable).contains(AnswerYes)) {
+
+         @for((occupier, idx) <- sectionAnswersPartTwo.answers.flatMap(_.occupiersList).getOrElse(IndexedSeq.empty).zipWithIndex) {
+
+             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.occupiersLabel", idx + 1)</h2>
+
+             @govukSummaryList(SummaryList(rows =
+                 sectionAnswers.row("checkYourAnswersAboutTheProperty.occupiersDetails",
+                     _ => occupier.name + s"<p class=\"govuk-body\"> ${occupier.address} </p>",
+                     aboutyouandtheproperty.routes.OccupiersDetailsController.show(
+                         idx),
+                     "",
+                     ("valueAsHtml", _ => None))
+             ))
+         }
+         @govukSummaryList(SummaryList(rows =
+             List(
+                 SummaryListRow(
+                     key = Key(Text(messages(occupiersCountMessage)), classes = "govuk-heading-m govuk-!-width-one-half"),
+                     actions = Option(Actions(
+                         items =
+                             List(
+                                 ActionItem(
+                                     s"${aboutyouandtheproperty.routes.OccupiersDetailsListController.show(occupiersListSize - 1).url}&from=CYA",
+                                     Text(messages("checkYourAnswersAboutTheProperty.occupiersAdd")))),
+                         classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
+                 )
+             )
+         ))
+     }
  }
 } else {
 

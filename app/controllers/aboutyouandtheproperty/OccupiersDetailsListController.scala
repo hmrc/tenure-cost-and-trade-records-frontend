@@ -95,7 +95,11 @@ class OccupiersDetailsListController @Inject() (
               )
             )
             session.saveOrUpdate(updatedData).map { _ =>
-              Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
+              if (data == AnswerYes) {
+                Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
+              } else {
+                Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
+              }
             }
           }
     )
@@ -154,7 +158,7 @@ class OccupiersDetailsListController @Inject() (
               )
             )
           }
-          Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(index))
+          Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0))
         case AnswerNo  =>
           Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(Option(index)))
       }
