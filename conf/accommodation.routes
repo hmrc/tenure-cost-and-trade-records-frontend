@@ -1,7 +1,7 @@
 # 6048 Accommodation details
 
-GET         /accommodation-unit                             controllers.accommodation.AccommodationUnit6048Controller.show(idx: Int ?= 0)
+GET         /accommodation-unit                             controllers.accommodation.AccommodationUnit6048Controller.show
 POST        /accommodation-unit                             controllers.accommodation.AccommodationUnit6048Controller.submit
 
-GET         /available-rooms                                controllers.accommodation.AvailableRooms6048Controller.show(idx: Int)
+GET         /available-rooms                                controllers.accommodation.AvailableRooms6048Controller.show
 POST        /available-rooms                                controllers.accommodation.AvailableRooms6048Controller.submit

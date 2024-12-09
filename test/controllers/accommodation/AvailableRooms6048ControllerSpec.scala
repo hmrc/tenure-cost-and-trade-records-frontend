@@ -48,7 +48,7 @@ class AvailableRooms6048ControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = availableRooms6048Controller.show(0)(fakeRequest)
+      val result = availableRooms6048Controller.show(fakeRequest)
       status(result) shouldBe OK
     }
   }

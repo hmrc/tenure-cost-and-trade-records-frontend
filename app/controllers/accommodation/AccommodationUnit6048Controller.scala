@@ -47,11 +47,11 @@ class AccommodationUnit6048Controller @Inject() (
     with I18nSupport
     with Logging {
 
-  def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       accommodationUnitView(
         accommodationDetails
-          .flatMap(_.accommodationUnits.lift(idx))
+          .flatMap(_.accommodationUnits.lift(navigator.idx))
           .map(accommodation => (accommodation.unitName, accommodation.unitType))
           .fold(accommodationUnit6048Form)(accommodationUnit6048Form.fill)
       )
@@ -75,11 +75,7 @@ class AccommodationUnit6048Controller @Inject() (
           .saveOrUpdate(updatedData)
           .map { _ =>
             Redirect(
-              navigator
-                .nextPage(AccommodationUnitPageId, updatedData)
-                .apply(updatedData)
-                .url
-                .replace("99", navigator.idx.toString)
+              navigator.nextPageWithParam(AccommodationUnitPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
       }

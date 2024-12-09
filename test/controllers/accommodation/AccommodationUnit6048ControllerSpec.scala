@@ -25,7 +25,7 @@ import utils.TestBaseSpec
   */
 class AccommodationUnit6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage = controllers.accommodation.routes.AvailableRooms6048Controller.show(0).url
+  private val nextPage = controllers.accommodation.routes.AvailableRooms6048Controller.show.url + "?idx=0"
 
   def accommodationUnit6048Controller =
     new AccommodationUnit6048Controller(
@@ -44,7 +44,7 @@ class AccommodationUnit6048ControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = accommodationUnit6048Controller.show(0)(fakeRequest)
+      val result = accommodationUnit6048Controller.show(fakeRequest)
       status(result) shouldBe OK
     }
   }

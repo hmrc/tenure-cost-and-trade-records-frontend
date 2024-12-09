@@ -65,6 +65,15 @@ abstract class Navigator @Inject() (
   ): Session => Call =
     routeMap.getOrElse(id, defaultPage) andThen possibleCYARedirect(session: Session) andThen auditNextUrl(session)
 
+  /**
+    * Get next page call with request parameter.
+    */
+  def nextPageWithParam(id: Identifier, session: Session, paramAndValue: String)(implicit
+    hc: HeaderCarrier,
+    request: Request[AnyContent]
+  ): Call =
+    nextPage(id, session).apply(session).callWithParam(paramAndValue)
+
   protected def auditNextUrl(session: Session)(call: Call)(implicit hc: HeaderCarrier): Call = {
     audit.sendContinueNextPage(session, call.url)
     call

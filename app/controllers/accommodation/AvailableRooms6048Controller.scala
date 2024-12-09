@@ -47,7 +47,7 @@ class AvailableRooms6048Controller @Inject() (
     with I18nSupport
     with Logging {
 
-  def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       availableRoomsView(
         currentUnit
@@ -75,8 +75,11 @@ class AvailableRooms6048Controller @Inject() (
           .saveOrUpdate(updatedData)
           .map { _ =>
             Redirect(
-              navigator.nextPage(AvailableRoomsPageId, updatedData).apply(updatedData)
-            ) // .url.replace("99", navigator.idx.toString)
+              navigator
+                .nextPage(AvailableRoomsPageId, updatedData)
+                .apply(updatedData)
+                // TODO: navigator.nextPageWithParam(AvailableRoomsPageId, updatedData, s"idx=${navigator.idx}")
+            )
           }
       }
     )
@@ -100,6 +103,6 @@ class AvailableRooms6048Controller @Inject() (
   private def backLink(implicit
     request: SessionRequest[AnyContent]
   ): String =
-    controllers.accommodation.routes.AccommodationUnit6048Controller.show(navigator.idx).url
+    s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
 
 }
