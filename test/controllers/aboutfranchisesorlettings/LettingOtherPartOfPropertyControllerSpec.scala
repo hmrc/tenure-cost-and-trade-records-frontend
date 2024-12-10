@@ -16,68 +16,150 @@
 
 package controllers.aboutfranchisesorlettings
 
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
+import models.ForType.*
+import models.{ForType, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import utils.FormBindingTestAssertions.mustContainError
+import play.api.libs.json.Writes
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.test.Helpers.*
+import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
+import utils.JsoupHelpers.*
 import utils.TestBaseSpec
+
+import scala.concurrent.Future.successful
 import scala.language.reflectiveCalls
 
 class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
 
-  import TestData._
-
-  def lettingOtherPartOfPropertyController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  ) =
-    new LettingOtherPartOfPropertyController(
-      stubMessagesControllerComponents(),
-      aboutFranchisesOrLettingsNavigator,
-      lettingOtherPartOfPropertyView,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
-    )
-
-  "GET /" should {
-    "return 200" in {
-      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = lettingOtherPartOfPropertyController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
-    }
-
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = lettingOtherPartOfPropertyController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
+  "the LettingOtherPartOfProperty controller" when {
+    "handling GET / requests"  should {
+      "reply 200 with the fresh form 6010 if no data in session" in new ControllerFixture(
+        forType = FOR6010,
+        aboutFranchisesOrLettings = None
+      ) {
+        val result = controller.show(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        contentAsString(result)     should not include "checked"
+      }
+      "reply 200 with the fresh form 6030 if no data in session" in new ControllerFixture(
+        forType = FOR6030,
+        aboutFranchisesOrLettings = None
+      ) {
+        val result = controller.show(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        contentAsString(result)     should not include "checked"
+      }
+      "reply 200 with the pre-filled form 6010" in new ControllerFixture(
+        forType = FOR6010,
+        aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
+      ) {
+        val result = controller.show(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = contentAsJsoup(result)
+        html.getElementsByTag("h1").first().text()               shouldBe "lettingOtherPartOfProperty.heading"
+        html.getElementById("lettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
+        html.backLinkHref                                        shouldBe routes.AddAnotherCateringOperationController.show(0).url
+      }
+      "reply 200 with the pre-filled form 6030" in new ControllerFixture(
+        forType = FOR6030,
+        aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
+      ) {
+        val result = controller.show(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val html = contentAsJsoup(result)
+        html.getElementsByTag("h1").first().text()               shouldBe "lettingOtherPartOfProperty.heading"
+        html.getElementById("lettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
+        html.backLinkHref                                        shouldBe routes.AddAnotherCateringOperationController.show(0).url
       }
     }
-  }
-
-  "Letting other part of properties form" should {
-    "error if lettingOtherPartOfProperty is missing" in {
-      val formData = baseFormData - errorKey.lettingOtherPartOfProperties
-      val form     = lettingOtherPartOfPropertiesForm.bind(formData)
-
-      mustContainError(errorKey.lettingOtherPartOfProperties, "error.lettingOtherPartOfProperty.missing", form)
+    "handling POST / requests" should {
+      "reply 400 and error messages if form 6010 is submitted with invalid data from TL" in new ControllerFixture(
+        forType = FOR6010
+      ) {
+        val result  = controller.submit(
+          fakePostRequest
+            .withQueryString(
+              "from" -> Seq("TL")
+            )
+            .withFormUrlEncodedBody(
+              "lettingOtherPartOfProperty" -> "" // missing !!!
+            )
+        )
+        val content = contentAsString(result)
+        status(result) shouldBe BAD_REQUEST
+        content          should include("error.lettingOtherPartOfProperty.missing")
+        content          should include(s"${controllers.routes.TaskListController.show().url}#letting-other-part-of-property")
+      }
+      "reply 400 and error messages if form 6030 is submitted with invalid data" in new ControllerFixture(
+        forType = FOR6030
+      ) {
+        val result  = controller.submit(
+          fakePostRequest
+            .withFormUrlEncodedBody(
+              "lettingOtherPartOfProperty" -> "" // missing !!!
+            )
+        )
+        val content = contentAsString(result)
+        status(result) shouldBe BAD_REQUEST
+        content          should include("error.lettingOtherPartOfProperty6030.missing")
+        content          should include(routes.AddAnotherCateringOperationController.show(0).url)
+      }
+    }
+    "reply 303 redirect to 'LettingOtherPartOfPropertyDetails' page if answer='yes' and from CYA" in new ControllerFixture(
+      forType = FOR6015
+    ) {
+      val result = controller.submit(
+        fakePostRequest
+          .withQueryString(
+            "from" -> Seq("CYA")
+          )
+          .withFormUrlEncodedBody(
+            "lettingOtherPartOfProperty" -> "yes"
+          )
+      )
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    }
+    "reply 303 redirect to 'LettingOtherPartOfPropertyDetails' page if answer='yes'" in new ControllerFixture(
+      forType = FOR6010
+    ) {
+      val result = controller.submit(
+        fakePostRequest
+          .withFormUrlEncodedBody(
+            "lettingOtherPartOfProperty" -> "yes"
+          )
+      )
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsController.show(Some(0)).url
     }
   }
 
-  object TestData {
-    val errorKey: ErrorKey = new ErrorKey
+  trait ControllerFixture(
+    forType: ForType = FOR6010,
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  ):
+    val repository = mock[SessionRepo]
+    val data       = captor[Session]
+    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
 
-    class ErrorKey {
-      val lettingOtherPartOfProperties: String = "lettingOtherPartOfProperty"
-    }
-
-    val baseFormData: Map[String, String] = Map("lettingOtherPartOfProperty" -> "yes")
-  }
+    val controller =
+      new LettingOtherPartOfPropertyController(
+        stubMessagesControllerComponents(),
+        aboutFranchisesOrLettingsNavigator,
+        lettingOtherPartOfPropertyView,
+        preEnrichedActionRefiner(
+          forType = forType,
+          aboutFranchisesOrLettings = aboutFranchisesOrLettings
+        ),
+        repository
+      )
 }
