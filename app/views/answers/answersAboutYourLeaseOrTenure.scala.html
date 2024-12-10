@@ -841,7 +841,7 @@
                             _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
                             aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                         sectionAnswers2.conditionRow(
-                            _.payACapitalSumAmountDetails.isDefined,
+                            _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).contains("yes"),
                             "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails",
                             _.payACapitalSumAmountDetails.map(_.capitalSumPaidAmountDetails.asMoney).getOrElse(""),
                             aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show(), "",
