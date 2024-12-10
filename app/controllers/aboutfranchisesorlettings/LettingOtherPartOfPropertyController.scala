@@ -68,14 +68,7 @@ class LettingOtherPartOfPropertyController @Inject() (
             }
           },
           "lettingOtherPartOfProperty",
-          getBackLink(request.sessionData, navigator.from) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for catering operation details page reached with error: $msg")
-              throw new RuntimeException(
-                s"Navigation for catering operation details page reached with error $msg"
-              )
-          },
+          getBackLink(request.sessionData, navigator.from),
           request.sessionData.toSummary,
           forType
         )
@@ -95,14 +88,7 @@ class LettingOtherPartOfPropertyController @Inject() (
           cateringOperationOrLettingAccommodationView(
             formWithErrors,
             "lettingOtherPartOfProperty",
-            getBackLink(request.sessionData, navigator.from) match {
-              case Right(link) => link
-              case Left(msg)   =>
-                logger.warn(s"Navigation for letting other part of property page reached with error: $msg")
-                throw new RuntimeException(
-                  s"Navigation for letting other part of property page reached with error $msg"
-                )
-            },
+            getBackLink(request.sessionData, navigator.from),
             request.sessionData.toSummary,
             forType
           )
@@ -126,16 +112,12 @@ class LettingOtherPartOfPropertyController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session, fromLocation: String): Either[String, String] =
+  private def getBackLink(answers: Session, fromLocation: String): String =
     fromLocation match {
-      case "TL" => Right(controllers.routes.TaskListController.show().url + "#letting-other-part-of-property")
+      case "TL" =>
+        controllers.routes.TaskListController.show().url + "#letting-other-part-of-property"
       case _    =>
-        answers.forType match {
-          case FOR6015 | FOR6016 =>
-            Right(getBackLinkOfrSections(answers))
-          case _                 =>
-            Right(getBackLinkOfrSections(answers))
-        }
+        getBackLinkOfrSections(answers)
     }
 
   private def getBackLinkOfrSections(answers: Session): String =
@@ -150,7 +132,8 @@ class LettingOtherPartOfPropertyController @Inject() (
         answers.forType match {
           case FOR6015 | FOR6016 =>
             controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
-          case _                 => controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
+          case _                 =>
+            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
         }
     }
 
