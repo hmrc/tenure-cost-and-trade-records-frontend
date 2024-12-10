@@ -73,12 +73,12 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
     "return correct backLink when 'from=TL' query param is present" in {
       val result = payACapitalSumAmountDetailsController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-details"
+        controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-amount-details"
       )
     }
 
-    "CurrentAnnualRentController123 SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted123" in {
+    "Pay a capital sum amount details SUBMIT /" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = payACapitalSumAmountDetailsController().submit(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
