@@ -104,6 +104,10 @@ trait TestBaseSpec
     RequestTarget("", "", Map("from" -> Seq("IES")))
   )
 
+  extension (request: FakeRequest[AnyContentAsEmpty.type])
+    def withQueryString(elems: (String, Seq[String])*) =
+      request.withTarget(RequestTarget("", "", Map(elems: _*)))
+
   def messages: Messages = messagesApi.preferred(fakeRequest)
 
   def servicesConfig: ServicesConfig = inject[ServicesConfig]
