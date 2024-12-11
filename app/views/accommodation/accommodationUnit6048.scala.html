@@ -40,7 +40,7 @@
     @formWithCSRF(action = controllers.accommodation.routes.AccommodationUnit6048Controller.submit) {
 
         @includes.textInput(govukInput, form, "unitName", "govuk-!-width-two-thirds", "accommodation.unitName")
-        @includes.textInput(govukInput, form, "unitType", "govuk-!-width-two-thirds", "accommodation.unitType", optional = true, hintMsg = "accommodation.unitType")
+        @includes.textInput(govukInput, form, "unitType", "govuk-!-width-two-thirds", "accommodation.unitType", hintMsg = "accommodation.unitType")
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

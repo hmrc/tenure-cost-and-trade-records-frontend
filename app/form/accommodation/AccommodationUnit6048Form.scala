@@ -33,6 +33,7 @@ object AccommodationUnit6048Form:
           maxLength(200, "error.accommodation.unitName.maxLength")
         ),
         "unitType" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.accommodation.unitType.required"),
           maxLength(200, "error.accommodation.unitType.maxLength")
         )
       )
