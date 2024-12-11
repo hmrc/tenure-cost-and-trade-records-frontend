@@ -33,6 +33,7 @@ import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
 import models.{AnnualRent, ForType, Session, SubmissionDraft}
 
+import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
 
 trait FakeObjects {
@@ -378,6 +379,9 @@ trait FakeObjects {
     PropertyCurrentlyUsed(List("fleetCaravanPark", "chaletPark", "other"), Some("another use details"))
   )
 
+  val prefilledPropertyCurrentlyInUsed: PropertyCurrentlyUsed =
+    PropertyCurrentlyUsed(List("fleetCaravanPark", "chaletPark", "other"), Some("another use details"))
+
   val prefilledAboutYouAndThePropertyPartTwo6045: AboutYouAndThePropertyPartTwo =
     prefilledAboutYouAndThePropertyPartTwo.copy(propertyCurrentlyUsed = prefilledPropertyCurrentlyInUsed)
 
@@ -402,9 +406,6 @@ trait FakeObjects {
     canProceed = None,
     occupiersList = IndexedSeq.empty
   )
-
-  val prefilledPropertyCurrentlyInUsed =
-    PropertyCurrentlyUsed(List("fleetCaravanPark", "chaletPark", "other"), Some("another use details"))
 
   val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
     YourContactDetails(
@@ -1407,7 +1408,7 @@ trait FakeObjects {
     Some("test@test.com"),
     Some("12312312312"),
     Some("additional info"),
-    Instant.now(),
+    Instant.now.truncatedTo(MILLIS),
     false
   )
 
@@ -1820,8 +1821,8 @@ trait FakeObjects {
   val prefilledAccommodationDetails: AccommodationDetails = AccommodationDetails(
     List(
       AccommodationUnit("Unit 1", "unit type", AvailableRooms(2, 4, 6, "Game room", 10)),
-      AccommodationUnit("Unit 2", "", AvailableRooms()),
-      AccommodationUnit("Unit 3", "")
+      AccommodationUnit("Unit 2", "barn", AvailableRooms()),
+      AccommodationUnit("Unit 3", "type")
     )
   )
 
