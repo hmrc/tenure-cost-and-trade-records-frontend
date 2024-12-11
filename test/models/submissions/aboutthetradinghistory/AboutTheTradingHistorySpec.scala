@@ -18,6 +18,7 @@ package models.submissions.aboutthetradinghistory
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.Json
 import utils.FakeObjects
 
 /**
@@ -31,6 +32,11 @@ class AboutTheTradingHistorySpec extends AnyFlatSpec with Matchers with FakeObje
     tradingHistory.fixedOperatingExpensesSections.map(_.total).sum                             shouldBe 15
     tradingHistory.otherCosts.map(_.otherCosts.map(_.total).sum)                               shouldBe Some(6)
     tradingHistory.variableOperatingExpenses.map(_.variableOperatingExpenses.map(_.total).sum) shouldBe Some(24)
+  }
+
+  it should "be serialized/deserialized from JSON" in {
+    val json = Json.toJson(prefilledAboutYourTradingHistory)
+    json.as[AboutTheTradingHistory] shouldBe prefilledAboutYourTradingHistory
   }
 
 }

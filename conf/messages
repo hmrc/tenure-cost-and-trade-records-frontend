@@ -1669,13 +1669,14 @@ lettingHistory.maxNumberReached.understanding.required = You are required to con
 # ACCOMMODATION DETAILS 6048
 # ############################
 label.section.accommodation = Accommodation details
-accommodation.unit.heading = Accommodation unit
+accommodation.unit.heading = Accommodation units
 accommodation.unit.p1 = Provide details of all accommodation units available for commercial letting. You will have the opportunity to add multiple units.
 label.accommodation.unitName = Unit name
 label.accommodation.unitType = Unit type
 hint.accommodation.unitType = For example, character cottage or barn
 error.accommodation.unitName.required = Enter the name of the accommodation unit
 error.accommodation.unitName.maxLength = The unit name must be {0} characters or fewer
+error.accommodation.unitType.required = Enter the type of the unit
 error.accommodation.unitType.maxLength = The unit type must be {0} characters or fewer
 accommodation.availableRooms.heading = Available rooms in {0}
 accommodation.availableRooms.p1 = You must declare the number of rooms for let in {0}
