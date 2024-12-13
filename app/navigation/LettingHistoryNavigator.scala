@@ -87,8 +87,14 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           then routes.OccupierDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "temporaryOccupiers")
         else routes.CompletedLettingsController.show
+    },
+    HowManyNightsPageId      -> { (currentSession, _) =>
+      for doesHaveCompletedLettings <- hasCompletedLettings(currentSession)
+      yield
+        if doesHaveCompletedLettings
+        then routes.OccupierListController.show
+        else routes.CompletedLettingsController.show
     }
-    // TODO IntendedLettingNightsPageId ... either CompletedLettings or OccupierList
   )
 
   def backLinkUrl(ofPage: Identifier, navigationData: Map[String, String] = Map.empty)(using
@@ -117,16 +123,14 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
    */
   private val forwardNavigationMap = Map[Identifier, NavigationFunction](
     PermanentResidentsPageId -> { (updatedSession, _) =>
-      for answeredYes <- hasPermanentResidents(updatedSession)
+      for doesHavePermanentResidents <- hasPermanentResidents(updatedSession)
       yield
-        if answeredYes
+        if doesHavePermanentResidents
         then
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
           else routes.ResidentListController.show
-        else
-          // AnswerNo
-          routes.CompletedLettingsController.show
+        else routes.CompletedLettingsController.show
     },
     ResidentDetailPageId     -> { (_, _) =>
       Some(routes.ResidentListController.show)
@@ -143,26 +147,21 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "permanentResidents")
-        else
-          // AnswerNo
-          routes.CompletedLettingsController.show
+        else routes.CompletedLettingsController.show
     },
     MaxNumberReachedPageId   -> { (_, navigationData) =>
       for kind <- Some(navigationData("kind"))
       yield
         if kind == "permanentResidents" then routes.CompletedLettingsController.show
-        else if kind == "temporaryOccupiers" then Call("GET", "/path/to/intended-nights")
+        else if kind == "temporaryOccupiers" then routes.HowManyNightsController.show
         else controllers.routes.TaskListController.show().withFragment("lettingHistory")
     },
     CompletedLettingsPageId  -> { (updatedSession, _) =>
-      for answeredYes <- hasCompletedLettings(updatedSession)
+      for doesHaveCompletedLettings <- hasCompletedLettings(updatedSession)
       yield
-        if answeredYes
+        if doesHaveCompletedLettings
         then routes.OccupierDetailController.show(index = None)
-        else
-          // AnswerNo
-          // TODO Introduce the HowManyNightsController
-          Call("GET", "/path/to/intended-nights")
+        else routes.HowManyNightsController.show
     },
     OccupierDetailPageId     -> { (_, navigationData) =>
       Some(routes.RentalPeriodController.show(index = Some(navigationData("index").toInt)))
@@ -183,10 +182,14 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           if completedLettings(updatedSession).size < MaxNumberOfCompletedLettings
           then routes.OccupierDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "temporaryOccupiers")
-        else
-          // AnswerNo
-          // TODO Introduce the IntendedLettingsNightsController
-          Call("GET", "/path/to/intended-nights")
+        else routes.HowManyNightsController.show
+    },
+    HowManyNightsPageId      -> { (currentSession, _) =>
+      for meetsCriteria <- doesMeetLettingCriteria(currentSession)
+      yield
+        if meetsCriteria
+        then Call("GET", "/path/to/is-yearly-available")
+        else Call("GET", "/path/to/letting-stopped")
     }
   )
 

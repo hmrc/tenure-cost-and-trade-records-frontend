@@ -1573,7 +1573,7 @@ lettingHistory.permanentResidents.heading = Permanent residents
 lettingHistory.permanentResidents.subheading = You must declare if any part of the property is occupied by tenants or employees as their permanent residence. Include any commercial residential lettings and staff accommodation.
 lettingHistory.hasPermanentResidents.legend = Is any part of the property used as a permanent residence by tenants or employees?
 lettingHistory.hasPermanentResidents.hint = Include any commercial residential lettings and staff accommodation.
-lettingHistory.hasPermanentResidents.error = Select yes if the property is used as permanent residence.
+lettingHistory.hasPermanentResidents.required = Select yes if the property is used as permanent residence.
 
 lettingHistory.residentDetail.heading = Resident''s details
 lettingHistory.residentDetail.subheading = We need the contact details of one person for each part of the property used as a main residence by a tenant or employee. You will have the opportunity to add additional households if required.
@@ -1624,6 +1624,9 @@ lettingHistory.maxNumberReached.temporaryOccupiers.heading = You have added the 
 lettingHistory.maxNumberReached.temporaryOccupiers.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VOA will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
 lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
+
+lettingHistory.intendedLettings.heading = How many nights do you intend to let the property commercially between {0} and {1}?
+lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not intend to let the property.
 
 
 # ACCOMMODATION DETAILS 6048

@@ -24,23 +24,23 @@ import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.completedLettings as CompletedLettingsView
 
 class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
 
   "the CompletedLettings controller" when {
-    "the user session is fresh" should {
+    "the user has not provided any answer yet" should {
       "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result  = controller.show(fakeGetRequest)
-        val content = contentAsString(result)
+        val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include(s"""${routes.PermanentResidentsController.show.url}" class="govuk-back-link"""")
-        content                     should include("lettingHistory.completedLettings.heading")
-        content                     should not include "checked"
+        val page = contentAsJsoup(result)
+        page.heading        shouldBe "lettingHistory.completedLettings.heading"
+        page.backLink       shouldBe routes.PermanentResidentsController.show.url
+        page.radios("answer") should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
@@ -49,7 +49,8 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        contentAsString(result) should include("lettingHistory.hasCompletedLettings.required")
+        val page   = contentAsJsoup(result)
+        page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to 'Occupier Detail' page" in new ControllerFixture {
         val result = controller.submit(
@@ -63,19 +64,20 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         hasCompletedLettings(data).value shouldBe true
       }
     }
-    "the user session is stale" should {
-      "regardless of the given number of occupiers" should {
+    "the user has already provided an answer"  should {
+      "regardless of the given number of occupiers"          should {
         "be handling GET by replying 200 with the HTML form having checked radios" in new ControllerFixture(
           permanentResidents = twoResidents,
           hasCompletedLettings = Some(true)
         ) {
-          val result  = controller.show(fakeGetRequest)
-          val content = contentAsString(result)
+          val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include(s"""${routes.ResidentListController.show.url}" class="govuk-back-link"""")
-          content                     should include("checked")
+          val page = contentAsJsoup(result)
+          page.backLink          shouldBe routes.ResidentListController.show.url
+          page.radios("answer")    should haveChecked(value = "yes")
+          page.radios("answer") shouldNot haveChecked(value = "no")
         }
         "be handling POST answer='yes' by replying 303 redirect to the 'Occupier Detail' page" in new ControllerFixture(
           hasCompletedLettings = Some(true)
@@ -96,10 +98,23 @@ class CompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe "/path/to/intended-nights"
+          redirectLocation(result).value   shouldBe routes.HowManyNightsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe false
           completedLettings(data)          shouldBe Nil
+        }
+      }
+      "and the maximum number of residents has been reached" should {
+        "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'Occupiers List' page" in new ControllerFixture(
+          hasCompletedLettings = Some(true)
+        ) {
+          pending
+          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+          status(result)                   shouldBe SEE_OTHER
+          redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
+          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          hasCompletedLettings(data).value shouldBe true
+          completedLettings(data)            should have size 5
         }
       }
     }

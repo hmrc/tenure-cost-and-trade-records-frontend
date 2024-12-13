@@ -26,7 +26,8 @@ case class LettingHistory(
   mayHaveMorePermanentResidents: Option[Boolean] = None,
   hasCompletedLettings: Option[Boolean] = None,
   completedLettings: List[OccupierDetail] = Nil,
-  mayHaveMoreCompletedLettings: Option[Boolean] = None
+  mayHaveMoreCompletedLettings: Option[Boolean] = None,
+  intendedLettings: Option[IntendedLettings] = None
 )
 
 object LettingHistory:
@@ -228,6 +229,46 @@ object LettingHistory:
       lettingHistory <- session.lettingHistory
       hasEvenMore    <- lettingHistory.mayHaveMoreCompletedLettings
     yield hasEvenMore
+
+  def intendedLettings(session: Session): Option[IntendedLettings] =
+    for
+      lettingHistory   <- session.lettingHistory
+      intendedLettings <- lettingHistory.intendedLettings
+    yield intendedLettings
+
+  def withNumberOfNights(nights: Int)(using session: Session): Session =
+    val someIntendedLettings = Some(
+      IntendedLettings(
+        nights = Some(nights)
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLettings
+      ),
+      copyFunc = { lettingHistory =>
+        lettingHistory.copy(intendedLettings =
+          lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLettings
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(nights = Some(nights))
+            )
+          }
+        )
+      }
+    )
+
+  def doesMeetLettingCriteria(session: Session): Option[Boolean] =
+    for
+      lettingHistory   <- session.lettingHistory
+      intendedLettings <- lettingHistory.intendedLettings
+      nights           <- intendedLettings.nights
+    yield isAboveThreshold(nights, session.isWelsh)
+
+  private def isAboveThreshold(nights: Int, isWelsh: Boolean): Boolean =
+    if isWelsh then nights >= 252 else nights >= 140
 
   given Format[LettingHistory]                   = Json.format
   extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes

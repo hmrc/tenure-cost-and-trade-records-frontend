@@ -22,12 +22,12 @@ import org.mockito.ArgumentCaptor
 import play.api.libs.json.Writes
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import utils.{JsoupHelpers, TestBaseSpec}
 
 import java.time.LocalDate
 import scala.concurrent.Future.successful
 
-class LettingHistoryControllerSpec extends TestBaseSpec:
+class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   val oneResident = List(
     ResidentDetail(name = "Mr. One", address = "Address One")

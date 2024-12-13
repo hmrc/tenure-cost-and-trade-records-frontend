@@ -19,7 +19,7 @@ package utils
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.{MatchResult, Matcher}
 
-trait CustomMatchers:
+trait AnswerYesNoMatchers:
 
   def beAnswerYes = new AnswerYesNoMatcher(expected = AnswerYes)
   def beAnswerNo  = new AnswerYesNoMatcher(expected = AnswerNo)
@@ -32,4 +32,4 @@ trait CustomMatchers:
         s"""Answer $actual was $expected""""
       )
 
-object CustomMatchers extends CustomMatchers
+object AnswerYesNoMatchers extends AnswerYesNoMatchers

@@ -17,14 +17,14 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.completedLettings
+import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{Address, LettingHistory, LocalPeriod, OccupierDetail}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
 import views.html.lettingHistory.rentalPeriod as RentalPeriodView
@@ -33,24 +33,24 @@ import java.time.LocalDate
 
 class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
 
-  "the RentPeriod controller" when {
+  "the RentalPeriod controller" when {
     "the user has not entered any rent period yet"           should {
-      "be handling GET /rental-period?index=0 by replying 200 with the form showing date fields" in new StaleSessionFixture {
-        val result  = controller.show(maybeIndex = Some(0))(fakeGetRequest)
-        val content = contentAsString(result)
+      "be handling GET index=0 by replying 200 with the form showing date fields" in new ControllerFixture {
+        val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include(s"""${routes.OccupierDetailController.show(Some(0)).url}" class="govuk-back-link"""")
-        content                     should include("lettingHistory.rentalPeriod.heading")
-        content                     should include("""name="fromDate.day"""")
-        content                     should include("""name="fromDate.month"""")
-        content                     should include("""name="fromDate.year"""")
-        content                     should include("""name="toDate.day"""")
-        content                     should include("""name="toDate.month"""")
-        content                     should include("""name="toDate.year"""")
+        val page = contentAsJsoup(result)
+        page.heading               shouldBe "lettingHistory.rentalPeriod.heading"
+        page.backLink              shouldBe routes.OccupierDetailController.show(Some(0)).url
+        page.input("fromDate.day")   should beEmpty
+        page.input("fromDate.month") should beEmpty
+        page.input("fromDate.year")  should beEmpty
+        page.input("toDate.day")     should beEmpty
+        page.input("toDate.month")   should beEmpty
+        page.input("toDate.year")    should beEmpty
       }
-      "be handling POST /rental-period?index=0 by replying 303 redirect to 'Occupier List' page" in new StaleSessionFixture {
+      "be handling POST index=0 by replying 303 redirect to 'Occupier List' page" in new ControllerFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
           "fromDate.day"   -> "1",
           "fromDate.month" -> "4",
@@ -69,7 +69,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
       }
     }
     "the user has already entered a rent period"             should {
-      "be handling GET /rental-period?index=0 by replying 200 with the pre-filled form showing date fields" in new StaleSessionFixture(
+      "be handling GET index=0 by replying 200 with the pre-filled form showing date values" in new ControllerFixture(
         rental = Some(
           LocalPeriod(
             fromDate = LocalDate.of(previousFiscalYearEnd, 9, 10),
@@ -77,33 +77,33 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           )
         )
       ) {
-        val result  = controller.show(maybeIndex = Some(0))(fakeGetRequest)
-        val content = contentAsString(result)
+        val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include("""name="fromDate.day" type="text"   value="10"""")
-        content                     should include("""name="fromDate.month" type="text"   value="9"""")
-        content                     should include("""name="fromDate.year" type="text"   value="2024"""")
-        content                     should include("""name="toDate.day" type="text"   value="9"""")
-        content                     should include("""name="toDate.month" type="text"   value="2"""")
-        content                     should include("""name="toDate.year" type="text"   value="2023"""")
-        content                     should include(routes.OccupierDetailController.show(index = Some(0)).url)
+        val page = contentAsJsoup(result)
+        page.backLink              shouldBe routes.OccupierDetailController.show(index = Some(0)).url
+        page.input("fromDate.day")   should haveValue("10")
+        page.input("fromDate.month") should haveValue("9")
+        page.input("fromDate.year")  should haveValue("2024")
+        page.input("toDate.day")     should haveValue("9")
+        page.input("toDate.month")   should haveValue("2")
+        page.input("toDate.year")    should haveValue("2023")
       }
     }
     "regardless users having entered occupier's name or not" should {
-      "be handling GET /rental-period missing index by replying 303 redirect to 'Occupiers List' page" in new StaleSessionFixture {
+      "be handling GET / missing index by replying 303 redirect to 'Occupiers List' page" in new ControllerFixture {
         val result = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
-      "be handling GET /rental-period unknown index by replying 303 redirect to 'Occupiers List' page" in new StaleSessionFixture {
+      "be handling GET / unknown index by replying 303 redirect to 'Occupiers List' page" in new ControllerFixture {
         val result = controller.show(maybeIndex = Some(99))(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
-      "be handling invalid POST /detail by replying 400 with error messages" in new StaleSessionFixture {
-        val result  = controller.submit(index = Some(0))(
+      "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
+        val result = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "fromDate.day"   -> "",
             "fromDate.month" -> "",
@@ -113,14 +113,14 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
             "toDate.year"    -> ""
           )
         )
-        val content = contentAsString(result)
         status(result) shouldBe BAD_REQUEST
-        content          should include("error.date.required")
+        val page   = contentAsJsoup(result)
+        page.error("fromDate.day") shouldBe "error.date.required"
       }
     }
   }
 
-  trait StaleSessionFixture(rental: Option[LocalPeriod] = None)
+  trait ControllerFixture(rental: Option[LocalPeriod] = None)
       extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new RentalPeriodController(

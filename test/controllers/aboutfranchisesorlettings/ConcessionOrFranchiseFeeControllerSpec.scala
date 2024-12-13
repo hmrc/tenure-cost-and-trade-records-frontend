@@ -39,7 +39,7 @@ class ConcessionOrFranchiseFeeControllerSpec extends TestBaseSpec:
         charset(result).value     shouldBe UTF_8.charset
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text() shouldBe "concessionOrFranchiseFee.heading"
-        html.backLinkHref                            should endWith(routes.FranchiseOrLettingsTiedToPropertyController.show().url)
+        html.backLink                                should endWith(routes.FranchiseOrLettingsTiedToPropertyController.show().url)
 
       }
       "reply 200 with a pre-filled HTML form and expected backLink" in new ControllerFixture(
@@ -51,7 +51,7 @@ class ConcessionOrFranchiseFeeControllerSpec extends TestBaseSpec:
         charset(result).value     shouldBe UTF_8.charset
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text() shouldBe "concessionOrFranchiseFee.heading"
-        html.backLinkHref                            should include(controllers.routes.TaskListController.show().url)
+        html.backLink                                should include(controllers.routes.TaskListController.show().url)
       }
     }
     "handling POST / requests" should {

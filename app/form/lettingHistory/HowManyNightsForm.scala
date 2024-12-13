@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.lettingHistory
+package form.lettingHistory
 
-import models.submissions.lettingHistory.ResidentDetail
+import play.api.data.Form
+import play.api.data.Forms.{number, single}
+import play.api.data.validation.Constraints.min
 
-trait PermanentResidentFixture:
-
-  val oneResident = List(
-    ResidentDetail(name = "one", address = "address1")
-  )
-
-  val fiveResidents = oneResident ++ List(
-    ResidentDetail(name = "two", address = "address2"),
-    ResidentDetail(name = "three", address = "address3"),
-    ResidentDetail(name = "four", address = "address4"),
-    ResidentDetail(name = "five", address = "address5")
+object HowManyNightsForm:
+  val theForm = Form[Int](
+    single(
+      "nights" -> number.verifying(min(0))
+    )
   )
