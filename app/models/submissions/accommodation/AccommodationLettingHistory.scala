@@ -25,9 +25,9 @@ import java.time.LocalDate
   */
 case class AccommodationLettingHistory(
   financialYearEnd: LocalDate,
-  nightsAvailableToLet: Option[BigDecimal] = None,
-  nightsLet: Option[BigDecimal] = None,
-  weeksAvailableForPersonalUse: Option[BigDecimal] = None
+  nightsAvailableToLet: Option[Int] = None,
+  nightsLet: Option[Int] = None,
+  weeksAvailableForPersonalUse: Option[Int] = None
 )
 
 object AccommodationLettingHistory:
