@@ -1618,6 +1618,17 @@ lettingHistory.occupierList.rentalPeriod.text = {0} to {1}
 lettingHistory.occupiersList.hadMoreOccupiers.label = Did any other occupants rent part of your property for 29 nights or more between {0} and {1}?
 lettingHistory.occupierList.hadMoreOccupiers.required = Select yes if the property had more occupiers
 
+lettingHistory.advertisingOnline.heading = Do you advertise the property online?
+error.lettingHistory.advertisingOnline.required = Select yes if you advertise the property online
+lettingHistory.advertisingOnlineDetails.heading  = Online advertising
+lettingHistory.advertisingOnlineDetails.paragraph = Provide the details of the holiday lettings websites, where the property is advertised. You will have the opportunity to add multiple
+label.lettingHistory.advertisingOnlineDetails.website = Website address
+hint.lettingHistory.advertisingOnlineDetails.website = Paste a direct link to your property, if known.
+lettingHistory.advertisingOnlineDetails.number.label = Property reference number
+lettingHistory.advertisingOnlineDetails.number.hint = Leave blank if not known.
+
+
+
 lettingHistory.maxNumberReached.permanentResidents.heading = You have added the maximum of {0} permanent residents
 lettingHistory.maxNumberReached.permanentResidents.paragraph.1 = If you had {0} or more permanent residents during the specified time range, the VOA will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.temporaryOccupiers.heading = You have added the maximum of {0} temporary occupiers

@@ -26,6 +26,12 @@ GET         /letting-history/occupier-remove                    controllers.lett
 POST        /letting-history/occupier-remove                    controllers.lettingHistory.OccupierListController.performRemove(index: Int)
 POST        /letting-history/occupier-list                      controllers.lettingHistory.OccupierListController.submit
 
+GET         /letting-history/advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.show
+POST        /letting-history/advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.submit
+
+GET         /letting-history/advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.show(index: Option[Int] ?= None)
+POST        /letting-history/advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.submit
+
 GET         /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.show(kind: String)
 POST        /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.submit(kind: String)
 

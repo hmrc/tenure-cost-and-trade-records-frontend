@@ -49,17 +49,25 @@ case object OccupierListPageId extends Identifier:
 case object HowManyNightsPageId extends Identifier:
   override def toString: String = "howManyNightsPage"
 
+case object AdvertisingOnlinePageId extends Identifier:
+  override def toString: String = "advertisingOnlinePage"
+
+case object AdvertisingOnlineDetailsPageId extends Identifier:
+  override def toString: String = "advertisingOnlinePageDetailsPage"
+
 extension (string: String)
   def asPageIdentifier: Option[Identifier] = string match
-    case "permanentResidentsPage" => Some(PermanentResidentsPageId)
-    case "residentDetailPage"     => Some(ResidentDetailPageId)
-    case "residentRemovePage"     => Some(ResidentRemovePageId)
-    case "residentListPage"       => Some(ResidentListPageId)
-    case "maxNumberReachedPage"   => Some(MaxNumberReachedPageId)
-    case "completedLettingsPage"  => Some(CompletedLettingsPageId)
-    case "occupierDetailPage"     => Some(OccupierDetailPageId)
-    case "rentalPeriodPage"       => Some(RentalPeriodPageId)
-    case "occupierRemovePage"     => Some(OccupierRemovePageId)
-    case "occupierListPage"       => Some(OccupierListPageId)
-    case "howManyNightsPage"      => Some(HowManyNightsPageId)
-    case _                        => None
+    case "permanentResidentsPage"       => Some(PermanentResidentsPageId)
+    case "residentDetailPage"           => Some(ResidentDetailPageId)
+    case "residentRemovePage"           => Some(ResidentRemovePageId)
+    case "residentListPage"             => Some(ResidentListPageId)
+    case "maxNumberReachedPage"         => Some(MaxNumberReachedPageId)
+    case "completedLettingsPage"        => Some(CompletedLettingsPageId)
+    case "occupierDetailPage"           => Some(OccupierDetailPageId)
+    case "rentalPeriodPage"             => Some(RentalPeriodPageId)
+    case "occupierRemovePage"           => Some(OccupierRemovePageId)
+    case "occupierListPage"             => Some(OccupierListPageId)
+    case "howManyNightsPage"            => Some(HowManyNightsPageId)
+    case "advertisingOnlinePage"        => Some(AdvertisingOnlinePageId)
+    case "advertisingOnlineDetailsPage" => Some(AdvertisingOnlineDetailsPageId)
+    case _                              => None

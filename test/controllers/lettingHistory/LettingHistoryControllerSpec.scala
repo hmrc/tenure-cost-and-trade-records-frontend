@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{Address, LocalPeriod, OccupierDetail, ResidentDetail}
+import models.submissions.lettingHistory.{Address, AdvertisingOnline, LocalPeriod, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
 import play.api.libs.json.Writes
 import repositories.SessionRepo
@@ -80,6 +80,20 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
       address = Address("Address Five", None, "Neverland", None, "BN124AX"),
       rental = None
     )
+  )
+
+  val oneOnlineAdvertising: List[AdvertisingOnline] = List(
+    AdvertisingOnline(websiteAddress = "123.com", propertyReferenceNumber = "aaa123")
+  )
+
+  val twoOnlineAdvertising: List[AdvertisingOnline] = oneOnlineAdvertising ++ List(
+    AdvertisingOnline(websiteAddress = "456.com", propertyReferenceNumber = "aaa456")
+  )
+
+  val fiveOnlineAdvertising: List[AdvertisingOnline] = twoOnlineAdvertising ++ List(
+    AdvertisingOnline(websiteAddress = "789.com", propertyReferenceNumber = "aaa789"),
+    AdvertisingOnline(websiteAddress = "101.com", propertyReferenceNumber = "aaa101"),
+    AdvertisingOnline(websiteAddress = "112.com", propertyReferenceNumber = "aaa112")
   )
 
   trait MockRepositoryFixture:
