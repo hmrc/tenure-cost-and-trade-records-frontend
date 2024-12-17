@@ -20,6 +20,8 @@ import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.libs.json.{Format, Json}
 
+import java.time.LocalDate
+
 case class LettingHistory(
   hasPermanentResidents: Option[Boolean] = None,
   permanentResidents: List[ResidentDetail] = Nil,
@@ -81,11 +83,14 @@ object LettingHistory:
           .map { (_, foundIndex) =>
             // patch the resident detail if found as existing
             lettingHistory
+              .copy(hasPermanentResidents = Some(true))
               .copy(permanentResidents = lettingHistory.permanentResidents.patch(foundIndex, List(residentDetail), 1))
           }
           .getOrElse {
             // not found ... then append it
-            lettingHistory.copy(permanentResidents = lettingHistory.permanentResidents.:+(residentDetail))
+            lettingHistory
+              .copy(hasPermanentResidents = Some(true))
+              .copy(permanentResidents = lettingHistory.permanentResidents.:+(residentDetail))
           }
       }
     )
@@ -155,14 +160,14 @@ object LettingHistory:
             .copy(name = name, address = address)
 
           val patchedCompletedLettings = lettingHistory.completedLettings.patch(foundIndex, List(patchedOccupier), 1)
-          val copiedLettingHistory     = lettingHistory.copy(completedLettings = patchedCompletedLettings)
+          val copiedLettingHistory     = lettingHistory.copy(hasCompletedLettings = Some(true)).copy(completedLettings = patchedCompletedLettings)
           (foundIndex, copiedLettingHistory)
         }
         .getOrElse {
           // not found ... then append it to the list of completed lettings
           val lastIndex                 = lettingHistory.completedLettings.size
           val extendedCompletedLettings = lettingHistory.completedLettings.:+(occupierDetail)
-          val copiedLettingHistory      = lettingHistory.copy(completedLettings = extendedCompletedLettings)
+          val copiedLettingHistory      = lettingHistory.copy(hasCompletedLettings = Some(true)).copy(completedLettings = extendedCompletedLettings)
           (lastIndex, copiedLettingHistory)
         }
     }
@@ -251,9 +256,13 @@ object LettingHistory:
           lettingHistory.intendedLettings.fold(
             ifEmpty = someIntendedLettings
           ) { intendedLettings =>
+            val meetsCriteria = isAboveThreshold(nights, session.isWelsh)
             Some(
               intendedLettings
                 .copy(nights = Some(nights))
+                .copy(hasStopped = if meetsCriteria then None else intendedLettings.hasStopped)
+                .copy(whenWasLastLet = if meetsCriteria then None else intendedLettings.whenWasLastLet)
+                .copy(isYearlyAvailable = None)
             )
           }
         )
@@ -269,6 +278,78 @@ object LettingHistory:
 
   private def isAboveThreshold(nights: Int, isWelsh: Boolean): Boolean =
     if isWelsh then nights >= 252 else nights >= 140
+
+  def withHasStopped(hasStopped: Boolean)(using session: Session): Session =
+    val someIntendedLettings = Some(
+      IntendedLettings(
+        hasStopped = Some(hasStopped)
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLettings
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLettings
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(hasStopped = Some(hasStopped))
+                .copy(whenWasLastLet = if hasStopped then intendedLettings.whenWasLastLet else None)
+                .copy(isYearlyAvailable = None)
+            )
+          }
+        )
+    )
+
+  def withWhenWasLastLet(whenWasLastLet: Option[LocalDate])(using session: Session): Session =
+    val someIntendedLetting = Some(
+      IntendedLettings(
+        whenWasLastLet = whenWasLastLet
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLetting
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLetting
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(whenWasLastLet = whenWasLastLet)
+                .copy(isYearlyAvailable = None)
+            )
+          }
+        )
+    )
+
+  def withIsYearlyAvailable(isYearlyAvailable: Boolean)(using session: Session): Session =
+    val someIntendedLetting = Some(
+      IntendedLettings(
+        isYearlyAvailable = Some(isYearlyAvailable)
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLetting
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLetting
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(isYearlyAvailable = Some(isYearlyAvailable))
+            )
+          }
+        )
+    )
 
   given Format[LettingHistory]                   = Json.format
   extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes

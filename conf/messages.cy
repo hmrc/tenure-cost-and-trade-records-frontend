@@ -1628,6 +1628,16 @@ lettingHistory.maxNumberReached.understanding.required = You are required to con
 lettingHistory.intendedLettings.heading = How many nights do you intend to let the property commercially between {0} and {1}?
 lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not intend to let the property.
 
+lettingHistory.hasStoppedLetting.heading = Have you already stopped letting the property commercially?
+lettingHistory.hasStoppedLetting.required = Select yes if you have stopped letting the property.
+
+lettingHistory.whenWasLastLet.heading = On which date was the property last commercially let?
+fieldName.lettingHistory.date = the date
+
+lettingHistory.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading = Is the property available for commercial letting all year around?
+lettingHistory.isYearlyAvailable.hasStoppedLetting.heading = During the last financial year, was the property available for commercial letting all year round?
+lettingHistory.isYearlyAvailable.required = Select yes if the property available all year round.
+
 
 # ACCOMMODATION DETAILS 6048
 # ############################
@@ -3557,6 +3567,9 @@ error.changeOccupationAndAccountingInfo.required = Select yes if you would like 
 
 # CYA LETTING HISTORY
 checkYourAnswersLettingHistory.residentialTenants = Residential tenants
+checkYourAnswersLettingHistory.temporaryOccupiers = Temporary occupiers
+checkYourAnswersLettingHistory.lettingIntention = Letting intention
+checkYourAnswersLettingHistory.advertisingProperty = Advertising the property
 
 # CYA ACCOMMODATION DETAILS
 checkYourAnswersAccommodation.accommodationDetails = Accommodation details
