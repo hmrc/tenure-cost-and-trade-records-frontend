@@ -40,7 +40,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.occupierList.heading.plural"
-        page.backLink    shouldBe routes.CompletedLettingsController.show.url
+        page.backLink    shouldBe routes.HasCompletedLettingsController.show.url
         page.summaryList shouldBe empty
       }
       "be handling GET /remove?index=0 by replying redirect to the 'Occupiers List' page" in new ControllerFixture {

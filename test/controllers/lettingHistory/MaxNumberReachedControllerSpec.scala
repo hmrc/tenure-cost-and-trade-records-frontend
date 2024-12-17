@@ -86,7 +86,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
               .withFormUrlEncodedBody("understood" -> "false")
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value            shouldBe routes.CompletedLettingsController.show.url
+          redirectLocation(result).value            shouldBe routes.HasCompletedLettingsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           mayHaveMorePermanentResidents(data).value shouldBe false
         }

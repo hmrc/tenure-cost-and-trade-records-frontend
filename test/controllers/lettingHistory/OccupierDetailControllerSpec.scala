@@ -39,7 +39,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.heading                 shouldBe "lettingHistory.occupierDetail.heading"
-        page.backLink                shouldBe routes.CompletedLettingsController.show.url
+        page.backLink                shouldBe routes.HasCompletedLettingsController.show.url
         page.input("name")             should beEmpty
         page.input("address.line1")    should beEmpty
         page.input("address.town")     should beEmpty

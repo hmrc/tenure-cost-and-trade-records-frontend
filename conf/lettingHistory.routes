@@ -1,39 +1,39 @@
 # lettingHistory.routes
 
-GET         /letting-history/permanent-residents                controllers.lettingHistory.PermanentResidentsController.show
-POST        /letting-history/permanent-residents                controllers.lettingHistory.PermanentResidentsController.submit
+GET         /letting-history-has-permanent-residents            controllers.lettingHistory.HasPermanentResidentsController.show
+POST        /letting-history-has-permanent-residents            controllers.lettingHistory.HasPermanentResidentsController.submit
 
-GET         /letting-history/resident-detail                    controllers.lettingHistory.ResidentDetailController.show(index: Option[Int] ?= None)
-POST        /letting-history/resident-detail                    controllers.lettingHistory.ResidentDetailController.submit
+GET         /letting-history-resident-detail                    controllers.lettingHistory.ResidentDetailController.show(index: Option[Int] ?= None)
+POST        /letting-history-resident-detail                    controllers.lettingHistory.ResidentDetailController.submit
 
-GET         /letting-history/resident-list                      controllers.lettingHistory.ResidentListController.show
-GET         /letting-history/resident-remove                    controllers.lettingHistory.ResidentListController.remove(index: Int)
-POST        /letting-history/resident-remove                    controllers.lettingHistory.ResidentListController.performRemove(index: Int)
-POST        /letting-history/resident-list                      controllers.lettingHistory.ResidentListController.submit
-
-GET         /letting-history/completed-lettings                 controllers.lettingHistory.CompletedLettingsController.show
-POST        /letting-history/completed-lettings                 controllers.lettingHistory.CompletedLettingsController.submit
+GET         /letting-history-resident-list                      controllers.lettingHistory.ResidentListController.show
+GET         /letting-history-resident-remove                    controllers.lettingHistory.ResidentListController.remove(index: Int)
+POST        /letting-history-resident-remove                    controllers.lettingHistory.ResidentListController.performRemove(index: Int)
+POST        /letting-history-resident-list                      controllers.lettingHistory.ResidentListController.submit
 
 
-GET         /letting-history/occupier-detail                    controllers.lettingHistory.OccupierDetailController.show(index: Option[Int] ?= None)
-POST        /letting-history/occupier-detail                    controllers.lettingHistory.OccupierDetailController.submit
+GET         /letting-history-has-completed-lettings             controllers.lettingHistory.HasCompletedLettingsController.show
+POST        /letting-history-has-completed-lettings             controllers.lettingHistory.HasCompletedLettingsController.submit
 
-GET         /letting-history/rental-period                      controllers.lettingHistory.RentalPeriodController.show(index: Option[Int] ?= None)
-POST        /letting-history/rental-period                      controllers.lettingHistory.RentalPeriodController.submit(index: Option[Int] ?= None)
+GET         /letting-history-occupier-detail                    controllers.lettingHistory.OccupierDetailController.show(index: Option[Int] ?= None)
+POST        /letting-history-occupier-detail                    controllers.lettingHistory.OccupierDetailController.submit
 
-GET         /letting-history/occupier-list                      controllers.lettingHistory.OccupierListController.show
-GET         /letting-history/occupier-remove                    controllers.lettingHistory.OccupierListController.remove(index: Int)
-POST        /letting-history/occupier-remove                    controllers.lettingHistory.OccupierListController.performRemove(index: Int)
-POST        /letting-history/occupier-list                      controllers.lettingHistory.OccupierListController.submit
+GET         /letting-history-rental-period                      controllers.lettingHistory.RentalPeriodController.show(index: Option[Int] ?= None)
+POST        /letting-history-rental-period                      controllers.lettingHistory.RentalPeriodController.submit(index: Option[Int] ?= None)
 
-GET         /letting-history/advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.show
-POST        /letting-history/advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.submit
+GET         /letting-history-occupier-list                      controllers.lettingHistory.OccupierListController.show
+GET         /letting-history-occupier-remove                    controllers.lettingHistory.OccupierListController.remove(index: Int)
+POST        /letting-history-occupier-remove                    controllers.lettingHistory.OccupierListController.performRemove(index: Int)
+POST        /letting-history-occupier-list                      controllers.lettingHistory.OccupierListController.submit
 
-GET         /letting-history/advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.show(index: Option[Int] ?= None)
-POST        /letting-history/advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.submit
+GET         /letting-history-max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.show(kind: String)
+POST        /letting-history-max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.submit(kind: String)
 
-GET         /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.show(kind: String)
-POST        /letting-history/max-number-reached                 controllers.lettingHistory.MaxNumberReachedController.submit(kind: String)
+GET         /letting-history-how-many-nights                    controllers.lettingHistory.HowManyNightsController.show
+POST        /letting-history-how-many-nights                    controllers.lettingHistory.HowManyNightsController.submit
 
-GET         /letting-history/how-many-nights                    controllers.lettingHistory.HowManyNightsController.show
-POST        /letting-history/how-many-nights                    controllers.lettingHistory.HowManyNightsController.submit
+GET         /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.show
+POST        /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.submit
+
+GET         /letting-history-advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.show(index: Option[Int] ?= None)
+POST        /letting-history-advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.submit

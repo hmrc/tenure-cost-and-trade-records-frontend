@@ -41,7 +41,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.heading       shouldBe "lettingHistory.intendedLettings.heading"
-        page.backLink      shouldBe routes.CompletedLettingsController.show.url
+        page.backLink      shouldBe routes.HasCompletedLettingsController.show.url
         page.input("nights") should beEmpty
       }
       "be handling good POST by replying 303 redirect to the 'Yearly availability' page" in new ControllerFixture(

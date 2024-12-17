@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.PermanentResidentsForm.theForm
+import form.lettingHistory.HasPermanentResidentsForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
 import models.submissions.lettingHistory.LettingHistory.*
@@ -27,16 +27,16 @@ import navigation.identifiers.PermanentResidentsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.permanentResidents as PermanentResidentsView
+import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
-class PermanentResidentsController @Inject() (
+class HasPermanentResidentsController @Inject()(
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: PermanentResidentsView,
+  theView: HasPermanentResidentsView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)

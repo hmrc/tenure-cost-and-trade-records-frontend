@@ -40,8 +40,9 @@
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
-            "advertisingOnline",
-            "lettingHistory.advertisingOnline.heading",
+            idPrefix = "lettingHistoryAdvertisingOnline",
+            name = "advertisingOnline",
+            legendKey = "lettingHistory.advertisingOnline.heading",
             classes = "govuk-fieldset__legend--l",
             isHeading = true
         )

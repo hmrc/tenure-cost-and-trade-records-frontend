@@ -20,6 +20,7 @@ import actions.SessionRequest
 import connectors.Audit
 import controllers.lettingHistory.{RentalPeriodSupport, routes}
 import models.Session
+import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.identifiers.*
 import play.api.mvc.Results.Redirect
@@ -43,7 +44,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       Some(controllers.routes.TaskListController.show().withFragment("lettingHistory"))
     },
     ResidentDetailPageId           -> { (_, _) =>
-      Some(routes.PermanentResidentsController.show)
+      Some(routes.HasPermanentResidentsController.show)
     },
     ResidentListPageId             -> { (currentSession, _) =>
       for size <- Some(permanentResidents(currentSession).size)
@@ -53,7 +54,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           if size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "permanentResidents")
-        else routes.PermanentResidentsController.show
+        else routes.HasPermanentResidentsController.show
     },
     MaxNumberReachedPageId         -> { (_, navigationData) =>
       for kind <- navigationData.get("kind")
@@ -69,10 +70,10 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
         else
           hasPermanentResidents(currentSession) match
             case Some(true) => routes.ResidentDetailController.show(index = None)
-            case _          => routes.PermanentResidentsController.show
+            case _          => routes.HasPermanentResidentsController.show
     },
     OccupierDetailPageId           -> { (_, _) =>
-      Some(routes.CompletedLettingsController.show)
+      Some(routes.HasCompletedLettingsController.show)
     },
     RentalPeriodPageId             -> { (_, navigationData) =>
       Some(routes.OccupierDetailController.show(navigationData.get("index").map(_.toInt)))
@@ -85,21 +86,21 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           if size < MaxNumberOfCompletedLettings
           then routes.OccupierDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "temporaryOccupiers")
-        else routes.CompletedLettingsController.show
+        else routes.HasCompletedLettingsController.show
     },
     HowManyNightsPageId            -> { (currentSession, _) =>
       for doesHaveCompletedLettings <- hasCompletedLettings(currentSession)
       yield
         if doesHaveCompletedLettings
         then routes.OccupierListController.show
-        else routes.CompletedLettingsController.show
+        else routes.HasCompletedLettingsController.show
     },
     // TODO IntendedLettingNightsPageId ... either CompletedLettings or OccupierList
-    AdvertisingOnlinePageId        -> { (_, _) =>
+    AdvertisingOnlinePageId -> { (_, _) =>
       Some(controllers.routes.TaskListController.show())
     },
     AdvertisingOnlineDetailsPageId -> { (_, _) =>
-      Some(routes.AdvertisingOnlineController.show)
+    Some(routes.AdvertisingOnlineController.show)
     }
   )
 
@@ -136,7 +137,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
           else routes.ResidentListController.show
-        else routes.CompletedLettingsController.show
+        else routes.HasCompletedLettingsController.show
     },
     ResidentDetailPageId           -> { (_, _) =>
       Some(routes.ResidentListController.show)
@@ -153,12 +154,12 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           if permanentResidents(updatedSession).size < MaxNumberOfPermanentResidents
           then routes.ResidentDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "permanentResidents")
-        else routes.CompletedLettingsController.show
+        else routes.HasCompletedLettingsController.show
     },
     MaxNumberReachedPageId         -> { (_, navigationData) =>
       for kind <- Some(navigationData("kind"))
       yield
-        if kind == "permanentResidents" then routes.CompletedLettingsController.show
+        if kind == "permanentResidents" then routes.HasCompletedLettingsController.show
         else if kind == "temporaryOccupiers" then routes.HowManyNightsController.show
         else controllers.routes.TaskListController.show().withFragment("lettingHistory")
     },

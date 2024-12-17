@@ -21,9 +21,9 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object PermanentResidentsForm:
+object HasCompletedLettingsForm:
   val theForm = Form[AnswersYesNo](
     single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasPermanentResidents.required")
+      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasCompletedLettings.required")
     )
   )
