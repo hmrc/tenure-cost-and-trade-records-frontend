@@ -78,10 +78,10 @@
                             items = Seq(
                                 ActionItem(
                                     s"${controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(idx).url}&from=Change",
-                                    content = Text("Change")),
+                                    content = Text(messages("label.change"))),
                                 ActionItem(
                                     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.remove(idx).url,
-                                    content = Text("Remove"))
+                                    content = Text(messages("label.remove")))
                             ),
                             classes = "hmrc-summary-list__actions"
                         )
@@ -97,8 +97,8 @@
                 idPrefix = Option("tradeServicesList"),
                 classes = "govuk-radios--inline",
                 items = Seq(
-                    "yes" -> messages("label.yes"),
-                    "no" -> messages("label.no")
+                    "yes" -> messages("label.yes.ydy"),
+                    "no" -> messages("label.no.nac.ydy")
                 ).map(radioItem => RadioItem(
                     content = Text(radioItem._2),
                     checked = radioItem._1.equals(theForm("tradeServicesList").value.getOrElse("")),

@@ -93,6 +93,7 @@ label.phone = Rhif ffôn
 label.email = Cyfeiriad e-bost
 label.submitAnotherForm = Submit another form
 label.change = Newid
+label.remove = Dileu
 label.liter = liter
 label.litres = litr
 label.percent = %
@@ -297,8 +298,8 @@ error.no.connection.selected = Select your connection to the property
 tradingNameFromProperty.heading = Beth yw enw masnachu’r busnes neu’r sefydliad sy’n gweithredu o’r eiddo?
 error.tradingNameFromProperty.required = Nodwch enw masnachu’r busnes neu’r sefydliad
 error.tradingNameFromProperty.maxLength = Mae’n rhaid i’r enw masnachu fod yn 50 o gymeriadau neu lai
-label.tradingNameFromPropertyHeadingLabel = Trading name
-label.tradingNameFromPropertyHeadingLabel6048 = Name
+label.tradingNameFromPropertyHeadingLabel = Enw masnachu
+label.tradingNameFromPropertyHeadingLabel6048 = Enw
 tradingNameFromProperty4068.heading = What is the name of the person or company operating the self-catering business from the property?
 error.tradingNameFromProperty6048.required = Enter the name of the person or company
 error.tradingNameFromProperty6048.maxLength = The name of the person or company must be 50 characters or fewer
@@ -770,7 +771,7 @@ error.landlordFullName.maxLength = Mae’n rhaid i enw’r landlord fod yn 50 o 
 typeOfTenure.heading = Nodwch eich math o ddeiliadaeth
 label.typeOfTenure.leasehold = Prydles
 label.typeOfTenure.license = Trwydded
-label.typeOfTenure.tenancy = Trwydded
+label.typeOfTenure.tenancy = Tenantiaeth
 label.typeOfTenure.long.leasehold = Prydles hir am rent tir
 error.typeOfTenure.required = Dewiswch bob un sy’n berthnasol.
 label.typeOfTenureDetails = Rhowch fanylion os oes cyfuniad o fathau o ddeiliadaeth
@@ -791,7 +792,7 @@ error.underReview.required = Dewiswch ‘do’ os yw’r rhent yn cael ei adolyg
 ##############################
 includedInYourRent.heading = A oes unrhyw rai o’r canlynol wedi’u cynnwys yn eich rhent ar?
 includedInYourRentApply.subheading = Dewiswch bob un sy’n berthnasol.
-includedInYourRent.vatValue = State the amount of VAT included in the rent
+includedInYourRent.vatValue = Nodwch swm y TAW sydd wedi’i gynnwys yn y rhent
 label.vat = TAW
 label.nondomesticRates = Ardrethi annomestig
 label.waterCharges = A percentage of turnover of the occupier’s business
@@ -802,7 +803,7 @@ label.includedInYourRent.nondomesticRates = Ardrethi annomestig
 label.includedInYourRent.waterCharges = Taliadau dŵr
 label.includedInYourRent.noneOfThese = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
 label.includedInYourRent.none = None
-hint.includedInYourRent = Select all that apply.
+hint.includedInYourRent = Dewiswch bob un sy’n berthnasol.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
@@ -945,15 +946,15 @@ error.rentOpenMarketValue.missing = Dewiswch ‘oedd’ os cafodd y rhent ei ben
 # DOES THE RENT PAYABLE
 ######################
 rentPayable.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw un o’r opsiynau sydd wedi’u rhestru?
-rentPayable6045.heading = Does the rent payable include or relate to any of the following?
+rentPayable6045.heading = A yw’r rhent sy’n daladwy yn cynnwys neu’n ymwneud ag unrhyw un o’r canlynol?
 checkbox.rentPayable.proprietor = Llety byw i’r perchennog neu’r staff
 checkbox.rentPayable.otherProperty = Eiddo arall
 checkbox.rentPayable.onlyPart = Dim ond rhan o’r eiddo
 checkbox.rentPayable.onlyLand = I dir yn unig (ac eithrio adeiladau)
 checkbox.rentPayable.shellUnit = Uned ‘gragen’ roedd yn rhaid i chi ei gosod eich hun
-checkbox.rentPayable.parkingSpaceGarage = Parking spaces or garages
+checkbox.rentPayable.parkingSpaceGarage = Mannau parcio neu garejys
 checkbox.rentPayable.noneOfThese = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
-checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
+checkbox.rentPayable.noneOfThese6045 = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Rhowch fanylion
 hint.detailsToQuestions = Mae enghreifftiau o ddisgrifiadau derbyniol yn cynnwys, “mae’r rhent yn cynnwys llety preswyl”, neu “hefyd yn cynnwys y safle drws nesaf”.
@@ -964,21 +965,26 @@ error.detailsToQuestions.maxLength = Mae’n rhaid i’r wybodaeth ychwanegol fo
 
 # RENT DEVELOPED LAND (FORM 6045/46)
 ######################
-rentDevelopedLand.heading = Does the rent payable relate to developed land?
-hint.rentDevelopedLand = For example, access roadways, hardstandings, or services.
+rentDevelopedLand.heading = A yw’r rhent sy’n daladwy yn ymwneud â thir datblygedig?
+hint.rentDevelopedLand = Er enghraifft, ffyrdd mynediad, lloriau caled, neu wasanaethau.
 error.rentDevelopedLand.missing = Select yes if the rent payable relates to developed land
 
 # RENT DEVELOPED LAND DETAILS (FORM 6045/46)
 ######################
-rentDevelopedLandDetails.heading = Describe the developments included in the rent
+rentDevelopedLandDetails.heading = Disgrifiwch y dablygiadau sydd wedi’u cynnwys yn y rhent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
 error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
 
 # RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
 ######################
-rentIncludeStructuresBuildings.heading = Does the rent payable include any structures or buildings?
+rentIncludeStructuresBuildings.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw strwythurau neu adeiladau?
 error.rentIncludeStructuresBuildings.missing = Select yes if the rent payable include any structures or buildings
 
+# RENT INCLUDES STRUCTURES BUILDINGS DETAILS (FORM 6045/46)
+######################
+rentIncludeStructuresBuildingsDetails.heading = Rhowch fanylion y strwythurau neu’r adeiladau sydd wedi’u cynnwys yn eich rhent
+error.rentIncludeStructuresBuildingsDetails.required = Enter details of the structures or buildings that are included in the rent
+error.rentIncludeStructuresBuildingsDetails.maxLength = Details of the structures or buildings that are included in the rent should be 2000 characters or fewer
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
@@ -987,14 +993,14 @@ error.rentPayableVaryOnQuantityOfBeers.missing = Select yes if the rent varies a
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ###############################################
-rentPayableVaryOnQuantityOfBeersDetails.heading = Sut mae’r diodydd a gyflenwir i’r eiddo yn effeithio ar y rhent sy'n daladwy?
+rentPayableVaryOnQuantityOfBeersDetails.heading = Sut mae’r diodydd a gyflenwir i’r eiddo yn effeithio ar y rhent sy’n daladwy?
 hint.rentPayableVaryOnQuantityOfBeersDetails = Er enghraifft, dywedwch wrthym os bydd eich rhent yn newid os yw’r faint a gyflenwir yn fwy na swm penodol.
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Enter a description of how the drinks supplied to your property affect your rent
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of how the drinks supplied to your property affect your rent should be 500 characters or fewer
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
-rentPayableVaryAccordingToGrossOrNet.heading = A yw’r rhent sy'n daladwy yn amrywio yn ôl trosiant gros neu net y busnes?
+rentPayableVaryAccordingToGrossOrNet.heading = A yw’r rhent sy’n daladwy yn amrywio yn ôl trosiant gros neu net y busnes?
 error.rentPayableVaryAccordingToGrossOrNet.missing = Dewiswch ‘ydy’ os yw’r rhent yn amrywio yn ôl eich trosiant
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
@@ -1084,13 +1090,13 @@ error.tradeServiceDescription.maxLength = Mae’n rhaid i’r disgrifiad o’r g
 
 # TRADE SERVICES ADDED
 #####################################
-addTradeService.heading = You have added {0} service {2}
+addTradeService.heading = Rydych wedi ychwanegu {0} service {2}
 addTradeServicePlural.heading = You have added {0} services {2}
 addTradeService.heading.landlord = provided by the landlord
 addTradeService.heading.rent = included in your rent
 addTradeServiceZero.heading = You have removed all the services provided by your landlord
-addTradeService.label = Would you like to add another service which is included in the rent?
-addTradeService.label6020 = Would you like to add another service?
+addTradeService.label = A ydych am ychwanegu gwasanaeth arall y telir amdano ar wahân?
+addTradeService.label6020 = A ydych am ychwanegu gwasanaeth arall y telir amdano ar wahân?
 error.addTradeService.required = Select yes if you would like to add another service provided by the landlord
 
 #PAYMENT FOR TRADE SERVICES
@@ -1125,24 +1131,24 @@ error.servicePaidSeparatelyList.required = Select yes if you would like to add a
 
 #SURRENDERED LEASE AGREEMENT DETAILS
 #########################
-surrenderedLeaseAgreement.heading = Details of the surrendered lease or agreement
-surrenderedLeaseAgreement.title = What was the annual rent under the surrendered lease or agreement excluding VAT?
-surrenderedLeaseAgreementMonths.heading = How long was the unexpired term at the time of surrender?
+surrenderedLeaseAgreement.heading = Manylion y brydles neu’r cytundeb a ildiwyd
+surrenderedLeaseAgreement.title = Beth oedd y rhent blynyddol o dan y brydles neu’r cytundeb a ildiwyd heb gynnwys TAW?
+surrenderedLeaseAgreementMonths.heading = Faint o gyfnod a oedd yn weddill ar adeg yr ildio?
 error.required.annualRentExcludingVat.surrenderedLeaseAgreementAmount = Enter the annual rent under the surrendered lease or agreement excluding VAT
 error.surrenderedLeaseAgreementMonths.required = Enter how long the unexpired term was at the time of surrender
-surrenderedLeaseAgreementMonths.months = months
+surrenderedLeaseAgreementMonths.months = misoedd
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
-rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover the services, excluding VAT?
+rentIncludeTradeServicesDetails.heading = Gwasanaethau masnach a ddarperir gan y landlord
+rentIncludeTradeServicesDetails.title = Pa swm sy’n cael ei gynnwys yn y rhent er mwyn talu am y gwasanaethau hyn, ac eithrio TAW?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
-rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
-rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
-label.describeServices = Describe the services provided
+rentIncludeTradeServicesDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
+rentIncludeTradeServicesDetails.hint2 = Er enghraifft, cynnal a chadw tanau, gwiriadau nwy blynyddol a gwasanaethau seler.
+label.describeServices = Disgrifiwch y gwasanaethau a ddarperir
 describeServicesTextArea.heading = Give details of the services provided by the landlord that are included in your rent
 label.describeServicesTextArea = Give details of the services provided by the landlord that are included in your rent
-rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
+rentIncludeTradeServicesDetailsTextBox.hint = Er enghraifft, cynnal a chadw tanau, gwiriadau nwy blynyddol a gwasanaethau seler.
 rentIncludeTradeServicesDetailsTextBoxArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
 error.describeServicesTextArea.required = Please provide details of the services provided by the landlord that are included in your rent.
 error.required.sumIncludedInRent = Please provide a value
@@ -1211,10 +1217,10 @@ error.workCarriedOutCondition.required = Select yes if you were required to carr
 
 # RENT FREE PERIOD
 #########################
-rentFreePeriod.heading = Were you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+rentFreePeriod.heading = A roddwyd cyfnod di-rent, unrhyw daliad, neu unrhyw fuddion eraill i chi pan ganiatawyd y brydles neu’r cytundeb?
 error.rentFreePeriod.required = Select yes if you were given any rent-free period, payment or benefit
-rentFreePeriodDetails.heading = Give details of any rent-free period, payment or benefit
-rentFreePeriodDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
+rentFreePeriodDetails.heading = Rhowch fanylion unrhyw gyfnod, taliad neu fudd di-rent
+rentFreePeriodDetails.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers cael y budd.
 error.rentFreePeriodDetails.maxLength = Description of given rent-free period, payment or benefit must be {0} characters or fewer
 
 # PAY A CAPITAL SUM
@@ -1244,8 +1250,8 @@ error.receivePaymentWhenLeaseGranted.missing = Dewiswch ‘do’ os cawsoch unrh
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
-rentIncreasedAnnuallyWithRPIs.heading = Rhent sy'n gysylltiedig â mynegeion
-rentIncreasedAnnuallyWithRPIs.p1 = Mae'n rhaid i chi ddweud wrthym os bydd eich rhent yn cynyddu yn unol ag unrhyw fynegeion fel y mynegai prisiau manwerthu (RPI) neu’r mynegai prisiau defnyddwyr (CPI).
+rentIncreasedAnnuallyWithRPIs.heading = Rhent sy’n gysylltiedig â mynegeion
+rentIncreasedAnnuallyWithRPIs.p1 = Mae’n rhaid i chi ddweud wrthym os bydd eich rhent yn cynyddu yn unol ag unrhyw fynegeion fel y mynegai prisiau manwerthu (RPI) neu’r mynegai prisiau defnyddwyr (CPI).
 rentIncreasedAnnuallyWithRPIs.subheading = A yw’r rhent yn cynyddu’n flynyddol yn unol ag unrhyw fynegeion?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
 error.rentIncreasedAnnuallyWithRPIs.missing = Dewiswch ‘ydy’ os yw’ch rhent yn codi yn unol â mynegai
@@ -1269,13 +1275,13 @@ label.renewalLeaseTenancy = Wrth adnewyddu prydles
 label.saleLeaseback = Fel rhan o drafodiad gwerthu ac adlesu
 label.rentActuallyAgreed = Pryd cafodd y rhent ei gytuno arno neu ei osod mewn gwirionedd?
 help.rentActuallyAgreed.title = Os nad ydych yn siŵr pa ddyddiad i’w ddefnyddio
-help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when:
-help.rentActuallyAgreed.list1.item1 = a new lease or agreement is signed
-help.rentActuallyAgreed.list1.item2 = an interim rent is established
-help.rentActuallyAgreed.list1.item3 = a new rent is established following a rent review
-help.rentActuallyAgreed.list1.item4 = a lease is renewed
-help.rentActuallyAgreed.list1.item5 = a sale and leaseback is agreed
-help.rentActuallyAgreed.p2 = It may not necessarily be the date of occupation or the date a rent is first paid.
+help.rentActuallyAgreed.p1 = Y dyddiad y cafodd y rhent ei gytuno arno neu ei osod fel arfer yw dyddiad:
+help.rentActuallyAgreed.list1.item1 = llofnodi prydles neu gytundeb newydd
+help.rentActuallyAgreed.list1.item2 = sefydlu rhent interim
+help.rentActuallyAgreed.list1.item3 = sefydlu rhent newydd yn dilyn adolygiad rhent
+help.rentActuallyAgreed.list1.item4 = adnewyddu prydles
+help.rentActuallyAgreed.list1.item5 = cytuno ar werthu ac adlesu
+help.rentActuallyAgreed.p2 = Efallai nad dyma’r dyddiad meddiannu na’r dyddiad y telir y rhent am y tro cyntaf.
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei bennu
 
@@ -1385,7 +1391,7 @@ error.addAnotherLetting.required = Dewiswch ‘oes’ os ydych am ychwanegu goso
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Ychwanegiadau neu welliannau
+tenantsAdditionsDisregarded.heading = Ychwanegiadau neu welliannau a ddiystyrwyd
 tenantsAdditionsDisregarded.p1 = Os yw’r rhent yn seiliedig ar werth yr eiddo ar y farchnad cyn i’r tenant wneud unrhyw ychwanegiadau neu welliannau, rhaid i chi ddarparu manylion.
 tenantsAdditionsDisregarded.p2 = Gallai enghreifftiau o ychwanegiadau neu welliannau gynnwys, ond heb fod yn gyfyngedig i’r canlynol:
 tenantsAdditionsDisregarded.list1 = gosod cragen
@@ -1689,7 +1695,7 @@ taskList.profitSummary = Profit summary
 declaration.heading = Nawr anfonwch eich datganiad
 declaration.information = Drwy gyflwyno’r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi’n eu darparu yn gywir.
 request.heading = Anfonwch eich cais nawr
-request.information = CGwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VOA gysylltu â chi ynglŷn â’ch cais.
+request.information = Gwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VOA gysylltu â chi ynglŷn â’ch cais.
 hint.declaration = Gellid mynd â chi i’r llys os ydych yn cyflwyno gwybodaeth anwir
 taskList.fuelSales = Fuel sales
 taskList.bunkerdFuel = Bunkered fuel
@@ -3351,10 +3357,11 @@ checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.no = Nid yw’r
 checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months = Rent review due within 12 months?
 checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate = Rent is reviewed or expires on {0}
 checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading = Manylion y brydles
-checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading = Your rent
+checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading = Eich rhent
 checkYourAnswersAboutYourLeaseOrTenure.yourLease.heading = Your lease
-checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat = Rent includes VAT?
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat = Rhent yn cynnwys TAW?
 checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement = Trefniant adlesu?
+checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease = Manylion y brydles
 checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent = Rhent blynyddol presennol
 checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid = Dyddiad y talwyd y rhent resennol am y tro cyntaf
 checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration = Dyddiad cychwyn y brydles a hyd y tymor
@@ -3362,18 +3369,20 @@ checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Dyddiad y d
 checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = Beth mae’r rhent yn ei gynnwys
 checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Taliadau wedi’u cynnwys yn y rhent
 checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Eitemau y mae’r rhent yn eu cynnwys neu’n ymwneud ag ef
-checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand = Rent relates to developed land?
-checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails = Description of included developments
-checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings = Rent includes structures or buildings?
-checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails = Description of included structures
+checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand = Rhent yn ymwneud â thir datblygedig?
+checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails = Disgrifiad o’r datblygiadau sydd wedi’u cynnwys
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings = Rhent yn cynnwys strwythurau new adeiladau?
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails = Disgrifiad o’r strwythurau sydd wedi’u cynnwys
 checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Y parti sy’n gyfrifol am atgyweiriadau y tu mewn?
 checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Y parti sy’n gyfrifol am atgyweiriadau y tu allan?
 checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Y parti sy’n gyfrifol am yswiriant adeiladu?
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices = Rhent yn cynnwys gwasanaethau masnach?
+checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs = Addasiadau gwelliannau neu atgyweiriadau?
+checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork = Manylion y Gwaith
 checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices = Disgrifiad o wasanaethau masnach
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails = Rhent yn cynnwys offer?
 checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent = Swm wedi’i gynnwys yn y rhent i dalu am offer
-checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent = Sum included in rent to cover equipment
+checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent = Swm wedi’i gynnwys yn y rhent i dalu am offer
 checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading = Sut y cyfrifwyd y rhent
 checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue = Rhent yn seiliedig ar y gwerth ar y farchnad agored?
 checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn = Beth mae’r rhent yn seiliedig arno
@@ -3384,11 +3393,11 @@ checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks = Rhent
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails = Sut mae rhent yn amrywio yr alcohol a gyflenwir
 checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed = Sut a phryd y gosodwyd y rhent
 checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent = Sut y cytunwyd ar y rhent
-checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview = Rent currently under review?
+checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview = Rhent yn cael ei adolygu ar hyn o bryd?
 checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Adolygiadau rhent: amlder a dyddiad disgwyl
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = A ellir gostwng y rhent?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Prydles flaenorol wedi’i hildio’n gynnar?
-checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Details of former lease
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Manylion y brydles flaenorol
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048 = Details of the surrendered lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months = Term remaining {0} months
@@ -3400,6 +3409,11 @@ checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails = Capital sum 
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = Taliad wedi’i gael pan ganiatawyd y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDateInput = When was this sum paid?
 checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Payment received when lease was granted?
+checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition = Gwaith sydd ei angen i sicrhau prydles?
+checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven = Buddion wedi’u derbyn pan roddwyd y brydles?
+checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails = Manylion y buddion
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020 = Swm cyfalaf a dalwyd gan y meddiannydd neu iddo?
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid = Swm cyfalaf a dalwyd
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent = Ffactorau eraill sy’n effeithio ar y rhent?
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails = Disgrifiad o’r ffactorau sy'n effeithio ar y rhent
 checkYourAnswersAboutYourLeaseOrTenure.typeOfTenure = Type of tenure

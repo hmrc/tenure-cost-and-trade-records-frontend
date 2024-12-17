@@ -95,6 +95,7 @@ label.phone = Telephone number
 label.email = Email address
 label.submitAnotherForm = Submit another form
 label.change = Change
+label.remove = Remove
 label.liter = liter
 label.litres = litres
 label.percent = %
