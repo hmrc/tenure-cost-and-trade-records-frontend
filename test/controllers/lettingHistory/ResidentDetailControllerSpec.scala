@@ -39,7 +39,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.residentDetail.heading"
-        page.backLink          shouldBe routes.PermanentResidentsController.show.url
+        page.backLink          shouldBe routes.HasPermanentResidentsController.show.url
         page.input("name")       should beEmpty
         page.textarea("address") should beEmpty
       }

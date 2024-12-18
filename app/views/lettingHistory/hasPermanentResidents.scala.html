@@ -34,10 +34,11 @@
 
     <p class="govuk-body">@messages("lettingHistory.permanentResidents.subheading")</p>
 
-    @formWithCSRF(action = controllers.lettingHistory.routes.PermanentResidentsController.submit) {
+    @formWithCSRF(action = controllers.lettingHistory.routes.HasPermanentResidentsController.submit) {
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
+            idPrefix = "lettingHistoryHasPermanentResidents",
             name = "answer",
             legendKey = "lettingHistory.hasPermanentResidents.legend",
             hint = messages("lettingHistory.hasPermanentResidents.hint"),

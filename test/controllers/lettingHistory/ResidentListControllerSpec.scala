@@ -40,7 +40,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.residentList.heading.plural"
-        page.backLink    shouldBe routes.PermanentResidentsController.show.url
+        page.backLink    shouldBe routes.HasPermanentResidentsController.show.url
         page.summaryList shouldBe empty
       }
       "be handling GET /remove?index=0 by replying redirect to the 'Resident List' page" in new ControllerFixture {
@@ -154,7 +154,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
       "be handling POST /list?hasMoreResidents=no by replying redirect to the 'Commercial Lettings' page" in new ControllerFixture {
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
         status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.CompletedLettingsController.show.url
+        redirectLocation(result).value shouldBe routes.HasCompletedLettingsController.show.url
       }
     }
   }

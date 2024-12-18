@@ -16,10 +16,10 @@
 
 package form.lettingHistory
 
+import form.lettingHistory.HasCompletedLettingsForm.theForm
 import models.submissions.common.AnswerYes
-import form.lettingHistory.PermanentResidentsForm.theForm
 
-class PermanentResidentFormSpec extends FormSpec:
+class HasCompletedLettingsFormSpec extends FormSpec:
 
   it should "bind data as expected" in {
     val data  = Map(
@@ -50,5 +50,5 @@ class PermanentResidentFormSpec extends FormSpec:
     bound
       .error("answer")
       .value
-      .message mustBe "lettingHistory.hasPermanentResidents.required"
+      .message mustBe "lettingHistory.hasCompletedLettings.required"
   }

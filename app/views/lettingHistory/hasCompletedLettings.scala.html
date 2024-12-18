@@ -45,10 +45,11 @@
         <li>@messages("lettingHistory.completedLettings.paragraph.3.point.2")</li>
     </ul>
 
-    @formWithCSRF(action = routes.CompletedLettingsController.submit) {
+    @formWithCSRF(action = routes.HasCompletedLettingsController.submit) {
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
+            idPrefix = "lettingHistoryHasCompletedLettings",
             name = "answer",
             legendKey = "", // see legend instead
             classes = "govuk-fieldset__legend--s",

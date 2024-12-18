@@ -26,105 +26,113 @@ import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.lettingHistory.permanentResidents as PermanentResidentsView
+import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
 
-class PermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
+class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
 
-  "the PermanentResidents controller" when {
+  "the CompletedLettings controller" when {
     "the user has not provided any answer yet" should {
-      "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
+      "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading        shouldBe "lettingHistory.permanentResidents.heading"
-        page.backLink       shouldBe controllers.routes.TaskListController.show().withFragment("lettingHistory").toString
+        page.heading        shouldBe "lettingHistory.completedLettings.heading"
+        page.backLink       shouldBe routes.HasPermanentResidentsController.show.url
         page.radios("answer") should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "answer" -> "" // missing
+            "answer" -> ""
           )
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.error("answer") shouldBe "lettingHistory.hasPermanentResidents.required"
+        page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
       }
-      "be handling POST answer='yes' by replying 303 redirect to the 'Residents Details' page" in new ControllerFixture {
+      "be handling POST answer='yes' by replying 303 redirect to 'Occupier Detail' page" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value    shouldBe routes.ResidentDetailController.show().url
+        redirectLocation(result).value   shouldBe routes.OccupierDetailController.show(index = None).url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        hasPermanentResidents(data).value shouldBe true
+        hasCompletedLettings(data).value shouldBe true
       }
     }
-    "the user has already answered"            should {
-      "regardless of the given number of residents"          should {
-        "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
-          oneResident
+    "the user has already provided an answer"  should {
+      "regardless of the given number of occupiers"          should {
+        "be handling GET by replying 200 with the HTML form having checked radios" in new ControllerFixture(
+          permanentResidents = twoResidents,
+          hasCompletedLettings = Some(true)
         ) {
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
           val page = contentAsJsoup(result)
-          page.radios("answer")    should haveChecked("yes")
-          page.radios("answer") shouldNot haveChecked("no")
+          page.backLink          shouldBe routes.ResidentListController.show.url
+          page.radios("answer")    should haveChecked(value = "yes")
+          page.radios("answer") shouldNot haveChecked(value = "no")
         }
-        "be handling POST answer='yes' by replying 303 redirect to the 'Resident Detail' page" in new ControllerFixture(
-          oneResident
+        "be handling POST answer='yes' by replying 303 redirect to the 'Occupier Detail' page" in new ControllerFixture(
+          hasCompletedLettings = Some(true)
         ) {
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
-          status(result)                    shouldBe SEE_OTHER
-          redirectLocation(result).value    shouldBe routes.ResidentDetailController.show().url
+          status(result)                   shouldBe SEE_OTHER
+          redirectLocation(result).value   shouldBe routes.OccupierDetailController.show(index = None).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          hasPermanentResidents(data).value shouldBe true
+          hasCompletedLettings(data).value shouldBe true
         }
-        "be handling POST answer='no' by replying 303 redirect to the 'Commercial Lettings' page" in new ControllerFixture(
-          oneResident
+        "be handling POST answer='no' by replying 303 redirect to the 'Letting intention' page" in new ControllerFixture(
+          hasCompletedLettings = Some(true)
         ) {
           // Answering 'no' will clear out all residents details
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
-          status(result)                    shouldBe SEE_OTHER
-          redirectLocation(result).value    shouldBe routes.CompletedLettingsController.show.url
+          val result = controller.submit(
+            fakePostRequest.withFormUrlEncodedBody(
+              "answer" -> "no"
+            )
+          )
+          status(result) shouldBe SEE_OTHER
+          redirectLocation(result).value   shouldBe routes.HowManyNightsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          hasPermanentResidents(data).value shouldBe false
-          permanentResidents(data)          shouldBe Nil
+          hasCompletedLettings(data).value shouldBe false
+          completedLettings(data)          shouldBe Nil
         }
       }
       "and the maximum number of residents has been reached" should {
-        "be handling POST answer='yes' by replying 303 redirect to the 'Resident List' page" in new ControllerFixture(
-          fiveResidents
+        "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'Occupiers List' page" in new ControllerFixture(
+          hasCompletedLettings = Some(true)
         ) {
+          pending
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
-          status(result)                    shouldBe SEE_OTHER
-          redirectLocation(result).value    shouldBe routes.ResidentListController.show.url
+          status(result)                   shouldBe SEE_OTHER
+          redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          hasPermanentResidents(data).value shouldBe true
-          permanentResidents(data)            should have size 5
+          hasCompletedLettings(data).value shouldBe true
+          completedLettings(data)            should have size 5
         }
       }
     }
   }
 
-  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil)
+  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil, hasCompletedLettings: Option[Boolean] = None)
       extends MockRepositoryFixture
       with SessionCapturingFixture:
-    val controller = new PermanentResidentsController(
+    val controller = new HasCompletedLettingsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
-      theView = inject[PermanentResidentsView],
+      theView = inject[HasCompletedLettingsView],
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
             hasPermanentResidents = Some(permanentResidents.nonEmpty),
-            permanentResidents = permanentResidents
+            permanentResidents = permanentResidents,
+            hasCompletedLettings = hasCompletedLettings
           )
         )
       ),
