@@ -80,11 +80,11 @@
       name = "otherHolidayAccommodationOpenAllYear",
       items = Seq(
         RadioItem(
-          content = Text(messages("label.yes")),
+          content = Text(messages("label.yes.ydy")),
           value = Some("yes")
         ),
         RadioItem(
-          content = Text(messages("label.no")),
+          content = Text(messages("label.no.nac.ydy")),
           value = Some("no"),
             conditionalHtml = Some(conditionalHTML)
         )
