@@ -88,13 +88,25 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(
-                                s"additionalAmusements[$idx].weeks",
-                                "additionalActivities.common.tradingPeriod",
-                                "govuk-input--width-2",
-                                Some(PrefixOrSuffix(
-                                    content = Text(messages("label.weeks"))
-                                ))),
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("additionalActivities.common.tradingPeriod"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "2",
+                                                "aria-label" -> messages("additionalActivities.common.tradingPeriod")
+                                            ),
+                                            suffix = Some(PrefixOrSuffix(
+                                                content = Text(messages("label.weeks"))
+                                            ))
+                                        ).withFormField(form(s"additionalAmusements[$idx].weeks")))
+                                    )
+                                )
+                            ),
                             turnoverRow(
                                 s"additionalAmusements[$idx].receipts",
                                 "additionalAmusements.receipts.label",
