@@ -95,6 +95,7 @@ label.phone = Telephone number
 label.email = Email address
 label.submitAnotherForm = Submit another form
 label.change = Change
+label.remove = Remove
 label.liter = liter
 label.litres = litres
 label.percent = %
@@ -2758,7 +2759,7 @@ error.otherHolidayAccommodation.required =  Select yes if there are other holida
 
 # OTHER HOLIDAY ACCOMMODATION DETAILS(FORM 6045/46)
 ####################################
-otherHolidayAccommodationDetails.heading = Is your other holiday acommodation open all year?
+otherHolidayAccommodationDetails.heading = Is your other holiday accommodation open all year?
 otherHolidayAccommodationDetails.weeksOpen = Enter number of weeks the site remains open in a year
 error.weeksInYearMapping.invalid = The number of weeks should be a number from 1 to 52
 error.weeksInYearMapping.blank =  Enter the number of weeks

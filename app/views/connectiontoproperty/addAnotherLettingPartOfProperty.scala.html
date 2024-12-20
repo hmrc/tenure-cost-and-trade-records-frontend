@@ -80,10 +80,10 @@
        items = Seq(
         ActionItem(
           controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(idx).url,
-         content = Text("Change")),
+         content = Text(messages("label.change"))),
         ActionItem(
          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url,
-         content = Text("Remove"))
+         content = Text(messages("label.remove")))
        ),
        classes = "hmrc-summary-list__actions"
       )

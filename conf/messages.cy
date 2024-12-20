@@ -93,6 +93,7 @@ label.phone = Rhif ffôn
 label.email = Cyfeiriad e-bost
 label.submitAnotherForm = Submit another form
 label.change = Newid
+label.remove = Dileu
 label.liter = liter
 label.litres = litr
 label.percent = %
@@ -297,8 +298,8 @@ error.no.connection.selected = Select your connection to the property
 tradingNameFromProperty.heading = Beth yw enw masnachu’r busnes neu’r sefydliad sy’n gweithredu o’r eiddo?
 error.tradingNameFromProperty.required = Nodwch enw masnachu’r busnes neu’r sefydliad
 error.tradingNameFromProperty.maxLength = Mae’n rhaid i’r enw masnachu fod yn 50 o gymeriadau neu lai
-label.tradingNameFromPropertyHeadingLabel = Trading name
-label.tradingNameFromPropertyHeadingLabel6048 = Name
+label.tradingNameFromPropertyHeadingLabel = Enw masnachu
+label.tradingNameFromPropertyHeadingLabel6048 = Enw
 tradingNameFromProperty4068.heading = What is the name of the person or company operating the self-catering business from the property?
 error.tradingNameFromProperty6048.required = Enter the name of the person or company
 error.tradingNameFromProperty6048.maxLength = The name of the person or company must be 50 characters or fewer
@@ -770,7 +771,7 @@ error.landlordFullName.maxLength = Mae’n rhaid i enw’r landlord fod yn 50 o 
 typeOfTenure.heading = Nodwch eich math o ddeiliadaeth
 label.typeOfTenure.leasehold = Prydles
 label.typeOfTenure.license = Trwydded
-label.typeOfTenure.tenancy = Trwydded
+label.typeOfTenure.tenancy = Tenantiaeth
 label.typeOfTenure.long.leasehold = Prydles hir am rent tir
 error.typeOfTenure.required = Dewiswch bob un sy’n berthnasol.
 label.typeOfTenureDetails = Rhowch fanylion os oes cyfuniad o fathau o ddeiliadaeth
@@ -791,7 +792,7 @@ error.underReview.required = Dewiswch ‘do’ os yw’r rhent yn cael ei adolyg
 ##############################
 includedInYourRent.heading = A oes unrhyw rai o’r canlynol wedi’u cynnwys yn eich rhent ar?
 includedInYourRentApply.subheading = Dewiswch bob un sy’n berthnasol.
-includedInYourRent.vatValue = State the amount of VAT included in the rent
+includedInYourRent.vatValue = Nodwch swm y TAW sydd wedi’i gynnwys yn y rhent
 label.vat = TAW
 label.nondomesticRates = Ardrethi annomestig
 label.waterCharges = A percentage of turnover of the occupier’s business
@@ -802,7 +803,7 @@ label.includedInYourRent.nondomesticRates = Ardrethi annomestig
 label.includedInYourRent.waterCharges = Taliadau dŵr
 label.includedInYourRent.noneOfThese = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
 label.includedInYourRent.none = None
-hint.includedInYourRent = Select all that apply.
+hint.includedInYourRent = Dewiswch bob un sy’n berthnasol.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
@@ -945,15 +946,15 @@ error.rentOpenMarketValue.missing = Dewiswch ‘oedd’ os cafodd y rhent ei ben
 # DOES THE RENT PAYABLE
 ######################
 rentPayable.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw un o’r opsiynau sydd wedi’u rhestru?
-rentPayable6045.heading = Does the rent payable include or relate to any of the following?
+rentPayable6045.heading = A yw’r rhent sy’n daladwy yn cynnwys neu’n ymwneud ag unrhyw un o’r canlynol?
 checkbox.rentPayable.proprietor = Llety byw i’r perchennog neu’r staff
 checkbox.rentPayable.otherProperty = Eiddo arall
 checkbox.rentPayable.onlyPart = Dim ond rhan o’r eiddo
 checkbox.rentPayable.onlyLand = I dir yn unig (ac eithrio adeiladau)
 checkbox.rentPayable.shellUnit = Uned ‘gragen’ roedd yn rhaid i chi ei gosod eich hun
-checkbox.rentPayable.parkingSpaceGarage = Parking spaces or garages
+checkbox.rentPayable.parkingSpaceGarage = Mannau parcio neu garejys
 checkbox.rentPayable.noneOfThese = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
-checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
+checkbox.rentPayable.noneOfThese6045 = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Rhowch fanylion
 hint.detailsToQuestions = Mae enghreifftiau o ddisgrifiadau derbyniol yn cynnwys, “mae’r rhent yn cynnwys llety preswyl”, neu “hefyd yn cynnwys y safle drws nesaf”.
@@ -964,21 +965,26 @@ error.detailsToQuestions.maxLength = Mae’n rhaid i’r wybodaeth ychwanegol fo
 
 # RENT DEVELOPED LAND (FORM 6045/46)
 ######################
-rentDevelopedLand.heading = Does the rent payable relate to developed land?
-hint.rentDevelopedLand = For example, access roadways, hardstandings, or services.
+rentDevelopedLand.heading = A yw’r rhent sy’n daladwy yn ymwneud â thir datblygedig?
+hint.rentDevelopedLand = Er enghraifft, ffyrdd mynediad, lloriau caled, neu wasanaethau.
 error.rentDevelopedLand.missing = Select yes if the rent payable relates to developed land
 
 # RENT DEVELOPED LAND DETAILS (FORM 6045/46)
 ######################
-rentDevelopedLandDetails.heading = Describe the developments included in the rent
+rentDevelopedLandDetails.heading = Disgrifiwch y dablygiadau sydd wedi’u cynnwys yn y rhent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
 error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
 
 # RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
 ######################
-rentIncludeStructuresBuildings.heading = Does the rent payable include any structures or buildings?
+rentIncludeStructuresBuildings.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw strwythurau neu adeiladau?
 error.rentIncludeStructuresBuildings.missing = Select yes if the rent payable include any structures or buildings
 
+# RENT INCLUDES STRUCTURES BUILDINGS DETAILS (FORM 6045/46)
+######################
+rentIncludeStructuresBuildingsDetails.heading = Rhowch fanylion y strwythurau neu’r adeiladau sydd wedi’u cynnwys yn eich rhent
+error.rentIncludeStructuresBuildingsDetails.required = Enter details of the structures or buildings that are included in the rent
+error.rentIncludeStructuresBuildingsDetails.maxLength = Details of the structures or buildings that are included in the rent should be 2000 characters or fewer
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
@@ -987,14 +993,14 @@ error.rentPayableVaryOnQuantityOfBeers.missing = Select yes if the rent varies a
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ###############################################
-rentPayableVaryOnQuantityOfBeersDetails.heading = Sut mae’r diodydd a gyflenwir i’r eiddo yn effeithio ar y rhent sy'n daladwy?
+rentPayableVaryOnQuantityOfBeersDetails.heading = Sut mae’r diodydd a gyflenwir i’r eiddo yn effeithio ar y rhent sy’n daladwy?
 hint.rentPayableVaryOnQuantityOfBeersDetails = Er enghraifft, dywedwch wrthym os bydd eich rhent yn newid os yw’r faint a gyflenwir yn fwy na swm penodol.
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Enter a description of how the drinks supplied to your property affect your rent
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of how the drinks supplied to your property affect your rent should be 500 characters or fewer
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
-rentPayableVaryAccordingToGrossOrNet.heading = A yw’r rhent sy'n daladwy yn amrywio yn ôl trosiant gros neu net y busnes?
+rentPayableVaryAccordingToGrossOrNet.heading = A yw’r rhent sy’n daladwy yn amrywio yn ôl trosiant gros neu net y busnes?
 error.rentPayableVaryAccordingToGrossOrNet.missing = Dewiswch ‘ydy’ os yw’r rhent yn amrywio yn ôl eich trosiant
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
@@ -1084,13 +1090,13 @@ error.tradeServiceDescription.maxLength = Mae’n rhaid i’r disgrifiad o’r g
 
 # TRADE SERVICES ADDED
 #####################################
-addTradeService.heading = You have added {0} service {2}
+addTradeService.heading = Rydych wedi ychwanegu {0} service {2}
 addTradeServicePlural.heading = You have added {0} services {2}
 addTradeService.heading.landlord = provided by the landlord
 addTradeService.heading.rent = included in your rent
 addTradeServiceZero.heading = You have removed all the services provided by your landlord
-addTradeService.label = Would you like to add another service which is included in the rent?
-addTradeService.label6020 = Would you like to add another service?
+addTradeService.label = A ydych am ychwanegu gwasanaeth arall y telir amdano ar wahân?
+addTradeService.label6020 = A ydych am ychwanegu gwasanaeth arall y telir amdano ar wahân?
 error.addTradeService.required = Select yes if you would like to add another service provided by the landlord
 
 #PAYMENT FOR TRADE SERVICES
@@ -1125,24 +1131,24 @@ error.servicePaidSeparatelyList.required = Select yes if you would like to add a
 
 #SURRENDERED LEASE AGREEMENT DETAILS
 #########################
-surrenderedLeaseAgreement.heading = Details of the surrendered lease or agreement
-surrenderedLeaseAgreement.title = What was the annual rent under the surrendered lease or agreement excluding VAT?
-surrenderedLeaseAgreementMonths.heading = How long was the unexpired term at the time of surrender?
+surrenderedLeaseAgreement.heading = Manylion y brydles neu’r cytundeb a ildiwyd
+surrenderedLeaseAgreement.title = Beth oedd y rhent blynyddol o dan y brydles neu’r cytundeb a ildiwyd heb gynnwys TAW?
+surrenderedLeaseAgreementMonths.heading = Faint o gyfnod a oedd yn weddill ar adeg yr ildio?
 error.required.annualRentExcludingVat.surrenderedLeaseAgreementAmount = Enter the annual rent under the surrendered lease or agreement excluding VAT
 error.surrenderedLeaseAgreementMonths.required = Enter how long the unexpired term was at the time of surrender
-surrenderedLeaseAgreementMonths.months = months
+surrenderedLeaseAgreementMonths.months = misoedd
 
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
-rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
-rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover the services, excluding VAT?
+rentIncludeTradeServicesDetails.heading = Gwasanaethau masnach a ddarperir gan y landlord
+rentIncludeTradeServicesDetails.title = Pa swm sy’n cael ei gynnwys yn y rhent er mwyn talu am y gwasanaethau hyn, ac eithrio TAW?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
-rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
-rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
-label.describeServices = Describe the services provided
+rentIncludeTradeServicesDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
+rentIncludeTradeServicesDetails.hint2 = Er enghraifft, cynnal a chadw tanau, gwiriadau nwy blynyddol a gwasanaethau seler.
+label.describeServices = Disgrifiwch y gwasanaethau a ddarperir
 describeServicesTextArea.heading = Give details of the services provided by the landlord that are included in your rent
 label.describeServicesTextArea = Give details of the services provided by the landlord that are included in your rent
-rentIncludeTradeServicesDetailsTextBox.hint = For example, maintenance of fires, annual gas checks and cellar services.
+rentIncludeTradeServicesDetailsTextBox.hint = Er enghraifft, cynnal a chadw tanau, gwiriadau nwy blynyddol a gwasanaethau seler.
 rentIncludeTradeServicesDetailsTextBoxArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
 error.describeServicesTextArea.required = Please provide details of the services provided by the landlord that are included in your rent.
 error.required.sumIncludedInRent = Please provide a value
@@ -1211,10 +1217,10 @@ error.workCarriedOutCondition.required = Select yes if you were required to carr
 
 # RENT FREE PERIOD
 #########################
-rentFreePeriod.heading = Were you given a rent-free period, any payment, or any other benefits when the lease or agreement was granted?
+rentFreePeriod.heading = A roddwyd cyfnod di-rent, unrhyw daliad, neu unrhyw fuddion eraill i chi pan ganiatawyd y brydles neu’r cytundeb?
 error.rentFreePeriod.required = Select yes if you were given any rent-free period, payment or benefit
-rentFreePeriodDetails.heading = Give details of any rent-free period, payment or benefit
-rentFreePeriodDetails.hint = Leave blank if the rent has been reviewed since the benefit was received.
+rentFreePeriodDetails.heading = Rhowch fanylion unrhyw gyfnod, taliad neu fudd di-rent
+rentFreePeriodDetails.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers cael y budd.
 error.rentFreePeriodDetails.maxLength = Description of given rent-free period, payment or benefit must be {0} characters or fewer
 
 # PAY A CAPITAL SUM
@@ -1244,8 +1250,8 @@ error.receivePaymentWhenLeaseGranted.missing = Dewiswch ‘do’ os cawsoch unrh
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
-rentIncreasedAnnuallyWithRPIs.heading = Rhent sy'n gysylltiedig â mynegeion
-rentIncreasedAnnuallyWithRPIs.p1 = Mae'n rhaid i chi ddweud wrthym os bydd eich rhent yn cynyddu yn unol ag unrhyw fynegeion fel y mynegai prisiau manwerthu (RPI) neu’r mynegai prisiau defnyddwyr (CPI).
+rentIncreasedAnnuallyWithRPIs.heading = Rhent sy’n gysylltiedig â mynegeion
+rentIncreasedAnnuallyWithRPIs.p1 = Mae’n rhaid i chi ddweud wrthym os bydd eich rhent yn cynyddu yn unol ag unrhyw fynegeion fel y mynegai prisiau manwerthu (RPI) neu’r mynegai prisiau defnyddwyr (CPI).
 rentIncreasedAnnuallyWithRPIs.subheading = A yw’r rhent yn cynyddu’n flynyddol yn unol ag unrhyw fynegeion?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
 error.rentIncreasedAnnuallyWithRPIs.missing = Dewiswch ‘ydy’ os yw’ch rhent yn codi yn unol â mynegai
@@ -1269,13 +1275,13 @@ label.renewalLeaseTenancy = Wrth adnewyddu prydles
 label.saleLeaseback = Fel rhan o drafodiad gwerthu ac adlesu
 label.rentActuallyAgreed = Pryd cafodd y rhent ei gytuno arno neu ei osod mewn gwirionedd?
 help.rentActuallyAgreed.title = Os nad ydych yn siŵr pa ddyddiad i’w ddefnyddio
-help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when:
-help.rentActuallyAgreed.list1.item1 = a new lease or agreement is signed
-help.rentActuallyAgreed.list1.item2 = an interim rent is established
-help.rentActuallyAgreed.list1.item3 = a new rent is established following a rent review
-help.rentActuallyAgreed.list1.item4 = a lease is renewed
-help.rentActuallyAgreed.list1.item5 = a sale and leaseback is agreed
-help.rentActuallyAgreed.p2 = It may not necessarily be the date of occupation or the date a rent is first paid.
+help.rentActuallyAgreed.p1 = Y dyddiad y cafodd y rhent ei gytuno arno neu ei osod fel arfer yw dyddiad:
+help.rentActuallyAgreed.list1.item1 = llofnodi prydles neu gytundeb newydd
+help.rentActuallyAgreed.list1.item2 = sefydlu rhent interim
+help.rentActuallyAgreed.list1.item3 = sefydlu rhent newydd yn dilyn adolygiad rhent
+help.rentActuallyAgreed.list1.item4 = adnewyddu prydles
+help.rentActuallyAgreed.list1.item5 = cytuno ar werthu ac adlesu
+help.rentActuallyAgreed.p2 = Efallai nad dyma’r dyddiad meddiannu na’r dyddiad y telir y rhent am y tro cyntaf.
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei bennu
 
@@ -1385,7 +1391,7 @@ error.addAnotherLetting.required = Dewiswch ‘oes’ os ydych am ychwanegu goso
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
-tenantsAdditionsDisregarded.heading = Ychwanegiadau neu welliannau
+tenantsAdditionsDisregarded.heading = Ychwanegiadau neu welliannau a ddiystyrwyd
 tenantsAdditionsDisregarded.p1 = Os yw’r rhent yn seiliedig ar werth yr eiddo ar y farchnad cyn i’r tenant wneud unrhyw ychwanegiadau neu welliannau, rhaid i chi ddarparu manylion.
 tenantsAdditionsDisregarded.p2 = Gallai enghreifftiau o ychwanegiadau neu welliannau gynnwys, ond heb fod yn gyfyngedig i’r canlynol:
 tenantsAdditionsDisregarded.list1 = gosod cragen
@@ -1703,7 +1709,7 @@ taskList.profitSummary = Profit summary
 declaration.heading = Nawr anfonwch eich datganiad
 declaration.information = Drwy gyflwyno’r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi’n eu darparu yn gywir.
 request.heading = Anfonwch eich cais nawr
-request.information = CGwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VOA gysylltu â chi ynglŷn â’ch cais.
+request.information = Gwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VOA gysylltu â chi ynglŷn â’ch cais.
 hint.declaration = Gellid mynd â chi i’r llys os ydych yn cyflwyno gwybodaeth anwir
 taskList.fuelSales = Fuel sales
 taskList.bunkerdFuel = Bunkered fuel
@@ -1851,48 +1857,48 @@ error.turnover.6020.otherIncome.range = Other income in the year ending {0} must
 error.turnover.6020.otherIncome.negative = Other income in the year ending {0} cannot be a negative number
 
 # TURNOVER 6045
-turnover.6045.anyStaticLeisureCaravansOnSite.heading = Static caravans
-turnover.6045.anyStaticLeisureCaravansOnSite.p1 = The questions in this section relate to static caravans used for holiday or leisure purposes. These could be let out to holidaymakers or used by private owners as holiday or second homes.
-turnover.6045.anyStaticLeisureCaravansOnSite.p2 = You should not include details of any residential caravans occupied as a sole or main residence.
-turnover.6045.anyStaticLeisureCaravansOnSite.question = Do you have any static holiday or leisure caravans located on your site?
+turnover.6045.anyStaticLeisureCaravansOnSite.heading = Carafannau statig
+turnover.6045.anyStaticLeisureCaravansOnSite.p1 = Mae’r cwestiynau yn yr adran hon yn berthnasol i garafannau statig a ddefnyddir at ddibenion hamdden neu wyliau. Gall y rhain cael eu rhoi ar osod i bobl sy’n mynd ar eu gwyliau, neu gall berchnogion preifat eu defnyddio fel cartref gwyliau neu ail gartref.
+turnover.6045.anyStaticLeisureCaravansOnSite.p2 = Ni ddylech gynnwys manylion unrhyw garafán breswyl sy’n cael ei meddiannu fel unig fan preswylio neu fel prif fan preswylio.
+turnover.6045.anyStaticLeisureCaravansOnSite.question = A oes gennych unrhyw garafannau gwyliau neu garafannau hamdden ar eich safle?
 error.turnover.6045.anyStaticLeisureCaravansOnSite.required = Select yes if you have any static holiday or leisure caravans located on your site
 
-turnover.6045.caravansOpenAllYear.heading = Are your static caravans open all year?
-turnover.6045.weeksPerYear.label = Enter number of weeks the site remains open in a year
+turnover.6045.caravansOpenAllYear.heading = A yw’ch carafannau statig ar agor drwy gydol y flwyddyn?
+turnover.6045.weeksPerYear.label = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
 error.caravans.openAllYear.required = Select yes if your static caravans are open all year
 error.caravans.weeksPerYear.required = Enter the number of weeks
 error.caravans.weeksPerYear.invalid = The number of weeks should be a number from 1 to 52
 
-turnover.6045.caravanFleetHire.grossReceipts.heading = Gross receipts from all static caravan fleet hire
-turnover.6045.caravanFleetHire.p1 = Include the income received from fleet hire of single and twin-unit static caravans:
-turnover.6045.caravanFleetHire.list1.item1 = owned by the operator
-turnover.6045.caravanFleetHire.list1.item2 = sub-let by the operator to holidaymakers on behalf of private owners
-turnover.6045.caravanFleetHire.p2 = All figures should exclude VAT, but include any charges made for gas and electricity. State all totals before the deduction of any agents’ letting commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.caravanFleetHire.grossReceipts = Gross receipts
-turnover.6045.excludingVAT = (excluding VAT)
+turnover.6045.caravanFleetHire.grossReceipts.heading = Derbyniadau gros o logi carafannau statig fel fflyd
+turnover.6045.caravanFleetHire.p1 = Dylech gynnwys yr incwm a gafwyd o logi carafannau statig unigol a charafannau statig dwy-uned fel fflyd:
+turnover.6045.caravanFleetHire.list1.item1 = sy’n eiddo i’r gweithredwr
+turnover.6045.caravanFleetHire.list1.item2 = sy’n cael eu his-osod gan y gweithredwr i bobl ar eu gwyliau ar ran perchnogion preifat
+turnover.6045.caravanFleetHire.p2 = Dylai pob ffigur eithrio TAW, ond dylai gynnwys unrhyw daliadau a godir am nwy a thrydan. Nodwch bob cyfanswm cyn didynnu comisiwn gosod unrhyw asiantau. Lle nad yw cyfrifon yn ymwneud â’ch tymor i gyd, nodwch y nifer berthnasol o wythnosau.
+turnover.6045.caravanFleetHire.grossReceipts = Derbyniadau gros
+turnover.6045.excludingVAT = (Heb gynnwys TAW)
 error.turnover.6045.caravanFleetHire.grossReceipts.required = Enter 0 if you did not have any gross receipts from static caravan fleet hire in the year ending {0}
 error.turnover.6045.caravanFleetHire.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravanFleetHire.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 
-turnover.6045.caravans.single.ownedByOperator.heading = Single caravans owned by the operator and used for fleet hire
-turnover.6045.caravans.single.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.single.ownedByOperator.heading = Carafannau unigol, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+turnover.6045.caravans.single.ownedByOperator.p1 = Nodwch eich derbynebau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 turnover.6045.caravans.single.ownedByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
-turnover.6045.caravans.single.ownedByOperator.help.link = Help with single caravans
-turnover.6045.caravans.single.ownedByOperator.help.p1 = A single caravan is transported onto the site in one piece and mounted on a pitch.
-turnover.6045.caravans.grossReceipts = Gross receipts
-turnover.6045.caravans.grossReceipts.hint = Inclusive of electricity charges and gas supplied if any.
-turnover.6045.caravans.vans = Number of vans
-turnover.6045.vans.suffix = vans
+turnover.6045.caravans.single.ownedByOperator.help.link = Help gyda charafannau unigol
+turnover.6045.caravans.single.ownedByOperator.help.p1 = Mae carafán unigol yn cael ei chludo i’r safle mewn un darn, ac yn cael ei gosod ar faes.
+turnover.6045.caravans.grossReceipts = Derbynebau gros
+turnover.6045.caravans.grossReceipts.hint = Gan gynnwys y trydan a’r nwy a gyflenwyd, os o gwbl.
+turnover.6045.caravans.vans = Nifer y faniau
+turnover.6045.vans.suffix = fan
 turnover.6045.caravan.suffix = caravan
-turnover.6045.caravans.suffix = caravans
+turnover.6045.caravans.suffix = carafanau
 error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans owned by the operator in the year ending {0}
 error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 error.caravans.single.ownedByOperator.vans.required = Enter 0 if you do not have any single caravan vans owned by the operator in the year ending {0}
 error.caravans.single.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
-turnover.6045.caravans.single.subletByOperator.heading = Single caravans sub-let by the operator to holidaymakers on behalf of private owners as fleet hire
-turnover.6045.caravans.single.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.single.subletByOperator.heading = Carafannau unigol sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd i bobl sy’n mynd ar eu gwyliau
+turnover.6045.caravans.single.subletByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 turnover.6045.caravans.single.subletByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans sub-let by the operator in the year ending {0}
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
@@ -1900,21 +1906,21 @@ error.turnover.6045.caravans.single.subletByOperator.grossReceipts.negative = Gr
 error.caravans.single.subletByOperator.vans.required = Enter 0 if you do not have any single caravan vans sub-let by the operator in the year ending {0}
 error.caravans.single.subletByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
-turnover.6045.caravans.twin.ownedByOperator.heading = Twin-unit caravans owned by the operator and used for fleet hire
-turnover.6045.caravans.twin.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.twin.ownedByOperator.heading = Carafannau dwy-uned, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+turnover.6045.caravans.twin.ownedByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 turnover.6045.caravans.twin.ownedByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
-turnover.6045.caravans.twin.ownedByOperator.help.link = Help with twin-unit caravans
-turnover.6045.caravans.twin.ownedByOperator.help.p1 = A twin-unit caravan is transported onto the site in no more than two parts which are then assembled by the means of bolts, clamps or other devices.
-turnover.6045.caravans.twin.ownedByOperator.help.p2 = A twin-unit caravan should be no longer than 20m, no wider than 6.8m, and no taller than 3.05m. It should also be capable of being moved by road.
+turnover.6045.caravans.twin.ownedByOperator.help.link = Help gyda charafannau dwy-uned
+turnover.6045.caravans.twin.ownedByOperator.help.p1 = Mae carafán ddwy-uned yn cael ei chludo i’r safle mewn naill ai un neu ddau ddarn, ac yn cael ei chydosod gan ddefnyddio bolltau, clampiau, neu ddyfeisiau eraill.
+turnover.6045.caravans.twin.ownedByOperator.help.p2 = Ni ddylai garafán ddwy-uned fod yn hirach na 20m, yn lletach na 6.8m, na’n dalach na 3.05m. Dylai hefyd fod yn gallu cael ei chludo ar y ffyrdd.
 error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans owned by the operator in the year ending {0}
 error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 error.caravans.twin.ownedByOperator.vans.required = Enter 0 if you do not have any twin-unit caravan vans owned by the operator in the year ending {0}
 error.caravans.twin.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.twin.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
-turnover.6045.caravans.twin.subletByOperator.heading = Twin-unit caravans sub-let to holidaymakers by the operator on behalf of private owners as fleet hire
-turnover.6045.caravans.twin.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.caravans.twin.subletByOperator.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
+turnover.6045.caravans.twin.subletByOperator.heading = Carafannau dwy-uned sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd i bobl sy’n mynd ar eu gwyliau
+turnover.6045.caravans.twin.subletByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+turnover.6045.caravans.twin.subletByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans sub-let in the year ending {0}
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
@@ -1932,16 +1938,16 @@ turnover.6045.caravans.age.fleet = Fleet
 turnover.6045.caravans.age.fleetCaravans = Number of fleet <br/> caravans
 turnover.6045.caravans.age.private = Private
 turnover.6045.caravans.age.privateCaravans = Number of private <br/> caravans
-turnover.6045.caravans.age.fleet.item1 = owned by the operator and used for fleet hire
+turnover.6045.caravans.age.fleet.item1 = O dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
 turnover.6045.caravans.age.private.p1 = For the purposes of this declaration, private caravans fail into any of the following sub-categories:
 turnover.6045.caravans.age.private.item1 = privately owned and used only by owner and family
 turnover.6045.caravans.age.private.item2 = sub-let by operator to holidaymakers on behalf of private owners as fleet hire
 turnover.6045.caravans.age.private.item3 = sub-let by private owners to holidaymakers other than family and friends
 turnover.6045.caravans.age.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
-turnover.6045.caravans.age.years0_5 = 0-5 years
-turnover.6045.caravans.age.years6_10 = 6-10 years
-turnover.6045.caravans.age.years11_15 = 11-15 years
-turnover.6045.caravans.age.years15plus = Over 15 years
+turnover.6045.caravans.age.years0_5 = 0-5 mlynedd
+turnover.6045.caravans.age.years6_10 = 6-10 mlynedd
+turnover.6045.caravans.age.years11_15 = 11-15 mlynedd
+turnover.6045.caravans.age.years15plus = Dros 15 mlynedd
 turnover.6045.caravans.age.total = Total
 error.caravans.single.fleetHire.years0_5.required = Enter 0 if you do not have on site any single caravans fleet hire in age category 0-5 years
 error.caravans.single.fleetHire.years0_5.nonNumeric = The amount of single caravans fleet hire 0-5 years must be a number
@@ -2001,9 +2007,9 @@ turnover.6045.caravansTotalSiteCapacity.ownedByOperatorForFleetHire = Owned by t
 turnover.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily = Privately owned and used only by owner and family
 turnover.6045.caravansTotalSiteCapacity.subletByOperator = Sub-let by operator to holidaymakers on behalf of private owners as fleet hire
 turnover.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Sub-let by private owners to holidaymakers other than family and friends
-turnover.6045.caravansTotalSiteCapacity.charitablePurposes = Used for charitable purposes
-turnover.6045.caravansTotalSiteCapacity.seasonalStaff = Used for seasonal staff
-turnover.6045.caravansTotalSiteCapacity.total = Total number of static caravans on site
+turnover.6045.caravansTotalSiteCapacity.charitablePurposes = Yn cael ei defnyddio at ddibenion elusennol
+turnover.6045.caravansTotalSiteCapacity.seasonalStaff = Yn cael ei defnyddio at ddibenion y staff tymhorol
+turnover.6045.caravansTotalSiteCapacity.total = Cyfanswm y carafannau statig sydd ar y safle
 error.caravans.ownedByOperatorForFleetHire.required = Enter 0 if you do not have on site any caravans owned by the operator and used for fleet hire
 error.caravans.ownedByOperatorForFleetHire.nonNumeric = The amount of caravans owned by the operator must be a number
 error.caravans.ownedByOperatorForFleetHire.negative = The amount of caravans owned by the operator cannot be a negative number
@@ -2022,19 +2028,19 @@ error.caravans.charitablePurposes.negative = The amount of caravans used for cha
 error.caravans.seasonalStaff.required = Enter 0 if you do not have on site any caravans used for seasonal staff
 error.caravans.seasonalStaff.nonNumeric = The amount of caravans used for seasonal staff must be a number
 error.caravans.seasonalStaff.negative = The amount of caravans used for seasonal staff cannot be a negative number
-turnover.6045.caravansPerService.heading = What services are provided to the static caravans in the following categories?
-turnover.6045.caravansPerService.services = Services
-turnover.6045.caravansPerService.numberOfCaravans = Number of caravans
-turnover.6045.caravansPerService.fleet = Fleet
-turnover.6045.caravansPerService.fleet.item1 = owned by the operator and used for fleet hire
-turnover.6045.caravansPerService.fleetWaterElectricityDrainage = Water, electricity and drainage
-turnover.6045.caravansPerService.fleetElectricityOnly = Electricity only
-turnover.6045.caravansPerService.private = Private
-turnover.6045.caravansPerService.private.item1 = privately owned and used only by owner and family
-turnover.6045.caravansPerService.private.item2 = sub-let by operator to holidaymakers on behalf of private owners as fleet hire
-turnover.6045.caravansPerService.private.item3 = sub-let by private owners to holidaymakers other than family and friends
-turnover.6045.caravansPerService.privateWaterElectricityDrainage = Water, electricity and drainage
-turnover.6045.caravansPerService.privateElectricityOnly = Electricity only
+turnover.6045.caravansPerService.heading = Pa wasanaethau sy’n cael eu darparu i’r carafanau statig o dan y categorïau canlynol?
+turnover.6045.caravansPerService.services = Gwasanaethau
+turnover.6045.caravansPerService.numberOfCaravans = Nifer y carafannau
+turnover.6045.caravansPerService.fleet = Fflyd
+turnover.6045.caravansPerService.fleet.item1 = o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+turnover.6045.caravansPerService.fleetWaterElectricityDrainage = Dŵr, trydan a systemau draenio
+turnover.6045.caravansPerService.fleetElectricityOnly = Trydan yn unig
+turnover.6045.caravansPerService.private = Preifat
+turnover.6045.caravansPerService.private.item1 = eiddo preifat, a defnyddir gan y perchennog a’i deulu yn unig
+turnover.6045.caravansPerService.private.item2 = yn cael eu his-osod gan y gweithredwyr, a hynny ar ran y perchnogion preifat, fel fflyd i’w llogi i bobl sy’n mynd ar eu gwyliau
+turnover.6045.caravansPerService.private.item3 = yn cael eu his-osod gan berchnogion preifat i bobl sy’n mynd ar eu gwyliau, ac nad ydynt yn deulu na’n ffrindiau
+turnover.6045.caravansPerService.privateWaterElectricityDrainage = Dŵr, trydan a systemau draenio
+turnover.6045.caravansPerService.privateElectricityOnly = Trydan yn unig
 error.caravans.fleetWaterElectricityDrainage.required = Enter 0 if you do not have on site any fleet caravans provided with water, electricity and drainage
 error.caravans.fleetWaterElectricityDrainage.nonNumeric = The amount of fleet caravans provided with water, electricity and drainage must be a number
 error.caravans.fleetWaterElectricityDrainage.negative = The amount of fleet caravans provided with water, electricity and drainage cannot be a negative number
@@ -2047,26 +2053,26 @@ error.caravans.privateWaterElectricityDrainage.negative = The amount of private 
 error.caravans.privateElectricityOnly.required = Enter 0 if you do not have on site any private caravans provided with electricity only
 error.caravans.privateElectricityOnly.nonNumeric = The amount of private caravans provided with electricity only must be a number
 error.caravans.privateElectricityOnly.negative = The amount of private caravans provided with electricity only cannot be a negative number
-turnover.6045.caravansAnnualPitchFee.heading = What is the current annual pitch fee for a single-unit static caravan, excluding VAT?
-turnover.6045.caravansAnnualPitchFee.p1 = Enter the annual pitch fee for a single static caravan. If you only have twin-unit vans, enter the standard annual pitch fee for a twin-unit van.
+turnover.6045.caravansAnnualPitchFee.heading = Beth yw’r ffi flynyddol am lain ar gyfer carafán statig unigol ar hyn o bryd, heb gynnwys TAW?
+turnover.6045.caravansAnnualPitchFee.p1 =  Nodwch y ffi flynyddol am lain ar gyfer carafán statig unigol. Os taw carafannau dwy-uned sydd gennych yn unig, nodwch y ffi flynyddol safonol am lain ar gyfer carafán ddwy-uned.
 turnover.6045.caravans.annualPitchFee = Total annual pitch fee
 turnover.6045.perYear.suffix = a year
-turnover.6045.caravans.servicesIncludedInPitchFee = What services are included in this pitch fee, and what is the charge made?
+turnover.6045.caravans.servicesIncludedInPitchFee = Pa wasanaethau sy’n cael eu cynnwys yn y ffi ar gyfer y llain hon, a beth yw’r  ffioedd a godir?
 turnover.6045.caravans.servicesIncludedInPitchFee.hint = Dewiswch bob un sy’n berthnasol.
-turnover.6045.caravans.fee.rates = Rates
-turnover.6045.caravans.fee.rates.label = State charges made
+turnover.6045.caravans.fee.rates = Ardrethi
+turnover.6045.caravans.fee.rates.label = Nodwch y ffioedd a godir
 turnover.6045.caravans.fee.rates.ariaLabel = Rates charges made
-turnover.6045.caravans.fee.waterAndDrainage = Water and drainage
-turnover.6045.caravans.fee.waterAndDrainage.label = State charges made
-turnover.6045.caravans.fee.waterAndDrainage.ariaLabel = Water and drainage charges made
-turnover.6045.caravans.fee.gas = Gas
-turnover.6045.caravans.fee.gas.label = State charges made
+turnover.6045.caravans.fee.waterAndDrainage = Dŵr a systemau draenio
+turnover.6045.caravans.fee.waterAndDrainage.label = Nodwch y ffioedd a godir
+turnover.6045.caravans.fee.waterAndDrainage.ariaLabel = Dŵr a systemau draenio
+turnover.6045.caravans.fee.gas = Nwy
+turnover.6045.caravans.fee.gas.label = Nodwch y ffioedd a godir
 turnover.6045.caravans.fee.gas.ariaLabel = Gas charges made
-turnover.6045.caravans.fee.electricity = Electricity
-turnover.6045.caravans.fee.electricity.label = State charges made
+turnover.6045.caravans.fee.electricity = Trydan
+turnover.6045.caravans.fee.electricity.label = Nodwch y ffioedd a godir
 turnover.6045.caravans.fee.electricity.ariaLabel = Electricity charges made
-turnover.6045.caravans.fee.other = Other (specify)
-turnover.6045.caravans.fee.other.hint = Describe the other services included in the pitch fee, including the charge made.
+turnover.6045.caravans.fee.other = Arall (rhowch fanylion)
+turnover.6045.caravans.fee.other.hint = Disgrifiwch y gwasanaethau eraill sy’n cael eu cynnwys yn y ffi am lain, gan gynnwys y ffioedd a godir.
 turnover.6045.caravans.fee.other.ariaLabel = Other included services description
 error.caravans.totalPitchFee.required = Enter the annual pitch fee
 error.caravans.totalPitchFee.nonNumeric = The annual pitch fee must be a number like 100 or 100.00
@@ -2091,10 +2097,10 @@ turnover.6045.lettingUnits.grossReceipts.heading = Letting units owned by site o
 turnover.6045.lettingUnits.p1.beginning = Enter your gross receipts from any of these units which are
 turnover.6045.lettingUnits.p1.bold = owned by the site operator.
 turnover.6045.lettingUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.lettingUnits.grossReceipts.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
+turnover.6045.lettingUnits.grossReceipts.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.lettingUnits.grossReceipts = Gross receipts
 turnover.6045.lettingUnits.grossReceipts.hint = Inclusive of electricity changes and gas supplied if any.
-turnover.6045.lettingUnits.numberOfUnits = Number of units
+turnover.6045.lettingUnits.numberOfUnits = Nifer yr unedau
 error.turnover.6045.lettingUnits.grossReceipts.required = Enter 0 if you did not have any gross receipts from letting units  the year ending {0}
 error.turnover.6045.lettingUnits.grossReceipts.ranged =  Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.lettingUnits.grossReceipts.negative =  Gross receipts in the year ending {0} cannot be a negative number
@@ -2105,7 +2111,7 @@ turnover.6045.subLetUnits.grossReceipts.heading = Units sub-let by site operator
 turnover.6045.subLetUnits.p1.beginning = Enter your gross receipts from any of these units which are
 turnover.6045.subLetUnits.p1.bold = sub-let by the site operator.
 turnover.6045.subLetUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.subLetUnits.numberOfUnits = Number of units
+turnover.6045.subLetUnits.numberOfUnits = Nifer yr unedau
 error.turnover.6045.subLetUnits.grossReceipts.required = Enter 0 if you did not have any gross receipts from sub-let units  the year ending {0}
 error.turnover.6045.subLetUnits.grossReceipts.ranged =  Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.subLetUnits.grossReceipts.negative =  Gross receipts in the year ending {0} cannot be a negative number
@@ -2114,15 +2120,15 @@ error.subLetUnits.numberOfUnits.negative = Number of sub-let units cannot be a n
 error.subLetUnits.numberOfUnits.nonNumeric = The number of sub-let units must be a number
 
 # TURNOVER 6048
-turnover.6048.income.heading = Income
-turnover.6048.income.p1 = Provide us with details of your income. If the accounts do not relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
-turnover.6048.income.letting = Letting income
-turnover.6048.excludingVAT = (excluding VAT)
-turnover.6048.income.serviceProvision = Income from service provision
-turnover.6048.income.serviceProvision.hint = For example gas, electricity or logs.
-turnover.6048.income.other = Income from other charges
-turnover.6048.income.other.hint = For example laundry, meals or leisure activities.
-turnover.6048.income.total = Total income
+turnover.6048.income.heading = Incwm
+turnover.6048.income.p1 = Rhowch fanylion eich incwm i ni. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, neu os and oeddech yn masnachu’n barhaus, nodwch y nifer berthnasol o wythnosau.
+turnover.6048.income.letting = Incwm o osodiadau
+turnover.6048.excludingVAT = (heb gynnwys TAW)
+turnover.6048.income.serviceProvision = Incwm o ddarparu gwasanaeth
+turnover.6048.income.serviceProvision.hint = Er enghraifft, nwy, trydan neu foncyffion.
+turnover.6048.income.other = Incwm o ffioedd eraill
+turnover.6048.income.other.hint = Er enghraifft, golchi dillad, prydau o fwyd neu weithgareddau hamdden.
+turnover.6048.income.total = Cyfanswm yr incwm
 error.turnover.6048.income.letting.required = Enter 0 if you did not have any letting income in the year ending {0}
 error.turnover.6048.income.letting.range = Letting income in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.income.letting.negative = Letting income in the year ending {0} cannot be a negative number
@@ -2132,12 +2138,12 @@ error.turnover.6048.income.serviceProvision.negative = Income from service provi
 error.turnover.6048.income.other.required = Enter 0 if you did not have any income from other charges in the year ending {0}
 error.turnover.6048.income.other.range = Income from other charges in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.income.other.negative = Income from other charges in the year ending {0} cannot be a negative number
-turnover.6048.fixedCosts.heading = Fixed costs
-turnover.6048.fixedCosts.insurance = Insurance
+turnover.6048.fixedCosts.heading = Costau penodol
+turnover.6048.fixedCosts.insurance = Yswiriant
 turnover.6048.fixedCosts.businessRatesOrCouncilTax = Business Rates or Council Tax paid
-turnover.6048.fixedCosts.rent = Rent paid
-turnover.6048.fixedCosts.rent.hint = Where applicable.
-turnover.6048.fixedCosts.total = Total fixed costs
+turnover.6048.fixedCosts.rent = Rhent wedi’i dalu
+turnover.6048.fixedCosts.rent.hint = Lle bo’n berthnasol.
+turnover.6048.fixedCosts.total = Cyfanswm y costau penodol
 error.turnover.6048.fixedCosts.insurance.required = Enter 0 if you did not have any insurance costs in the year ending {0}
 error.turnover.6048.fixedCosts.insurance.range = Insurance costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.fixedCosts.insurance.negative = Insurance costs in the year ending {0} cannot be a negative number
@@ -2147,16 +2153,16 @@ error.turnover.6048.fixedCosts.businessRatesOrCouncilTax.negative = Business Rat
 error.turnover.6048.fixedCosts.rent.required = Enter 0 if you did not have any rent costs in the year ending {0}
 error.turnover.6048.fixedCosts.rent.range = Rent costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.fixedCosts.rent.negative = Rent costs in the year ending {0} cannot be a negative number
-turnover.6048.accountingCosts.heading = Accounting costs
-turnover.6048.accountingCosts.wagesAndNationalInsurance = Wages and National Insurance
-turnover.6048.accountingCosts.depreciationBuildings = Depreciation
-turnover.6048.accountingCosts.depreciationBuildings.hint = Buildings.
-turnover.6048.accountingCosts.depreciationContents = Depreciation
-turnover.6048.accountingCosts.depreciationContents.hint = Contents, fixtures and fittings.
-turnover.6048.accountingCosts.bookkeepingOrAccountancy = Bookkeeping or accountancy fees
-turnover.6048.accountingCosts.bankCharges = Bank charges
-turnover.6048.accountingCosts.bankCharges.hint = Excluding interest.
-turnover.6048.accountingCosts.total = Total accounting costs
+turnover.6048.accountingCosts.heading = Costau cyfrifyddu
+turnover.6048.accountingCosts.wagesAndNationalInsurance = Yswiriant Gwladol a Chyflog
+turnover.6048.accountingCosts.depreciationBuildings = Dibrisiad
+turnover.6048.accountingCosts.depreciationBuildings.hint = Adeiladau.
+turnover.6048.accountingCosts.depreciationContents = Dibrisiad
+turnover.6048.accountingCosts.depreciationContents.hint = Gosodiadau, ffitiadau a’r cynnwys.
+turnover.6048.accountingCosts.bookkeepingOrAccountancy = Ffioedd cyfrifyddiaeth a chadw cyfrifon
+turnover.6048.accountingCosts.bankCharges = Costau banc
+turnover.6048.accountingCosts.bankCharges.hint = Gan eithrio llog.
+turnover.6048.accountingCosts.total = Cyfanswm y costau cyfrifyddu
 error.turnover.6048.accountingCosts.wagesAndNationalInsurance.required = Enter 0 if you did not have any Wages and National Insurance costs in the year ending {0}
 error.turnover.6048.accountingCosts.wagesAndNationalInsurance.range = Wages and National Insurance costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.accountingCosts.wagesAndNationalInsurance.negative = Wages and National Insurance costs in the year ending {0} cannot be a negative number
@@ -2172,17 +2178,17 @@ error.turnover.6048.accountingCosts.bookkeepingOrAccountancy.negative = Bookkeep
 error.turnover.6048.accountingCosts.bankCharges.required = Enter 0 if you did not have any bank charges in the year ending {0}
 error.turnover.6048.accountingCosts.bankCharges.range = Bank charges in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.accountingCosts.bankCharges.negative = Bank charges in the year ending {0} cannot be a negative number
-turnover.6048.administrativeCosts.heading = Administrative costs
-turnover.6048.administrativeCosts.subscriptionsAndFees = Subscriptions and fees
-turnover.6048.administrativeCosts.subscriptionsAndFees.hint = Trade associations, tourist board grading.
-turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage = Telephone, broadband, stationery and postage
-turnover.6048.administrativeCosts.bookingAgency = Booking agency costs
-turnover.6048.administrativeCosts.bookingAgency.hint = Letting agency or listing fees.
-turnover.6048.administrativeCosts.advertising = Advertising costs
-turnover.6048.administrativeCosts.advertising.hint = Including website.
-turnover.6048.administrativeCosts.printing = Printing costs
-turnover.6048.administrativeCosts.printing.hint = For example brochure, letterheads.
-turnover.6048.administrativeCosts.total = Total administrative costs
+turnover.6048.administrativeCosts.heading = Costau gweinyddol
+turnover.6048.administrativeCosts.subscriptionsAndFees = Tanysgrifiadau a ffioedd
+turnover.6048.administrativeCosts.subscriptionsAndFees.hint = Cymdeithasau masnachu, sgôr bwrdd croeso.
+turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage = Teleffon, cysylltiad band eang, deunyddiau ysgrifennu a phostio
+turnover.6048.administrativeCosts.bookingAgency = Costau’r asiantaeth archebu
+turnover.6048.administrativeCosts.bookingAgency.hint = Ffioedd yr asiantaeth gosod eiddo neu’r ffi ar gyfer rhoi gosodiadau.
+turnover.6048.administrativeCosts.advertising = Costau hysbysebu
+turnover.6048.administrativeCosts.advertising.hint = Gan gynnwys y wefan.
+turnover.6048.administrativeCosts.printing = Costau argraffu
+turnover.6048.administrativeCosts.printing.hint = Er enghraifft llyfryn, papur â phennawd.
+turnover.6048.administrativeCosts.total = Cyfanswm y costau gweinyddol
 error.turnover.6048.administrativeCosts.subscriptionsAndFees.required = Enter 0 if you did not have any subscriptions and fees in the year ending {0}
 error.turnover.6048.administrativeCosts.subscriptionsAndFees.range = Subscriptions and fees in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.administrativeCosts.subscriptionsAndFees.negative = Subscriptions and fees in the year ending {0} cannot be a negative number
@@ -2198,18 +2204,18 @@ error.turnover.6048.administrativeCosts.advertising.negative = Advertising costs
 error.turnover.6048.administrativeCosts.printing.required = Enter 0 if you did not have any printing costs in the year ending {0}
 error.turnover.6048.administrativeCosts.printing.range = Printing costs in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.administrativeCosts.printing.negative = Printing costs in the year ending {0} cannot be a negative number
-turnover.6048.operationalCosts.heading = Operational costs
+turnover.6048.operationalCosts.heading = Costau gweithredu
 turnover.6048.operationalCosts.energyBills = Energy bills
-turnover.6048.operationalCosts.energyBills.hint = Electricity, gas, water, oil and logs.
-turnover.6048.operationalCosts.laundryCleaning = Laundry, dry cleaning, carpet cleaning
-turnover.6048.operationalCosts.repairsRenewalsMaintenance = Repairs, renewals and maintenance
-turnover.6048.operationalCosts.tvLicences = TV licences
-turnover.6048.operationalCosts.tvLicences.hint = Including satellite and subscriptions.
-turnover.6048.operationalCosts.travellingAndMotorExpenses = Travelling and motor expenses
-turnover.6048.operationalCosts.other = Other costs
+turnover.6048.operationalCosts.energyBills.hint = Trydan, nwy, dŵr, olew a boncyffion.
+turnover.6048.operationalCosts.laundryCleaning = Golchi dillad, sychlanhau, golchi carped
+turnover.6048.operationalCosts.repairsRenewalsMaintenance = Atgyweiriadau, adnewyddiadau, cynnal a chadw
+turnover.6048.operationalCosts.tvLicences = Trwyddedau teledu
+turnover.6048.operationalCosts.tvLicences.hint = Gan gynnwys teledu lloeren a thanysgrifiadau.
+turnover.6048.operationalCosts.travellingAndMotorExpenses = Treuliau moduro a theithio
+turnover.6048.operationalCosts.other = Costau eraill
 turnover.6048.operationalCosts.other.hint = Include any other operational costs not listed previously.
-turnover.6048.operationalCosts.other.details = Give details of the items included in your other costs
-turnover.6048.operationalCosts.total = Total operational costs
+turnover.6048.operationalCosts.other.details = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich costau eraill.
+turnover.6048.operationalCosts.total = Cyfanswm y costau gweithredu
 error.turnover.6048.operationalCosts.energyBills.required = Enter 0 if you did not have any energy bills in the year ending {0}
 error.turnover.6048.operationalCosts.energyBills.range = Energy bills in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6048.operationalCosts.energyBills.negative = Energy bills in the year ending {0} cannot be a negative number
@@ -2703,23 +2709,32 @@ error.premisesCosts.buildingInsurance.negative = Building insurance in the year 
 
 # OTHER HOLIDAY ACCOMMODATION (FORM 6045/46)
 ####################################
-otherHolidayAccommodation.heading = Other holiday accommodation
-otherHolidayAccommodation.question = Are there any chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units located on your site?
-help.otherHolidayAccommodation.title = Help with defining other holiday accommodation
-help.otherHolidayAccommodation.p1 = For the purpose of this declaration, other holiday accommodation is defined as having the following characteristics:
-help.otherHolidayAccommodation.list1.p1 = permanent structures
-help.otherHolidayAccommodation.list1.p2 = brought onto site in more than two parts
-help.otherHolidayAccommodation.list1.p3 = assembled on site
-help.otherHolidayAccommodation.list1.p4 = cannot be transported by road once assembled
+otherHolidayAccommodation.heading = Llety gwyliau arall
+otherHolidayAccommodation.question = A oes unrhyw gabanau gwyliau, cabanau pren, tai llety, byngalos, fflatiau, tai, neu unedau llety gwyliau tebyg ar eich safle?
+help.otherHolidayAccommodation.title = Help gyda diffinio llety gwyliau arall
+help.otherHolidayAccommodation.p1 = At ddibenion y datganiad hwn, diffinnir rhywbeth yn ‘llety gwyliau arall’ os yw’r canlynol yn wir:
+help.otherHolidayAccommodation.list1.p1 = mae ganddo strwythurau parhaol
+help.otherHolidayAccommodation.list1.p2 = mae’n dod i’r safle mewn mwy na dau ddarn
+help.otherHolidayAccommodation.list1.p3 = mae’n cael ei gydosod ar y safle
+help.otherHolidayAccommodation.list1.p4 = nad oes modd ei gludo ar y ffyrdd unwaith iddo gael ei gydosod
 error.otherHolidayAccommodation.required =  Select yes if there are other holiday letting units located on your site.
+
+# OTHER HOLIDAY ACCOMMODATION DETAILS(FORM 6045/46)
+####################################
+otherHolidayAccommodationDetails.heading = A yw’ch llety gwyliau arall ar agor drwy gydol y flwyddyn?
+otherHolidayAccommodationDetails.weeksOpen = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
+error.weeksInYearMapping.invalid = The number of weeks should be a number from 1 to 52
+error.weeksInYearMapping.blank =  Enter the number of weeks
+error.otherHolidayAccommodationOpenAllYear.required = Select yes if your other holiday accommodation open all year
+
 
 # TOTAL SITE CAPACITY(FORM 6045/46)
 ####################################
 totalSiteCapacity.heading = Total site capacity - other holiday accommodation
 totalSiteCapacity.p1 = You must declare how many units of other holiday accommodation you have in each of the listed categories. This must be the units that are on site today, or will be on site when you submit this declaration.
-totalSiteCapacity.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
+totalSiteCapacity.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 totalSiteCapacity.category = Category
-totalSiteCapacity.numberOfUnits = Number of units
+totalSiteCapacity.numberOfUnits = Nifer yr unedau
 totalSiteCapacity.availableForLetting = Owned by the site operator and available for letting
 totalSiteCapacity.occupiedBySeasonalStuff = Owned by the site operator and occupied by seasonal staff
 totalSiteCapacity.privatelyOwned = Privately owned
@@ -2737,53 +2752,53 @@ error.privatelyOwned.negative = The number of units privately owned must be betw
 
 #TOURING AND TENTING PITCHES QUESTION
 
-touringAndTentingPitches.heading = Touring and tenting pitches
+touringAndTentingPitches.heading = Lleiniau pebyll a lleiniau teithio
 
-touringAndTentingPitches.question.heading = Do you have any touring and tenting pitches on your site?
+touringAndTentingPitches.question.heading = A oes gennych unrhyw leiniau pebyll neu leiniau teithio ar eich safle?
 error.touringAndTentingPitches.missing = Select yes if you have any touring and tenting pitches on your site
-help.touringAndTentingPitches.title = Help with defining touring and tenting pitches
-help.touringAndTentingPitches.p = For the purposes of this declaration, touring and tenting pitches are defined as:
-help.touringAndTentingPitches.pitches = pitches for caravans, motor homes, or tents
-help.touringAndTentingPitches.glamping = glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
-help.touringAndTentingPitches.rally = rally areas
+help.touringAndTentingPitches.title = Help gyda diffinio lleiniau pebyll a lleiniau teithio
+help.touringAndTentingPitches.p = At ddibenion y datganiad hwn, rydym yn diffinio ‘lleiniau pebyll a lleiniau teithio’ fel a ganlyn:
+help.touringAndTentingPitches.pitches = lleiniau ar gyfer carafannau, cartrefi modur, neu bebyll
+help.touringAndTentingPitches.glamping = lleiniau glampio ar gyfer pebyll cloch, yurts, tipis, cabanau bugail, neu strwythurau symudol neu strwythur eraill a godir ymlaen llaw
+help.touringAndTentingPitches.rally = lleiniau rali
 
 
 # ARE YOUR TOURING AND TENTING PITCHES OPEN ALL YEAR
 
-areYourPitchesOpen.heading = Are your touring and tenting pitches open all year?
+areYourPitchesOpen.heading = A yw’ch lleiniau pebyll neu’ch lleiniau teithio ar agor drwy gydol y flwyddyn?
 error.areYourPitchesOpen.missing = Select yes if your touring and tenting pitches open all year
-areYourPitchesOpen.conditional.label = Enter a number of weeks the site remains open in a year
+areYourPitchesOpen.conditional.label = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
 error.areYourPitchesOpen.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
 error.areYourPitchesOpen.conditional.value.missing = Provide a number of weeks the site remains open in a year
 
 # CYA TOURING AND TENTS PITCHES
 
-cYa.touringAndTentingPitches.heading = Check your answers - touring and tenting pitches
-cYa.touringAndTentingPitches.pitches.heading = Touring and tenting pitches
-cYa.touringAndTentingPitches.pitches.label = Touring and tenting pitches on site?
-cYa.touringAndTentingPitches.pitchesAllYear.label = Touring and tenting pitches open all year?
+cYa.touringAndTentingPitches.heading = Gwiriwch eich atebion – lleiniau pebyll a lleiniau teithio
+cYa.touringAndTentingPitches.pitches.heading = Lleiniau pebyll a lleiniau teithio
+cYa.touringAndTentingPitches.pitches.label = Lleiniau pebyll neu lleiniau teithio ar y safle?
+cYa.touringAndTentingPitches.pitchesAllYear.label = Lleiniau pebyll a lleiniau teithio ar agor drwy gydol y flwyddyn?
 cYa.touringAndTentingPitches.pitchesAllYear.openWeek = Open {0} week
 cYa.touringAndTentingPitches.pitchesAllYear.openWeeks = Open {0} weeks
-cYa.pitchesForCaravans.heading = Pitches for caravans, motor homes or tenting units, including any 28-day rights
-cya.pitchesForGlamping.heading = Glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
-cya.rallyAreas.heading = Rally areas not included previously
-cya.touringAndTentingPitches.total.label = Touring and tenting pitches currently on site
-cya.touringAndTentingPitches.certificated.label = Certified location for use as a caravan site?
+cYa.pitchesForCaravans.heading = Lleiniau ar gyfer carafannau, cartrefi modur, neu bebyll, gan gynnwys unrhyw hawliadau 28 diwrnod
+cya.pitchesForGlamping.heading = Lleiniau glampio ar gyfer pebyll cloch, yurts, tipis, cabanau bugail, neu strwythurau symudol neu strwythurau eraill a godir ymlaen llaw
+cya.rallyAreas.heading = Lleiniau rali sydd heb eu cynnwys hyd yn hyn
+cya.touringAndTentingPitches.total.label = Cyfanswm y lleiniau pebyll neu lleiniau teithio ar y safle
+cya.touringAndTentingPitches.certificated.label = Lleoliad wedi’i awdurdodi at ddibenion gweithredu fel safle carafannau?
 
 #PITCHES FOR CARAVANS
 #####################
 
-pitchesForCaravans.heading = Pitches for caravans, motor homes or tenting units, including any 28-day rights
+pitchesForCaravans.heading = Lleiniau ar gyfer carafannau, cartrefi modur, neu bebyll, gan gynnwys unrhyw hawliadau 28 diwrnod
 
 #PITCHES FOR GLAMPING
 #####################
 
-pitchesForGlamping.heading = Glamping pitches for bell tents, yurts, tipis, shepherd huts, or other pre-erected or mobile structures
+pitchesForGlamping.heading = Lleiniau glampio ar gyfer pebyll cloch, yurts, tipis, cabanau bugail, neu strwythurau symudol neu strwythurau eraill a godir ymlaen llaw
 
 #RALLY AREAS
 ############
 
-rallyAreas.heading = Rally areas not included previously
+rallyAreas.heading = Lleiniau rali sydd heb eu cynnwys hyd yn hyn
 error.rallyAreas.areaInHectares.required = Enter 0 if you did not have any rally areas in the year ending {0}
 error.rallyAreas.areaInHectares.range = Areas in hectares in the year ending {0} must be a number, for example 100 or 100.00
 
@@ -2803,20 +2818,20 @@ error.tentingPitchesTotal.range = Touring and tenting pitches figure must be a p
 #TENTING PITCHES CERTIFICATED
 ############################
 
-tentingPitchesCertificated.heading = Is the site a certificated location for use as a touring caravan site under Paragraph 5 Schedule 1 of the Caravan Sites and Control of Development Act 1960?
+tentingPitchesCertificated.heading = A yw’r safle hwn yn leoliad sydd wedi’i awdurdodi at ddibenion gweithredu fel safle carafannau teithio, a hynny yn unol â Pharagraff 5 o Atodlen 1 i Ddeddf Safleoedd Carafannau a Rheoli Datblygu 1960?
 error.tentingPitchesCertificated.missing = Select yes, if the site is a certificated location for use as a touring caravan site under Paragraph 5 Schedule 1 of the Caravan Sites and Control of Development Act 1960
 
 #TENTING PITCHES TRADING COMMON LABELS
 ######################################
 
 tentingPitches.common.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
-tentingPitches.common.VAT = Enter your gross receipts from these pitches excluding VAT and electricity costs.
-tentingPitches.common.stateTheNumber = Where accounts do not relate to the whole of your season, state the number of relevant weeks.
+tentingPitches.common.VAT = Nodwch eich derbyniadau o’r lleiniau hyn, heb gynnwys TAW na chostau trydan.
+tentingPitches.common.stateTheNumber = Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 tentingPitches.common.financialYearEnd = Diwedd y flwyddyn ariannol
 tentingPitches.common.tradingPeriod = Cyfnod masnachu
-tentingPitches.common.grossReceipts = Gross receipts
-tentingPitches.common.numberOfPitches = Number of pitches
-tentingPitches.common.areaInHectares = Area in hectares
+tentingPitches.common.grossReceipts = Derbyniadau gros
+tentingPitches.common.numberOfPitches = Nifer yr lleiniau
+tentingPitches.common.areaInHectares = Yr ardal, mewn hectarau
 error.tentingPitches.grossReceipts.required = Enter 0 if you did not have any gross receipts in the year ending {0}
 error.tentingPitches.grossReceipts.range = Wages and salaries in the year ending {0} must be a positive number, for example 100 or 100.00
 error.tentingPitches.numberOfPitches.required = Enter 0 if you did not have any pitches in the year ending {0}
@@ -2825,25 +2840,24 @@ error.tentingPitches.numberOfPitches.negative = Number of pitches in the year en
 
 #ADDITIONAL ACTIVITIES 6045
 ########################
-additionalActivitiesOnSite.heading = Additional activities
-additionalActivitiesOnSite.subheading = Are there any additional income-generating activities on the site?
-additionalActivitiesOnSite.hint = This could include, but is not limited to, shops, bars, leisure activities or caravan storage
+additionalActivitiesOnSite.heading = Gweithgareddau ychwanegol
+additionalActivitiesOnSite.subheading = A oes unrhyw weithgareddau ychwanegol sy’n cynhyrchu incwm ar y safle?
+additionalActivitiesOnSite.hint = Gall hyn gynnwys, ond heb fod yn gyfyngedig i, siopau, bariau, gweithgareddau hamdden, neu storio carafannau
 error.additionalActivitiesOnSite.missing = Select yes if there are additional income-generating activities on the site
 
 #ADDITIONAL ACTIVITIES ALL YEAR 6045
 ###########################
 
-additionalActivitiesAllYear.heading = Are your additional activities available all year round?
+additionalActivitiesAllYear.heading = A yw’ch gweithgareddau ychwanegol ar gael drwy gydol y flwyddyn?
 error.additionalActivitiesAllYear.missing = Select yes if your additional activities are available all year round
-additionalActivitiesAllYear.conditional.label = Enter a number of weeks the site remains open in a year
+additionalActivitiesAllYear.conditional.label = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
 error.additionalActivitiesAllYear.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
 error.additionalActivitiesAllYear.conditional.value.missing = Provide a number of weeks the site remains open in a year
 
 #SHOPS ADDITIONAL ACTIVITIES 6045
 #################################
-shops.additionalActivitiesOnSite.heading = Shops
-shops.additionalActivitiesOnSite.p = If you run any on-site shops, enter the receipts and cost of purchases excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-
+shops.additionalActivitiesOnSite.heading = Siopau
+shops.additionalActivitiesOnSite.p = Os ydych yn rhedeg unrhyw siop ar y safle, nodwch y derbyniadau a chostau’r pryniannau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 error.additionalShops.grossReceipts.required = Enter 0 if you did not have any gross receipts from shops in the year ending {0}
 error.additionalShops.grossReceipts.range    = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalShops.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
@@ -2853,9 +2867,9 @@ error.additionalShops.costOfPurchase.negative = Cost of purchase in the year end
 
 #CATERING ADDITIONAL ACTIVITIES 6045
 #################################
-catering.additionalActivitiesOnSite.heading = Catering
-catering.additionalActivitiesOnSite.p1 = If you run any on-site catering facilities, enter the receipts and cost of purchases excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-catering.additionalActivitiesOnSite.p2 = Do not include any receipts from franchises or concession. You will be asked about these on later page.
+catering.additionalActivitiesOnSite.heading = Arlwyo
+catering.additionalActivitiesOnSite.p1 = Os ydych yn rhedeg unrhyw gyfleusterau arlwyo ar y safle, nodwch y derbyniadau a chostau’r pryniannau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+catering.additionalActivitiesOnSite.p2 = Peidiwch â chynnwys unrhyw dderbyniadau o fasnachfreintiau neu gonsesiynau arlwyo. Gofynnir i chi ynglŷn â’r rhain ar dudalen yn nes ymlaen.
 
 error.additionalCatering.grossReceipts.required = Enter 0 if you did not have any gross receipts from catering in the year ending {0}
 error.additionalCatering.grossReceipts.range    = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
@@ -2866,14 +2880,14 @@ error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year 
 
 #BARS AND CLUBS ADDITIONAL ACTIVITIES 6045
 
-additionalBarsClubs.heading = Bars and clubs
-additionalBarsClubs.p = If you run any on-site bars and clubs, enter the receipts and costs excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-additionalBarsClubs.grossBar.label = Gross receipts from bar sale
-additionalBarsClubs.costBar.label = Cost of bar purchases
-additionalBarsClubs.grossClubMembership.label = Gross receipts from club membership fees
-additionalBarsClubs.grossFromSeparate.label = Gross receipts from separate entry charges
-additionalBarsClubs.costOfEntertainment.label = Cost of entertainment
-additionalBarsClubs.costOfEntertainment.hint = For example, hiring artistes.
+additionalBarsClubs.heading = Bariau a chlybiau
+additionalBarsClubs.p = Os ydych yn rhedeg unrhyw far neu glwb ar y safle, nodwch y derbyniadau a’r costau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalBarsClubs.grossBar.label = Derbyniadau gros o werthiannau’r bar
+additionalBarsClubs.costBar.label = Costau pryniannau’r bar
+additionalBarsClubs.grossClubMembership.label = Derbyniadau gros o ffioedd aelodaeth clwb
+additionalBarsClubs.grossFromSeparate.label = Derbyniadau gros o daliadau mynediad ar wahân
+additionalBarsClubs.costOfEntertainment.label = Costau’r adloniant
+additionalBarsClubs.costOfEntertainment.hint = Er enghraifft, hurio perfformwyr.
 
 error.additionalBarsClubs.grossBar.required = Enter 0 if you did not have any gross receipts from bar sale in the year ending {0}
 error.additionalBarsClubs.grossBar.range    = Gross receipts from bar sale in the year ending {0} must be a number, for example 100 or 100.00
@@ -2894,37 +2908,37 @@ error.additionalBarsClubs.grossFromSeparate.negative = Gross receipts from separ
 error.additionalBarsClubs.costOfEntertainment.required = Enter 0 if you did not have any cost of entertainment in the year ending {0}
 error.additionalBarsClubs.costOfEntertainment.range    = Cost of entertainment in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalBarsClubs.costOfEntertainment.negative = Cost of entertainment in the year ending {0} cannot be a negative number
-additionalActivities.common.tradingPeriod = Trading period
-additionalActivities.common.financialYear = Financial year
-additionalActivities.common.grossReceipts = Gross receipts
+additionalActivities.common.tradingPeriod = Cyfnod masnachu
+additionalActivities.common.financialYear = Diwedd y flwyddyn ariannol
+additionalActivities.common.grossReceipts = Derbyniadau gros
 additionalActivities.common.costOfPurchase = Cost of purchase
 
 #ADDITIONAL AMUSEMENTS
 
-additionalAmusements.heading = Amusements
-additionalAmusements.p = If you run any on-site amusements such as gaming machines, juke boxes or pool tables, enter the receipts after the deduction of any prices and licence fee. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-additionalAmusements.receipts.label = Receipts (after deduction of prizes and licence fee)
+additionalAmusements.heading = Difyrion
+additionalAmusements.p = Os ydych yn rhedeg unrhyw ddifyrion ar y safle, megis peiriannau hapchwarae, jiwcbocsys neu fyrddau pŵl, nodwch y derbyniadau ar ôl didynnu ffi’r drwydded ac unrhyw wobrwyon. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalAmusements.receipts.label = Derbyniadau (Ar ôl didynnu ffi’r drwydded a gwobrwyon)
 
 error.additionalAmusements.receipts.required = Enter 0 if you did not have any receipts from on-site amusements in the year ending {0}
 error.additionalAmusements.receipts.range    = Receipts from on-site amusements in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalAmusements.receipts.negative = Receipts from on-site amusements in the year ending {0} cannot be a negative number
 
 #ADDITIONAL MISC
-additionalMisc.heading = Miscellaneous activities
-additionalMisc.p = If you run any other activities for which a separate charge is made, enter the receipts excluding VAT. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-additionalMisc.leisureReceipts.label = Gross receipts from other leisure facilities
-additionalMisc.leisureReceipts.hint = For example, golf, tennis, moorings, boat storage.
-additionalMisc.giveDetails = Give details
-additionalMisc.winterStorageReceipts.label = Receipts from the winter storage of touring caravans
-additionalMisc.numberOfVans.label =  Number of vans
+additionalMisc.heading = Gweithgareddau amrywiol
+additionalMisc.p = Os ydych yn rhedeg unrhyw weithgaredd arall lle codir ffioedd ar wahân, nodwch y derbyniadau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalMisc.leisureReceipts.label = Derbyniadau gros o gyfleusterau hamdden eraill
+additionalMisc.leisureReceipts.hint = Er enghraifft, golff, tenis, angorau, storio cychod .
+additionalMisc.giveDetails = Rhowch fanylion
+additionalMisc.winterStorageReceipts.label = Derbyniadau o storio carafannau teithio
+additionalMisc.numberOfVans.label =  Nifer y faniau
 additionalMisc.numberOfVans.suffix = vans
-additionalMisc.otherActivitiesReceipts.label = Receipts from the other activities not covered previously
-additionalMisc.otherActivitiesReceipts.hint = For example, repairs to off-site caravans.
-additionalMisc.otherServicesReceipts.label = Receipts from sale of other services
-additionalMisc.otherServicesReceipts.label.explain = (in excess of costs)
-additionalMisc.otherServicesReceipts.hint = For example, laundry.
-additionalMisc.bottledGasReceipts.label = Receipts from sale of bottled gas
-additionalMisc.bottledGasReceipts.explain = (less costs of purchases)
+additionalMisc.otherActivitiesReceipts.label = Derbyniadau o unrhyw weithgareddau eraill sydd heb gael eu nodi hyd yn hyn
+additionalMisc.otherActivitiesReceipts.hint = Er enghraifft, atgyweirio carafannau oddi ar y safle.
+additionalMisc.otherServicesReceipts.label = Derbyniadau o werthiant gwasanaethau eraill
+additionalMisc.otherServicesReceipts.label.explain = (sy’n fwy na’r gost)
+additionalMisc.otherServicesReceipts.hint = Er enghraifft, golchi dillad.
+additionalMisc.bottledGasReceipts.label = Derbyniadau o werthiant nwy wedi’i botelu
+additionalMisc.bottledGasReceipts.explain = (heb gynnwys cost y pryniannau)
 
 error.additionalMisc.leisureReceipts.required = Enter 0 if you did not have any receipts from other leisure facilities in the year ending {0}
 error.additionalMisc.leisureReceipts.range    = Receipts from other leisure facilities in the year ending {0} must be a number, for example 100 or 100.00
@@ -2957,38 +2971,38 @@ error.additionalMisc.bottledGasReceipts.range    = Receipts from sale of bottled
 error.additionalMisc.bottledGasReceipts.negative = Receipts from sale of bottled gas in the year ending {0} cannot be a negative number
 
 # COMMON ADDITIONAL ACTIVITIES 6045
-additionalActivities.common.inset = All fields on this page are mandatory. If any of the categories are applicable, enter the number 0.
-additionalActivities.common.tradingPeriod = Trading period
-additionalActivities.common.financialYear = Financial year
-additionalActivities.common.grossReceipts = Gross receipts
-additionalActivities.common.costOfPurchase = Cost of purchase
+additionalActivities.common.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+additionalActivities.common.tradingPeriod = Cyfnod masnachu
+additionalActivities.common.financialYear = Diwedd y flwyddyn ariannol
+additionalActivities.common.grossReceipts = Derbyniadau gros
+additionalActivities.common.costOfPurchase = Costau’r pryniannau
 
 # CYA ADDITIONAL ACTIVITIES 6045
 ################################
 
-cYa.additionalActivities.heading = Check your answers - additional activities
-cYa.additionalActivities.activities.heading = Additional activities
-cYa.additionalActivities.shops.heading = Shops
-cYa.additionalActivities.catering.heading = Catering
-cYa.additionalActivities.bars.heading = Bars and clubs
-cYa.additionalActivities.amusements.heading = Amusements
-cYa.additionalActivities.miscellaneous.heading = Miscellaneous activities
-cYa.additionalActivities.activities.onSite.label = Additional activities on site?
-cYa.additionalActivities.activities.allYear.label = Additional activities open all year?
-cYa.additionalActivities.gross = Gross receipts
-cYa.additionalActivities.costOfPurchases = Cost of purchases
-cYa.additionalActivities.grossFromBars = Gross receipts from bar sales
-cYa.additionalActivities.costOfBars = Cost of bar purchases
-cYa.additionalActivities.grossFromMembership = Gross receipts from club membership fees
-cYa.additionalActivities.grossFromSeparate = Gross receipts from separate entry charges
-cYa.additionalActivities.costOfEntertainment = Cost of entertainment
-cYa.additionalActivities.receipts = Receipts
-cYa.additionalActivities.grossFromOther = Gross receipts from other leisure facilities
-cYa.additionalActivities.storageOfCaravans = Storage of touring caravans
-cYa.additionalActivities.numberOfVans = Number of vans
-cYa.additionalActivities.otherActivities = Other activities not covered previously
-cYa.additionalActivities.otherServices = Sale of other services
-cYa.additionalActivities.gasBottled = Sale of bottled gas
+cYa.additionalActivities.heading = Gwiriwch eich atebion – gweithgareddau ychwanegol
+cYa.additionalActivities.activities.heading = Gweithgareddau ychwanegol
+cYa.additionalActivities.shops.heading = Siopau
+cYa.additionalActivities.catering.heading = Arlwyo
+cYa.additionalActivities.bars.heading = Bariau a chlybiau
+cYa.additionalActivities.amusements.heading = Difyrion
+cYa.additionalActivities.miscellaneous.heading = Gweithgareddau amrywiol
+cYa.additionalActivities.activities.onSite.label = Gweithgareddau ychwanegol ar y safle?
+cYa.additionalActivities.activities.allYear.label = Gweithgareddau ychwanegol ar agor drwy gydol y flwyddyn?
+cYa.additionalActivities.gross = Derbyniadau gros
+cYa.additionalActivities.costOfPurchases = Costau’r pryniannau
+cYa.additionalActivities.grossFromBars = Derbyniadau gros o werthiannau’r bar
+cYa.additionalActivities.costOfBars = Costau pryniannau’r bar
+cYa.additionalActivities.grossFromMembership = Derbyniadau gros o ffioedd aelodaeth clwb
+cYa.additionalActivities.grossFromSeparate = Derbyniadau gros o daliadau mynediad ar wahân
+cYa.additionalActivities.costOfEntertainment = Costau’r adloniant
+cYa.additionalActivities.receipts = Derbyniadau
+cYa.additionalActivities.grossFromOther = Derbyniadau gros o gyfleusterau hamdden eraill
+cYa.additionalActivities.storageOfCaravans = Storio carafannau teithio dros y gaeaf
+cYa.additionalActivities.numberOfVans = Nifer y faniau
+cYa.additionalActivities.otherActivities = Unrhyw weithgareddau eraill sydd heb gael eu nodi hyd yn hyn
+cYa.additionalActivities.otherServices = Gwerthiant gwasanaethau eraill
+cYa.additionalActivities.gasBottled = Gwerthiant nwy wedi’i botelu
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
@@ -3365,10 +3379,11 @@ checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.no = Nid yw’r
 checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months = Rent review due within 12 months?
 checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate = Rent is reviewed or expires on {0}
 checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading = Manylion y brydles
-checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading = Your rent
+checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading = Eich rhent
 checkYourAnswersAboutYourLeaseOrTenure.yourLease.heading = Your lease
-checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat = Rent includes VAT?
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat = Rhent yn cynnwys TAW?
 checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement = Trefniant adlesu?
+checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease = Manylion y brydles
 checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent = Rhent blynyddol presennol
 checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid = Dyddiad y talwyd y rhent resennol am y tro cyntaf
 checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration = Dyddiad cychwyn y brydles a hyd y tymor
@@ -3376,18 +3391,20 @@ checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Dyddiad y d
 checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = Beth mae’r rhent yn ei gynnwys
 checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Taliadau wedi’u cynnwys yn y rhent
 checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Eitemau y mae’r rhent yn eu cynnwys neu’n ymwneud ag ef
-checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand = Rent relates to developed land?
-checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails = Description of included developments
-checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings = Rent includes structures or buildings?
-checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails = Description of included structures
+checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand = Rhent yn ymwneud â thir datblygedig?
+checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails = Disgrifiad o’r datblygiadau sydd wedi’u cynnwys
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings = Rhent yn cynnwys strwythurau new adeiladau?
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails = Disgrifiad o’r strwythurau sydd wedi’u cynnwys
 checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Y parti sy’n gyfrifol am atgyweiriadau y tu mewn?
 checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Y parti sy’n gyfrifol am atgyweiriadau y tu allan?
 checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Y parti sy’n gyfrifol am yswiriant adeiladu?
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices = Rhent yn cynnwys gwasanaethau masnach?
+checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs = Addasiadau gwelliannau neu atgyweiriadau?
+checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork = Manylion y Gwaith
 checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices = Disgrifiad o wasanaethau masnach
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails = Rhent yn cynnwys offer?
 checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent = Swm wedi’i gynnwys yn y rhent i dalu am offer
-checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent = Sum included in rent to cover equipment
+checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent = Swm wedi’i gynnwys yn y rhent i dalu am offer
 checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading = Sut y cyfrifwyd y rhent
 checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue = Rhent yn seiliedig ar y gwerth ar y farchnad agored?
 checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn = Beth mae’r rhent yn seiliedig arno
@@ -3398,11 +3415,11 @@ checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks = Rhent
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails = Sut mae rhent yn amrywio yr alcohol a gyflenwir
 checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed = Sut a phryd y gosodwyd y rhent
 checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent = Sut y cytunwyd ar y rhent
-checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview = Rent currently under review?
+checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview = Rhent yn cael ei adolygu ar hyn o bryd?
 checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Adolygiadau rhent: amlder a dyddiad disgwyl
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = A ellir gostwng y rhent?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Prydles flaenorol wedi’i hildio’n gynnar?
-checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Details of former lease
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Manylion y brydles flaenorol
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048 = Details of the surrendered lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months = Term remaining {0} months
@@ -3414,6 +3431,11 @@ checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails = Capital sum 
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = Taliad wedi’i gael pan ganiatawyd y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDateInput = When was this sum paid?
 checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Payment received when lease was granted?
+checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition = Gwaith sydd ei angen i sicrhau prydles?
+checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven = Buddion wedi’u derbyn pan roddwyd y brydles?
+checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails = Manylion y buddion
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020 = Swm cyfalaf a dalwyd gan y meddiannydd neu iddo?
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid = Swm cyfalaf a dalwyd
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent = Ffactorau eraill sy’n effeithio ar y rhent?
 checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails = Disgrifiad o’r ffactorau sy'n effeithio ar y rhent
 checkYourAnswersAboutYourLeaseOrTenure.typeOfTenure = Type of tenure
@@ -3466,26 +3488,26 @@ checkYourAnswersAboutTheProperty.occupiersAdd = Add or remove an occupier
 checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
 
 checkYourAnswersAboutTheTradingHistory.heading = Gwiriwch eich atebion – hanes masnachu
-checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers – static caravans
-checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans
-checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Static caravans on site?
-checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear = Static caravans open all year?
+checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Gwiriwch eich atebion – carafannau statig
+checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Carafannau statig
+checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Carafanau statig ar y safle?
+checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear = Carafanau statig ar agor drwy gydol y flwyddyn?
 checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks = Open {0} weeks
-checkYourAnswersAboutTheTradingHistory.6045.caravans.single.ownedByOperator = Single caravans owned by operator and used for fleet hire
-checkYourAnswersAboutTheTradingHistory.6045.caravans.single.subletByOperator = Single caravans sub-let by operator on behalf of private owners used for fleet hire
-checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator = Twin-unit caravans owned by the operator and used for fleet hire
-checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator = Twin-unit caravans sub-let by operator on behalf of private owners used for fleet hire
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.ownedByOperator = Ages of single static caravans used for fleet hire
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.subletByOperator = Ages of single static caravans used privately
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.ownedByOperator = Ages of twin-unit static caravans used for fleet hire
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.subletByOperator = Ages of twin-unit static caravans used privately
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.heading = Number of units onsite by category
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily = Privately owned and used
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator = Sub-let by operator on behalf of private owners as fleet hire
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Sub-let by private owners to holidaymakers other than family and friends
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total = Total static caravans on site
-checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Services provided to static caravans
-checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Standard pitch fee and included services
+checkYourAnswersAboutTheTradingHistory.6045.caravans.single.ownedByOperator = Carafannau unigol, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravans.single.subletByOperator = Carafannau unigol sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator = Carafannau dwy-uned, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator = Carafannau dwy-uned sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.ownedByOperator = Oedrannau’r carafanau statig unigol a ddefnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.subletByOperator = Oedrannau’r carafanau statig unigol a ddefnyddir at ddibenion preifat
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.ownedByOperator = Oedrannau’r carafanau statig ddwy-uned a ddefnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.subletByOperator = Oedrannau’r carafanau statig ddwy-uned a ddefnyddir at ddibenion preifat
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.heading = Nifer yr unedau sydd ar y safle yn ôl y categori
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily = O dan berchnogaeth breifat, a defnyddir gan y perchennog a’i deulu yn unig
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator = Yn cael ei is-osod gan y gweithredwyr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd i bobl  sy’n mynd ar eu gwyliau
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Yn cael ei is-osod gan berchnogion preifat i bobl sy’n mynd ar eu gwyliau, ac nad ydynt yn deulu na’n ffrindiau
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total = Cyfanswm y carafannau statig sydd ar y safle
+checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Yn cael ei defnyddio at ddibenion elusennol
+checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Yn cael ei defnyddio at ddibenion elusennol
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other = Other
 checkYourAnswersAboutTheTradingHistory.occupationDate = Dyddiad meddiannu
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Diwedd y flwyddyn ariannol
@@ -3493,7 +3515,7 @@ checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu
 checkYourAnswersAboutTheTradingHistory.drinks = Diodydd
 checkYourAnswersAboutTheTradingHistory.food = Bwyd
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Derbyniadau eraill
-checkYourAnswersAboutTheTradingHistory.other = Other
+checkYourAnswersAboutTheTradingHistory.other = Arall
 checkYourAnswersAboutTheTradingHistory.accommodation = Llety
 checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Cyfraddau’r feddiannaeth, ar gyfartaledd
 checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Cyfanswm refeniw y gwerthiannau
@@ -3510,7 +3532,7 @@ checkYourAnswersRequestReferenceNumber.subheading1 = Manylion yr eiddo
 checkYourAnswersRequestReferenceNumber.subheading2 = Eich manylion
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Amgylchiadau anarferol sy’n effeithio ar y trisiant
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Ffactorau sy’n dylanwadu ar dderbyniadau
-checkYourAnswersAboutTheTradingHistory.grossReceipts = Gross receipts
+checkYourAnswersAboutTheTradingHistory.grossReceipts = Derbyniadau gros
 checkYourAnswersAboutTheTradingHistory.grossIncome = Incwm gros
 checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Cyfanswm nifer yr ymwelwyr
 checkYourAnswersAboutTheTradingHistory.payPointOrZone = Trosiant Paypoint neu Payzone
@@ -3520,9 +3542,9 @@ checkYourAnswersAboutTheTradingHistory.fuelSales = Gwerthiannau tanwydd
 checkYourAnswersAboutTheTradingHistory.totalFuelSales = Cyfanswm y gwerthiannau tanwydd
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Tanwydd byncer
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question = A ydych yn gwerthu tanwydd byncer?
-checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading = Total volume of bunkered fuel sold
+checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading = Cyfanswm cyfaint y tanwydd byncer a werthwyd
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard = Bunker fuel card {0}
-checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails = Bunker fuel card details
+checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails = Manylion cardiau tanwydd byncer
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded = You have added {0} bunker fuel {1}
 checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove = Add or remove bunker fuel card
 checkYourAnswersAboutTheTradingHistory.customerCreditAcc = Cyfrifon credyd cwsmeriaid
@@ -3551,14 +3573,23 @@ checkYourAnswersAboutTheTradingHistory.otherExpenses = Treuliau eraill
 # CYA TRADING HISTORY 6048
 checkYourAnswersAboutTheTradingHistory.income.serviceProvision = Income from services
 checkYourAnswersAboutTheTradingHistory.fixedCosts.businessRatesOrCouncilTax = Business rates or Council Tax
-checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationBuildings = Depreciation - buildings
-checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents = Depreciation - contents, fixtures and fittings
-checkYourAnswersAboutTheTradingHistory.administrativeCosts.subscriptionsAndFees = Subscriptions, fees
-checkYourAnswersAboutTheTradingHistory.administrativeCosts.telephoneBroadbandStationeryPostage = Telephone, broadband, stationery, postage
+checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationBuildings = Dibrisiad - adeiladau
+checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents = Dibrisiad - gosodiadau, ffitiadau a’r cynnwys
+checkYourAnswersAboutTheTradingHistory.administrativeCosts.subscriptionsAndFees = Tanysgrifiadau a ffioedd
+checkYourAnswersAboutTheTradingHistory.administrativeCosts.telephoneBroadbandStationeryPostage = Teleffon, cysylltiad band eang, deunyddiau ysgrifennu a phostio
 # CYA OTHER HOLIDAY ACCOMMODATION 6045/46
-checkYourAnswersOtherHolidayAccommodation.heading = Check your answers - other holiday accommodation
-checkYourAnswersOtherHolidayAccommodation.h2 = Other holiday accommodation
-checkYourAnswersOtherHolidayAccommodation.onSite = Other holiday accommodation on site?
+checkYourAnswersOtherHolidayAccommodation.heading = Gwiriwch eich atebion – llety gwyliau arall
+checkYourAnswersOtherHolidayAccommodation.h2 = Llety gwyliau arall
+checkYourAnswersOtherHolidayAccommodation.onSite = Llety gwyliau arall ar y safle?
+checkYourAnswersOtherHolidayAccommodation.openAllYear = Llety gwyliau arall ar agor drwy gydol y flwyddyn?
+
+checkYourAnswersOtherHolidayAccommodation.grossReceipts = Derbyniadau gros
+checkYourAnswersOtherHolidayAccommodation.numberOfUnits = Nifer yr unedau
+checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading = Nifer yr unedau sydd ar y safle yn ôl y categori
+checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting = Sy’n eiddo i’r gweithredwr ac ar gael i’w gosod
+checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff = Sy’n eiddo i’r gweithredwr ar gyfer defnydd staff tymhorol
+checkYourAnswersOtherHolidayAccommodation.privatelyOwned = Eiddo preifat
+checkYourAnswersOtherHolidayAccommodation.totalLettingUnits = Total letting units on site
 
 changeOccupationAndAccountingInfo.heading = Changing your occupation and accounting information
 changeOccupationAndAccountingInfo.p1 = Changing your occupation date or your financial year-end date will invalidate all your entries in the trading history section.
