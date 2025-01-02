@@ -1,0 +1,97 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.lettingHistory.routes
+@import models.submissions.common.AnswersYesNo
+@import models.submissions.lettingHistory.LettingHistory.getAdvertisingOnlineDetails
+@import navigation.identifiers.{asPageIdentifier, ResidentRemovePageId}
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
+
+@this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton)
+
+@(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+
+@advertisingList = @{getAdvertisingOnlineDetails(request.sessionData)}
+
+@fromPage = @{
+    request.session.get("from").flatMap(_.asPageIdentifier)
+}
+
+@advertisingCount = @{ advertisingList.length }
+
+@pageHeadingMessageKey = @{
+    (advertisingCount, fromPage) match {
+        case (0, Some(ResidentRemovePageId)) => "lettingHistory.advertisingList.heading.removed"
+        case (1, _)                          => "lettingHistory.advertisingList.heading.singular"
+        case _                               => "lettingHistory.advertisingList.heading.plural"
+    }
+}
+
+    <div class="govuk-!-width-one-quarter"></div>
+
+@layout(
+    theForm = theForm,
+    summary = Some(request.sessionData.toSummary),
+    pageHeading = messages(pageHeadingMessageKey, advertisingCount),
+    backLinkUrl = backLink,
+    showSection = true,
+    sectionName = messages("label.section.lettingHistory"),
+) {
+
+    @govukSummaryList(SummaryList(
+        rows = advertisingList.zipWithIndex.map { case (entry, index) =>
+            SummaryListRow(
+                key = Key(
+                    content = Text(entry.websiteAddress),
+                    classes = "govuk-!-font-weight-regular govuk-!-width-full"
+                ),
+                value = Value(
+                    classes = "govuk-!-width-one-quarter",
+                ),
+                actions = Some(Actions(
+                    classes = "govuk-!-width-one-half" ,
+                    items = Seq(
+                        ActionItem(
+                            href = routes.AdvertisingOnlineDetailsController.show(index).url,
+                            content = Text(messages("label.change"))
+                        ),
+                        ActionItem(
+                            href = routes.AdvertisingListController.remove(index).url,
+                            content = Text(messages("label.remove"))
+                        )
+                    )
+                ))
+            )
+        }
+    ))
+
+    @formWithCSRF(action = routes.AdvertisingListController.submit) {
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            idPrefix = "advertisingList",
+            name = "advertisingList",
+            legendKey = "lettingHistory.advertisingList.hasMoreWebsites.label",
+            classes = "govuk-fieldset__legend--s",
+            isHeading = true
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

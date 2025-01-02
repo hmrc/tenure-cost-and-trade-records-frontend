@@ -16,11 +16,13 @@
 
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
-@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents}
+@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents, MaxNumberOfAdvertisingOnline}
 @import play.api.data.Form
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
+
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton)
 
@@ -31,6 +33,7 @@
     kind match {
         case "permanentResidents" => MaxNumberOfPermanentResidents
         case "temporaryOccupiers" => MaxNumberOfCompletedLettings
+        case "advertisingOnline"  => MaxNumberOfAdvertisingOnline
         case _ => 0
     }
 }
@@ -39,8 +42,16 @@
     kind match {
         case "permanentResidents" => routes.ResidentListController.show
         case "temporaryOccupiers" => routes.OccupierListController.show
+        case "advertisingOnline"  => routes.AdvertisingListController.show
         case _ => Call("POST", "/unknown")
     }
+}
+
+@checkBoxMessage = @{
+  kind match {
+       case "advertisingOnline"  => messages("lettingHistory.maxNumberReached.advertisingOnline.understanding")
+       case _                    => messages("lettingHistory.maxNumberReached.understanding")
+  }
 }
 
 @headingMessage = @{
@@ -75,12 +86,12 @@
                 name = "understood",
                 items = Seq(
                     CheckboxItem(
-                        content = Text(messages("lettingHistory.maxNumberReached.understanding")),
+                        content = Text(checkBoxMessage),
                         value = "true",
                         checked = alreadyChecked
                     )
                 )
-            )
+            ).withFormField(theForm("understood"))
         )
 
         <p class="govuk-body govuk-!-margin-bottom-8">

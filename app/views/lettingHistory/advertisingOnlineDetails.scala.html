@@ -22,7 +22,7 @@
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukCharacterCount: GovukCharacterCount, govukButton: GovukButton)
 
 
-@(theForm: Form[AdvertisingOnline], backLink: Option[String], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AdvertisingOnline], backLink: Option[String], index: Option[Int], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  theForm = theForm,
@@ -35,7 +35,7 @@
 
  <p class="govuk-body">@messages("lettingHistory.advertisingOnlineDetails.paragraph")</p>
 
- @formWithCSRF(action = routes.AdvertisingOnlineDetailsController.submit) {
+ @formWithCSRF(action = routes.AdvertisingOnlineDetailsController.submit(index)) {
   @includes.textInput(
    govukInput,
    theForm,
@@ -46,14 +46,14 @@
    labelClasses = "govuk-!-font-weight-bold",
   )
 
-  @includes.textInputCharCount(
-   govukCharacterCount,
+  @includes.textInput(
+   govukInput,
    theForm,
-   name = "propertyReferenceNumber",
-   labelContent = "lettingHistory.advertisingOnlineDetails.number.label",
-   classes = "govuk-!-font-weight-bold",
-   hint = "lettingHistory.advertisingOnlineDetails.number.hint",
-   charCount = 1000
+   id = "propertyReferenceNumber",
+   classes = "govuk-!-width-full",
+   labelContent = "lettingHistory.advertisingOnlineDetails.number",
+   hintMsg = "lettingHistory.advertisingOnlineDetails.number",
+   labelClasses = "govuk-!-font-weight-bold",
   )
 
   @includes.continueSaveAsDraftButtons(govukButton)

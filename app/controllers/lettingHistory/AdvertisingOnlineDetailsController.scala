@@ -20,10 +20,10 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.AdvertisingOnlineDetailsForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfAdvertisingOnline, byAddingAdvertisingOnlineDetails, byAddingPermanentResident}
-import models.submissions.lettingHistory.{AdvertisingOnline, ResidentDetail}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfAdvertisingOnline, byUpdatingAdvertisingOnlineDetails}
+import models.submissions.lettingHistory.AdvertisingOnline
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.{AdvertisingOnlineDetailsPageId, ResidentDetailPageId}
+import navigation.identifiers.AdvertisingOnlineDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.*
 import repositories.SessionRepo
@@ -60,17 +60,17 @@ class AdvertisingOnlineDetailsController @Inject() (
           detailsOnIdx <- advertisingOnlineList.lift(idx)
         yield theForm.fill(detailsOnIdx)
 
-      Ok(theView(filledForm.getOrElse(theForm), backLinkUrl, request.sessionData.toSummary))
+      Ok(theView(filledForm.getOrElse(theForm), backLinkUrl, index, request.sessionData.toSummary))
   }
 
-  def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AdvertisingOnline](
       theForm,
       theFormWithErrors =>
-        successful(BadRequest(theView(theFormWithErrors, backLinkUrl, request.sessionData.toSummary))),
+        successful(BadRequest(theView(theFormWithErrors, backLinkUrl, index, request.sessionData.toSummary))),
       details =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(byAddingAdvertisingOnlineDetails(details))
+        for savedSession <- repository.saveOrUpdateSession(byUpdatingAdvertisingOnlineDetails(index, details))
         yield navigator.redirect(currentPage = AdvertisingOnlineDetailsPageId, savedSession)
     )
   }

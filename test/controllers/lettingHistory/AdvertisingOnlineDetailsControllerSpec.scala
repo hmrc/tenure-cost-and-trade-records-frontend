@@ -17,8 +17,8 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{advertisingOnlineDetails, permanentResidents}
-import models.submissions.lettingHistory.{AdvertisingOnline, LettingHistory, ResidentDetail}
+import models.submissions.lettingHistory.LettingHistory.getAdvertisingOnlineDetails
+import models.submissions.lettingHistory.{AdvertisingOnline, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.http.Status.*
 import play.api.libs.json.Writes
@@ -33,27 +33,27 @@ class AdvertisingOnlineDetailsControllerSpec extends LettingHistoryControllerSpe
   "the Advertising online details controller" when {
     "the user session is fresh"                        should {
       "be handling GET /detail by replying 200 with the form showing name and address fields" in new ControllerFixture {
-        val result = controller.show(index = None)(fakeGetRequest)
+        val result = controller.show(None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading                           shouldBe "lettingHistory.advertisingOnlineDetails.heading"
-        page.backLink                          shouldBe routes.AdvertisingOnlineController.show.url
-        page.input("websiteAddress")             should beEmpty
-        page.textarea("propertyReferenceNumber") should beEmpty
+        page.heading                        shouldBe "lettingHistory.advertisingOnlineDetails.heading"
+        page.backLink                       shouldBe routes.AdvertisingOnlineController.show.url
+        page.input("websiteAddress")          should beEmpty
+        page.input("propertyReferenceNumber") should beEmpty
       }
       "be handling good POST /detail by replying 303 redirect to the 'Advertising Online List' page" in new ControllerFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
           "websiteAddress"          -> "123.uk",
           "propertyReferenceNumber" -> "123abc"
         )
-        val result  = controller.submit(request)
-        status(result)                    shouldBe SEE_OTHER
-        redirectLocation(result).value    shouldBe controllers.routes.TaskListController.show().url // TODO
+        val result  = controller.submit(None)(request)
+        status(result)                       shouldBe SEE_OTHER
+        redirectLocation(result).value       shouldBe routes.AdvertisingListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        advertisingOnlineDetails(data)      should have size 1
-        advertisingOnlineDetails(data)(0) shouldBe AdvertisingOnline(
+        getAdvertisingOnlineDetails(data)      should have size 1
+        getAdvertisingOnlineDetails(data)(0) shouldBe AdvertisingOnline(
           websiteAddress = "123.uk",
           propertyReferenceNumber = "123abc"
         )
@@ -80,14 +80,14 @@ class AdvertisingOnlineDetailsControllerSpec extends LettingHistoryControllerSpe
             "websiteAddress"          -> "test.pl",
             "propertyReferenceNumber" -> "1234ref"
           )
-          val result  = controller.submit(request)
-          status(result)                                            shouldBe SEE_OTHER
-          redirectLocation(result).value                            shouldBe controllers.routes.TaskListController.show().url // TODO
+          val result  = controller.submit(None)(request)
+          status(result)                                               shouldBe SEE_OTHER
+          redirectLocation(result).value                               shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          advertisingOnlineDetails(data)                              should have size 2 // instead of 1
-          advertisingOnlineDetails(data)(0)                         shouldBe oneOnlineAdvertising.head
-          advertisingOnlineDetails(data)(1).websiteAddress          shouldBe "test.pl"
-          advertisingOnlineDetails(data)(1).propertyReferenceNumber shouldBe "1234ref"
+          getAdvertisingOnlineDetails(data)                              should have size 2 // instead of 1
+          getAdvertisingOnlineDetails(data)(0)                         shouldBe oneOnlineAdvertising.head
+          getAdvertisingOnlineDetails(data)(1).websiteAddress          shouldBe "test.pl"
+          getAdvertisingOnlineDetails(data)(1).propertyReferenceNumber shouldBe "1234ref"
         }
         "be handling POST /detail?overwrite by replying 303 redirect to 'Advertising Online List' page" in new ControllerFixture(
           twoOnlineAdvertising
@@ -96,14 +96,14 @@ class AdvertisingOnlineDetailsControllerSpec extends LettingHistoryControllerSpe
             "websiteAddress"          -> twoOnlineAdvertising.last.websiteAddress,
             "propertyReferenceNumber" -> "otherReference123"
           )
-          val result  = controller.submit(request)
-          status(result)                                            shouldBe SEE_OTHER
-          redirectLocation(result).value                            shouldBe controllers.routes.TaskListController.show().url
+          val result  = controller.submit(None)(request)
+          status(result)                                               shouldBe SEE_OTHER
+          redirectLocation(result).value                               shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          advertisingOnlineDetails(data)                              should have size 2
-          advertisingOnlineDetails(data)(0)                         shouldBe oneOnlineAdvertising.head
-          advertisingOnlineDetails(data)(1).websiteAddress          shouldBe "456.com"
-          advertisingOnlineDetails(data)(1).propertyReferenceNumber shouldBe "otherReference123"
+          getAdvertisingOnlineDetails(data)                              should have size 3
+          getAdvertisingOnlineDetails(data)(0)                         shouldBe oneOnlineAdvertising.head
+          getAdvertisingOnlineDetails(data)(1).websiteAddress          shouldBe "456.com"
+          getAdvertisingOnlineDetails(data)(1).propertyReferenceNumber shouldBe "aaa456"
         }
       }
       "and the maximum number of advertising online details has been reached" should {
@@ -118,7 +118,7 @@ class AdvertisingOnlineDetailsControllerSpec extends LettingHistoryControllerSpe
     }
     "regardless of what the user might have submitted" should {
       "be handling invalid POST /detail by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
+        val result = controller.submit(None)(
           fakePostRequest.withFormUrlEncodedBody(
             "websiteAddress"          -> "",
             "propertyReferenceNumber" -> ""

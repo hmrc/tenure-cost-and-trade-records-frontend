@@ -84,15 +84,15 @@ class OccupiersDetailsListController @Inject() (
             )
           } { existingEntries =>
             if (existingEntries.isEmpty) {
-                  Redirect(
-                    navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
-                  )
+              Redirect(
+                navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
+              )
             } else {
               val updatedServices = existingEntries.updated(
                 index,
                 existingEntries(index)
               )
-              val updatedData = updateAboutYouAndThePropertyPartTwo(
+              val updatedData     = updateAboutYouAndThePropertyPartTwo(
                 _.copy(
                   occupiersList = updatedServices,
                   addAnotherPaidService = data
