@@ -26,13 +26,17 @@ case class LettingHistory(
   mayHaveMorePermanentResidents: Option[Boolean] = None,
   hasCompletedLettings: Option[Boolean] = None,
   completedLettings: List[OccupierDetail] = Nil,
-  mayHaveMoreCompletedLettings: Option[Boolean] = None
+  intendedLettings: Option[IntendedLettings] = None,
+  mayHaveMoreCompletedLettings: Option[Boolean] = None,
+  advertisingOnline: Option[Boolean] = None,
+  advertisingOnlineDetails: List[AdvertisingOnline] = Nil
 )
 
 object LettingHistory:
 
   val MaxNumberOfPermanentResidents = 5
   val MaxNumberOfCompletedLettings  = 5
+  val MaxNumberOfAdvertisingOnline  = 5
 
   private def foldLettingHistory(ifEmpty: LettingHistory, copyFunc: LettingHistory => LettingHistory)(using
     session: Session
@@ -228,6 +232,88 @@ object LettingHistory:
       lettingHistory <- session.lettingHistory
       hasEvenMore    <- lettingHistory.mayHaveMoreCompletedLettings
     yield hasEvenMore
+
+  def intendedLettings(session: Session): Option[IntendedLettings] =
+    for
+      lettingHistory   <- session.lettingHistory
+      intendedLettings <- lettingHistory.intendedLettings
+    yield intendedLettings
+
+  def withNumberOfNights(nights: Int)(using session: Session): Session =
+    val someIntendedLettings = Some(
+      IntendedLettings(
+        nights = Some(nights)
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLettings
+      ),
+      copyFunc = { lettingHistory =>
+        lettingHistory.copy(intendedLettings =
+          lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLettings
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(nights = Some(nights))
+            )
+          }
+        )
+      }
+    )
+
+  def doesMeetLettingCriteria(session: Session): Option[Boolean] =
+    for
+      lettingHistory   <- session.lettingHistory
+      intendedLettings <- lettingHistory.intendedLettings
+      nights           <- intendedLettings.nights
+    yield isAboveThreshold(nights, session.isWelsh)
+
+  private def isAboveThreshold(nights: Int, isWelsh: Boolean): Boolean =
+    if isWelsh then nights >= 252 else nights >= 140
+
+  def hasOnlineAdvertising(session: Session): Option[Boolean] =
+    for
+      lettingHistory       <- session.lettingHistory
+      hasOnlineAdvertising <- lettingHistory.advertisingOnline
+    yield hasOnlineAdvertising
+
+  def advertisingOnlineDetails(session: Session): List[AdvertisingOnline] =
+    for
+      lettingHistory           <- session.lettingHistory.toList
+      advertisingOnlineDetails <- lettingHistory.advertisingOnlineDetails
+    yield advertisingOnlineDetails
+
+  def withAdvertisingOnline(question: Boolean)(using session: Session): Session =
+    foldLettingHistory(
+      ifEmpty = LettingHistory(advertisingOnline = Option(question)),
+      copyFunc = lettingHistory => lettingHistory.copy(advertisingOnline = Option(question))
+    )
+
+  def byAddingAdvertisingOnlineDetails(advertisingOnline: AdvertisingOnline)(using session: Session): Session =
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        advertisingOnline = Some(true),
+        advertisingOnlineDetails = List(advertisingOnline)
+      ),
+      copyFunc = { lettingHistory =>
+        lettingHistory.advertisingOnlineDetails.zipWithIndex
+          .find { (existingDetails, _) =>
+            existingDetails.websiteAddress == advertisingOnline.websiteAddress
+          }
+          .map { (_, foundIndex) =>
+            lettingHistory
+              .copy(advertisingOnlineDetails =
+                lettingHistory.advertisingOnlineDetails.patch(foundIndex, List(advertisingOnline), 1)
+              )
+          }
+          .getOrElse {
+            lettingHistory
+              .copy(advertisingOnlineDetails = lettingHistory.advertisingOnlineDetails.:+(advertisingOnline))
+          }
+      }
+    )
 
   given Format[LettingHistory]                   = Json.format
   extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes

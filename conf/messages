@@ -95,6 +95,7 @@ label.phone = Telephone number
 label.email = Email address
 label.submitAnotherForm = Submit another form
 label.change = Change
+label.remove = Remove
 label.liter = liter
 label.litres = litres
 label.percent = %
@@ -1610,7 +1611,7 @@ lettingHistory.permanentResidents.heading = Permanent residents
 lettingHistory.permanentResidents.subheading = You must declare if any part of the property is occupied by tenants or employees as their permanent residence. Include any commercial residential lettings and staff accommodation.
 lettingHistory.hasPermanentResidents.legend = Is any part of the property used as a permanent residence by tenants or employees?
 lettingHistory.hasPermanentResidents.hint = Include any commercial residential lettings and staff accommodation.
-lettingHistory.hasPermanentResidents.error = Select yes if the property is occupied as permanent residence.
+lettingHistory.hasPermanentResidents.required = Select yes if the property is occupied as permanent residence.
 
 lettingHistory.residentDetail.heading = Resident''s details
 lettingHistory.residentDetail.subheading = We need the contact details of one person for each part of the property used as a main residence by a tenant or employee. You will have the opportunity to add additional households if required.
@@ -1656,6 +1657,15 @@ lettingHistory.occupierList.rentalPeriod.text = {0} to {1}
 lettingHistory.occupiersList.hadMoreOccupiers.label = Did any other occupants rent part of your property for 29 nights or more between {0} and {1}?
 lettingHistory.occupierList.hadMoreOccupiers.required = Select yes if the property had more occupiers
 
+lettingHistory.advertisingOnline.heading = Do you advertise the property online?
+error.lettingHistory.advertisingOnline.required = Select yes if you advertise the property online
+lettingHistory.advertisingOnlineDetails.heading  = Online advertising
+lettingHistory.advertisingOnlineDetails.paragraph = Provide the details of the holiday lettings websites, where the property is advertised. You will have the opportunity to add multiple
+label.lettingHistory.advertisingOnlineDetails.website = Website address
+hint.lettingHistory.advertisingOnlineDetails.website = Paste a direct link to your property, if known.
+lettingHistory.advertisingOnlineDetails.number.label = Property reference number
+lettingHistory.advertisingOnlineDetails.number.hint = Leave blank if not known.
+
 lettingHistory.maxNumberReached.permanentResidents.heading = You have added the maximum of {0} permanent residents
 lettingHistory.maxNumberReached.permanentResidents.paragraph.1 = If you had {0} or more permanent residents during the specified time range, the VOA will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.permanentResidents.link.1 = Check or update the {0} permanent residents
@@ -1665,6 +1675,8 @@ lettingHistory.maxNumberReached.temporaryOccupiers.link.1 = Check or update the 
 lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
 lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
 
+lettingHistory.intendedLettings.heading = How many nights do you intend to let the property commercially between {0} and {1}?
+lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not intend to let the property.
 
 # ACCOMMODATION DETAILS 6048
 # ############################
@@ -2747,7 +2759,7 @@ error.otherHolidayAccommodation.required =  Select yes if there are other holida
 
 # OTHER HOLIDAY ACCOMMODATION DETAILS(FORM 6045/46)
 ####################################
-otherHolidayAccommodationDetails.heading = Is your other holiday acommodation open all year?
+otherHolidayAccommodationDetails.heading = Is your other holiday accommodation open all year?
 otherHolidayAccommodationDetails.weeksOpen = Enter number of weeks the site remains open in a year
 error.weeksInYearMapping.invalid = The number of weeks should be a number from 1 to 52
 error.weeksInYearMapping.blank =  Enter the number of weeks

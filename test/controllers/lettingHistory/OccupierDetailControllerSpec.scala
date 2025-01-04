@@ -24,29 +24,29 @@ import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.occupierDetail as OccupierDetailView
 
 class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the OccupierDetail controller" when {
-    "the user session is fresh"                 should {
-      "be handling GET by replying 200 with the form showing name and address fields" in new FreshSessionFixture {
-        val result  = controller.show(maybeIndex = None)(fakeGetRequest)
-        val content = contentAsString(result)
+    "the user session is fresh"                        should {
+      "be handling GET by replying 200 with the form showing name and address fields" in new ControllerFixture {
+        val result = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include(s"""${routes.CompletedLettingsController.show.url}" class="govuk-back-link"""")
-        content                     should include("""lettingHistory.occupierDetail.heading""")
-        content                     should include("""name="name"""")
-        content                     should include("""name="address.line1"""")
-        content                     should include("""name="address.town"""")
-        content                     should include("""name="address.county"""")
-        content                     should include("""name="address.postcode"""")
+        val page = contentAsJsoup(result)
+        page.heading                 shouldBe "lettingHistory.occupierDetail.heading"
+        page.backLink                shouldBe routes.HasCompletedLettingsController.show.url
+        page.input("name")             should beEmpty
+        page.input("address.line1")    should beEmpty
+        page.input("address.town")     should beEmpty
+        page.input("address.county")   should beEmpty
+        page.input("address.postcode") should beEmpty
       }
-      "be handling good POST by replying 303 redirect to 'Rental Period' page" in new FreshSessionFixture {
+      "be handling good POST by replying 303 redirect to 'Rental Period' page" in new ControllerFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
           "name"             -> "Mr. Unknown",
           "address.line1"    -> "11, Fantasy Street",
@@ -75,18 +75,20 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
     }
     "the user session is stale" when {
       "regardless of the given number residents"             should {
-        "be handling GET ?index=0 by replying 200 with the form pre-filled with name and address values" in new StaleSessionFixture(
+        "be handling GET ?index=0 by replying 200 with the form pre-filled with name and address values" in new ControllerFixture(
           oneOccupier
         ) {
-          val result  = controller.show(maybeIndex = Some(0))(fakeGetRequest)
-          val content = contentAsString(result)
+          val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include("Mr. One")
-          content                     should include("Address One")
+          val page = contentAsJsoup(result)
+          page.input("name")             should haveValue(oneOccupier.head.name)
+          page.input("address.line1")    should haveValue(oneOccupier.head.address.line1)
+          page.input("address.town")     should haveValue(oneOccupier.head.address.town)
+          page.input("address.postcode") should haveValue(oneOccupier.head.address.postcode)
         }
-        "be handling POST unknown by replying 303 redirect to 'Rental Period' page" in new StaleSessionFixture(
+        "be handling POST unknown by replying 303 redirect to 'Rental Period' page" in new ControllerFixture(
           oneOccupier
         ) {
           // Post an unknown resident detail and expect it to become the third resident
@@ -113,7 +115,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             postcode = "BN12 4AX"
           )
         }
-        "be handling POST known by replying 303 redirect to 'Rental Period' page" in new StaleSessionFixture(
+        "be handling POST known by replying 303 redirect to 'Rental Period' page" in new ControllerFixture(
           twoOccupiers
         ) {
           // Post the second resident detail again and expect it to be changed
@@ -144,7 +146,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         }
       }
       "and the maximum number of occupiers has been reached" should {
-        "be handling GET by replying 303 redirect to the 'Occupiers List' page" in new StaleSessionFixture(
+        "be handling GET by replying 303 redirect to the 'Occupiers List' page" in new ControllerFixture(
           fiveOccupiers
         ) {
           val result = controller.show(maybeIndex = None)(fakeGetRequest)
@@ -153,9 +155,9 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         }
       }
     }
-    "the user session is either fresh or stale" should {
-      "be handling invalid POST by replying 400 with error messages" in new FreshSessionFixture {
-        val result  = controller.submit(
+    "regardless of what the user might have submitted" should {
+      "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
+        val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "name"             -> "",
             "address.line1"    -> "",
@@ -165,30 +167,17 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.postcode" -> ""
           )
         )
-        val content = contentAsString(result)
         status(result) shouldBe BAD_REQUEST
-        content          should include("lettingHistory.occupierDetail.name.required")
-        content          should include("error.buildingNameNumber.required")
-        content          should include("error.townCity.required")
-        content          should include("error.postcodeAlternativeContact.required")
+        val page   = contentAsJsoup(result)
+        page.error("name")             shouldBe "lettingHistory.occupierDetail.name.required"
+        page.error("address.line1")    shouldBe "error.buildingNameNumber.required"
+        page.error("address.town")     shouldBe "error.townCity.required"
+        page.error("address.postcode") shouldBe "error.postcodeAlternativeContact.required"
       }
     }
   }
 
-  // It provides the scenario of fresh session (there's no letting history yet in session)
-  trait FreshSessionFixture extends MockRepositoryFixture with SessionCapturingFixture:
-    val controller = new OccupierDetailController(
-      mcc = stubMessagesControllerComponents(),
-      navigator = inject[LettingHistoryNavigator],
-      theView = inject[OccupierDetailView],
-      sessionRefiner = preEnrichedActionRefiner(
-        lettingHistory = None
-      ),
-      repository
-    )
-
-  // It represents the scenario of ongoing session (with some letting history already created)
-  trait StaleSessionFixture(completedLettings: List[OccupierDetail])
+  trait ControllerFixture(completedLettings: List[OccupierDetail] = Nil)
       extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new OccupierDetailController(

@@ -16,14 +16,13 @@
 
 package form.lettingHistory
 
-import form.MappingSupport.createYesNoType as answerYesNo
-import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.data.Forms.{number, single}
+import play.api.data.validation.Constraints.min
 
-object CompletedLettingsForm:
-  val theForm = Form[AnswersYesNo](
+object HowManyNightsForm:
+  val theForm = Form[Int](
     single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasCompletedLettings.required")
+      "nights" -> number.verifying(min(0))
     )
   )

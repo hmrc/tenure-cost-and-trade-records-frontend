@@ -16,45 +16,36 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswersYesNo
-@import actions.SessionRequest
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        formWithCSRF: FormWithCSRF,
-
+        formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
-    pageHeading = messages("additionalActivitiesOnSite.heading"),
-    showH1 = true,
+    pageHeading = messages("lettingHistory.advertisingOnline.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    showH1= false,
+    summary = Option(summary),
+    sectionName = messages("label.section.lettingHistory"),
     backLinkUrl = backLink,
-    sectionName = messages("label.section.aboutYourTradingHistory"),
-    theForm = theForm,
-    fullWidth = true
+    theForm = theForm
 ) {
 
-    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.submit()) {
-
-      <p class="govuk-body"></p>
-
+    @formWithCSRF(action = controllers.lettingHistory.routes.AdvertisingOnlineController.submit) {
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
-            "additionalActivitiesOnSite",
-            "additionalActivitiesOnSite.subheading",
-            messages("label.yes.oes"),
-            messages("label.no.nac.oes"),
-            hint = messages("additionalActivitiesOnSite.hint"),
-            classes = "govuk-fieldset__legend--m"
+            idPrefix = "lettingHistoryAdvertisingOnline",
+            name = "advertisingOnline",
+            legendKey = "lettingHistory.advertisingOnline.heading",
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
         )
-
         @includes.continueSaveAsDraftButtons(govukButton)
     }
-
-
 }

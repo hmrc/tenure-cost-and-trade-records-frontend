@@ -38,7 +38,9 @@
 
 
 @rowLabel(labelKey: String) = {
-    <p class="govuk-body">@messages(labelKey)</p>
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+    </p>
 }
 
 @turnoverRow(formField: String, labelKey: String) = @{

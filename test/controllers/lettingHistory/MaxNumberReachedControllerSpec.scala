@@ -24,95 +24,96 @@ import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.maxNumberReached as MaxNumberReachedView
 
 class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
 
   "the MaxNumberReached controller" when {
-    "the user session is fresh" when {
+    "the user has not provided any answer yet"        should {
       "and the journey comes from the 'Resident List' page" should {
-        "be handling GET by replying 200 with the HTML form having unchecked radios" in new StaleSessionFixture {
-          val result  = controller.show(kind = "permanentResidents")(fakeGetRequest)
-          val content = contentAsString(result)
+        "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
+          val result = controller.show(kind = "permanentResidents")(fakeGetRequest)
+
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include(s"""${routes.ResidentListController.show.url}" class="govuk-back-link"""")
-          content                     should not include "checked"
+          val page = contentAsJsoup(result)
+          page.heading            shouldBe "lettingHistory.maxNumberReached.permanentResidents.heading"
+          page.backLink           shouldBe routes.ResidentListController.show.url
+          page.radios("understood") should haveNoneChecked
         }
-        "be handling GET by replying 200 with the HTML form having unchecked radios despite unknown kind" in new StaleSessionFixture {
-          val result  = controller.show(kind = "unknown")(fakeGetRequest)
-          val content = contentAsString(result)
+        "be handling GET by replying 200 with the HTML form having unchecked radios despite unknown kind" in new ControllerFixture {
+          val result = controller.show(kind = "unknown")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include(s"""${controllers.routes.TaskListController
-              .show()
-              .withFragment("lettingHistory")}" class="govuk-back-link"""")
-          content                     should not include "checked"
+          val page = contentAsJsoup(result)
+          page.backLink           shouldBe controllers.routes.TaskListController.show().withFragment("lettingHistory").toString
+          page.radios("understood") should haveNoneChecked
         }
       }
       "and the journey comes from the 'Occupier List' page" should {
-        "be handling GET by replying 200 with the HTML form having unchecked radios" in new StaleSessionFixture {
-          val result  = controller.show(kind = "temporaryOccupiers")(fakeGetRequest)
-          val content = contentAsString(result)
+        "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
+          val result = controller.show(kind = "temporaryOccupiers")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include(s"""${routes.OccupierListController.show.url}" class="govuk-back-link"""")
-          content                     should not include "checked"
+          val page = contentAsJsoup(result)
+          page.heading            shouldBe "lettingHistory.maxNumberReached.temporaryOccupiers.heading"
+          page.backLink           shouldBe routes.OccupierListController.show.url
+          page.radios("understood") should haveNoneChecked
         }
       }
     }
-    "the user session is stale"      should {
+    "the user has already provided an answer"         should {
       "and the journey comes from the 'Resident List' page" should {
-        "be handling GET by replying 200 with the HTML form having already checked radios" in new StaleSessionFixture(
+        "be handling GET by replying 200 with the HTML form having already checked radios" in new ControllerFixture(
           mayHaveMorePermanentResidents = Some(true)
         ) {
-          val result  = controller.show(kind = "permanentResidents")(fakeGetRequest)
-          val content = contentAsString(result)
+          val result = controller.show(kind = "permanentResidents")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include(s"""${routes.ResidentListController.show.url}" class="govuk-back-link"""")
-          content                     should include("checked")
+          val page = contentAsJsoup(result)
+          page.backLink             shouldBe routes.ResidentListController.show.url
+          page.checkbox("understood") should beChecked
         }
-        "be handling POST understood=false by replying 303 redirect to 'How many nights' page" in new StaleSessionFixture {
+        "be handling POST understood=false by replying 303 redirect to 'How many nights' page" in new ControllerFixture {
           val result = controller.submit(kind = "permanentResidents")(
             fakePostRequest
               .withFormUrlEncodedBody("understood" -> "false")
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value            shouldBe routes.CompletedLettingsController.show.url
+          redirectLocation(result).value            shouldBe routes.HasCompletedLettingsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           mayHaveMorePermanentResidents(data).value shouldBe false
         }
       }
       "and the journey comes from the 'Occupier List' page" should {
-        "be handling GET by replying 200 with the HTML form having already checked radios" in new StaleSessionFixture(
+        "be handling GET by replying 200 with the HTML form having already checked radios" in new ControllerFixture(
           mayHaveMoreCompletedLettings = Some(true)
         ) {
-          val result  = controller.show(kind = "temporaryOccupiers")(fakeGetRequest)
-          val content = contentAsString(result)
+          val result = controller.show(kind = "temporaryOccupiers")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
-          content                     should include(s"""${routes.OccupierListController.show.url}" class="govuk-back-link"""")
-          content                     should include("checked")
+          val page = contentAsJsoup(result)
+          page.backLink             shouldBe routes.OccupierListController.show.url
+          page.checkbox("understood") should beChecked
         }
-        "be handling POST kind=temporaryOccupiers&understand=false by replying 303 redirect to the 'How many nights' page" in new StaleSessionFixture {
+        "be handling POST kind=temporaryOccupiers&understand=false by replying 303 redirect to the 'How many nights' page" in new ControllerFixture {
           val result = controller.submit(kind = "temporaryOccupiers")(
             fakePostRequest
               .withFormUrlEncodedBody("understood" -> "false")
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value           shouldBe "/path/to/intended-nights"
+          redirectLocation(result).value           shouldBe routes.HowManyNightsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           mayHaveMoreCompletedLettings(data).value shouldBe false
         }
-        "be handling POST kind=unknown by replying 303 redirect to the 'Task List' page" in new StaleSessionFixture {
+        "be handling POST kind=unknown by replying 303 redirect to the 'Task List' page" in new ControllerFixture {
           val result = controller.submit(kind = "unknown")(
             fakePostRequest
               .withFormUrlEncodedBody("understood" -> "false")
@@ -127,19 +128,20 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
         }
       }
     }
-    "regardless of the user session" should {
-      "be handling invalid POST by replying 400 with error message" in new StaleSessionFixture {
+    "regardless of what the user might have answered" should {
+      "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(kind = "permanentResidents")(
           fakePostRequest
             .withFormUrlEncodedBody("understood" -> "") // understood is missing!
         )
         status(result) shouldBe BAD_REQUEST
-        contentAsString(result) should include("error.boolean")
+        val page   = contentAsJsoup(result)
+        page.error("understood") shouldBe "error.boolean"
       }
     }
   }
 
-  trait StaleSessionFixture(
+  trait ControllerFixture(
     mayHaveMorePermanentResidents: Option[Boolean] = None,
     mayHaveMoreCompletedLettings: Option[Boolean] = None
   ) extends MockRepositoryFixture

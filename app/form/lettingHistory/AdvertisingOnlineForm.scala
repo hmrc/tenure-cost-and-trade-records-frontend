@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package controllers.lettingHistory
+package form.lettingHistory
 
-import models.submissions.lettingHistory.ResidentDetail
+import form.MappingSupport.createYesNoType as answerYesNo
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
 
-trait PermanentResidentFixture:
+object AdvertisingOnlineForm {
 
-  val oneResident = List(
-    ResidentDetail(name = "one", address = "address1")
+  val theForm: Form[AnswersYesNo] = Form(
+    single(
+      "advertisingOnline" -> answerYesNo("error.lettingHistory.advertisingOnline.required")
+    )
   )
 
-  val fiveResidents = oneResident ++ List(
-    ResidentDetail(name = "two", address = "address2"),
-    ResidentDetail(name = "three", address = "address3"),
-    ResidentDetail(name = "four", address = "address4"),
-    ResidentDetail(name = "five", address = "address5")
-  )
+}

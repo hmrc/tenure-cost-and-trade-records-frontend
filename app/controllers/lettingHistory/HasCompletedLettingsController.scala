@@ -18,25 +18,25 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.CompletedLettingsForm.theForm
+import form.lettingHistory.HasCompletedLettingsForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.CompletedLettingsPageId
+import navigation.identifiers.*
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.completedLettings as CompletedLettingsView
+import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
-class CompletedLettingsController @Inject (
+class HasCompletedLettingsController @Inject(
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: CompletedLettingsView,
+  theView: HasCompletedLettingsView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)

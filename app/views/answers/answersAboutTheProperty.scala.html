@@ -127,7 +127,7 @@
             Seq(
                 yearEndingRow(
                     aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show(),
-                    messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
+                    messages("checkYourAnswersAboutTheProperty.availabilityCommercial"),
                     sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
                     .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
                 ),
@@ -143,7 +143,7 @@
             Seq(
                 yearEndingRow(
                     aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show(),
-                    messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
+                    messages("checkYourAnswersAboutTheProperty.completedCommercial"),
                     sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
                     .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
                 ),

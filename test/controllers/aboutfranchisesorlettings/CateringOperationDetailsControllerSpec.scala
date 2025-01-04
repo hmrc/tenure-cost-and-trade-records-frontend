@@ -49,7 +49,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         html.getElementById("cateringAddress.town").value               shouldBe ""
         html.getElementById("cateringAddress.county").value             shouldBe ""
         html.getElementById("cateringAddress.postcode").value           shouldBe ""
-        html.backLinkHref                                                 should endWith("/catering-operation-or-letting-accommodation")
+        html.backLink                                                     should endWith("/catering-operation-or-letting-accommodation")
       }
       "reply 200 with a pre-filled HTML form 6010 and backLink to /catering-operation-or-letting-accommodation" in new ControllerFixture(
         FOR6010
@@ -67,7 +67,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         html.getElementById("cateringAddress.town").value               shouldBe "GORING-BY-SEA, WORTHING"
         html.getElementById("cateringAddress.county").value             shouldBe "West sussex"
         html.getElementById("cateringAddress.postcode").value           shouldBe "BN12 4AX"
-        html.backLinkHref                                                 should endWith("/catering-operation-or-letting-accommodation")
+        html.backLink                                                     should endWith("/catering-operation-or-letting-accommodation")
       }
       "reply 200 with the HTML form 6015 and backLink to /concession-or-franchise" in new ControllerFixture(FOR6015) {
         val result = controller.show(index = Some(2))(fakeGetRequest)
@@ -75,7 +75,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val html = contentAsJsoup(result)
-        html.backLinkHref should endWith("/concession-or-franchise")
+        html.backLink should endWith("/concession-or-franchise")
       }
       "reply 200 with the HTML form 6010 and backLink to /add-another-catering-operation" in new ControllerFixture(
         FOR6010
@@ -85,7 +85,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val html = contentAsJsoup(result)
-        html.backLinkHref should endWith("/add-another-catering-operation?idx=1") // the given index is decremented by 1
+        html.backLink should endWith("/add-another-catering-operation?idx=1") // the given index is decremented by 1
       }
     }
     "handling POST / requests" should {

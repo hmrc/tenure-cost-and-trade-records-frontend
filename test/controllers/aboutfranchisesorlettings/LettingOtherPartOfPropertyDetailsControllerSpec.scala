@@ -45,7 +45,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
         html.getElementById("lettingAddress.town").value               shouldBe ""
         html.getElementById("lettingAddress.county").value             shouldBe ""
         html.getElementById("lettingAddress.postcode").value           shouldBe ""
-        html.backLinkHref                                                should endWith(routes.LettingOtherPartOfPropertyController.show().url)
+        html.backLink                                                    should endWith(routes.LettingOtherPartOfPropertyController.show().url)
       }
       "reply 200 with a fresh HTML form if given an unknown index" in new ControllerFixture {
         val result = controller.show(Some(2))(fakeRequest)
@@ -60,7 +60,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
         html.getElementById("lettingAddress.town").value               shouldBe ""
         html.getElementById("lettingAddress.county").value             shouldBe ""
         html.getElementById("lettingAddress.postcode").value           shouldBe ""
-        html.backLinkHref                                                should endWith(routes.AddAnotherLettingOtherPartOfPropertyController.show(1).url)
+        html.backLink                                                    should endWith(routes.AddAnotherLettingOtherPartOfPropertyController.show(1).url)
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture(
         Some(prefilledAboutFranchiseOrLettings)

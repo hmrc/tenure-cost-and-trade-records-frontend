@@ -49,7 +49,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         html.getElementById("cateringAddress.town").value               shouldBe ""
         html.getElementById("cateringAddress.county").value             shouldBe ""
         html.getElementById("cateringAddress.postcode").value           shouldBe ""
-        html.backLinkHref                                                 should endWith(routes.CateringOperationController.show().url)
+        html.backLink                                                     should endWith(routes.CateringOperationController.show().url)
 
       }
       "reply 200 with a pre-filled HTML form 6010" in new ControllerFixture(FOR6010) {
@@ -73,7 +73,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         html.getElementsByTag("h1").first().text()  shouldBe "concessionDetails.heading"
         html.getElementById("operatorName").value   shouldBe ""
         html.getElementById("typeOfBusiness").value shouldBe ""
-        html.backLinkHref                             should endWith(routes.ConcessionOrFranchiseController.show().url)
+        html.backLink                                 should endWith(routes.ConcessionOrFranchiseController.show().url)
       }
       "reply 200 with a pre-filled HTML form 6010 and expected backLink" in new ControllerFixture(
         FOR6010
@@ -91,7 +91,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         html.getElementById("cateringAddress.town").value               shouldBe ""
         html.getElementById("cateringAddress.county").value             shouldBe ""
         html.getElementById("cateringAddress.postcode").value           shouldBe ""
-        html.backLinkHref                                                 should endWith(routes.AddAnotherCateringOperationController.show(1).url)
+        html.backLink                                                     should endWith(routes.AddAnotherCateringOperationController.show(1).url)
       }
     }
     "handling POST / requests" should {

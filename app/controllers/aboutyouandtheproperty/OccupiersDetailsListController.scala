@@ -72,11 +72,10 @@ class OccupiersDetailsListController @Inject() (
       data =>
         request.sessionData.aboutYouAndThePropertyPartTwo
           .map(_.occupiersList)
-          .filter(_.nonEmpty)
           .fold {
             Future.successful(
               if (data == AnswerYes) {
-                Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(index))
+                Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
               } else {
                 Redirect(
                   navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
@@ -84,21 +83,27 @@ class OccupiersDetailsListController @Inject() (
               }
             )
           } { existingEntries =>
-            val updatedServices = existingEntries.updated(
-              index,
-              existingEntries(index)
-            )
-            val updatedData     = updateAboutYouAndThePropertyPartTwo(
-              _.copy(
-                occupiersList = updatedServices,
-                addAnotherPaidService = data
+            if (existingEntries.isEmpty) {
+                  Redirect(
+                    navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
+                  )
+            } else {
+              val updatedServices = existingEntries.updated(
+                index,
+                existingEntries(index)
               )
-            )
-            session.saveOrUpdate(updatedData).map { _ =>
-              if (data == AnswerYes) {
-                Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
-              } else {
-                Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
+              val updatedData = updateAboutYouAndThePropertyPartTwo(
+                _.copy(
+                  occupiersList = updatedServices,
+                  addAnotherPaidService = data
+                )
+              )
+              session.saveOrUpdate(updatedData).map { _ =>
+                if (data == AnswerYes) {
+                  Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
+                } else {
+                  Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
+                }
               }
             }
           }
@@ -160,7 +165,7 @@ class OccupiersDetailsListController @Inject() (
           }
           Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0))
         case AnswerNo  =>
-          Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(Option(index)))
+          Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0))
       }
     )
   }

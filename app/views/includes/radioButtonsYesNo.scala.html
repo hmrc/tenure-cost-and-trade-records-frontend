@@ -32,12 +32,13 @@
         classes: String = "",
         hint: String = "",
         isHeading: Boolean = false,
-        legend: Option[String] = None)(implicit messages: Messages)
+        legend: Option[String] = None,
+        idPrefix: Option[String] = None)(implicit messages: Messages)
 
 @govukRadios(
   Radios(
     name = name,
-    idPrefix = Option(s"$name"),
+    idPrefix = idPrefix.fold(Option(s"$name"))(identity(_)),
     items = Seq(
       "yes" -> messages(yesLabel),
       "no" -> messages(noLabel)
