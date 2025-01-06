@@ -16,14 +16,15 @@
 
 package form.lettingHistory
 
+import form.MappingSupport.createYesNoType as answerYesNo
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{boolean, single}
+import play.api.data.Forms.single
 
-object MaxNumberReachedForm {
-  val theForm: Form[Boolean] = Form[Boolean] {
+object AdvertisingListForm {
+  val theForm: Form[AnswersYesNo] = Form[AnswersYesNo](
     single(
-      "understood" -> boolean
-        .verifying("lettingHistory.maxNumberReached.understanding.required", understand => understand)
+      "advertisingList" -> answerYesNo(errorMessage = "lettingHistory.advertisingList.hasMoreWebsites.required")
     )
-  }
+  )
 }

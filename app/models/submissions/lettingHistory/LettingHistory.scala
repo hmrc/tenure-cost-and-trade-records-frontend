@@ -29,7 +29,8 @@ case class LettingHistory(
   mayHaveMoreCompletedLettings: Option[Boolean] = None,
   intendedLettings: Option[IntendedLettings] = None,
   advertisingOnline: Option[Boolean] = None,
-  advertisingOnlineDetails: List[AdvertisingOnline] = Nil
+  advertisingOnlineDetails: List[AdvertisingOnline] = Nil,
+  mayHaveMoreAdvertisingDetails: Option[Boolean] = None
 )
 
 object LettingHistory:
@@ -309,7 +310,7 @@ object LettingHistory:
       hasOnlineAdvertising <- lettingHistory.advertisingOnline
     yield hasOnlineAdvertising
 
-  def advertisingOnlineDetails(session: Session): List[AdvertisingOnline] =
+  def getAdvertisingOnlineDetails(session: Session): List[AdvertisingOnline] =
     for
       lettingHistory           <- session.lettingHistory.toList
       advertisingOnlineDetails <- lettingHistory.advertisingOnlineDetails
@@ -321,27 +322,38 @@ object LettingHistory:
       copyFunc = lettingHistory => lettingHistory.copy(advertisingOnline = Option(question))
     )
 
-  def byAddingAdvertisingOnlineDetails(advertisingOnline: AdvertisingOnline)(using session: Session): Session =
+  def byUpdatingAdvertisingOnlineDetails(index: Option[Int], advertisingOnline: AdvertisingOnline)(using
+    session: Session
+  ): Session =
     foldLettingHistory(
       ifEmpty = LettingHistory(
         advertisingOnline = Some(true),
         advertisingOnlineDetails = List(advertisingOnline)
       ),
+      copyFunc = lettingHistory => {
+        val updatedDetails = index match {
+          case Some(idx) =>
+            lettingHistory.advertisingOnlineDetails.zipWithIndex.map {
+              case (_, i) if i == idx => advertisingOnline
+              case (existingData, _)  => existingData
+            }
+          case None      =>
+            lettingHistory.advertisingOnlineDetails :+ advertisingOnline
+        }
+        lettingHistory.copy(advertisingOnlineDetails = updatedDetails)
+      }
+    )
+
+  def byRemovingAdvertisingDetailsAt(index: Int)(using session: Session): Session =
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        advertisingOnline = Some(false),
+        advertisingOnlineDetails = Nil
+      ),
       copyFunc = { lettingHistory =>
-        lettingHistory.advertisingOnlineDetails.zipWithIndex
-          .find { (existingDetails, _) =>
-            existingDetails.websiteAddress == advertisingOnline.websiteAddress
-          }
-          .map { (_, foundIndex) =>
-            lettingHistory
-              .copy(advertisingOnlineDetails =
-                lettingHistory.advertisingOnlineDetails.patch(foundIndex, List(advertisingOnline), 1)
-              )
-          }
-          .getOrElse {
-            lettingHistory
-              .copy(advertisingOnlineDetails = lettingHistory.advertisingOnlineDetails.:+(advertisingOnline))
-          }
+        lettingHistory.copy(
+          advertisingOnlineDetails = lettingHistory.advertisingOnlineDetails.patch(index, Nil, 1)
+        )
       }
     )
 

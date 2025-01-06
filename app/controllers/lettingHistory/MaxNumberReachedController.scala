@@ -69,16 +69,11 @@ class MaxNumberReachedController @Inject() (
     navigator.backLinkUrl(ofPage = MaxNumberReachedPageId, navigationData)
 
   private def hasEvenMoreEntries(kind: String)(using request: SessionRequest[AnyContent]): Option[Boolean] =
-    if kind == "permanentResidents"
-    then
-      for
-        lettingHistory <- request.sessionData.lettingHistory
-        bool           <- lettingHistory.mayHaveMorePermanentResidents
-      yield bool
-    else if kind == "temporaryOccupiers"
-    then
-      for
-        lettingHistory <- request.sessionData.lettingHistory
-        bool           <- lettingHistory.mayHaveMoreCompletedLettings
-      yield bool
-    else None
+    request.sessionData.lettingHistory.flatMap { lettingHistory =>
+      kind match {
+        case "permanentResidents" => lettingHistory.mayHaveMorePermanentResidents
+        case "temporaryOccupiers" => lettingHistory.mayHaveMoreCompletedLettings
+        case "advertisingOnline"  => lettingHistory.mayHaveMoreAdvertisingDetails
+        case _                    => None
+      }
+    }
