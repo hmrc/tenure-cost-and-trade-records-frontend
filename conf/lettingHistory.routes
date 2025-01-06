@@ -53,3 +53,6 @@ GET         /letting-history-advertising-list                   controllers.lett
 GET         /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.remove(index: Int)
 POST        /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.performRemove(index: Int)
 POST        /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.submit
+
+GET          /letting-history-check-your-answers                controllers.lettingHistory.CheckYourAnswersLettingController.show()
+POST         /letting-history-check-your-answers                controllers.lettingHistory.CheckYourAnswersLettingController.submit()

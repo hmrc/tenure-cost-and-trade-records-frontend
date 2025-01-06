@@ -1,5 +1,5 @@
-@*
- * Copyright 2024 HM Revenue & Customs
+/*
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +12,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@()
+package form.lettingHistory
+
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
+
+object CYALettingHistoryForm {
+
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "cYALettingHistory" -> createYesNoType("error.checkYourAnswersRadio.required")
+      )
+    )
+}

@@ -44,6 +44,8 @@ class HasPermanentResidentsController @Inject() (
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
+    println(Console.MAGENTA +   request.getQueryString("from") + "10000000000000000" + Console.RESET)
+
     val freshForm  = theForm
     val filledForm =
       for
@@ -55,6 +57,7 @@ class HasPermanentResidentsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
+    println(Console.MAGENTA +   request.getQueryString("from") + "11111111111111111111" + Console.RESET)
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),

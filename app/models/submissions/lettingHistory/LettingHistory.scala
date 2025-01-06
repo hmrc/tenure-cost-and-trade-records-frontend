@@ -32,7 +32,8 @@ case class LettingHistory(
   intendedLettings: Option[IntendedLettings] = None,
   advertisingOnline: Option[Boolean] = None,
   advertisingOnlineDetails: List[AdvertisingOnline] = Nil,
-  mayHaveMoreAdvertisingDetails: Option[Boolean] = None
+  mayHaveMoreAdvertisingDetails: Option[Boolean] = None,
+  checkYourAnswers: Option[AnswersYesNo] = None
 )
 
 object LettingHistory:
@@ -401,6 +402,12 @@ object LettingHistory:
       ifEmpty = LettingHistory(advertisingOnline = Option(question)),
       copyFunc = lettingHistory => lettingHistory.copy(advertisingOnline = Option(question))
     )
+
+  def withCheckYourAnswers(question: AnswersYesNo)(using session: Session): Session =
+      foldLettingHistory(
+        ifEmpty = LettingHistory(checkYourAnswers = Option(question)),
+        copyFunc = lettingHistory => lettingHistory.copy(checkYourAnswers = Option(question))
+      )
 
   def byUpdatingAdvertisingOnlineDetails(index: Option[Int], advertisingOnline: AdvertisingOnline)(using
     session: Session

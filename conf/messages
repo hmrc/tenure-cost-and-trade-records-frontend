@@ -1705,6 +1705,40 @@ lettingHistory.tradingSeasonLength.toDate.error = The "to date" must be less tha
 lettingHistory.tradingSeasonLength.error = The "from date" must be less than or equal to the "to date"
 
 
+
+cya.lettingHistory.heading = Check your answers - letting history
+cya.lettingHistory.label = Have you completed this section?
+cya.lettingHistory.residentialTenants.label = Residential tenants
+cya.lettingHistory.residentialTenants.question = Main residence for tenants or employees?
+cya.lettingHistory.residentialTenants.resident = Resident {0}
+cya.lettingHistory.residentialTenants.residentDetails = Resident''s details
+cya.lettingHistory.residentialTenants.residentAdded = You have added 1 resident
+cya.lettingHistory.residentialTenants.residentsAdded = You have added {0} residents
+cya.lettingHistory.residentialTenants.add = Add a resident
+cya.lettingHistory.temporaryOccupiers.label = Temporary occupiers
+cya.lettingHistory.temporaryOccupiers.question = Completed commercial lettings - 29 nights or longer?
+cya.lettingHistory.temporaryOccupiers.occupier = Temporary occupier {0}
+cya.lettingHistory.temporaryOccupiers.occupiersDetails = Occupier''s details
+cya.lettingHistory.temporaryOccupiers.tenureLength = Tenure length
+cya.lettingHistory.temporaryOccupiers.occupierAdded = You have added 1 temporary occupier
+cya.lettingHistory.temporaryOccupiers.occupiersAdded = You have added {0} temporary occupiers
+cya.lettingHistory.temporaryOccupiers.add = Add a temporary occupier
+cya.lettingHistory.intention.label = Letting intention
+cya.lettingHistory.intention.question = Number of nights intended for commercial letting
+cya.lettingHistory.intention.night = night
+cya.lettingHistory.intention.nights = nights
+cya.lettingHistory.intention.stopped = Stopped letting commercially?
+cya.lettingHistory.intention.final = Final commercial letting
+cya.lettingHistory.intention.availableFor = Available for letting all year?
+cya.lettingHistory.intention.seasonDetails = Season details
+cya.lettingHistory.advertising.label = Advertising the property
+cya.lettingHistory.advertising.question = Do you advertise online?
+cya.lettingHistory.advertising.website = Website {0}
+cya.lettingHistory.advertising.websiteDetails = Website details
+cya.lettingHistory.advertising.add = Add a website
+cya.lettingHistory.advertising.websiteAdded = You have added 1 website
+cya.lettingHistory.advertising.websitesAdded = You have added {0} websites
+
 # ACCOMMODATION DETAILS 6048
 # ############################
 label.section.accommodation = Accommodation details

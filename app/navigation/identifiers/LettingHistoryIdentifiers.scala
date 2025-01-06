@@ -73,6 +73,9 @@ case object AdvertisingListPageId extends Identifier:
 case object AdvertisingRemovePageId extends Identifier:
   override def toString: String = "advertisingRemovePage"
 
+case object CheckYourAnswersLettingHistoryPageId extends Identifier:
+    override def toString: String = "checkYourAnswersLettingHistoryPage"
+
 extension (string: String)
   def asPageIdentifier: Option[Identifier] = string match
     case "permanentResidentsPage"       => Some(PermanentResidentsPageId)
@@ -94,4 +97,5 @@ extension (string: String)
     case "advertisingOnlineDetailsPage" => Some(AdvertisingOnlineDetailsPageId)
     case "advertisingListPage"          => Some(AdvertisingListPageId)
     case "advertisingRemovePage"        => Some(AdvertisingRemovePageId)
-    case _                              => None
+    case "checkYourAnswersLettingHistoryPage" =>  Some(CheckYourAnswersLettingHistoryPageId)
+    case _                                    => None

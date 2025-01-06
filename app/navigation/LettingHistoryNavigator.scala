@@ -148,14 +148,14 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
   def backLinkUrl(ofPage: PageIdentifier, navigationData: NavigationData = Map.empty)(using
     request: SessionRequest[AnyContent]
   ): Option[String] =
-    val call =
-      for
-        sessionToMaybeCallFunc <- backwardNavigationMap.get(ofPage)
-        backwardCall           <- sessionToMaybeCallFunc.apply(request.sessionData, navigationData.withFrom)
-      yield backwardCall
-
-    call.map(_.toString)
-
+    if (request.getQueryString("from").contains("CYA")) {
+      Some(routes.CheckYourAnswersLettingController.show().url)
+    } else {
+      backwardNavigationMap
+        .get(ofPage)
+        .flatMap(_.apply(request.sessionData, navigationData))
+        .map(_.toString)
+    }
   // ----------------------------------------------------------------------------------------------------------------
 
   /*
@@ -197,7 +197,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       yield kind match
         case "permanentResidents" => routes.HasCompletedLettingsController.show
         case "temporaryOccupiers" => routes.HowManyNightsController.show
-        // TODO case "advertisingOnline" => ???
+        case "advertisingOnline"  => routes.CheckYourAnswersLettingController.show()
         case _                    => controllers.routes.TaskListController.show().withFragment("lettingHistory")
     },
     CompletedLettingsPageId        -> { (updatedSession, _) =>
@@ -262,7 +262,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     AdvertisingOnlinePageId        -> { (currentSession, _) =>
       hasOnlineAdvertising(currentSession) match
         case Some(true) => Some(routes.AdvertisingOnlineDetailsController.show(index = None))
-        case _          => Some(controllers.routes.TaskListController.show()) // TODO: CYA
+        case _          => Some(routes.CheckYourAnswersLettingController.show())
     },
     AdvertisingOnlineDetailsPageId -> { (_, _) => Some(routes.AdvertisingListController.show) },
     AdvertisingRemovePageId        -> { (_, _) => Some(routes.AdvertisingListController.show) },
@@ -274,7 +274,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
           if getAdvertisingOnlineDetails(updatedSession).sizeIs < MaxNumberOfAdvertisingOnline
           then routes.AdvertisingOnlineDetailsController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "advertisingOnline")
-        else controllers.routes.TaskListController.show() // TODO: CYA
+        else routes.CheckYourAnswersLettingController.show()
     }
   )
 
