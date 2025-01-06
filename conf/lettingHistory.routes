@@ -39,4 +39,9 @@ GET         /letting-history-advertising-online                 controllers.lett
 POST        /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.submit
 
 GET         /letting-history-advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.show(index: Option[Int] ?= None)
-POST        /letting-history-advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.submit
+POST        /letting-history-advertising-online-details         controllers.lettingHistory.AdvertisingOnlineDetailsController.submit(index: Option[Int] ?= None)
+
+GET         /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.show
+GET         /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.remove(index: Int)
+POST        /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.performRemove(index: Int)
+POST        /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.submit

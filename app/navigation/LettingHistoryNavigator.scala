@@ -60,10 +60,12 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     MaxNumberReachedPageId         -> { (_, navigationData) =>
       for kind <- navigationData.get("kind")
-      yield
-        if kind == "permanentResidents" then routes.ResidentListController.show
-        else if kind == "temporaryOccupiers" then routes.OccupierListController.show
-        else controllers.routes.TaskListController.show().withFragment("lettingHistory")
+      yield kind match {
+        case "permanentResidents" => routes.ResidentListController.show
+        case "temporaryOccupiers" => routes.OccupierListController.show
+        case "advertisingOnline"  => routes.AdvertisingListController.show
+        case _                    => controllers.routes.TaskListController.show().withFragment("lettingHistory")
+      }
     },
     CompletedLettingsPageId        -> { (currentSession, _) =>
       for size <- Some(permanentResidents(currentSession).size)
@@ -106,6 +108,13 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     AdvertisingOnlineDetailsPageId -> { (_, _) =>
       Some(routes.AdvertisingOnlineController.show)
+      Some(routes.AdvertisingOnlineController.show)
+    },
+    AdvertisingListPageId          -> { (currentSession, _) =>
+      if (getAdvertisingOnlineDetails(currentSession).sizeIs >= MaxNumberOfAdvertisingOnline)
+        Some(routes.MaxNumberReachedController.show(kind = "advertisingOnline"))
+      else
+        Some(routes.AdvertisingOnlineDetailsController.show(index = None))
     }
   )
 
@@ -210,10 +219,19 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     AdvertisingOnlinePageId        -> { (currentSession, _) =>
       hasOnlineAdvertising(currentSession) match
         case Some(true) => Some(routes.AdvertisingOnlineDetailsController.show(index = None))
-        case _          => Some(controllers.routes.TaskListController.show())
+        case _          => Some(controllers.routes.TaskListController.show()) // TODO: CYA
     },
-    AdvertisingOnlineDetailsPageId -> { (_, _) =>
-      Some(controllers.routes.TaskListController.show())
+    AdvertisingOnlineDetailsPageId -> { (_, _) => Some(routes.AdvertisingListController.show) },
+    AdvertisingRemovePageId        -> { (_, _) => Some(routes.AdvertisingListController.show) },
+    AdvertisingListPageId          -> { (updatedSession, navigationData) =>
+      for case hasMoreAdvertising: Boolean <- navigationData.get("hasMoreAdvertisingDetails")
+      yield
+        if hasMoreAdvertising
+        then
+          if getAdvertisingOnlineDetails(updatedSession).sizeIs < MaxNumberOfAdvertisingOnline
+          then routes.AdvertisingOnlineDetailsController.show(index = None)
+          else routes.MaxNumberReachedController.show(kind = "advertisingOnline")
+        else controllers.routes.TaskListController.show() // TODO: CYA
     }
   )
 
