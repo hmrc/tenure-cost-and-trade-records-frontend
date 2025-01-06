@@ -224,14 +224,14 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     AdvertisingOnlineDetailsPageId -> { (_, _) => Some(routes.AdvertisingListController.show) },
     AdvertisingRemovePageId        -> { (_, _) => Some(routes.AdvertisingListController.show) },
     AdvertisingListPageId          -> { (updatedSession, navigationData) =>
-      for hasMoreAdvertising <- navigationData.get("hasMoreAdvertisingDetails").map(_.toBoolean)
-        yield
-          if hasMoreAdvertising
-          then
-            if getAdvertisingOnlineDetails(updatedSession).sizeIs < MaxNumberOfAdvertisingOnline
-            then routes.AdvertisingOnlineDetailsController.show(index = None)
-            else routes.MaxNumberReachedController.show(kind = "advertisingOnline")
-          else controllers.routes.TaskListController.show() // TODO: CYA
+      for case hasMoreAdvertising: Boolean <- navigationData.get("hasMoreAdvertisingDetails")
+      yield
+        if hasMoreAdvertising
+        then
+          if getAdvertisingOnlineDetails(updatedSession).sizeIs < MaxNumberOfAdvertisingOnline
+          then routes.AdvertisingOnlineDetailsController.show(index = None)
+          else routes.MaxNumberReachedController.show(kind = "advertisingOnline")
+        else controllers.routes.TaskListController.show() // TODO: CYA
     }
   )
 

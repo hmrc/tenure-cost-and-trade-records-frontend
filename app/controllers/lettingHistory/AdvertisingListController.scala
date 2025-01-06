@@ -93,7 +93,7 @@ class AdvertisingListController @Inject() (
           navigator.redirect(
             currentPage = AdvertisingListPageId,
             updatedSession = request.sessionData,
-            navigationData = Map("hasMoreAdvertisingDetails" -> answer.toBoolean.toString)
+            navigationData = Map("hasMoreAdvertisingDetails" -> answer.toBoolean)
           )
         )
     )
