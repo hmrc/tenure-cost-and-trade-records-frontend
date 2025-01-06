@@ -20,8 +20,11 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit.DAYS
 
 class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
 
@@ -89,11 +92,12 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
       }
 
       "Redirect when form data rentOpenMarketValue submitted" in {
-        val res = tenancyLeaseAgreementExpireController().submit(
+        val tomorrow = LocalDate.now().plus(1, DAYS)
+        val res      = tenancyLeaseAgreementExpireController().submit(
           FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "tenancyLeaseAgreementExpire.day"   -> "1",
-            "tenancyLeaseAgreementExpire.month" -> "1",
-            "tenancyLeaseAgreementExpire.year"  -> "2025"
+            "tenancyLeaseAgreementExpire.day"   -> tomorrow.getDayOfMonth.toString,
+            "tenancyLeaseAgreementExpire.month" -> tomorrow.getMonthValue.toString,
+            "tenancyLeaseAgreementExpire.year"  -> tomorrow.getYear.toString
           )
         )
         status(res) shouldBe SEE_OTHER

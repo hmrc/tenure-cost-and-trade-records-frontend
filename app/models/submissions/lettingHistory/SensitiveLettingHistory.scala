@@ -20,10 +20,10 @@ import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveLettingHistory(
   hasPermanentResidents: Option[Boolean],
-  permanentResidents: List[SensitiveResidentDetail],
+  permanentResidents: Option[List[SensitiveResidentDetail]],
   mayHaveMorePermanentResidents: Option[Boolean],
   hasCompletedLettings: Option[Boolean],
-  completedLettings: List[SensitiveOccupierDetail],
+  completedLettings: Option[List[SensitiveOccupierDetail]],
   mayHaveMoreCompletedLettings: Option[Boolean],
   intendedLettings: Option[IntendedLettings],
   advertisingOnline: Option[Boolean],
@@ -33,12 +33,12 @@ case class SensitiveLettingHistory(
   override def decryptedValue: LettingHistory =
     LettingHistory(
       hasPermanentResidents,
-      permanentResidents.map(_.decryptedValue),
+      permanentResidents.fold(Nil)(_.map(_.decryptedValue)),
       mayHaveMorePermanentResidents,
       hasCompletedLettings,
-      completedLettings.map(_.decryptedValue),
-      intendedLettings,
+      completedLettings.fold(Nil)(_.map(_.decryptedValue)),
       mayHaveMoreCompletedLettings,
+      intendedLettings,
       advertisingOnline,
       advertisingOnlineDetails
     )
@@ -51,13 +51,19 @@ object SensitiveLettingHistory:
   // encryption method
   def apply(lettingHistory: LettingHistory): SensitiveLettingHistory =
     SensitiveLettingHistory(
-      lettingHistory.hasPermanentResidents,
-      lettingHistory.permanentResidents.map(SensitiveResidentDetail(_)),
-      lettingHistory.mayHaveMorePermanentResidents,
-      lettingHistory.hasCompletedLettings,
-      lettingHistory.completedLettings.map(SensitiveOccupierDetail(_)),
-      lettingHistory.mayHaveMoreCompletedLettings,
-      lettingHistory.intendedLettings,
-      lettingHistory.advertisingOnline,
-      lettingHistory.advertisingOnlineDetails
+      hasPermanentResidents = lettingHistory.hasPermanentResidents,
+      permanentResidents =
+        if lettingHistory.hasPermanentResidents.isEmpty
+        then None
+        else Some(lettingHistory.permanentResidents.map(SensitiveResidentDetail(_))),
+      mayHaveMorePermanentResidents = lettingHistory.mayHaveMorePermanentResidents,
+      hasCompletedLettings = lettingHistory.hasCompletedLettings,
+      completedLettings =
+        if lettingHistory.hasCompletedLettings.isEmpty
+        then None
+        else Some(lettingHistory.completedLettings.map(SensitiveOccupierDetail(_))),
+      mayHaveMoreCompletedLettings = lettingHistory.mayHaveMoreCompletedLettings,
+      intendedLettings = lettingHistory.intendedLettings,
+      advertisingOnline = lettingHistory.advertisingOnline,
+      advertisingOnlineDetails = lettingHistory.advertisingOnlineDetails
     )

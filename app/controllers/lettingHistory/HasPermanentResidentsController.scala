@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
-class HasPermanentResidentsController @Inject()(
+class HasPermanentResidentsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
   theView: HasPermanentResidentsView,

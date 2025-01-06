@@ -74,7 +74,7 @@ class OccupierDetailController @Inject (
           byAddingOccupierNameAndAddress(occupierDetail.name, occupierDetail.address)
         for
           savedSession  <- repository.saveOrUpdateSession(updatedSession)
-          navigationData = Map("index" -> occupierIndex.toString)
+          navigationData = Map("index" -> occupierIndex)
         yield navigator.redirect(currentPage = OccupierDetailPageId, savedSession, navigationData)
     )
   }

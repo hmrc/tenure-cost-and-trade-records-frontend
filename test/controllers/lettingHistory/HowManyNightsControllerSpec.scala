@@ -56,6 +56,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         redirectLocation(result).value            shouldBe "/path/to/is-yearly-available"
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.nights.value shouldBe 140
+        intendedLettings(data).value.hasStopped   shouldBe None
       }
     }
     "the user has already specified a given number of nights" should {
@@ -82,10 +83,11 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
           "nights" -> "251" // still does NOT meet criteria (in Wales)
         )
         val result  = controller.submit(request)
-        status(result)                            shouldBe SEE_OTHER
-        redirectLocation(result).value            shouldBe "/path/to/letting-stopped"
+        status(result)                                shouldBe SEE_OTHER
+        redirectLocation(result).value                shouldBe routes.HasStoppedLettingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        intendedLettings(data).value.nights.value shouldBe 251
+        intendedLettings(data).value.nights.value     shouldBe 251
+        intendedLettings(data).value.hasStopped.value shouldBe false
       }
     }
     "regardless of what users might have submitted"           should {
@@ -119,7 +121,8 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
             hasCompletedLettings = hasCompletedLettings,
             intendedLettings = Some(
               IntendedLettings(
-                nights = nights
+                nights = nights,
+                hasStopped = hasStopped
               )
             )
           )
