@@ -1652,6 +1652,9 @@ lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not i
 lettingHistory.hasStoppedLetting.heading = Have you already stopped letting the property commercially?
 lettingHistory.hasStoppedLetting.required = Select yes if you have stopped letting the property.
 
+lettingHistory.whenWasLastLet.heading = On which date was the property last commercially let?
+fieldName.lettingHistory.date = the date
+
 
 # ACCOMMODATION DETAILS 6048
 # ############################

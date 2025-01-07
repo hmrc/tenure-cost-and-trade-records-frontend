@@ -20,6 +20,8 @@ import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.libs.json.{Format, Json}
 
+import java.time.LocalDate
+
 case class LettingHistory(
   hasPermanentResidents: Option[Boolean] = None,
   permanentResidents: List[ResidentDetail] = Nil,
@@ -265,6 +267,7 @@ object LettingHistory:
               intendedLettings
                 .copy(nights = Some(nights))
                 .copy(hasStopped = if meetsCriteria then None else intendedLettings.hasStopped)
+                .copy(whenWasLastLet = if meetsCriteria then None else intendedLettings.whenWasLastLet)
             )
           }
         )
@@ -299,7 +302,28 @@ object LettingHistory:
             Some(
               intendedLettings
                 .copy(hasStopped = Some(hasStopped))
+                .copy(whenWasLastLet = if hasStopped then intendedLettings.whenWasLastLet else None)
             )
+          }
+        )
+    )
+
+  def withWhenWasLastLet(whenWasLastLet: Option[LocalDate])(using session: Session): Session =
+    val someIntendedLetting = Some(
+      IntendedLettings(
+        whenWasLastLet = whenWasLastLet
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLetting
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLetting
+          ) { intendedLettings =>
+            Some(intendedLettings.copy(whenWasLastLet = whenWasLastLet))
           }
         )
     )
