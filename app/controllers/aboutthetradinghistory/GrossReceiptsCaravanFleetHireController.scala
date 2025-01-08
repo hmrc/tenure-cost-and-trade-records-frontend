@@ -51,13 +51,13 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
       val caravansOpenAllYear = request.sessionData.aboutTheTradingHistoryPartOne.map(_.caravans.map(_.openAllYear.map(_.name)))
-      val caravansYear = request.sessionData.aboutTheTradingHistoryPartOne.map(_.caravans.map(_.weeksPerYear.getOrElse(12)).getOrElse(13))
+      val caravansYear = request.sessionData.aboutTheTradingHistoryPartOne.map(_.caravans.map(_.weeksPerYear.getOrElse(52)).getOrElse(52))
 
       Ok(
         grossReceiptsCaravanFleetHireView(
           grossReceiptsCaravanFleetHireForm(years).fill(
             if(caravansOpenAllYear.contains("no")) {
-              turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire(caravansYear.getOrElse(14)))
+              turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire(caravansYear.getOrElse(52)))
             } else {
               turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire())
             }
