@@ -50,11 +50,17 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
+      val caravansOpenAllYear = request.sessionData.aboutTheTradingHistoryPartOne.map(_.caravans.map(_.openAllYear.map(_.name)))
+      val caravansYear = request.sessionData.aboutTheTradingHistoryPartOne.map(_.caravans.map(_.weeksPerYear.getOrElse(12)).getOrElse(13))
 
       Ok(
         grossReceiptsCaravanFleetHireView(
           grossReceiptsCaravanFleetHireForm(years).fill(
-            turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire())
+            if(caravansOpenAllYear.contains("no")) {
+              turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire(caravansYear.getOrElse(14)))
+            } else {
+              turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire())
+            }
           ),
           getBackLink
         )
@@ -91,12 +97,17 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
   }
 
   private def runWithSessionCheck(
-    action: Seq[TurnoverSection6045] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
-    request.sessionData.aboutTheTradingHistoryPartOne
-      .flatMap(_.turnoverSections6045)
-      .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+                                   action: Seq[TurnoverSection6045] => Future[Result]
+                                 )(implicit request: SessionRequest[AnyContent]): Future[Result] = {
+    if (request.sessionData.aboutTheTradingHistoryPartOne.map(_.turnoverSections6045).exists(_.nonEmpty)) {
+      request.sessionData.aboutTheTradingHistoryPartOne
+        .flatMap(_.turnoverSections6045)
+        .filter(_.nonEmpty)
+        .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+    } else {
+      Redirect(routes.AboutYourTradingHistoryController.show())
+    }
+  }
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
