@@ -106,6 +106,19 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     WhenWasLastLetPageId           -> { (_, _) =>
       Some(routes.HasStoppedLettingController.show)
     },
+    IsYearlyAvailablePageId        -> { (currentSession, _) =>
+      for {
+        intendedLettings <- intendedLettings(currentSession)
+      } yield
+        if intendedLettings.hasStopped.isEmpty
+        then routes.HowManyNightsController.show
+        else
+          intendedLettings.hasStopped.map { hasStopped =>
+            if hasStopped
+            then routes.WhenWasLastLetController.show
+            else routes.HasStoppedLettingController.show
+          }.get
+    },
     AdvertisingOnlinePageId        -> { (_, _) =>
       Some(controllers.routes.TaskListController.show())
     },
@@ -208,7 +221,7 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       for meetsCriteria <- doesMeetLettingCriteria(currentSession)
       yield
         if meetsCriteria
-        then Call("GET", "/path/to/is-yearly-available")
+        then routes.IsYearlyAvailableController.show
         else routes.HasStoppedLettingController.show
     },
     HasStoppedLettingPageId        -> { (_, navigationData) =>
@@ -217,10 +230,19 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
       yield
         if hasStopped
         then routes.WhenWasLastLetController.show
-        else Call("GET", "/path/to/is-yearly-available")
+        else routes.IsYearlyAvailableController.show
     },
     WhenWasLastLetPageId           -> { (_, _) =>
-      Some(Call("GET", "/path/to/is-yearly-available"))
+      Some(routes.IsYearlyAvailableController.show)
+    },
+    IsYearlyAvailablePageId        -> { (currentSession, _) =>
+      for
+        intendedLettings  <- intendedLettings(currentSession)
+        isYearlyAvailable <- intendedLettings.isYearlyAvailable
+      yield
+        if isYearlyAvailable
+        then Call("GET", "/path/to/do-you-advert-online")
+        else Call("GET", "/path/to/length-of-trading-session")
     },
     AdvertisingOnlinePageId        -> { (currentSession, _) =>
       hasOnlineAdvertising(currentSession) match
