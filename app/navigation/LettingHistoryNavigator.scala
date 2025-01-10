@@ -60,12 +60,11 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     MaxNumberReachedPageId         -> { (_, navigationData) =>
       for kind <- navigationData.get("kind")
-      yield kind match {
+      yield kind match
         case "permanentResidents" => routes.ResidentListController.show
         case "temporaryOccupiers" => routes.OccupierListController.show
         case "advertisingOnline"  => routes.AdvertisingListController.show
         case _                    => controllers.routes.TaskListController.show().withFragment("lettingHistory")
-      }
     },
     CompletedLettingsPageId        -> { (currentSession, _) =>
       for size <- Some(permanentResidents(currentSession).size)
@@ -119,11 +118,23 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
             else routes.HasStoppedLettingController.show
           }.get
     },
-    AdvertisingOnlinePageId        -> { (_, _) =>
-      Some(controllers.routes.TaskListController.show())
+    TradingSeasonLengthPageId      -> { (_, _) =>
+      Some(routes.IsYearlyAvailableController.show)
+    },
+    AdvertisingOnlinePageId        -> { (currentSession, _) =>
+      for {
+        intendedLettings <- intendedLettings(currentSession)
+      } yield
+        if intendedLettings.isYearlyAvailable.isEmpty
+        then routes.HowManyNightsController.show
+        else
+          intendedLettings.isYearlyAvailable.map { isYearlyAvailable =>
+            if isYearlyAvailable
+            then routes.IsYearlyAvailableController.show
+            else routes.TradingSeasonLengthController.show
+          }.get
     },
     AdvertisingOnlineDetailsPageId -> { (_, _) =>
-      Some(routes.AdvertisingOnlineController.show)
       Some(routes.AdvertisingOnlineController.show)
     },
     AdvertisingListPageId          -> { (currentSession, _) =>
@@ -183,10 +194,11 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
     },
     MaxNumberReachedPageId         -> { (_, navigationData) =>
       for kind <- Some(navigationData("kind"))
-      yield
-        if kind == "permanentResidents" then routes.HasCompletedLettingsController.show
-        else if kind == "temporaryOccupiers" then routes.HowManyNightsController.show
-        else controllers.routes.TaskListController.show().withFragment("lettingHistory")
+      yield kind match
+        case "permanentResidents" => routes.HasCompletedLettingsController.show
+        case "temporaryOccupiers" => routes.HowManyNightsController.show
+        // TODO case "advertisingOnline" => ???
+        case _                    => controllers.routes.TaskListController.show().withFragment("lettingHistory")
     },
     CompletedLettingsPageId        -> { (updatedSession, _) =>
       for doesHaveCompletedLettings <- hasCompletedLettings(updatedSession)
@@ -241,8 +253,11 @@ class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) 
         isYearlyAvailable <- intendedLettings.isYearlyAvailable
       yield
         if isYearlyAvailable
-        then Call("GET", "/path/to/do-you-advert-online")
-        else Call("GET", "/path/to/length-of-trading-session")
+        then routes.AdvertisingOnlineController.show
+        else routes.TradingSeasonLengthController.show
+    },
+    TradingSeasonLengthPageId      -> { (_, _) =>
+      Some(routes.AdvertisingOnlineController.show)
     },
     AdvertisingOnlinePageId        -> { (currentSession, _) =>
       hasOnlineAdvertising(currentSession) match

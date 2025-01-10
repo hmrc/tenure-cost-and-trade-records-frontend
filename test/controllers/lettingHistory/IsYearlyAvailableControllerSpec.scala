@@ -59,7 +59,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                       shouldBe "/path/to/do-you-advert-online"
+        redirectLocation(result).value                       shouldBe routes.AdvertisingOnlineController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.isYearlyAvailable.value shouldBe true
       }
@@ -102,7 +102,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                       shouldBe "/path/to/length-of-trading-session"
+        redirectLocation(result).value                       shouldBe routes.TradingSeasonLengthController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.isYearlyAvailable.value shouldBe false
       }

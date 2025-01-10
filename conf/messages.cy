@@ -1611,9 +1611,9 @@ lettingHistory.occupierDetail.address.legend = Occupier''s address
 lettingHistory.occupierDetail.address.hint = This should be the address they provided when they rented the property.
 
 lettingHistory.rentalPeriod.heading = When did {0} rent part of your property?
-fieldName.lettingHistory.fromDate = from date
+fieldName.lettingHistory.rentalPeriod.fromDate = from date
 lettingHistory.rentalPeriod.fromDate.error = The "from date" must be greater than or equal to {0}
-fieldName.lettingHistory.toDate = to date
+fieldName.lettingHistory.rentalPeriod.toDate = to date
 lettingHistory.rentalPeriod.toDate.error = The "to date" must be less than or equal to {0}
 lettingHistory.rentalPeriod.error = The "from date" must be less than or equal to the "to date"
 
@@ -1658,6 +1658,13 @@ fieldName.lettingHistory.date = the date
 lettingHistory.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading = Is the property available for commercial letting all year around?
 lettingHistory.isYearlyAvailable.hasStoppedLetting.heading = During the last financial year, was the property available for commercial letting all year round?
 lettingHistory.isYearlyAvailable.required = Select yes if the property available all year round.
+
+lettingHistory.tradingSeasonLength.heading = Give details of the length of your trading season
+fieldName.lettingHistory.tradingSeasonLength.fromDate = from date
+lettingHistory.tradingSeasonLength.fromDate.error = The "from date" must be greater than or equal to {0}
+fieldName.lettingHistory.tradingSeasonLength.toDate = to date
+lettingHistory.tradingSeasonLength.toDate.error = The "to date" must be less than or equal to {0}
+lettingHistory.tradingSeasonLength.error = The "from date" must be less than or equal to the "to date"
 
 
 # ACCOMMODATION DETAILS 6048
