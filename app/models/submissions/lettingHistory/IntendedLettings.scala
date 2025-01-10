@@ -23,10 +23,11 @@ case class IntendedLettings(
   nights: Option[Int] = None,
   hasStopped: Option[Boolean] = None,
   whenWasLastLet: Option[LocalDate] = None,
-  isYearlyAvailable: Option[Boolean] = None
+  isYearlyAvailable: Option[Boolean] = None,
+  tradingSeasonLength: Option[LocalPeriod] = None
 )
 
 object IntendedLettings:
   given Format[IntendedLettings]     = Json.format
   def unapply(obj: IntendedLettings) =
-    Some(obj.nights, obj.hasStopped, obj.whenWasLastLet, obj.isYearlyAvailable)
+    Some(obj.nights, obj.hasStopped, obj.whenWasLastLet, obj.isYearlyAvailable, obj.tradingSeasonLength)

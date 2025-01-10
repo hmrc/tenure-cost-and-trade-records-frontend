@@ -37,8 +37,11 @@ POST        /letting-history-has-stopped                        controllers.lett
 GET         /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.show
 POST        /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.submit
 
-GET         /letting-history/is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.show
-POST        /letting-history/is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.submit
+GET         /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.show
+POST        /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.submit
+
+GET         /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonLengthController.show
+POST        /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonLengthController.submit
 
 GET         /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.show
 POST        /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.submit

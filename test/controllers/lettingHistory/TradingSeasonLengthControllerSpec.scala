@@ -27,28 +27,28 @@ import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
-import views.html.lettingHistory.rentalPeriod as RentalPeriodView
-
+import views.html.lettingHistory.tradingSeasonLength as TradingSeasonLengthView
 import java.time.LocalDate
 
-class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
+class TradingSeasonLengthControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
 
-  "the RentalPeriod controller" when {
+  "the TradingSeasonLength controller" when {
     "the user has not entered any period yet"       should {
-      "be handling GET index=0 by replying 200 with the form showing date fields" in new ControllerFixture {
-        val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
+      "be handling GET by replying 200 with the form showing date fields" in new ControllerFixture {
+        val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading               shouldBe "lettingHistory.rentalPeriod.heading"
-        page.backLink              shouldBe routes.OccupierDetailController.show(Some(0)).url
+        page.heading               shouldBe "lettingHistory.tradingSeasonLength.heading"
+        page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should beEmpty
         page.input("fromDate.month") should beEmpty
         page.input("fromDate.year")  should beEmpty
         page.input("toDate.day")     should beEmpty
         page.input("toDate.month")   should beEmpty
         page.input("toDate.year")    should beEmpty
+
       }
       "be handling POST index=0 by replying 303 redirect to 'Occupier List' page" in new ControllerFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
@@ -59,17 +59,24 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           "toDate.month"   -> "3",
           "toDate.year"    -> previousFiscalYearEnd.toString
         )
-        val result  = controller.submit(index = Some(0))(request)
-        status(result)                                     shouldBe SEE_OTHER
-        redirectLocation(result).value                     shouldBe routes.OccupierListController.show.url
+        val result  = controller.submit(request)
+        status(result)                                                  shouldBe SEE_OTHER
+        redirectLocation(result).value                                  shouldBe routes.AdvertisingOnlineController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        completedLettings(data)                              should have size 1
-        completedLettings(data).head.rental.value.fromDate shouldBe LocalDate.of(previousFiscalYearEnd - 1, 4, 1)
-        completedLettings(data).head.rental.value.toDate   shouldBe LocalDate.of(previousFiscalYearEnd, 3, 31)
+        intendedLettings(data).value.tradingSeasonLength.value.fromDate shouldBe LocalDate.of(
+          previousFiscalYearEnd - 1,
+          4,
+          1
+        )
+        intendedLettings(data).value.tradingSeasonLength.value.toDate   shouldBe LocalDate.of(
+          previousFiscalYearEnd,
+          3,
+          31
+        )
       }
     }
     "the user has already entered a period"         should {
-      "be handling GET index=0 by replying 200 with the pre-filled form showing date values" in new ControllerFixture(
+      "be handling GET by replying 200 with the pre-filled form showing date values" in new ControllerFixture(
         period = Some(
           LocalPeriod(
             fromDate = LocalDate.of(previousFiscalYearEnd, 9, 10),
@@ -77,12 +84,12 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           )
         )
       ) {
-        val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
+        val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.backLink              shouldBe routes.OccupierDetailController.show(index = Some(0)).url
+        page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should haveValue("10")
         page.input("fromDate.month") should haveValue("9")
         page.input("fromDate.year")  should haveValue("2024")
@@ -92,18 +99,8 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
       }
     }
     "regardless users having entered period or not" should {
-      "be handling GET / missing index by replying 303 redirect to 'Occupiers List' page" in new ControllerFixture {
-        val result = controller.show(maybeIndex = None)(fakeGetRequest)
-        status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.OccupierListController.show.url
-      }
-      "be handling GET / unknown index by replying 303 redirect to 'Occupiers List' page" in new ControllerFixture {
-        val result = controller.show(maybeIndex = Some(99))(fakeGetRequest)
-        status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.OccupierListController.show.url
-      }
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(index = Some(0))(
+        val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "fromDate.day"   -> "",
             "fromDate.month" -> "",
@@ -123,26 +120,17 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
   trait ControllerFixture(period: Option[LocalPeriod] = None)
       extends MockRepositoryFixture
       with SessionCapturingFixture:
-    val controller = new RentalPeriodController(
+    val controller = new TradingSeasonLengthController(
       mcc = stubMessagesControllerComponents(),
       dateUtil = inject[DateUtilLocalised],
       navigator = inject[LettingHistoryNavigator],
-      theView = inject[RentalPeriodView],
+      theView = inject[TradingSeasonLengthView],
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            hasCompletedLettings = Some(true),
-            completedLettings = List(
-              OccupierDetail(
-                name = "Somebody",
-                address = Address(
-                  line1 = "22, Somewhere Street",
-                  line2 = None,
-                  town = "Neverland",
-                  county = None,
-                  postcode = "BN124AX"
-                ),
-                rental = period
+            intendedLettings = Some(
+              IntendedLettings(
+                tradingSeasonLength = period
               )
             )
           )
