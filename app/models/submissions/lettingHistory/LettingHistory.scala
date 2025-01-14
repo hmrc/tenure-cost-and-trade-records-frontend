@@ -268,6 +268,8 @@ object LettingHistory:
                 .copy(nights = Some(nights))
                 .copy(hasStopped = if meetsCriteria then None else intendedLettings.hasStopped)
                 .copy(whenWasLastLet = if meetsCriteria then None else intendedLettings.whenWasLastLet)
+                .copy(isYearlyAvailable = None)
+                .copy(tradingSeasonLength = None)
             )
           }
         )
@@ -303,6 +305,8 @@ object LettingHistory:
               intendedLettings
                 .copy(hasStopped = Some(hasStopped))
                 .copy(whenWasLastLet = if hasStopped then intendedLettings.whenWasLastLet else None)
+                .copy(isYearlyAvailable = None)
+                .copy(tradingSeasonLength = None)
             )
           }
         )
@@ -323,7 +327,59 @@ object LettingHistory:
           intendedLettings = lettingHistory.intendedLettings.fold(
             ifEmpty = someIntendedLetting
           ) { intendedLettings =>
-            Some(intendedLettings.copy(whenWasLastLet = whenWasLastLet))
+            Some(
+              intendedLettings
+                .copy(whenWasLastLet = whenWasLastLet)
+                .copy(isYearlyAvailable = None)
+                .copy(tradingSeasonLength = None)
+            )
+          }
+        )
+    )
+
+  def withIsYearlyAvailable(isYearlyAvailable: Boolean)(using session: Session): Session =
+    val someIntendedLetting = Some(
+      IntendedLettings(
+        isYearlyAvailable = Some(isYearlyAvailable)
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLetting
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLetting
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(isYearlyAvailable = Some(isYearlyAvailable))
+                .copy(tradingSeasonLength = if isYearlyAvailable then None else intendedLettings.tradingSeasonLength)
+            )
+          }
+        )
+    )
+
+  def withTradingSeasonLength(period: LocalPeriod)(using session: Session): Session =
+    val someIntendedLetting = Some(
+      IntendedLettings(
+        tradingSeasonLength = Some(period)
+      )
+    )
+    foldLettingHistory(
+      ifEmpty = LettingHistory(
+        intendedLettings = someIntendedLetting
+      ),
+      copyFunc = lettingHistory =>
+        lettingHistory.copy(
+          intendedLettings = lettingHistory.intendedLettings.fold(
+            ifEmpty = someIntendedLetting
+          ) { intendedLettings =>
+            Some(
+              intendedLettings
+                .copy(tradingSeasonLength = Some(period))
+            )
           }
         )
     )

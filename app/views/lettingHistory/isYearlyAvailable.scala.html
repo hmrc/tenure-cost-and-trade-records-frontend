@@ -1,0 +1,47 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.lettingHistory.routes
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+
+@this(layout: Layout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton)
+
+
+@(theForm: Form[AnswersYesNo], keyFragment: String, backLink: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
+
+@layout(
+    theForm = theForm,
+    summary = Some(request.sessionData.toSummary),
+    pageHeading = messages(s"lettingHistory.isYearlyAvailable.$keyFragment.heading"),
+    backLinkUrl = backLink,
+    showSection = true,
+    sectionName = messages("label.section.lettingHistory"),
+) {
+
+    @formWithCSRF(action = routes.IsYearlyAvailableController.submit) {
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            name = "answer",
+            legendKey = "",
+        )
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

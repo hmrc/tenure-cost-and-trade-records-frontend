@@ -30,20 +30,20 @@ object FieldMappings:
   def nonEmptyText(errorMessage: String) =
     text.verifying(nonEmpty(errorMessage = errorMessage))
 
-  def constrainedLocalDate(field: String, period: LocalPeriod)(using
+  def constrainedLocalDate(prefix: String, field: String, period: LocalPeriod)(using
     request: SessionRequest[AnyContent],
     messages: Messages,
     dateUtil: DateUtilLocalised
   ) =
-    val mapping = requiredDateMapping(fieldNameKey = s"lettingHistory.$field", allowPastDates = true)
+    val mapping = requiredDateMapping(fieldNameKey = s"$field", allowPastDates = true)
     if field == "fromDate" then
       mapping.verifying(
-        error = messages(s"lettingHistory.rentalPeriod.$field.error", dateUtil.formatDate(period.fromDate)),
+        error = messages(s"$prefix.$field.error", dateUtil.formatDate(period.fromDate)),
         constraint = { d => d.isAfter(period.fromDate) || d.isEqual(period.fromDate) }
       )
     else if field == "toDate" then
       mapping.verifying(
-        error = messages(s"lettingHistory.rentalPeriod.$field.error", dateUtil.formatDate(period.toDate)),
+        error = messages(s"$prefix.$field.error", dateUtil.formatDate(period.toDate)),
         constraint = { d => d.isBefore(period.toDate) || d.isEqual(period.toDate) }
       )
     else /* unconstrained */ mapping
