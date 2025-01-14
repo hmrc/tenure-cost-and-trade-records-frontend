@@ -17,9 +17,11 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
 import models.Session
+import models.audit.ChangeLinkAudit
 import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
@@ -36,6 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AreYouThirdPartyController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   areYouThirdPartyView: areYouThirdParty,
   withSessionRefiner: WithSessionRefiner,
@@ -46,6 +49,27 @@ class AreYouThirdPartyController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "AreYouThirdParty"))
+      case _                                           =>
+        Future.successful(
+          Ok(
+            areYouThirdPartyView(
+              request.sessionData.stillConnectedDetails.flatMap(_.areYouThirdParty) match {
+                case Some(enforcementAction) => areYouThirdPartyForm.fill(enforcementAction)
+                case _                       => areYouThirdPartyForm
+              },
+              getBackLink,
+              request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         areYouThirdPartyView(
