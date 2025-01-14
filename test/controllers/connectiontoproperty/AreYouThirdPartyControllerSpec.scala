@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import controllers.connectiontoproperty.TestData.{baseFormData, errorKey}
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
@@ -30,11 +31,14 @@ import scala.language.reflectiveCalls
 
 class AreYouThirdPartyControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def areYouThirdPartyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
     new AreYouThirdPartyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       areYouThirdPartyView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
