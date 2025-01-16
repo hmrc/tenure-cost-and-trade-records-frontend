@@ -86,8 +86,11 @@ class FurtherInformationOrRemarksController @Inject() (
       formWithErrors => BadRequest(furtherInformationOrRemarksView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(FurtherInformationId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(navigator
+              .nextPage(FurtherInformationId, updatedData).apply(updatedData)))
       }
     )
   }
