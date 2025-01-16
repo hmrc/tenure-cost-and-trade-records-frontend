@@ -59,7 +59,7 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
             if(caravansOpenAllYear.contains("no")) {
               turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire(caravansYear.getOrElse(52)))
             } else {
-              turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire())
+              turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire(caravansYear.getOrElse(52)))
             }
           ),
           getBackLink

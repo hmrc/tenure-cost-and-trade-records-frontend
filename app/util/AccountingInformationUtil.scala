@@ -98,7 +98,7 @@ object AccountingInformationUtil {
         }
       else
         financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
-          TurnoverSection6045(financialYearEnd = finYearEnd)
+          TurnoverSection6045(financialYearEnd = finYearEnd, 52)
         }
 
     val updatedData = updateAboutTheTradingHistory(
