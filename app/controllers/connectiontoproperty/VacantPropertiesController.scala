@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
+import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, VacantProperties}
 import navigation.ConnectionToPropertyNavigator
@@ -35,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class VacantPropertiesController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   vacantPropertiesView: vacantProperties,
   withSessionRefiner: WithSessionRefiner,
@@ -45,18 +48,40 @@ class VacantPropertiesController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "VacantProperties"))
+      case _ =>
+        Future.successful(
+          Ok(
+            vacantPropertiesView(
+              request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
+                case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
+                case _ => vacantPropertiesForm
+              },
+              calculateBackLink,
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         vacantPropertiesView(
           request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
             case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
-            case _                      => vacantPropertiesForm
+            case _ => vacantPropertiesForm
           },
           calculateBackLink,
           request.sessionData.toSummary
         )
       )
     )
+
+
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

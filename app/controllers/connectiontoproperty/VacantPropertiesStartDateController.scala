@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertyStartDateForm.vacantPropertyStartDateForm
+import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import navigation.ConnectionToPropertyNavigator
@@ -35,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class VacantPropertiesStartDateController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   vacantPropertyStartDateView: vacantPropertyStartDate,
   withSessionRefiner: WithSessionRefiner,
@@ -45,18 +48,39 @@ class VacantPropertiesStartDateController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "VacantPropertiesStartDate"))
+      case _ => Future.successful(
+        Ok(
+          vacantPropertyStartDateView(
+            request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
+              case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
+              case _ => vacantPropertyStartDateForm
+            },
+            request.sessionData.toSummary,
+            calculateBackLink
+          )
+        )
+      )
+    }
     Future.successful(
       Ok(
         vacantPropertyStartDateView(
           request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
             case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
-            case _                             => vacantPropertyStartDateForm
+            case _ => vacantPropertyStartDateForm
           },
           request.sessionData.toSummary,
           calculateBackLink
         )
       )
     )
+
+
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
