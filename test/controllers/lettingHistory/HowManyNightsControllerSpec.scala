@@ -53,7 +53,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         )
         val result  = controller.submit(request)
         status(result)                            shouldBe SEE_OTHER
-        redirectLocation(result).value            shouldBe "/path/to/is-yearly-available"
+        redirectLocation(result).value            shouldBe routes.IsYearlyAvailableController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.nights.value shouldBe 140
         intendedLettings(data).value.hasStopped   shouldBe None

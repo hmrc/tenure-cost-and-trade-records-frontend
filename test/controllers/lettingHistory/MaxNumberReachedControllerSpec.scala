@@ -32,7 +32,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
 
   "the MaxNumberReached controller" when {
     "the user has not provided any answer yet"        should {
-      "and the journey comes from the 'Resident List' page" should {
+      "and the journey comes from the 'Resident List' page"    should {
         "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
           val result = controller.show(kind = "permanentResidents")(fakeGetRequest)
 
@@ -40,35 +40,38 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
           val page = contentAsJsoup(result)
-          page.heading            shouldBe "lettingHistory.maxNumberReached.permanentResidents.heading"
-          page.backLink           shouldBe routes.ResidentListController.show.url
-          page.radios("understood") should haveNoneChecked
-        }
-        "be handling GET by replying 200 with the HTML form having unchecked radios despite unknown kind" in new ControllerFixture {
-          val result = controller.show(kind = "unknown")(fakeGetRequest)
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
-          val page = contentAsJsoup(result)
-          page.backLink           shouldBe controllers.routes.TaskListController.show().withFragment("lettingHistory").toString
-          page.radios("understood") should haveNoneChecked
+          page.heading              shouldBe "lettingHistory.maxNumberReached.permanentResidents.heading"
+          page.backLink             shouldBe routes.ResidentListController.show.url
+          page.checkbox("understood") should notBeChecked
         }
       }
-      "and the journey comes from the 'Occupier List' page" should {
+      "and the journey comes from the 'Occupier List' page"    should {
         "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
           val result = controller.show(kind = "temporaryOccupiers")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
           val page = contentAsJsoup(result)
-          page.heading            shouldBe "lettingHistory.maxNumberReached.temporaryOccupiers.heading"
-          page.backLink           shouldBe routes.OccupierListController.show.url
-          page.radios("understood") should haveNoneChecked
+          page.heading              shouldBe "lettingHistory.maxNumberReached.temporaryOccupiers.heading"
+          page.backLink             shouldBe routes.OccupierListController.show.url
+          page.checkbox("understood") should notBeChecked
+        }
+      }
+      "and the journey comes from the 'Advertising List' page" should {
+        "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
+          val result = controller.show(kind = "advertisingOnline")(fakeGetRequest)
+          status(result)            shouldBe OK
+          contentType(result).value shouldBe HTML
+          charset(result).value     shouldBe UTF_8.charset
+          val page = contentAsJsoup(result)
+          page.heading              shouldBe "lettingHistory.maxNumberReached.advertisingOnline.heading"
+          page.backLink             shouldBe routes.AdvertisingListController.show.url
+          page.checkbox("understood") should notBeChecked
         }
       }
     }
     "the user has already provided an answer"         should {
-      "and the journey comes from the 'Resident List' page" should {
+      "and the journey comes from the 'Resident List' page"    should {
         "be handling GET by replying 200 with the HTML form having already checked radios" in new ControllerFixture(
           mayHaveMorePermanentResidents = Some(true)
         ) {
@@ -80,18 +83,8 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           page.backLink             shouldBe routes.ResidentListController.show.url
           page.checkbox("understood") should beChecked
         }
-        "be handling POST understood=false by replying 400 and display error message" in new ControllerFixture {
-          val result = controller.submit(kind = "permanentResidents")(
-            fakePostRequest
-              .withFormUrlEncodedBody("understood" -> "false")
-          )
-          status(result) shouldBe BAD_REQUEST
-          val page   = contentAsJsoup(result)
-          page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
-
-        }
       }
-      "and the journey comes from the 'Occupier List' page" should {
+      "and the journey comes from the 'Occupier List' page"    should {
         "be handling GET by replying 200 with the HTML form having already checked radios" in new ControllerFixture(
           mayHaveMoreCompletedLettings = Some(true)
         ) {
@@ -103,54 +96,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           page.backLink             shouldBe routes.OccupierListController.show.url
           page.checkbox("understood") should beChecked
         }
-        "be handling POST kind=temporaryOccupiers&understand=false by replying 400  display error message" in new ControllerFixture {
-          val result = controller.submit(kind = "temporaryOccupiers")(
-            fakePostRequest
-              .withFormUrlEncodedBody("understood" -> "false")
-          )
-          status(result) shouldBe BAD_REQUEST
-          val page   = contentAsJsoup(result)
-          page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
-        }
-        "be handling POST kind=unknown by replying 400  display error message" in new ControllerFixture {
-          val result = controller.submit(kind = "unknown")(
-            fakePostRequest
-              .withFormUrlEncodedBody("understood" -> "false")
-          )
-          status(result) shouldBe BAD_REQUEST
-          val page   = contentAsJsoup(result)
-          page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
-        }
       }
-    }
-    "regardless of what the user might have answered" should {
-      "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(kind = "permanentResidents")(
-          fakePostRequest
-            .withFormUrlEncodedBody("understood" -> "") // understood is missing!
-        )
-        status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
-        page.error("understood") shouldBe "error.boolean"
-      }
-    }
-
-    "the user has not provided any answer yet" should {
-      "and the journey comes from the 'Advertising List' page" should {
-        "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
-          val result = controller.show(kind = "advertisingOnline")(fakeGetRequest)
-
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
-          val page = contentAsJsoup(result)
-          page.heading            shouldBe "lettingHistory.maxNumberReached.advertisingOnline.heading"
-          page.backLink           shouldBe routes.AdvertisingListController.show.url
-          page.radios("understood") should haveNoneChecked
-        }
-      }
-    }
-    "the user has already provided an answer"  should {
       "and the journey comes from the 'Advertising List' page" should {
         "be handling GET by replying 200 with the HTML form having already checked radios" in new ControllerFixture(
           mayHaveMoreAdvertisingOnline = Some(true)
@@ -163,6 +109,66 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           page.backLink             shouldBe routes.AdvertisingListController.show.url
           page.checkbox("understood") should beChecked
         }
+      }
+    }
+    "regardless of what the user might have answered" should {
+      "be handling GET by replying 200 with the HTML form having unchecked radios despite unknown kind" in new ControllerFixture {
+        val result = controller.show(kind = "unknown")(fakeGetRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.backLink             shouldBe controllers.routes.TaskListController.show().withFragment("lettingHistory").toString
+        page.checkbox("understood") should notBeChecked
+      }
+      "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
+        val result = controller.submit(kind = "whatever")(
+          fakePostRequest
+            .withFormUrlEncodedBody("understood" -> "") // understood is missing!
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page   = contentAsJsoup(result)
+        page.error("understood") shouldBe "error.boolean"
+      }
+      "and the journey comes from the 'Resident List' page"    should {
+        "be handling POST kind=permanentResidents&understood=false by replying 400 and display error message" in new ControllerFixture {
+          val result = controller.submit(kind = "permanentResidents")(
+            fakePostRequest
+              .withFormUrlEncodedBody("understood" -> "false")
+          )
+          status(result) shouldBe BAD_REQUEST
+          val page   = contentAsJsoup(result)
+          page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
+        }
+        "be handling POST kind=permanentResidents&understood=true by replying 303 redirect to the 'Has Completed Lettings' page" in new ControllerFixture {
+          val result = controller.submit(kind = "permanentResidents")(
+            fakePostRequest
+              .withFormUrlEncodedBody("understood" -> "true")
+          )
+          status(result) shouldBe SEE_OTHER
+          redirectLocation(result).value shouldBe routes.HasCompletedLettingsController.show.url
+        }
+      }
+      "and the journey comes from the 'Occupier List' page"    should {
+        "be handling POST kind=temporaryOccupiers&understand=false by replying 400  display error message" in new ControllerFixture {
+          val result = controller.submit(kind = "temporaryOccupiers")(
+            fakePostRequest
+              .withFormUrlEncodedBody("understood" -> "false")
+          )
+          status(result) shouldBe BAD_REQUEST
+          val page   = contentAsJsoup(result)
+          page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
+        }
+        "be handling POST kind=temporaryOccupiers&understood=true by replying 303 redirect to the 'How Many Nights' page" in new ControllerFixture {
+          val result = controller.submit(kind = "temporaryOccupiers")(
+            fakePostRequest
+              .withFormUrlEncodedBody("understood" -> "true")
+          )
+          status(result) shouldBe SEE_OTHER
+          redirectLocation(result).value shouldBe routes.HowManyNightsController.show.url
+        }
+      }
+      "and the journey comes from the 'Advertising List' page" should {
         "be handling POST kind=advertisingOnline&understand=false by replying 400 and display error message" in new ControllerFixture {
           val result = controller.submit(kind = "advertisingOnline")(
             fakePostRequest
@@ -171,6 +177,15 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           status(result) shouldBe BAD_REQUEST
           val page   = contentAsJsoup(result)
           page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
+        }
+        "be handling POST kind=advertisingOnline&understood=true by replying 303 redirect to the '???' page" in new ControllerFixture {
+          pending
+          val result = controller.submit(kind = "advertisingOnline")(
+            fakePostRequest
+              .withFormUrlEncodedBody("understood" -> "true")
+          )
+          status(result) shouldBe SEE_OTHER
+          redirectLocation(result).value shouldBe "/path/to/???"
         }
       }
     }

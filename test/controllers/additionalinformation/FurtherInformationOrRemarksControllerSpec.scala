@@ -17,6 +17,7 @@
 package controllers.additionalinformation
 
 import models.submissions.additionalinformation.AdditionalInformation
+import connectors.Audit
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,10 +25,13 @@ import utils.TestBaseSpec
 
 class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def furtherInformationOrRemarksController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
   ) = new FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
+    mockAudit,
     additionalInformationNavigator,
     furtherInformationOrRemarksView,
     preEnrichedActionRefiner(additionalInformation = additionalInformation),
@@ -38,6 +42,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
     additionalInformation: Option[AdditionalInformation] = None
   ) = new FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
+    mockAudit,
     additionalInformationNavigator,
     furtherInformationOrRemarksView,
     preEnrichedActionRefiner(additionalInformation = additionalInformation),

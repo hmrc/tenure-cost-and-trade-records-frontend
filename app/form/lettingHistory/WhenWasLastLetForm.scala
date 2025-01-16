@@ -18,23 +18,20 @@ package form.lettingHistory
 
 import actions.SessionRequest
 import controllers.lettingHistory.RentalPeriodSupport
-import form.lettingHistory.FieldMappings.constrainedLocalDate
-import models.submissions.lettingHistory.LocalPeriod
+import form.DateMappings.requiredDateMapping as requiredDate
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 import play.api.i18n.Messages
 import play.api.mvc.AnyContent
 import util.DateUtilLocalised
 
-object RentalPeriodForm extends Object with RentalPeriodSupport:
+import java.time.LocalDate
+
+object WhenWasLastLetForm extends Object with RentalPeriodSupport:
 
   def theForm(using request: SessionRequest[AnyContent], messages: Messages, dateUtil: DateUtilLocalised) =
-    Form[LocalPeriod](
-      mapping(
-        "fromDate" -> constrainedLocalDate("lettingHistory.rentalPeriod", "fromDate", previousRentalPeriod),
-        "toDate"   -> constrainedLocalDate("lettingHistory.rentalPeriod", "toDate", previousRentalPeriod)
-      )(LocalPeriod.apply)(LocalPeriod.unapply).verifying(
-        error = messages("lettingHistory.rentalPeriod.error"),
-        constraint = period => period.fromDate.isBefore(period.toDate) || period.fromDate.isEqual(period.toDate)
+    Form[LocalDate](
+      single(
+        "date" -> requiredDate(fieldNameKey = "lettingHistory.date", allowPastDates = true)
       )
     )

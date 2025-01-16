@@ -17,8 +17,10 @@
 package controllers.additionalinformation
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+import models.audit.ChangeLinkAudit
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
 import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import navigation.AdditionalInformationNavigator
@@ -29,19 +31,41 @@ import repositories.SessionRepo
 import views.html.additionalinformation.furtherInformationOrRemarks
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class FurtherInformationOrRemarksController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AdditionalInformationNavigator,
   furtherInformationOrRemarksView: furtherInformationOrRemarks,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "FurtherInformation"))
+      case _                                           =>
+        Future.successful(
+          Ok(
+            furtherInformationOrRemarksView(
+              request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match {
+                case Some(furtherInformationOrRemarksDetails) =>
+                  furtherInformationOrRemarksForm.fill(furtherInformationOrRemarksDetails)
+                case _                                        => furtherInformationOrRemarksForm
+              },
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         furtherInformationOrRemarksView(
@@ -62,8 +86,11 @@ class FurtherInformationOrRemarksController @Inject() (
       formWithErrors => BadRequest(furtherInformationOrRemarksView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(FurtherInformationId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(navigator
+              .nextPage(FurtherInformationId, updatedData).apply(updatedData)))
       }
     )
   }

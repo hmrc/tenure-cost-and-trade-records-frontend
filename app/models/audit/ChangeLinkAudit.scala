@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 
-package models.submissions.lettingHistory
+package models.audit
 
-import java.time.LocalDate
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{Json, OFormat}
 
-case class IntendedLettings(
-  nights: Option[Int] = None,
-  hasStopped: Option[Boolean] = None,
-  whenWasLastLet: Option[LocalDate] = None,
-  isYearlyAvailable: Option[Boolean] = None,
-  tradingSeasonLength: Option[LocalPeriod] = None
-)
+case class ChangeLinkAudit(forType: String, cyaURL: String, cyaField: String)
 
-object IntendedLettings:
-  given Format[IntendedLettings]     = Json.format
-  def unapply(obj: IntendedLettings) =
-    Some(obj.nights, obj.hasStopped, obj.whenWasLastLet, obj.isYearlyAvailable, obj.tradingSeasonLength)
+object ChangeLinkAudit {
+  implicit val format: OFormat[ChangeLinkAudit] = Json.format
+}

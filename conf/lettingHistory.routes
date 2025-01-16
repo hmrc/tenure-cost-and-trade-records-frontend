@@ -11,7 +11,6 @@ GET         /letting-history-resident-remove                    controllers.lett
 POST        /letting-history-resident-remove                    controllers.lettingHistory.ResidentListController.performRemove(index: Int)
 POST        /letting-history-resident-list                      controllers.lettingHistory.ResidentListController.submit
 
-
 GET         /letting-history-has-completed-lettings             controllers.lettingHistory.HasCompletedLettingsController.show
 POST        /letting-history-has-completed-lettings             controllers.lettingHistory.HasCompletedLettingsController.submit
 
@@ -34,6 +33,15 @@ POST        /letting-history-how-many-nights                    controllers.lett
 
 GET         /letting-history-has-stopped                        controllers.lettingHistory.HasStoppedLettingController.show
 POST        /letting-history-has-stopped                        controllers.lettingHistory.HasStoppedLettingController.submit
+
+GET         /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.show
+POST        /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.submit
+
+GET         /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.show
+POST        /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.submit
+
+GET         /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonLengthController.show
+POST        /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonLengthController.submit
 
 GET         /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.show
 POST        /letting-history-advertising-online                 controllers.lettingHistory.AdvertisingOnlineController.submit
