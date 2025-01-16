@@ -38,9 +38,8 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
     "behave like a normal page" when {
       "rendered" must {
-        "have the correct banner title" in {
+        "have the correct banner title" in
           checkServiceNameInHeaderBanner(createView())
-        }
 
         "Section heading is visible" in {
           val doc         = asDocument(createViewUsingForm(form))

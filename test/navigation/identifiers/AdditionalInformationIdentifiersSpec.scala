@@ -22,12 +22,10 @@ class AdditionalInformationIdentifiersSpec extends TestBaseSpec {
 
   "Additional information identifiers" when {
 
-    "Identifier for further information page" in {
+    "Identifier for further information page" in
       assert(FurtherInformationId.toString.equals("furtherInformationPage"))
-    }
 
-    "Identifier for CYA page" in {
+    "Identifier for CYA page" in
       assert(CheckYourAnswersAdditionalInformationId.toString.equals("checkYourAnswersAdditionalInformationPage"))
-    }
   }
 }

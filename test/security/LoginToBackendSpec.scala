@@ -39,7 +39,7 @@ class LoginToBackendSpec extends UnitTest {
       )
       val r                                                          = await(l(refNum, postcode, now))
 
-      "indicate there is no saved document" in {
+      "indicate there is no saved document" in
         assert(
           r === NoExistingDocument(
             loginResponse.forAuthToken,
@@ -48,7 +48,6 @@ class LoginToBackendSpec extends UnitTest {
             loginResponse.isWelsh
           )
         )
-      }
     }
   }
 
