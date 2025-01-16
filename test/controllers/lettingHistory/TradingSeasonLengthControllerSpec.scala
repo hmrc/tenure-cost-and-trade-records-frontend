@@ -58,15 +58,15 @@ class TradingSeasonLengthControllerSpec extends LettingHistoryControllerSpec wit
           "toDate.year"    -> previousFiscalYearEnd.toString
         )
         val result  = controller.submit(request)
-        status(result)                                                  shouldBe SEE_OTHER
-        redirectLocation(result).value                                  shouldBe routes.AdvertisingOnlineController.show.url
+        status(result)                                            shouldBe SEE_OTHER
+        redirectLocation(result).value                            shouldBe routes.AdvertisingOnlineController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        intendedLettings(data).value.tradingSeasonLength.value.fromDate shouldBe LocalDate.of(
+        intendedLettings(data).value.tradingPeriod.value.fromDate shouldBe LocalDate.of(
           previousFiscalYearEnd - 1,
           4,
           1
         )
-        intendedLettings(data).value.tradingSeasonLength.value.toDate   shouldBe LocalDate.of(
+        intendedLettings(data).value.tradingPeriod.value.toDate   shouldBe LocalDate.of(
           previousFiscalYearEnd,
           3,
           31
@@ -127,8 +127,8 @@ class TradingSeasonLengthControllerSpec extends LettingHistoryControllerSpec wit
         lettingHistory = Some(
           LettingHistory(
             intendedLettings = Some(
-              IntendedLettings(
-                tradingSeasonLength = period
+              IntendedDetail(
+                tradingPeriod = period
               )
             )
           )

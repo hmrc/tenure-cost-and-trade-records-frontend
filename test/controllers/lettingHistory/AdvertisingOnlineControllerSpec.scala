@@ -17,8 +17,8 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.hasOnlineAdvertising
-import models.submissions.lettingHistory.{AdvertisingOnline, IntendedLettings, LettingHistory}
+import models.submissions.lettingHistory.LettingHistory.{hasOnlineAdvertising, intendedLettings}
+import models.submissions.lettingHistory.{AdvertisingDetail, IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -29,7 +29,7 @@ import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.lettingHistory.advertisingOnline as AdvertisingOnlineView
+import views.html.lettingHistory.onlineAdvertising as HasOnlineAdvertisingView
 
 class AdvertisingOnlineControllerSpec extends LettingHistoryControllerSpec:
 
@@ -44,7 +44,7 @@ class AdvertisingOnlineControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         content                     should include(s"""${routes.IsYearlyAvailableController.show}" class="govuk-back-link"""")
-        content                     should include("lettingHistory.advertisingOnline.heading")
+        content                     should include("lettingHistory.hasOnlineAdvertising.heading")
         content                     should not include "checked"
       }
       "be handling invalid POST AdvertisingOnline=null and reply 400 with error message" in new ControllerFixture(
@@ -58,10 +58,10 @@ class AdvertisingOnlineControllerSpec extends LettingHistoryControllerSpec:
         status(result) shouldBe BAD_REQUEST
         val content = contentAsString(result)
         content should include(s"""${routes.TradingSeasonLengthController.show}" class="govuk-back-link"""")
-        content should include("error.lettingHistory.advertisingOnline.required")
+        content should include("error.lettingHistory.hasOnlineAdvertising.required")
       }
       "be handling POST AdvertisingOnline='yes' and reply 303 redirect to the 'Advertising Online Details' page" in new ControllerFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingOnline" -> "yes"))
+        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("onlineAdvertising" -> "yes"))
         status(result)                   shouldBe SEE_OTHER
         redirectLocation(result).value   shouldBe routes.AdvertisingOnlineDetailsController.show().url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -82,7 +82,7 @@ class AdvertisingOnlineControllerSpec extends LettingHistoryControllerSpec:
         "be handling POST AdvertisingOnline='yes' and reply 303 redirect to the 'Advertising Online Details' page" in new ControllerFixture(
           oneOnlineAdvertising
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingOnline" -> "yes"))
+          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("onlineAdvertising" -> "yes"))
           status(result)                   shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.AdvertisingOnlineDetailsController.show().url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -91,10 +91,9 @@ class AdvertisingOnlineControllerSpec extends LettingHistoryControllerSpec:
         "be handling POST AdvertisingOnline='no' and reply 303 redirect to the 'CYA' page" in new ControllerFixture(
           oneOnlineAdvertising
         ) {
-          val result: Future[Result] =
-            controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingOnline" -> "no"))
-          status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe controllers.routes.TaskListController.show().url // TODO!!!
+          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("onlineAdvertising" -> "no"))
+          status(result)                   shouldBe SEE_OTHER
+          redirectLocation(result).value   shouldBe routes.CheckYourAnswersController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasOnlineAdvertising(data).value shouldBe false
         }
@@ -102,24 +101,24 @@ class AdvertisingOnlineControllerSpec extends LettingHistoryControllerSpec:
     }
   }
   trait ControllerFixture(
-    advertisingOnlineDetails: List[AdvertisingOnline] = List.empty,
+    advertisingOnlineDetails: List[AdvertisingDetail] = List.empty,
     isYearlyAvailable: Option[Boolean] = None
   ) extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new AdvertisingOnlineController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
-      theView = inject[AdvertisingOnlineView],
+      theView = inject[HasOnlineAdvertisingView],
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Option(
           LettingHistory(
             intendedLettings = Some(
-              IntendedLettings(
+              IntendedDetail(
                 isYearlyAvailable = isYearlyAvailable
               )
             ),
-            advertisingOnline = if advertisingOnlineDetails.isEmpty then None else Some(true),
-            advertisingOnlineDetails = advertisingOnlineDetails
+            hasOnlineAdvertising = if advertisingOnlineDetails.isEmpty then None else Some(true),
+            onlineAdvertising = advertisingOnlineDetails
           )
         )
       ),

@@ -25,7 +25,7 @@ object AdvertisingOnlineForm {
 
   val theForm: Form[AnswersYesNo] = Form(
     single(
-      "advertisingOnline" -> answerYesNo("error.lettingHistory.advertisingOnline.required")
+      "onlineAdvertising" -> answerYesNo("error.lettingHistory.hasOnlineAdvertising.required")
     )
   )
 

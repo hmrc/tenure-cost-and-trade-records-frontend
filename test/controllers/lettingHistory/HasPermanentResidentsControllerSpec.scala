@@ -83,9 +83,11 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           redirectLocation(result).value    shouldBe routes.ResidentDetailController.show().url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasPermanentResidents(data).value shouldBe true
+          permanentResidents(data)          shouldBe oneResident
         }
         "be handling POST answer='no' by replying 303 redirect to the 'Commercial Lettings' page" in new ControllerFixture(
-          oneResident
+          permanentResidents = fiveResidents,
+          mayHaveMorePermanentResidents = Some(true)
         ) {
           // Answering 'no' will clear out all residents details
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
@@ -94,11 +96,13 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasPermanentResidents(data).value shouldBe false
           permanentResidents(data)          shouldBe Nil
+          given Session = data.getValue
+          mayHaveMoreOf("permanentResidents") shouldBe None
         }
       }
       "and the maximum number of residents has been reached" should {
         "be handling POST answer='yes' by replying 303 redirect to the 'Resident List' page" in new ControllerFixture(
-          fiveResidents
+          permanentResidents = fiveResidents
         ) {
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                    shouldBe SEE_OTHER
@@ -111,8 +115,10 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
     }
   }
 
-  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil)
-      extends MockRepositoryFixture
+  trait ControllerFixture(
+    permanentResidents: List[ResidentDetail] = Nil,
+    mayHaveMorePermanentResidents: Option[Boolean] = None
+  ) extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new HasPermanentResidentsController(
       mcc = stubMessagesControllerComponents(),
@@ -122,7 +128,8 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         lettingHistory = Some(
           LettingHistory(
             hasPermanentResidents = Some(permanentResidents.nonEmpty),
-            permanentResidents = permanentResidents
+            permanentResidents = permanentResidents,
+            mayHaveMorePermanentResidents = mayHaveMorePermanentResidents
           )
         )
       ),

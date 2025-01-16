@@ -30,10 +30,11 @@ import repositories.SessionRepo
 import util.DateUtilLocalised
 import views.html.lettingHistory.tradingSeasonLength as TradingSeasonLengthView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class TradingSeasonLengthController @Inject (
   mcc: MessagesControllerComponents,
   dateUtil: DateUtilLocalised,
@@ -52,7 +53,7 @@ class TradingSeasonLengthController @Inject (
     val filledForm =
       for
         intendedLettings    <- intendedLettings(request.sessionData)
-        tradingSeasonLength <- intendedLettings.tradingSeasonLength
+        tradingSeasonLength <- intendedLettings.tradingPeriod
       yield theForm.fill(tradingSeasonLength)
 
     Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
@@ -64,7 +65,9 @@ class TradingSeasonLengthController @Inject (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       period =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withTradingSeasonLength(period))
+        for
+          newSession   <- successful(withTradingPeriod(period))
+          savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = TradingSeasonLengthPageId, savedSession)
     )
   }

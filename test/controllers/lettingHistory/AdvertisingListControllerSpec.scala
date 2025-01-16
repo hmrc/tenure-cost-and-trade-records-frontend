@@ -17,8 +17,8 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.getAdvertisingOnlineDetails
-import models.submissions.lettingHistory.{AdvertisingOnline, LettingHistory}
+import models.submissions.lettingHistory.LettingHistory.onlineAdvertising
+import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.http.Status.*
 import play.api.libs.json.Writes
@@ -99,9 +99,9 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
             fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value    shouldBe routes.AdvertisingListController.show.url
+          redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          getAdvertisingOnlineDetails(data) shouldBe empty
+          onlineAdvertising(data)        shouldBe empty
         }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Advertising List' page" in new ControllerFixture(
           oneOnlineAdvertising
@@ -133,7 +133,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingList" -> "yes"))
           status(result)                 shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.MaxNumberReachedController
-            .show(kind = "advertisingOnline")
+            .show(kind = "onlineAdvertising")
             .url
         }
       }
@@ -152,12 +152,12 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
       "be handling POST /list?hasMoreAdvertisingDetails=no by replying redirect to the CYA page" in new ControllerFixture {
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingList" -> "no"))
         status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe controllers.routes.TaskListController.show().url // TODO !!!
+        redirectLocation(result).value shouldBe routes.CheckYourAnswersController.show.url
       }
     }
   }
 
-  trait ControllerFixture(list: List[AdvertisingOnline] = Nil)
+  trait ControllerFixture(list: List[AdvertisingDetail] = Nil)
       extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new AdvertisingListController(
@@ -168,8 +168,8 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
-            advertisingOnline = Some(list.nonEmpty),
-            advertisingOnlineDetails = list
+            hasOnlineAdvertising = Some(list.nonEmpty),
+            onlineAdvertising = list
           )
         )
       ),

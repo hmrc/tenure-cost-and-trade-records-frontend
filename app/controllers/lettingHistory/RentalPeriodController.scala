@@ -32,10 +32,11 @@ import repositories.SessionRepo
 import util.DateUtilLocalised
 import views.html.lettingHistory.rentalPeriod as RentalPeriodView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class RentalPeriodController @Inject (
   mcc: MessagesControllerComponents,
   dateUtil: DateUtilLocalised,
@@ -56,7 +57,7 @@ class RentalPeriodController @Inject (
       for
         index            <- maybeIndex
         completedLetting <- completedLettings(request.sessionData).lift(index)
-        rentalPeriod     <- completedLetting.rental
+        rentalPeriod     <- completedLetting.rentalPeriod
       yield theForm.fill(rentalPeriod)
 
     withOccupierAt(maybeIndex) { (partiallyAppliedView, _) =>
@@ -71,7 +72,9 @@ class RentalPeriodController @Inject (
         theFormWithErrors => successful(BadRequest(partiallyAppliedView.apply(theFormWithErrors))),
         rental =>
           given Session = request.sessionData
-          for savedSession <- repository.saveOrUpdateSession(byAddingOccupierRentalPeriod(index, rental))
+          for
+            newSession   <- successful(byUpdatingOccupierRentalPeriod(index, rental))
+            savedSession <- repository.saveOrUpdateSession(newSession)
           yield navigator.redirect(currentPage = RentalPeriodPageId, savedSession)
       )
     }

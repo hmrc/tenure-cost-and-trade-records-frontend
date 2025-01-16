@@ -18,11 +18,11 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
+import models.submissions.lettingHistory.{LettingHistory, OccupierDetail, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
 
@@ -66,7 +66,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
       "regardless of the given number of occupiers"          should {
         "be handling GET by replying 200 with the HTML form having checked radios" in new ControllerFixture(
           permanentResidents = twoResidents,
-          hasCompletedLettings = Some(true)
+          completedLettings = twoOccupiers
         ) {
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
@@ -78,16 +78,18 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           page.radios("answer") shouldNot haveChecked(value = "no")
         }
         "be handling POST answer='yes' by replying 303 redirect to the 'Occupier Detail' page" in new ControllerFixture(
-          hasCompletedLettings = Some(true)
+          completedLettings = twoOccupiers
         ) {
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                   shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.OccupierDetailController.show(index = None).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true
+          completedLettings(data)          shouldBe twoOccupiers
         }
         "be handling POST answer='no' by replying 303 redirect to the 'Letting intention' page" in new ControllerFixture(
-          hasCompletedLettings = Some(true)
+          completedLettings = fiveOccupiers,
+          mayHaveMoreCompletedLettings = Some(true)
         ) {
           // Answering 'no' will clear out all residents details
           val result = controller.submit(
@@ -100,13 +102,14 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe false
           completedLettings(data)          shouldBe Nil
+          given Session = data.getValue
+          mayHaveMoreOf("completedLettings") shouldBe None
         }
       }
-      "and the maximum number of residents has been reached" should {
+      "and the maximum number of occupiers has been reached" should {
         "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'Occupiers List' page" in new ControllerFixture(
-          hasCompletedLettings = Some(true)
+          completedLettings = fiveOccupiers
         ) {
-          pending
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                   shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
@@ -118,8 +121,11 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
     }
   }
 
-  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil, hasCompletedLettings: Option[Boolean] = None)
-      extends MockRepositoryFixture
+  trait ControllerFixture(
+    permanentResidents: List[ResidentDetail] = Nil,
+    completedLettings: List[OccupierDetail] = Nil,
+    mayHaveMoreCompletedLettings: Option[Boolean] = None
+  ) extends MockRepositoryFixture
       with SessionCapturingFixture:
     val controller = new HasCompletedLettingsController(
       mcc = stubMessagesControllerComponents(),
@@ -130,7 +136,9 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           LettingHistory(
             hasPermanentResidents = Some(permanentResidents.nonEmpty),
             permanentResidents = permanentResidents,
-            hasCompletedLettings = hasCompletedLettings
+            hasCompletedLettings = Some(completedLettings.nonEmpty),
+            completedLettings = completedLettings,
+            mayHaveMoreCompletedLettings = mayHaveMoreCompletedLettings
           )
         )
       ),

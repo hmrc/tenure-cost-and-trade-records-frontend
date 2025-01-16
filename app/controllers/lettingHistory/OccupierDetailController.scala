@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.OccupierDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, byAddingOccupierNameAndAddress}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, byAddingOrUpdatingTemporaryOccupier}
 import models.submissions.lettingHistory.OccupierDetail
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.OccupierDetailPageId
@@ -29,10 +29,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.occupierDetail as OccupierDetailView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
+@Singleton
 class OccupierDetailController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -71,7 +72,7 @@ class OccupierDetailController @Inject (
       occupierDetail =>
         given Session                       = request.sessionData
         val (occupierIndex, updatedSession) =
-          byAddingOccupierNameAndAddress(occupierDetail.name, occupierDetail.address)
+          byAddingOrUpdatingTemporaryOccupier(occupierDetail.name, occupierDetail.address)
         for
           savedSession  <- repository.saveOrUpdateSession(updatedSession)
           navigationData = Map("index" -> occupierIndex)

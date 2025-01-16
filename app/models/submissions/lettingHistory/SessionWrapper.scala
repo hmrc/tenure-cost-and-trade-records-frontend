@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package models.submissions.lettingHistory
 
-import form.WebsiteMapping.validateWebaddress
-import models.submissions.lettingHistory.AdvertisingDetail
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import models.Session
 
-object AdvertisingOnlineDetailsForm:
+case class SessionWrapper(data: Session, changed: Boolean):
+  def notChanged = !changed
 
-  val theForm: Form[AdvertisingDetail] = Form(
-    mapping(
-      "websiteAddress"          -> validateWebaddress,
-      "propertyReferenceNumber" -> default(text, "")
-    )(AdvertisingDetail.apply)(AdvertisingDetail.unapply)
-  )
+object SessionWrapper:
+  def unchanged(using session: Session) =
+    SessionWrapper(data = session, changed = false)
+
+  def change(newLettingHistory: LettingHistory)(using session: Session): SessionWrapper =
+    SessionWrapper(
+      data = session.copy(lettingHistory = Some(newLettingHistory)),
+      changed = true
+    )

@@ -21,10 +21,10 @@ import play.api.libs.json.{Format, Json}
 case class OccupierDetail(
   name: String,
   address: Address,
-  rental: Option[LocalPeriod]
+  rentalPeriod: Option[LocalPeriod]
 )
 
 object OccupierDetail:
   def unapply(obj: OccupierDetail): Option[(String, Address, Option[LocalPeriod])] =
-    Some(obj.name, obj.address, obj.rental)
+    Some(obj.name, obj.address, obj.rentalPeriod)
   given Format[OccupierDetail]                                                     = Json.format

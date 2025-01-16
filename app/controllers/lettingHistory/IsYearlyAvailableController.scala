@@ -29,10 +29,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.isYearlyAvailable as IsYearlyAvailableView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
+@Singleton
 class IsYearlyAvailableController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -61,7 +62,9 @@ class IsYearlyAvailableController @Inject (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, keyFragment, backLinkUrl))),
       answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withIsYearlyAvailable(answer.toBoolean))
+        for
+          newSession   <- withIsYearlyAvailable(answer.toBoolean)
+          savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = IsYearlyAvailablePageId, savedSession)
     )
   }

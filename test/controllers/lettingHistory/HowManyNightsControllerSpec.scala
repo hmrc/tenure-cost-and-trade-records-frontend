@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
@@ -118,7 +118,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
           LettingHistory(
             hasCompletedLettings = hasCompletedLettings,
             intendedLettings = Some(
-              IntendedLettings(
+              IntendedDetail(
                 nights = nights,
                 hasStopped = hasStopped
               )

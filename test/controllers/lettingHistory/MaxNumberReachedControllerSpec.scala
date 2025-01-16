@@ -53,12 +53,12 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
       }
       "and the journey comes from the 'Advertising List' page" should {
         "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
-          val result = controller.show(kind = "advertisingOnline")(fakeGetRequest)
+          val result = controller.show(kind = "onlineAdvertising")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
           val page = contentAsJsoup(result)
-          page.heading              shouldBe "lettingHistory.maxNumberReached.advertisingOnline.heading"
+          page.heading              shouldBe "lettingHistory.maxNumberReached.onlineAdvertising.heading"
           page.backLink             shouldBe routes.AdvertisingListController.show.url
           page.checkbox("understood") should notBeChecked
         }
@@ -95,7 +95,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET by replying 200 with the HTML form having already checked radios" in new ControllerFixture(
           mayHaveMoreAdvertisingOnline = Some(true)
         ) {
-          val result = controller.show(kind = "advertisingOnline")(fakeGetRequest)
+          val result = controller.show(kind = "onlineAdvertising")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
@@ -163,8 +163,8 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
         }
       }
       "and the journey comes from the 'Advertising List' page" should {
-        "be handling POST kind=advertisingOnline&understand=false by replying 400 and display error message" in new ControllerFixture {
-          val result = controller.submit(kind = "advertisingOnline")(
+        "be handling POST kind=onlineAdvertising&understand=false by replying 400 and display error message" in new ControllerFixture {
+          val result = controller.submit(kind = "onlineAdvertising")(
             fakePostRequest
               .withFormUrlEncodedBody("understood" -> "false")
           )
@@ -172,9 +172,9 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           val page   = contentAsJsoup(result)
           page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
         }
-        "be handling POST kind=advertisingOnline&understood=true by replying 303 redirect to the '???' page" in new ControllerFixture {
+        "be handling POST kind=onlineAdvertising&understood=true by replying 303 redirect to the '???' page" in new ControllerFixture {
           pending
-          val result = controller.submit(kind = "advertisingOnline")(
+          val result = controller.submit(kind = "onlineAdvertising")(
             fakePostRequest
               .withFormUrlEncodedBody("understood" -> "true")
           )
@@ -200,7 +200,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           LettingHistory(
             mayHaveMorePermanentResidents = mayHaveMorePermanentResidents,
             mayHaveMoreCompletedLettings = mayHaveMoreCompletedLettings,
-            mayHaveMoreAdvertisingDetails = mayHaveMoreAdvertisingOnline
+            mayHaveMoreOnlineAdvertising = mayHaveMoreAdvertisingOnline
           )
         )
       ),

@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{Address, AdvertisingOnline, LocalPeriod, OccupierDetail, ResidentDetail}
+import models.submissions.lettingHistory.{Address, AdvertisingDetail, LocalPeriod, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
 import play.api.libs.json.Writes
 import repositories.SessionRepo
@@ -33,7 +33,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   val occupierDetails = OccupierDetail(
     name = "Mr. One",
     address = Address("Address One", None, "Neverland", None, "BN124AX"),
-    rental = None
+    rentalPeriod = None
   )
 
   val oneResident = List(
@@ -54,7 +54,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     OccupierDetail(
       name = "Mr. One",
       address = Address("Address One", None, "Neverland", None, "BN124AX"),
-      rental = None
+      rentalPeriod = None
     )
   )
 
@@ -62,7 +62,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     OccupierDetail(
       name = "Mr. Two",
       address = Address("Address Two", None, "Neverland", None, "BN124AX"),
-      rental = Some(
+      rentalPeriod = Some(
         LocalPeriod(
           fromDate = LocalDate.of(2023, 4, 2),
           toDate = LocalDate.of(2024, 3, 30)
@@ -75,32 +75,32 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     OccupierDetail(
       name = "Miss. Three",
       address = Address("Address Three", None, "Neverland", None, "BN124AX"),
-      rental = None
+      rentalPeriod = None
     ),
     OccupierDetail(
       name = "Mr. Four",
       address = Address("Address Four", None, "Neverland", None, "BN124AX"),
-      rental = None
+      rentalPeriod = None
     ),
     OccupierDetail(
       name = "Mrs. Five",
       address = Address("Address Five", None, "Neverland", None, "BN124AX"),
-      rental = None
+      rentalPeriod = None
     )
   )
 
-  val oneOnlineAdvertising: List[AdvertisingOnline] = List(
-    AdvertisingOnline(websiteAddress = "123.com", propertyReferenceNumber = "aaa123")
+  val oneOnlineAdvertising: List[AdvertisingDetail] = List(
+    AdvertisingDetail(websiteAddress = "123.com", propertyReferenceNumber = "aaa123")
   )
 
-  val twoOnlineAdvertising: List[AdvertisingOnline] = oneOnlineAdvertising ++ List(
-    AdvertisingOnline(websiteAddress = "456.com", propertyReferenceNumber = "aaa456")
+  val twoOnlineAdvertising: List[AdvertisingDetail] = oneOnlineAdvertising ++ List(
+    AdvertisingDetail(websiteAddress = "456.com", propertyReferenceNumber = "aaa456")
   )
 
-  val fiveOnlineAdvertising: List[AdvertisingOnline] = twoOnlineAdvertising ++ List(
-    AdvertisingOnline(websiteAddress = "789.com", propertyReferenceNumber = "aaa789"),
-    AdvertisingOnline(websiteAddress = "111.com", propertyReferenceNumber = "aaa111"),
-    AdvertisingOnline(websiteAddress = "112.com", propertyReferenceNumber = "aaa112")
+  val fiveOnlineAdvertising: List[AdvertisingDetail] = twoOnlineAdvertising ++ List(
+    AdvertisingDetail(websiteAddress = "789.com", propertyReferenceNumber = "aaa789"),
+    AdvertisingDetail(websiteAddress = "111.com", propertyReferenceNumber = "aaa111"),
+    AdvertisingDetail(websiteAddress = "112.com", propertyReferenceNumber = "aaa112")
   )
 
   trait MockRepositoryFixture:

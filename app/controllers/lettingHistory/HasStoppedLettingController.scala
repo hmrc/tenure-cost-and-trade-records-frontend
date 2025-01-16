@@ -29,10 +29,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.Future.successful
 
+@Singleton
 class HasStoppedLettingController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -62,7 +63,8 @@ class HasStoppedLettingController @Inject (
       answer =>
         given Session = request.sessionData
         for
-          savedSession  <- repository.saveOrUpdateSession(withHasStopped(answer.toBoolean))
+          newSession    <- withHasStopped(answer.toBoolean)
+          savedSession  <- repository.saveOrUpdateSession(newSession)
           navigationData = Map("hasStopped" -> answer.toBoolean)
         yield navigator.redirect(currentPage = HasStoppedLettingPageId, savedSession, navigationData)
     )

@@ -21,23 +21,24 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.AdvertisingOnlineForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory.{toAnswer, toBoolean, withAdvertisingOnline}
+import models.submissions.lettingHistory.LettingHistory.{toAnswer, toBoolean, withHasOnlineAdvertising}
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.AdvertisingOnlinePageId
+import navigation.identifiers.HasOnlineAdvertisingPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.advertisingOnline
+import views.html.lettingHistory.advertisingOnline as HasOnlineAdvertisingView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
+// TODO Rename to HasOnlineAdvertisingController
 @Singleton
 class AdvertisingOnlineController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: advertisingOnline,
+  theView: HasOnlineAdvertisingView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
@@ -48,7 +49,7 @@ class AdvertisingOnlineController @Inject() (
     val filledForm =
       for
         lettingHistory      <- request.sessionData.lettingHistory
-        advertisingQuestion <- lettingHistory.advertisingOnline
+        advertisingQuestion <- lettingHistory.hasOnlineAdvertising
       yield theForm.fill(advertisingQuestion.toAnswer)
 
     Ok(
@@ -67,12 +68,14 @@ class AdvertisingOnlineController @Inject() (
         successful(BadRequest(theView(theFormWithErrors, request.sessionData.toSummary, backLinkUrl))),
       answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withAdvertisingOnline(answer.toBoolean))
-        yield navigator.redirect(currentPage = AdvertisingOnlinePageId, savedSession)
+        for
+          newSession   <- successful(withHasOnlineAdvertising(answer.toBoolean))
+          savedSession <- repository.saveOrUpdateSession(newSession)
+        yield navigator.redirect(currentPage = HasOnlineAdvertisingPageId, savedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
-    navigator.backLinkUrl(ofPage = AdvertisingOnlinePageId).getOrElse("")
+    navigator.backLinkUrl(ofPage = HasOnlineAdvertisingPageId).getOrElse("")
 
 }

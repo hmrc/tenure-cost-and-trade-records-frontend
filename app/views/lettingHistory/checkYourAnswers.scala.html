@@ -51,7 +51,7 @@
     lettingHistory.flatMap(_.completedLettings).fold(0)(_.length)
 }
 @advertisingOnlineListSize = @{
-    lettingHistory.flatMap(_.advertisingOnlineDetails).fold(0)(_.length)
+    lettingHistory.flatMap(_.onlineAdvertising).fold(0)(_.length)
 }
 
 
@@ -147,7 +147,7 @@
                       ("valueAsHtml", _ => None)) ++
                   answers.row(
                       "cya.lettingHistory.intention.seasonDetails",
-                      _.intendedLettings.map(_.tradingSeasonLength).fold("")(x => x.getOrElse("").toString),
+                      _.intendedLettings.map(_.tradingPeriod).fold("")(x => x.getOrElse("").toString),
                       controllers.lettingHistory.routes.TradingSeasonLengthController.show,
                       "fromDate",
                       ("valueAsHtml", _ => None))
@@ -159,14 +159,14 @@
     @govukSummaryList(SummaryList(rows =
         answers.row(
             "cya.lettingHistory.advertising.question",
-            _.advertisingOnline.fold("")(x => booleanToYesNo(x)),
+            _.hasOnlineAdvertising.fold("")(x => booleanToYesNo(x)),
             controllers.lettingHistory.routes.AdvertisingOnlineController.show,
             "",
             ("valueAsHtml", _ => None))
     ))
 
 
-    @formWithCSRF(action = routes.CheckYourAnswersLettingController.submit()) {
+    @formWithCSRF(action = routes.CheckYourAnswersController.submit) {
 
         @includes.checkYourAnswersRadioButtons(
             govukRadios,

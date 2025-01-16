@@ -23,7 +23,7 @@ import form.lettingHistory.ResidentListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
+import models.submissions.lettingHistory.{LettingHistory, ResidentDetail, SessionWrapper}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{ResidentListPageId, ResidentRemovePageId}
 import play.api.data.Form
@@ -35,10 +35,11 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.residentList as ResidentListView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class ResidentListController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -71,11 +72,13 @@ class ResidentListController @Inject() (
             val eventuallySavedSession =
               if answer == AnswerYes then
                 given Session = request.sessionData
-                for savedSession <- repository.saveOrUpdateSession(byRemovingPermanentResidentAt(index))
+                for
+                  newSession   <- byRemovingPermanentResidentAt(index)
+                  savedSession <- repository.saveOrUpdateSession(newSession)
                 yield savedSession
               else
                 // AnswerNo
-                successful(request.sessionData)
+                successful(request.sessionData.withChangedData(true))
 
             for savedSession <- eventuallySavedSession
             yield navigator.redirect(currentPage = ResidentRemovePageId, savedSession)
@@ -104,10 +107,12 @@ class ResidentListController @Inject() (
 
   private def eventuallySaveOrUpdateSessionWith(
     hasMoreResidents: Boolean
-  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext) =
+  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
     if !hasMoreResidents && permanentResidents(session).isEmpty
-    then repository.saveOrUpdateSession(withPermanentResidents(false))
-    else successful(session)
+    then {
+      val newSession = withHasPermanentResidents(false)
+      repository.saveOrUpdateSession(newSession)
+    } else successful(session.withChangedData(false))
 
   private def withResidentDetailAt(
     index: Int

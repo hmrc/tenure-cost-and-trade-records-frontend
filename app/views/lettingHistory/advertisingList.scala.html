@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
-@import models.submissions.lettingHistory.LettingHistory.getAdvertisingOnlineDetails
+@import models.submissions.lettingHistory.LettingHistory.onlineAdvertising
 @import navigation.identifiers.{asPageIdentifier, ResidentRemovePageId}
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
@@ -27,7 +27,7 @@
 
 @(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
-@advertisingList = @{getAdvertisingOnlineDetails(request.sessionData)}
+@advertisingList = @{onlineAdvertising(request.sessionData)}
 
 @fromPage = @{
     request.session.get("from").flatMap(_.asPageIdentifier)

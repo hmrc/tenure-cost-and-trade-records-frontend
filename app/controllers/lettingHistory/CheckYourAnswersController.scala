@@ -21,37 +21,36 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.CYALettingHistoryForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory. withCheckYourAnswers
+import models.submissions.lettingHistory.LettingHistory.withCheckYourAnswers
 import navigation.LettingHistoryNavigator
-import navigation.identifiers. CheckYourAnswersLettingHistoryPageId
+import navigation.identifiers.CheckYourAnswersPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.checkYourAnswersLettingHistory
+import views.html.lettingHistory.checkYourAnswers as CheckYourAnswersView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class CheckYourAnswersLettingController @Inject() (
-      mcc: MessagesControllerComponents,
-      navigator: LettingHistoryNavigator,
-      theView: checkYourAnswersLettingHistory,
-      sessionRefiner: WithSessionRefiner,
-      @Named("session") repository: SessionRepo
-      )(implicit ec: ExecutionContext)
-  extends FORDataCaptureController(mcc)
+class CheckYourAnswersController @Inject()(
+  mcc: MessagesControllerComponents,
+  navigator: LettingHistoryNavigator,
+  theView: CheckYourAnswersView,
+  sessionRefiner: WithSessionRefiner,
+  @Named("session") repository: SessionRepo
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-
     val filledForm =
       for
-        lettingHistory      <- request.sessionData.lettingHistory
-        cya                 <- lettingHistory.checkYourAnswers
+        lettingHistory <- request.sessionData.lettingHistory
+        cya            <- lettingHistory.checkYourAnswers
       yield theForm.fill(cya)
 
     Ok(
@@ -62,20 +61,20 @@ class CheckYourAnswersLettingController @Inject() (
     )
   }
 
-
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors =>
-        successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withCheckYourAnswers(answer))
-          yield navigator.redirect(currentPage = CheckYourAnswersLettingHistoryPageId, savedSession)
+        for
+          newSession   <- successful(withCheckYourAnswers(answer))
+          savedSession <- repository.saveOrUpdateSession(newSession)
+        yield navigator.redirect(currentPage = CheckYourAnswersPageId, savedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
-    navigator.backLinkUrl(ofPage = CheckYourAnswersLettingHistoryPageId).getOrElse("")
+    navigator.backLinkUrl(ofPage = CheckYourAnswersPageId).getOrElse("")
 
 }

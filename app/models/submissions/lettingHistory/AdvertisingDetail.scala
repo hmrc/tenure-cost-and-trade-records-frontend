@@ -18,15 +18,13 @@ package models.submissions.lettingHistory
 
 import play.api.libs.json.{Format, Json}
 
-case class AdvertisingOnline(
+case class AdvertisingDetail(
   websiteAddress: String,
   propertyReferenceNumber: String
 )
 
-object AdvertisingOnline:
-
-  def unapply(obj: AdvertisingOnline): Option[(String, String)] = Option(
+object AdvertisingDetail:
+  given Format[AdvertisingDetail]                               = Json.format
+  def unapply(obj: AdvertisingDetail): Option[(String, String)] = Some(
     (obj.websiteAddress, obj.propertyReferenceNumber)
   )
-
-  given Format[AdvertisingOnline] = Json.format

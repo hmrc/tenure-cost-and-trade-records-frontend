@@ -27,7 +27,7 @@
 @(theForm: Form[AnswersYesNo], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
-    pageHeading = messages("lettingHistory.advertisingOnline.heading"),
+    pageHeading = messages("lettingHistory.hasOnlineAdvertising.heading"),
     showSection = true,
     showH1= false,
     summary = Option(summary),
@@ -41,8 +41,8 @@
             govukRadios,
             theForm,
             idPrefix = "lettingHistoryAdvertisingOnline",
-            name = "advertisingOnline",
-            legendKey = "lettingHistory.advertisingOnline.heading",
+            name = "onlineAdvertising",
+            legendKey = "lettingHistory.hasOnlineAdvertising.heading",
             classes = "govuk-fieldset__legend--l",
             isHeading = true
         )

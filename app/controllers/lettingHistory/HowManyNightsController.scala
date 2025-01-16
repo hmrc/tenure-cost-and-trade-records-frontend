@@ -28,10 +28,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.howManyNights as HowManyNightsView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class HowManyNightsController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -61,7 +62,9 @@ class HowManyNightsController @Inject (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, currentRentalPeriod, backLinkUrl))),
       nights =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withNumberOfNights(nights))
+        for
+          newSession   <- withNumberOfNights(nights)
+          savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = HowManyNightsPageId, savedSession)
     )
   }

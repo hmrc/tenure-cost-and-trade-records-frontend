@@ -41,7 +41,7 @@
 }
 
 @rentalPeriodOf(occupier: OccupierDetail) = @{
-    occupier.rental.map { r =>
+    occupier.rentalPeriod.map { r =>
         messages(
             "lettingHistory.occupierList.rentalPeriod.text",
             r.fromDate.shortDate,

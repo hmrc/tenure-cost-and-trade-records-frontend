@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
@@ -118,7 +118,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         lettingHistory = Some(
           LettingHistory(
             intendedLettings = Some(
-              IntendedLettings(
+              IntendedDetail(
                 hasStopped = hasStopped,
                 isYearlyAvailable = isYearlyAvailable
               )

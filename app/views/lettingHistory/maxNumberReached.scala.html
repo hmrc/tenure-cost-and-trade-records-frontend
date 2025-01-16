@@ -33,7 +33,7 @@
     kind match {
         case "permanentResidents" => MaxNumberOfPermanentResidents
         case "temporaryOccupiers" => MaxNumberOfCompletedLettings
-        case "advertisingOnline"  => MaxNumberOfAdvertisingOnline
+        case "onlineAdvertising"  => MaxNumberOfAdvertisingOnline
         case _ => 0
     }
 }
@@ -42,14 +42,14 @@
     kind match {
         case "permanentResidents" => routes.ResidentListController.show
         case "temporaryOccupiers" => routes.OccupierListController.show
-        case "advertisingOnline"  => routes.AdvertisingListController.show
+        case "onlineAdvertising"  => routes.AdvertisingListController.show
         case _ => Call("POST", "/unknown")
     }
 }
 
 @checkBoxMessage = @{
   kind match {
-       case "advertisingOnline"  => messages("lettingHistory.maxNumberReached.advertisingOnline.understanding")
+       case "onlineAdvertising"  => messages("lettingHistory.maxNumberReached.onlineAdvertising.understanding")
        case _                    => messages("lettingHistory.maxNumberReached.understanding")
   }
 }

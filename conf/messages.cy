@@ -1623,8 +1623,8 @@ lettingHistory.occupierList.rentalPeriod.text = {0} to {1}
 lettingHistory.occupiersList.hadMoreOccupiers.label = Did any other occupants rent part of your property for 29 nights or more between {0} and {1}?
 lettingHistory.occupierList.hadMoreOccupiers.required = Select yes if the property had more occupiers
 
-lettingHistory.advertisingOnline.heading = Do you advertise the property online?
-error.lettingHistory.advertisingOnline.required = Select yes if you advertise the property online
+lettingHistory.hasOnlineAdvertising.heading = Do you advertise the property online?
+error.lettingHistory.hasOnlineAdvertising.required = Select yes if you advertise the property online
 lettingHistory.advertisingOnlineDetails.heading  = Online advertising
 lettingHistory.advertisingOnlineDetails.paragraph = Provide the details of the holiday lettings websites, where the property is advertised. You will have the opportunity to add multiple websites if required.
 label.lettingHistory.advertisingOnlineDetails.website = Website address
@@ -1638,10 +1638,10 @@ lettingHistory.maxNumberReached.permanentResidents.link.1 = Check or update the 
 lettingHistory.maxNumberReached.temporaryOccupiers.heading = You have added the maximum of {0} temporary occupiers
 lettingHistory.maxNumberReached.temporaryOccupiers.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VOA will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.temporaryOccupiers.link.1 = Check or update the {0} temporary occupiers
-lettingHistory.maxNumberReached.advertisingOnline.heading = You have added the maximum of {0} holiday lettings websites
-lettingHistory.maxNumberReached.advertisingOnline.paragraph.1 = If you advertise on {0} or more holiday lettings websites, the VOA will contact you to collect the details you were unable to declare.
-lettingHistory.maxNumberReached.advertisingOnline.link.1 = Check or update the {0} holiday lettings websites
-lettingHistory.maxNumberReached.advertisingOnline.understanding = I understand that the VOA will contact me about the details of the undeclared websites.
+lettingHistory.maxNumberReached.onlineAdvertising.heading = You have added the maximum of {0} holiday lettings websites
+lettingHistory.maxNumberReached.onlineAdvertising.paragraph.1 = If you advertise on {0} or more holiday lettings websites, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.onlineAdvertising.link.1 = Check or update the {0} holiday lettings websites
+lettingHistory.maxNumberReached.onlineAdvertising.understanding = I understand that the VOA will contact me about the details of the undeclared websites.
 lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
 lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
 

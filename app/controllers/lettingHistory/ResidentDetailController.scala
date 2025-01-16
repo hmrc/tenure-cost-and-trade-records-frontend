@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, byAddingPermanentResident}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, byAddingOrUpdatingPermanentResident}
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.ResidentDetailPageId
@@ -29,10 +29,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.residentDetail as ResidentDetailView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class ResidentDetailController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -69,7 +70,9 @@ class ResidentDetailController @Inject() (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       residentDetail =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(byAddingPermanentResident(residentDetail))
+        for
+          newSession   <- successful(byAddingOrUpdatingPermanentResident(residentDetail))
+          savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
     )
   }

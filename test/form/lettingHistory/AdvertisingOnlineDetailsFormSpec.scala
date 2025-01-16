@@ -17,7 +17,7 @@
 package form.lettingHistory
 
 import form.lettingHistory.AdvertisingOnlineDetailsForm.theForm
-import models.submissions.lettingHistory.AdvertisingOnline
+import models.submissions.lettingHistory.AdvertisingDetail
 
 class AdvertisingOnlineDetailsFormSpec extends FormSpec:
 
@@ -32,7 +32,7 @@ class AdvertisingOnlineDetailsFormSpec extends FormSpec:
   }
 
   it should "unbind good data as expected" in {
-    val residentDetail = AdvertisingOnline(
+    val residentDetail = AdvertisingDetail(
       websiteAddress = "123.uk",
       propertyReferenceNumber = "3456aaa"
     )
