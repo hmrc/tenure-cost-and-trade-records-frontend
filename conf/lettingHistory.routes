@@ -31,11 +31,11 @@ POST        /letting-history-max-number-reached                 controllers.lett
 GET         /letting-history-how-many-nights                    controllers.lettingHistory.HowManyNightsController.show
 POST        /letting-history-how-many-nights                    controllers.lettingHistory.HowManyNightsController.submit
 
-GET         /letting-history-has-stopped                        controllers.lettingHistory.HasStoppedLettingController.show
-POST        /letting-history-has-stopped                        controllers.lettingHistory.HasStoppedLettingController.submit
+GET         /letting-history-has-stopped-letting                controllers.lettingHistory.HasStoppedLettingController.show
+POST        /letting-history-has-stopped-letting                controllers.lettingHistory.HasStoppedLettingController.submit
 
-GET         /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.show
-POST        /letting-history/when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.submit
+GET         /letting-history-when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.show
+POST        /letting-history-when-was-last-let                  controllers.lettingHistory.WhenWasLastLetController.submit
 
 GET         /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.show
 POST        /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.submit
