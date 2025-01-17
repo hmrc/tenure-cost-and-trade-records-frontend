@@ -89,8 +89,12 @@ class FurtherInformationOrRemarksController @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map(_ =>
-            Redirect(navigator
-              .nextPage(FurtherInformationId, updatedData).apply(updatedData)))
+            Redirect(
+              navigator
+                .nextPage(FurtherInformationId, updatedData)
+                .apply(updatedData)
+            )
+          )
       }
     )
   }

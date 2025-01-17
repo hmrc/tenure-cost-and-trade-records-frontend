@@ -21,6 +21,7 @@ import form.aboutyouandtheproperty.OccupiersDetailsListForm.occupiersDetailsList
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, OccupiersDetails}
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
@@ -118,6 +119,15 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0).url
       )
 
+    }
+
+  }
+  "OccupiersDetails" should {
+
+    "serialize and deserialize correctly" in {
+      val occupiersDetails = OccupiersDetails("Mike", "Bristol")
+      val json             = Json.toJson(occupiersDetails)
+      json.as[OccupiersDetails] shouldBe occupiersDetails
     }
 
   }

@@ -121,21 +121,13 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
       case FOR6045 | FOR6046 =>
         controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
       case FOR6048           =>
-        if (!answers.aboutYouAndThePropertyPartTwo.flatMap(_.canProceed).getOrElse(false)) {
-          if (answers.isWelsh)
-            controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
-          else
-            controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
-        } else {
-          answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match
-            case Some(AnswerYes) =>
-              controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController
-                .show(answers.aboutYouAndThePropertyPartTwo.fold(0)(_.occupiersListIndex))
-                .url
-            case _               =>
-              controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
-        }
-
-      case FOR6076 => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
+        answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match
+          case Some(AnswerYes) =>
+            controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController
+              .show(answers.aboutYouAndThePropertyPartTwo.fold(0)(_.occupiersListIndex))
+              .url
+          case _               =>
+            controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
+      case FOR6076           => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
     }
 }
