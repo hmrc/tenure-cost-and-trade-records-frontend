@@ -25,8 +25,7 @@ import utils.TestBaseSpec
   */
 class AvailableRooms6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage =
-    "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: Letting history English/Welsh
+  private val nextPage = "/send-trade-and-cost-information/accommodation-letting-history?idx=0"
 
   def availableRooms6048Controller =
     new AvailableRooms6048Controller(
