@@ -25,10 +25,8 @@ import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.HasStoppedLettingPageId
 import play.api.i18n.I18nSupport
-import play.api.libs.json.Writes
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
 import javax.inject.{Inject, Named}

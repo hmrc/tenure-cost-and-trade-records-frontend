@@ -68,19 +68,18 @@ class SaveAsDraftController @Inject() (
       }
   }
 
-  def saveAsDraft(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
-    implicit request =>
-      customUserPasswordForm
-        .bindFromRequest()
-        .fold(
-          formWithErrors =>
-            Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath, request.sessionData.toSummary)),
-          validData => {
-            val session = request.sessionData.copy(saveAsDraftPassword = mongoHasher.hash(validData.password))
-            sessionRepo.saveOrUpdate(session)
-            saveSubmissionDraft(session, exitPath)
-          }
-        )
+  def saveAsDraft(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    customUserPasswordForm
+      .bindFromRequest()
+      .fold(
+        formWithErrors =>
+          Ok(customPasswordSaveAsDraftView(formWithErrors, expiryDate, exitPath, request.sessionData.toSummary)),
+        validData => {
+          val session = request.sessionData.copy(saveAsDraftPassword = mongoHasher.hash(validData.password))
+          sessionRepo.saveOrUpdate(session)
+          saveSubmissionDraft(session, exitPath)
+        }
+      )
   }
 
   private def expiryDate(implicit messages: Messages): String = dateUtil.formatDate(LocalDate.now.plusDays(saveForDays))

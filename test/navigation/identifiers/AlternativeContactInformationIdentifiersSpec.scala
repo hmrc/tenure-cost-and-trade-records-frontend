@@ -22,8 +22,7 @@ class AlternativeContactInformationIdentifiersSpec extends TestBaseSpec {
 
   "Alternative contact details identifiers" when {
 
-    "Identifier for Alternative contact details page" in {
+    "Identifier for Alternative contact details page" in
       assert(AlternativeContactDetailsId.toString.equals("alternativeContactDetailsPage"))
-    }
   }
 }

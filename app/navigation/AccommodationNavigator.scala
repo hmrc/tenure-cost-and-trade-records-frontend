@@ -27,9 +27,9 @@ import javax.inject.Inject
 class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AccommodationUnitPageId -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
-    AvailableRoomsPageId    -> (_ =>
+    AccommodationUnitPageId           -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
+    AvailableRoomsPageId              -> (_ => accommodation.routes.AccommodationLettingHistory6048Controller.show),
+    AccommodationLettingHistoryPageId -> (_ =>
       controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ) // TODO: Letting history English/Welsh
-
+    ) // TODO: When was the high-season tariff applied
   )

@@ -53,7 +53,6 @@ class AdvertisingOnlineDetailsController @Inject() (
     if index.isEmpty && advertisingOnlineList.sizeIs == MaxNumberOfAdvertisingOnline
     then Redirect(controllers.routes.TaskListController.show())
     else
-      val freshForm  = theForm
       val filledForm =
         for
           idx          <- index

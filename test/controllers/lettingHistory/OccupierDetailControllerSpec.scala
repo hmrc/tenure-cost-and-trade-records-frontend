@@ -20,8 +20,6 @@ import models.Session
 import models.submissions.lettingHistory.{Address, LettingHistory, LocalPeriod, OccupierDetail}
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.http.MimeTypes.HTML
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*

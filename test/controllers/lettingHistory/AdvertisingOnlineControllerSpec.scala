@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{hasOnlineAdvertising, intendedLettings}
+import models.submissions.lettingHistory.LettingHistory.hasOnlineAdvertising
 import models.submissions.lettingHistory.{AdvertisingOnline, IntendedLettings, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.http.MimeTypes.HTML

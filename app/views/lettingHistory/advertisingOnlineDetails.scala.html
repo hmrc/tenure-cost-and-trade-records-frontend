@@ -17,9 +17,9 @@
 @import models.pages.Summary
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.AdvertisingOnline
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput, GovukCharacterCount}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukCharacterCount: GovukCharacterCount, govukButton: GovukButton)
+@this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton)
 
 
 @(theForm: Form[AdvertisingOnline], backLink: Option[String], index: Option[Int], summary: Summary)(implicit request: Request[?], messages: Messages)

@@ -36,9 +36,8 @@ trait ViewBehaviours extends ViewSpecBase {
   def normalPage(view: () => HtmlFormat.Appendable, messageKeyPrefix: String, expectedGuidanceKeys: String*) =
     "behave like a normal page" when {
       "rendered" must {
-        "have the correct banner title" in {
+        "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
-        }
 
         "display the correct browser title" in {
           val doc = asDocument(view())
@@ -72,9 +71,8 @@ trait ViewBehaviours extends ViewSpecBase {
   ) =
     "behave like a normal page" when {
       "rendered" must {
-        "have the correct banner title" in {
+        "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
-        }
 
         "display the correct browser title" in {
           val doc = asDocument(view())
@@ -112,9 +110,8 @@ trait ViewBehaviours extends ViewSpecBase {
   ) =
     "behave like a normal page" when {
       "rendered" must {
-        "have the correct banner title" in {
+        "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
-        }
 
         "display the correct browser title" in {
           val doc = asDocument(view())
@@ -153,9 +150,8 @@ trait ViewBehaviours extends ViewSpecBase {
   ) =
     "behave like a normal page" when {
       "rendered" must {
-        "have the correct banner title" in {
+        "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
-        }
 
         "display the correct browser title" in {
           val doc = asDocument(view())
@@ -192,9 +188,8 @@ trait ViewBehaviours extends ViewSpecBase {
   ) =
     "behave like a normal page" when {
       "rendered" must {
-        "have the correct banner title" in {
+        "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
-        }
 
         "display the correct browser title" in {
           val doc = asDocument(view())

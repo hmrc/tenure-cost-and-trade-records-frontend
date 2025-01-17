@@ -293,7 +293,7 @@ object MappingSupport {
       )
       .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
-  def nonNegativeNumberWithYear(field: String, year: String)(implicit
+  def nonNegativeNumberWithYear(field: String, year: String, maxValue: Int = 1000000)(implicit
     messages: Messages
   ): Mapping[Option[Int]] =
     optional(
@@ -301,6 +301,7 @@ object MappingSupport {
         .verifying(messages(s"error.$field.nonNumeric", year), numberRegex.matches)
         .transform[Int](_.toInt, _.toString)
         .verifying(messages(s"error.$field.negative", year), _ >= 0)
+        .verifying(messages(s"error.$field.maxValue", year, maxValue), _ <= maxValue)
     ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
   def rallyAreasMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
