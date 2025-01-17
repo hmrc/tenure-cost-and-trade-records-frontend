@@ -26,7 +26,6 @@ import play.api.libs.json.{Json, OFormat}
   */
 case class AccommodationDetails(
   accommodationUnits: List[AccommodationUnit],
-  lettingHistory: Option[Seq[AccommodationLettingHistory]] = None,
   sectionCompleted: Option[AnswersYesNo] = None
 )
 

@@ -18,17 +18,18 @@ package controllers.accommodation
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.accommodation.AvailableRooms6048Form.availableRooms6048Form
-import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms}
+import form.accommodation.AccommodationLettingHistory6048Form.accommodationLettingHistory6048Form
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
+import models.submissions.accommodation.{AccommodationDetails, AccommodationLettingHistory, AccommodationUnit, AvailableRooms}
 import navigation.AccommodationNavigator
-import navigation.identifiers.AvailableRoomsPageId
+import navigation.identifiers.AccommodationLettingHistoryPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.accommodation.availableRooms6048
+import views.html.accommodation.accommodationLettingHistory6048
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
@@ -36,8 +37,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class AvailableRooms6048Controller @Inject() (
-  availableRoomsView: availableRooms6048,
+class AccommodationLettingHistory6048Controller @Inject() (
+  accommodationLettingHistoryView: accommodationLettingHistory6048,
   navigator: AccommodationNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -48,11 +49,15 @@ class AvailableRooms6048Controller @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val yearEndDates: Seq[LocalDate] = Seq(LocalDate.now)
+    val years                        = yearEndDates.map(_.getYear.toString)
+
     Ok(
-      availableRoomsView(
+      accommodationLettingHistoryView(
         currentUnit
-          .flatMap(_.availableRooms)
-          .fold(availableRooms6048Form)(availableRooms6048Form.fill),
+          .flatMap(_.lettingHistory)
+          .fold(accommodationLettingHistory6048Form(years))(accommodationLettingHistory6048Form(years).fill),
+        yearEndDates,
         currentUnitName,
         backLink
       )
@@ -60,21 +65,30 @@ class AvailableRooms6048Controller @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AvailableRooms](
-      availableRooms6048Form,
-      formWithErrors => BadRequest(availableRoomsView(formWithErrors, currentUnitName, backLink)),
+    val yearEndDates: Seq[LocalDate] = Seq(LocalDate.now)
+    val years                        = yearEndDates.map(_.getYear.toString)
+
+    continueOrSaveAsDraft[Seq[AccommodationLettingHistory]](
+      accommodationLettingHistory6048Form(years),
+      formWithErrors =>
+        BadRequest(accommodationLettingHistoryView(formWithErrors, yearEndDates, currentUnitName, backLink)),
       data => {
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
-            availableRooms = Some(data)
+            lettingHistory = Some(data)
           )
         )
 
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            Redirect(navigator.nextPageWithParam(AvailableRoomsPageId, updatedData, s"idx=${navigator.idx}"))
+            Redirect(
+              navigator
+                .nextPage(AccommodationLettingHistoryPageId, updatedData)
+                .apply(updatedData)
+                // TODO: navigator.nextPageWithParam(AccommodationLettingHistoryPageId, updatedData, s"idx=${navigator.idx}")
+            )
           }
       }
     )
@@ -98,6 +112,6 @@ class AvailableRooms6048Controller @Inject() (
   private def backLink(implicit
     request: SessionRequest[AnyContent]
   ): String =
-    s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
+    s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=${navigator.idx}"
 
 }

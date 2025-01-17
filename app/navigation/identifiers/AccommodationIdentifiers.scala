@@ -21,3 +21,6 @@ case object AccommodationUnitPageId extends Identifier:
 
 case object AvailableRoomsPageId extends Identifier:
   override def toString: String = "availableRoomsPage"
+
+case object AccommodationLettingHistoryPageId extends Identifier:
+  override def toString: String = "accommodationLettingHistoryPage"
