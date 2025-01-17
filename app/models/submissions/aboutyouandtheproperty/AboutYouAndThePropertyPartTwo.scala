@@ -36,7 +36,6 @@ case class AboutYouAndThePropertyPartTwo(
   completedCommercialLettings: Option[Int] = None,
   completedCommercialLettingsWelsh: Option[Seq[CompletedLettings]] = None,
   partsUnavailable: Option[AnswersYesNo] = None,
-  canProceed: Option[Boolean] = None,
   occupiersList: IndexedSeq[OccupiersDetails] = IndexedSeq.empty,
   addAnotherPaidService: Option[AnswersYesNo] = None,
   occupiersListIndex: Int = 0

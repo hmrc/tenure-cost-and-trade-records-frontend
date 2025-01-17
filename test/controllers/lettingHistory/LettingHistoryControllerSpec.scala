@@ -29,6 +29,13 @@ import scala.concurrent.Future.successful
 
 class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
 
+  val residentDetails = ResidentDetail(name = "Mr. One", address = "Address One")
+  val occupierDetails = OccupierDetail(
+    name = "Mr. One",
+    address = Address("Address One", None, "Neverland", None, "BN124AX"),
+    rental = None
+  )
+
   val oneResident = List(
     ResidentDetail(name = "Mr. One", address = "Address One")
   )

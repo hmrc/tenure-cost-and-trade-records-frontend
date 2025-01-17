@@ -20,9 +20,9 @@ import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
+import play.api.libs.json.{Json, Writes}
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.residentDetail as ResidentDetailView
 
@@ -129,6 +129,16 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         page.error("address") shouldBe "lettingHistory.residentDetail.address.required"
       }
     }
+  }
+
+  "ResidentDetail" should {
+
+    "serialize and deserialize correctly" in {
+      val residentDetail = residentDetails
+      val json           = Json.toJson(residentDetail)
+      json.as[ResidentDetail] shouldBe residentDetail
+    }
+
   }
 
   trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil)

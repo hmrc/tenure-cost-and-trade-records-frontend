@@ -403,7 +403,6 @@ trait FakeObjects {
       )
     ),
     partsUnavailable = Some(AnswerYes),
-    canProceed = None,
     occupiersList = IndexedSeq.empty
   )
 

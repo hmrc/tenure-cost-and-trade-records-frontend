@@ -171,6 +171,10 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(AddAnotherBunkerFuelCardsDetailsId.toString.equals("addAnotherBunkerFuelCardsDetailsPage"))
     "Identifier for accept low margin fuel cards page" in
       assert(AcceptLowMarginFuelCardsId.toString.equals("acceptLowMarginFuelCardsPage"))
+    "Identifier for AccommodationUnit page" in
+      assert(AccommodationUnitPageId.toString.equals("accommodationUnitPage"))
+    "Identifier for AvailableRooms page" in
+      assert(AvailableRoomsPageId.toString.equals("availableRoomsPage"))
     "Identifier for add lm fuel cards page" in
       assert(AddAnotherLowMarginFuelCardsDetailsId.toString.equals("addAnotherLowMarginFuelCardsDetailsPage"))
     "Identifier for lm fuel cards page" in

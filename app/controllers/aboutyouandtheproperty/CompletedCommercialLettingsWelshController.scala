@@ -85,10 +85,8 @@ class CompletedCommercialLettingsWelshController @Inject() (
 
               val completedLettingsNightsSum = updatedLettingData.map(_.numberOfNights).sum
 
-              val updatedCanProceed = commercialLetNightsSum >= 252 && completedLettingsNightsSum >= 182
               partTwo.copy(
-                completedCommercialLettingsWelsh = Option(updatedLettingData),
-                canProceed = Some(updatedCanProceed)
+                completedCommercialLettingsWelsh = Option(updatedLettingData)
               )
             }
             session

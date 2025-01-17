@@ -301,29 +301,8 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
         mockSessionRepo
       )
 
-      "canProceed is false and isWelsh is true" in {
-        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(false))
-        val result  = controller(partTwo, isPossibleWelsh = true).show(fakeRequest)
-
-        status(result)        shouldBe Status.OK
-        contentAsString(result) should include(
-          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
-        )
-      }
-
-      "canProceed is false and isWelsh is false" in {
-        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(canProceed = Option(false))
-        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
-
-        status(result)        shouldBe Status.OK
-        contentAsString(result) should include(
-          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
-        )
-      }
-
       "some occupiers - family members in the property" in {
         val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
-          canProceed = Option(true),
           partsUnavailable = Option(AnswerYes)
         )
         val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
@@ -335,7 +314,6 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
       }
       "no occupiers  - family members in the property" in {
         val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
-          canProceed = Option(true),
           partsUnavailable = Option(AnswerNo)
         )
         val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
