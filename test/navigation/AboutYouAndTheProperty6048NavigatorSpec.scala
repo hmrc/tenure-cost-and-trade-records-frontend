@@ -94,60 +94,13 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to CYA page when letting conditions not fulfilled for England " in {
-
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndThePropertyPartTwo = Option(
-          AboutYouAndThePropertyPartTwo(
-            commercialLetAvailability = Option(12),
-            completedCommercialLettings = Option(12)
-          )
-        )
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(CompletedCommercialLettingsId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    }
-
-    "return a function that goes to CYA page when letting conditions not fulfilled for Wales " in {
-
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndThePropertyPartTwo = Option(
-          AboutYouAndThePropertyPartTwo(
-            commercialLetAvailabilityWelsh = Option(
-              Seq(
-                LettingAvailability(LocalDate.of(2024, 3, 31), 10),
-                LettingAvailability(LocalDate.of(2023, 3, 31), 20),
-                LettingAvailability(LocalDate.of(2022, 3, 31), 15)
-              )
-            ),
-            completedCommercialLettingsWelsh = Option(
-              Seq(
-                CompletedLettings(LocalDate.of(2024, 3, 31), 10),
-                CompletedLettings(LocalDate.of(2023, 3, 31), 20),
-                CompletedLettings(LocalDate.of(2022, 3, 31), 15)
-              )
-            )
-          )
-        )
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(CompletedCommercialLettingsWelshId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    }
-
-    "return a function that goes to unavailable parts  page when letting conditions fulfilled for England " in {
+    "return a function that goes to unavailable parts  page  for England " in {
 
       val answers = baseFilled6048Session.copy(
         aboutYouAndThePropertyPartTwo = Option(
           AboutYouAndThePropertyPartTwo(
             commercialLetAvailability = Option(200),
-            completedCommercialLettings = Option(200),
-            canProceed = Option(true)
+            completedCommercialLettings = Option(200)
           )
         )
       )
@@ -158,7 +111,7 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
     }
 
-    "return a function that goes to unavailable parts  page when letting conditions fulfilled for Wales " in {
+    "return a function that goes to unavailable parts  page  for Wales " in {
 
       val answers = baseFilled6048Session.copy(
         aboutYouAndThePropertyPartTwo = Option(
@@ -176,8 +129,7 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
                 CompletedLettings(LocalDate.of(2023, 3, 31), 200),
                 CompletedLettings(LocalDate.of(2022, 3, 31), 150)
               )
-            ),
-            canProceed = Option(true)
+            )
           )
         )
       )

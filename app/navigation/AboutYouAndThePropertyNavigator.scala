@@ -139,10 +139,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def completedCommercialLettingsRouting: Session => Call = answers =>
-    if (answers.aboutYouAndThePropertyPartTwo.flatMap(_.canProceed).getOrElse(false))
-      controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
-    else
-      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
 
   private def partsUnavailableRouting: Session => Call = answers =>
     answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
