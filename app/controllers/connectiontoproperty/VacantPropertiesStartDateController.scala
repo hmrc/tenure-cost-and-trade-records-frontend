@@ -49,37 +49,40 @@ class VacantPropertiesStartDateController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val containCYA = request.uri
-    val forType = request.sessionData.forType
+    val forType    = request.sessionData.forType
 
     containCYA match {
       case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "VacantPropertiesStartDate"))
-      case _ => Future.successful(
-        Ok(
-          vacantPropertyStartDateView(
-            request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
-              case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
-              case _ => vacantPropertyStartDateForm
-            },
-            request.sessionData.toSummary,
-            calculateBackLink
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "VacantPropertiesStartDate")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            vacantPropertyStartDateView(
+              request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
+                case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
+                case _                             => vacantPropertyStartDateForm
+              },
+              request.sessionData.toSummary,
+              calculateBackLink
+            )
           )
         )
-      )
     }
     Future.successful(
       Ok(
         vacantPropertyStartDateView(
           request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
             case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
-            case _ => vacantPropertyStartDateForm
+            case _                             => vacantPropertyStartDateForm
           },
           request.sessionData.toSummary,
           calculateBackLink
         )
       )
     )
-
 
   }
 

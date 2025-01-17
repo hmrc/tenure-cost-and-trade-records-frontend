@@ -49,18 +49,18 @@ class VacantPropertiesController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val containCYA = request.uri
-    val forType = request.sessionData.forType
+    val forType    = request.sessionData.forType
 
     containCYA match {
       case containsCYA if containsCYA.contains("=CYA") =>
         audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "VacantProperties"))
-      case _ =>
+      case _                                           =>
         Future.successful(
           Ok(
             vacantPropertiesView(
               request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
                 case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
-                case _ => vacantPropertiesForm
+                case _                      => vacantPropertiesForm
               },
               calculateBackLink,
               request.sessionData.toSummary
@@ -73,14 +73,13 @@ class VacantPropertiesController @Inject() (
         vacantPropertiesView(
           request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
             case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
-            case _ => vacantPropertiesForm
+            case _                      => vacantPropertiesForm
           },
           calculateBackLink,
           request.sessionData.toSummary
         )
       )
     )
-
 
   }
 

@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 import models.ForType
 import models.ForType.*
@@ -32,12 +33,15 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
 
   import TestData._
 
+  val mockAudit: Audit = mock[Audit]
+
   def tradingNameOperatingFromPropertyController(
     forType: ForType = FOR6010,
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = forType, stillConnectedDetails = stillConnectedDetails),
@@ -49,6 +53,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
@@ -60,6 +65,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
@@ -71,6 +77,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
@@ -82,6 +89,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
@@ -93,6 +101,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
@@ -104,6 +113,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
@@ -115,6 +125,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   ) =
     new TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

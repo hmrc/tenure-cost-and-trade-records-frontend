@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import form.Errors
 import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -23,6 +24,7 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class AreYouStillConnectedControllerSpec extends TestBaseSpec {
@@ -30,10 +32,13 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
+
   def areYouStillConnectedController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
   ) = new AreYouStillConnectedController(
     stubMessagesControllerComponents(),
+    mockAudit,
     connectedToPropertyNavigator,
     areYouStillConnectedView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

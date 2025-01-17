@@ -17,8 +17,10 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -29,19 +31,44 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleInsideRepairs
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class UltimatelyResponsibleInsideRepairsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   ultimatelyResponsibleIRView: ultimatelyResponsibleInsideRepairs,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "UltimatelyResponsibleInsideRepairs")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            ultimatelyResponsibleIRView(
+              request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleInsideRepairs) match {
+                case Some(ultimatelyResponsibleIR) =>
+                  ultimatelyResponsibleInsideRepairsForm.fill(ultimatelyResponsibleIR)
+                case _                             => ultimatelyResponsibleInsideRepairsForm
+              },
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         ultimatelyResponsibleIRView(

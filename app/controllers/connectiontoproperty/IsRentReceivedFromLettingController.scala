@@ -50,18 +50,21 @@ class IsRentReceivedFromLettingController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val containCYA = request.uri
-    val forType = request.sessionData.forType
+    val forType    = request.sessionData.forType
 
     containCYA match {
       case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "IsRentReceivedFromLetting"))
-      case _ =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "IsRentReceivedFromLetting")
+        )
+      case _                                           =>
         Future.successful(
           Ok(
             isRentReceivedFromLettingView(
               request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
                 case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
-                case _ => isRentReceivedFromLettingForm
+                case _                       => isRentReceivedFromLettingForm
               },
               getBackLink(),
               request.sessionData.toSummary
@@ -74,14 +77,13 @@ class IsRentReceivedFromLettingController @Inject() (
         isRentReceivedFromLettingView(
           request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
             case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
-            case _ => isRentReceivedFromLettingForm
+            case _                       => isRentReceivedFromLettingForm
           },
           getBackLink(),
           request.sessionData.toSummary
         )
       )
     )
-
 
   }
 

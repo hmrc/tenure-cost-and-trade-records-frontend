@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import form.Errors
 import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails}
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
@@ -32,10 +33,13 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
+
   def provideContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) = new ProvideContactDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     connectedToPropertyNavigator,
     provideContactDetailsView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

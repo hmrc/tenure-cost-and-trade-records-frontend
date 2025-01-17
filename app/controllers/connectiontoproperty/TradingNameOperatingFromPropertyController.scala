@@ -54,19 +54,22 @@ class TradingNameOperatingFromPropertyController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val containCYA = request.uri
-    val forType = request.sessionData.forType
+    val forType    = request.sessionData.forType
 
     containCYA match {
       case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "TradingNameOperatingFromProperty"))
-      case _ =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "TradingNameOperatingFromProperty")
+        )
+      case _                                           =>
         if (forType == FOR6048) {
           Future.successful(
             Ok(
               nameOfBusinessOperatingFromPropertyView(
                 request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
                   case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
-                  case _ => tradingNameOperatingFromProperty6048Form
+                  case _                      => tradingNameOperatingFromProperty6048Form
                 },
                 calculateBackLink,
                 request.sessionData.toSummary,
@@ -80,7 +83,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
               nameOfBusinessOperatingFromPropertyView(
                 request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
                   case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
-                  case _ => tradingNameOperatingFromPropertyForm
+                  case _                      => tradingNameOperatingFromPropertyForm
                 },
                 calculateBackLink,
                 request.sessionData.toSummary,
@@ -95,7 +98,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
         nameOfBusinessOperatingFromPropertyView(
           request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
             case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
-            case _ => tradingNameOperatingFromPropertyForm
+            case _                      => tradingNameOperatingFromPropertyForm
           },
           calculateBackLink,
           request.sessionData.toSummary,

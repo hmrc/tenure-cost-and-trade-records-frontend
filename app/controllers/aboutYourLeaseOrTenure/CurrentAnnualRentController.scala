@@ -17,12 +17,14 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{AnnualRent, Session}
 import models.ForType.*
+import models.audit.ChangeLinkAudit
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
 import play.api.Logging
@@ -33,19 +35,40 @@ import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.currentAnnualRent
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CurrentAnnualRentController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   currentAnnualRentView: currentAnnualRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "CurrentAnnualRent"))
+      case _                                           =>
+        Ok(
+          currentAnnualRentView(
+            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {
+              case Some(annualRent) => currentAnnualRentForm().fill(annualRent)
+              case _                => currentAnnualRentForm()
+            },
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        )
+    }
     Ok(
       currentAnnualRentView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {

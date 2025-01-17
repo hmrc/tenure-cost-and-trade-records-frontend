@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
+import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.EditTheAddress
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
@@ -34,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class EditAddressController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
@@ -44,18 +47,18 @@ class EditAddressController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val containCYA = request.uri
-    val forType = request.sessionData.forType
+    val forType    = request.sessionData.forType
 
     containCYA match {
       case containsCYA if containsCYA.contains("=CYA") =>
         audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "EditAddress"))
-      case _ =>
+      case _                                           =>
         Future.successful(
           Ok(
             editAddressView(
               request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
                 case Some(editAddress) => editAddressForm.fill(editAddress)
-                case _ => editAddressForm
+                case _                 => editAddressForm
               },
               request.sessionData.toSummary,
               calculateBackLink
@@ -68,7 +71,7 @@ class EditAddressController @Inject() (
         editAddressView(
           request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
             case Some(editAddress) => editAddressForm.fill(editAddress)
-            case _ => editAddressForm
+            case _                 => editAddressForm
           },
           request.sessionData.toSummary,
           calculateBackLink
@@ -76,7 +79,6 @@ class EditAddressController @Inject() (
       )
     )
   }
-
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[EditTheAddress](

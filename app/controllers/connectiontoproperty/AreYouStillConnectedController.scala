@@ -47,18 +47,21 @@ class AreYouStillConnectedController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val containCYA = request.uri
-    val forType = request.sessionData.forType
+    val forType    = request.sessionData.forType
 
     containCYA match {
       case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "AreYouStillConnected"))
-      case _ =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "AreYouStillConnected")
+        )
+      case _                                           =>
         Future.successful(
           Ok(
             areYouStillConnectedView(
               connectionTypeInSession match {
                 case Some(addressConnectionType) => areYouStillConnectedForm.fill(addressConnectionType)
-                case _ => areYouStillConnectedForm
+                case _                           => areYouStillConnectedForm
               },
               request.sessionData.toSummary,
               calculateBackLink

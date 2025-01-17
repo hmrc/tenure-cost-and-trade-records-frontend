@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TenantDetailsForm.tenantDetailsForm
+import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails, TenantDetails}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
@@ -34,6 +36,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class LettingPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   tenantDetailsView: tenantDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -51,6 +54,25 @@ class LettingPartOfPropertyDetailsController @Inject() (
       requestedLettingPartOfPropertyDetails <- existingLettingPartOfPropertyDetails.lift(requestedIndex)
     } yield requestedLettingPartOfPropertyDetails.tenantDetails
 
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "LettingPartOfPropertyDetails")
+        )
+      case _                                           =>
+        Ok(
+          tenantDetailsView(
+            existingDetails.fold(tenantDetailsForm)(tenantDetailsForm.fill),
+            index,
+            getBackLink(index),
+            request.sessionData.toSummary
+          )
+        )
+    }
     Ok(
       tenantDetailsView(
         existingDetails.fold(tenantDetailsForm)(tenantDetailsForm.fill),

@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.LettingPartOfPropertyRentForm.lettingPartOfPropertyRentForm
+import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.LettingPartOfPropertyRentDetails
 import navigation.ConnectionToPropertyNavigator
@@ -34,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class LettingPartOfPropertyDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -49,6 +52,27 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
         val lettingDetailsForm = lettingPartOfPropertyDetails.lettingPartOfPropertyRentDetails.fold(
           lettingPartOfPropertyRentForm
         )(lettingPartOfPropertyRentForm.fill)
+
+        val containCYA = request.uri
+        val forType    = request.sessionData.forType
+
+        containCYA match {
+          case containsCYA if containsCYA.contains("=CYA") =>
+            audit.sendExplicitAudit(
+              "cya-change-link",
+              ChangeLinkAudit(forType.toString, request.uri, "LettingPartOfPropertyDetailsRent")
+            )
+          case _                                           =>
+            Ok(
+              lettingPartOfPropertyRentDetailsView(
+                lettingDetailsForm,
+                index,
+                existingSection.get.tenantDetails.name,
+                calculateBackLink(index),
+                request.sessionData.toSummary
+              )
+            )
+        }
         Ok(
           lettingPartOfPropertyRentDetailsView(
             lettingDetailsForm,
@@ -59,6 +83,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           )
         )
     }
+
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
