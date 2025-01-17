@@ -79,8 +79,9 @@ class ServicePaidSeparatelyChargeController @Inject() (
           val updatedDetails   = existingSections
             .updated(index, existingSections(index).copy(annualCharge = Some(data)))
           val updatedData      = updateAboutLeaseOrAgreementPartThree(_.copy(servicesPaid = updatedDetails))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(ServicePaidSeparatelyChargeId, updatedData).apply(updatedData))
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ => Redirect(navigator.nextPage(ServicePaidSeparatelyChargeId, updatedData).apply(updatedData)))
 
         }
     )
