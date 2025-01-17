@@ -27,6 +27,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.AccountingInformationUtil
 import views.html.accommodation.accommodationLettingHistory6048
 
 import java.time.LocalDate
@@ -49,13 +50,14 @@ class AccommodationLettingHistory6048Controller @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val yearEndDates: Seq[LocalDate] = Seq(LocalDate.now)
-    val years                        = yearEndDates.map(_.getYear.toString)
+    val yearEndDates = finYearEndDates
+    val years        = yearEndDates.map(_.getYear.toString)
 
     Ok(
       accommodationLettingHistoryView(
         currentUnit
           .flatMap(_.lettingHistory)
+          .filter(_.size == years.size)
           .fold(accommodationLettingHistory6048Form(years))(accommodationLettingHistory6048Form(years).fill),
         yearEndDates,
         currentUnitName,
@@ -65,18 +67,23 @@ class AccommodationLettingHistory6048Controller @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val yearEndDates: Seq[LocalDate] = Seq(LocalDate.now)
-    val years                        = yearEndDates.map(_.getYear.toString)
+    val yearEndDates = finYearEndDates
+    val years        = yearEndDates.map(_.getYear.toString)
 
     continueOrSaveAsDraft[Seq[AccommodationLettingHistory]](
       accommodationLettingHistory6048Form(years),
       formWithErrors =>
         BadRequest(accommodationLettingHistoryView(formWithErrors, yearEndDates, currentUnitName, backLink)),
       data => {
+        val updatedLettingHistory =
+          (data zip yearEndDates).map { case (lettingHistory, yearEnd) =>
+            lettingHistory.copy(financialYearEnd = yearEnd)
+          }
+
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
-            lettingHistory = Some(data)
+            lettingHistory = Some(updatedLettingHistory)
           )
         )
 
@@ -93,6 +100,12 @@ class AccommodationLettingHistory6048Controller @Inject() (
       }
     )
   }
+
+  private def finYearEndDates(implicit
+    request: SessionRequest[AnyContent]
+  ): Seq[LocalDate] =
+    val firstOccupy = request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate)
+    AccountingInformationUtil.financialYearsRequiredAccommodation6048(firstOccupy, request.sessionData.isWelsh)
 
   private def accommodationDetails(implicit
     request: SessionRequest[AnyContent]

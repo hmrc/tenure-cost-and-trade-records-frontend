@@ -21,16 +21,32 @@ import controllers.aboutthetradinghistory
 import models.Session
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory._
+import models.submissions.aboutthetradinghistory.*
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.AnyContent
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 /**
   * @author Yuriy Tumakha
   */
 object AccountingInformationUtil {
+
+  private def yearNow                 = YearMonth.now.getYear
+  private def monthNow                = YearMonth.now.getMonthValue
+  private val endOfMarch              = LocalDate.of(yearNow, 3, 31)
+  private val financialYearEndOfMarch = DayMonthsDuration(31, 3)
+  private val defaultStart            = MonthsYearDuration(monthNow, yearNow)
+
+  def financialYearsRequiredAccommodation6048(
+    firstOccupy: Option[MonthsYearDuration],
+    isWales: Boolean
+  ): Seq[LocalDate] =
+    if isWales then
+      Some(financialYearsRequired(firstOccupy.getOrElse(defaultStart), financialYearEndOfMarch))
+        .filter(_.nonEmpty)
+        .getOrElse(Seq(endOfMarch))
+    else Seq(endOfMarch)
 
   def financialYearsRequired(firstOccupy: MonthsYearDuration, financialYear: DayMonthsDuration): Seq[LocalDate] = {
     val now     = LocalDate.now
