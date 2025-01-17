@@ -1706,7 +1706,18 @@ accommodation.nights = nosweithiau
 accommodation.nightsAvailableToLet = Number of nights available for holiday lettings
 accommodation.nightsLet = Number of nights let
 accommodation.weeksAvailableForPersonalUse = Weeks available for personal use
-
+error.accommodation.lettingHistory.nightsAvailableToLet.required = Enter 0 if you do not have any nights available for lettings in the accommodation unit in the year ending {0}
+error.accommodation.lettingHistory.nightsAvailableToLet.nonNumeric = The amount of nights available for lettings in the year ending {0} must be a number
+error.accommodation.lettingHistory.nightsAvailableToLet.negative = The amount of nights available for lettings in the year ending {0} cannot be a negative number
+error.accommodation.lettingHistory.nightsAvailableToLet.maxValue = The amount of nights available for lettings in the year ending {0} cannot be more than {1}
+error.accommodation.lettingHistory.nightsLet.required = Enter 0 if there were no nights let for the accommodation unit in the year ending {0}
+error.accommodation.lettingHistory.nightsLet.nonNumeric = The amount of nights let in the year ending {0} must be a number
+error.accommodation.lettingHistory.nightsLet.negative = The amount of nights let in the year ending {0} cannot be a negative number
+error.accommodation.lettingHistory.nightsLet.maxValue = The amount of nights let in the year ending {0} cannot be more than {1}
+error.accommodation.lettingHistory.weeksAvailableForPersonalUse.required = Enter 0 if there were no weeks available for personal use in the accommodation unit in the year ending {0}
+error.accommodation.lettingHistory.weeksAvailableForPersonalUse.nonNumeric = The amount of weeks available for personal use in the year ending {0} must be a number
+error.accommodation.lettingHistory.weeksAvailableForPersonalUse.negative = The amount of weeks available for personal use in the year ending {0} cannot be a negative number
+error.accommodation.lettingHistory.weeksAvailableForPersonalUse.maxValue = The amount of weeks available for personal use in the year ending {0} cannot be more than {1}
 
 # 6010 TYPES
 ##############################

@@ -32,11 +32,16 @@ object AccommodationLettingHistory6048Form {
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[AccommodationLettingHistory] =
     mapping(
       "financialYearEnd"             -> ignored(LocalDate.EPOCH),
-      "nightsAvailableToLet"         -> nonNegativeNumberWithYear("accommodation.lettingHistory.nightsAvailableToLet", year),
-      "nightsLet"                    -> nonNegativeNumberWithYear("accommodation.lettingHistory.nightsLet", year),
+      "nightsAvailableToLet"         -> nonNegativeNumberWithYear(
+        "accommodation.lettingHistory.nightsAvailableToLet",
+        year,
+        366
+      ),
+      "nightsLet"                    -> nonNegativeNumberWithYear("accommodation.lettingHistory.nightsLet", year, 366),
       "weeksAvailableForPersonalUse" -> nonNegativeNumberWithYear(
         "accommodation.lettingHistory.weeksAvailableForPersonalUse",
-        year
+        year,
+        52
       )
     )(AccommodationLettingHistory.apply)(o => Some(Tuple.fromProductTyped(o)))
 
