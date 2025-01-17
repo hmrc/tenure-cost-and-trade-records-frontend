@@ -60,7 +60,6 @@ class CompletedCommercialLettingsController @Inject() (
       completedCommercialLettingsForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
       data => {
-        val currentAboutTheProperty = request.sessionData.aboutYouAndThePropertyPartTwo
         val updatedData             = updateAboutYouAndThePropertyPartTwo(
           _.copy(
             completedCommercialLettings = Option(data)
