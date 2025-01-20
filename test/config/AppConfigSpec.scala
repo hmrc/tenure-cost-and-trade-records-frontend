@@ -71,9 +71,8 @@ class AppConfigSpec extends AnyWordSpec with Matchers with MockitoSugar {
       when(mockConfig.getOptional[Boolean]("useDummyTrueIP")).thenReturn(None)
 
       val appConfig = new AppConfig(mockConfig)
-      a[ConfigSettingMissing] should be thrownBy {
+      a[ConfigSettingMissing] should be thrownBy
         appConfig.useDummyIp
-      }
     }
 
     "throw ConfigSettingMissing exception if string config is missing" in {
@@ -81,9 +80,8 @@ class AppConfigSpec extends AnyWordSpec with Matchers with MockitoSugar {
       when(mockConfig.getOptional[String]("govukStartPage")).thenReturn(None)
 
       val appConfig = new AppConfig(mockConfig)
-      a[ConfigSettingMissing] should be thrownBy {
+      a[ConfigSettingMissing] should be thrownBy
         appConfig.govukStartPage
-      }
     }
 
     "return the correct default URLs" in {

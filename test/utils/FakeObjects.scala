@@ -403,7 +403,6 @@ trait FakeObjects {
       )
     ),
     partsUnavailable = Some(AnswerYes),
-    canProceed = None,
     occupiersList = IndexedSeq.empty
   )
 
@@ -1820,10 +1819,16 @@ trait FakeObjects {
 
   val prefilledAccommodationDetails: AccommodationDetails = AccommodationDetails(
     List(
-      AccommodationUnit("Unit 1", "unit type", AvailableRooms(2, 4, 6, "Game room", 10)),
-      AccommodationUnit("Unit 2", "barn", AvailableRooms()),
+      AccommodationUnit(
+        "Unit 1",
+        "unit type",
+        AvailableRooms(2, 4, 6, "Game room", 10),
+        Seq(AccommodationLettingHistory(today, 99, 9, 11))
+      ),
+      AccommodationUnit("Unit 2", "barn", AvailableRooms(), Seq(AccommodationLettingHistory(today, 99, 9, 22))),
       AccommodationUnit("Unit 3", "type")
-    )
+    ),
+    AnswerYes
   )
 
 }

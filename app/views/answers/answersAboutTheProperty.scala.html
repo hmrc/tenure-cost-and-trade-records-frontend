@@ -169,7 +169,6 @@
                         ("valueAsHtml", _ => None)
                     )))
     }
- @if(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.canProceed).getOrElse(false)) {
      <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.familyUse.heading")</h2>
 
      @govukSummaryList(SummaryList(rows =
@@ -211,7 +210,6 @@
              )
          ))
      }
- }
 } else {
 
     @if(forType == FOR6076) {

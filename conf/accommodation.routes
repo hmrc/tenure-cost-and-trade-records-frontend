@@ -5,3 +5,6 @@ POST        /accommodation-unit                             controllers.accommod
 
 GET         /available-rooms                                controllers.accommodation.AvailableRooms6048Controller.show
 POST        /available-rooms                                controllers.accommodation.AvailableRooms6048Controller.submit
+
+GET         /accommodation-letting-history                  controllers.accommodation.AccommodationLettingHistory6048Controller.show
+POST        /accommodation-letting-history                  controllers.accommodation.AccommodationLettingHistory6048Controller.submit

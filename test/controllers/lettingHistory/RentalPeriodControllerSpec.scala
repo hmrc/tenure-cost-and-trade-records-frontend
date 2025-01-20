@@ -20,8 +20,6 @@ import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.http.MimeTypes.HTML
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*

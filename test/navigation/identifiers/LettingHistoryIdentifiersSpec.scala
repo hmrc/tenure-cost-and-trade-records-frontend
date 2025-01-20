@@ -22,17 +22,14 @@ class LettingHistoryIdentifiersSpec extends TestBaseSpec {
 
   "Letting history identifiers" when {
 
-    "Identifier for permanent residents page" in {
+    "Identifier for permanent residents page" in
       assert(PermanentResidentsPageId.toString.equals("permanentResidentsPage"))
-    }
 
-    "Identifier for resident details page" in {
+    "Identifier for resident details page" in
       assert(ResidentDetailPageId.toString.equals("residentDetailPage"))
-    }
 
-    "Identifier for resident list page" in {
+    "Identifier for resident list page" in
       assert(ResidentListPageId.toString.equals("residentListPage"))
-    }
 
 //    "Identifier for commercial lettings page" in {
 //      assert(CommercialLettingsPageId.toString.equals("CommercialLettingsPage"))

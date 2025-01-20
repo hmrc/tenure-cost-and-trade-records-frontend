@@ -24,7 +24,8 @@ import play.api.libs.json.{Json, OFormat}
 case class AccommodationUnit(
   unitName: String,
   unitType: String,
-  availableRooms: Option[AvailableRooms] = None
+  availableRooms: Option[AvailableRooms] = None,
+  lettingHistory: Option[Seq[AccommodationLettingHistory]] = None
 )
 
 object AccommodationUnit:

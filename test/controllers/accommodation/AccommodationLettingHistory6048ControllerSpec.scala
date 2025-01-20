@@ -23,45 +23,47 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AvailableRooms6048ControllerSpec extends TestBaseSpec {
+class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage = "/send-trade-and-cost-information/accommodation-letting-history?idx=0"
+  private val nextPage =
+    "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: When was the high-season tariff applied
 
-  def availableRooms6048Controller =
-    new AvailableRooms6048Controller(
-      availableRoomsView,
+  def accommodationLettingHistory6048Controller =
+    new AccommodationLettingHistory6048Controller(
+      accommodationLettingHistoryView,
       accommodationNavigator,
-      preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
+      preEnrichedActionRefiner(
+        referenceNumber = "99996010008", // England
+        accommodationDetails = Some(prefilledAccommodationDetails)
+      ),
       mockSessionRepo,
       stubMessagesControllerComponents()
     )
 
   private def validFormData: Seq[(String, String)] =
     Seq(
-      "singleBedrooms"                -> "2",
-      "doubleBedrooms"                -> "4",
-      "bathrooms"                     -> "6",
-      "otherAccommodationDescription" -> "",
-      "maxGuestsNumber"               -> "10"
+      "lettingHistory[0].nightsAvailableToLet"         -> "200",
+      "lettingHistory[0].nightsLet"                    -> "150",
+      "lettingHistory[0].weeksAvailableForPersonalUse" -> "10"
     )
 
   "GET /" should {
     "return 200" in {
-      val result = availableRooms6048Controller.show(fakeRequest)
+      val result = accommodationLettingHistory6048Controller.show(fakeRequest)
       status(result) shouldBe OK
     }
   }
 
   "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = availableRooms6048Controller.submit(
+      val res = accommodationLettingHistory6048Controller.submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "save the form data and redirect to the next page" in {
-      val res = availableRooms6048Controller.submit(
+      val res = accommodationLettingHistory6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER

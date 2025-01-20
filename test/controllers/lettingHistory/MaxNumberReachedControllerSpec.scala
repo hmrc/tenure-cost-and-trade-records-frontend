@@ -16,16 +16,10 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory
-import models.submissions.lettingHistory.LettingHistory._
 import navigation.LettingHistoryNavigator
-import play.api.http.MimeTypes.HTML
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers._
-import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.maxNumberReached as MaxNumberReachedView
 
 class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:

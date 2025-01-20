@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package navigation.identifiers
+package models.submissions.accommodation
 
-import utils.TestBaseSpec
+import play.api.libs.json.{Json, OFormat}
 
-class AdditionalInformationIdentifiersSpec extends TestBaseSpec {
+import java.time.LocalDate
 
-  "Additional information identifiers" when {
+/**
+  * @author Yuriy Tumakha
+  */
+case class AccommodationLettingHistory(
+  financialYearEnd: LocalDate,
+  nightsAvailableToLet: Option[Int] = None,
+  nightsLet: Option[Int] = None,
+  weeksAvailableForPersonalUse: Option[Int] = None
+)
 
-    "Identifier for further information page" in
-      assert(FurtherInformationId.toString.equals("furtherInformationPage"))
-
-    "Identifier for CYA page" in
-      assert(CheckYourAnswersAdditionalInformationId.toString.equals("checkYourAnswersAdditionalInformationPage"))
-  }
-}
+object AccommodationLettingHistory:
+  implicit val format: OFormat[AccommodationLettingHistory] = Json.format
