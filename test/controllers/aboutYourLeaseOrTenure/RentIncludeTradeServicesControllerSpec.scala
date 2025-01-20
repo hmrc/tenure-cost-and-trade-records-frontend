@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -25,10 +26,12 @@ import utils.TestBaseSpec
 
 class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def rentIncludeTradeServicesController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new RentIncludeTradeServicesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     inject[AboutYourLeaseOrTenureNavigator],
     rentIncludeTradeServicesView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),

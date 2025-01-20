@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
+import models.audit.ChangeLinkAudit
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.ProvideContactDetails
@@ -36,6 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ProvideContactDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   provideContactDetailsView: provideContactDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -46,6 +49,29 @@ class ProvideContactDetailsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "ProvideContactDetails")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            provideContactDetailsView(
+              request.sessionData.stillConnectedDetails.flatMap(_.provideContactDetails) match {
+                case Some(customerDetails) => provideContactDetailsForm.fill(customerDetails)
+                case _                     => provideContactDetailsForm
+              },
+              getBackLink,
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         provideContactDetailsView(

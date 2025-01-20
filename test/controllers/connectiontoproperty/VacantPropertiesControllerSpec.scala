@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, StillConnectedDetails}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,11 +25,13 @@ import utils.TestBaseSpec
 
 class VacantPropertiesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def vacantPropertiesController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledVacantProperties)
   ) =
     new VacantPropertiesController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       vacantPropertiesView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

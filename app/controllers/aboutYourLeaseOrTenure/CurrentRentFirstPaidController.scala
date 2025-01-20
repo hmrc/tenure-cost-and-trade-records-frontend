@@ -17,10 +17,12 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
 import models.ForType.*
 import models.Session
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import models.submissions.common.AnswerYes
@@ -32,18 +34,42 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.currentRentFirstPaid
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CurrentRentFirstPaidController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   currentRentFirstPaidView: currentRentFirstPaid,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "CurrentRentFirstPaid")
+        )
+      case _                                           =>
+        Ok(
+          currentRentFirstPaidView(
+            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {
+              case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fill(currentRentFirstPaid)
+              case _                          => currentRentFirstPaidForm
+            },
+            getBackLink(request.sessionData),
+            request.sessionData.toSummary
+          )
+        )
+    }
     Ok(
       currentRentFirstPaidView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {

@@ -17,9 +17,11 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.ForType
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -30,21 +32,44 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.includedInYourRent
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class IncludedInYourRentController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   includedInYourRentView: includedInYourRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "IncludedInYourRent"))
+      case _                                           =>
+        Future.successful(
+          Ok(
+            includedInYourRentView(
+              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
+                case Some(includedInYourRentDetails) => includedInYourRentForm(forType).fill(includedInYourRentDetails)
+                case _                               => includedInYourRentForm(forType)
+              },
+              request.sessionData.toSummary,
+              forType,
+              navigator.from
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         includedInYourRentView(

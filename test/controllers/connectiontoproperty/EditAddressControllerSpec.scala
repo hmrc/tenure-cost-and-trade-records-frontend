@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import play.api.http.Status
@@ -30,10 +31,13 @@ class EditAddressControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
+
   def editAddressController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
   ) = new EditAddressController(
     stubMessagesControllerComponents(),
+    mockAudit,
     connectedToPropertyNavigator,
     editAddressView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

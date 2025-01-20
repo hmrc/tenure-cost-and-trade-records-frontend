@@ -17,8 +17,10 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
+import models.audit.ChangeLinkAudit
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouStillConnectedPageId
 import play.api.i18n.I18nSupport
@@ -34,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AreYouStillConnectedController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   areYouStillConnectedView: areYouStillConnected,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +46,30 @@ class AreYouStillConnectedController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "AreYouStillConnected")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            areYouStillConnectedView(
+              connectionTypeInSession match {
+                case Some(addressConnectionType) => areYouStillConnectedForm.fill(addressConnectionType)
+                case _                           => areYouStillConnectedForm
+              },
+              request.sessionData.toSummary,
+              calculateBackLink
+            )
+          )
+        )
+    }
+
     Future.successful(
       Ok(
         areYouStillConnectedView(

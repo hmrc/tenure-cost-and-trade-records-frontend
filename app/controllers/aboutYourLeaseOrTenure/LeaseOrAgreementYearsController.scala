@@ -17,9 +17,11 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 import models.Session
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -36,6 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class LeaseOrAgreementYearsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   leaseOrAgreementYearsView: leaseOrAgreementYears,
   withSessionRefiner: WithSessionRefiner,
@@ -46,6 +49,29 @@ class LeaseOrAgreementYearsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "LeaseOrAgreementYears")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            leaseOrAgreementYearsView(
+              leaseOrAgreementDetailsInSession match {
+                case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
+                case _                                  => leaseOrAgreementYearsForm
+              },
+              getBackLink(request.sessionData),
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         leaseOrAgreementYearsView(

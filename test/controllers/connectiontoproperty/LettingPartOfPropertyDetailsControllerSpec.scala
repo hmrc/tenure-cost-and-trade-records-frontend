@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
 import play.api.http.Status
@@ -25,11 +26,13 @@ import utils.TestBaseSpec
 
 class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def lettingPartOfPropertyDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
     new LettingPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tenantDetailsView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

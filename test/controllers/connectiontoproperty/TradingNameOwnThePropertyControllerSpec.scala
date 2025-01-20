@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
@@ -28,11 +29,14 @@ import scala.language.reflectiveCalls
 
 class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
   import TestData._
+
+  val mockAudit: Audit = mock[Audit]
   def tradingNameOwnThePropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
     new TradingNameOwnThePropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNameOwnThePropertyView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

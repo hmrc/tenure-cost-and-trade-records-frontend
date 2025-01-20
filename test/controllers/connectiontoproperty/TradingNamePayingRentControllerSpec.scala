@@ -16,6 +16,7 @@
 
 package controllers.connectiontoproperty
 
+import connectors.Audit
 import form.connectiontoproperty.TradingNamePayingRentForm.tradingNamePayingRentForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
@@ -28,11 +29,14 @@ import scala.language.reflectiveCalls
 
 class TradingNamePayingRentControllerSpec extends TestBaseSpec {
   import TestData._
+
+  val mockAudit: Audit = mock[Audit]
   def tradingNamePayingRentController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
     new TradingNamePayingRentController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       tradingNamePayRentView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),

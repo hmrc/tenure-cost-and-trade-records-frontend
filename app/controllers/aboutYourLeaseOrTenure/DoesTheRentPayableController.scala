@@ -17,8 +17,10 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.DoesTheRentPayableForm.doesTheRentPayableForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -29,19 +31,41 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.doesTheRentPayable
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class DoesTheRentPayableController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   doesTheRentPayableView: doesTheRentPayable,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "DoesTheRentPayable"))
+      case _                                           =>
+        Future.successful(
+          Ok(
+            doesTheRentPayableView(
+              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
+                case Some(doesTheRentPayable) => doesTheRentPayableForm.fill(doesTheRentPayable)
+                case _                        => doesTheRentPayableForm
+              },
+              request.sessionData.forType,
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         doesTheRentPayableView(

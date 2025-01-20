@@ -17,8 +17,10 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -29,18 +31,42 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.currentLeaseOrAgreementBegin
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CurrentLeaseOrAgreementBeginController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "CurrentLeaseOrAgreementBegin")
+        )
+      case _                                           =>
+        Ok(
+          currentLeaseOrAgreementBeginView(
+            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match {
+              case Some(currentLeaseOrAgreementBegin) =>
+                currentLeaseOrAgreementBeginForm.fill(currentLeaseOrAgreementBegin)
+              case _                                  => currentLeaseOrAgreementBeginForm
+            },
+            request.sessionData.toSummary
+          )
+        )
+    }
     Ok(
       currentLeaseOrAgreementBeginView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match {

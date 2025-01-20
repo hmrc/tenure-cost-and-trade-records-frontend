@@ -17,10 +17,12 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 import models.ForType
 import models.ForType.*
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import models.submissions.common.AnswerYes
@@ -32,19 +34,43 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleOutsideRepairs
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class UltimatelyResponsibleOutsideRepairsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   ultimatelyResponsibleORView: ultimatelyResponsibleOutsideRepairs,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "UltimatelyResponsibleOutsideRepairs")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            ultimatelyResponsibleORView(
+              request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleOutsideRepairs) match {
+                case Some(ultimatelyResponsible) => ultimatelyResponsibleOutsideRepairsForm.fill(ultimatelyResponsible)
+                case _                           => ultimatelyResponsibleOutsideRepairsForm
+              },
+              getBackLink
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         ultimatelyResponsibleORView(

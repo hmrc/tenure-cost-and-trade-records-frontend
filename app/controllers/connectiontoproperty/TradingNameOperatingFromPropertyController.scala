@@ -17,11 +17,13 @@
 package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 import form.connectiontoproperty.TradingNameOperatingFromProperty6048Form.tradingNameOperatingFromProperty6048Form
 import models.ForType
 import models.ForType.*
+import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, TradingNameOperatingFromProperty}
 import navigation.ConnectionToPropertyNavigator
@@ -38,6 +40,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class TradingNameOperatingFromPropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: ConnectionToPropertyNavigator,
   nameOfBusinessOperatingFromPropertyView: tradingNameOperatingFromProperty,
   withSessionRefiner: WithSessionRefiner,
@@ -50,35 +53,59 @@ class TradingNameOperatingFromPropertyController @Inject() (
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (forType == FOR6048) {
-      Future.successful(
-        Ok(
-          nameOfBusinessOperatingFromPropertyView(
-            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-              case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
-              case _                      => tradingNameOperatingFromProperty6048Form
-            },
-            calculateBackLink,
-            request.sessionData.toSummary,
-            navigator.from
-          )
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "TradingNameOperatingFromProperty")
         )
-      )
-    } else {
-      Future.successful(
-        Ok(
-          nameOfBusinessOperatingFromPropertyView(
-            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-              case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
-              case _                      => tradingNameOperatingFromPropertyForm
-            },
-            calculateBackLink,
-            request.sessionData.toSummary,
-            navigator.from
+      case _                                           =>
+        if (forType == FOR6048) {
+          Future.successful(
+            Ok(
+              nameOfBusinessOperatingFromPropertyView(
+                request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+                  case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
+                  case _                      => tradingNameOperatingFromProperty6048Form
+                },
+                calculateBackLink,
+                request.sessionData.toSummary,
+                navigator.from
+              )
+            )
           )
-        )
-      )
+        } else {
+          Future.successful(
+            Ok(
+              nameOfBusinessOperatingFromPropertyView(
+                request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+                  case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
+                  case _                      => tradingNameOperatingFromPropertyForm
+                },
+                calculateBackLink,
+                request.sessionData.toSummary,
+                navigator.from
+              )
+            )
+          )
+        }
     }
+    Future.successful(
+      Ok(
+        nameOfBusinessOperatingFromPropertyView(
+          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+            case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
+            case _                      => tradingNameOperatingFromPropertyForm
+          },
+          calculateBackLink,
+          request.sessionData.toSummary,
+          navigator.from
+        )
+      )
+    )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import config.ErrorHandler
-import connectors.AddressLookupConnector
+import connectors.{AddressLookupConnector, Audit}
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import models.{Address, AddressLookup, ForType}
@@ -27,8 +27,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
-import scala.language.reflectiveCalls
 
+import scala.language.reflectiveCalls
 import scala.concurrent.Future
 
 class AboutYourLandlordControllerSpec extends TestBaseSpec {
@@ -36,6 +36,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit                                   = mock[Audit]
   val mockAddressLookupConnector: AddressLookupConnector = mock[AddressLookupConnector]
   val errorHandler: ErrorHandler                         = inject[ErrorHandler]
 
@@ -44,6 +45,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new AboutYourLandlordController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     aboutYourLandlordView,
     mockAddressLookupConnector,

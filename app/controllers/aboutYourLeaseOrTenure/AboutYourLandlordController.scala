@@ -18,11 +18,12 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
-import connectors.AddressLookupConnector
+import connectors.{AddressLookupConnector, Audit}
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.ForType.*
 import models.Session
+import models.audit.ChangeLinkAudit
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
@@ -39,6 +40,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AboutYourLandlordController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   aboutYourLandlordView: aboutYourLandlord,
   addressLookupConnector: AddressLookupConnector,
@@ -51,6 +53,26 @@ class AboutYourLandlordController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "AboutYourLandlord"))
+      case _                                           =>
+        Future.successful(
+          Ok(
+            aboutYourLandlordView(
+              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord) match {
+                case Some(aboutTheLandlord) => aboutTheLandlordForm.fill(aboutTheLandlord)
+                case _                      => aboutTheLandlordForm
+              },
+              request.sessionData.toSummary,
+              getBackLink(request.sessionData)
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         aboutYourLandlordView(

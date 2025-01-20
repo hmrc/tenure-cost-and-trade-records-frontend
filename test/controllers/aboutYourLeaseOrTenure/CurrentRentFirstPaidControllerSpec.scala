@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
@@ -27,6 +28,7 @@ import org.jsoup.Jsoup
 
 class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def currentRentFirstPaidController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
@@ -35,6 +37,7 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
     )
   ) = new CurrentRentFirstPaidController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     currentRentFirstPaidView,
     preEnrichedActionRefiner(

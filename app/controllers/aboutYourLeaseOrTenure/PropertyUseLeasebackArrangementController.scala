@@ -17,11 +17,13 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.ForType.*
 import models.Session
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId
@@ -32,20 +34,49 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.propertyUseLeasebackArrangement
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PropertyUseLeasebackArrangementController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   propertyUseLeasebackAgreementView: propertyUseLeasebackArrangement,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "PropertyUseLeasebackAgreement")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            propertyUseLeasebackAgreementView(
+              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) match {
+                case Some(propertyUseLeasebackAgreement) =>
+                  propertyUseLeasebackArrangementForm.fill(propertyUseLeasebackAgreement)
+                case _                                   => propertyUseLeasebackArrangementForm
+              },
+              getBackLink(request.sessionData),
+              request.sessionData.stillConnectedDetails
+                .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
+                .getOrElse(""),
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         propertyUseLeasebackAgreementView(

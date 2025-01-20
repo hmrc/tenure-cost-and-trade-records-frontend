@@ -17,8 +17,10 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -30,20 +32,45 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.connectedToLandlordDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ConnectedToLandlordDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   connectedToLandlordDetailsView: connectedToLandlordDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val containCYA = request.uri
+    val forType    = request.sessionData.forType
+
+    containCYA match {
+      case containsCYA if containsCYA.contains("=CYA") =>
+        audit.sendExplicitAudit(
+          "cya-change-link",
+          ChangeLinkAudit(forType.toString, request.uri, "ConnectedToLandlordDetails")
+        )
+      case _                                           =>
+        Future.successful(
+          Ok(
+            connectedToLandlordDetailsView(
+              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlordDetails) match {
+                case Some(connectedToLandlordDetails) =>
+                  connectedToLandlordDetailsForm.fill(connectedToLandlordDetails)
+                case _                                => connectedToLandlordDetailsForm
+              },
+              request.sessionData.toSummary
+            )
+          )
+        )
+    }
     Future.successful(
       Ok(
         connectedToLandlordDetailsView(

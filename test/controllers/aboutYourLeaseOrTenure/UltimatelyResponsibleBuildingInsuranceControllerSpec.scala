@@ -16,10 +16,12 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 import play.api.test.*
 import play.api.test.Helpers.*
@@ -29,10 +31,13 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec 
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def ultimatelyResponsibleBuildingInsuranceController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) = new UltimatelyResponsibleBuildingInsuranceController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     ultimatelyResponsibleBuildingInsuranceView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),

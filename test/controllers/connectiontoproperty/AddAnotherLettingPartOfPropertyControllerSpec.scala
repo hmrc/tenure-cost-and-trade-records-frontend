@@ -24,17 +24,22 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import actions.SessionRequest
+import connectors.Audit
+
 import scala.language.reflectiveCalls
 
 class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
 
   import TestData._
 
+  val mockAudit: Audit = mock[Audit]
+
   def addAnotherLettingPartOfPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
     new AddAnotherLettingPartOfPropertyController(
       stubMessagesControllerComponents(),
+      mockAudit,
       connectedToPropertyNavigator,
       addAnotherLettingPartOfPropertyView,
       genericRemoveConfirmationView,
