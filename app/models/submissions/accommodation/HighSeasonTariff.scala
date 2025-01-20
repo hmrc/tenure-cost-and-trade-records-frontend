@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,15 @@ package models.submissions.accommodation
 
 import play.api.libs.json.{Json, OFormat}
 
+import java.time.LocalDate
+
 /**
   * @author Yuriy Tumakha
   */
-case class AccommodationUnit(
-  unitName: String,
-  unitType: String,
-  availableRooms: Option[AvailableRooms] = None,
-  lettingHistory: Option[Seq[AccommodationLettingHistory]] = None,
-  highSeasonTariff: Option[HighSeasonTariff] = None
+case class HighSeasonTariff(
+  fromDate: LocalDate,
+  toDate: LocalDate
 )
 
-object AccommodationUnit:
-  implicit val format: OFormat[AccommodationUnit] = Json.format
+object HighSeasonTariff:
+  implicit val format: OFormat[HighSeasonTariff] = Json.format
