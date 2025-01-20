@@ -50,21 +50,10 @@ class AreYouThirdPartyController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "AreYouThirdParty"))
-    }
-        Future.successful(
-          Ok(
-            areYouThirdPartyView(
-              request.sessionData.stillConnectedDetails.flatMap(_.areYouThirdParty) match {
-                case Some(enforcementAction) => areYouThirdPartyForm.fill(enforcementAction)
-                case _                       => areYouThirdPartyForm
-              },
-              getBackLink,
-              request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
-              request.sessionData.toSummary
-            )
-          )
-        )
+      audit.sendExplicitAudit(
+        "cya-change-link",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "AreYouThirdParty")
+      )
     }
     Future.successful(
       Ok(
