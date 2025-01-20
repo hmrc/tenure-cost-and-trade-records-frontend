@@ -49,13 +49,9 @@ class AreYouThirdPartyController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "AreYouThirdParty"))
-      case _                                           =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "AreYouThirdParty"))
+    }
         Future.successful(
           Ok(
             areYouThirdPartyView(
