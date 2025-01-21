@@ -24,6 +24,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
 @import util.DateUtilLocalised
+@import util.DateUtil.*
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
@@ -43,8 +44,8 @@
     occupier.rental.map { r =>
         messages(
             "lettingHistory.occupierList.rentalPeriod.text",
-            dateUtil.formatDate(r.fromDate),
-            dateUtil.formatDate(r.toDate)
+            r.fromDate.shortDate,
+            r.toDate.shortDate
         )
     }
     .getOrElse("")

@@ -1643,9 +1643,9 @@ lettingHistory.occupierDetail.address.legend = Occupier''s address
 lettingHistory.occupierDetail.address.hint = This should be the address they provided when they rented the property.
 
 lettingHistory.rentalPeriod.heading = When did {0} rent part of your property?
-fieldName.lettingHistory.rentalPeriod.fromDate = from date
+fieldName.fromDate = from date
 lettingHistory.rentalPeriod.fromDate.error = The "from date" must be greater than or equal to {0}
-fieldName.lettingHistory.rentalPeriod.toDate = to date
+fieldName.toDate = to date
 lettingHistory.rentalPeriod.toDate.error = The "to date" must be less than or equal to {0}
 lettingHistory.rentalPeriod.error = The "from date" must be less than or equal to the "to date"
 
