@@ -51,5 +51,5 @@ POST        /letting-history-advertising-online-details         controllers.lett
 
 GET         /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.show
 GET         /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.remove(index: Int)
-POST        /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.performRemove(index: Int)
-POST        /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.submit
+POST        /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.performRemove(index: Int)
+POST        /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.submit
