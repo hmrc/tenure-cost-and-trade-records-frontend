@@ -53,37 +53,36 @@ class TradingNameOperatingFromPropertyController @Inject() (
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-        if (forType == FOR6048) {
-          Future.successful(
-            Ok(
-              nameOfBusinessOperatingFromPropertyView(
-                request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-                  case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
-                  case _                      => tradingNameOperatingFromProperty6048Form
-                },
-                calculateBackLink,
-                request.sessionData.toSummary,
-                navigator.from
-              )
-            )
+    if (forType == FOR6048) {
+      Future.successful(
+        Ok(
+          nameOfBusinessOperatingFromPropertyView(
+            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+              case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
+              case _                      => tradingNameOperatingFromProperty6048Form
+            },
+            calculateBackLink,
+            request.sessionData.toSummary,
+            navigator.from
           )
-        } else {
-          Future.successful(
-            Ok(
-              nameOfBusinessOperatingFromPropertyView(
-                request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-                  case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
-                  case _                      => tradingNameOperatingFromPropertyForm
-                },
-                calculateBackLink,
-                request.sessionData.toSummary,
-                navigator.from
-              )
-            )
+        )
+      )
+    } else {
+      Future.successful(
+        Ok(
+          nameOfBusinessOperatingFromPropertyView(
+            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+              case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
+              case _                      => tradingNameOperatingFromPropertyForm
+            },
+            calculateBackLink,
+            request.sessionData.toSummary,
+            navigator.from
           )
-        }
+        )
+      )
     }
-
+  }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (forType == FOR6048) {
