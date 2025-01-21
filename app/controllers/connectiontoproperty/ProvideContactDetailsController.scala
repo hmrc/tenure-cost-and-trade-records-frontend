@@ -49,29 +49,6 @@ class ProvideContactDetailsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "ProvideContactDetails")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            provideContactDetailsView(
-              request.sessionData.stillConnectedDetails.flatMap(_.provideContactDetails) match {
-                case Some(customerDetails) => provideContactDetailsForm.fill(customerDetails)
-                case _                     => provideContactDetailsForm
-              },
-              getBackLink,
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         provideContactDetailsView(

@@ -48,30 +48,6 @@ class TradingNamePayingRentController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "TradingNamePayingRent")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            tradingNamePayingRentView(
-              request.sessionData.stillConnectedDetails.flatMap(_.tradingNamePayingRent) match {
-                case Some(tradingNamePayingRent) => tradingNamePayingRentForm.fill(tradingNamePayingRent)
-                case _                           => tradingNamePayingRentForm
-              },
-              getBackLink,
-              request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
 
     Future.successful(
       Ok(

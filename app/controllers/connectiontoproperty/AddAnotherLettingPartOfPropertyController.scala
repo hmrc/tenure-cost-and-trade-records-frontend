@@ -49,29 +49,6 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection = request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(index))
-    val containCYA      = request.uri
-    val forType         = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "AddAnotherLettingPartOfProperty")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            addAnotherLettingPartOfPropertyView(
-              existingSection
-                .flatMap(_.addAnotherLettingToProperty)
-                .fold(addAnotherLettingForm)(addAnotherLettingForm.fill),
-              index,
-              calculateBackLink(index),
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         addAnotherLettingPartOfPropertyView(

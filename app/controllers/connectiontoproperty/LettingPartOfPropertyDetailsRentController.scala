@@ -53,26 +53,6 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           lettingPartOfPropertyRentForm
         )(lettingPartOfPropertyRentForm.fill)
 
-        val containCYA = request.uri
-        val forType    = request.sessionData.forType
-
-        containCYA match {
-          case containsCYA if containsCYA.contains("=CYA") =>
-            audit.sendExplicitAudit(
-              "cya-change-link",
-              ChangeLinkAudit(forType.toString, request.uri, "LettingPartOfPropertyDetailsRent")
-            )
-          case _                                           =>
-            Ok(
-              lettingPartOfPropertyRentDetailsView(
-                lettingDetailsForm,
-                index,
-                existingSection.get.tenantDetails.name,
-                calculateBackLink(index),
-                request.sessionData.toSummary
-              )
-            )
-        }
         Ok(
           lettingPartOfPropertyRentDetailsView(
             lettingDetailsForm,

@@ -54,25 +54,6 @@ class LettingPartOfPropertyDetailsController @Inject() (
       requestedLettingPartOfPropertyDetails <- existingLettingPartOfPropertyDetails.lift(requestedIndex)
     } yield requestedLettingPartOfPropertyDetails.tenantDetails
 
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "LettingPartOfPropertyDetails")
-        )
-      case _                                           =>
-        Ok(
-          tenantDetailsView(
-            existingDetails.fold(tenantDetailsForm)(tenantDetailsForm.fill),
-            index,
-            getBackLink(index),
-            request.sessionData.toSummary
-          )
-        )
-    }
     Ok(
       tenantDetailsView(
         existingDetails.fold(tenantDetailsForm)(tenantDetailsForm.fill),
