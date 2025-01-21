@@ -54,7 +54,9 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
       Ok(
         grossReceiptsCaravanFleetHireView(
           grossReceiptsCaravanFleetHireForm(years).fill(
-            turnoverSections6045.map(_.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire())
+            turnoverSections6045.map(section =>
+              section.grossReceiptsCaravanFleetHire getOrElse GrossReceiptsCaravanFleetHire(section.tradingPeriod)
+            )
           ),
           getBackLink
         )

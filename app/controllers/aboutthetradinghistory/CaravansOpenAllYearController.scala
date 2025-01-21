@@ -19,18 +19,19 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansOpenAllYearForm.caravansOpenAllYearForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
-import models.submissions.common.AnswersYesNo
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, Caravans, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
+import models.submissions.common.{AnswerNo, AnswersYesNo}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CaravansOpenAllYearId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.caravansOpenAllYear
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * 6045/6046 Trading history - Are your static caravans open all year.
@@ -50,37 +51,60 @@ class CaravansOpenAllYearController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(
-      caravansOpenAllYearView(
-        savedAnswer.fold(caravansOpenAllYearForm)(caravansOpenAllYearForm.fill),
-        getBackLink
+    runWithSessionCheck { _ =>
+      Ok(
+        caravansOpenAllYearView(
+          savedAnswer.fold(caravansOpenAllYearForm)(caravansOpenAllYearForm.fill),
+          getBackLink
+        )
       )
-    )
+    }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[(AnswersYesNo, Option[Int])](
-      caravansOpenAllYearForm,
-      formWithErrors => BadRequest(caravansOpenAllYearView(formWithErrors, getBackLink)),
-      data => {
-        val updatedData = updateCaravans(
-          _.copy(
-            openAllYear = Some(data._1),
-            weeksPerYear = data._2
-          )
-        )
+    runWithSessionCheck { turnoverSections6045 =>
+      continueOrSaveAsDraft[(AnswersYesNo, Option[Int])](
+        caravansOpenAllYearForm,
+        formWithErrors => BadRequest(caravansOpenAllYearView(formWithErrors, getBackLink)),
+        data => {
+          val tradingPeriod   = data._2.getOrElse(52)
+          val updatedSections =
+            if data._1 == AnswerNo then turnoverSections6045.map(_.copy(tradingPeriod = tradingPeriod))
+            else turnoverSections6045
 
-        session
-          .saveOrUpdate(updatedData)
-          .map { _ =>
-            navigator.cyaPage
-              .filter(_ => navigator.from == "CYA")
-              .getOrElse(navigator.nextPage(CaravansOpenAllYearId, updatedData).apply(updatedData))
-          }
-          .map(Redirect)
-      }
-    )
+          val updatedData = updateAboutTheTradingHistoryPartOne(tradingHistoryPartOne =>
+            val caravans = tradingHistoryPartOne.caravans getOrElse Caravans()
+            tradingHistoryPartOne.copy(
+              turnoverSections6045 = Some(updatedSections),
+              caravans = Some(
+                caravans.copy(
+                  openAllYear = Some(data._1),
+                  weeksPerYear = data._2
+                )
+              )
+            )
+          )
+
+          session
+            .saveOrUpdate(updatedData)
+            .map { _ =>
+              navigator.cyaPage
+                .filter(_ => navigator.from == "CYA")
+                .getOrElse(navigator.nextPage(CaravansOpenAllYearId, updatedData).apply(updatedData))
+            }
+            .map(Redirect)
+        }
+      )
+    }
   }
+
+  private def runWithSessionCheck(
+    action: Seq[TurnoverSection6045] => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+    request.sessionData.aboutTheTradingHistoryPartOne
+      .flatMap(_.turnoverSections6045)
+      .filter(_.nonEmpty)
+      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
   private def savedAnswer(implicit
     request: SessionRequest[AnyContent]
