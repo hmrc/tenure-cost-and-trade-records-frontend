@@ -27,17 +27,19 @@
 
 @(form: Form[LocalDate], index: Int )(implicit request: SessionRequest[?], messages: Messages)
 
+@getYear = @{
+    form.value.map(_.getYear).fold("")(_.toString)
+}
+
 @layout(
-  pageHeading = messages("financialYearEndDates.heading"),
+  pageHeading = messages("financialYearEndDates.heading", getYear),
   showSection = true,
   summary = Some(request.sessionData.toSummary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url,
+  backLinkUrl = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url,
   fullWidth = true,
   theForm = form
 ) {
-
-    <p class="govuk-body">@messages("financialYearEndDates.p1")</p>
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.EditFinancialYearEndDateController.submit(index)) {
 
@@ -46,7 +48,7 @@
           field = "financialYearEnd",
           govukDate = govukDateInput,
           showFieldSet = false,
-          helpText = messages("label.financialYearEnd.help"),
+          helpText = messages("financialYearEndDates.hint"),
           showDays = true,
       )
 
