@@ -49,34 +49,6 @@ class ConnectionToThePropertyController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "ConnectionToTheProperty")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            connectionToThePropertyView(
-              request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
-                case Some(connectionToProperty) => connectionToThePropertyForm.fill(connectionToProperty)
-                case _                          => connectionToThePropertyForm
-              },
-              getBackLink(request.sessionData) match {
-                case Right(link) => link
-                case Left(msg)   =>
-                  logger.warn(s"Navigation for connection to property page reached with error: $msg")
-                  throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
-              },
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         connectionToThePropertyView(

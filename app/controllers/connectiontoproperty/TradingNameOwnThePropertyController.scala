@@ -48,32 +48,6 @@ class TradingNameOwnThePropertyController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "TradingNameOwnTheProperty")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            tradingNameOwnThePropertyView(
-              ownThePropertyInSession match {
-                case Some(ownTheProperty) => tradingNameOwnThePropertyForm.fill(ownTheProperty)
-                case _                    => tradingNameOwnThePropertyForm
-              },
-              getBackLink,
-              request.sessionData.stillConnectedDetails
-                .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
-                .getOrElse(""),
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         tradingNameOwnThePropertyView(

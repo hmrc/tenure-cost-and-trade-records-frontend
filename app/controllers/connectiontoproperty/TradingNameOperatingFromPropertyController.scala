@@ -53,16 +53,6 @@ class TradingNameOperatingFromPropertyController @Inject() (
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "TradingNameOperatingFromProperty")
-        )
-      case _                                           =>
         if (forType == FOR6048) {
           Future.successful(
             Ok(
@@ -93,20 +83,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
           )
         }
     }
-    Future.successful(
-      Ok(
-        nameOfBusinessOperatingFromPropertyView(
-          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-            case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
-            case _                      => tradingNameOperatingFromPropertyForm
-          },
-          calculateBackLink,
-          request.sessionData.toSummary,
-          navigator.from
-        )
-      )
-    )
-  }
+
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (forType == FOR6048) {
