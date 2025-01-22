@@ -46,6 +46,12 @@ class AreYouStillConnectedController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "cya-change-link",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "AreYouStillConnected")
+      )
+    }
     Future.successful(
       Ok(
         areYouStillConnectedView(

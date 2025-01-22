@@ -52,6 +52,17 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
       ) { currentSection =>
         val rentIncludesForm = lettingPartOfPropertyRentIncludesForm.fill(currentSection.itemsIncludedInRent)
 
+        if (request.getQueryString("from").contains("CYA")) {
+          audit.sendExplicitAudit(
+            "cya-change-link",
+            ChangeLinkAudit(
+              request.sessionData.forType.toString,
+              request.uri,
+              "LettingPartOfPropertyItemsIncludedInRent"
+            )
+          )
+        }
+
         Ok(
           lettingPartOfPropertyRentIncludesView(
             rentIncludesForm,

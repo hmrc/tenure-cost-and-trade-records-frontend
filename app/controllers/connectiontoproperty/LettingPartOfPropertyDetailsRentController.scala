@@ -53,6 +53,13 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           lettingPartOfPropertyRentForm
         )(lettingPartOfPropertyRentForm.fill)
 
+        if (request.getQueryString("from").contains("CYA")) {
+          audit.sendExplicitAudit(
+            "cya-change-link",
+            ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "LettingPartOfPropertyDetailsRent")
+          )
+        }
+
         Ok(
           lettingPartOfPropertyRentDetailsView(
             lettingDetailsForm,
