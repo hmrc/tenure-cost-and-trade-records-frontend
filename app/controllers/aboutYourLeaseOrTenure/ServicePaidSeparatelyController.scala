@@ -95,7 +95,8 @@ class ServicePaidSeparatelyController @Inject() (
           }
         val updatedData    = updateAboutLeaseOrAgreementPartThree(_ => updatedDetails)
         session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(ServicePaidSeparatelyId, updatedData).apply(updatedData))
+          .map(_ => Redirect(navigator.nextPage(ServicePaidSeparatelyId, updatedData).apply(updatedData))
+          )
       }
     )
   }
