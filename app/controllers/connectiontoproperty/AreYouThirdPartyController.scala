@@ -55,6 +55,7 @@ class AreYouThirdPartyController @Inject() (
         ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "AreYouThirdParty")
       )
     }
+    
     Future.successful(
       Ok(
         areYouThirdPartyView(
