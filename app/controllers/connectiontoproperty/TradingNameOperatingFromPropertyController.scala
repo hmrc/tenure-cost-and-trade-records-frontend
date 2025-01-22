@@ -53,6 +53,12 @@ class TradingNameOperatingFromPropertyController @Inject() (
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "cya-change-link",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "TradingNameOperatingFromProperty")
+      )
+    }
     if (forType == FOR6048) {
       Future.successful(
         Ok(
