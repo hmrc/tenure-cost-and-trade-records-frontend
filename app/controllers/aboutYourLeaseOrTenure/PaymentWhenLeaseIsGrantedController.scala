@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.paymentWhenLeaseIsGranted
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PaymentWhenLeaseIsGrantedController @Inject() (
@@ -41,7 +41,8 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -69,8 +70,10 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
         ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PayWhenLeaseGrantedId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(PayWhenLeaseGrantedId, updatedData).apply(updatedData)))
+
       }
     )
   }

@@ -90,8 +90,12 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
       formWithErrors => BadRequest(ultimatelyResponsibleORView(formWithErrors, getBackLink)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleOutsideRepairs = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(UltimatelyResponsibleOutsideRepairsPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(navigator.nextPage(UltimatelyResponsibleOutsideRepairsPageId, updatedData).apply(updatedData))
+          )
+
       }
     )
   }

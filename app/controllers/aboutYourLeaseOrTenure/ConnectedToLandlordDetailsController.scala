@@ -91,8 +91,10 @@ class ConnectedToLandlordDetailsController @Inject() (
       formWithErrors => BadRequest(connectedToLandlordDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlordDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(ConnectedToLandlordDetailsPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(ConnectedToLandlordDetailsPageId, updatedData).apply(updatedData)))
+
       }
     )
   }

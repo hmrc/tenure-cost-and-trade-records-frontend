@@ -87,8 +87,10 @@ class DoesTheRentPayableController @Inject() (
         BadRequest(doesTheRentPayableView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(DoesRentPayablePageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(DoesRentPayablePageId, updatedData).apply(updatedData)))
+
       }
     )
   }

@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.premisesLicenseConditions
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PremisesLicenseConditionsController @Inject() (
@@ -40,7 +40,8 @@ class PremisesLicenseConditionsController @Inject() (
   premisesLicenseView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -72,8 +73,9 @@ class PremisesLicenseConditionsController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditions = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PremisesLicenceConditionsPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(PremisesLicenceConditionsPageId, updatedData).apply(updatedData)))
       }
     )
   }

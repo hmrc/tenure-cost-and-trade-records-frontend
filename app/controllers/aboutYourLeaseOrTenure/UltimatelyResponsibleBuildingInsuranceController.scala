@@ -90,8 +90,12 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject() (
       data => {
         val updatedData =
           updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleBuildingInsurance = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(UltimatelyResponsibleBusinessInsurancePageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(navigator.nextPage(UltimatelyResponsibleBusinessInsurancePageId, updatedData).apply(updatedData))
+          )
+
       }
     )
   }

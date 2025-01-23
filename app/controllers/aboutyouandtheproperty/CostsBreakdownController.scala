@@ -28,7 +28,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.costsBreakdown
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class CostsBreakdownController @Inject() (
   mcc: MessagesControllerComponents,
@@ -36,7 +36,8 @@ class CostsBreakdownController @Inject() (
   view: costsBreakdown,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -65,8 +66,9 @@ class CostsBreakdownController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(costsBreakdown = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CostsBreakdownId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(CostsBreakdownId, updatedData).apply(updatedData)))
       }
     )
   }

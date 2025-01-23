@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncreaseAnnuallyWithRPI
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RentIncreaseAnnuallyWithRPIController @Inject() (
@@ -40,7 +40,8 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -73,8 +74,10 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
         ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(RentIncreaseByRPIPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(RentIncreaseByRPIPageId, updatedData).apply(updatedData)))
+
       }
     )
   }

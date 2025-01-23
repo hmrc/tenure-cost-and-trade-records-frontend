@@ -31,7 +31,7 @@ import views.html.aboutYourLeaseOrTenure.tradeServicesList
 import views.html.genericRemoveConfirmation
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TradeServicesListController @Inject() (
@@ -41,7 +41,8 @@ class TradeServicesListController @Inject() (
   genericRemoveConfirmationView: genericRemoveConfirmation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -99,8 +100,10 @@ class TradeServicesListController @Inject() (
                 tradeServices = updatedSections
               )
             )
-            session.saveOrUpdate(updatedData)
-            Redirect(navigator.nextPage(TradeServicesListId, updatedData).apply(updatedData))
+            session
+              .saveOrUpdate(updatedData)
+              .map(_ => Redirect(navigator.nextPage(TradeServicesListId, updatedData).apply(updatedData)))
+
           }
     )
   }

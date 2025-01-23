@@ -30,6 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.leaseSurrenderdEarly
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LeaseSurrenderedEarlyController @Inject() (
@@ -38,7 +39,8 @@ class LeaseSurrenderedEarlyController @Inject() (
   view: leaseSurrenderdEarly,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -60,8 +62,10 @@ class LeaseSurrenderedEarlyController @Inject() (
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink(request), request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(leaseSurrenderedEarly = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LeaseSurrenderedEarlyId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(LeaseSurrenderedEarlyId, updatedData).apply(updatedData)))
+
       }
     )
   }

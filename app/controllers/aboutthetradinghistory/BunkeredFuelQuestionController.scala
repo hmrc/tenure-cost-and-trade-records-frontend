@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.bunkeredFuelQuestion
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class BunkeredFuelQuestionController @Inject() (
@@ -39,7 +39,8 @@ class BunkeredFuelQuestionController @Inject() (
   view: bunkeredFuelQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -71,8 +72,9 @@ class BunkeredFuelQuestionController @Inject() (
         ),
       data => {
         val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelQuestion = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(BunkeredFuelQuestionId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(BunkeredFuelQuestionId, updatedData).apply(updatedData)))
       }
     )
   }

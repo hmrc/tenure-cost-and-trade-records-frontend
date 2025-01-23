@@ -30,6 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.workCarriedOutCondition
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class WorkCarriedOutConditionController @Inject() (
@@ -38,7 +39,8 @@ class WorkCarriedOutConditionController @Inject() (
   view: workCarriedOutCondition,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -63,8 +65,10 @@ class WorkCarriedOutConditionController @Inject() (
         ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(workCarriedOutCondition = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(WorkCarriedOutConditionId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(WorkCarriedOutConditionId, updatedData).apply(updatedData)))
+
       }
     )
   }

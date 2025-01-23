@@ -111,8 +111,10 @@ class PropertyUseLeasebackArrangementController @Inject() (
         ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(propertyUseLeasebackAgreement = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PropertyUseLeasebackAgreementId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(PropertyUseLeasebackAgreementId, updatedData).apply(updatedData)))
+
       }
     )
   }

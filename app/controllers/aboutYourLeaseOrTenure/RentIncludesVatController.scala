@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncludesVat
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RentIncludesVatController @Inject() (
@@ -38,7 +38,8 @@ class RentIncludesVatController @Inject() (
   rentIncludeVatView: rentIncludesVat,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -62,8 +63,10 @@ class RentIncludesVatController @Inject() (
       formWithErrors => BadRequest(rentIncludeVatView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludesVat = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(RentIncludesVatPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(RentIncludesVatPageId, updatedData).apply(updatedData)))
+
       }
     )
   }

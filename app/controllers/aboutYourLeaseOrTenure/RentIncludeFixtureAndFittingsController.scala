@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncludeFixtureAndFittings
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RentIncludeFixtureAndFittingsController @Inject() (
@@ -42,7 +42,8 @@ class RentIncludeFixtureAndFittingsController @Inject() (
   rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -76,8 +77,10 @@ class RentIncludeFixtureAndFittingsController @Inject() (
       data => {
         val updatedData =
           updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(RentFixtureAndFittingsPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(RentFixtureAndFittingsPageId, updatedData).apply(updatedData)))
+
       }
     )
   }

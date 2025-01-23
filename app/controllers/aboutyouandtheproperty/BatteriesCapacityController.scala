@@ -28,7 +28,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.batteriesCapacity
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class BatteriesCapacityController @Inject() (
   mcc: MessagesControllerComponents,
@@ -36,7 +36,8 @@ class BatteriesCapacityController @Inject() (
   view: batteriesCapacity,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -65,8 +66,9 @@ class BatteriesCapacityController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(batteriesCapacity = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(BatteriesCapacityId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(BatteriesCapacityId, updatedData).apply(updatedData)))
       }
     )
   }

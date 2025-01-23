@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.intervalsOfRentReview
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class IntervalsOfRentReviewController @Inject() (
@@ -37,7 +38,8 @@ class IntervalsOfRentReviewController @Inject() (
   intervalsOfRentReviewView: intervalsOfRentReview,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -57,8 +59,10 @@ class IntervalsOfRentReviewController @Inject() (
       formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(IntervalsOfRentReviewId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(IntervalsOfRentReviewId, updatedData).apply(updatedData)))
+
       }
     )
   }

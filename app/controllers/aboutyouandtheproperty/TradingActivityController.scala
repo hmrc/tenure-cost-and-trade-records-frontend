@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.tradingActivity
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TradingActivityController @Inject() (
@@ -39,7 +39,8 @@ class TradingActivityController @Inject() (
   tradingActivityView: tradingActivity,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -69,8 +70,9 @@ class TradingActivityController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(tradingActivity = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TradingActivityPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(TradingActivityPageId, updatedData).apply(updatedData)))
       }
     )
   }
