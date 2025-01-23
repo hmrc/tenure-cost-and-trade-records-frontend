@@ -88,8 +88,12 @@ class UltimatelyResponsibleInsideRepairsController @Inject() (
       formWithErrors => BadRequest(ultimatelyResponsibleIRView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleInsideRepairs = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(UltimatelyResponsibleInsideRepairsPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(navigator.nextPage(UltimatelyResponsibleInsideRepairsPageId, updatedData).apply(updatedData))
+          )
+
       }
     )
   }

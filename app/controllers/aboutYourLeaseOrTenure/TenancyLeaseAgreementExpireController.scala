@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TenancyLeaseAgreementExpireController @Inject() (
@@ -38,7 +38,8 @@ class TenancyLeaseAgreementExpireController @Inject() (
   tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -62,8 +63,14 @@ class TenancyLeaseAgreementExpireController @Inject() (
       formWithErrors => BadRequest(tenancyLeaseAgreementExpireView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenancyLeaseAgreementExpire = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TenancyLeaseAgreementExpirePageId, request.sessionData).apply(request.sessionData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(
+              navigator.nextPage(TenancyLeaseAgreementExpirePageId, request.sessionData).apply(request.sessionData)
+            )
+          )
+
       }
     )
   }

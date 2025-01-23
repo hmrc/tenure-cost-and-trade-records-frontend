@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.incentivesPaymentsConditions
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class IncentivesPaymentsConditionsController @Inject() (
@@ -38,7 +38,8 @@ class IncentivesPaymentsConditionsController @Inject() (
   incentivesPaymentsConditionsView: incentivesPaymentsConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -61,8 +62,10 @@ class IncentivesPaymentsConditionsController @Inject() (
       formWithErrors => BadRequest(incentivesPaymentsConditionsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(incentivesPaymentsConditionsDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(IncentivesPaymentsConditionsId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(IncentivesPaymentsConditionsId, updatedData).apply(updatedData)))
+
       }
     )
   }

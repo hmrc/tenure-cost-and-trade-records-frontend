@@ -30,6 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.provideDetailsOfYourLease
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ProvideDetailsOfYourLeaseController @Inject() (
@@ -38,7 +39,8 @@ class ProvideDetailsOfYourLeaseController @Inject() (
   provideDetailsOfYourLeaseView: provideDetailsOfYourLease,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -59,8 +61,10 @@ class ProvideDetailsOfYourLeaseController @Inject() (
       formWithErrors => BadRequest(provideDetailsOfYourLeaseView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(provideDetailsOfYourLease = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(ProvideDetailsOfYourLeasePageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(ProvideDetailsOfYourLeasePageId, updatedData).apply(updatedData)))
+
       }
     )
   }

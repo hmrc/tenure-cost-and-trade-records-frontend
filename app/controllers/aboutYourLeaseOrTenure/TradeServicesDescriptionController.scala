@@ -94,8 +94,10 @@ class TradeServicesDescriptionController @Inject() (
               )
           }
         val updatedData    = updateAboutLeaseOrAgreementPartThree(_ => updatedDetails)
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TradeServicesDescriptionId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(TradeServicesDescriptionId, updatedData).apply(updatedData)))
+
       }
     )
   }
