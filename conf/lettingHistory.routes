@@ -4,7 +4,7 @@ GET         /letting-history-has-permanent-residents            controllers.lett
 POST        /letting-history-has-permanent-residents            controllers.lettingHistory.HasPermanentResidentsController.submit
 
 GET         /letting-history-resident-detail                    controllers.lettingHistory.ResidentDetailController.show(index: Option[Int] ?= None)
-POST        /letting-history-resident-detail                    controllers.lettingHistory.ResidentDetailController.submit
+POST        /letting-history-resident-detail                    controllers.lettingHistory.ResidentDetailController.submit(index: Option[Int] ?= None)
 
 GET         /letting-history-resident-list                      controllers.lettingHistory.ResidentListController.show
 GET         /letting-history-resident-remove                    controllers.lettingHistory.ResidentListController.remove(index: Int)
@@ -15,7 +15,7 @@ GET         /letting-history-has-completed-lettings             controllers.lett
 POST        /letting-history-has-completed-lettings             controllers.lettingHistory.HasCompletedLettingsController.submit
 
 GET         /letting-history-occupier-detail                    controllers.lettingHistory.OccupierDetailController.show(index: Option[Int] ?= None)
-POST        /letting-history-occupier-detail                    controllers.lettingHistory.OccupierDetailController.submit
+POST        /letting-history-occupier-detail                    controllers.lettingHistory.OccupierDetailController.submit(index: Option[Int] ?= None)
 
 GET         /letting-history-rental-period                      controllers.lettingHistory.RentalPeriodController.show(index: Option[Int] ?= None)
 POST        /letting-history-rental-period                      controllers.lettingHistory.RentalPeriodController.submit(index: Option[Int] ?= None)
@@ -40,14 +40,14 @@ POST        /letting-history-when-was-last-let                  controllers.lett
 GET         /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.show
 POST        /letting-history-is-yearly-available                controllers.lettingHistory.IsYearlyAvailableController.submit
 
-GET         /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonLengthController.show
-POST        /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonLengthController.submit
+GET         /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonController.show
+POST        /letting-history-trading-season-length              controllers.lettingHistory.TradingSeasonController.submit
 
-GET         /letting-history-has-online-advertising             controllers.lettingHistory.AdvertisingOnlineController.show
-POST        /letting-history-has-online-advertising             controllers.lettingHistory.AdvertisingOnlineController.submit
+GET         /letting-history-has-online-advertising             controllers.lettingHistory.HasOnlineAdvertisingController.show
+POST        /letting-history-has-online-advertising             controllers.lettingHistory.HasOnlineAdvertisingController.submit
 
-GET         /letting-history-advertising-detail                 controllers.lettingHistory.AdvertisingOnlineDetailsController.show(index: Option[Int] ?= None)
-POST        /letting-history-advertising-detail                 controllers.lettingHistory.AdvertisingOnlineDetailsController.submit(index: Option[Int] ?= None)
+GET         /letting-history-advertising-detail                 controllers.lettingHistory.AdvertisingDetailController.show(index: Option[Int] ?= None)
+POST        /letting-history-advertising-detail                 controllers.lettingHistory.AdvertisingDetailController.submit(index: Option[Int] ?= None)
 
 GET         /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.show
 GET         /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.remove(index: Int)

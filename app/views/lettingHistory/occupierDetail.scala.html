@@ -23,7 +23,7 @@
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukFieldset: GovukFieldset, govukHint: GovukHint, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
-@(theForm: Form[OccupierDetail], fiscalPeriod: LocalPeriod, backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[OccupierDetail], fiscalPeriod: LocalPeriod, backLink: Option[String], maybeIndex: Option[Int])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     theForm = theForm,
@@ -42,7 +42,7 @@
     )
     </p>
 
-    @formWithCSRF(action = routes.OccupierDetailController.submit) {
+    @formWithCSRF(action = routes.OccupierDetailController.submit(maybeIndex)) {
         @includes.textInput(
             govukInput,
             theForm,

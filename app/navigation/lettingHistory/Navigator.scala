@@ -16,6 +16,7 @@
 
 package navigation.lettingHistory
 
+import controllers.lettingHistory.{isFromCheckYourAnswer, unchangedSession}
 import actions.SessionRequest
 import app.RoutesPrefix
 import connectors.Audit
@@ -33,13 +34,14 @@ abstract class Navigator(audit: Audit):
 
   val backwardNavigationMap: NavigationMap
   val checkYourAnswerCall: Call
+  val taskListCall: Call
 
   def backLinkUrl(ofPage: PageIdentifier, navigation: NavigationData = Map.empty)(using
     request: SessionRequest[AnyContent]
   ): Option[String] =
     // TODO if request.isFromTaskList then ...
     if request.isFromCheckYourAnswer
-    then Some(prefixedCheckYourAnswerCall.url)
+    then Some(prefixed(checkYourAnswerCall).url)
     else
       backwardNavigationMap
         .get(ofPage)
@@ -54,7 +56,7 @@ abstract class Navigator(audit: Audit):
   ): Result =
     val nextCall =
       if request.isFromCheckYourAnswer && session.notChanged
-      then Some(prefixedCheckYourAnswerCall)
+      then Some(prefixed(checkYourAnswerCall))
       else
         for call <- forwardNavigationMap(currentPage)(session, navigation)
         yield {
@@ -67,31 +69,5 @@ abstract class Navigator(audit: Audit):
       case _          => throw new Exception("NavigatorIllegalState : couldn't determine next redirect call")
 
   // This helper method makes sure the call URL is properly prefixed
-  private def prefixedCheckYourAnswerCall =
-    Call(checkYourAnswerCall.method, RoutesPrefix.prefix + checkYourAnswerCall.url)
-
-  // --------------------------------------------------------
-
-  extension (request: SessionRequest[AnyContent])
-    def unchangedSession =
-      SessionWrapper(request.sessionData, changed = false)
-
-    def isFromCheckYourAnswer: Boolean =
-      request
-        .getQueryString("from")
-        .map { fromValue =>
-          fromValue.contains("CYA")
-        }
-        .getOrElse {
-          request.body.asFormUrlEncoded
-            .map { submittedData =>
-              submittedData
-                .get("from")
-                .flatMap(_.headOption)
-                .map { fromValue =>
-                  fromValue.contains("CYA")
-                }
-                .getOrElse(false)
-            }
-            .getOrElse(false)
-        }
+  protected def prefixed(call: Call) =
+    Call(call.method, RoutesPrefix.prefix + call.url)

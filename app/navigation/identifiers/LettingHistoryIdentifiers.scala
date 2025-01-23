@@ -64,7 +64,7 @@ case object TradingSeasonLengthPageId extends Identifier:
 case object HasOnlineAdvertisingPageId extends Identifier:
   override def toString: String = "hasOnlineAdvertisingPage"
 
-case object OnlineAdvertisingDetailPageId extends Identifier:
+case object AdvertisingDetailPageId extends Identifier:
   override def toString: String = "onlineAdvertisingDetailPage"
 
 case object AdvertisingListPageId extends Identifier:
@@ -78,24 +78,24 @@ case object CheckYourAnswersPageId extends Identifier:
 
 extension (string: String)
   def asPageIdentifier: Option[Identifier] = string match
-    case "hasPermanentResidentsPage"          => Some(HasPermanentResidentsPageId)
-    case "residentDetailPage"                 => Some(ResidentDetailPageId)
-    case "residentRemovePage"                 => Some(ResidentRemovePageId)
-    case "residentListPage"                   => Some(ResidentListPageId)
-    case "maxNumberReachedPage"               => Some(MaxNumberReachedPageId)
-    case "hasCompletedLettingsPage"           => Some(HasCompletedLettingsPageId)
-    case "occupierDetailPage"                 => Some(OccupierDetailPageId)
-    case "rentalPeriodPage"                   => Some(RentalPeriodPageId)
-    case "occupierRemovePage"                 => Some(OccupierRemovePageId)
-    case "occupierListPage"                   => Some(OccupierListPageId)
-    case "howManyNightsPage"                  => Some(HowManyNightsPageId)
-    case "hasStoppedLettingPage"              => Some(HasStoppedLettingPageId)
-    case "whenWasLastLetPage"                 => Some(WhenWasLastLetPageId)
-    case "isYearlyAvailablePage"              => Some(IsYearlyAvailablePageId)
-    case "tradingSeasonLengthPage"            => Some(TradingSeasonLengthPageId)
-    case "hasOnlineAdvertisingPage"           => Some(HasOnlineAdvertisingPageId)
-    case "onlineAdvertisingDetailPage"        => Some(OnlineAdvertisingDetailPageId)
-    case "advertisingListPage"                => Some(AdvertisingListPageId)
-    case "advertisingRemovePage"              => Some(AdvertisingRemovePageId)
-    case "checkYourAnswers" => Some(CheckYourAnswersPageId)
-    case _                                    => None
+    case "hasPermanentResidentsPage" => Some(HasPermanentResidentsPageId)
+    case "residentDetailPage"        => Some(ResidentDetailPageId)
+    case "residentRemovePage"        => Some(ResidentRemovePageId)
+    case "residentListPage"          => Some(ResidentListPageId)
+    case "maxNumberReachedPage"      => Some(MaxNumberReachedPageId)
+    case "hasCompletedLettingsPage"  => Some(HasCompletedLettingsPageId)
+    case "occupierDetailPage"        => Some(OccupierDetailPageId)
+    case "rentalPeriodPage"          => Some(RentalPeriodPageId)
+    case "occupierRemovePage"        => Some(OccupierRemovePageId)
+    case "occupierListPage"          => Some(OccupierListPageId)
+    case "howManyNightsPage"         => Some(HowManyNightsPageId)
+    case "hasStoppedLettingPage"     => Some(HasStoppedLettingPageId)
+    case "whenWasLastLetPage"        => Some(WhenWasLastLetPageId)
+    case "isYearlyAvailablePage"     => Some(IsYearlyAvailablePageId)
+    case "tradingSeasonLengthPage"   => Some(TradingSeasonLengthPageId)
+    case "hasOnlineAdvertisingPage"  => Some(HasOnlineAdvertisingPageId)
+    case "AdvertisingDetailPage"     => Some(AdvertisingDetailPageId)
+    case "advertisingListPage"       => Some(AdvertisingListPageId)
+    case "advertisingRemovePage"     => Some(AdvertisingRemovePageId)
+    case "checkYourAnswers"          => Some(CheckYourAnswersPageId)
+    case _                           => None

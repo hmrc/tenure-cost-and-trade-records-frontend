@@ -68,7 +68,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           hasStopped = Some(true),
           whenWasLastLet = Some(date),
           isYearlyAvailable = Some(true),
-          tradingPeriod = Some(period)
+          tradingSeason = Some(period)
         )
       ) {
         val session = withNumberOfNights(141) // meets criteria
@@ -79,7 +79,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         intendedLettings(session.data).value.hasStopped mustBe None
         intendedLettings(session.data).value.whenWasLastLet mustBe None
         intendedLettings(session.data).value.isYearlyAvailable mustBe None
-        intendedLettings(session.data).value.tradingPeriod mustBe None
+        intendedLettings(session.data).value.tradingSeason mustBe None
       }
     }
     "copying the session withHasStopped"        should {
@@ -121,7 +121,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           hasStopped = Some(true),
           whenWasLastLet = Some(date),
           isYearlyAvailable = Some(true),
-          tradingPeriod = Some(period)
+          tradingSeason = Some(period)
         )
       ) {
         val session = withHasStopped(false)
@@ -132,7 +132,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         intendedLettings(session.data).value.hasStopped.value mustBe false
         intendedLettings(session.data).value.whenWasLastLet mustBe None
         intendedLettings(session.data).value.isYearlyAvailable mustBe None
-        intendedLettings(session.data).value.tradingPeriod mustBe None
+        intendedLettings(session.data).value.tradingSeason mustBe None
       }
     }
     "copying the session withWhenWasLastLet"    should {
@@ -174,7 +174,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           hasStopped = Some(true),
           whenWasLastLet = Some(date),
           isYearlyAvailable = Some(true),
-          tradingPeriod = Some(period)
+          tradingSeason = Some(period)
         )
       ) {
         val threeDaysAfter = date.plusDays(3)
@@ -186,7 +186,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         intendedLettings(session.data).value.hasStopped.value mustBe true
         intendedLettings(session.data).value.whenWasLastLet.value mustBe threeDaysAfter
         intendedLettings(session.data).value.isYearlyAvailable mustBe None
-        intendedLettings(session.data).value.tradingPeriod mustBe None
+        intendedLettings(session.data).value.tradingSeason mustBe None
       }
     }
     "copying the session withIsYearlyAvailable" should {
@@ -228,7 +228,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           hasStopped = Some(true),
           whenWasLastLet = Some(date),
           isYearlyAvailable = Some(true),
-          tradingPeriod = Some(period)
+          tradingSeason = Some(period)
         )
       ) {
         val session = withIsYearlyAvailable(false)
@@ -239,7 +239,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         intendedLettings(session.data).value.hasStopped.value mustBe true
         intendedLettings(session.data).value.whenWasLastLet.value mustBe date
         intendedLettings(session.data).value.isYearlyAvailable.value mustBe false
-        intendedLettings(session.data).value.tradingPeriod.value mustBe period
+        intendedLettings(session.data).value.tradingSeason.value mustBe period
       }
     }
     "copying the session withTradingPeriod"     should {
@@ -248,32 +248,32 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
-        intendedLettings(session.data).value.tradingPeriod.value mustBe period
+        intendedLettings(session.data).value.tradingSeason.value mustBe period
       }
       "set a period value although lettingHistory.intendedLettings was None" in new SessionWithNoIntendedLettings {
         val session = withTradingPeriod(period)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
-        intendedLettings(session.data).value.tradingPeriod.value mustBe period
+        intendedLettings(session.data).value.tradingSeason.value mustBe period
       }
       "set a period value although lettingHistory.intendedLettings.tradingPeriod was None" in new SessionWithSomeIntendedLettings(
-        intendedLettings = IntendedDetail(tradingPeriod = None)
+        intendedLettings = IntendedDetail(tradingSeason = None)
       ) {
         val session = withTradingPeriod(period)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
-        intendedLettings(session.data).value.tradingPeriod.value mustBe period
+        intendedLettings(session.data).value.tradingSeason.value mustBe period
       }
       "keep the value if lettingHistory.intendedLettings.tradingPeriod is the same" in new SessionWithSomeIntendedLettings(
-        intendedLettings = IntendedDetail(tradingPeriod = Some(period))
+        intendedLettings = IntendedDetail(tradingSeason = Some(period))
       ) {
         val session = withTradingPeriod(period)
         session.changed mustBe false
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
-        intendedLettings(session.data).value.tradingPeriod.value mustBe period
+        intendedLettings(session.data).value.tradingSeason.value mustBe period
       }
       "change the value if lettingHistory.intendedLettings.tradingPeriod is different" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(
@@ -281,7 +281,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           hasStopped = Some(true),
           whenWasLastLet = Some(date),
           isYearlyAvailable = Some(true),
-          tradingPeriod = Some(period)
+          tradingSeason = Some(period)
         )
       ) {
         val aDifferentPeriod = period.copy(fromDate = date.plusDays(3))
@@ -293,7 +293,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         intendedLettings(session.data).value.hasStopped.value mustBe true
         intendedLettings(session.data).value.whenWasLastLet.value mustBe date
         intendedLettings(session.data).value.isYearlyAvailable.value mustBe true
-        intendedLettings(session.data).value.tradingPeriod.value mustBe aDifferentPeriod
+        intendedLettings(session.data).value.tradingSeason.value mustBe aDifferentPeriod
       }
     }
   }

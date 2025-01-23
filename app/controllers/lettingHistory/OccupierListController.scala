@@ -74,7 +74,7 @@ class OccupierListController @Inject() (
               if answer == AnswerYes then
                 given Session = request.sessionData
                 for
-                  newSession   <- byRemovingPermanentOccupierAt(index)
+                  newSession   <- byRemovingCompletedLettingAt(index)
                   savedSession <- repository.saveOrUpdateSession(newSession)
                 yield savedSession
               else

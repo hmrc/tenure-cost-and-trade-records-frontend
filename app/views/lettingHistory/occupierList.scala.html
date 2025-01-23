@@ -20,7 +20,7 @@
 @import models.submissions.lettingHistory.OccupierDetail
 @import models.submissions.lettingHistory.LocalPeriod
 @import navigation.identifiers.{asPageIdentifier, OccupierRemovePageId}
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{HtmlContent, Text}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
 @import util.DateUtilLocalised
@@ -35,9 +35,21 @@
 @occupiersCount = @{ completedLettings.length }
 
 @pageHeadingMessageKey = @{
-    if (occupiersCount == 0 && fromPage == Some(OccupierRemovePageId)) "lettingHistory.occupierList.heading.removed"
+    if (occupiersCount == 0 && fromPage == Some(OccupierRemovePageId)) "lettingHistory.occupierList.heading.removedAll"
     else if (occupiersCount == 1) "lettingHistory.occupierList.heading.singular"
     else "lettingHistory.occupierList.heading.plural"
+}
+
+
+@nameAndAddressOf(occupier: OccupierDetail) = {
+    <div>@occupier.name</div>
+    <div class="govuk-!-font-size-14">
+    @occupier.address.line1<br>
+    @if(occupier.address.line2.isDefined){@occupier.address.line2<br>}
+    @occupier.address.town<br>
+    @if(occupier.address.county.isDefined){@occupier.address.county<br>}
+    @occupier.address.postcode<br>
+    </div>
 }
 
 @rentalPeriodOf(occupier: OccupierDetail) = @{
@@ -65,7 +77,8 @@
         rows = completedLettings.zipWithIndex.map { (occupier, index) =>
             SummaryListRow(
                 key = Key(
-                    content = Text(occupier.name),
+                    //content = Text(occupier.name),
+                    content = HtmlContent(nameAndAddressOf(occupier)),
                     classes = "govuk-!-font-weight-regular"
                 ),
                 value = Value(

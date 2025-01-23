@@ -38,7 +38,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading       shouldBe "lettingHistory.intendedLettings.heading"
+        page.heading       shouldBe "lettingHistory.intendedLettings.nights.heading"
         page.backLink      shouldBe routes.HasCompletedLettingsController.show.url
         page.input("nights") should beEmpty
       }

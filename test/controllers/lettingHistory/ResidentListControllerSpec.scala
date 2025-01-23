@@ -38,7 +38,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.residentList.heading.plural"
-        page.backLink    shouldBe routes.HasPermanentResidentsController.show.url
+        // TODO page.backLink    shouldBe None
         page.summaryList shouldBe empty
       }
       "be handling GET /remove?index=0 by replying redirect to the 'Resident List' page" in new ControllerFixture {

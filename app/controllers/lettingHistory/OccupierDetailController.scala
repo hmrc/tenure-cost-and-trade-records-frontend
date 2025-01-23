@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.OccupierDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, byAddingOrUpdatingTemporaryOccupier}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, byAddingOrUpdatingOccupier}
 import models.submissions.lettingHistory.OccupierDetail
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.OccupierDetailPageId
@@ -62,23 +62,24 @@ class OccupierDetailController @Inject (
             occupierDetail <- completedLettings.lift(index)
           yield freshForm.fill(occupierDetail)
 
-        Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
+        Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl, maybeIndex))
   }
 
-  def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[OccupierDetail](
-      theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
-      occupierDetail =>
-        given Session                       = request.sessionData
-        val (occupierIndex, updatedSession) =
-          byAddingOrUpdatingTemporaryOccupier(occupierDetail.name, occupierDetail.address)
-        for
-          savedSession  <- repository.saveOrUpdateSession(updatedSession)
-          navigationData = Map("index" -> occupierIndex)
-        yield navigator.redirect(currentPage = OccupierDetailPageId, savedSession, navigationData)
-    )
-  }
+  def submit(maybeIndex: Option[Int] = None): Action[AnyContent] =
+    (Action andThen sessionRefiner).async { implicit request =>
+      continueOrSaveAsDraft[OccupierDetail](
+        theForm,
+        theFormWithErrors =>
+          successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl, maybeIndex))),
+        occupierDetail =>
+          given Session                       = request.sessionData
+          val (occupierIndex, updatedSession) = byAddingOrUpdatingOccupier(occupierDetail, maybeIndex)
+          for
+            savedSession  <- repository.saveOrUpdateSession(updatedSession)
+            navigationData = Map("index" -> occupierIndex)
+          yield navigator.redirect(currentPage = OccupierDetailPageId, savedSession, navigationData)
+      )
+    }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = OccupierDetailPageId)

@@ -18,24 +18,23 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.AdvertisingOnlineDetailsForm.theForm
+import form.lettingHistory.AdvertisingDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfAdvertisingOnline, byAddingOrUpdatingOnlineAdvertising}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising}
 import models.submissions.lettingHistory.AdvertisingDetail
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.OnlineAdvertisingDetailPageId
+import navigation.identifiers.AdvertisingDetailPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.*
 import repositories.SessionRepo
-import views.html.lettingHistory.advertisingOnlineDetails as OnlineAdvertisingDetailView
+import views.html.lettingHistory.advertisingDetail as OnlineAdvertisingDetailView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
-// TODO Rename to OnlineAdvertisingDetailController
 @Singleton
-class AdvertisingOnlineDetailsController @Inject() (
+class AdvertisingDetailController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
   theView: OnlineAdvertisingDetailView,
@@ -51,7 +50,7 @@ class AdvertisingOnlineDetailsController @Inject() (
       yield lettingHistory.onlineAdvertising
     ).flatten
 
-    if index.isEmpty && onlineAdvertising.sizeIs == MaxNumberOfAdvertisingOnline
+    if index.isEmpty && onlineAdvertising.sizeIs == MaxNumberOfOnlineAdvertising
     then Redirect(controllers.routes.TaskListController.show())
     else
       val filledForm =
@@ -73,9 +72,9 @@ class AdvertisingOnlineDetailsController @Inject() (
         for
           newSession   <- byAddingOrUpdatingOnlineAdvertising(index, details)
           savedSession <- repository.saveOrUpdateSession(newSession)
-        yield navigator.redirect(currentPage = OnlineAdvertisingDetailPageId, savedSession)
+        yield navigator.redirect(currentPage = AdvertisingDetailPageId, savedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = OnlineAdvertisingDetailPageId)
+    navigator.backLinkUrl(ofPage = AdvertisingDetailPageId)

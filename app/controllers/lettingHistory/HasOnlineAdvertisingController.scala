@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.AdvertisingOnlineForm.theForm
+import form.lettingHistory.HasOnlineAdvertisingForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
 import models.submissions.lettingHistory.LettingHistory.{toAnswer, toBoolean, withHasOnlineAdvertising}
@@ -27,15 +27,14 @@ import navigation.identifiers.HasOnlineAdvertisingPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.advertisingOnline as HasOnlineAdvertisingView
+import views.html.lettingHistory.hasOnlineAdvertising as HasOnlineAdvertisingView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
-// TODO Rename to HasOnlineAdvertisingController
 @Singleton
-class AdvertisingOnlineController @Inject() (
+class HasOnlineAdvertisingController @Inject()(
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
   theView: HasOnlineAdvertisingView,
@@ -52,20 +51,13 @@ class AdvertisingOnlineController @Inject() (
         advertisingQuestion <- lettingHistory.hasOnlineAdvertising
       yield theForm.fill(advertisingQuestion.toAnswer)
 
-    Ok(
-      theView(
-        filledForm.getOrElse(theForm),
-        request.sessionData.toSummary,
-        backLinkUrl
-      )
-    )
+    Ok(theView(filledForm.getOrElse(theForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors =>
-        successful(BadRequest(theView(theFormWithErrors, request.sessionData.toSummary, backLinkUrl))),
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       answer =>
         given Session = request.sessionData
         for
@@ -75,7 +67,7 @@ class AdvertisingOnlineController @Inject() (
     )
   }
 
-  private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
-    navigator.backLinkUrl(ofPage = HasOnlineAdvertisingPageId).getOrElse("")
+  private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
+    navigator.backLinkUrl(ofPage = HasOnlineAdvertisingPageId)
 
 }

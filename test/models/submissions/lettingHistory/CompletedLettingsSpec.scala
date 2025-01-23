@@ -68,7 +68,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session byAddingOrUpdatingTemporaryOccupier" should {
       "set a non-empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val (index, session) = byAddingOrUpdatingTemporaryOccupier(johnBrown.name, johnBrown.address)
+        val (index, session) = byAddingOrUpdatingOccupier(johnBrown)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         hasCompletedLettings(session.data).value mustBe true
@@ -76,7 +76,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         completedLettings(session.data).head mustBe johnBrown
       }
       "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
-        val (index, session) = byAddingOrUpdatingTemporaryOccupier(johnBrown.name, johnBrown.address)
+        val (index, session) = byAddingOrUpdatingOccupier(johnBrown)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1
@@ -85,7 +85,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "confirm resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val (index, session) = byAddingOrUpdatingTemporaryOccupier(johnBrown.name, johnBrown.address)
+        val (index, session) = byAddingOrUpdatingOccupier(johnBrown)
         session.changed mustBe false
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1
@@ -94,7 +94,8 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "change resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val (index, session) = byAddingOrUpdatingTemporaryOccupier(johnBrown.name, aliceWhite.address)
+        val (index, session) =
+          byAddingOrUpdatingOccupier(OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None))
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1
@@ -104,7 +105,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "append a second resident to the existing list" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val (index, session) = byAddingOrUpdatingTemporaryOccupier(aliceWhite.name, aliceWhite.address)
+        val (index, session) = byAddingOrUpdatingOccupier(aliceWhite)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 2
@@ -148,16 +149,16 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         completedLettings(session.data).head.rentalPeriod.value mustBe year2024
       }
     }
-    "copying the session byRemovingPermanentOccupierAt"       should {
+    "copying the session byRemovingCompletedLettingAt"        should {
       "set an empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = byRemovingPermanentOccupierAt(2)
+        val session = byRemovingCompletedLettingAt(2)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         hasCompletedLettings(session.data).value mustBe false
         completedLettings(session.data) mustBe empty
       }
       "remove from empty completedLettings list when lettingHistory is not None" in new SessionWithSomeLettingHistory {
-        val session = byRemovingPermanentOccupierAt(0)
+        val session = byRemovingCompletedLettingAt(0)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe false
         completedLettings(session.data) mustBe empty
@@ -165,7 +166,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "remove existent resident from completedLettings list" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val session = byRemovingPermanentOccupierAt(0)
+        val session = byRemovingCompletedLettingAt(0)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe false
         completedLettings(session.data) mustBe empty

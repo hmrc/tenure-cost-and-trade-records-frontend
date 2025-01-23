@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package models.submissions.lettingHistory
+package form.lettingHistory
 
-import java.time.LocalDate
-import play.api.libs.json.{Format, Json}
+import form.WebsiteMapping.validateWebaddress
+import models.submissions.lettingHistory.AdvertisingDetail
+import play.api.data.Form
+import play.api.data.Forms.{default, mapping, text}
 
-case class IntendedDetail(
-  nights: Option[Int] = None,
-  hasStopped: Option[Boolean] = None,
-  whenWasLastLet: Option[LocalDate] = None,
-  isYearlyAvailable: Option[Boolean] = None,
-  tradingSeason: Option[LocalPeriod] = None
-)
+object AdvertisingDetailForm:
 
-object IntendedDetail:
-  given Format[IntendedDetail]     = Json.format
-  def unapply(obj: IntendedDetail) =
-    Some(obj.nights, obj.hasStopped, obj.whenWasLastLet, obj.isYearlyAvailable, obj.tradingSeason)
+  val theForm: Form[AdvertisingDetail] = Form(
+    mapping(
+      "websiteAddress"          -> validateWebaddress,
+      "propertyReferenceNumber" -> default(text, "")
+    )(AdvertisingDetail.apply)(AdvertisingDetail.unapply)
+  )

@@ -16,25 +16,31 @@
 
 package form.lettingHistory
 
-import form.lettingHistory.HasStoppedLettingForm.theForm
-import models.submissions.common.AnswerYes
+import form.lettingHistory.AdvertisingDetailForm.theForm
+import models.submissions.lettingHistory.AdvertisingDetail
 
-class HasStoppedLettingFormSpec extends FormSpec:
+class AdvertisingDetailFormSpec extends FormSpec:
 
-  it should "bind data as expected" in {
+  it should "bind good data as expected" in {
     val data  = Map(
-      "answer" -> "yes"
+      "websiteAddress"          -> "123.uk",
+      "propertyReferenceNumber" -> "3456aaa"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
   }
 
-  it should "unbind data as expected" in {
-    val filled = theForm.fill(AnswerYes)
+  it should "unbind good data as expected" in {
+    val residentDetail = AdvertisingDetail(
+      websiteAddress = "123.uk",
+      propertyReferenceNumber = "3456aaa"
+    )
+    val filled         = theForm.fill(residentDetail)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "answer" -> "yes"
+      "websiteAddress"          -> "123.uk",
+      "propertyReferenceNumber" -> "3456aaa"
     )
   }
 
@@ -42,13 +48,11 @@ class HasStoppedLettingFormSpec extends FormSpec:
     // When the form gets submitted before being filled
     val bound = theForm.bind(
       Map(
-        "answer" -> ""
+        "websiteAddress"          -> "",
+        "propertyReferenceNumber" -> ""
       )
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound
-      .error("answer")
-      .value
-      .message mustBe "lettingHistory.intendedLettings.hasStoppedLetting.required"
+    bound.error("websiteAddress").value.message mustBe "error.websiteAddressForProperty.required"
   }

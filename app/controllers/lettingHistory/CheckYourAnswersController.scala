@@ -18,24 +18,24 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.CYALettingHistoryForm.theForm
+import form.lettingHistory.CheckYourAnswerForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory.withCheckYourAnswers
+import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.checkYourAnswers as CheckYourAnswersView
+import views.html.lettingHistory.checkYourAnswers.template as CheckYourAnswersView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class CheckYourAnswersController @Inject()(
+class CheckYourAnswersController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
   theView: CheckYourAnswersView,
@@ -49,16 +49,11 @@ class CheckYourAnswersController @Inject()(
   def show: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     val filledForm =
       for
-        lettingHistory <- request.sessionData.lettingHistory
-        cya            <- lettingHistory.checkYourAnswers
-      yield theForm.fill(cya)
+        lettingHistory   <- request.sessionData.lettingHistory
+        sectionCompleted <- lettingHistory.sectionCompleted
+      yield theForm.fill(sectionCompleted.toAnswer)
 
-    Ok(
-      theView(
-        filledForm.getOrElse(theForm),
-        backLinkUrl
-      )
-    )
+    Ok(theView(filledForm.getOrElse(theForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
@@ -68,13 +63,13 @@ class CheckYourAnswersController @Inject()(
       answer =>
         given Session = request.sessionData
         for
-          newSession   <- successful(withCheckYourAnswers(answer))
+          newSession   <- successful(withSectionCompleted(answer.toBoolean))
           savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = CheckYourAnswersPageId, savedSession)
     )
   }
 
-  private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
-    navigator.backLinkUrl(ofPage = CheckYourAnswersPageId).getOrElse("")
+  private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
+    navigator.backLinkUrl(ofPage = CheckYourAnswersPageId)
 
 }

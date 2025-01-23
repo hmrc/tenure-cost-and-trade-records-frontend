@@ -51,7 +51,7 @@ trait OnlineAdvertising:
                     hasOnlineAdvertising = Some(true)
                   )
                 else
-                  // reset the permanent residents list
+                  // reset the online advertising list
                   lettingHistory.copy(
                     hasOnlineAdvertising = Some(false),
                     onlineAdvertising = Nil,
@@ -92,7 +92,7 @@ trait OnlineAdvertising:
       }
     )
 
-  def byRemovingAdvertisingDetailsAt(index: Int)(using session: Session): SessionWrapper =
+  def byRemovingOnlineAdvertisingAt(index: Int)(using session: Session): SessionWrapper =
     session.lettingHistory match
       case None                 =>
         changeSession {

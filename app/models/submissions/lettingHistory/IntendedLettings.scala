@@ -67,16 +67,21 @@ trait IntendedLettings:
                           .copy(hasStopped = if meetsCriteria then None else intendedLettings.hasStopped)
                           .copy(whenWasLastLet = if meetsCriteria then None else intendedLettings.whenWasLastLet)
                           .copy(isYearlyAvailable = None)
-                          .copy(tradingPeriod = None)
+                          .copy(tradingSeason = None)
                       )
                     )
                   }
+
+  def intendedLettingsNights(session: Session): Option[Int] =
+    for
+      intendedLettings <- intendedLettings(session)
+      nights           <- intendedLettings.nights
+    yield nights
 
   def withHasStopped(newHasStopped: Boolean)(using session: Session): SessionWrapper =
     val newIntendedLettings = IntendedDetail(
       hasStopped = Some(newHasStopped)
     )
-
     session.lettingHistory match
       case None                 =>
         changeSession {
@@ -110,10 +115,16 @@ trait IntendedLettings:
                           .copy(hasStopped = Some(newHasStopped))
                           .copy(whenWasLastLet = if newHasStopped then intendedLettings.whenWasLastLet else None)
                           .copy(isYearlyAvailable = None)
-                          .copy(tradingPeriod = None)
+                          .copy(tradingSeason = None)
                       )
                     )
                   }
+
+  def intendedLettingsHasStopped(session: Session): Option[Boolean] =
+    for
+      intendedLettings <- intendedLettings(session)
+      hasStopped       <- intendedLettings.hasStopped
+    yield hasStopped
 
   def withWhenWasLastLet(newWhenWasLastLet: LocalDate)(using session: Session): SessionWrapper =
     val newIntendedLettings = IntendedDetail(
@@ -151,10 +162,16 @@ trait IntendedLettings:
                         intendedLettings
                           .copy(whenWasLastLet = Some(newWhenWasLastLet))
                           .copy(isYearlyAvailable = None)
-                          .copy(tradingPeriod = None)
+                          .copy(tradingSeason = None)
                       )
                     )
                   }
+
+  def intendedLettingsWhenWasLastLet(session: Session): Option[LocalDate] =
+    for
+      intendedLettings <- intendedLettings(session)
+      whenWasLastLet   <- intendedLettings.whenWasLastLet
+    yield whenWasLastLet
 
   def withIsYearlyAvailable(newIsYearlyAvailable: Boolean)(using session: Session): SessionWrapper =
     val newIntendedLettings = IntendedDetail(
@@ -191,14 +208,20 @@ trait IntendedLettings:
                       Some(
                         intendedLettings
                           .copy(isYearlyAvailable = Some(newIsYearlyAvailable))
-                          .copy(tradingPeriod = if newIsYearlyAvailable then None else intendedLettings.tradingPeriod)
+                          .copy(tradingSeason = if newIsYearlyAvailable then None else intendedLettings.tradingSeason)
                       )
                     )
                   }
 
+  def intendedLettingsIsYearlyAvailable(session: Session): Option[Boolean] =
+    for
+      intendedLettings  <- intendedLettings(session)
+      isYearlyAvailable <- intendedLettings.isYearlyAvailable
+    yield isYearlyAvailable
+
   def withTradingPeriod(newTradingPeriod: LocalPeriod)(using session: Session): SessionWrapper =
     val newIntendedLettings = IntendedDetail(
-      tradingPeriod = Some(newTradingPeriod)
+      tradingSeason = Some(newTradingPeriod)
     )
     session.lettingHistory match
       case None                 =>
@@ -212,13 +235,13 @@ trait IntendedLettings:
               lettingHistory.copy(intendedLettings = Some(newIntendedLettings))
             }
           case Some(intendedLettings) =>
-            intendedLettings.tradingPeriod match
+            intendedLettings.tradingSeason match
               case None                   =>
                 changeSession {
                   lettingHistory.copy(intendedLettings =
                     Some(
                       intendedLettings
-                        .copy(tradingPeriod = Some(newTradingPeriod))
+                        .copy(tradingSeason = Some(newTradingPeriod))
                     )
                   )
                 }
@@ -230,11 +253,24 @@ trait IntendedLettings:
                     lettingHistory.copy(intendedLettings =
                       Some(
                         intendedLettings
-                          .copy(tradingPeriod = Some(newTradingPeriod))
+                          .copy(tradingSeason = Some(newTradingPeriod))
                       )
                     )
                   }
 
+  def intendedLettingsTradingPeriod(session: Session): Option[LocalPeriod] =
+    for
+      intendedLettings <- intendedLettings(session)
+      tradingPeriod    <- intendedLettings.tradingSeason
+    yield tradingPeriod
+
 object IntendedLettings:
-  def isAboveThreshold(nights: Int, isWelsh: Boolean): Boolean =
+  def doesMeetLettingCriteria(session: Session): Option[Boolean] =
+    for
+      lettingHistory   <- session.lettingHistory
+      intendedLettings <- lettingHistory.intendedLettings
+      nights           <- intendedLettings.nights
+    yield isAboveThreshold(nights, session.isWelsh)
+
+  private def isAboveThreshold(nights: Int, isWelsh: Boolean): Boolean =
     if isWelsh then nights >= 252 else nights >= 140

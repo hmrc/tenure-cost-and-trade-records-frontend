@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,17 @@
 
 package form.lettingHistory
 
-import form.MappingSupport.createYesNoType as answerYesNo
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object IsYearlyAvailableForm:
-  val theForm = Form[AnswersYesNo](
-    single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.intendedLettings.isYearlyAvailable.required")
+object CheckYourAnswerForm {
+
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "answer" -> createYesNoType("error.checkYourAnswersRadio.required")
+      )
     )
-  )
+}

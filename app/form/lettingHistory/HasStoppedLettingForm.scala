@@ -24,6 +24,6 @@ import play.api.data.Forms.single
 object HasStoppedLettingForm:
   val theForm = Form[AnswersYesNo](
     single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.hasStoppedLetting.required")
+      "answer" -> answerYesNo(errorMessage = "lettingHistory.intendedLettings.hasStoppedLetting.required")
     )
   )

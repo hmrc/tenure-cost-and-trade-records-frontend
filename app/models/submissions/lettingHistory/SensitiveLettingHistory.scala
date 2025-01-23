@@ -26,10 +26,13 @@ case class SensitiveLettingHistory(
   completedLettings: Option[List[SensitiveOccupierDetail]],
   mayHaveMoreCompletedLettings: Option[Boolean],
   intendedLettings: Option[IntendedDetail],
-  onlineAdvertising: Option[Boolean],
-  advertisingOnlineDetails: List[AdvertisingDetail]
+  hasOnlineAdvertising: Option[Boolean],
+  onlineAdvertising: Option[List[AdvertisingDetail]],
+  mayHaveMoreOnlineAdvertising: Option[Boolean],
+  sectionCompleted: Option[Boolean]
 ) extends Sensitive[LettingHistory]:
 
+  // decryption method
   override def decryptedValue: LettingHistory =
     LettingHistory(
       hasPermanentResidents,
@@ -39,8 +42,10 @@ case class SensitiveLettingHistory(
       completedLettings.fold(Nil)(_.map(_.decryptedValue)),
       mayHaveMoreCompletedLettings,
       intendedLettings,
-      onlineAdvertising,
-      advertisingOnlineDetails
+      hasOnlineAdvertising,
+      onlineAdvertising.fold(Nil)(_.map(identity)),
+      mayHaveMoreOnlineAdvertising,
+      sectionCompleted
     )
 
 object SensitiveLettingHistory:
@@ -53,17 +58,22 @@ object SensitiveLettingHistory:
     SensitiveLettingHistory(
       hasPermanentResidents = lettingHistory.hasPermanentResidents,
       permanentResidents =
-        if lettingHistory.hasPermanentResidents.isEmpty
+        if lettingHistory.permanentResidents.isEmpty
         then None
         else Some(lettingHistory.permanentResidents.map(SensitiveResidentDetail(_))),
       mayHaveMorePermanentResidents = lettingHistory.mayHaveMorePermanentResidents,
       hasCompletedLettings = lettingHistory.hasCompletedLettings,
       completedLettings =
-        if lettingHistory.hasCompletedLettings.isEmpty
+        if lettingHistory.completedLettings.isEmpty
         then None
         else Some(lettingHistory.completedLettings.map(SensitiveOccupierDetail(_))),
       mayHaveMoreCompletedLettings = lettingHistory.mayHaveMoreCompletedLettings,
       intendedLettings = lettingHistory.intendedLettings,
-      onlineAdvertising = lettingHistory.hasOnlineAdvertising,
-      advertisingOnlineDetails = lettingHistory.onlineAdvertising
+      hasOnlineAdvertising = lettingHistory.hasOnlineAdvertising,
+      onlineAdvertising =
+        if lettingHistory.onlineAdvertising.isEmpty
+        then None
+        else Some(lettingHistory.onlineAdvertising),
+      mayHaveMoreOnlineAdvertising = lettingHistory.mayHaveMoreOnlineAdvertising,
+      sectionCompleted = lettingHistory.sectionCompleted
     )

@@ -30,7 +30,7 @@ import scala.jdk.CollectionConverters.*
 trait JsoupHelpers:
   extension (el: Element) def value = Option(el.`val`()).get
   extension (d: Document)
-    def heading             = d.select("h1.govuk-heading-l").first().text().trim
+    def heading             = d.select("h1").first().text().trim
     def backLink            = d.select("a.govuk-back-link").first().attribute("href").getValue
     // def error(id: String)     = d.select(s"""p.govuk-error-message[id="$id-error"]""").textNodes().asScala.last.text().trim
     def error(id: String)   = d.select(s"""a[href="#$id"]""").textNodes().asScala.last.text().trim

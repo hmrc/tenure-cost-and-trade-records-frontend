@@ -31,18 +31,18 @@
 @layout(
     theForm = theForm,
     summary = Some(request.sessionData.toSummary),
-    pageHeading = messages("lettingHistory.completedLettings.heading"),
+    pageHeading = messages("lettingHistory.hasCompletedLettings.heading"),
     backLinkUrl = backLink,
     showSection = true,
     sectionName = messages("label.section.lettingHistory"),
 ) {
 
-    <p class="govuk-body">@messages("lettingHistory.completedLettings.paragraph.1")</p>
-    <p class="govuk-body">@messages("lettingHistory.completedLettings.paragraph.2")</p>
-    <p class="govuk-body">@messages("lettingHistory.completedLettings.paragraph.3")</p>
+    <p class="govuk-body">@messages("lettingHistory.hasCompletedLettings.paragraph.1")</p>
+    <p class="govuk-body">@messages("lettingHistory.hasCompletedLettings.paragraph.2")</p>
+    <p class="govuk-body">@messages("lettingHistory.hasCompletedLettings.paragraph.3")</p>
     <ul class="govuk-body">
-        <li>@messages("lettingHistory.completedLettings.paragraph.3.point.1")</li>
-        <li>@messages("lettingHistory.completedLettings.paragraph.3.point.2")</li>
+        <li>@messages("lettingHistory.hasCompletedLettings.paragraph.3.point.1")</li>
+        <li>@messages("lettingHistory.hasCompletedLettings.paragraph.3.point.2")</li>
     </ul>
 
     @formWithCSRF(action = routes.HasCompletedLettingsController.submit) {

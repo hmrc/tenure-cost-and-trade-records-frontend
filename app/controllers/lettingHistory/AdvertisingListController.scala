@@ -22,8 +22,8 @@ import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmation
 import form.lettingHistory.AdvertisingListForm.theForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory, SessionWrapper}
-import models.submissions.lettingHistory.LettingHistory.{byRemovingAdvertisingDetailsAt, toBoolean}
+import models.submissions.lettingHistory.LettingHistory.{byRemovingOnlineAdvertisingAt, toBoolean}
+import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{AdvertisingListPageId, AdvertisingRemovePageId}
 import play.api.data.Form
@@ -37,7 +37,6 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
-// TODO Rename to OnlineAdvertisingListController
 @Singleton
 class AdvertisingListController @Inject() (
   mcc: MessagesControllerComponents,
@@ -71,7 +70,7 @@ class AdvertisingListController @Inject() (
               if answer == AnswerYes then
                 given Session = request.sessionData
                 for
-                  newSession   <- successful(byRemovingAdvertisingDetailsAt(index))
+                  newSession   <- successful(byRemovingOnlineAdvertisingAt(index))
                   savedSession <- repository.saveOrUpdateSession(newSession)
                 yield savedSession
               else successful(request.sessionData.withChangedData(true))

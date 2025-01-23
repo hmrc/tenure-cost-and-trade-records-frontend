@@ -61,7 +61,9 @@ trait PermanentResidents:
       hasPermanentResidents <- lettingHistory.hasPermanentResidents
     yield hasPermanentResidents
 
-  def byAddingOrUpdatingPermanentResident(newResident: ResidentDetail)(using session: Session): SessionWrapper =
+  def byAddingOrUpdatingPermanentResident(newResident: ResidentDetail, maybeIndex: Option[Int] = None)(using
+    session: Session
+  ): SessionWrapper =
     session.lettingHistory match
       case None                 =>
         changeSession {
@@ -72,9 +74,11 @@ trait PermanentResidents:
         }
       case Some(lettingHistory) =>
         val maybeExistingIndex =
-          lettingHistory.permanentResidents.zipWithIndex
-            .find((existing, _) => existing.name == newResident.name)
-            .map((_, index) => index)
+          maybeIndex.orElse {
+            lettingHistory.permanentResidents.zipWithIndex
+              .find((existing, _) => existing.name == newResident.name)
+              .map((_, index) => index)
+          }
 
         maybeExistingIndex match
           case None                =>
@@ -86,7 +90,7 @@ trait PermanentResidents:
             }
           case Some(existingIndex) =>
             val oldResident = lettingHistory.permanentResidents(existingIndex)
-            if newResident.address == oldResident.address
+            if newResident == oldResident
             then
               // the given resident detail is NOT changing the existing one
               unchangedSession

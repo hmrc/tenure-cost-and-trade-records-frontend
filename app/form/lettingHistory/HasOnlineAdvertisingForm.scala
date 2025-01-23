@@ -16,16 +16,15 @@
 
 package form.lettingHistory
 
-import form.WebsiteMapping.validateWebaddress
-import models.submissions.lettingHistory.AdvertisingDetail
+import form.MappingSupport.createYesNoType as answerYesNo
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.single
 
-object AdvertisingOnlineDetailsForm:
-
-  val theForm: Form[AdvertisingDetail] = Form(
-    mapping(
-      "websiteAddress"          -> validateWebaddress,
-      "propertyReferenceNumber" -> default(text, "")
-    )(AdvertisingDetail.apply)(AdvertisingDetail.unapply)
+object HasOnlineAdvertisingForm {
+  val theForm: Form[AnswersYesNo] = Form(
+    single(
+      "answer" -> answerYesNo("lettingHistory.hasOnlineAdvertising.required")
+    )
   )
+}

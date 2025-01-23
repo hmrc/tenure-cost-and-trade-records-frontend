@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package views.includes.cards
 
-import form.MappingSupport.createYesNoType
-import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.mvc.Call
 
-object CYALettingHistoryForm {
-
-  val theForm: Form[AnswersYesNo] =
-    Form(
-      single(
-        "cYALettingHistory" -> createYesNoType("error.checkYourAnswersRadio.required")
-      )
-    )
-}
+case class CardData(
+  index: Int,
+  removeAction: Call,
+  entries: Seq[CardEntry]
+)

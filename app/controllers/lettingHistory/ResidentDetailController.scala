@@ -61,21 +61,22 @@ class ResidentDetailController @Inject() (
             residentDetail <- permanentResidents.lift(index)
           yield freshForm.fill(residentDetail)
 
-        Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
+        Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl, maybeIndex))
   }
 
-  def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ResidentDetail](
-      theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
-      residentDetail =>
-        given Session = request.sessionData
-        for
-          newSession   <- successful(byAddingOrUpdatingPermanentResident(residentDetail))
-          savedSession <- repository.saveOrUpdateSession(newSession)
-        yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
-    )
-  }
+  def submit(maybeIndex: Option[Int] = None): Action[AnyContent] =
+    (Action andThen sessionRefiner).async { implicit request =>
+      continueOrSaveAsDraft[ResidentDetail](
+        theForm,
+        theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex))),
+        residentDetail =>
+          given Session = request.sessionData
+          for
+            newSession   <- successful(byAddingOrUpdatingPermanentResident(residentDetail, maybeIndex))
+            savedSession <- repository.saveOrUpdateSession(newSession)
+          yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
+      )
+    }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = ResidentDetailPageId)

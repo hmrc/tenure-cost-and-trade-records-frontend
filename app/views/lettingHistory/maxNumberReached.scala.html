@@ -16,7 +16,7 @@
 
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
-@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents, MaxNumberOfAdvertisingOnline}
+@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents, MaxNumberOfOnlineAdvertising}
 @import play.api.data.Form
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
@@ -32,8 +32,8 @@
 @maxNumberOfEntries = @{
     kind match {
         case "permanentResidents" => MaxNumberOfPermanentResidents
-        case "temporaryOccupiers" => MaxNumberOfCompletedLettings
-        case "onlineAdvertising"  => MaxNumberOfAdvertisingOnline
+        case "completedLettings" => MaxNumberOfCompletedLettings
+        case "onlineAdvertising"  => MaxNumberOfOnlineAdvertising
         case _ => 0
     }
 }
@@ -41,7 +41,7 @@
 @checkOrUpdateCall = @{
     kind match {
         case "permanentResidents" => routes.ResidentListController.show
-        case "temporaryOccupiers" => routes.OccupierListController.show
+        case "completedLettings" => routes.OccupierListController.show
         case "onlineAdvertising"  => routes.AdvertisingListController.show
         case _ => Call("POST", "/unknown")
     }

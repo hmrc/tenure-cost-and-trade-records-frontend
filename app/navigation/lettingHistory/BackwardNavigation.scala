@@ -25,31 +25,24 @@ trait BackwardNavigation:
   this: Navigator =>
 
   val backwardNavigationMap: NavigationMap = Map(
-    HasPermanentResidentsPageId   -> { (_, _) =>
-      Some(controllers.routes.TaskListController.show().withFragment("lettingHistory"))
+    HasPermanentResidentsPageId -> { (_, _) =>
+      Some(taskListCall)
     },
-    ResidentDetailPageId          -> { (_, _) =>
+    ResidentDetailPageId        -> { (_, _) =>
       Some(routes.HasPermanentResidentsController.show)
     },
-    ResidentListPageId            -> { (session, _) =>
-      for size <- Some(permanentResidents(session.data).size)
-      yield
-        if size > 0
-        then
-          if size < MaxNumberOfPermanentResidents
-          then routes.ResidentDetailController.show(index = None)
-          else routes.MaxNumberReachedController.show(kind = "permanentResidents")
-        else routes.HasPermanentResidentsController.show
+    ResidentListPageId          -> { (session, _) =>
+      None
     },
-    MaxNumberReachedPageId        -> { (_, navigation) =>
+    MaxNumberReachedPageId      -> { (_, navigation) =>
       for kind <- navigation.get("kind")
       yield kind match
         case "permanentResidents" => routes.ResidentListController.show
-        case "temporaryOccupiers" => routes.OccupierListController.show
+        case "completedLettings"  => routes.OccupierListController.show
         case "onlineAdvertising"  => routes.AdvertisingListController.show
-        case _                    => controllers.routes.TaskListController.show().withFragment("lettingHistory")
+        case _                    => taskListCall
     },
-    HasCompletedLettingsPageId    -> { (session, _) =>
+    HasCompletedLettingsPageId  -> { (session, _) =>
       for size <- Some(permanentResidents(session.data).size)
       yield
         if size > 0 then routes.ResidentListController.show
@@ -58,37 +51,30 @@ trait BackwardNavigation:
             case Some(true) => routes.ResidentDetailController.show(index = None)
             case _          => routes.HasPermanentResidentsController.show
     },
-    OccupierDetailPageId          -> { (_, _) =>
+    OccupierDetailPageId        -> { (_, _) =>
       Some(routes.HasCompletedLettingsController.show)
     },
-    RentalPeriodPageId            -> { (_, navigation) =>
+    RentalPeriodPageId          -> { (_, navigation) =>
       for case index: Int <- navigation.get("index")
       yield routes.OccupierDetailController.show(index = Some(index))
     },
-    OccupierListPageId            -> { (session, _) =>
-      for size <- Some(completedLettings(session.data).size)
-      yield
-        if size > 0
-        then
-          if size < MaxNumberOfCompletedLettings
-          then routes.OccupierDetailController.show(index = None)
-          else routes.MaxNumberReachedController.show(kind = "temporaryOccupiers")
-        else routes.HasCompletedLettingsController.show
+    OccupierListPageId          -> { (session, _) =>
+      None
     },
-    HowManyNightsPageId           -> { (session, _) =>
+    HowManyNightsPageId         -> { (session, _) =>
       for doesHaveCompletedLettings <- hasCompletedLettings(session.data)
       yield
         if doesHaveCompletedLettings
         then routes.OccupierListController.show
         else routes.HasCompletedLettingsController.show
     },
-    HasStoppedLettingPageId       -> { (_, _) =>
+    HasStoppedLettingPageId     -> { (_, _) =>
       Some(routes.HowManyNightsController.show)
     },
-    WhenWasLastLetPageId          -> { (_, _) =>
+    WhenWasLastLetPageId        -> { (_, _) =>
       Some(routes.HasStoppedLettingController.show)
     },
-    IsYearlyAvailablePageId       -> { (session, _) =>
+    IsYearlyAvailablePageId     -> { (session, _) =>
       for {
         intendedLettings <- intendedLettings(session.data)
       } yield
@@ -101,10 +87,10 @@ trait BackwardNavigation:
             else routes.HasStoppedLettingController.show
           }.get
     },
-    TradingSeasonLengthPageId     -> { (_, _) =>
+    TradingSeasonLengthPageId   -> { (_, _) =>
       Some(routes.IsYearlyAvailableController.show)
     },
-    HasOnlineAdvertisingPageId    -> { (session, _) =>
+    HasOnlineAdvertisingPageId  -> { (session, _) =>
       for {
         intendedLettings <- intendedLettings(session.data)
       } yield
@@ -114,19 +100,20 @@ trait BackwardNavigation:
           intendedLettings.isYearlyAvailable.map { isYearlyAvailable =>
             if isYearlyAvailable
             then routes.IsYearlyAvailableController.show
-            else routes.TradingSeasonLengthController.show
+            else routes.TradingSeasonController.show
           }.get
     },
-    OnlineAdvertisingDetailPageId -> { (_, _) =>
-      Some(routes.AdvertisingOnlineController.show)
+    AdvertisingDetailPageId     -> { (_, _) =>
+      Some(routes.HasOnlineAdvertisingController.show)
     },
-    AdvertisingListPageId         -> { (session, _) =>
-      if (onlineAdvertising(session.data).sizeIs >= MaxNumberOfAdvertisingOnline)
-        Some(routes.MaxNumberReachedController.show(kind = "onlineAdvertising"))
-      else
-        Some(routes.AdvertisingOnlineDetailsController.show(index = None))
+    AdvertisingListPageId       -> { (session, _) =>
+      None
+    },
+    CheckYourAnswersPageId      -> { (session, _) =>
+      for doesHaveOnlineAdvertising <- hasOnlineAdvertising(session.data)
+      yield
+        if doesHaveOnlineAdvertising
+        then routes.AdvertisingListController.show
+        else routes.HasOnlineAdvertisingController.show
     }
-    // TODO CheckYourAnswersPageId -> { (_, _) =>
-    //   ???
-    // }
   )

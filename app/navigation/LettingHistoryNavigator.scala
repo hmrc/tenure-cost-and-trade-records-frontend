@@ -30,3 +30,4 @@ class LettingHistoryNavigator @Inject() (audit: Audit)
     with RentalPeriodSupport:
 
   val checkYourAnswerCall = routes.CheckYourAnswersController.show
+  val taskListCall        = controllers.routes.TaskListController.show().withFragment("letting-history")

@@ -1,0 +1,128 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.lettingHistory.routes
+@import models.submissions.lettingHistory.{LettingHistory, ResidentDetail, OccupierDetail, LocalPeriod, AdvertisingDetail}
+@import models.submissions.common.AnswersYesNo
+@import views.includes.summary._
+@import views.lettingHistory.checkYourAnswers.Helpers._
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.DateUtilLocalised
+@import java.time.LocalDate
+
+@this(layout: Layout, govukButton: GovukButton, govukRadios: GovukRadios, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
+
+@(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
+
+@layout(
+    theForm = theForm,
+    summary = Some(request.sessionData.toSummary),
+    pageHeading = messages("lettingHistory.checkYourAnswers.heading"),
+    backLinkUrl = backLink,
+    showSection = true,
+    fullWidth = true,
+    sectionName = messages("label.section.lettingHistory"),
+) {
+
+    <h2 id="permanent-residents" class="govuk-heading-m">
+    @messages("lettingHistory.checkYourAnswers.permanentResidents.heading")
+    </h2>
+    @includes.cards.header(
+        govukSummaryList,
+        messageKey = "lettingHistory.checkYourAnswers.permanentResidents.question",
+        valueAsBoolean = LettingHistory.hasEntitiesOf(kind = "permanentResidents", request.sessionData),
+        changeAction = routes.HasPermanentResidentsController.show.withFromCheckYourAnswer.withFragment("permanent-residents")
+    )
+    @includes.cards.list(
+        govukSummaryList,
+        cardsType = messages("lettingHistory.checkYourAnswers.permanentResidents.cardsType"),
+        cardsData = permanentResidentsCardsData(fragment = "permanent-residents")
+    )
+    @includes.cards.footer(
+        govukSummaryList,
+        messageKey = "lettingHistory.checkYourAnswers.permanentResidents.added",
+        valueAsInt = LettingHistory.countEntitiesOf(kind = "permanentResidents", request.sessionData).getOrElse(0),
+        addActionMessage = messages("lettingHistory.checkYourAnswers.permanentResidents.addOneMore"),
+        addActionCall = routes.ResidentDetailController.show(index = None).withFromCheckYourAnswer.withFragment("permanent-residents")
+    )
+
+
+    <h2 id="completed-lettings" class="govuk-heading-m govuk-!-static-margin-top-9">
+    @messages("lettingHistory.checkYourAnswers.completedLettings.heading")
+    </h2>
+    @includes.cards.header(
+        govukSummaryList,
+        messageKey = "lettingHistory.checkYourAnswers.completedLettings.question",
+        valueAsBoolean = LettingHistory.hasEntitiesOf(kind = "completedLettings", request.sessionData),
+        changeAction = routes.HasCompletedLettingsController.show.withFromCheckYourAnswer.withFragment("completed-lettings")
+    )
+    @includes.cards.list(
+        govukSummaryList,
+        cardsType = messages("lettingHistory.checkYourAnswers.completedLettings.cardsType"),
+        cardsData = completedLettingsCardsData(fragment = "completed-lettings"),
+    )
+    @includes.cards.footer(
+        govukSummaryList,
+        messageKey = "lettingHistory.checkYourAnswers.completedLettings.added",
+        valueAsInt = LettingHistory.countEntitiesOf(kind = "completedLettings", request.sessionData).getOrElse(0),
+        addActionMessage = messages("lettingHistory.checkYourAnswers.completedLettings.addOneMore"),
+        addActionCall = routes.OccupierDetailController.show(index = None).withFromCheckYourAnswer.withFragment("completed-lettings")
+    )
+
+
+    <h2 id="letting-intentions" class="govuk-heading-m govuk-!-static-margin-top-9">
+    @messages("lettingHistory.checkYourAnswers.lettingIntentions.heading")
+    </h2>
+    @includes.summary.list(
+        govukSummaryList,
+        summaryData = mapSummaryDataWithFragment(lettingIntentionSummaryData(dateUtil), fragment = "letting-history")
+    )
+
+
+    <h2 id="online-advertising" class="govuk-heading-m govuk-!-static-margin-top-9">
+    @messages("lettingHistory.checkYourAnswers.onlineAdvertising.heading")
+    </h2>
+    @includes.cards.header(
+        govukSummaryList,
+        messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.question",
+        valueAsBoolean = LettingHistory.hasEntitiesOf(kind = "onlineAdvertising", request.sessionData),
+        changeAction = routes.HasOnlineAdvertisingController.show.withFromCheckYourAnswer.withFragment("online-advertising")
+    )
+    @includes.cards.list(
+        govukSummaryList,
+        cardsType = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardsType"),
+        cardsData = onlineAdvertisingCardsData(fragment = "online-advertising"),
+    )
+    @includes.cards.footer(
+        govukSummaryList,
+        messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.added",
+        valueAsInt = LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData).getOrElse(0),
+        addActionMessage = messages("lettingHistory.checkYourAnswers.onlineAdvertising.addOneMore"),
+        addActionCall = routes.AdvertisingDetailController.show(index = None).withFromCheckYourAnswer.withFragment("online-advertising")
+    )
+
+    <div class="govuk-heading-m govuk-!-static-margin-bottom-9"></div>
+
+    @formWithCSRF(action = routes.CheckYourAnswersController.submit) {
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            name = "answer"
+        )
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}

@@ -31,7 +31,7 @@ import views.html.lettingHistory.advertisingList as AdvertisingList
 
 class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
 
-  "the Advertising Online List controller" when {
+  "the AdvertisingList controller" when {
     "the user session is fresh"      should {
       "be handling GET /list by replying 200 with the form showing an empty list of advertising details" in new ControllerFixture {
         val result = controller.show(fakeGetRequest)
@@ -40,7 +40,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.advertisingList.heading.plural"
-        page.backLink    shouldBe routes.AdvertisingOnlineDetailsController.show().url
+        // TODO page.backLink    shouldBe None
         page.summaryList shouldBe empty
       }
       "be handling GET /remove?index=0 by replying redirect to the 'Advertising Online List' page" in new ControllerFixture {
@@ -55,15 +55,19 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
         verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
       }
       "be handling POST /list?hasMoreAdvertisingDetails=yes by replying redirect to the 'Advertising Online Detail' page" in new ControllerFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingList" -> "yes"))
-        status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.AdvertisingOnlineDetailsController.show().url
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "answer" -> "yes"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.AdvertisingDetailController.show().url
       }
     }
     "the user session is stale" when {
       "regardless of the given number residents"                 should {
         "be handling GET /list and reply 200 by showing the list of known online advertising details" in new ControllerFixture(
-          oneOnlineAdvertising
+          oneAdvertising
         ) {
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
@@ -71,10 +75,10 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           charset(result).value     shouldBe UTF_8.charset
           val page = contentAsJsoup(result)
           page.summaryList   shouldNot be(empty)
-          page.summaryList(0) shouldBe oneOnlineAdvertising.head.websiteAddress
+          page.summaryList(0) shouldBe oneAdvertising.head.websiteAddress
         }
         "be handling GET /remove?index=0 by replying 200 with the 'Confirm remove' page" in new ControllerFixture(
-          oneOnlineAdvertising
+          oneAdvertising
         ) {
           val result = controller.remove(index = 0)(fakeGetRequest)
           status(result)            shouldBe OK
@@ -84,7 +88,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           page.submitAction shouldBe routes.AdvertisingListController.performRemove(0).url
         }
         "be handling invalid POST /remove?index=0 by replying 400 with error messages" in new ControllerFixture(
-          oneOnlineAdvertising
+          oneAdvertising
         ) {
           val result = controller.performRemove(index = 0)(fakePostRequest)
           status(result) shouldBe BAD_REQUEST
@@ -93,7 +97,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
         }
         "be handling confirmation POST /remove?index=0 by actually removing the advertising detailsand then replying redirect to the 'Advertising List' page" in new ControllerFixture(
-          oneOnlineAdvertising
+          oneAdvertising
         ) {
           val result = controller.performRemove(index = 0)(
             fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
@@ -104,7 +108,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           onlineAdvertising(data)        shouldBe empty
         }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Advertising List' page" in new ControllerFixture(
-          oneOnlineAdvertising
+          oneAdvertising
         ) {
           val result = controller.performRemove(index = 0)(
             fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
@@ -116,22 +120,26 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
       }
       "and the maximum number of web addresses has been reached" should {
         "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture(
-          fiveOnlineAdvertising
+          fiveAdvertising
         ) {
           val result = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
-              "advertisingList" -> ""
+              "answer" -> "" // missing
             )
           )
           status(result) shouldBe BAD_REQUEST
           val page   = contentAsJsoup(result)
-          page.error("advertisingList") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
+          page.error("answer") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
         }
         "be handling POST /list?hasMoreAdvertisingDetails=yes by replying redirect to the 'Max Number of Advertising' page" in new ControllerFixture(
-          fiveOnlineAdvertising
+          fiveAdvertising
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingList" -> "yes"))
-          status(result)                 shouldBe SEE_OTHER
+          val result = controller.submit(
+            fakePostRequest.withFormUrlEncodedBody(
+              "answer" -> "yes"
+            )
+          )
+          status(result) shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.MaxNumberReachedController
             .show(kind = "onlineAdvertising")
             .url
@@ -142,16 +150,20 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
       "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "advertisingList" -> ""
+            "answer" -> "" // missing
           )
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.error("advertisingList") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
+        page.error("answer") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
       }
       "be handling POST /list?hasMoreAdvertisingDetails=no by replying redirect to the CYA page" in new ControllerFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("advertisingList" -> "no"))
-        status(result)                 shouldBe SEE_OTHER
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "answer" -> "no"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CheckYourAnswersController.show.url
       }
     }

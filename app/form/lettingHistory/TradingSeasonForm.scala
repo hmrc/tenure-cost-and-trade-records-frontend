@@ -26,16 +26,24 @@ import play.api.i18n.Messages
 import play.api.mvc.AnyContent
 import util.DateUtilLocalised
 
-object TradingSeasonLengthForm extends Object with RentalPeriodSupport:
+object TradingSeasonForm extends Object with RentalPeriodSupport:
 
   def theForm(using request: SessionRequest[AnyContent], messages: Messages, dateUtil: DateUtilLocalised) =
     Form[LocalPeriod](
       mapping(
-        "fromDate" -> constrainedLocalDate("lettingHistory.tradingSeasonLength", "fromDate", previousRentalPeriod),
-        "toDate"   -> constrainedLocalDate("lettingHistory.tradingSeasonLength", "toDate", previousRentalPeriod)
+        "fromDate" -> constrainedLocalDate(
+          "lettingHistory.intendedLettings.tradingSeason",
+          "fromDate",
+          previousRentalPeriod
+        ),
+        "toDate"   -> constrainedLocalDate(
+          "lettingHistory.intendedLettings.tradingSeason",
+          "toDate",
+          previousRentalPeriod
+        )
       )(LocalPeriod.apply)(LocalPeriod.unapply)
         .verifying(
-          error = messages("lettingHistory.tradingSeasonLength.error"),
+          error = messages("lettingHistory.intendedLettings.tradingSeason.error"),
           constraint = period => period.fromDate.isBefore(period.toDate) || period.fromDate.isEqual(period.toDate)
         )
     )

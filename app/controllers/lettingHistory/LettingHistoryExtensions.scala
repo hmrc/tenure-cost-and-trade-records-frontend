@@ -16,9 +16,11 @@
 
 package controllers.lettingHistory
 
+import actions.SessionRequest
 import models.Session
 import models.submissions.lettingHistory.SessionWrapper
 import play.api.libs.json.Writes
+import play.api.mvc.{AnyContent, Call}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -33,3 +35,27 @@ extension (repository: SessionRepo)
 extension (sessionData: Session)
   def withChangedData(bool: Boolean) =
     SessionWrapper(sessionData, changed = bool)
+
+extension (request: SessionRequest[AnyContent])
+  def unchangedSession =
+    SessionWrapper(request.sessionData, changed = false)
+
+  def isFromCheckYourAnswer: Boolean =
+    request
+      .getQueryString("from")
+      .map { fromValue =>
+        fromValue.contains("CYA")
+      }
+      .getOrElse {
+        request.body.asFormUrlEncoded
+          .map { submittedData =>
+            submittedData
+              .get("from")
+              .flatMap(_.headOption)
+              .map { fromValue =>
+                fromValue.contains("CYA")
+              }
+              .getOrElse(false)
+          }
+          .getOrElse(false)
+      }

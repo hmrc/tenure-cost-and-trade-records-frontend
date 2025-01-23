@@ -74,7 +74,7 @@ class MaxNumberReachedController @Inject() (
     request.sessionData.lettingHistory.flatMap { lettingHistory =>
       kind match {
         case "permanentResidents" => lettingHistory.mayHaveMorePermanentResidents
-        case "temporaryOccupiers" => lettingHistory.mayHaveMoreCompletedLettings
+        case "completedLettings"  => lettingHistory.mayHaveMoreCompletedLettings
         case "onlineAdvertising"  => lettingHistory.mayHaveMoreOnlineAdvertising
         case _                    => None
       }

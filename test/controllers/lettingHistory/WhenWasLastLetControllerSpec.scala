@@ -39,7 +39,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading           shouldBe "lettingHistory.whenWasLastLet.heading"
+        page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url
         page.input("date.day")   should beEmpty
         page.input("date.month") should beEmpty
@@ -67,7 +67,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading           shouldBe "lettingHistory.whenWasLastLet.heading"
+        page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url
         page.input("date.day")   should haveValue("25")
         page.input("date.month") should haveValue("12")

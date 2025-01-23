@@ -60,10 +60,9 @@ trait CompletedLettings:
       hasCompletedLettings <- lettingHistory.hasCompletedLettings
     yield hasCompletedLettings
 
-  def byAddingOrUpdatingTemporaryOccupier(newName: String, newAddress: Address)(using
+  def byAddingOrUpdatingOccupier(newOccupier: OccupierDetail, maybeIndex: Option[Int] = None)(using
     session: Session
   ): (Int, SessionWrapper) =
-    val occupierDetail = OccupierDetail(newName, newAddress, rentalPeriod = None)
     session.lettingHistory match
       case None                 =>
         (
@@ -71,21 +70,23 @@ trait CompletedLettings:
           changeSession {
             LettingHistory(
               hasCompletedLettings = Some(true),
-              completedLettings = List(occupierDetail)
+              completedLettings = List(newOccupier)
             )
           }
         )
       case Some(lettingHistory) =>
         val maybeExistingIndex =
-          lettingHistory.completedLettings.zipWithIndex
-            .find((existing, _) => existing.name == newName)
-            .map((_, index) => index)
+          maybeIndex.orElse {
+            lettingHistory.completedLettings.zipWithIndex
+              .find((existing, _) => existing.name == newOccupier.name)
+              .map((_, index) => index)
+          }
 
         maybeExistingIndex match
           case None                =>
             // the given occupier is actually new ... therefore APPEND it to the list
             val lastIndex                 = lettingHistory.completedLettings.size
-            val extendedCompletedLettings = lettingHistory.completedLettings :+ occupierDetail
+            val extendedCompletedLettings = lettingHistory.completedLettings :+ newOccupier
             (
               lastIndex,
               changeSession {
@@ -96,14 +97,16 @@ trait CompletedLettings:
             )
           case Some(existingIndex) =>
             val oldOccupier = lettingHistory.completedLettings(existingIndex)
-            if newAddress == oldOccupier.address
+            if newOccupier == oldOccupier
             then
               // the given occupier detail is NOT changing the existing one
               (existingIndex, unchangedSession)
             else
               // the given occupier detail are changing the existing one ... therefore PATCH the list
               val patchedOccupier          =
-                lettingHistory.completedLettings(existingIndex).copy(name = newName, address = newAddress)
+                lettingHistory
+                  .completedLettings(existingIndex)
+                  .copy(name = newOccupier.name, address = newOccupier.address)
               val patchedCompletedLettings =
                 lettingHistory.completedLettings.patch(existingIndex, List(patchedOccupier), 1)
               (
@@ -140,7 +143,7 @@ trait CompletedLettings:
           )
         }
 
-  def byRemovingPermanentOccupierAt(index: Int)(using session: Session): SessionWrapper =
+  def byRemovingCompletedLettingAt(index: Int)(using session: Session): SessionWrapper =
     session.lettingHistory match
       case None                 =>
         changeSession {

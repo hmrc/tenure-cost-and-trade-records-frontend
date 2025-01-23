@@ -18,6 +18,7 @@ package models.submissions.lettingHistory
 
 import models.Session
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
 import play.api.libs.json.{Format, Json}
 
 case class LettingHistory(
@@ -31,7 +32,7 @@ case class LettingHistory(
   hasOnlineAdvertising: Option[Boolean] = None,
   onlineAdvertising: List[AdvertisingDetail] = Nil,
   mayHaveMoreOnlineAdvertising: Option[Boolean] = None,
-  checkYourAnswers: Option[AnswersYesNo] = None
+  sectionCompleted: Option[Boolean] = None
 )
 
 object LettingHistory
@@ -43,7 +44,7 @@ object LettingHistory
 
   val MaxNumberOfPermanentResidents = 5
   val MaxNumberOfCompletedLettings  = 5
-  val MaxNumberOfAdvertisingOnline  = 5
+  val MaxNumberOfOnlineAdvertising  = 5
 
   @deprecated
   def withoutTheAbilityToDetectChanges(ifEmpty: LettingHistory, copyFunc: LettingHistory => LettingHistory)(using
@@ -68,7 +69,7 @@ object LettingHistory
         kind match
           case "permanentResidents" =>
             lettingHistory.copy(mayHaveMorePermanentResidents = Some(understand))
-          case "temporaryOccupiers" =>
+          case "completedLettings"  =>
             lettingHistory.copy(mayHaveMoreCompletedLettings = Some(understand))
           case "onlineAdvertising"  =>
             lettingHistory.copy(mayHaveMoreOnlineAdvertising = Some(understand))
@@ -77,23 +78,61 @@ object LettingHistory
       }
     )
 
-  def mayHaveMoreOf(kind: String)(using session: Session): Option[Boolean] =
+  def mayHaveMoreEntitiesOf(kind: String, session: Session): Option[Boolean] =
     for
       lettingHistory <- session.lettingHistory
       mayHaveMore    <- {
         kind match
           case "permanentResidents" => lettingHistory.mayHaveMorePermanentResidents
-          case "temporaryOccupiers" => lettingHistory.mayHaveMoreCompletedLettings
-          case "advertisingDetails" => lettingHistory.mayHaveMoreOnlineAdvertising
+          case "completedLettings"  => lettingHistory.mayHaveMoreCompletedLettings
+          case "onlineAdvertising"  => lettingHistory.mayHaveMoreOnlineAdvertising
           case _                    => None
       }
     yield mayHaveMore
 
-  def withCheckYourAnswers(question: AnswersYesNo)(using session: Session): SessionWrapper =
-    withoutTheAbilityToDetectChanges(
-      ifEmpty = LettingHistory(checkYourAnswers = Option(question)),
-      copyFunc = lettingHistory => lettingHistory.copy(checkYourAnswers = Option(question))
-    )
+  def hasEntitiesOf(kind: String, session: Session): Option[Boolean] =
+    for
+      lettingHistory <- session.lettingHistory
+      hasEntries     <- {
+        kind match
+          case "permanentResidents" => lettingHistory.hasPermanentResidents
+          case "completedLettings"  => lettingHistory.hasCompletedLettings
+          case "onlineAdvertising"  => lettingHistory.hasOnlineAdvertising
+          case _                    => None
+      }
+    yield hasEntries
+
+  def countEntitiesOf[T](kind: String, session: Session): Option[Int] =
+    for
+      lettingHistory <- session.lettingHistory
+      count          <- {
+        kind match
+          case "permanentResidents" => Some(lettingHistory.permanentResidents.size)
+          case "completedLettings"  => Some(lettingHistory.completedLettings.size)
+          case "onlineAdvertising"  => Some(lettingHistory.onlineAdvertising.size)
+          case _                    => Some(0)
+      }
+    yield count
+
+  def withSectionCompleted(newValue: Boolean)(using session: Session): SessionWrapper =
+    session.lettingHistory match
+      case None                 =>
+        changeSession {
+          LettingHistory(sectionCompleted = Some(newValue))
+        }
+      case Some(lettingHistory) =>
+        lettingHistory.sectionCompleted match
+          case None           =>
+            changeSession {
+              lettingHistory.copy(sectionCompleted = Some(newValue))
+            }
+          case Some(oldValue) =>
+            if newValue == oldValue
+            then unchangedSession
+            else
+              changeSession {
+                lettingHistory.copy(sectionCompleted = Some(newValue))
+              }
 
   given Format[LettingHistory]                   = Json.format
   extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes

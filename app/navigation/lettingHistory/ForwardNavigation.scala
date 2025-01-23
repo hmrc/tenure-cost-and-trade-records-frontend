@@ -17,8 +17,6 @@
 package navigation.lettingHistory
 
 import controllers.lettingHistory.routes
-import models.Session
-import models.submissions.lettingHistory.IntendedLettings.isAboveThreshold
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
 import navigation.identifiers.{Identifier as PageIdentifier, *}
@@ -36,23 +34,23 @@ trait ForwardNavigation:
   // need to result with SEE_OTHER location (a.k.a. "redirect after-post" pattern)
   //
   val forwardNavigationMap: NavigationMap = Map(
-    HasPermanentResidentsPageId   -> { (session, navigation) =>
+    HasPermanentResidentsPageId -> { (session, navigation) =>
       for doesHavePermanentResidents <- hasPermanentResidents(session.data)
       yield
         if doesHavePermanentResidents
         then
-          if permanentResidents(session.data).size < MaxNumberOfPermanentResidents
+          if permanentResidents(session.data).isEmpty
           then routes.ResidentDetailController.show(index = None)
           else routes.ResidentListController.show
         else routes.HasCompletedLettingsController.show
     },
-    ResidentDetailPageId          -> { (_, _) =>
+    ResidentDetailPageId        -> { (_, _) =>
       Some(routes.ResidentListController.show)
     },
-    ResidentRemovePageId          -> { (_, _) =>
+    ResidentRemovePageId        -> { (_, _) =>
       Some(routes.ResidentListController.show)
     },
-    ResidentListPageId            -> { (session, navigation) =>
+    ResidentListPageId          -> { (session, navigation) =>
       for case hasMoreResidents: Boolean <- navigation.get("hasMoreResidents")
       yield
         if hasMoreResidents
@@ -62,35 +60,35 @@ trait ForwardNavigation:
           else routes.MaxNumberReachedController.show(kind = "permanentResidents")
         else routes.HasCompletedLettingsController.show
     },
-    MaxNumberReachedPageId        -> { (_, navigation) =>
+    MaxNumberReachedPageId      -> { (_, navigation) =>
       for kind <- Some(navigation("kind"))
       yield kind match
         case "permanentResidents" => routes.HasCompletedLettingsController.show
-        case "temporaryOccupiers" => routes.HowManyNightsController.show
+        case "completedLettings"  => routes.HowManyNightsController.show
         case "onlineAdvertising"  => routes.CheckYourAnswersController.show
-        case _                    => controllers.routes.TaskListController.show().withFragment("lettingHistory")
+        case _                    => taskListCall
     },
-    HasCompletedLettingsPageId    -> { (session, _) =>
+    HasCompletedLettingsPageId  -> { (session, _) =>
       for doesHaveCompletedLettings <- hasCompletedLettings(session.data)
       yield
         if doesHaveCompletedLettings
         then
-          if completedLettings(session.data).size < MaxNumberOfCompletedLettings
+          if completedLettings(session.data).isEmpty
           then routes.OccupierDetailController.show(index = None)
           else routes.OccupierListController.show
         else routes.HowManyNightsController.show
     },
-    OccupierDetailPageId          -> { (_, navigation) =>
+    OccupierDetailPageId        -> { (_, navigation) =>
       for case index: Int <- navigation.get("index")
       yield routes.RentalPeriodController.show(index = Some(index))
     },
-    RentalPeriodPageId            -> { (_, _) =>
+    RentalPeriodPageId          -> { (_, _) =>
       Some(routes.OccupierListController.show)
     },
-    OccupierRemovePageId          -> { (_, _) =>
+    OccupierRemovePageId        -> { (_, _) =>
       Some(routes.OccupierListController.show)
     },
-    OccupierListPageId            -> { (session, navigation) =>
+    OccupierListPageId          -> { (session, navigation) =>
       // Note that navigation.isDefinedAt("hadMoreOccupiers") is certainly true!
       // See ResidentListController.submit()
       for case hadMoreOccupiers: Boolean <- navigation.get("hadMoreOccupiers")
@@ -99,63 +97,63 @@ trait ForwardNavigation:
         then
           if completedLettings(session.data).size < MaxNumberOfCompletedLettings
           then routes.OccupierDetailController.show(index = None)
-          else routes.MaxNumberReachedController.show(kind = "temporaryOccupiers")
+          else routes.MaxNumberReachedController.show(kind = "completedLettings")
         else routes.HowManyNightsController.show
     },
-    HowManyNightsPageId           -> { (session, _) =>
-      for meetsCriteria <- doesMeetLettingCriteria(session.data)
+    HowManyNightsPageId         -> { (session, _) =>
+      for meetsCriteria <- IntendedLettings.doesMeetLettingCriteria(session.data)
       yield
         if meetsCriteria
         then routes.IsYearlyAvailableController.show
         else routes.HasStoppedLettingController.show
     },
-    HasStoppedLettingPageId       -> { (_, navigation) =>
+    HasStoppedLettingPageId     -> { (_, navigation) =>
       for case hasStopped: Boolean <- navigation.get("hasStopped")
       yield
         if hasStopped
         then routes.WhenWasLastLetController.show
         else routes.IsYearlyAvailableController.show
     },
-    WhenWasLastLetPageId          -> { (_, _) =>
+    WhenWasLastLetPageId        -> { (_, _) =>
       Some(routes.IsYearlyAvailableController.show)
     },
-    IsYearlyAvailablePageId       -> { (session, _) =>
+    IsYearlyAvailablePageId     -> { (session, _) =>
       for
         intendedLettings  <- intendedLettings(session.data)
         isYearlyAvailable <- intendedLettings.isYearlyAvailable
       yield
-        if isYearlyAvailable
-        then routes.AdvertisingOnlineController.show
-        else routes.TradingSeasonLengthController.show
+        if !isYearlyAvailable
+        then routes.TradingSeasonController.show
+        else routes.HasOnlineAdvertisingController.show
     },
-    TradingSeasonLengthPageId     -> { (_, _) =>
-      Some(routes.AdvertisingOnlineController.show)
+    TradingSeasonLengthPageId   -> { (session, _) =>
+      if LettingHistory.onlineAdvertising(session.data).nonEmpty
+      then Some(routes.AdvertisingListController.show)
+      else Some(routes.HasOnlineAdvertisingController.show)
     },
-    HasOnlineAdvertisingPageId    -> { (session, _) =>
-      hasOnlineAdvertising(session.data) match
-        case Some(true) => Some(routes.AdvertisingOnlineDetailsController.show(index = None))
-        case _          => Some(routes.CheckYourAnswersController.show)
+    HasOnlineAdvertisingPageId  -> { (session, _) =>
+      for doesHaveOnlineAdvertising <- hasOnlineAdvertising(session.data)
+      yield
+        if doesHaveOnlineAdvertising
+        then
+          if onlineAdvertising(session.data).isEmpty
+          then routes.AdvertisingDetailController.show(index = None)
+          else routes.AdvertisingListController.show
+        else routes.CheckYourAnswersController.show
     },
-    OnlineAdvertisingDetailPageId -> { (_, _) => Some(routes.AdvertisingListController.show) },
-    AdvertisingRemovePageId       -> { (_, _) => Some(routes.AdvertisingListController.show) },
-    AdvertisingListPageId         -> { (session, navigation) =>
+    AdvertisingDetailPageId     -> { (_, _) => Some(routes.AdvertisingListController.show) },
+    AdvertisingRemovePageId     -> { (_, _) => Some(routes.AdvertisingListController.show) },
+    AdvertisingListPageId       -> { (session, navigation) =>
       for case hasMoreAdvertising: Boolean <- navigation.get("hasMoreAdvertisingDetails")
       yield
         if hasMoreAdvertising
         then
-          if onlineAdvertising(session.data).sizeIs < MaxNumberOfAdvertisingOnline
-          then routes.AdvertisingOnlineDetailsController.show(index = None)
+          if onlineAdvertising(session.data).sizeIs < MaxNumberOfOnlineAdvertising
+          then routes.AdvertisingDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "onlineAdvertising")
         else routes.CheckYourAnswersController.show
+    },
+    CheckYourAnswersPageId      -> { (_, _) =>
+      Some(prefixed(taskListCall))
     }
-    // TODO CheckYourAnswersPageId -> { (_, _) =>
-    //   ???
-    // }
   )
-
-  private def doesMeetLettingCriteria(session: Session): Option[Boolean] =
-    for
-      lettingHistory   <- session.lettingHistory
-      intendedLettings <- lettingHistory.intendedLettings
-      nights           <- intendedLettings.nights
-    yield isAboveThreshold(nights, session.isWelsh)

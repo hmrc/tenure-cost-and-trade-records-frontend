@@ -16,10 +16,10 @@
 
 package form.lettingHistory
 
-import form.lettingHistory.HasStoppedLettingForm.theForm
+import form.lettingHistory.AdvertisingListForm.theForm
 import models.submissions.common.AnswerYes
 
-class HasStoppedLettingFormSpec extends FormSpec:
+class AdvertisingListFormSpec extends FormSpec:
 
   it should "bind data as expected" in {
     val data  = Map(
@@ -47,8 +47,5 @@ class HasStoppedLettingFormSpec extends FormSpec:
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound
-      .error("answer")
-      .value
-      .message mustBe "lettingHistory.intendedLettings.hasStoppedLetting.required"
+    bound.error("answer").value.message mustBe "lettingHistory.advertisingList.hasMoreWebsites.required"
   }

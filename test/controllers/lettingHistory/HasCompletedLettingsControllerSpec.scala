@@ -36,21 +36,22 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading        shouldBe "lettingHistory.completedLettings.heading"
-        page.backLink       shouldBe routes.HasPermanentResidentsController.show.url
-        page.radios("answer") should haveNoneChecked
+        page.heading           shouldBe "lettingHistory.hasCompletedLettings.heading"
+        page.backLink          shouldBe routes.HasPermanentResidentsController.show.url
+        page.radios("answer") shouldNot be(empty)
+        page.radios("answer")    should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "answer" -> ""
+            "answer" -> "" // missing
           )
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
       }
-      "be handling POST answer='yes' by replying 303 redirect to 'Occupier Detail' page" in new ControllerFixture {
+      "be handling POST answer='yes' by replying 303 redirect to 'CompletedLettingsDetail' page" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
@@ -74,44 +75,52 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           charset(result).value     shouldBe UTF_8.charset
           val page = contentAsJsoup(result)
           page.backLink          shouldBe routes.ResidentListController.show.url
+          page.radios("answer") shouldNot be(empty)
           page.radios("answer")    should haveChecked(value = "yes")
           page.radios("answer") shouldNot haveChecked(value = "no")
         }
-        "be handling POST answer='yes' by replying 303 redirect to the 'Occupier Detail' page" in new ControllerFixture(
+        "be handling POST answer='yes' by replying 303 redirect to the 'CompletedLettingDetail' page" in new ControllerFixture(
           completedLettings = twoOccupiers
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
-          status(result)                   shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe routes.OccupierDetailController.show(index = None).url
+          val result = controller.submit(
+            fakePostRequest.withFormUrlEncodedBody(
+              "answer" -> "yes"
+            )
+          )
+          status(result) shouldBe SEE_OTHER
+          redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true
           completedLettings(data)          shouldBe twoOccupiers
         }
-        "be handling POST answer='no' by replying 303 redirect to the 'Letting intention' page" in new ControllerFixture(
+        "be handling POST answer='no' by replying 303 redirect to the 'LettingIntention' page" in new ControllerFixture(
           completedLettings = fiveOccupiers,
           mayHaveMoreCompletedLettings = Some(true)
         ) {
-          // Answering 'no' will clear out all residents details
+          // Answering 'no' will clear out all completed lettings
           val result = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "no"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe routes.HowManyNightsController.show.url
+          redirectLocation(result).value                                   shouldBe routes.HowManyNightsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          hasCompletedLettings(data).value shouldBe false
-          completedLettings(data)          shouldBe Nil
-          given Session = data.getValue
-          mayHaveMoreOf("completedLettings") shouldBe None
+          hasCompletedLettings(data).value                                 shouldBe false
+          completedLettings(data)                                          shouldBe Nil
+          mayHaveMoreEntitiesOf(kind = "completedLettings", data.getValue) shouldBe None
         }
       }
       "and the maximum number of occupiers has been reached" should {
-        "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'Occupiers List' page" in new ControllerFixture(
+        "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'CompletedLettingList' page" in new ControllerFixture(
           completedLettings = fiveOccupiers
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
-          status(result)                   shouldBe SEE_OTHER
+          val result = controller.submit(
+            fakePostRequest.withFormUrlEncodedBody(
+              "answer" -> "yes"
+            )
+          )
+          status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true

@@ -53,7 +53,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           "address.county"   -> "",
           "address.postcode" -> "BN124AX"
         )
-        val result  = controller.submit(request)
+        val result  = controller.submit()(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentalPeriodController.show(index = Some(0)).url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -98,7 +98,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.county"   -> "",
             "address.postcode" -> "BN124AX"
           )
-          val result  = controller.submit(request)
+          val result  = controller.submit()(request)
           status(result)                     shouldBe SEE_OTHER
           redirectLocation(result).value     shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -126,7 +126,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.county"   -> "Nowhere",
             "address.postcode" -> "BN124AX"
           )
-          val result  = controller.submit(request)
+          val result  = controller.submit()(request)
           status(result)                          shouldBe SEE_OTHER
           redirectLocation(result).value          shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -155,7 +155,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of what the user might have submitted" should {
       "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result = controller.submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "name"             -> "",
             "address.line1"    -> "",

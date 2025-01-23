@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package views.includes.cards
 
-import form.MappingSupport.createYesNoType as answerYesNo
-import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.mvc.Call
 
-object AdvertisingOnlineForm {
-
-  val theForm: Form[AnswersYesNo] = Form(
-    single(
-      "onlineAdvertising" -> answerYesNo("error.lettingHistory.hasOnlineAdvertising.required")
-    )
-  )
-
-}
+case class CardEntry(
+  key: String,
+  value: String,
+  changeAction: Call
+)
