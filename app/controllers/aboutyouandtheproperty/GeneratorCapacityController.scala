@@ -28,7 +28,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.generatorCapacity
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class GeneratorCapacityController @Inject() (
@@ -37,7 +37,8 @@ class GeneratorCapacityController @Inject() (
   view: generatorCapacity,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -66,8 +67,9 @@ class GeneratorCapacityController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(generatorCapacity = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(GeneratorCapacityId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(GeneratorCapacityId, updatedData).apply(updatedData)))
       }
     )
   }

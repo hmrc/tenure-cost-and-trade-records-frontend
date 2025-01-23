@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.tiedForGoods
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TiedForGoodsController @Inject() (
@@ -40,7 +40,8 @@ class TiedForGoodsController @Inject() (
   tiedForGoodsView: tiedForGoods,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -72,8 +73,10 @@ class TiedForGoodsController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoods = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TiedForGoodsPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(TiedForGoodsPageId, updatedData).apply(updatedData)))
+
       }
     )
   }

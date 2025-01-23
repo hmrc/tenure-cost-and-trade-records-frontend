@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.websiteForProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class WebsiteForPropertyController @Inject() (
@@ -41,7 +41,8 @@ class WebsiteForPropertyController @Inject() (
   websiteForPropertyView: websiteForProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -73,8 +74,10 @@ class WebsiteForPropertyController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(WebsiteForPropertyPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(WebsiteForPropertyPageId, updatedData).apply(updatedData)))
+
       }
     )
   }

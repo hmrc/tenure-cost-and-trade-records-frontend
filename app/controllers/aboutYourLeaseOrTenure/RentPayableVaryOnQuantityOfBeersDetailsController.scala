@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfBeersDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
@@ -38,7 +38,8 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -67,8 +68,10 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
       data => {
         val updatedData =
           updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersInformationDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(rentVaryQuantityOfBeersDetailsId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(rentVaryQuantityOfBeersDetailsId, updatedData).apply(updatedData)))
+
       }
     )
   }

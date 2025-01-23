@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.aboutYou
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AboutYouController @Inject() (
@@ -38,7 +38,8 @@ class AboutYouController @Inject() (
   aboutYouView: aboutYou,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -64,8 +65,9 @@ class AboutYouController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AboutYouPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(AboutYouPageId, updatedData).apply(updatedData)))
       }
     )
   }

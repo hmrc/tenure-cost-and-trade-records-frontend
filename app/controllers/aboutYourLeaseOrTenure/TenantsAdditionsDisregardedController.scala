@@ -32,6 +32,7 @@ import views.html.aboutYourLeaseOrTenure.tenantsAdditionsDisregarded
 import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TenantsAdditionsDisregardedController @Inject() (
@@ -40,7 +41,8 @@ class TenantsAdditionsDisregardedController @Inject() (
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -63,8 +65,10 @@ class TenantsAdditionsDisregardedController @Inject() (
         BadRequest(tenantsAdditionsDisregardedView(formWithErrors, getBackLink, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(TenantsAdditionsDisregardedId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(TenantsAdditionsDisregardedId, updatedData).apply(updatedData)))
+
       }
     )
   }

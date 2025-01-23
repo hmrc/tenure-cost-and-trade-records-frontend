@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.howIsCurrentRentFixed
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class HowIsCurrentRentFixedController @Inject() (
@@ -42,7 +42,8 @@ class HowIsCurrentRentFixedController @Inject() (
   howIsCurrentRentFixedView: howIsCurrentRentFixed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -70,8 +71,10 @@ class HowIsCurrentRentFixedController @Inject() (
         ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(HowIsCurrentRentFixedId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(HowIsCurrentRentFixedId, updatedData).apply(updatedData)))
+
       }
     )
   }

@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.paymentForTradeServices
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PaymentForTradeServicesController @Inject() (
@@ -41,7 +41,8 @@ class PaymentForTradeServicesController @Inject() (
   paymentView: paymentForTradeServices,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -73,8 +74,10 @@ class PaymentForTradeServicesController @Inject() (
         ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(paymentForTradeServices = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(PaymentForTradeServicesId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(PaymentForTradeServicesId, updatedData).apply(updatedData)))
+
       }
     )
   }

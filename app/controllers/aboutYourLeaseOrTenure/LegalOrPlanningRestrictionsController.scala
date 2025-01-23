@@ -33,6 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.legalOrPlanningRestrictions
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LegalOrPlanningRestrictionsController @Inject() (
@@ -41,7 +42,8 @@ class LegalOrPlanningRestrictionsController @Inject() (
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -70,8 +72,10 @@ class LegalOrPlanningRestrictionsController @Inject() (
         ),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(LegalOrPlanningRestrictionId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(LegalOrPlanningRestrictionId, updatedData).apply(updatedData)))
+
       }
     )
   }

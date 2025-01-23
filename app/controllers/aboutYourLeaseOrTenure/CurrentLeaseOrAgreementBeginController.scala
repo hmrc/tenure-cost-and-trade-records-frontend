@@ -85,8 +85,10 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
       formWithErrors => BadRequest(currentLeaseOrAgreementBeginView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CurrentLeaseBeginPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(CurrentLeaseBeginPageId, updatedData).apply(updatedData)))
+
       }
     )
   }

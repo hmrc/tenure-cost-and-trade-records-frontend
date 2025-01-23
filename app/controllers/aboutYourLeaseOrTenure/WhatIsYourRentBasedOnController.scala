@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.whatIsYourRentBasedOn
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class WhatIsYourRentBasedOnController @Inject() (
@@ -38,7 +38,8 @@ class WhatIsYourRentBasedOnController @Inject() (
   whatIsYourRentBasedOnView: whatIsYourRentBasedOn,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -70,8 +71,10 @@ class WhatIsYourRentBasedOnController @Inject() (
           BadRequest(whatIsYourRentBasedOnView(formWithCustomError, request.sessionData.toSummary))
         } else {
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(whatIsYourCurrentRentBasedOnDetails = Some(data)))
-          session.saveOrUpdate(updatedData)
-          Redirect(navigator.nextPage(WhatRentBasedOnPageId, updatedData).apply(updatedData))
+          session
+            .saveOrUpdate(updatedData)
+            .map(_ => Redirect(navigator.nextPage(WhatRentBasedOnPageId, updatedData).apply(updatedData)))
+
         }
       }
     )

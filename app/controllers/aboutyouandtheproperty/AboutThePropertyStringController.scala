@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.aboutThePropertyString
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AboutThePropertyStringController @Inject() (
@@ -40,7 +40,8 @@ class AboutThePropertyStringController @Inject() (
   aboutThePropertyStringView: aboutThePropertyString,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit val ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
@@ -74,8 +75,9 @@ class AboutThePropertyStringController @Inject() (
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetailsString = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData)))
       }
     )
   }

@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.currentRentPayableWithin12Months
 
 import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CurrentRentPayableWithin12MonthsController @Inject() (
@@ -37,7 +38,8 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
   currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-) extends FORDataCaptureController(mcc)
+)(implicit ec: ExecutionContext)
+    extends FORDataCaptureController(mcc)
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
@@ -59,8 +61,12 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
       formWithErrors => BadRequest(currentRentPayableWithin12MonthsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentPayableWithin12Months = Some(data)))
-        session.saveOrUpdate(updatedData)
-        Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId, updatedData).apply(updatedData))
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ =>
+            Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId, updatedData).apply(updatedData))
+          )
+
       }
     )
   }
