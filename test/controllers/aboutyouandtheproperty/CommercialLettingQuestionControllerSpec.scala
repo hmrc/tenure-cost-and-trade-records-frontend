@@ -17,6 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import actions.SessionRequest
+import connectors.Audit
 import form.aboutyouandtheproperty.CommercialLettingQuestionForm.commercialLettingQuestionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
@@ -30,6 +31,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
+  val mockAudit: Audit = mock[Audit]
   def controller(
     isWelsh: Boolean = false,
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
@@ -37,6 +39,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     )
   ) = new CommercialLettingQuestionController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     commercialLettingQuestionView,
     preEnrichedActionRefiner(isWelsh = isWelsh, aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),

@@ -48,7 +48,7 @@ class EditAddressController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (request.getQueryString("from").contains("CYA")) {
       audit.sendExplicitAudit(
-        "cya-change-link",
+        "CyaChangeLink",
         ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "EditAddress")
       )
     }

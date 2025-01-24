@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import play.api.http.Status
@@ -28,11 +29,14 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+
+  val mockAudit: Audit = mock[Audit]
   def propertyCurrentlyUsedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
   ) = new PropertyCurrentlyUsedController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     propertyCurrentlyUsedView,
     preEnrichedActionRefiner(

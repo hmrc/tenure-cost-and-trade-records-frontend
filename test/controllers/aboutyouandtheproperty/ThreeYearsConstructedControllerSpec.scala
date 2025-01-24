@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.ThreeYearsConstructedForm.threeYearsConstructedForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._
@@ -30,11 +31,14 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def threeYearsConstructedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) =
     new ThreeYearsConstructedController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYouAndThePropertyNavigator,
       threeYearsConstructedView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -47,6 +51,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
     )
   ) = new ThreeYearsConstructedController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     threeYearsConstructedView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),

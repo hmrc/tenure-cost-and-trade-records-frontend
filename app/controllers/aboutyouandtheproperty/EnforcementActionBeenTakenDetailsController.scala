@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
 import navigation.AboutYouAndThePropertyNavigator
@@ -34,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class EnforcementActionBeenTakenDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +46,13 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "EnforcementActionBeenTakenDetails")
+      )
+    }
+
     Future.successful(
       Ok(
         enforcementActionBeenTakenDetailsView(

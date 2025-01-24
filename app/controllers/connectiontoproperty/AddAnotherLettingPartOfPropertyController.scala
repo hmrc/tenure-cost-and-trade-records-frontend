@@ -51,7 +51,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
     val existingSection = request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(index))
     if (request.getQueryString("from").contains("CYA")) {
       audit.sendExplicitAudit(
-        "cya-change-link",
+        "CyaChangeLink",
         ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "AddAnotherLettingPartOfProperty")
       )
     }

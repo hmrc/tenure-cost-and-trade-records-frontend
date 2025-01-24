@@ -17,10 +17,12 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.WebsiteForPropertyForm.websiteForPropertyForm
 import models.ForType.*
 import models.Session
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
 import navigation.AboutYouAndThePropertyNavigator
@@ -37,6 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class WebsiteForPropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   websiteForPropertyView: websiteForProperty,
   withSessionRefiner: WithSessionRefiner,
@@ -47,6 +50,12 @@ class WebsiteForPropertyController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "cya-change-link",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "WebsiteForProperty")
+      )
+    }
     Future.successful(
       Ok(
         websiteForPropertyView(

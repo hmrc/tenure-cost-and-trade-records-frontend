@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
@@ -24,16 +25,19 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
+  val mockAudit: Audit = mock[Audit]
   def tiedForGoodsDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new TiedForGoodsDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     tiedForGoodsDetailsView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -42,6 +46,7 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
 
   def tiedForGoodsDetailsControllerNone() = new TiedForGoodsDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     tiedForGoodsDetailsView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

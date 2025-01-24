@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.CompletedCommercialLettingsForm.completedCommercialLettingsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
@@ -29,12 +30,15 @@ class CompletedCommercialLettingsControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
+  val mockAudit: Audit = mock[Audit]
+
   def controller(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
   ) = new CompletedCommercialLettingsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     completedCommercialLettingsView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),

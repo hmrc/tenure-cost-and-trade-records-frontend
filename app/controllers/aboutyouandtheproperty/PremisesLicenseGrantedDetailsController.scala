@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 import navigation.AboutYouAndThePropertyNavigator
@@ -34,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class PremisesLicenseGrantedDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   premisesLicenseGrantedDetailsView: premisesLicenseGrantedDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +46,13 @@ class PremisesLicenseGrantedDetailsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "PremisesLicenseGrantedDetails")
+      )
+    }
+
     Future.successful(
       Ok(
         premisesLicenseGrantedDetailsView(

@@ -16,12 +16,14 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.TradingActivityForm.tradingActivityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class TradingActivityControllerSpec extends TestBaseSpec {
@@ -29,10 +31,13 @@ class TradingActivityControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def tradingActivityController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new TradingActivityController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     tradingActivityView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -41,6 +46,7 @@ class TradingActivityControllerSpec extends TestBaseSpec {
 
   def tradingActivityControllerNone() = new TradingActivityController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     tradingActivityView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

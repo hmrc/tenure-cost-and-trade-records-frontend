@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -30,10 +31,13 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.LicensableActivitiesForm._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def licensableActivitiesController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new LicensableActivitiesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     licensableActivitiesView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -42,6 +46,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
 
   def licensableActivitiesControllerNone() = new LicensableActivitiesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     licensableActivitiesView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

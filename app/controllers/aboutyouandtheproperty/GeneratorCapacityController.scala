@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.GeneratorCapacityForm.generatorCapacityForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.GeneratorCapacityId
@@ -33,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class GeneratorCapacityController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   view: generatorCapacity,
   withSessionRefiner: WithSessionRefiner,
@@ -42,6 +45,13 @@ class GeneratorCapacityController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "GeneratorCapacity")
+      )
+    }
+
     Future.successful(
       Ok(
         view(
