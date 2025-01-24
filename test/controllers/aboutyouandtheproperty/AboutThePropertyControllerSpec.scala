@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import play.api.http.Status
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
@@ -23,16 +24,20 @@ import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyHotel}
 import play.api.test.FakeRequest
+
 import scala.language.reflectiveCalls
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   import TestData._
 
+  val mockAudit: Audit = mock[Audit]
+
   def aboutThePropertyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new AboutThePropertyController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     aboutThePropertyView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -43,6 +48,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
   ) = new AboutThePropertyController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     aboutThePropertyView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -51,6 +57,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyControllerNone() = new AboutThePropertyController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     aboutThePropertyView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

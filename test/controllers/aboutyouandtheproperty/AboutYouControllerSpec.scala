@@ -16,12 +16,14 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class AboutYouControllerSpec extends TestBaseSpec {
@@ -30,10 +32,13 @@ class AboutYouControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
+
   def aboutYouController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new AboutYouController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     aboutYouView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -42,6 +47,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
 
   def aboutYouControllerNone() = new AboutYouController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     aboutYouView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

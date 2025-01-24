@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.CommercialLettingAvailabilityWelshForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, LettingAvailability}
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -29,6 +30,8 @@ import java.time.LocalDate
 class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
+
+  val mockAudit: Audit = mock[Audit]
 
   val years = Seq("2024", "2023", "2022")
 
@@ -48,6 +51,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
     )
   ) = new CommercialLettingAvailabilityWelshController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     commercialLettingAvailabilityWelshView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),

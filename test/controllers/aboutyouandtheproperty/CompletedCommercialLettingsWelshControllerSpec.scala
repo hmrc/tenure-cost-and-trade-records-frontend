@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.CompletedCommercialLettingsWelshForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, CompletedLettings}
 import play.api.libs.json.Json
@@ -28,6 +29,8 @@ import java.time.LocalDate
 class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
+
+  val mockAudit: Audit = mock[Audit]
 
   val years = Seq("2024", "2023", "2022")
 
@@ -47,6 +50,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     )
   ) = new CompletedCommercialLettingsWelshController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     completedCommercialLettingsWelshView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),

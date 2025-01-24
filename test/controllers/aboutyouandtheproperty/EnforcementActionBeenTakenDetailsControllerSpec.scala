@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import play.api.http.Status
@@ -23,16 +24,20 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
+
 import scala.language.reflectiveCalls
 
 class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
+  val mockAudit: Audit = mock[Audit]
+
   def enforcementActionBeenTakenDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new EnforcementActionBeenTakenDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     enforcemenntActionBeenTakenDetailsView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -41,6 +46,7 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 
   def enforcementActionBeenTakenDetailsControllerNone() = new EnforcementActionBeenTakenDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     enforcemenntActionBeenTakenDetailsView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

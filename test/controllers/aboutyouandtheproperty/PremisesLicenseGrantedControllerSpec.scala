@@ -16,12 +16,14 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
@@ -29,10 +31,13 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import form.aboutyouandtheproperty.PremisesLicenseGrantedForm.premisesLicenseGrantedForm
 
+  val mockAudit: Audit = mock[Audit]
+
   def premisesLicenseGrantedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new PremisesLicenseGrantedController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     premisesLicenceGrantedView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -41,6 +46,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
 
   def premisesLicenseGrantedControllerNone() = new PremisesLicenseGrantedController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     premisesLicenceGrantedView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

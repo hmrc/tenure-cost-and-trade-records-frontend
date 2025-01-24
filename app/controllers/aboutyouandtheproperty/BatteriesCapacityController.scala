@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.BatteriesCapacityForm.batteriesCapacityForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.BatteriesCapacityId
@@ -32,6 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class BatteriesCapacityController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   view: batteriesCapacity,
   withSessionRefiner: WithSessionRefiner,
@@ -41,6 +44,12 @@ class BatteriesCapacityController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "BatteriesCapacity")
+      )
+    }
     Future.successful(
       Ok(
         view(

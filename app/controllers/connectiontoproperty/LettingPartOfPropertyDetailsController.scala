@@ -55,7 +55,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
     } yield requestedLettingPartOfPropertyDetails.tenantDetails
     if (request.getQueryString("from").contains("CYA")) {
       audit.sendExplicitAudit(
-        "cya-change-link",
+        "CyaChangeLink",
         ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "LettingPartOfPropertyDetails")
       )
     }

@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.PlantAndTechnologyForm.plantAndTechnologyForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.common.{AnswerNo, AnswerYes}
@@ -24,6 +25,7 @@ import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class PlantAndTechnologyControllerSpec extends TestBaseSpec {
@@ -31,11 +33,13 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
   def plantAndTechnologyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
   ) = new PlantAndTechnologyController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     plantAndTechnologyView,
     preEnrichedActionRefiner(
@@ -47,6 +51,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
 
   def plantAndTechnologyControllerNone() = new PlantAndTechnologyController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     plantAndTechnologyView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),

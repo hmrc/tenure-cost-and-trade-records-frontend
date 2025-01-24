@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CommercialLettingAvailabilityForm.commercialLettingAvailabilityForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CommercialLettingAvailabilityId
@@ -34,6 +36,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class CommercialLettingAvailabilityController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   view: commercialLettingAvailability,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +47,12 @@ class CommercialLettingAvailabilityController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "CommercialLettingAvailability")
+      )
+    }
     Ok(
       view(
         request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailability) match {

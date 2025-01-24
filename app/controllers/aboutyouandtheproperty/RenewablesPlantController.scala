@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.RenewablesPlant
 import models.submissions.common.{AnswerNo, AnswerYes}
@@ -35,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RenewablesPlantController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   view: renewablesPlant,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +47,12 @@ class RenewablesPlantController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "RenewablesPlant")
+      )
+    }
     Future.successful(
       Ok(
         view(

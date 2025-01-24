@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.PartsUnavailableForm.partsUnavailableForm
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
@@ -28,8 +29,11 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def controller(isWelsh: Boolean = false) = new PartsUnavailableController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     partsUnavailableView,
     preEnrichedActionRefiner(isWelsh = isWelsh),

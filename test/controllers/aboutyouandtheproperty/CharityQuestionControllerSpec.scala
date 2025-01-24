@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.CharityQuestionForm.charityQuestionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status.*
@@ -29,11 +30,13 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
   def charityQuestionController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) =
     new CharityQuestionController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYouAndThePropertyNavigator,
       charityQuestionView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -42,6 +45,7 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
 
   def charityQuestionControllerNone() = new CharityQuestionController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     charityQuestionView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

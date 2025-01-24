@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.OccupiersDetailsForm.occupiersDetailsForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, OccupiersDetails}
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.OccupiersDetailsId
@@ -33,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class OccupiersDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   view: occupiersDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -42,6 +45,13 @@ class OccupiersDetailsController @Inject() (
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "OccupiersDetails")
+      )
+    }
+
     val existingDetails: Option[OccupiersDetails] =
       for {
         requestedIndex <- index
