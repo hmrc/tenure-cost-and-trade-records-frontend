@@ -17,6 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.OccupiersDetailsListForm.occupiersDetailsListForm
 import form.confirmableActionForm.confirmableActionForm
@@ -30,6 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.occupiersDetailsList
 import views.html.genericRemoveConfirmation
 import controllers.toOpt
+import models.audit.ChangeLinkAudit
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -37,6 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class OccupiersDetailsListController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   view: occupiersDetailsList,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -47,6 +50,12 @@ class OccupiersDetailsListController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "OccupiersDetailsList")
+      )
+    }
     Future.successful(
       Ok(
         view(

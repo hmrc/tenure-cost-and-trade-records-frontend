@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -30,11 +31,14 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def contactDetailsQuestionController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) =
     new ContactDetailsQuestionController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYouAndThePropertyNavigator,
       contactDetailsQuestionView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -43,6 +47,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
 
   def contactDetailsQuestionControllerNone() = new ContactDetailsQuestionController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     contactDetailsQuestionView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

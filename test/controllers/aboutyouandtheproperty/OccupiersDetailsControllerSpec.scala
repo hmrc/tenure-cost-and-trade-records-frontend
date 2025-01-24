@@ -17,6 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import actions.SessionRequest
+import connectors.Audit
 import form.aboutyouandtheproperty.OccupiersDetailsForm.occupiersDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
@@ -30,12 +31,15 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
 
   import TestData._
 
+  val mockAudit: Audit = mock[Audit]
+
   def controller(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
   ) = new OccupiersDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     occupiersDetailsView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
@@ -44,6 +48,7 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
 
   def aboutYouControllerNone() = new OccupiersDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     occupiersDetailsView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),

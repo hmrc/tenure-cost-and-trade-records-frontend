@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PartsUnavailableForm.partsUnavailableForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
@@ -35,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class PartsUnavailableController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   view: partsUnavailable,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +48,12 @@ class PartsUnavailableController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "PartsUnavailable")
+      )
+    }
     Future.successful(
       Ok(
         view(

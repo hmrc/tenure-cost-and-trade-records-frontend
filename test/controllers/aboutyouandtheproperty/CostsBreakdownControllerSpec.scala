@@ -15,6 +15,7 @@
  */
 
 package controllers.aboutyouandtheproperty
+import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.CostsBreakdownForm.costsBreakdownForm
 import play.api.http.Status
@@ -30,10 +31,13 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
+
   def costsBreakdownController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new CostsBreakdownController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     costsBreakdownView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -42,6 +46,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
 
   def costsBreakdownControllerNone() = new CostsBreakdownController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     costsBreakdownView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

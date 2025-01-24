@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.GeneratorCapacityForm.generatorCapacityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
@@ -31,10 +32,13 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
+
   def generatorCapacityController(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
   ) = new GeneratorCapacityController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     generatorCapacityView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
@@ -43,6 +47,7 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
 
   def generatorCapacityControllerNone() = new GeneratorCapacityController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     generatorCapacityView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),

@@ -16,6 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import form.aboutyouandtheproperty.BatteriesCapacityForm.batteriesCapacityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
@@ -31,10 +32,13 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
+  val mockAudit: Audit = mock[Audit]
+
   def batteriesCapacityController(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
   ) = new BatteriesCapacityController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     batteriesCapacityView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
@@ -43,6 +47,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec {
 
   def batteriesCapacityControllerNone() = new BatteriesCapacityController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     batteriesCapacityView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),

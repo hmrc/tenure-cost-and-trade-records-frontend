@@ -15,6 +15,7 @@
  */
 
 package controllers.aboutyouandtheproperty
+import connectors.Audit
 import form.Errors
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
 import play.api.http.Status
@@ -32,10 +33,12 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
+  val mockAudit: Audit = mock[Audit]
   def renewablesPlantController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new RenewablesPlantController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     renewablesPlantView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -48,6 +51,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
     )
   ) = new RenewablesPlantController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     renewablesPlantView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),

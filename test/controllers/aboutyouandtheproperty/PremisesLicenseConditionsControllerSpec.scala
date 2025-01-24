@@ -16,11 +16,13 @@
 
 package controllers.aboutyouandtheproperty
 
+import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
@@ -29,10 +31,13 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
   import form.aboutyouandtheproperty.PremisesLicenseConditionsForm._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def premisesLicenseController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) = new PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     premisesLicensableView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -43,6 +48,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
   ) = new PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     premisesLicensableView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
@@ -51,6 +57,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
   def premisesLicenseControllerNone() = new PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYouAndThePropertyNavigator,
     premisesLicensableView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),

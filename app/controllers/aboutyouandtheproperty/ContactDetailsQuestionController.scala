@@ -17,8 +17,10 @@
 package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
+import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutYouAndThePropertyNavigator
@@ -34,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ContactDetailsQuestionController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
   contactDetailsQuestionView: contactDetailsQuestion,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +46,12 @@ class ContactDetailsQuestionController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    if (request.getQueryString("from").contains("CYA")) {
+      audit.sendExplicitAudit(
+        "CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "ContactDetailsQuestion")
+      )
+    }
     Future.successful(
       Ok(
         contactDetailsQuestionView(
