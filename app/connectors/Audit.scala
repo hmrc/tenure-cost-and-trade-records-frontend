@@ -16,11 +16,13 @@
 
 package connectors
 
+import actions.SessionRequest
 import com.google.inject.ImplementedBy
 import models.Session
-import models.audit.SavedAsDraftEvent
+import models.audit.{ChangeLinkAudit, SavedAsDraftEvent}
 import play.api.i18n.Messages
 import play.api.libs.json.{JsObject, Json}
+import play.api.mvc.AnyContent
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.AuditExtensions.auditHeaderCarrier
 import uk.gov.hmrc.play.audit.http.config.AuditingConfig
@@ -50,6 +52,10 @@ trait Audit extends AuditConnector {
 
   def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(implicit hc: HeaderCarrier): Unit =
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)
+
+  def sendChangeLink(pageID: String)(implicit request: SessionRequest[AnyContent], hc: HeaderCarrier): Unit =
+    sendExplicitAudit("CyaChangeLink",
+      ChangeLinkAudit(request.sessionData.forType.toString, request.uri, pageID))
 
 }
 
