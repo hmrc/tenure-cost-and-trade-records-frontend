@@ -54,8 +54,10 @@ trait Audit extends AuditConnector {
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)
 
   def sendChangeLink(pageID: String)(implicit request: SessionRequest[AnyContent], hc: HeaderCarrier): Unit =
-    sendExplicitAudit("CyaChangeLink",
-      ChangeLinkAudit(request.sessionData.forType.toString, request.uri, pageID))
+    if (request.getQueryString("from").contains("CYA")) {
+      sendExplicitAudit("CyaChangeLink",
+        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, pageID))
+    }
 
 }
 

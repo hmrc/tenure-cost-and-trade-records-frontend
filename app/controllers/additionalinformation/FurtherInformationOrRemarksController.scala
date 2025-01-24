@@ -46,9 +46,7 @@ class FurtherInformationOrRemarksController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
       audit.sendChangeLink("FurtherInformationOrRemarks")
-    }
 
     Future.successful(
       Ok(
