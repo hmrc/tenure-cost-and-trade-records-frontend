@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalAmusementsForm.additionalAmusementsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalAmusements, AdditionalBarsClubs, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AdditionalAmusements, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalAmusementsId
 import play.api.i18n.I18nSupport

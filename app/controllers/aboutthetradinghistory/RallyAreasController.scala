@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.RallyAreasTradingDataForm.rallyAreasTradingDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{RallyAreasTradingData, TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{RallyAreasTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.RallyAreasId
 import play.api.i18n.I18nSupport

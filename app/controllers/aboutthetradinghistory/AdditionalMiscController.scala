@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.AdditionalMiscForm.additionalMiscForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalAmusements, AdditionalMisc, AdditionalMiscDetails, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalMiscId
 import play.api.i18n.I18nSupport

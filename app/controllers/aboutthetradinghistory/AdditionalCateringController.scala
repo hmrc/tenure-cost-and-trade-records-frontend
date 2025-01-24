@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalCateringForm.additionalCateringForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalCatering, TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AdditionalCatering, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalCateringId
 import play.api.i18n.I18nSupport
@@ -30,6 +30,7 @@ import views.html.aboutthetradinghistory.additionalCatering
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class AdditionalCateringController @Inject() (
   mcc: MessagesControllerComponents,

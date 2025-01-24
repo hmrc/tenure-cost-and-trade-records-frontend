@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesTradingDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{GrossReceiptsSubLetUnits, TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{TentingPitchesTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.PitchesForGlampingId
 import play.api.i18n.I18nSupport
@@ -30,6 +30,7 @@ import views.html.aboutthetradinghistory.pitchesForGlamping
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class PitchesForGlampingController @Inject() (
   mcc: MessagesControllerComponents,

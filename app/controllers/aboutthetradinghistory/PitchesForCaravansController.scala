@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesTradingDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{GrossReceiptsLettingUnits, TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{TentingPitchesTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.PitchesForCaravansId
 import play.api.i18n.I18nSupport
