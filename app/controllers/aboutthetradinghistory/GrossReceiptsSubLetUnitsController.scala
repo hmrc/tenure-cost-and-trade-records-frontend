@@ -48,7 +48,10 @@ class GrossReceiptsSubLetUnitsController @Inject() (
       Ok(
         view(
           grossReceiptsSubLetUnitsForm(years).fill(
-            turnoverSections6045.map(_.grossReceiptsSubLetUnits getOrElse GrossReceiptsSubLetUnits())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.grossReceiptsLettingUnits.fold(52)(_.tradingPeriod)
+              section.grossReceiptsSubLetUnits.getOrElse(GrossReceiptsSubLetUnits(tradingPeriod))
+            )
           ),
           getBackLink
         )

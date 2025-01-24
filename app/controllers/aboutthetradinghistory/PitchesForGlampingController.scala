@@ -30,6 +30,7 @@ import views.html.aboutthetradinghistory.pitchesForGlamping
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class PitchesForGlampingController @Inject() (
   mcc: MessagesControllerComponents,
@@ -48,7 +49,10 @@ class PitchesForGlampingController @Inject() (
       Ok(
         view(
           tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(_.pitchesForGlamping getOrElse TentingPitchesTradingData())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.pitchesForCaravans.fold(52)(_.tradingPeriod)
+              section.pitchesForGlamping.getOrElse(TentingPitchesTradingData(tradingPeriod))
+            )
           ),
           getBackLink
         )

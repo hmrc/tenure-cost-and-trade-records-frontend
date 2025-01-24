@@ -48,7 +48,7 @@ class PitchesForCaravansController @Inject() (
       Ok(
         view(
           tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(_.pitchesForCaravans getOrElse TentingPitchesTradingData())
+            turnoverSections6045.map(_.pitchesForCaravans getOrElse initialPitchesForCaravans)
           ),
           getBackLink
         )
@@ -90,6 +90,16 @@ class PitchesForCaravansController @Inject() (
       )
     }
   }
+
+  private def initialPitchesForCaravans(implicit
+    request: SessionRequest[AnyContent]
+  ): TentingPitchesTradingData =
+    val tradingPeriod = request.sessionData.aboutTheTradingHistoryPartOne
+      .flatMap(_.touringAndTentingPitches)
+      .flatMap(_.tentingPitchesAllYear)
+      .flatMap(_.weekOfPitchesUse)
+      .getOrElse(52)
+    TentingPitchesTradingData(tradingPeriod)
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]

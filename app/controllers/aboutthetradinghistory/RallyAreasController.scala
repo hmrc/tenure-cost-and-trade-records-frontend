@@ -48,7 +48,10 @@ class RallyAreasController @Inject() (
       Ok(
         view(
           rallyAreasTradingDataForm(years).fill(
-            turnoverSections6045.map(_.rallyAreas getOrElse RallyAreasTradingData())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.pitchesForCaravans.fold(52)(_.tradingPeriod)
+              section.rallyAreas.getOrElse(RallyAreasTradingData(tradingPeriod))
+            )
           ),
           getBackLink
         )

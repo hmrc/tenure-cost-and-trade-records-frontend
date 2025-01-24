@@ -30,6 +30,7 @@ import views.html.aboutthetradinghistory.additionalCatering
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class AdditionalCateringController @Inject() (
   mcc: MessagesControllerComponents,
@@ -48,7 +49,10 @@ class AdditionalCateringController @Inject() (
       Ok(
         view(
           additionalCateringForm(years).fill(
-            turnoverSections6045.map(_.additionalCatering getOrElse AdditionalCatering())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.additionalShops.fold(52)(_.tradingPeriod)
+              section.additionalCatering.getOrElse(AdditionalCatering(tradingPeriod))
+            )
           ),
           getBackLink
         )

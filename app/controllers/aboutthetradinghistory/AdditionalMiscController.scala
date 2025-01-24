@@ -51,7 +51,13 @@ class AdditionalMiscController @Inject() (
       Ok(
         view(
           additionalMiscForm(years).fill(
-            (turnoverSections6045.map(_.additionalMisc.getOrElse(AdditionalMisc())), details)
+            (
+              turnoverSections6045.map(section =>
+                val tradingPeriod = section.additionalShops.fold(52)(_.tradingPeriod)
+                section.additionalMisc.getOrElse(AdditionalMisc(tradingPeriod))
+              ),
+              details
+            )
           ),
           getBackLink
         )

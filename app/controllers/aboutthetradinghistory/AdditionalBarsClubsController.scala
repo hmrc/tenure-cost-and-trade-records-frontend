@@ -48,7 +48,10 @@ class AdditionalBarsClubsController @Inject() (
       Ok(
         view(
           additionalBarsClubsForm(years).fill(
-            turnoverSections6045.map(_.additionalBarsClubs getOrElse AdditionalBarsClubs())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.additionalShops.fold(52)(_.tradingPeriod)
+              section.additionalBarsClubs.getOrElse(AdditionalBarsClubs(tradingPeriod))
+            )
           ),
           getBackLink
         )
