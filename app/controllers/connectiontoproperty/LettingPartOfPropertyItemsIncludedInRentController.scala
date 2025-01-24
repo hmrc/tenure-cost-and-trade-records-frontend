@@ -45,23 +45,14 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("LettingPartOfPropertyItemsIncludedInRent")
+
     request.sessionData.stillConnectedDetails
       .flatMap(_.lettingPartOfPropertyDetails.lift(index))
       .fold(
         startRedirect
       ) { currentSection =>
         val rentIncludesForm = lettingPartOfPropertyRentIncludesForm.fill(currentSection.itemsIncludedInRent)
-
-        if (request.getQueryString("from").contains("CYA")) {
-          audit.sendExplicitAudit(
-            "CyaChangeLink",
-            ChangeLinkAudit(
-              request.sessionData.forType.toString,
-              request.uri,
-              "LettingPartOfPropertyItemsIncludedInRent"
-            )
-          )
-        }
 
         Ok(
           lettingPartOfPropertyRentIncludesView(

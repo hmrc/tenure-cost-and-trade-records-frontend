@@ -46,6 +46,9 @@ class LettingPartOfPropertyDetailsController @Inject() (
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("LettingPartOfPropertyDetails")
+
+
     val existingDetails: Option[TenantDetails] = for {
       requestedIndex                        <- index
       existingLettingPartOfPropertyDetails  <-
@@ -53,12 +56,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedLettingPartOfPropertyDetails <- existingLettingPartOfPropertyDetails.lift(requestedIndex)
     } yield requestedLettingPartOfPropertyDetails.tenantDetails
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "LettingPartOfPropertyDetails")
-      )
-    }
+
 
     Ok(
       tenantDetailsView(

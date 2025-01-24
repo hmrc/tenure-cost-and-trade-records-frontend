@@ -48,12 +48,8 @@ class VacantPropertiesStartDateController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "TradingNameOwnTheProperty")
-      )
-    }
+    audit.sendChangeLink("VacantPropertiesStartDate")
+
     Future.successful(
       Ok(
         vacantPropertyStartDateView(
