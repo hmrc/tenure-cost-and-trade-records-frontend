@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesTradingDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{GrossReceiptsSubLetUnits, TentingPitchesTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.PitchesForGlampingId
 import play.api.i18n.I18nSupport
@@ -48,7 +48,10 @@ class PitchesForGlampingController @Inject() (
       Ok(
         view(
           tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(_.pitchesForGlamping getOrElse TentingPitchesTradingData())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.pitchesForCaravans.fold(52)(_.tradingPeriod)
+              section.pitchesForGlamping.getOrElse(TentingPitchesTradingData(tradingPeriod))
+            )
           ),
           getBackLink
         )

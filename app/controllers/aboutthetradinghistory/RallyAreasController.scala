@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.RallyAreasTradingDataForm.rallyAreasTradingDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{RallyAreasTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{RallyAreasTradingData, TentingPitchesTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.RallyAreasId
 import play.api.i18n.I18nSupport
@@ -48,7 +48,10 @@ class RallyAreasController @Inject() (
       Ok(
         view(
           rallyAreasTradingDataForm(years).fill(
-            turnoverSections6045.map(_.rallyAreas getOrElse RallyAreasTradingData())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.pitchesForCaravans.fold(52)(_.tradingPeriod)
+              section.rallyAreas.getOrElse(RallyAreasTradingData(tradingPeriod))
+            )
           ),
           getBackLink
         )

@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.AdditionalMiscForm.additionalMiscForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AdditionalAmusements, AdditionalMisc, AdditionalMiscDetails, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalMiscId
 import play.api.i18n.I18nSupport
@@ -51,7 +51,13 @@ class AdditionalMiscController @Inject() (
       Ok(
         view(
           additionalMiscForm(years).fill(
-            (turnoverSections6045.map(_.additionalMisc.getOrElse(AdditionalMisc())), details)
+            (
+              turnoverSections6045.map(section =>
+                val tradingPeriod = section.additionalShops.fold(52)(_.tradingPeriod)
+                section.additionalMisc.getOrElse(AdditionalMisc(tradingPeriod))
+              ),
+              details
+            )
           ),
           getBackLink
         )

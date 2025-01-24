@@ -48,7 +48,7 @@ class AdditionalShopsController @Inject() (
       Ok(
         view(
           additionalShopsForm(years).fill(
-            turnoverSections6045.map(_.additionalShops getOrElse AdditionalShops())
+            turnoverSections6045.map(_.additionalShops getOrElse initialAdditionalShops)
           ),
           getBackLink
         )
@@ -90,6 +90,16 @@ class AdditionalShopsController @Inject() (
       )
     }
   }
+
+  private def initialAdditionalShops(implicit
+    request: SessionRequest[AnyContent]
+  ): AdditionalShops =
+    val tradingPeriod = request.sessionData.aboutTheTradingHistoryPartOne
+      .flatMap(_.additionalActivities)
+      .flatMap(_.additionalActivitiesAllYear)
+      .flatMap(_.weeksOpen)
+      .getOrElse(52)
+    AdditionalShops(tradingPeriod)
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]

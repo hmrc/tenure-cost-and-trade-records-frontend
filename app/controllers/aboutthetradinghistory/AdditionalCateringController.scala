@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalCateringForm.additionalCateringForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalCatering, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AdditionalCatering, TentingPitchesTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalCateringId
 import play.api.i18n.I18nSupport
@@ -48,7 +48,10 @@ class AdditionalCateringController @Inject() (
       Ok(
         view(
           additionalCateringForm(years).fill(
-            turnoverSections6045.map(_.additionalCatering getOrElse AdditionalCatering())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.additionalShops.fold(52)(_.tradingPeriod)
+              section.additionalCatering.getOrElse(AdditionalCatering(tradingPeriod))
+            )
           ),
           getBackLink
         )

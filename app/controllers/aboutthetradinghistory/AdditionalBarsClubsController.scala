@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalBarsClubsForm.additionalBarsClubsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalBarsClubs, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AdditionalBarsClubs, AdditionalCatering, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalBarsClubsId
 import play.api.i18n.I18nSupport
@@ -48,7 +48,10 @@ class AdditionalBarsClubsController @Inject() (
       Ok(
         view(
           additionalBarsClubsForm(years).fill(
-            turnoverSections6045.map(_.additionalBarsClubs getOrElse AdditionalBarsClubs())
+            turnoverSections6045.map(section =>
+              val tradingPeriod = section.additionalShops.fold(52)(_.tradingPeriod)
+              section.additionalBarsClubs.getOrElse(AdditionalBarsClubs(tradingPeriod))
+            )
           ),
           getBackLink
         )

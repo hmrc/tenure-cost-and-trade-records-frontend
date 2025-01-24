@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesTradingDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{GrossReceiptsLettingUnits, TentingPitchesTradingData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.PitchesForCaravansId
 import play.api.i18n.I18nSupport
@@ -48,7 +48,7 @@ class PitchesForCaravansController @Inject() (
       Ok(
         view(
           tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(_.pitchesForCaravans getOrElse TentingPitchesTradingData())
+            turnoverSections6045.map(_.pitchesForCaravans getOrElse initialPitchesForCaravans)
           ),
           getBackLink
         )
@@ -90,6 +90,16 @@ class PitchesForCaravansController @Inject() (
       )
     }
   }
+
+  private def initialPitchesForCaravans(implicit
+    request: SessionRequest[AnyContent]
+  ): TentingPitchesTradingData =
+    val tradingPeriod = request.sessionData.aboutTheTradingHistoryPartOne
+      .flatMap(_.touringAndTentingPitches)
+      .flatMap(_.tentingPitchesAllYear)
+      .flatMap(_.weekOfPitchesUse)
+      .getOrElse(52)
+    TentingPitchesTradingData(tradingPeriod)
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
