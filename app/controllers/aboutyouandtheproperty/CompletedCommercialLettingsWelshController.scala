@@ -46,12 +46,8 @@ class CompletedCommercialLettingsWelshController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "CompletedCommercialLettingsWelsh")
-      )
-    }
+    audit.sendChangeLink("CompletedCommercialLettingsWelsh")
+
     request.sessionData.aboutYouAndThePropertyPartTwo
       .filter(_.commercialLetDate.isDefined)
       .fold(Redirect(routes.CommercialLettingQuestionController.show())) { data =>

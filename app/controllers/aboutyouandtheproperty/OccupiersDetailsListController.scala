@@ -50,12 +50,7 @@ class OccupiersDetailsListController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "OccupiersDetailsList")
-      )
-    }
+    audit.sendChangeLink("OccupiersDetailsList")
     Future.successful(
       Ok(
         view(

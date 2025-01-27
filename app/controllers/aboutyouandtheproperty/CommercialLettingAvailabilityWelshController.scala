@@ -47,12 +47,8 @@ class CommercialLettingAvailabilityWelshController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "CommercialLettingAvailabilityWelsh")
-      )
-    }
+    audit.sendChangeLink("CommercialLettingAvailabilityWelsh")
+
 
     request.sessionData.aboutYouAndThePropertyPartTwo
       .filter(_.commercialLetDate.isDefined)
