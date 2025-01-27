@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.Session
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
@@ -76,6 +77,8 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
     }
   }
 
+  val mockAudit: Audit = mock[Audit]
+
   trait ControllerFixture:
     val repository = mock[SessionRepo]
     val data       = captor[Session]
@@ -84,6 +87,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
     val controller =
       new FeeReceivedController(
         stubMessagesControllerComponents(),
+        mockAudit,
         aboutFranchisesOrLettingsNavigator,
         feeReceivedView,
         preEnrichedActionRefiner(

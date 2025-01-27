@@ -49,7 +49,6 @@ class CommercialLettingAvailabilityWelshController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CommercialLettingAvailabilityWelsh")
 
-
     request.sessionData.aboutYouAndThePropertyPartTwo
       .filter(_.commercialLetDate.isDefined)
       .fold(Redirect(routes.CommercialLettingQuestionController.show())) { data =>

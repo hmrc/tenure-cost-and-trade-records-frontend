@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseFeeForm.concessionOrFranchiseFeeForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class ConcessionOrFranchiseFeeController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationView: cateringOperationOrLettingAccommodation,
   withSessionRefiner: WithSessionRefiner,
@@ -47,6 +49,7 @@ class ConcessionOrFranchiseFeeController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#catering-operation-or-letting-accommodation"
       case _    => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
     }
+    audit.sendChangeLink("ConcessionOrFranchiseFee")
     Ok(
       cateringOperationOrLettingAccommodationView(
         request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee) match {

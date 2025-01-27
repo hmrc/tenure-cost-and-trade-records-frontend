@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.{ForType, Session}
@@ -139,6 +140,8 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
     }
   }
 
+  val mockAudit: Audit = mock[Audit]
+
   trait ControllerFixture(givenForType: ForType = FOR6010):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
@@ -147,6 +150,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
     val controller =
       new CateringOperationBusinessDetailsController(
         stubMessagesControllerComponents(),
+        mockAudit,
         aboutFranchisesOrLettingsNavigator,
         cateringOperationDetailsView,
         preEnrichedActionRefiner(

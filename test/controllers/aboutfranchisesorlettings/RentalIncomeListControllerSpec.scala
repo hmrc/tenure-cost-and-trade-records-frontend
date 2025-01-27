@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
+import connectors.Audit
 import form.aboutfranchisesorlettings.RentalIncomeListForm.rentalIncomeListForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord}
 import play.api.http.Status._
@@ -27,12 +28,14 @@ import utils.TestBaseSpec
 
 class RentalIncomeListControllerSpec extends TestBaseSpec {
   import TestData._
+  val mockAudit: Audit = mock[Audit]
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettings6045
     )
   ) = new RentalIncomeListController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutFranchisesOrLettingsNavigator,
     rentalIncomeListView,
     genericRemoveConfirmationView,

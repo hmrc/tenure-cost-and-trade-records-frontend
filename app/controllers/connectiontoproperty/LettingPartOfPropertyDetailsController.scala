@@ -48,7 +48,6 @@ class LettingPartOfPropertyDetailsController @Inject() (
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyDetails")
 
-
     val existingDetails: Option[TenantDetails] = for {
       requestedIndex                        <- index
       existingLettingPartOfPropertyDetails  <-
@@ -56,7 +55,6 @@ class LettingPartOfPropertyDetailsController @Inject() (
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedLettingPartOfPropertyDetails <- existingLettingPartOfPropertyDetails.lift(requestedIndex)
     } yield requestedLettingPartOfPropertyDetails.tenantDetails
-
 
     Ok(
       tenantDetailsView(

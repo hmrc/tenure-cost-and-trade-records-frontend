@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentalIncomeListForm.rentalIncomeListForm
 import form.confirmableActionForm.confirmableActionForm
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RentalIncomeListController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   view: rentalIncomeList,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -67,6 +69,7 @@ class RentalIncomeListController @Inject() (
       record    <- income.lift(index)
       addRecord <- record.addAnotherRecord
     } yield addRecord
+    audit.sendChangeLink("RentalIncomeList")
 
     Future.successful(
       Ok(

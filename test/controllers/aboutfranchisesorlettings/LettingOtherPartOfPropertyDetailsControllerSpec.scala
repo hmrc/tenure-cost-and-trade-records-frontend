@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.libs.json.Writes
@@ -131,6 +132,8 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
+  val mockAudit: Audit = mock[Audit]
+
   trait ControllerFixture(aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
@@ -139,6 +142,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
     val controller =
       new LettingOtherPartOfPropertyDetailsController(
         stubMessagesControllerComponents(),
+        mockAudit,
         aboutFranchisesOrLettingsNavigator,
         lettingOtherPartOfPropertyDetailsView,
         preEnrichedActionRefiner(

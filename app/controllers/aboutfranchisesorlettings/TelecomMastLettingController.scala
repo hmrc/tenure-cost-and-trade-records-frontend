@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TelecomMastLettingForm.telecomMastLettingForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingPartOfProperty, TelecomMastLetting}
@@ -32,6 +33,7 @@ import scala.concurrent.ExecutionContext
 
 class TelecomMastLettingController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   telecomMastLettingView: telecomMastLetting,
   withSessionRefiner: WithSessionRefiner,
@@ -55,6 +57,7 @@ class TelecomMastLettingController @Inject() (
                               case _                         => None
                             }
     } yield telecomMastLetting
+    audit.sendChangeLink("TelecomMastLetting")
 
     Ok(
       telecomMastLettingView(

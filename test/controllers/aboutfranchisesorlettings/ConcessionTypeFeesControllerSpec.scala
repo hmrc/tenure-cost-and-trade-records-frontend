@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
@@ -23,9 +24,11 @@ import utils.TestBaseSpec
 
 class ConcessionTypeFeesControllerSpec extends TestBaseSpec {
 
-  def controller =
+  val mockAudit: Audit = mock[Audit]
+  def controller       =
     new ConcessionTypeFeesController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutFranchisesOrLettingsNavigator,
       feeReceivedView,
       preEnrichedActionRefiner(

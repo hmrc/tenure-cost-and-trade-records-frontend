@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
 import form.confirmableActionForm.confirmableActionForm
@@ -39,6 +40,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AddAnotherCateringOperationController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -78,6 +80,7 @@ class AddAnotherCateringOperationController @Inject() (
         .flatMap(_.cateringOperationSections.lift(index))
         .flatMap(_.addAnotherOperationToProperty)
     }
+    audit.sendChangeLink("AddAnotherCateringOperation")
 
     Future.successful(
       Ok(

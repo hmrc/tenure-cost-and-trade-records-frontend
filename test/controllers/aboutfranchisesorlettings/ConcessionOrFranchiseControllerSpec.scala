@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,8 +27,11 @@ class ConcessionOrFranchiseControllerSpec extends TestBaseSpec {
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
+  val mockAudit: Audit = mock[Audit]
+
   val concessionOrFranchiseController = new ConcessionOrFranchiseController(
     stubMessagesControllerComponents(),
+    mockAudit,
     mockAboutFranchisesOrLettingsNavigator,
     rentFromConcession,
     preFilledSession,

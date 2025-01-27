@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.{ForType, Session}
@@ -165,6 +166,8 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
     }
   }
 
+  val mockAudit: Audit = mock[Audit]
+
   trait ControllerFixture(
     givenForType: ForType = FOR6010,
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
@@ -176,6 +179,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
     val controller =
       new CateringOperationDetailsController(
         stubMessagesControllerComponents(),
+        mockAudit,
         aboutFranchisesOrLettingsNavigator,
         cateringOperationDetailsView,
         preEnrichedActionRefiner(

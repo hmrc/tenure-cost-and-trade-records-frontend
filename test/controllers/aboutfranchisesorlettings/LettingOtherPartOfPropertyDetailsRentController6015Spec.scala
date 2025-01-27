@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import controllers.aboutfranchisesorlettings
 import models.ForType
 import models.ForType.*
@@ -30,12 +31,13 @@ import utils.TestBaseSpec
 class LettingOtherPartOfPropertyDetailsRentController6015Spec extends TestBaseSpec {
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
-
+  val mockAudit: Audit                       = mock[Audit]
   def lettingOtherPartOfPropertyDetailsRentController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
     new LettingOtherPartOfPropertyDetailsRentController(
       stubMessagesControllerComponents(),
+      mockAudit,
       mockAboutFranchisesOrLettingsNavigator,
       lettingOtherPartOfPropertyRentDetailsView,
       preEnrichedActionRefiner(forType = FOR6015, aboutFranchisesOrLettings = aboutFranchisesOrLettings),

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfLettingForm.typeOfLettingForm
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, TelecomMastLetting, TypeOfLetting, TypeOfLettingAdvertisingRight, TypeOfLettingAutomatedTellerMachine, TypeOfLettingOther, TypeOfLettingTelecomMast}
@@ -33,6 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class TypeOfLettingController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   typeOfLettingView: typeOfLetting,
   withSessionRefiner: WithSessionRefiner,
@@ -51,6 +53,7 @@ class TypeOfLettingController @Inject() (
         )
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
     } yield requestedAccommodationSection.typeOfLetting
+    audit.sendChangeLink("TypeOfLetting")
 
     Ok(
       typeOfLettingView(

@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -28,12 +29,15 @@ class LettingOtherPartOfPropertyRentIncludesControllerSpec extends TestBaseSpec 
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
+  val mockAudit: Audit = mock[Audit]
+
   val mockLettingOtherPartOfPropertyCheckboxesDetails = mock[cateringOperationOrLettingAccommodationRentIncludes]
   when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any, any, any, any, any, any, any)(any, any))
     .thenReturn(HtmlFormat.empty)
 
   val lettingOtherPartOfPropertyDetailsCheckboxesController = new LettingOtherPartOfPropertyRentIncludesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     mockAboutFranchisesOrLettingsNavigator,
     mockLettingOtherPartOfPropertyCheckboxesDetails,
     preFilledSession,

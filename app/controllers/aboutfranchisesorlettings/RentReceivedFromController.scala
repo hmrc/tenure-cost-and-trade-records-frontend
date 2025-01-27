@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentReceivedFromForm.rentReceivedFromForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -33,6 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class RentReceivedFromController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   rentReceivedFromView: rentReceivedFrom,
   withSessionRefiner: WithSessionRefiner,
@@ -52,6 +54,8 @@ class RentReceivedFromController @Inject() (
         cateringOperationOrLettingAccommodationSection.rentReceivedFrom.fold(
           rentReceivedFromForm
         )(rentReceivedFromForm.fill)
+      audit.sendChangeLink("RentReceivedFrom")
+
       Ok(
         rentReceivedFromView(
           rentDetailsForm,

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.ConcessionTypeDetailsForm.concessionTypeDetailsForm
 import models.submissions.aboutfranchisesorlettings.*
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class ConcessionTypeDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   view: concessionTypeDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -54,6 +56,7 @@ class ConcessionTypeDetailsController @Inject() (
                           }
     } yield concessionRecord
 
+    audit.sendChangeLink("ConcessionTypeDetails")
     Ok(
       view(
         existingDetails.fold(concessionTypeDetailsForm)(

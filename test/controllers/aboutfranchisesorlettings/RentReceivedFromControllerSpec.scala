@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import controllers.aboutfranchisesorlettings
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -29,12 +30,13 @@ import utils.TestBaseSpec
 class RentReceivedFromControllerSpec extends TestBaseSpec {
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
-
+  val mockAudit: Audit                       = mock[Audit]
   def rentReceivedFromController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
     new RentReceivedFromController(
       stubMessagesControllerComponents(),
+      mockAudit,
       mockAboutFranchisesOrLettingsNavigator,
       rentReceivedFromView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),

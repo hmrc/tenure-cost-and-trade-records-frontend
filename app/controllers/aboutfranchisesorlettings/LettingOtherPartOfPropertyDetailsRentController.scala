@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRent6015Form.lettingOtherPartOfPropertyRent6015Form
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
@@ -35,6 +36,7 @@ import javax.inject.{Inject, Named, Singleton}
 @Singleton
 class LettingOtherPartOfPropertyDetailsRentController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -51,6 +53,8 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
         val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRent6015Details.fold(
           lettingOtherPartOfPropertyRent6015Form
         )(lettingOtherPartOfPropertyRent6015Form.fill)
+        audit.sendChangeLink("LettingOtherPartOfPropertyDetailsRent")
+
         Ok(
           cateringOperationOrLettingAccommodationRentDetailsView(
             lettingDetailsForm,

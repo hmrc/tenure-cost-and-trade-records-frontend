@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import utils.TestBaseSpec
@@ -24,12 +25,14 @@ import play.api.test.FakeRequest
 
 class AdvertisingRightLettingControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def advertisingRightLettingController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
   ) = new AdvertisingRightLettingController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutFranchisesOrLettingsNavigator,
     advertisingRightView,
     preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),

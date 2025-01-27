@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
@@ -32,6 +33,7 @@ import scala.concurrent.ExecutionContext
 
 class RentDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   rentDetailsView: rentDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -52,6 +54,7 @@ class RentDetailsController @Inject() (
     val rentDetails: Option[RentDetails]               = existingDetails.flatMap(_.rentalDetails)
     val operatorName: String                           = getOperatorName(existingDetails)
     val rentalDetailForm                               = rentDetails.fold(rentDetailsForm)(rentDetailsForm.fill)
+    audit.sendChangeLink("RentDetails")
 
     Ok(
       rentDetailsView(

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
+import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.*
 import play.api.http.Status.*
@@ -29,6 +30,7 @@ import java.time.LocalDate
 
 class TypeOfIncomeControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def typeOfIncomeController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettings6045
@@ -36,6 +38,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
   ) =
     new TypeOfIncomeController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutFranchisesOrLettingsNavigator,
       typeOfIncomeView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6045),

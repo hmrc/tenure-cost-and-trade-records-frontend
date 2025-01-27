@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
 import models.ForType
@@ -35,6 +36,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class CateringOperationRentIncludesController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationDetailsCheckboxesView: cateringOperationOrLettingAccommodationRentIncludes,
   withSessionRefiner: WithSessionRefiner,
@@ -50,7 +52,7 @@ class CateringOperationRentIncludesController @Inject() (
         startRedirect
       ) { currentSection =>
         val rentIncludesForm = cateringOperationOrLettingAccommodationRentIncludesForm.fill(currentSection.itemsInRent)
-
+        audit.sendChangeLink("CateringOperationRentIncludes")
         Ok(
           cateringOperationOrLettingAccommodationDetailsCheckboxesView(
             rentIncludesForm,

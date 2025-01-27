@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -49,6 +51,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedLettingSection <- existingLettingSections.lift(requestedIndex)
     } yield requestedLettingSection.lettingOtherPartOfPropertyInformationDetails
+    audit.sendChangeLink("LettingOtherPartOfPropertyDetails")
 
     Ok(
       cateringOperationOrLettingAccommodationDetailsView(

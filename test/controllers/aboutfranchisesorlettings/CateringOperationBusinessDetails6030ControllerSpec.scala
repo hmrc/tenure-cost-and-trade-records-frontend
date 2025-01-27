@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.cateringOperationBusinessDetails6030Form
 import models.ForType
 import models.ForType.*
@@ -25,12 +26,15 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class CateringOperationBusinessDetails6030ControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
+
+  val mockAudit: Audit = mock[Audit]
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
@@ -39,6 +43,7 @@ class CateringOperationBusinessDetails6030ControllerSpec extends TestBaseSpec {
   ) =
     new CateringOperationBusinessDetailsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       mockAboutFranchisesOrLettingsNavigator,
       cateringOperationDetailsView,
       preEnrichedActionRefiner(forType = FOR6030, aboutFranchisesOrLettings = aboutFranchisesOrLettings),

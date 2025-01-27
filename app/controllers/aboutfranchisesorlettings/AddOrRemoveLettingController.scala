@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
@@ -28,12 +29,14 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.addOrRemoveLetting
 import views.html.genericRemoveConfirmation
+
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AddOrRemoveLettingController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   addOrRemoveLettingView: addOrRemoveLetting,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -64,6 +67,8 @@ class AddOrRemoveLettingController @Inject() (
     val addAnother: Option[AnswersYesNo] =
       franchisesOrLettingsData
         .flatMap(_.lettings.flatMap(_.lift(index)).flatMap(_.addAnotherLetting))
+
+    audit.sendChangeLink("AddOrRemoveLetting")
 
     Future.successful(
       Ok(

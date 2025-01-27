@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfIncomeForm.typeOfIncomeForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class TypeOfIncomeController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   view: typeOfIncome,
   withSessionRefiner: WithSessionRefiner,
@@ -50,6 +52,7 @@ class TypeOfIncomeController @Inject() (
         allRecords      <- request.sessionData.aboutFranchisesOrLettings.map(_.rentalIncome.getOrElse(IndexedSeq.empty))
         requestedRecord <- allRecords.lift(requestedIndex)
       } yield requestedRecord.sourceType
+    audit.sendChangeLink("TypeOfIncome")
 
     Ok(
       view(
