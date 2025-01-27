@@ -51,12 +51,8 @@ class CommercialLettingQuestionController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "CommercialLettingQuestion")
-      )
-    }
+    audit.sendChangeLink("CommercialLettingQuestion")
+
     Ok(
       view(
         request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate) match {

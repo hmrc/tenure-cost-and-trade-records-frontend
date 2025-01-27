@@ -47,12 +47,7 @@ class RenewablesPlantController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "RenewablesPlant")
-      )
-    }
+    audit.sendChangeLink("RenewablesPlant")
     Future.successful(
       Ok(
         view(

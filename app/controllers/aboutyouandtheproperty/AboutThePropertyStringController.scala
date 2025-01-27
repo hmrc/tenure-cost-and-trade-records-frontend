@@ -49,12 +49,8 @@ class AboutThePropertyStringController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.getQueryString("from").contains("CYA")) {
-      audit.sendExplicitAudit(
-        "CyaChangeLink",
-        ChangeLinkAudit(request.sessionData.forType.toString, request.uri, "AboutThePropertyString")
-      )
-    }
+    audit.sendChangeLink("AboutThePropertyString")
+
     Future.successful(
       Ok(
         aboutThePropertyStringView(
