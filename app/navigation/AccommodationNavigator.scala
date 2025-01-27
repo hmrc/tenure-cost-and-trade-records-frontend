@@ -29,7 +29,8 @@ class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AccommodationUnitPageId           -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
     AvailableRoomsPageId              -> (_ => accommodation.routes.AccommodationLettingHistory6048Controller.show),
-    AccommodationLettingHistoryPageId -> (_ =>
+    AccommodationLettingHistoryPageId -> (_ => accommodation.routes.HighSeasonTariff6048Controller.show),
+    HighSeasonTariffPageId            -> (_ =>
       controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ) // TODO: When was the high-season tariff applied
+    ) // TODO: Included items for
   )

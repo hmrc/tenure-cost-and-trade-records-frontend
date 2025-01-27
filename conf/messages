@@ -1756,6 +1756,7 @@ error.accommodation.lettingHistory.weeksAvailableForPersonalUse.required = Enter
 error.accommodation.lettingHistory.weeksAvailableForPersonalUse.nonNumeric = The amount of weeks available for personal use in the year ending {0} must be a number
 error.accommodation.lettingHistory.weeksAvailableForPersonalUse.negative = The amount of weeks available for personal use in the year ending {0} cannot be a negative number
 error.accommodation.lettingHistory.weeksAvailableForPersonalUse.maxValue = The amount of weeks available for personal use in the year ending {0} cannot be more than {1}
+accommodation.highSeasonTariff.heading = When was the high-season tariff applied in the 12 months from {0} to {1}?
 
 # 6010 TYPES
 ##############################

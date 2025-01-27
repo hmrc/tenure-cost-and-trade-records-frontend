@@ -45,8 +45,8 @@ class FurtherInformationOrRemarksController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async {
-    implicit request => audit.sendChangeLink("FurtherInformationOrRemarks")
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("FurtherInformationOrRemarks")
 
     Future.successful(
       Ok(

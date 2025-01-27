@@ -8,3 +8,6 @@ POST        /available-rooms                                controllers.accommod
 
 GET         /accommodation-letting-history                  controllers.accommodation.AccommodationLettingHistory6048Controller.show
 POST        /accommodation-letting-history                  controllers.accommodation.AccommodationLettingHistory6048Controller.submit
+
+GET         /high-season-tariff                             controllers.accommodation.HighSeasonTariff6048Controller.show
+POST        /high-season-tariff                             controllers.accommodation.HighSeasonTariff6048Controller.submit

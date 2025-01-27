@@ -25,6 +25,7 @@ import models.submissions.aboutthetradinghistory.*
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.AnyContent
 
+import java.time.Month.{APRIL, MARCH}
 import java.time.{LocalDate, YearMonth}
 
 /**
@@ -34,9 +35,21 @@ object AccountingInformationUtil {
 
   private def yearNow                 = YearMonth.now.getYear
   private def monthNow                = YearMonth.now.getMonthValue
-  private val endOfMarch              = LocalDate.of(yearNow, 3, 31)
+  private val endOfMarch              = LocalDate.of(yearNow, MARCH, 31)
   private val financialYearEndOfMarch = DayMonthsDuration(31, 3)
   private val defaultStart            = MonthsYearDuration(monthNow, yearNow)
+
+  def previousFinancialYear6048 =
+    if monthNow > 3 then yearNow
+    else yearNow - 1
+
+  def currentFinancialYear6048: Int = previousFinancialYear6048 + 1
+
+  def accommodationLastFinYearFromTo: Seq[YearMonth] =
+    Seq(
+      YearMonth.of(previousFinancialYear6048 - 1, APRIL),
+      YearMonth.of(previousFinancialYear6048, MARCH)
+    )
 
   def financialYearsRequiredAccommodation6048(
     firstOccupy: Option[MonthsYearDuration],
