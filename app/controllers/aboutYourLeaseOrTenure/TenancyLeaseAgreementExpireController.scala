@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class TenancyLeaseAgreementExpireController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   tenancyLeaseAgreementExpireView: tenancyLeaseAgreementExpire,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class TenancyLeaseAgreementExpireController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("TenancyLeaseAgreementExpire")
+
     Future.successful(
       Ok(
         tenancyLeaseAgreementExpireView(

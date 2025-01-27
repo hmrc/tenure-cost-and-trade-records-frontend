@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.ForType
@@ -38,6 +39,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class LegalOrPlanningRestrictionsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
   withSessionRefiner: WithSessionRefiner,
@@ -47,6 +49,8 @@ class LegalOrPlanningRestrictionsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("LegalOrPlanningRestrictions")
+
     Ok(
       legalOrPlanningRestrictionsView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {

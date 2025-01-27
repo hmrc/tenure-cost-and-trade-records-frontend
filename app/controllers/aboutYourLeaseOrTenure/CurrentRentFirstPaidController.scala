@@ -49,27 +49,8 @@ class CurrentRentFirstPaidController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("CurrentRentFirstPaid")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "CurrentRentFirstPaid")
-        )
-      case _                                           =>
-        Ok(
-          currentRentFirstPaidView(
-            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {
-              case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fill(currentRentFirstPaid)
-              case _                          => currentRentFirstPaidForm
-            },
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
-          )
-        )
-    }
     Ok(
       currentRentFirstPaidView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {

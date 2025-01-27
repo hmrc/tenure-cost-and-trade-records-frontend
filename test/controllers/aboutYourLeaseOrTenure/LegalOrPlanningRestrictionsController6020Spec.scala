@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.ForType
 import models.ForType.*
@@ -32,12 +33,15 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
   import TestData.*
   import utils.FormBindingTestAssertions.*
 
+  val mockAudit: Audit = mock[Audit]
+
   def legalOrPlanningRestrictionsController(
     forType: ForType = FOR6020,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       legalOrPlanningRestrictionsView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),

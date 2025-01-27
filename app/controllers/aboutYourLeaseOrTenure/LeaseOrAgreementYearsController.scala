@@ -49,29 +49,8 @@ class LeaseOrAgreementYearsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("LeaseOrAgreementYears")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "LeaseOrAgreementYears")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            leaseOrAgreementYearsView(
-              leaseOrAgreementDetailsInSession match {
-                case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
-                case _                                  => leaseOrAgreementYearsForm
-              },
-              getBackLink(request.sessionData),
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         leaseOrAgreementYearsView(

@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartThree}
 import play.api.http.Status
@@ -29,6 +30,7 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec {
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
+  val mockAudit: Audit = mock[Audit]
 
   def rentIncludeStructuresBuildingsController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
@@ -39,6 +41,7 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec {
     )
   ) = new RentIncludeStructuresBuildingsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     rentIncludeStructuresBuildingsView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),

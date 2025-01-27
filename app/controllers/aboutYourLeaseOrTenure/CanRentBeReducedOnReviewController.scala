@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import models.ForType.*
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CanRentBeReducedOnReviewController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   canRentBeReducedOnReviewView: canRentBeReducedOnReview,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class CanRentBeReducedOnReviewController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("CanRentBeReducedOnReview")
+
     Future.successful(
       Ok(
         canRentBeReducedOnReviewView(

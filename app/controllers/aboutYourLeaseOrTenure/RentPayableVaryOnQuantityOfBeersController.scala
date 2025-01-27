@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RentPayableVaryOnQuantityOfBeersController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("RentPayableVaryOnQuantityOfBeers")
+
     Future.successful(
       Ok(
         rentPayableVaryOnQuantityOfBeersView(

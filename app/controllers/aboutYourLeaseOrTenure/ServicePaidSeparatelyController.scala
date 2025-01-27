@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyForm.servicePaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class ServicePaidSeparatelyController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   view: servicePaidSeparately,
   withSessionRefiner: WithSessionRefiner,
@@ -48,6 +50,8 @@ class ServicePaidSeparatelyController @Inject() (
       existingServicesPaid  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid)
       requestedServicesPaid <- existingServicesPaid.lift(idx)
     } yield requestedServicesPaid.details
+
+    audit.sendChangeLink("ServicePaidSeparately")
 
     Ok(
       view(

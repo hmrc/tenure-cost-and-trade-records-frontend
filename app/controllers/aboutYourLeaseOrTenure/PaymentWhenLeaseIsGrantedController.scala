@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
 import models.ForType.*
@@ -37,6 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class PaymentWhenLeaseIsGrantedController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted,
   withSessionRefiner: WithSessionRefiner,
@@ -47,6 +49,8 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("PaymentWhenLeaseIsGranted")
+
     Future.successful(
       Ok(
         paymentWhenLeaseIsGrantedView(

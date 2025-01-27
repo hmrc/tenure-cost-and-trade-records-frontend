@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TradeServicesListForm.addAnotherServiceForm
 import form.confirmableActionForm.confirmableActionForm
@@ -36,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class TradeServicesListController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   tradeServicesListView: tradeServicesList,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -48,6 +50,8 @@ class TradeServicesListController @Inject() (
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection =
       request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(index))
+
+    audit.sendChangeLink("TradeServicesList")
 
     Future.successful(
       Ok(

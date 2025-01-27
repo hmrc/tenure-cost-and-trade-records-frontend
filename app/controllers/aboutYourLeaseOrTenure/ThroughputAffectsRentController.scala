@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ThroughputAffectsRentForm.doesRentVaryToThroughputForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
@@ -39,6 +40,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class ThroughputAffectsRentController @Inject() (
   throughputAffectsRentView: throughputAffectsRent,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,6 +51,8 @@ class ThroughputAffectsRentController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("ThroughputAffectsRent")
+
     Ok(
       throughputAffectsRentView(
         leaseOrAgreementPartThree

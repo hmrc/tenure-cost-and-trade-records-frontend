@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 import form.confirmableActionForm.confirmableActionForm
@@ -38,6 +39,7 @@ import scala.concurrent.Future
 @Singleton
 class ServicePaidSeparatelyListController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   view: servicePaidSeparatelyList,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -49,6 +51,8 @@ class ServicePaidSeparatelyListController @Inject() (
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection =
       request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(index))
+
+    audit.sendChangeLink("ServicePaidSeparatelyList")
 
     Future.successful(
       Ok(

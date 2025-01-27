@@ -46,29 +46,8 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("UltimatelyResponsibleBuildingInsurance")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "UltimatelyResponsibleBuildingInsurance")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            ultimatelyResponsibleBIView(
-              request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleBuildingInsurance) match {
-                case Some(ultimatelyResponsibleBI) =>
-                  ultimatelyResponsibleBuildingInsuranceForm.fill(ultimatelyResponsibleBI)
-                case _                             => ultimatelyResponsibleBuildingInsuranceForm
-              },
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         ultimatelyResponsibleBIView(

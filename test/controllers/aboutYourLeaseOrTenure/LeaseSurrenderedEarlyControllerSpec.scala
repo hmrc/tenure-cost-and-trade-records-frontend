@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,6 +25,7 @@ import utils.TestBaseSpec
 
 class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def leaseSurrenderedEarlyController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
@@ -31,6 +33,7 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec {
     )
   ) = new LeaseSurrenderedEarlyController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     leaseSurrenderedEarlyView,
     preEnrichedActionRefiner(

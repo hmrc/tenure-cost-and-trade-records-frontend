@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
@@ -26,12 +27,15 @@ import utils.TestBaseSpec
 
 class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def servicePaidSeparatelyController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) = new ServicePaidSeparatelyController(
     stubMessagesControllerComponents(),
+    mockAudit,
     inject[AboutYourLeaseOrTenureNavigator],
     servicePaidSeparatelyView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),

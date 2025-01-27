@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 import models.ForType.*
@@ -38,6 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
   withSessionRefiner: WithSessionRefiner,
@@ -48,6 +50,8 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("RentPayableVaryAccordingToGrossOrNet")
+
     Future.successful(
       Ok(
         rentPayableVaryAccordingToGrossOrNetView(

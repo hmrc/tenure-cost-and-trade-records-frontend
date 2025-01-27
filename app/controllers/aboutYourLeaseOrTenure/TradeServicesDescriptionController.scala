@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TradeServiceDescriptionForm.tradeServicesDescriptionForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class TradeServicesDescriptionController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   tradeServicesDescriptionView: tradeServicesDescription,
   withSessionRefiner: WithSessionRefiner,
@@ -48,6 +50,7 @@ class TradeServicesDescriptionController @Inject() (
       existingServices  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.tradeServices)
       requestedServices <- existingServices.lift(idx)
     } yield requestedServices.details
+    audit.sendChangeLink("TradeServicesDescription")
 
     Ok(
       tradeServicesDescriptionView(

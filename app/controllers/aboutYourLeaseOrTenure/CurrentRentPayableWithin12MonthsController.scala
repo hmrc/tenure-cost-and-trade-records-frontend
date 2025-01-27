@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class CurrentRentPayableWithin12MonthsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("CurrentRentPayableWithin12Months")
+
     Ok(
       currentRentPayableWithin12MonthsView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentPayableWithin12Months) match {

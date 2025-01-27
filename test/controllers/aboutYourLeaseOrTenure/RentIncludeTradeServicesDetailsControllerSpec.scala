@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
@@ -26,6 +27,8 @@ import utils.TestBaseSpec
 
 class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def rentIncludeTradeServicesDetailsController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
@@ -34,6 +37,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     )
   ) = new RentIncludeTradeServicesDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     rentIncludeTradeServicesDetailsView,
     rentIncludeTradeServicesDetailsTextAreaView,

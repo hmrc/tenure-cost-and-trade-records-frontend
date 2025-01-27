@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetailsForm.surrenderedLeaseAgreementDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour.updateAboutLeaseOrAgreementPartFour
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class SurrenderLeaseAgreementDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   surrenderedLeaseAgreementDetailsView: surrenderedLeaseAgreementDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -42,6 +44,8 @@ class SurrenderLeaseAgreementDetailsController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("SurrenderLeaseAgreementDetails")
+
     Future.successful(
       Ok(
         surrenderedLeaseAgreementDetailsView(

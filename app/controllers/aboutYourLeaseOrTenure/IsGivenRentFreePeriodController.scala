@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.IsGivenRentFreePeriodForm.isGivenRentFreePeriodForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
@@ -39,6 +40,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class IsGivenRentFreePeriodController @Inject() (
   isGivenRentFreePeriodView: isGivenRentFreePeriod,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,6 +51,7 @@ class IsGivenRentFreePeriodController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("IsGivenRentFreePeriod")
     Ok(
       isGivenRentFreePeriodView(
         leaseOrAgreementPartFour

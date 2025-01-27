@@ -46,26 +46,8 @@ class DoesTheRentPayableController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("DoesTheRentPayable")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "DoesTheRentPayable"))
-      case _                                           =>
-        Future.successful(
-          Ok(
-            doesTheRentPayableView(
-              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
-                case Some(doesTheRentPayable) => doesTheRentPayableForm.fill(doesTheRentPayable)
-                case _                        => doesTheRentPayableForm
-              },
-              request.sessionData.forType,
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         doesTheRentPayableView(

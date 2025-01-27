@@ -46,27 +46,8 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("CurrentLeaseOrAgreementBegin")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "CurrentLeaseOrAgreementBegin")
-        )
-      case _                                           =>
-        Ok(
-          currentLeaseOrAgreementBeginView(
-            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match {
-              case Some(currentLeaseOrAgreementBegin) =>
-                currentLeaseOrAgreementBeginForm.fill(currentLeaseOrAgreementBegin)
-              case _                                  => currentLeaseOrAgreementBeginForm
-            },
-            request.sessionData.toSummary
-          )
-        )
-    }
     Ok(
       currentLeaseOrAgreementBeginView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match {

@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.ForType
 import models.ForType.*
@@ -31,6 +32,9 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+
+  val mockAudit: Audit = mock[Audit]
+
   def payACapitalSumController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
@@ -41,6 +45,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
   ) =
     new PayACapitalSumController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       payACapitalSumView,
       preEnrichedActionRefiner(

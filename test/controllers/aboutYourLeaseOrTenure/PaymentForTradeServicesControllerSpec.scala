@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeServicesForm
 import models.ForType
 import models.ForType.*
@@ -24,12 +25,15 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+
+  val mockAudit: Audit = mock[Audit]
 
   def paymentForTradeServicesController(
     forType: ForType = FOR6010,
@@ -39,6 +43,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
   ) =
     new PaymentForTradeServicesController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       paymentForTradeServicesView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),

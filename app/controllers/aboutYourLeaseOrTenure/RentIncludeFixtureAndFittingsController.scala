@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 import models.ForType.*
@@ -38,6 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RentIncludeFixtureAndFittingsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings,
   withSessionRefiner: WithSessionRefiner,
@@ -48,6 +50,8 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("RentIncludeFixtureAndFittings")
+
     Future.successful(
       Ok(
         rentIncludeFixtureAndFittingsView(
