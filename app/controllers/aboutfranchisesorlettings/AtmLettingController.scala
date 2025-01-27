@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingPartOfProperty}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -32,6 +33,7 @@ import scala.concurrent.ExecutionContext
 
 class AtmLettingController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   atmLettingView: atmLetting,
   withSessionRefiner: WithSessionRefiner,
@@ -55,6 +57,7 @@ class AtmLettingController @Inject() (
                           }
     } yield atmLetting
 
+    audit.sendChangeLink("AtmLetting")
     Ok(
       atmLettingView(
         existingDetails.fold(atmLettingForm)(

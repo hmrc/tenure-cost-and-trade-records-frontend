@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.FeeReceivedForm.feeReceivedForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ConcessionTypeFeesController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   view: feeReceived,
   withSessionRefiner: WithSessionRefiner,
@@ -46,6 +48,7 @@ class ConcessionTypeFeesController @Inject() (
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { concession =>
       val years = financialYearEndDates.map(_.getYear.toString)
+      audit.sendChangeLink("ConcessionTypeFees")
 
       Ok(
         view(

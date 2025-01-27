@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord, LettingOtherPartOfPropertyInformationDetails}
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class LettingTypeDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   view: lettingTypeDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -53,6 +55,7 @@ class LettingTypeDetailsController @Inject() (
                           case _                            => None
                         }
     } yield lettingRecord
+    audit.sendChangeLink("LettingTypeDetails")
 
     Ok(
       view(

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.ConcessionOrFranchiseForm.concessionOrFranchiseForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ConcessionOrFranchiseController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   rentFromConcessionsView: rentFromConcessions,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,7 @@ class ConcessionOrFranchiseController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("ConcessionOrFranchise")
     Future.successful(
       Ok(
         rentFromConcessionsView(

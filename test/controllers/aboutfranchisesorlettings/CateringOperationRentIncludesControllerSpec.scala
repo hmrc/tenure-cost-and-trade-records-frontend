@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,11 +25,13 @@ import utils.TestBaseSpec
 
 class CateringOperationRentIncludesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def cateringOperationRentIncludesController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ) =
     new CateringOperationRentIncludesController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutFranchisesOrLettingsNavigator,
       cateringOperationRentIncludesView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
@@ -36,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -49,6 +51,8 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     val addAnother = request.sessionData.aboutFranchisesOrLettings
       .flatMap(_.lettingSections.lift(index))
       .flatMap(_.addAnotherLettingToProperty)
+
+    audit.sendChangeLink("AddAnotherLettingOtherPartOfProperty")
 
     Future.successful(
       Ok(

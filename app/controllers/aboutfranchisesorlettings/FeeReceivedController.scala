@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import controllers.aboutthetradinghistory.routes
 import form.aboutfranchisesorlettings.FeeReceivedForm.feeReceivedForm
@@ -36,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class FeeReceivedController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   feeReceivedView: feeReceived,
   withSessionRefiner: WithSessionRefiner,
@@ -47,6 +49,7 @@ class FeeReceivedController @Inject() (
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { currentSection =>
       val years = financialYearEndDates.map(_.getYear.toString)
+      audit.sendChangeLink("FeeReceived")
 
       Ok(
         feeReceivedView(

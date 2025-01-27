@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
+import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.test.FakeRequest
@@ -25,6 +26,7 @@ import play.api.test.Helpers._
 
 class TypeOfLettingControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def typeOfLettingController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
@@ -32,6 +34,7 @@ class TypeOfLettingControllerSpec extends TestBaseSpec {
   ) =
     new TypeOfLettingController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutFranchisesOrLettingsNavigator,
       typeOfLettingView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),

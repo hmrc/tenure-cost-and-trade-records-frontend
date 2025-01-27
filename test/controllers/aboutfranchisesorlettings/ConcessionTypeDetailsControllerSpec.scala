@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import org.jsoup.Jsoup
 import play.api.http.Status._
@@ -25,11 +26,13 @@ import utils.TestBaseSpec
 
 class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
   ) =
     new ConcessionTypeDetailsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutFranchisesOrLettingsNavigator,
       concessionTypeDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),

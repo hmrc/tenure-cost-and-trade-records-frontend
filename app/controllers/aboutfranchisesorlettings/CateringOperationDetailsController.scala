@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
 import models.ForType.*
@@ -36,6 +37,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class CateringOperationDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -52,7 +54,7 @@ class CateringOperationDetailsController @Inject() (
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
     } yield requestedAccommodationSection.cateringOperationDetails
-
+    audit.sendChangeLink("CateringOperationDetails")
     Ok(
       cateringOperationDetailsView(
         existingDetails.fold(cateringOperationOrLettingAccommodationForm)(

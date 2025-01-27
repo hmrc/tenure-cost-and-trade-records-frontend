@@ -24,17 +24,21 @@ import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
 import play.api.test.Helpers._
 import actions.SessionRequest
+import connectors.Audit
 import play.api.test.FakeRequest
+
 import scala.language.reflectiveCalls
 
 class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
   import TestData._
+  val mockAudit: Audit = mock[Audit]
   def addOrRemoveLettingController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
   ) = new AddOrRemoveLettingController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutFranchisesOrLettingsNavigator,
     addOrRemoveLettingView,
     genericRemoveConfirmationView,

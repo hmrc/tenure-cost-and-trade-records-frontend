@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.ForType.*
 import models.{ForType, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
@@ -147,13 +148,15 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
     forType: ForType = FOR6010,
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
   ):
-    val repository = mock[SessionRepo]
-    val data       = captor[Session]
+    val repository       = mock[SessionRepo]
+    val data             = captor[Session]
+    val mockAudit: Audit = mock[Audit]
     when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
 
     val controller =
       new LettingOtherPartOfPropertyController(
         stubMessagesControllerComponents(),
+        mockAudit,
         aboutFranchisesOrLettingsNavigator,
         lettingOtherPartOfPropertyView,
         preEnrichedActionRefiner(

@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.cateringOperationBusinessDetails6030Form
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetailsForm.cateringOperationBusinessDetailsForm
@@ -38,6 +39,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class CateringOperationBusinessDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -60,6 +62,7 @@ class CateringOperationBusinessDetailsController @Inject() (
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
     } yield requestedAccommodationSection.cateringOperationBusinessDetails
 
+    audit.sendChangeLink("CateringOperationBusinessDetails")
     Ok(
       cateringOperationDetailsView(
         if (forType == FOR6030) {

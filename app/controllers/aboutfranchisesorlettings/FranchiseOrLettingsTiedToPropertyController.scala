@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import models.ForType.*
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class FranchiseOrLettingsTiedToPropertyController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("FranchiseOrLettingsTiedToProperty")
+
     Future.successful(
       Ok(
         franchiseOrLettingsTiedToPropertyView(

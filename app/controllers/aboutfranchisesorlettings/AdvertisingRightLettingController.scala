@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AdvertisingRightLettingForm.advertisingRightLettingForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty}
@@ -32,6 +33,7 @@ import scala.concurrent.ExecutionContext
 
 class AdvertisingRightLettingController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   advertisingRightLettingView: advertisingRightLetting,
   withSessionRefiner: WithSessionRefiner,
@@ -56,6 +58,7 @@ class AdvertisingRightLettingController @Inject() (
                             }
     } yield advertRightLetting
 
+    audit.sendChangeLink("AdvertisingRightLetting")
     Ok(
       advertisingRightLettingView(
         existingDetails.fold(advertisingRightLettingForm)(

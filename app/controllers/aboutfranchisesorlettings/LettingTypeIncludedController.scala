@@ -17,6 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord}
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class LettingTypeIncludedController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   view: lettingTypeIncluded,
   withSessionRefiner: WithSessionRefiner,
@@ -59,6 +61,7 @@ class LettingTypeIncludedController @Inject() (
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getLettingIncomeRecord(index).flatMap(_.itemsIncluded)
     val operatorName    = getOperatorName(index)
+    audit.sendChangeLink("LettingTypeIncluded")
 
     Ok(
       view(

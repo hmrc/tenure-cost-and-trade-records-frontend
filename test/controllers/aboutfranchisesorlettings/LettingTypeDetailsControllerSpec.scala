@@ -16,6 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
+import connectors.Audit
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
@@ -27,12 +28,13 @@ import utils.TestBaseSpec
 class LettingTypeDetailsControllerSpec extends TestBaseSpec {
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
-
+  val mockAudit: Audit                       = mock[Audit]
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
   ) =
     new LettingTypeDetailsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       mockAboutFranchisesOrLettingsNavigator,
       lettingTypeDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
