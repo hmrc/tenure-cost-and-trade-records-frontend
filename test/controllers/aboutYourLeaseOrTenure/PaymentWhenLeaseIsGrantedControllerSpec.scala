@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
@@ -26,12 +27,15 @@ import utils.TestBaseSpec
 
 class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def paymentWhenLeaseIsGrantedController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new PaymentWhenLeaseIsGrantedController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       paymentWhenLeaseIsGrantedView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),

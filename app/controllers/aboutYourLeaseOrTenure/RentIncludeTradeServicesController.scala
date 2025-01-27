@@ -46,30 +46,8 @@ class RentIncludeTradeServicesController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("RentIncludeTradeServices")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "RentIncludeTradeServices")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            rentIncludeTradeServicesView(
-              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
-                case Some(rentIncludeTradeServicesDetails) =>
-                  rentIncludeTradeServicesForm.fill(rentIncludeTradeServicesDetails)
-                case _                                     => rentIncludeTradeServicesForm
-              },
-              request.sessionData.forType,
-              request.sessionData.toSummary
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         rentIncludeTradeServicesView(

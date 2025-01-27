@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.ForType
 import models.ForType.*
@@ -24,18 +25,22 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+  val mockAudit: Audit = mock[Audit]
+
   def legalOrPlanningRestrictionsController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       legalOrPlanningRestrictionsView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),

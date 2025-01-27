@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -32,6 +33,8 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
 
   import TestData._
 
+  val mockAudit: Audit = mock[Audit]
+
   def servicePaidSeparatelyListController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -39,6 +42,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
   ) =
     new ServicePaidSeparatelyListController(
       stubMessagesControllerComponents(),
+      mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],
       servicePaidSeparatelyListView,
       genericRemoveConfirmationView,

@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyForm.leaseSurrenderedEarlyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
@@ -35,6 +36,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class LeaseSurrenderedEarlyController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   view: leaseSurrenderdEarly,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class LeaseSurrenderedEarlyController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("LeaseSurrenderedEarly")
+
     Ok(
       view(
         request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.leaseSurrenderedEarly) match {

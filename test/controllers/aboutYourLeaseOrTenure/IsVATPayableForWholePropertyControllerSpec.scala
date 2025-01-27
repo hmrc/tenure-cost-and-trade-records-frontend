@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -26,12 +27,15 @@ import utils.TestBaseSpec
   */
 class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def isVATPayableForWholePropertyController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) = new IsVATPayableForWholePropertyController(
     isVATPayableForWholePropertyView,
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo,

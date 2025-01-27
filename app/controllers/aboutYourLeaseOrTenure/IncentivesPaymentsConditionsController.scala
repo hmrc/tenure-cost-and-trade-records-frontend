@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class IncentivesPaymentsConditionsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   incentivesPaymentsConditionsView: incentivesPaymentsConditions,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class IncentivesPaymentsConditionsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("IncentivesPaymentsConditions")
+
     Future.successful(
       Ok(
         incentivesPaymentsConditionsView(

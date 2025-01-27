@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.DoesRentIncludeParkingForm.doesRentIncludeParkingForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
@@ -39,6 +40,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class DoesRentIncludeParkingController @Inject() (
   doesRentIncludeParkingView: doesRentIncludeParking,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,6 +51,8 @@ class DoesRentIncludeParkingController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("DoesRentIncludeParking")
+
     Ok(
       doesRentIncludeParkingView(
         leaseOrAgreementPartThree

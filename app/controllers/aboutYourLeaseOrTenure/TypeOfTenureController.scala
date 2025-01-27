@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TypeOfTenureForm.typeOfTenureForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class TypeOfTenureController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   typeOfTenureView: typeOfTenure,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +47,7 @@ class TypeOfTenureController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("TypeOfTenure")
     Future.successful(
       Ok(
         typeOfTenureView(

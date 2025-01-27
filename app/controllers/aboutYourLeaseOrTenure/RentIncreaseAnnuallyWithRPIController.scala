@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import models.Session
@@ -36,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RentIncreaseAnnuallyWithRPIController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI,
   withSessionRefiner: WithSessionRefiner,
@@ -46,6 +48,8 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("RentIncreaseAnnuallyWithRPI")
+
     Future.successful(
       Ok(
         rentIncreaseAnnuallyWithRPIView(

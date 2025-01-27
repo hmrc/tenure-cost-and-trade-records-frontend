@@ -49,27 +49,8 @@ class IncludedInYourRentController @Inject() (
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("IncludedInYourRent")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "IncludedInYourRent"))
-      case _                                           =>
-        Future.successful(
-          Ok(
-            includedInYourRentView(
-              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
-                case Some(includedInYourRentDetails) => includedInYourRentForm(forType).fill(includedInYourRentDetails)
-                case _                               => includedInYourRentForm(forType)
-              },
-              request.sessionData.toSummary,
-              forType,
-              navigator.from
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         includedInYourRentView(

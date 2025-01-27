@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
 import play.api.http.Status
@@ -28,10 +29,13 @@ import java.time.temporal.ChronoUnit.DAYS
 
 class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def tenancyLeaseAgreementExpireController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) = new TenancyLeaseAgreementExpireController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     tenantsLeaseAgreementExpireView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),

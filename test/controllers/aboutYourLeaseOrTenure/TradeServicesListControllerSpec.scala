@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.TradeServicesListForm.addAnotherServiceForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -32,6 +33,8 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
 
   import TestData._
 
+  val mockAudit: Audit = mock[Audit]
+
   def tradeServicesListController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -39,6 +42,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
   ) =
     new TradeServicesListController(
       stubMessagesControllerComponents(),
+      mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],
       tradeServicesListView,
       genericRemoveConfirmationView,
@@ -49,6 +53,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
   def tradeServicesListControllerNone =
     new TradeServicesListController(
       stubMessagesControllerComponents(),
+      mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],
       tradeServicesListView,
       genericRemoveConfirmationView,

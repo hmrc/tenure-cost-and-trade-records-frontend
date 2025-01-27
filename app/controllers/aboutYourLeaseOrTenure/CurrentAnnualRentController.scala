@@ -51,24 +51,7 @@ class CurrentAnnualRentController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
-
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit("cya-change-link", ChangeLinkAudit(forType.toString, request.uri, "CurrentAnnualRent"))
-      case _                                           =>
-        Ok(
-          currentAnnualRentView(
-            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {
-              case Some(annualRent) => currentAnnualRentForm().fill(annualRent)
-              case _                => currentAnnualRentForm()
-            },
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
-          )
-        )
-    }
+    audit.sendChangeLink("CurrentAnnualRent")
     Ok(
       currentAnnualRentView(
         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {

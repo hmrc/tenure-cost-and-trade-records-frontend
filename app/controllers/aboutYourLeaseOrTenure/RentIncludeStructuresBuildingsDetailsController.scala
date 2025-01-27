@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsDetailsForm.rentIncludeStructuresBuildingsDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour.updateAboutLeaseOrAgreementPartFour
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RentIncludeStructuresBuildingsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   rentIncludeStructuresBuildingsDetailsView: rentIncludeStructuresBuildingsDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class RentIncludeStructuresBuildingsDetailsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("RentIncludeStructuresBuildingsDetails")
+
     Future.successful(
       Ok(
         rentIncludeStructuresBuildingsDetailsView(

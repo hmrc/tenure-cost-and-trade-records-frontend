@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,12 +24,15 @@ import utils.TestBaseSpec
 
 class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def servicePaidSeparatelyChargeController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) = new ServicePaidSeparatelyChargeController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     servicePaidSeparatelyChargeView,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),

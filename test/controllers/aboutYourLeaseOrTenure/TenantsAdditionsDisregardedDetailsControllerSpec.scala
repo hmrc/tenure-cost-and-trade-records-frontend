@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,11 +25,14 @@ import utils.TestBaseSpec
 
 class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def tenantsAdditionsDisregardedDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new TenantsAdditionsDisregardedDetailsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       tenantsAdditionsDisregardedDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),

@@ -16,11 +16,13 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm.isParkingRentPaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 /**
@@ -30,12 +32,15 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+
+  val mockAudit: Audit = mock[Audit]
   def isParkingRentPaidSeparatelyController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) = new IsParkingRentPaidSeparatelyController(
     isParkingRentPaidSeparatelyView,
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo,

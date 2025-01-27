@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class IntervalsOfRentReviewController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   intervalsOfRentReviewView: intervalsOfRentReview,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class IntervalsOfRentReviewController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("IntervalsOfRentReview")
+
     Ok(
       intervalsOfRentReviewView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.intervalsOfRentReview) match {

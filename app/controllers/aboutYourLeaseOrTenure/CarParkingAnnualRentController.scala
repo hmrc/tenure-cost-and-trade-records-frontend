@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CarParkingAnnualRentForm.carParkingAnnualRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
@@ -38,6 +39,7 @@ import scala.concurrent.ExecutionContext
   */
 @Singleton
 class CarParkingAnnualRentController @Inject() (
+  audit: Audit,
   carParkingAnnualRentView: carParkingAnnualRent,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
@@ -49,6 +51,8 @@ class CarParkingAnnualRentController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("CarParkingAnnualRent")
+
     Ok(
       carParkingAnnualRentView(
         leaseOrAgreementPartThree

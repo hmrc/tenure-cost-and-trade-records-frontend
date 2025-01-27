@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 import models.ForType
@@ -37,6 +38,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class TenantsAdditionsDisregardedController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   withSessionRefiner: WithSessionRefiner,
@@ -46,6 +48,8 @@ class TenantsAdditionsDisregardedController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("TenantsAdditionsDisregarded")
+
     Ok(
       tenantsAdditionsDisregardedView(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregardedDetails) match {

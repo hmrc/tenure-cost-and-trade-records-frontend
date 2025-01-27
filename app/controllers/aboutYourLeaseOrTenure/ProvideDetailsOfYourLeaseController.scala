@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm.provideDetailsOfYourLeaseForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
@@ -35,6 +36,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class ProvideDetailsOfYourLeaseController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   provideDetailsOfYourLeaseView: provideDetailsOfYourLease,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +47,8 @@ class ProvideDetailsOfYourLeaseController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("ProvideDetailsOfYourLease")
+
     Ok(
       provideDetailsOfYourLeaseView(
         leaseOrAgreementPartThree

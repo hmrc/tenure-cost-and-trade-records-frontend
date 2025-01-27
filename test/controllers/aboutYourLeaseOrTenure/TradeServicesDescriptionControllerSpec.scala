@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
@@ -27,6 +28,8 @@ import utils.TestBaseSpec
 
 class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def tradeServicesDescriptionController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
@@ -34,6 +37,7 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
   ) =
     new TradeServicesDescriptionController(
       stubMessagesControllerComponents(),
+      mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],
       tradeServicesDescriptionView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),

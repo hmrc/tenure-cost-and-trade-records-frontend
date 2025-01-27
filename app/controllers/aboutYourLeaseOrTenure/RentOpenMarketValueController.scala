@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm.rentOpenMarketValuesForm
 import models.ForType.*
@@ -38,6 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RentOpenMarketValueController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   rentOpenMarketValueView: rentOpenMarketValue,
   withSessionRefiner: WithSessionRefiner,
@@ -48,6 +50,8 @@ class RentOpenMarketValueController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("RentOpenMarketValue")
+
     Future.successful(
       Ok(
         rentOpenMarketValueView(

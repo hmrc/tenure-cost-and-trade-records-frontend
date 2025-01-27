@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -26,12 +27,14 @@ import utils.TestBaseSpec
   */
 class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def isGivenRentFreePeriodController(
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
       prefilledAboutLeaseOrAgreementPartFour
     )
   ) = new IsGivenRentFreePeriodController(
     isGivenRentFreePeriodView,
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
     mockSessionRepo,

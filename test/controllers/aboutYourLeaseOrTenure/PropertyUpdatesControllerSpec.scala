@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
 import models.ForType
 import models.ForType.*
@@ -32,6 +33,8 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def propertyUpdateController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
@@ -41,6 +44,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
   ) =
     new PropertyUpdatesController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       propertyUpdatesView,
       preEnrichedActionRefiner(

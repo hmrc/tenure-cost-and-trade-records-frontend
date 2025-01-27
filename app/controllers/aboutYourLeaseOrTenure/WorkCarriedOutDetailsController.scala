@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.WorkCarriedOutDetailsForm.workCarriedOutDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class WorkCarriedOutDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   view: workCarriedOutDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class WorkCarriedOutDetailsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("WorkCarriedOutDetails")
+
     Ok(
       view(
         request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.workCarriedOutDetails) match {

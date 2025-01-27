@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
@@ -28,6 +29,8 @@ import utils.TestBaseSpec
   */
 class IsRentUnderReviewControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def isRentUnderReviewController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
@@ -35,6 +38,7 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
     )
   ) = new IsRentUnderReviewController(
     isRentUnderReviewView,
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo,

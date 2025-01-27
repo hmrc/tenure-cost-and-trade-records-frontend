@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.BenefitsGivenForm.benefitsGivenForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class BenefitsGivenController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   view: benefitsGiven,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class BenefitsGivenController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("BenefitsGiven")
+
     Ok(
       view(
         request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven) match {

@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CapitalSumDescriptionForm.capitalSumDescriptionForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
@@ -34,6 +35,7 @@ import scala.concurrent.ExecutionContext
 
 class CapitalSumDescriptionController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   view: capitalSumDescription,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class CapitalSumDescriptionController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("CapitalSumDescription")
+
     Ok(
       view(
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.capitalSumDescription) match {

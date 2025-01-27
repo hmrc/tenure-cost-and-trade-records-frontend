@@ -17,6 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.IsRentUnderReviewForm.isRentUnderReviewForm
 import models.ForType
@@ -41,6 +42,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class IsRentUnderReviewController @Inject() (
   isRentUnderReviewView: isRentUnderReview,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -51,6 +53,8 @@ class IsRentUnderReviewController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("IsRentUnderReview")
+
     Ok(
       isRentUnderReviewView(
         leaseOrAgreementPartThree

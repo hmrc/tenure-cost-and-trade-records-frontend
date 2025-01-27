@@ -33,6 +33,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PayACapitalSumDetailsForm.payACapitalSumDetailsForm
 import models.Session
@@ -52,6 +53,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class PayACapitalSumDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
   payACapitalSumDetailsView: payACapitalSumDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -62,6 +64,8 @@ class PayACapitalSumDetailsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("PayACapitalSumDetails")
+
     Future.successful(
       Ok(
         payACapitalSumDetailsView(

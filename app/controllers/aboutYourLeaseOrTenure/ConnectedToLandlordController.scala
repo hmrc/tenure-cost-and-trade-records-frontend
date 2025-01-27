@@ -48,30 +48,8 @@ class ConnectedToLandlordController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val containCYA = request.uri
-    val forType    = request.sessionData.forType
+    audit.sendChangeLink("ConnectedToLandlord")
 
-    containCYA match {
-      case containsCYA if containsCYA.contains("=CYA") =>
-        audit.sendExplicitAudit(
-          "cya-change-link",
-          ChangeLinkAudit(forType.toString, request.uri, "ConnectedToLandlord")
-        )
-      case _                                           =>
-        Future.successful(
-          Ok(
-            connectedToLandlordView(
-              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
-                case Some(connectedToLandlord) =>
-                  connectedToLandlordForm.fill(connectedToLandlord)
-                case _                         => connectedToLandlordForm
-              },
-              request.sessionData.toSummary,
-              request.sessionData.forType
-            )
-          )
-        )
-    }
     Future.successful(
       Ok(
         connectedToLandlordView(

@@ -16,6 +16,7 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
@@ -29,11 +30,14 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
 
   val test2001character = "x" * 2001
 
+  val mockAudit: Audit = mock[Audit]
+
   def intervalsOfRentReviewController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new IntervalsOfRentReviewController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourLeaseOrTenureNavigator,
       intervalsOfRentReviewView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),

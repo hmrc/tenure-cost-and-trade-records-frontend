@@ -16,9 +16,9 @@
 
 package controllers.aboutYourLeaseOrTenure
 
+import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import utils.TestBaseSpec
-
 import play.api.test.*
 import play.api.test.Helpers.*
 
@@ -27,12 +27,15 @@ import play.api.test.Helpers.*
   */
 class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def throughputAffectsRentController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) = new ThroughputAffectsRentController(
     throughputAffectsRentView,
+    mockAudit,
     aboutYourLeaseOrTenureNavigator,
     preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
     mockSessionRepo,
