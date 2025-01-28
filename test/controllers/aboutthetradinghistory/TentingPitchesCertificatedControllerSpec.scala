@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.TentingPitchesCertificatedForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
@@ -27,12 +28,14 @@ class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
   def tentingPitchesCertificatedController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
   ) = new TentingPitchesCertificatedController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     tentingPitchesCertificatedView,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),

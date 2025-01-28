@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalAmusementsForm.additionalAmusementsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AdditionalAmusementsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: additionalAmusements,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,7 @@ class AdditionalAmusementsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("AdditionalAmusements")
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
 

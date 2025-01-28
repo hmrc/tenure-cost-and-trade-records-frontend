@@ -16,15 +16,19 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.OtherHolidayAccommodationForm.otherHolidayAccommodationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
+
+  val mockAudit: Audit = mock[Audit]
 
   import TestData._
   import utils.FormBindingTestAssertions._
@@ -34,6 +38,7 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
     )
   ) = new OtherHolidayAccommodationController(
     otherHolidayAccommodationView,
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
     mockSessionRepo,

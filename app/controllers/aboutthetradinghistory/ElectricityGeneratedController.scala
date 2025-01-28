@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.ElectricityGeneratedForm.electricityGeneratedForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -40,6 +41,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ElectricityGeneratedController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   electricityGeneratedView: electricityGenerated6076,
   withSessionRefiner: WithSessionRefiner,
@@ -49,6 +51,8 @@ class ElectricityGeneratedController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("ElectricityGenerated")
+
     runWithSessionCheck { turnoverSections6076 =>
       val years = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
 

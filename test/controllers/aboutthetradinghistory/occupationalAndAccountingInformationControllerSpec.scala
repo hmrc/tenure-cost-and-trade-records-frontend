@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -26,12 +27,15 @@ import views.html.aboutthetradinghistory.aboutYourTradingHistory
 
 class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   val mockAboutYouNavigator: AboutTheTradingHistoryNavigator   = mock[AboutTheTradingHistoryNavigator]
   val mockAboutYourTradingHistoryView: aboutYourTradingHistory = mock[aboutYourTradingHistory]
   when(mockAboutYourTradingHistoryView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYourTradingHistoryController = new AboutYourTradingHistoryController(
     stubMessagesControllerComponents(),
+    mockAudit,
     mockAboutYouNavigator,
     mockAboutYourTradingHistoryView,
     preFilledSession,

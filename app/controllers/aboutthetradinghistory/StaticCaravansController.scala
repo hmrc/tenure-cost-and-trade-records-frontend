@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.StaticCaravansForm.staticCaravansForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
@@ -40,6 +41,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class StaticCaravansController @Inject() (
   staticCaravansView: staticCaravans,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -50,6 +52,8 @@ class StaticCaravansController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("StaticCaravans")
+
     Ok(
       staticCaravansView(
         savedAnswer.fold(staticCaravansForm)(staticCaravansForm.fill),

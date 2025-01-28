@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,9 +25,11 @@ import utils.TestBaseSpec
 
 class ElectricityGeneratedControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit               = mock[Audit]
   def electricityGeneratedController =
     new ElectricityGeneratedController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       electricityGenerated6076View,
       preEnrichedActionRefiner(

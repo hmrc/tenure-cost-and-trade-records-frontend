@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
@@ -24,10 +25,13 @@ import utils.TestBaseSpec
 
 class PercentageFromFuelCardsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def percentageFromFuelCards(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
   ) = new PercentageFromFuelCardsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     percentageFromFuelCardsView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),

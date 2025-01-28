@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.ChangeOccupationAndAccountingForm.changeOccupationAndAccountingForm
 import models.submissions.common.{AnswerYes, AnswersYesNo}
@@ -36,6 +37,7 @@ import javax.inject.{Inject, Named, Singleton}
 @Singleton
 class ChangeOccupationAndAccountingController @Inject() (
   changeOccupationAndAccountingInfoView: changeOccupationAndAccountingInfo,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -45,6 +47,8 @@ class ChangeOccupationAndAccountingController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("ChangeOccupationAndAccounting")
+
     Ok(changeOccupationAndAccountingInfoView(changeOccupationAndAccountingForm))
   }
 

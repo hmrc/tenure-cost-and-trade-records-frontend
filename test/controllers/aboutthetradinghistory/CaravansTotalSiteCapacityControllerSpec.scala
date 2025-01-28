@@ -16,12 +16,15 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
+
+  val mockAudit: Audit = mock[Audit]
 
   private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show().url
 
@@ -30,6 +33,7 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
   def caravansTotalSiteCapacityController =
     new CaravansTotalSiteCapacityController(
       caravansTotalSiteCapacityView,
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),

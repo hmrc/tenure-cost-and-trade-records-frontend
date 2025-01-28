@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import connectors.Audit
 import models.Session
 import play.api.http.Status
 import play.api.mvc.AnyContent
@@ -26,8 +27,11 @@ import utils.TestBaseSpec
 
 class FinancialYearEndDatesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def financialYearEndDatesController(session: Session) = new FinancialYearEndDatesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     financialYearEndDatesView,
     preEnrichedActionRefiner(

@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.AdditionalActivitiesOnSiteForm.additionalActivitiesOnSiteForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -28,12 +29,15 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def additionalActivitiesOnSiteController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
   ) = new AdditionalActivitiesOnSiteController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     additionalActivitiesOnSiteView,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),

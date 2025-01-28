@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
@@ -23,12 +24,16 @@ import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status
 import utils.TestBaseSpec
 
 class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec {
+
+  val mockAudit: Audit = mock[Audit]
+
   def totalSiteCapacity6045Controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
   ) = new TotalSiteCapacity6045Controller(
     totalSiteCapacity6045View,
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
     mockSessionRepo,

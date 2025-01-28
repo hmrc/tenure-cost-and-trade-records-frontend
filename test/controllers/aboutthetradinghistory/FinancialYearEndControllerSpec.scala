@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.ForType
@@ -30,19 +31,21 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import scala.language.reflectiveCalls
 
+import scala.language.reflectiveCalls
 import scala.concurrent.Future
 
 class FinancialYearEndControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
+  val mockAudit: Audit = mock[Audit]
 
   def financialYearEndController(
     forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new FinancialYearEndController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     financialYearEndView,
     preEnrichedActionRefiner(forType = forType, aboutTheTradingHistory = aboutTheTradingHistory),

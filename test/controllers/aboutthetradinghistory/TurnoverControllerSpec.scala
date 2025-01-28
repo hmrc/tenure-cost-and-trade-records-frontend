@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
@@ -25,10 +26,12 @@ import utils.TestBaseSpec
 
 class TurnoverControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def turnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new TurnoverController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     turnoverView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),

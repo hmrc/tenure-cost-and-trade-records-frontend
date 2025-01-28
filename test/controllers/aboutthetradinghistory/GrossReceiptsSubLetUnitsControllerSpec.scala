@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,6 +25,7 @@ import utils.TestBaseSpec
 
 class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit     = mock[Audit]
   private val previousPage = aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show().url
 
   private val nextPage = controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
@@ -31,6 +33,7 @@ class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
   def grossReceiptsSubLetUnitsController =
     new GrossReceiptsSubLetUnitsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       grossReceiptsSubLetUnitsView,
       preEnrichedActionRefiner(

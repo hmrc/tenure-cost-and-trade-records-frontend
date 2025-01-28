@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.confirmableActionForm.confirmableActionForm
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
@@ -38,6 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -63,6 +65,8 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
       .map(_.bunkerFuelCardDetails.name)
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("AddAnotherBunkerFuelCardsDetails")
+
     val addAnother =
       aboutTheTradingHistoryData
         .flatMap(_.bunkerFuelCardsDetails.flatMap(_.lift(index)))

@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.AdditionalActivitiesAllYearForm.additionalActivitiesAllYearForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import models.submissions.common.AnswerNo
@@ -28,11 +29,13 @@ class AdditionalActivitiesAllYearControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+  val mockAudit: Audit = mock[Audit]
 
   def additionalActivitiesAllYearController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
   ) = new AdditionalActivitiesAllYearController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     additionalActivitiesAllYearView,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),

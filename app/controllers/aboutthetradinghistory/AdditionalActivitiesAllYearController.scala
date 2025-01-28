@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalActivitiesAllYearForm.additionalActivitiesAllYearForm
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, AdditionalActivitiesAllYear}
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AdditionalActivitiesAllYearController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: additionalActivitiesAllYear,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class AdditionalActivitiesAllYearController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("AdditionalActivitiesAllYear")
+
     Future.successful(
       Ok(
         view(

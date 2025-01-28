@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
@@ -25,10 +26,12 @@ import utils.TestBaseSpec
 
 class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
   ) = new IncomeExpenditureSummary6076Controller(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     incomeExpenditureSummary6076View,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),

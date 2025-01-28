@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import connectors.Audit
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAnotherLowMarginFuelCardsDetailsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
@@ -26,16 +27,20 @@ import play.api.test.Helpers
 import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
 
   import TestData._
 
+  val mockAudit: Audit = mock[Audit]
+
   def createAddAnotherLowMarginFuelCardsDetailsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory)
   ) = new AddAnotherLowMarginFuelCardsDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     addAnotherLowMarginFuelCardsDetailsView,
     genericRemoveConfirmationView,

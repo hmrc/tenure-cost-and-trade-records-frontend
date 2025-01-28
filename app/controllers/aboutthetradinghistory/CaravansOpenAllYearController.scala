@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansOpenAllYearForm.caravansOpenAllYearForm
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, Caravans, TurnoverSection6045}
@@ -41,6 +42,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CaravansOpenAllYearController @Inject() (
   caravansOpenAllYearView: caravansOpenAllYear,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -51,6 +53,7 @@ class CaravansOpenAllYearController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("CaravansOpenAllYear")
     runWithSessionCheck { _ =>
       Ok(
         caravansOpenAllYearView(

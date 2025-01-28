@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TotalSiteCapacityForm.totalSiteCapacityForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
@@ -36,6 +37,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class TotalSiteCapacity6045Controller @Inject() (
   view: totalSiteCapacity6045,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -46,6 +48,8 @@ class TotalSiteCapacity6045Controller @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("TotalSiteCapacity6045")
+
     Ok(
       view(
         aboutTheTradingHistoryPartOne

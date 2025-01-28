@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
@@ -24,9 +25,11 @@ import utils.TestBaseSpec
 
 class StaffCostsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit     = mock[Audit]
   def staffCostsController =
     new StaffCostsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       staffCostsView,
       preEnrichedActionRefiner(

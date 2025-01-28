@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.ForType
@@ -34,11 +35,13 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
+  val mockAudit: Audit = mock[Audit]
   def aboutYourTradingHistoryController(
     forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
   ) = new AboutYourTradingHistoryController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     aboutYourTradingHistoryView,
     preEnrichedActionRefiner(

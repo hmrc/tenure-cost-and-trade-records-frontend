@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CustomerCreditAccountsForm.customerCreditAccountsForm
 import models.Session
@@ -38,6 +39,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CustomerCreditAccountsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: customerCreditAccounts,
   withSessionRefiner: WithSessionRefiner,
@@ -47,6 +49,8 @@ class CustomerCreditAccountsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("CustomerCreditAccounts")
+
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>

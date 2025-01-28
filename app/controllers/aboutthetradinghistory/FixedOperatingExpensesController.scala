@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FixedOperatingExpensesForm.fixedOperatingExpensesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class FixedOperatingExpensesController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   fixedOperatingExpensesView: fixedOperatingExpenses,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class FixedOperatingExpensesController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("FixedOperatingExpenses")
+
     runWithSessionCheck { tradingHistory =>
       val yearEndDates = financialYearEndDates(tradingHistory)
       val years        = yearEndDates.map(_.getYear.toString)

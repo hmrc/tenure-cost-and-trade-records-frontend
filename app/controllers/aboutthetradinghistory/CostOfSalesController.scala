@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CostOfSalesForm.costOfSalesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CostOfSalesController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   costOfSalesView: costOfSales,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class CostOfSalesController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("CostOfSales")
+
     runWithSessionCheck { aboutTheTradingHistory =>
       val costOfSales = if (aboutTheTradingHistory.costOfSales.size == aboutTheTradingHistory.turnoverSections.size) {
         (aboutTheTradingHistory.costOfSales zip financialYearEndDates(aboutTheTradingHistory)).map {

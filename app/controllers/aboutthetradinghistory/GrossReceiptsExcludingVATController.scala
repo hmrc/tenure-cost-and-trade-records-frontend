@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.GrossReceiptsExcludingVATForm.grossReceiptsExcludingVATForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class GrossReceiptsExcludingVATController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: grossReceiptsExcludingVAT,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class GrossReceiptsExcludingVATController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("GrossReceiptsExcludingVAT")
+
     runWithSessionCheck { turnoverSections6076 =>
       val grossReceiptsExcludingVATSeq = turnoverSections6076.flatMap(_.grossReceiptsExcludingVAT)
 

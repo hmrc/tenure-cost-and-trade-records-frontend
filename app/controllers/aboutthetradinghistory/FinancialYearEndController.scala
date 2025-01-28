@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.ForType.*
@@ -39,6 +40,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class FinancialYearEndController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   financialYearEndView: financialYearEnd,
   withSessionRefiner: WithSessionRefiner,
@@ -52,6 +54,8 @@ class FinancialYearEndController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+        audit.sendChangeLink("FinancialYearEnd")
+
         Ok(
           financialYearEndView(
             aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.financialYear) match {

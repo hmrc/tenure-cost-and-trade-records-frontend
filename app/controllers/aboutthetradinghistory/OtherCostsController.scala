@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OtherCostsForm.form
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OtherCost, OtherCosts}
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class OtherCostsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   otherCostsView: otherCosts,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class OtherCostsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("OtherCosts")
+
     runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
       val yearEndDates       = financialYearEndDates(aboutTheTradingHistory)
       val existingOtherCosts = aboutTheTradingHistory.otherCosts.getOrElse(OtherCosts())

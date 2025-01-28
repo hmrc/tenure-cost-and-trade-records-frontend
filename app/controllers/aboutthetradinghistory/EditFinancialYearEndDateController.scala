@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDateForm.financialYearEndDateForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -36,6 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class EditFinancialYearEndDateController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   editFinancialYearEndDateView: editFinancialYearEndDate,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +47,8 @@ class EditFinancialYearEndDateController @Inject() (
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("EditFinancialYearEndDate")
+
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))

@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import models.submissions.common.{AnswerNo, AnswerYes}
 import play.api.test.FakeRequest
@@ -24,6 +25,8 @@ import utils.TestBaseSpec
 
 class CaravansOpenAllYearControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   private val previousPage = aboutthetradinghistory.routes.StaticCaravansController.show().url
 
   private val nextPage = aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
@@ -31,6 +34,7 @@ class CaravansOpenAllYearControllerSpec extends TestBaseSpec {
   def caravansOpenAllYearController =
     new CaravansOpenAllYearController(
       caravansOpenAllYearView,
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),

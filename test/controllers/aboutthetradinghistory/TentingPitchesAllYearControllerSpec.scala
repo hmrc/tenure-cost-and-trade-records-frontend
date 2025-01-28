@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.TentingPitchesAllYearForm.tentingPitchesAllYearForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import models.submissions.common.AnswerNo
@@ -29,10 +30,13 @@ class TentingPitchesAllYearControllerSpec extends TestBaseSpec {
   import TestData._
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
+
   def tentingPitchesAllYearController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
   ) = new TentingPitchesAllYearController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     tentingPitchesAllYearView,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),

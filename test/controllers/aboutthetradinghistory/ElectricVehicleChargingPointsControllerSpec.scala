@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,10 +25,12 @@ import utils.TestBaseSpec
 
 class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
   def electricVehicleChargingPointsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
   ) = new ElectricVehicleChargingPointsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     electricVehicleChargingPointsView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),

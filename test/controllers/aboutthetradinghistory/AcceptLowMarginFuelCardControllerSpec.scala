@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.TestBaseSpec
@@ -25,9 +26,12 @@ import utils.TestBaseSpec
   */
 class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def acceptLowMarginFuelCardController =
     new AcceptLowMarginFuelCardController(
       acceptLowMarginFuelCardView,
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020)),
       mockSessionRepo,

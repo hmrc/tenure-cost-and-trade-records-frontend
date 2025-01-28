@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OtherHolidayAccommodationForm.otherHolidayAccommodationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
@@ -36,6 +37,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class OtherHolidayAccommodationController @Inject() (
   view: otherHolidayAccommodation,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -46,6 +48,8 @@ class OtherHolidayAccommodationController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("OtherHolidayAccommodation")
+
     Ok(
       view(
         aboutTheTradingHistoryPartOne
