@@ -58,12 +58,12 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           "toDate.year"    -> previousFiscalYearEnd.toString
         )
         val result  = controller.submit(index = Some(0))(request)
-        status(result)                                     shouldBe SEE_OTHER
-        redirectLocation(result).value                     shouldBe routes.OccupierListController.show.url
+        status(result)                                           shouldBe SEE_OTHER
+        redirectLocation(result).value                           shouldBe routes.OccupierListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        completedLettings(data)                              should have size 1
-        completedLettings(data).head.rental.value.fromDate shouldBe LocalDate.of(previousFiscalYearEnd - 1, 4, 1)
-        completedLettings(data).head.rental.value.toDate   shouldBe LocalDate.of(previousFiscalYearEnd, 3, 31)
+        completedLettings(data)                                    should have size 1
+        completedLettings(data).head.rentalPeriod.value.fromDate shouldBe LocalDate.of(previousFiscalYearEnd - 1, 4, 1)
+        completedLettings(data).head.rentalPeriod.value.toDate   shouldBe LocalDate.of(previousFiscalYearEnd, 3, 31)
       }
     }
     "the user has already entered a period"         should {
@@ -140,7 +140,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
                   county = None,
                   postcode = "BN124AX"
                 ),
-                rental = period
+                rentalPeriod = period
               )
             )
           )

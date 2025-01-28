@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
@@ -36,9 +36,10 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading        shouldBe "lettingHistory.hasStoppedLetting.heading"
-        page.backLink       shouldBe routes.HowManyNightsController.show.url
-        page.radios("answer") should haveNoneChecked
+        page.heading           shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.heading"
+        page.backLink          shouldBe routes.HowManyNightsController.show.url
+        page.radios("answer") shouldNot be(empty)
+        page.radios("answer")    should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
@@ -48,7 +49,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.error("answer") shouldBe "lettingHistory.hasStoppedLetting.required"
+        page.error("answer") shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'Last Rent' page" in new ControllerFixture {
         val result = controller.submit(
@@ -71,6 +72,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
+        page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveChecked(value = "yes")
         page.radios("answer") shouldNot haveChecked(value = "no")
       }
@@ -102,7 +104,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         lettingHistory = Some(
           LettingHistory(
             intendedLettings = Some(
-              IntendedLettings(
+              IntendedDetail(
                 hasStopped = hasStopped
               )
             )

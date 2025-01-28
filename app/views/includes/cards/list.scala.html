@@ -1,0 +1,63 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import views.includes.cards.CardData
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@(govukSummaryList: GovukSummaryList, cardsType: String, cardsData: Seq[CardData])(implicit request: SessionRequest[AnyContent], messages: Messages)
+
+@cardsData.map { data =>
+    @govukSummaryList(
+        SummaryList(
+            card = Some(Card(
+                title = Some(CardTitle(
+                    content = Text(s"$cardsType ${data.index + 1}")
+                )),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = data.removeAction.toString,
+                            content = Text(messages("label.remove"))
+                        )
+                    ),
+                    classes = "govuk-!-font-size-14"
+                )),
+                classes = "govuk-!-margin-bottom-1"
+            )),
+            rows = data.entries.map { entry =>
+                SummaryListRow(
+                    key = Key(
+                        content = Text(entry.key),
+                        classes = "govuk-!-width-one-half"
+                    ),
+                    value = Value(
+                        content = HtmlContent(entry.value)
+                    ),
+                    actions = Some(Actions(
+                        items = Seq(
+                            ActionItem(
+                                href = entry.changeAction.toString,
+                                content = Text(messages("label.change"))
+                            )
+                        ),
+                        classes = "govuk-!-font-size-14"
+                    ))
+                )
+            }
+        )
+    )
+}

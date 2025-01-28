@@ -24,6 +24,6 @@ import play.api.data.Forms.single
 object IsYearlyAvailableForm:
   val theForm = Form[AnswersYesNo](
     single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.isYearlyAvailable.required")
+      "answer" -> answerYesNo(errorMessage = "lettingHistory.intendedLettings.isYearlyAvailable.required")
     )
   )

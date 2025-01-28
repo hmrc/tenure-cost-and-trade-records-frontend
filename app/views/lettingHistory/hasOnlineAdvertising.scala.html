@@ -14,35 +14,31 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswersYesNo
 @import models.pages.Summary
 
-@this(layout: Layout,
-        govukButton: GovukButton,
-        govukRadios: GovukRadios,
-        formWithCSRF: FormWithCSRF
-)
+@this(layout: Layout, govukButton: GovukButton, govukRadios: GovukRadios, formWithCSRF: FormWithCSRF)
 
-@(theForm: Form[AnswersYesNo], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 @layout(
-    pageHeading = messages("lettingHistory.advertisingOnline.heading"),
-    showSection = true,
-    showH1= false,
-    summary = Option(summary),
-    sectionName = messages("label.section.lettingHistory"),
+    theForm = theForm,
+    summary = Some(request.sessionData.toSummary),
+    pageHeading = messages("lettingHistory.hasOnlineAdvertising.heading"),
     backLinkUrl = backLink,
-    theForm = theForm
+    showSection = true,
+    sectionName = messages("label.section.lettingHistory"),
 ) {
 
-    @formWithCSRF(action = controllers.lettingHistory.routes.AdvertisingOnlineController.submit) {
+    @formWithCSRF(action = controllers.lettingHistory.routes.HasOnlineAdvertisingController.submit) {
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
             idPrefix = "lettingHistoryAdvertisingOnline",
-            name = "advertisingOnline",
-            legendKey = "lettingHistory.advertisingOnline.heading",
+            name = "answer",
+            legendKey = "",
             classes = "govuk-fieldset__legend--l",
             isHeading = true
         )

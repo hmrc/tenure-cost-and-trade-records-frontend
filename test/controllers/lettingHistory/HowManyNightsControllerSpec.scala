@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
@@ -38,7 +38,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading       shouldBe "lettingHistory.intendedLettings.heading"
+        page.heading       shouldBe "lettingHistory.intendedLettings.nights.heading"
         page.backLink      shouldBe routes.HasCompletedLettingsController.show.url
         page.input("nights") should beEmpty
       }
@@ -118,7 +118,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
           LettingHistory(
             hasCompletedLettings = hasCompletedLettings,
             intendedLettings = Some(
-              IntendedLettings(
+              IntendedDetail(
                 nights = nights,
                 hasStopped = hasStopped
               )

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package views.includes.cards
 
-import form.WebsiteMapping.validateWebaddress
-import models.submissions.lettingHistory.AdvertisingOnline
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.mvc.Call
 
-object AdvertisingOnlineDetailsForm:
-
-  val theForm: Form[AdvertisingOnline] = Form(
-    mapping(
-      "websiteAddress"          -> validateWebaddress,
-      "propertyReferenceNumber" -> default(text, "")
-    )(AdvertisingOnline.apply)(AdvertisingOnline.unapply)
-  )
+case class CardData(
+  index: Int,
+  removeAction: Call,
+  entries: Seq[CardEntry]
+)

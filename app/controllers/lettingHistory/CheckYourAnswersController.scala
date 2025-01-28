@@ -18,61 +18,58 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.AdvertisingOnlineForm.theForm
+import form.lettingHistory.CheckYourAnswerForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory.{toAnswer, toBoolean, withAdvertisingOnline}
+import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.AdvertisingOnlinePageId
+import navigation.identifiers.CheckYourAnswersPageId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.advertisingOnline
+import views.html.lettingHistory.checkYourAnswers.template as CheckYourAnswersView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
+import scala.concurrent.ExecutionContext
 
 @Singleton
-class AdvertisingOnlineController @Inject() (
+class CheckYourAnswersController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: advertisingOnline,
+  theView: CheckYourAnswersView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
+)(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport
+    with Logging {
 
-  def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
+  def show: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     val filledForm =
       for
-        lettingHistory      <- request.sessionData.lettingHistory
-        advertisingQuestion <- lettingHistory.advertisingOnline
-      yield theForm.fill(advertisingQuestion.toAnswer)
+        lettingHistory   <- request.sessionData.lettingHistory
+        sectionCompleted <- lettingHistory.sectionCompleted
+      yield theForm.fill(sectionCompleted.toAnswer)
 
-    Ok(
-      theView(
-        filledForm.getOrElse(theForm),
-        request.sessionData.toSummary,
-        backLinkUrl
-      )
-    )
+    Ok(theView(filledForm.getOrElse(theForm), backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors =>
-        successful(BadRequest(theView(theFormWithErrors, request.sessionData.toSummary, backLinkUrl))),
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withAdvertisingOnline(answer.toBoolean))
-        yield navigator.redirect(currentPage = AdvertisingOnlinePageId, savedSession)
+        for
+          newSession   <- successful(withSectionCompleted(answer.toBoolean))
+          savedSession <- repository.saveOrUpdateSession(newSession)
+        yield navigator.redirect(currentPage = CheckYourAnswersPageId, savedSession)
     )
   }
 
-  private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
-    navigator.backLinkUrl(ofPage = AdvertisingOnlinePageId).getOrElse("")
+  private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
+    navigator.backLinkUrl(ofPage = CheckYourAnswersPageId)
 
 }

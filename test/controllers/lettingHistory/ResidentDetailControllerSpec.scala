@@ -46,7 +46,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           "name"    -> "Mr. Unknown",
           "address" -> "Neverland"
         )
-        val result  = controller.submit(request)
+        val result  = controller.submit()(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -78,7 +78,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
             "name"    -> "Mr. Unknown",
             "address" -> "Neverland"
           )
-          val result  = controller.submit(request)
+          val result  = controller.submit()(request)
           status(result)                      shouldBe SEE_OTHER
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -95,7 +95,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
             "name"    -> twoResidents.last.name,
             "address" -> "22, Different Street"
           )
-          val result  = controller.submit(request)
+          val result  = controller.submit()(request)
           status(result)                      shouldBe SEE_OTHER
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -117,7 +117,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of what the user might have submitted" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result = controller.submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "name"    -> "",
             "address" -> ""

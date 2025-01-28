@@ -18,26 +18,26 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.AdvertisingOnlineDetailsForm.theForm
+import form.lettingHistory.AdvertisingDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfAdvertisingOnline, byUpdatingAdvertisingOnlineDetails}
-import models.submissions.lettingHistory.AdvertisingOnline
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising}
+import models.submissions.lettingHistory.AdvertisingDetail
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.AdvertisingOnlineDetailsPageId
+import navigation.identifiers.AdvertisingDetailPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.*
 import repositories.SessionRepo
-import views.html.lettingHistory.advertisingOnlineDetails as AdvertisingOnlineDetails
+import views.html.lettingHistory.advertisingDetail as OnlineAdvertisingDetailView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
 @Singleton
-class AdvertisingOnlineDetailsController @Inject() (
+class AdvertisingDetailController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: AdvertisingOnlineDetails,
+  theView: OnlineAdvertisingDetailView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
@@ -45,34 +45,36 @@ class AdvertisingOnlineDetailsController @Inject() (
     with I18nSupport:
 
   def show(index: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    val advertisingOnlineList = (
+    val onlineAdvertising = (
       for lettingHistory <- request.sessionData.lettingHistory.toList
-      yield lettingHistory.advertisingOnlineDetails
+      yield lettingHistory.onlineAdvertising
     ).flatten
 
-    if index.isEmpty && advertisingOnlineList.sizeIs == MaxNumberOfAdvertisingOnline
+    if index.isEmpty && onlineAdvertising.sizeIs == MaxNumberOfOnlineAdvertising
     then Redirect(controllers.routes.TaskListController.show())
     else
       val filledForm =
         for
           idx          <- index
-          detailsOnIdx <- advertisingOnlineList.lift(idx)
+          detailsOnIdx <- onlineAdvertising.lift(idx)
         yield theForm.fill(detailsOnIdx)
 
       Ok(theView(filledForm.getOrElse(theForm), backLinkUrl, index, request.sessionData.toSummary))
   }
 
   def submit(index: Option[Int]): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AdvertisingOnline](
+    continueOrSaveAsDraft[AdvertisingDetail](
       theForm,
       theFormWithErrors =>
         successful(BadRequest(theView(theFormWithErrors, backLinkUrl, index, request.sessionData.toSummary))),
       details =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(byUpdatingAdvertisingOnlineDetails(index, details))
-        yield navigator.redirect(currentPage = AdvertisingOnlineDetailsPageId, savedSession)
+        for
+          newSession   <- byAddingOrUpdatingOnlineAdvertising(index, details)
+          savedSession <- repository.saveOrUpdateSession(newSession)
+        yield navigator.redirect(currentPage = AdvertisingDetailPageId, savedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = AdvertisingOnlineDetailsPageId)
+    navigator.backLinkUrl(ofPage = AdvertisingDetailPageId)

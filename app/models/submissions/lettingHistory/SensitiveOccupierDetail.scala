@@ -43,5 +43,5 @@ object SensitiveOccupierDetail:
     SensitiveOccupierDetail(
       SensitiveString(occupierDetail.name),
       SensitiveAddress(occupierDetail.address),
-      occupierDetail.rental
+      occupierDetail.rentalPeriod
     )

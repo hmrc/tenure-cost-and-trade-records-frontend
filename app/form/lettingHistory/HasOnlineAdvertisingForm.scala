@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +12,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@()
+package form.lettingHistory
+
+import form.MappingSupport.createYesNoType as answerYesNo
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.single
+
+object HasOnlineAdvertisingForm {
+  val theForm: Form[AnswersYesNo] = Form(
+    single(
+      "answer" -> answerYesNo("lettingHistory.hasOnlineAdvertising.required")
+    )
+  )
+}

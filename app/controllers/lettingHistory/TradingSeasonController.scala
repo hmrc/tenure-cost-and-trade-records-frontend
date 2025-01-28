@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.lettingHistory.TradingSeasonLengthForm.theForm
+import form.lettingHistory.TradingSeasonForm.theForm
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.LocalPeriod
@@ -28,17 +28,18 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import util.DateUtilLocalised
-import views.html.lettingHistory.tradingSeasonLength as TradingSeasonLengthView
+import views.html.lettingHistory.tradingSeason as TradingSeasonView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
-class TradingSeasonLengthController @Inject (
+@Singleton
+class TradingSeasonController @Inject (
   mcc: MessagesControllerComponents,
   dateUtil: DateUtilLocalised,
   navigator: LettingHistoryNavigator,
-  theView: TradingSeasonLengthView,
+  theView: TradingSeasonView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext)
@@ -52,7 +53,7 @@ class TradingSeasonLengthController @Inject (
     val filledForm =
       for
         intendedLettings    <- intendedLettings(request.sessionData)
-        tradingSeasonLength <- intendedLettings.tradingSeasonLength
+        tradingSeasonLength <- intendedLettings.tradingSeason
       yield theForm.fill(tradingSeasonLength)
 
     Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
@@ -64,7 +65,9 @@ class TradingSeasonLengthController @Inject (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       period =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withTradingSeasonLength(period))
+        for
+          newSession   <- successful(withTradingPeriod(period))
+          savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = TradingSeasonLengthPageId, savedSession)
     )
   }

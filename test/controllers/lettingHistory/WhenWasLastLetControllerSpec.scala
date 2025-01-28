@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.lettingHistory.LettingHistory._
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
@@ -39,7 +39,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading           shouldBe "lettingHistory.whenWasLastLet.heading"
+        page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url
         page.input("date.day")   should beEmpty
         page.input("date.month") should beEmpty
@@ -67,7 +67,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading           shouldBe "lettingHistory.whenWasLastLet.heading"
+        page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url
         page.input("date.day")   should haveValue("25")
         page.input("date.month") should haveValue("12")
@@ -102,7 +102,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         lettingHistory = Some(
           LettingHistory(
             intendedLettings = Some(
-              IntendedLettings(
+              IntendedDetail(
                 whenWasLastLet = whenWasLastLet
               )
             )

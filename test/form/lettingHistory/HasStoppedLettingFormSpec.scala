@@ -50,5 +50,5 @@ class HasStoppedLettingFormSpec extends FormSpec:
     bound
       .error("answer")
       .value
-      .message mustBe "lettingHistory.hasStoppedLetting.required"
+      .message mustBe "lettingHistory.intendedLettings.hasStoppedLetting.required"
   }

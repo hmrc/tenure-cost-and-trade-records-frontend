@@ -23,7 +23,7 @@ import form.lettingHistory.OccupierListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{LettingHistory, OccupierDetail}
+import models.submissions.lettingHistory.{LettingHistory, OccupierDetail, SessionWrapper}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{OccupierListPageId, OccupierRemovePageId}
 import play.api.data.Form
@@ -35,10 +35,11 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.occupierList as OccupierListView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class OccupierListController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -72,11 +73,13 @@ class OccupierListController @Inject() (
             val eventuallySavedSession =
               if answer == AnswerYes then
                 given Session = request.sessionData
-                for savedSession <- repository.saveOrUpdateSession(byRemovingPermanentOccupierAt(index))
+                for
+                  newSession   <- byRemovingCompletedLettingAt(index)
+                  savedSession <- repository.saveOrUpdateSession(newSession)
                 yield savedSession
               else
                 // AnswerNo
-                successful(request.sessionData)
+                successful(request.sessionData.withChangedData(true))
 
             for savedSession <- eventuallySavedSession
             yield navigator.redirect(currentPage = OccupierRemovePageId, savedSession)
@@ -105,10 +108,12 @@ class OccupierListController @Inject() (
 
   private def eventuallySaveOrUpdateSessionWith(
     hadMoreOccupier: Boolean
-  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext) =
+  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
     if !hadMoreOccupier && completedLettings(session).isEmpty
-    then repository.saveOrUpdateSession(withCompletedLettings(false))
-    else successful(session)
+    then {
+      val newSession = withHasCompletedLettings(false)
+      repository.saveOrUpdateSession(newSession)
+    } else successful(session.withChangedData(false))
 
   private def renderTheConfirmationViewWith(theForm: Form[AnswersYesNo], occupierDetail: OccupierDetail, index: Int)(
     using request: SessionRequest[AnyContent]

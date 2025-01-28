@@ -19,7 +19,7 @@
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.lettingHistory.ResidentDetail
 @import navigation.identifiers.{asPageIdentifier, ResidentRemovePageId}
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Text, HtmlContent}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
 
@@ -55,7 +55,7 @@
                     classes = "govuk-!-font-weight-regular"
                 ),
                  value = Value(
-                     content = Text(resident.address),
+                     content = HtmlContent(resident.address.replace("\n", "<br>")),
                      classes = "govuk-!-font-size-14"
                  ),
                 actions = Some(Actions(

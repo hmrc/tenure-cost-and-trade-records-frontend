@@ -45,7 +45,7 @@ class OccupierDetailFormSpec extends FormSpec:
         county = Some("Neverland"),
         postcode = "BN124AX"
       ),
-      rental = None
+      rentalPeriod = None
     )
     val filled         = theForm.fill(occupierDetail)
     filled.hasErrors mustBe false

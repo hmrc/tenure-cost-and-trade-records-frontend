@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package models.submissions.lettingHistory
 
-import form.MappingSupport.createYesNoType as answerYesNo
-import models.submissions.common.AnswersYesNo
-import play.api.data.Form
-import play.api.data.Forms.single
+import play.api.libs.json.{Format, Json}
 
-object AdvertisingOnlineForm {
+case class AdvertisingDetail(
+  websiteAddress: String,
+  propertyReferenceNumber: String
+)
 
-  val theForm: Form[AnswersYesNo] = Form(
-    single(
-      "advertisingOnline" -> answerYesNo("error.lettingHistory.advertisingOnline.required")
-    )
+object AdvertisingDetail:
+  given Format[AdvertisingDetail]                               = Json.format
+  def unapply(obj: AdvertisingDetail): Option[(String, String)] = Some(
+    (obj.websiteAddress, obj.propertyReferenceNumber)
   )
-
-}

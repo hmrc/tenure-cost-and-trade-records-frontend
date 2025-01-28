@@ -19,11 +19,11 @@ package controllers.lettingHistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmationForm
-import form.lettingHistory.AdvertisingListForm.theForm as theForm
+import form.lettingHistory.AdvertisingListForm.theForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.{AdvertisingOnline, LettingHistory}
-import models.submissions.lettingHistory.LettingHistory.{byRemovingAdvertisingDetailsAt, toBoolean}
+import models.submissions.lettingHistory.LettingHistory.{byRemovingOnlineAdvertisingAt, toBoolean}
+import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{AdvertisingListPageId, AdvertisingRemovePageId}
 import play.api.data.Form
@@ -69,9 +69,11 @@ class AdvertisingListController @Inject() (
             val eventuallySavedSession =
               if answer == AnswerYes then
                 given Session = request.sessionData
-                for savedSession <- repository.saveOrUpdateSession(byRemovingAdvertisingDetailsAt(index))
+                for
+                  newSession   <- successful(byRemovingOnlineAdvertisingAt(index))
+                  savedSession <- repository.saveOrUpdateSession(newSession)
                 yield savedSession
-              else successful(request.sessionData)
+              else successful(request.sessionData.withChangedData(true))
 
             for savedSession <- eventuallySavedSession
             yield navigator.redirect(currentPage = AdvertisingRemovePageId, savedSession)
@@ -92,8 +94,8 @@ class AdvertisingListController @Inject() (
         successful(
           navigator.redirect(
             currentPage = AdvertisingListPageId,
-            updatedSession = request.sessionData,
-            navigationData = Map("hasMoreAdvertisingDetails" -> answer.toBoolean)
+            session = request.sessionData.withChangedData(false),
+            navigation = Map("hasMoreAdvertisingDetails" -> answer.toBoolean)
           )
         )
     )
@@ -101,15 +103,15 @@ class AdvertisingListController @Inject() (
 
   private def withAdvertisingDetailAt(
     index: Int
-  )(func: AdvertisingOnline => Future[Result])(using request: SessionRequest[AnyContent]): Future[Result] =
+  )(func: AdvertisingDetail => Future[Result])(using request: SessionRequest[AnyContent]): Future[Result] =
     LettingHistory
-      .getAdvertisingOnlineDetails(request.sessionData)
+      .onlineAdvertising(request.sessionData)
       .lift(index)
       .fold(successful(Redirect(routes.AdvertisingListController.show))) { entry =>
         func.apply(entry)
       }
 
-  private def renderTheConfirmationViewWith(theForm: Form[AnswersYesNo], advertising: AdvertisingOnline, index: Int)(
+  private def renderTheConfirmationViewWith(theForm: Form[AnswersYesNo], advertising: AdvertisingDetail, index: Int)(
     using request: SessionRequest[AnyContent]
   ) =
     theConfirmationView(

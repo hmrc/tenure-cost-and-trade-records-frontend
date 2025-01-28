@@ -1593,12 +1593,12 @@ lettingHistory.residentList.heading.plural = You have added {0} permanent reside
 lettingHistory.residentList.hasMoreResidents.label = Are any other parts of the property occupied by tenants or employees as their main residence?
 lettingHistory.residentList.hasMoreResidents.required = Select yes if the property has more occupiers
 
-lettingHistory.completedLettings.heading = Completed commercial lettings - 29 nights and longer
-lettingHistory.completedLettings.paragraph.1 = Declare if any parts of your property were let commercially - in periods of 29 nights and longer - within the stated timeframe.
-lettingHistory.completedLettings.paragraph.2 = Include student lets, long-term bookings, and any consecutive tenancies totalling 29 nights or more.
-lettingHistory.completedLettings.paragraph.3 = Do not include any parts of the property:
-lettingHistory.completedLettings.paragraph.3.point.1 = used by family and friends
-lettingHistory.completedLettings.paragraph.3.point.2 = let out to staff or permanent residents.
+lettingHistory.hasCompletedLettings.heading = Completed commercial lettings - 29 nights and longer
+lettingHistory.hasCompletedLettings.paragraph.1 = Declare if any parts of your property were let commercially - in periods of 29 nights and longer - within the stated timeframe.
+lettingHistory.hasCompletedLettings.paragraph.2 = Include student lets, long-term bookings, and any consecutive tenancies totalling 29 nights or more.
+lettingHistory.hasCompletedLettings.paragraph.3 = Do not include any parts of the property:
+lettingHistory.hasCompletedLettings.paragraph.3.point.1 = used by family and friends
+lettingHistory.hasCompletedLettings.paragraph.3.point.2 = let out to staff or permanent residents.
 lettingHistory.hasCompletedLettings.legend = Was any part of your property let in periods of 29 nights and longer between {0} and {1}.
 lettingHistory.hasCompletedLettings.required = Select yes if the property had any completed lettings in the period.
 
@@ -1608,7 +1608,6 @@ label.lettingHistory.occupierDetail.name.label = Occupier''s name
 lettingHistory.occupierDetail.name.required = Enter the name of the temporary occupier
 lettingHistory.occupierDetail.address.legend = Occupier''s address
 lettingHistory.occupierDetail.address.hint = This should be the address they provided when they rented the property.
-
 lettingHistory.rentalPeriod.heading = When did {0} rent part of your property?
 fieldName.fromDate = from date
 lettingHistory.rentalPeriod.fromDate.error = The "from date" must be greater than or equal to {0}
@@ -1616,54 +1615,90 @@ fieldName.toDate = to date
 lettingHistory.rentalPeriod.toDate.error = The "to date" must be less than or equal to {0}
 lettingHistory.rentalPeriod.error = The "from date" must be less than or equal to the "to date"
 
-lettingHistory.occupierList.heading.removed = You have removed all temporary occupiers of the property
+lettingHistory.occupierList.heading.removedAll = You have removed all temporary occupiers of the property
 lettingHistory.occupierList.heading.singular = You have added {0} temporary occupier
 lettingHistory.occupierList.heading.plural = You have added {0} temporary occupiers
-lettingHistory.occupierList.rentalPeriod.text = {0} to {1}
+lettingHistory.occupierList.rentalPeriod.text = from {0} to {1}
 lettingHistory.occupiersList.hadMoreOccupiers.label = Did any other occupants rent part of your property for 29 nights or more between {0} and {1}?
 lettingHistory.occupierList.hadMoreOccupiers.required = Select yes if the property had more occupiers
 
-lettingHistory.advertisingOnline.heading = Do you advertise the property online?
-error.lettingHistory.advertisingOnline.required = Select yes if you advertise the property online
-lettingHistory.advertisingOnlineDetails.heading  = Online advertising
-lettingHistory.advertisingOnlineDetails.paragraph = Provide the details of the holiday lettings websites, where the property is advertised. You will have the opportunity to add multiple websites if required.
-label.lettingHistory.advertisingOnlineDetails.website = Website address
-hint.lettingHistory.advertisingOnlineDetails.website = Paste a direct link to your property, if known.
-label.lettingHistory.advertisingOnlineDetails.number= Property reference number
-hint.lettingHistory.advertisingOnlineDetails.number= Leave blank if not known.
+lettingHistory.hasOnlineAdvertising.heading = Do you advertise the property online?
+lettingHistory.hasOnlineAdvertising.required = Select yes if you advertise the property online
+
+lettingHistory.advertisingDetail.heading  = Online advertising
+lettingHistory.advertisingDetail.paragraph = Provide the details of the holiday lettings websites, where the property is advertised. You will have the opportunity to add multiple websites if required.
+label.lettingHistory.advertisingDetail.websiteAddress = Website address
+hint.lettingHistory.advertisingDetail.websiteAddress = Paste a direct link to your property, if known.
+label.lettingHistory.advertisingDetail.propertyReferenceNumber = Property reference number
+hint.lettingHistory.advertisingDetail.propertyReferenceNumber = Leave blank if not known.
+
+lettingHistory.advertisingList.heading.removedAll = You have removed all your holiday lettings websites
+lettingHistory.advertisingList.heading.singular = You have added {0} holiday lettings website
+lettingHistory.advertisingList.heading.plural = You have added {0} holiday lettings websites
+lettingHistory.advertisingList.hasMoreWebsites.label = Would you like to add another holiday lettings website
+lettingHistory.advertisingList.hasMoreWebsites.required = Select yes if you would like to add another holiday lettings website
 
 lettingHistory.maxNumberReached.permanentResidents.heading = You have added the maximum of {0} permanent residents
 lettingHistory.maxNumberReached.permanentResidents.paragraph.1 = If you had {0} or more permanent residents during the specified time range, the VOA will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.permanentResidents.link.1 = Check or update the {0} permanent residents
-lettingHistory.maxNumberReached.temporaryOccupiers.heading = You have added the maximum of {0} temporary occupiers
-lettingHistory.maxNumberReached.temporaryOccupiers.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VOA will contact you to collect the details you were unable to declare.
-lettingHistory.maxNumberReached.temporaryOccupiers.link.1 = Check or update the {0} temporary occupiers
-lettingHistory.maxNumberReached.advertisingOnline.heading = You have added the maximum of {0} holiday lettings websites
-lettingHistory.maxNumberReached.advertisingOnline.paragraph.1 = If you advertise on {0} or more holiday lettings websites, the VOA will contact you to collect the details you were unable to declare.
-lettingHistory.maxNumberReached.advertisingOnline.link.1 = Check or update the {0} holiday lettings websites
-lettingHistory.maxNumberReached.advertisingOnline.understanding = I understand that the VOA will contact me about the details of the undeclared websites.
+lettingHistory.maxNumberReached.completedLettings.heading = You have added the maximum of {0} temporary occupiers
+lettingHistory.maxNumberReached.completedLettings.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.completedLettings.link.1 = Check or update the {0} temporary occupiers
+lettingHistory.maxNumberReached.onlineAdvertising.heading = You have added the maximum of {0} holiday lettings websites
+lettingHistory.maxNumberReached.onlineAdvertising.paragraph.1 = If you advertise on {0} or more holiday lettings websites, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.onlineAdvertising.link.1 = Check or update the {0} holiday lettings websites
+lettingHistory.maxNumberReached.onlineAdvertising.understanding = I understand that the VOA will contact me about the details of the undeclared websites.
 lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
 lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
 
-lettingHistory.intendedLettings.heading = How many nights do you intend to let the property commercially between {0} and {1}?
+lettingHistory.intendedLettings.nights.heading = How many nights do you intend to let the property commercially between {0} and {1}?
 lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not intend to let the property.
-
-lettingHistory.hasStoppedLetting.heading = Have you already stopped letting the property commercially?
-lettingHistory.hasStoppedLetting.required = Select yes if you have stopped letting the property.
-
-lettingHistory.whenWasLastLet.heading = On which date was the property last commercially let?
+lettingHistory.intendedLettings.hasStoppedLetting.heading = Have you already stopped letting the property commercially?
+lettingHistory.intendedLettings.hasStoppedLetting.required = Select yes if you have stopped letting the property.
+lettingHistory.intendedLettings.whenWasLastLet.heading = On which date was the property last commercially let?
 fieldName.lettingHistory.date = the date
+lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading = Is the property available for commercial letting all year around?
+lettingHistory.intendedLettings.isYearlyAvailable.hasStoppedLetting.heading = During the last financial year, was the property available for commercial letting all year round?
+lettingHistory.intendedLettings.isYearlyAvailable.required = Select yes if the property available all year round.
+lettingHistory.intendedLettings.tradingSeason.heading = Give details of the length of your trading season
+fieldName.lettingHistory.intendedLettings.tradingSeason.fromDate = from date
+lettingHistory.intendedLettings.tradingSeason.fromDate.error = The "from date" must be greater than or equal to {0}
+fieldName.lettingHistory.intendedLettings.tradingSeason.toDate = to date
+lettingHistory.intendedLettings.tradingSeason.toDate.error = The "to date" must be less than or equal to {0}
+lettingHistory.intendedLettings.tradingSeason.error = The "from date" must be less than or equal to the "to date"
 
-lettingHistory.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading = Is the property available for commercial letting all year around?
-lettingHistory.isYearlyAvailable.hasStoppedLetting.heading = During the last financial year, was the property available for commercial letting all year round?
-lettingHistory.isYearlyAvailable.required = Select yes if the property available all year round.
+lettingHistory.checkYourAnswers.heading = Check your answers - letting history
 
-lettingHistory.tradingSeasonLength.heading = Give details of the length of your trading season
-fieldName.lettingHistory.tradingSeasonLength.fromDate = from date
-lettingHistory.tradingSeasonLength.fromDate.error = The "from date" must be greater than or equal to {0}
-fieldName.lettingHistory.tradingSeasonLength.toDate = to date
-lettingHistory.tradingSeasonLength.toDate.error = The "to date" must be less than or equal to {0}
-lettingHistory.tradingSeasonLength.error = The "from date" must be less than or equal to the "to date"
+lettingHistory.checkYourAnswers.permanentResidents.heading = Residential tenants
+lettingHistory.checkYourAnswers.permanentResidents.question = Main residence for tenants or employees?
+lettingHistory.checkYourAnswers.permanentResidents.addedSingular = You have added {0} resident
+lettingHistory.checkYourAnswers.permanentResidents.addedPlural = You have added {0} residents
+lettingHistory.checkYourAnswers.permanentResidents.addOneMore = Add a resident
+lettingHistory.checkYourAnswers.permanentResidents.cardsType = Resident
+lettingHistory.checkYourAnswers.permanentResidents.cardKey1 = Resident''s details
+
+lettingHistory.checkYourAnswers.completedLettings.heading = Temporary occupiers
+lettingHistory.checkYourAnswers.completedLettings.question = Completed commercial lettings - 29 nights or longer?
+lettingHistory.checkYourAnswers.completedLettings.addedSingular = You have added {0} temporary occupier
+lettingHistory.checkYourAnswers.completedLettings.addedPlural = You have added {0} temporary occupiers
+lettingHistory.checkYourAnswers.completedLettings.addOneMore = Add a temporary occupier
+lettingHistory.checkYourAnswers.completedLettings.cardsType = Temporary occupier
+lettingHistory.checkYourAnswers.completedLettings.cardKey1 = Occupier''s details
+
+lettingHistory.checkYourAnswers.lettingIntentions.heading = Letting intention
+lettingHistory.checkYourAnswers.lettingIntentions.nights = Number of nights intended for commercial letting
+lettingHistory.checkYourAnswers.lettingIntentions.hasStopped = Stopped letting commercially?
+lettingHistory.checkYourAnswers.lettingIntentions.whenWasLastLet = Final commercial letting
+lettingHistory.checkYourAnswers.lettingIntentions.isYearlyAvailable = Available for letting all year?
+lettingHistory.checkYourAnswers.lettingIntentions.tradingPeriod = Season details
+
+lettingHistory.checkYourAnswers.onlineAdvertising.heading = Advertising the property
+lettingHistory.checkYourAnswers.onlineAdvertising.question = Do you advertise online?
+lettingHistory.checkYourAnswers.onlineAdvertising.addedSingular = You have added {0} website
+lettingHistory.checkYourAnswers.onlineAdvertising.addedPlural = You have added {0} websites
+lettingHistory.checkYourAnswers.onlineAdvertising.addOneMore = Add a website
+lettingHistory.checkYourAnswers.onlineAdvertising.cardsType = Website
+lettingHistory.checkYourAnswers.onlineAdvertising.cardKey1 = Website details
 
 
 # ACCOMMODATION DETAILS 6048

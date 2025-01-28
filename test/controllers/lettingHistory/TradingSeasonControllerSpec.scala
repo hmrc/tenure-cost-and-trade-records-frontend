@@ -25,10 +25,10 @@ import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
-import views.html.lettingHistory.tradingSeasonLength as TradingSeasonLengthView
+import views.html.lettingHistory.tradingSeason as TradingSeasonView
 import java.time.LocalDate
 
-class TradingSeasonLengthControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
+class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
 
   "the TradingSeasonLength controller" when {
     "the user has not entered any period yet"       should {
@@ -38,7 +38,7 @@ class TradingSeasonLengthControllerSpec extends LettingHistoryControllerSpec wit
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading               shouldBe "lettingHistory.tradingSeasonLength.heading"
+        page.heading               shouldBe "lettingHistory.intendedLettings.tradingSeason.heading"
         page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should beEmpty
         page.input("fromDate.month") should beEmpty
@@ -58,15 +58,15 @@ class TradingSeasonLengthControllerSpec extends LettingHistoryControllerSpec wit
           "toDate.year"    -> previousFiscalYearEnd.toString
         )
         val result  = controller.submit(request)
-        status(result)                                                  shouldBe SEE_OTHER
-        redirectLocation(result).value                                  shouldBe routes.AdvertisingOnlineController.show.url
+        status(result)                                            shouldBe SEE_OTHER
+        redirectLocation(result).value                            shouldBe routes.HasOnlineAdvertisingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        intendedLettings(data).value.tradingSeasonLength.value.fromDate shouldBe LocalDate.of(
+        intendedLettings(data).value.tradingSeason.value.fromDate shouldBe LocalDate.of(
           previousFiscalYearEnd - 1,
           4,
           1
         )
-        intendedLettings(data).value.tradingSeasonLength.value.toDate   shouldBe LocalDate.of(
+        intendedLettings(data).value.tradingSeason.value.toDate   shouldBe LocalDate.of(
           previousFiscalYearEnd,
           3,
           31
@@ -118,17 +118,17 @@ class TradingSeasonLengthControllerSpec extends LettingHistoryControllerSpec wit
   trait ControllerFixture(period: Option[LocalPeriod] = None)
       extends MockRepositoryFixture
       with SessionCapturingFixture:
-    val controller = new TradingSeasonLengthController(
+    val controller = new TradingSeasonController(
       mcc = stubMessagesControllerComponents(),
       dateUtil = inject[DateUtilLocalised],
       navigator = inject[LettingHistoryNavigator],
-      theView = inject[TradingSeasonLengthView],
+      theView = inject[TradingSeasonView],
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(
           LettingHistory(
             intendedLettings = Some(
-              IntendedLettings(
-                tradingSeasonLength = period
+              IntendedDetail(
+                tradingSeason = period
               )
             )
           )

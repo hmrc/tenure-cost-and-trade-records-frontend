@@ -53,7 +53,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           "address.county"   -> "",
           "address.postcode" -> "BN124AX"
         )
-        val result  = controller.submit(request)
+        val result  = controller.submit()(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentalPeriodController.show(index = Some(0)).url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -67,7 +67,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             county = None,
             postcode = "BN12 4AX"
           ),
-          rental = None
+          rentalPeriod = None
         )
       }
     }
@@ -98,7 +98,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.county"   -> "",
             "address.postcode" -> "BN124AX"
           )
-          val result  = controller.submit(request)
+          val result  = controller.submit()(request)
           status(result)                     shouldBe SEE_OTHER
           redirectLocation(result).value     shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -126,21 +126,21 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.county"   -> "Nowhere",
             "address.postcode" -> "BN124AX"
           )
-          val result  = controller.submit(request)
-          status(result)                     shouldBe SEE_OTHER
-          redirectLocation(result).value     shouldBe routes.RentalPeriodController.show(index = Some(1)).url
+          val result  = controller.submit()(request)
+          status(result)                          shouldBe SEE_OTHER
+          redirectLocation(result).value          shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-          completedLettings(data)              should have size 2 // the same as it was before sending the post request
-          completedLettings(data)(0)         shouldBe oneOccupier.head
-          completedLettings(data)(1).name    shouldBe "Mr. Two"
-          completedLettings(data)(1).address shouldBe Address(
+          completedLettings(data)                   should have size 2 // the same as it was before sending the post request
+          completedLettings(data)(0)              shouldBe oneOccupier.head
+          completedLettings(data)(1).name         shouldBe "Mr. Two"
+          completedLettings(data)(1).address      shouldBe Address(
             line1 = "22, Different Street", // instead of "Address Two"
             line2 = None,
             town = "Neverland",
             county = Some("Nowhere"),
             postcode = "BN12 4AX"
           )
-          completedLettings(data)(1).rental  shouldBe twoOccupiers.last.rental
+          completedLettings(data)(1).rentalPeriod shouldBe twoOccupiers.last.rentalPeriod
         }
       }
       "and the maximum number of occupiers has been reached" should {
@@ -155,7 +155,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of what the user might have submitted" should {
       "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result = controller.submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "name"             -> "",
             "address.line1"    -> "",

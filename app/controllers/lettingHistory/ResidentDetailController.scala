@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, byAddingPermanentResident}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, byAddingOrUpdatingPermanentResident}
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.ResidentDetailPageId
@@ -29,10 +29,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.residentDetail as ResidentDetailView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class ResidentDetailController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -60,19 +61,22 @@ class ResidentDetailController @Inject() (
             residentDetail <- permanentResidents.lift(index)
           yield freshForm.fill(residentDetail)
 
-        Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl))
+        Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl, maybeIndex))
   }
 
-  def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ResidentDetail](
-      theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
-      residentDetail =>
-        given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(byAddingPermanentResident(residentDetail))
-        yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
-    )
-  }
+  def submit(maybeIndex: Option[Int] = None): Action[AnyContent] =
+    (Action andThen sessionRefiner).async { implicit request =>
+      continueOrSaveAsDraft[ResidentDetail](
+        theForm,
+        theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex))),
+        residentDetail =>
+          given Session = request.sessionData
+          for
+            newSession   <- successful(byAddingOrUpdatingPermanentResident(residentDetail, maybeIndex))
+            savedSession <- repository.saveOrUpdateSession(newSession)
+          yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
+      )
+    }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = ResidentDetailPageId)

@@ -23,7 +23,7 @@ class LettingHistoryIdentifiersSpec extends TestBaseSpec {
   "Letting history identifiers" when {
 
     "Identifier for permanent residents page" in
-      assert(PermanentResidentsPageId.toString.equals("permanentResidentsPage"))
+      assert(HasPermanentResidentsPageId.toString.equals("hasPermanentResidentsPage"))
 
     "Identifier for resident details page" in
       assert(ResidentDetailPageId.toString.equals("residentDetailPage"))

@@ -52,8 +52,8 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
     encryptedOccupierDetails.address.county.value must not be clearLettingHistory.completedLettings.head.address.county.value
     encryptedOccupierDetails.address.postcode     must not be clearLettingHistory.completedLettings.head.address.postcode
     encryptedOccupierDetails.rental.isDefined mustBe true
-    encryptedOccupierDetails.rental.value.fromDate mustBe clearLettingHistory.completedLettings.head.rental.value.fromDate
-    encryptedOccupierDetails.rental.value.toDate mustBe clearLettingHistory.completedLettings.head.rental.value.toDate
+    encryptedOccupierDetails.rental.value.fromDate mustBe clearLettingHistory.completedLettings.head.rentalPeriod.value.fromDate
+    encryptedOccupierDetails.rental.value.toDate mustBe clearLettingHistory.completedLettings.head.rentalPeriod.value.toDate
   }
 
   it should "deserialize from encrypted JSON" in {
@@ -81,7 +81,7 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
           county = Some("Birds' Island"),
           postcode = "BN124AX"
         ),
-        rental = Some(
+        rentalPeriod = Some(
           LocalPeriod(
             fromDate = LocalDate.of(2023, 4, 1),
             toDate = LocalDate.of(2024, 3, 31)

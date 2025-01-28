@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
@@ -36,9 +36,10 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading        shouldBe "lettingHistory.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading"
-        page.backLink       shouldBe routes.HowManyNightsController.show.url
-        page.radios("answer") should haveNoneChecked
+        page.heading           shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading"
+        page.backLink          shouldBe routes.HowManyNightsController.show.url
+        page.radios("answer") shouldNot be(empty)
+        page.radios("answer")    should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
@@ -48,7 +49,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.error("answer") shouldBe "lettingHistory.isYearlyAvailable.required"
+        page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'Do you advert online' page" in new ControllerFixture {
         val result = controller.submit(
@@ -57,7 +58,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                       shouldBe routes.AdvertisingOnlineController.show.url
+        redirectLocation(result).value                       shouldBe routes.HasOnlineAdvertisingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.isYearlyAvailable.value shouldBe true
       }
@@ -72,8 +73,9 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading           shouldBe "lettingHistory.isYearlyAvailable.hasStoppedLetting.heading"
+        page.heading           shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.hasStoppedLetting.heading"
         page.backLink          shouldBe routes.WhenWasLastLetController.show.url
+        page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveChecked("yes")
         page.radios("answer") shouldNot haveChecked("no")
       }
@@ -88,7 +90,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.error("answer") shouldBe "lettingHistory.isYearlyAvailable.required"
+        page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
       "be handling POST answer='no' by replying 303 redirect to the 'Give lenght of trading session' page" in new ControllerFixture(
         hasStopped = Some(false),
@@ -100,7 +102,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                       shouldBe routes.TradingSeasonLengthController.show.url
+        redirectLocation(result).value                       shouldBe routes.TradingSeasonController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.isYearlyAvailable.value shouldBe false
       }
@@ -118,7 +120,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         lettingHistory = Some(
           LettingHistory(
             intendedLettings = Some(
-              IntendedLettings(
+              IntendedDetail(
                 hasStopped = hasStopped,
                 isYearlyAvailable = isYearlyAvailable
               )

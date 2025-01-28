@@ -23,16 +23,17 @@ import models.Session
 import models.submissions.common.AnswersYesNo
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import navigation.identifiers.PermanentResidentsPageId
+import navigation.identifiers.HasPermanentResidentsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class HasPermanentResidentsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -60,10 +61,12 @@ class HasPermanentResidentsController @Inject() (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withPermanentResidents(answer.toBoolean))
-        yield navigator.redirect(currentPage = PermanentResidentsPageId, savedSession)
+        for
+          newSession     <- successful(withHasPermanentResidents(answer.toBoolean))
+          updatedSession <- repository.saveOrUpdateSession(newSession)
+        yield navigator.redirect(currentPage = HasPermanentResidentsPageId, updatedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = PermanentResidentsPageId)
+    navigator.backLinkUrl(ofPage = HasPermanentResidentsPageId)

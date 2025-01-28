@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
-@import models.submissions.lettingHistory.LettingHistory.getAdvertisingOnlineDetails
+@import models.submissions.lettingHistory.LettingHistory.onlineAdvertising
 @import navigation.identifiers.{asPageIdentifier, ResidentRemovePageId}
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
@@ -27,7 +27,7 @@
 
 @(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
-@advertisingList = @{getAdvertisingOnlineDetails(request.sessionData)}
+@advertisingList = @{onlineAdvertising(request.sessionData)}
 
 @fromPage = @{
     request.session.get("from").flatMap(_.asPageIdentifier)
@@ -37,13 +37,11 @@
 
 @pageHeadingMessageKey = @{
     (advertisingCount, fromPage) match {
-        case (0, Some(ResidentRemovePageId)) => "lettingHistory.advertisingList.heading.removed"
+        case (0, Some(ResidentRemovePageId)) => "lettingHistory.advertisingList.heading.removedAll"
         case (1, _)                          => "lettingHistory.advertisingList.heading.singular"
         case _                               => "lettingHistory.advertisingList.heading.plural"
     }
 }
-
-    <div class="govuk-!-width-one-quarter"></div>
 
 @layout(
     theForm = theForm,
@@ -59,23 +57,24 @@
             SummaryListRow(
                 key = Key(
                     content = Text(entry.websiteAddress),
-                    classes = "govuk-!-font-weight-regular govuk-!-width-full"
+                    classes = "govuk-!-font-weight-regular"
                 ),
                 value = Value(
-                    classes = "govuk-!-width-one-quarter",
+                    content = Text(entry.propertyReferenceNumber),
+                    classes = "govuk-!-font-size-14",
                 ),
                 actions = Some(Actions(
-                    classes = "govuk-!-width-one-half" ,
                     items = Seq(
                         ActionItem(
-                            href = routes.AdvertisingOnlineDetailsController.show(index).url,
+                            href = routes.AdvertisingDetailController.show(index).url,
                             content = Text(messages("label.change"))
                         ),
                         ActionItem(
                             href = routes.AdvertisingListController.remove(index).url,
                             content = Text(messages("label.remove"))
                         )
-                    )
+                    ),
+                    classes = "govuk-!-font-size-14"
                 ))
             )
         }
@@ -85,8 +84,8 @@
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
-            idPrefix = "advertisingList",
-            name = "advertisingList",
+            idPrefix = "lettingHistoryAdvertisingList",
+            name = "answer",
             legendKey = "lettingHistory.advertisingList.hasMoreWebsites.label",
             classes = "govuk-fieldset__legend--s",
             isHeading = true

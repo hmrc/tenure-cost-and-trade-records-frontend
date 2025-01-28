@@ -16,31 +16,25 @@
 
 package form.lettingHistory
 
-import form.lettingHistory.AdvertisingOnlineDetailsForm.theForm
-import models.submissions.lettingHistory.AdvertisingOnline
+import form.lettingHistory.HasOnlineAdvertisingForm.theForm
+import models.submissions.common.AnswerYes
 
-class AdvertisingOnlineDetailsFormSpec extends FormSpec:
+class HasOnlineAdvertisingFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in {
+  it should "bind data as expected" in {
     val data  = Map(
-      "websiteAddress"          -> "123.uk",
-      "propertyReferenceNumber" -> "3456aaa"
+      "answer" -> "yes"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
   }
 
-  it should "unbind good data as expected" in {
-    val residentDetail = AdvertisingOnline(
-      websiteAddress = "123.uk",
-      propertyReferenceNumber = "3456aaa"
-    )
-    val filled         = theForm.fill(residentDetail)
+  it should "unbind data as expected" in {
+    val filled = theForm.fill(AnswerYes)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "websiteAddress"          -> "123.uk",
-      "propertyReferenceNumber" -> "3456aaa"
+      "answer" -> "yes"
     )
   }
 
@@ -48,11 +42,13 @@ class AdvertisingOnlineDetailsFormSpec extends FormSpec:
     // When the form gets submitted before being filled
     val bound = theForm.bind(
       Map(
-        "websiteAddress"          -> "",
-        "propertyReferenceNumber" -> ""
+        "answer" -> ""
       )
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound.error("websiteAddress").value.message mustBe "error.websiteAddressForProperty.required"
+    bound
+      .error("answer")
+      .value
+      .message mustBe "lettingHistory.hasOnlineAdvertising.required"
   }

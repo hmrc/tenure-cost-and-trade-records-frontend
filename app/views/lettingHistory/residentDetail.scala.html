@@ -22,7 +22,7 @@
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukCharacterCount: GovukCharacterCount, govukButton: GovukButton)
 
-@(theForm: Form[ResidentDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[ResidentDetail], backLink: Option[String], maybeIndex: Option[Int])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     theForm = theForm,
@@ -35,7 +35,7 @@
 
     <p class="govuk-body">@messages("lettingHistory.residentDetail.subheading")</p>
 
-    @formWithCSRF(action = routes.ResidentDetailController.submit) {
+    @formWithCSRF(action = routes.ResidentDetailController.submit(maybeIndex)) {
         @includes.textInput(
             govukInput,
             theForm,

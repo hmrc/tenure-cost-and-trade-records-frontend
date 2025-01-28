@@ -25,18 +25,17 @@ import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.WhenWasLastLetPageId
 import play.api.i18n.I18nSupport
-import play.api.libs.json.Writes
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
 import views.html.lettingHistory.whenWasLastLet as WhenWasLastLetView
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class WhenWasLastLetController @Inject (
   mcc: MessagesControllerComponents,
   dateUtil: DateUtilLocalised,
@@ -67,17 +66,13 @@ class WhenWasLastLetController @Inject (
       theForm,
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
       date =>
-        for savedSession <- saveOrUpdateWithWhenWasLastLet(Some(date), request.sessionData)
+        given Session = request.sessionData
+        for
+          newSession   <- successful(withWhenWasLastLet(date))
+          savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = WhenWasLastLetPageId, savedSession)
     )
   }
-
-  private def saveOrUpdateWithWhenWasLastLet(
-    date: Option[LocalDate],
-    session: Session
-  )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[Session] =
-    given Session = session
-    repository.saveOrUpdateSession(withWhenWasLastLet(date))
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = WhenWasLastLetPageId)

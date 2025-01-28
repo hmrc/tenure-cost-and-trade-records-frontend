@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,17 @@
 
 package models.submissions.lettingHistory
 
-import play.api.libs.json.{Format, Json}
+import models.Session
 
-case class AdvertisingOnline(
-  websiteAddress: String,
-  propertyReferenceNumber: String
-)
+case class SessionWrapper(data: Session, changed: Boolean):
+  def notChanged = !changed
 
-object AdvertisingOnline:
+object SessionWrapper:
+  def unchanged(using session: Session) =
+    SessionWrapper(data = session, changed = false)
 
-  def unapply(obj: AdvertisingOnline): Option[(String, String)] = Option(
-    (obj.websiteAddress, obj.propertyReferenceNumber)
-  )
-
-  given Format[AdvertisingOnline] = Json.format
+  def change(newLettingHistory: LettingHistory)(using session: Session): SessionWrapper =
+    SessionWrapper(
+      data = session.copy(lettingHistory = Some(newLettingHistory)),
+      changed = true
+    )

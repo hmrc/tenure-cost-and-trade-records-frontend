@@ -29,10 +29,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton
 class HasCompletedLettingsController @Inject (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -61,10 +62,12 @@ class HasCompletedLettingsController @Inject (
       theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
       answer =>
         given Session = request.sessionData
-        for savedSession <- repository.saveOrUpdateSession(withCompletedLettings(answer.toBoolean))
-        yield navigator.redirect(currentPage = CompletedLettingsPageId, savedSession)
+        for
+          newSession   <- withHasCompletedLettings(answer.toBoolean)
+          savedSession <- repository.saveOrUpdateSession(newSession)
+        yield navigator.redirect(currentPage = HasCompletedLettingsPageId, savedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = CompletedLettingsPageId)
+    navigator.backLinkUrl(ofPage = HasCompletedLettingsPageId)

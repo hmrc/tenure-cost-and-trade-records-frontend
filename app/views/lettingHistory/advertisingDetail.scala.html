@@ -16,33 +16,33 @@
 
 @import models.pages.Summary
 @import controllers.lettingHistory.routes
-@import models.submissions.lettingHistory.AdvertisingOnline
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import models.submissions.lettingHistory.AdvertisingDetail
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput, GovukCharacterCount}
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton)
 
 
-@(theForm: Form[AdvertisingOnline], backLink: Option[String], index: Option[Int], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AdvertisingDetail], backLink: Option[String], index: Option[Int], summary: Summary)(implicit request: Request[AnyContent], messages: Messages)
 
 @layout(
  theForm = theForm,
  summary = Some(summary),
- pageHeading = messages("lettingHistory.advertisingOnlineDetails.heading"),
+ pageHeading = messages("lettingHistory.advertisingDetail.heading"),
  backLinkUrl = backLink,
  showSection = true,
  sectionName = messages("label.section.lettingHistory"),
 ) {
 
- <p class="govuk-body">@messages("lettingHistory.advertisingOnlineDetails.paragraph")</p>
+ <p class="govuk-body">@messages("lettingHistory.advertisingDetail.paragraph")</p>
 
- @formWithCSRF(action = routes.AdvertisingOnlineDetailsController.submit(index)) {
+ @formWithCSRF(action = routes.AdvertisingDetailController.submit(index)) {
   @includes.textInput(
    govukInput,
    theForm,
    id = "websiteAddress",
    classes = "govuk-!-width-full",
-   labelContent = "lettingHistory.advertisingOnlineDetails.website",
-   hintMsg = "lettingHistory.advertisingOnlineDetails.website",
+   labelContent = "lettingHistory.advertisingDetail.websiteAddress",
+   hintMsg = "lettingHistory.advertisingDetail.websiteAddress",
    labelClasses = "govuk-!-font-weight-bold",
   )
 
@@ -51,8 +51,8 @@
    theForm,
    id = "propertyReferenceNumber",
    classes = "govuk-!-width-full",
-   labelContent = "lettingHistory.advertisingOnlineDetails.number",
-   hintMsg = "lettingHistory.advertisingOnlineDetails.number",
+   labelContent = "lettingHistory.advertisingDetail.propertyReferenceNumber",
+   hintMsg = "lettingHistory.advertisingDetail.propertyReferenceNumber",
    labelClasses = "govuk-!-font-weight-bold",
   )
 

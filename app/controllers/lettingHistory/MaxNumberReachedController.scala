@@ -28,10 +28,11 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.maxNumberReached as MaxNumberReachedView
 
-import javax.inject.{Inject, Named}
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
+@Singleton
 class MaxNumberReachedController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
@@ -57,7 +58,8 @@ class MaxNumberReachedController @Inject() (
       understand => {
         given Session = request.sessionData
         for
-          savedSession  <- repository.saveOrUpdateSession(withMayHaveMoreOf(kind, understand))
+          newSession    <- withMayHaveMoreOf(kind, understand)
+          savedSession  <- repository.saveOrUpdateSession(newSession)
           navigationData = Map("kind" -> kind)
         yield navigator.redirect(currentPage = MaxNumberReachedPageId, savedSession, navigationData)
       }
@@ -72,8 +74,8 @@ class MaxNumberReachedController @Inject() (
     request.sessionData.lettingHistory.flatMap { lettingHistory =>
       kind match {
         case "permanentResidents" => lettingHistory.mayHaveMorePermanentResidents
-        case "temporaryOccupiers" => lettingHistory.mayHaveMoreCompletedLettings
-        case "advertisingOnline"  => lettingHistory.mayHaveMoreAdvertisingDetails
+        case "completedLettings"  => lettingHistory.mayHaveMoreCompletedLettings
+        case "onlineAdvertising"  => lettingHistory.mayHaveMoreOnlineAdvertising
         case _                    => None
       }
     }

@@ -15,9 +15,9 @@
  *@
 
 @import actions.SessionRequest
-@import models.pages.Summary
+@import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukRadios, GovukButton}
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton)
 
@@ -34,7 +34,7 @@
 
     <p class="govuk-body">@messages("lettingHistory.permanentResidents.subheading")</p>
 
-    @formWithCSRF(action = controllers.lettingHistory.routes.HasPermanentResidentsController.submit) {
+    @formWithCSRF(action = routes.HasPermanentResidentsController.submit) {
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
