@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearsForm.financialYearsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -35,6 +36,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class FinancialYearsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   financialYearsView: financialYears,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +47,8 @@ class FinancialYearsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("FinancialYears")
+
     Ok(
       financialYearsView(
         request.sessionData.aboutTheTradingHistoryPartOne

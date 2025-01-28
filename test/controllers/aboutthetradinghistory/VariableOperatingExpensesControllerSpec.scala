@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,8 +24,11 @@ import utils.TestBaseSpec
 
 class VariableOperatingExpensesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   val variableOperatingExpensesController = new VariableOperatingExpensesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     variableOperatingExpensesView,
     preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),

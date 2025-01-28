@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage
 import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage.SingleCaravansSublet
@@ -39,8 +40,9 @@ class SingleCaravansSubletController @Inject() (
   val navigator: AboutTheTradingHistoryNavigator,
   val withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
-  mcc: MessagesControllerComponents
-) extends CaravansTrading6045Controller(SingleCaravansSublet, mcc) {
+  mcc: MessagesControllerComponents,
+  audit: Audit
+) extends CaravansTrading6045Controller(SingleCaravansSublet, mcc, audit) {
 
   def getSavedAnswer: TurnoverSection6045 => Option[CaravansTrading6045] =
     _.singleCaravansSublet

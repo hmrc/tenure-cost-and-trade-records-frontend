@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,9 +24,12 @@ import utils.TestBaseSpec
 
 class OtherIncomeControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def otherIncomeController =
     new OtherIncomeController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       otherIncome6076View,
       preEnrichedActionRefiner(

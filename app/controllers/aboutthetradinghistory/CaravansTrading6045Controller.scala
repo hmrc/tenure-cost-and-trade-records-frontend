@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.CaravansTradingForm
 import form.aboutthetradinghistory.CaravansTradingForm.caravansTradingForm
@@ -41,7 +42,8 @@ import scala.concurrent.{ExecutionContext, Future}
   */
 abstract class CaravansTrading6045Controller(
   tradingPage: CaravansTradingPage,
-  mcc: MessagesControllerComponents
+  mcc: MessagesControllerComponents,
+  audit: Audit
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
@@ -68,6 +70,8 @@ abstract class CaravansTrading6045Controller(
   private def form(years: Seq[String])(implicit messages: Messages) = caravansTradingForm(years, unitType, lettingType)
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink(pageId.toString)
+
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
 

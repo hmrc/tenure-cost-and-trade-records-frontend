@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansAgeCategoriesForm.caravansAgeCategoriesForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
@@ -43,7 +44,8 @@ import scala.concurrent.ExecutionContext
 abstract class CaravansAgeCategoriesController @Inject() (
   pageId: Identifier,
   caravanUnitType: CaravanUnitType,
-  mcc: MessagesControllerComponents
+  mcc: MessagesControllerComponents,
+  audit: Audit
 ) extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
@@ -62,6 +64,8 @@ abstract class CaravansAgeCategoriesController @Inject() (
   def updateAnswer(caravansAge: CaravansAge): Caravans => Caravans
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink(pageId.toString)
+
     Ok(
       caravansAgeCategoriesView(
         savedAnswer.fold(form)(form.fill),

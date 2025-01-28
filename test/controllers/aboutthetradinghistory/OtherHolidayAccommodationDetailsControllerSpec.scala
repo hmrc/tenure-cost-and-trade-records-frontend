@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.OtherHolidayAccommodationDetailsForm.otherHolidayAccommodationDetailsForm
 import models.Session
@@ -33,6 +34,8 @@ import scala.language.reflectiveCalls
 
 class OtherHolidayAccommodationDetailsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   import TestData._
   import utils.FormBindingTestAssertions._
 
@@ -43,6 +46,7 @@ class OtherHolidayAccommodationDetailsControllerSpec extends TestBaseSpec {
     )
   ) = new OtherHolidayAccommodationDetailsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     otherHolidayAccommodationDetailsView,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),

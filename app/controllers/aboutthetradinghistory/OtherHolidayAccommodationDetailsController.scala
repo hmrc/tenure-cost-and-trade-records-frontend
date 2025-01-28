@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OtherHolidayAccommodationDetailsForm.otherHolidayAccommodationDetailsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateOtherHolidayAccommodation
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class OtherHolidayAccommodationDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: otherHolidayAccommodationDetails,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +47,8 @@ class OtherHolidayAccommodationDetailsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("OtherHolidayAccommodationDetails")
+
     Future.successful(
       Ok(
         view(

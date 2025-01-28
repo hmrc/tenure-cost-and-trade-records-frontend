@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TentingPitchesOnSiteForm.tentingPitchesOnSiteForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class TentingPitchesOnSiteController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: tentingPitchesOnSite,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class TentingPitchesOnSiteController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("TentingPitchesOnSite")
+
     Future.successful(
       Ok(
         view(

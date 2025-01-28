@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import models.ForType.*
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -24,8 +25,11 @@ import utils.TestBaseSpec
 
 class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def unusualCircumstancesController6015 = new UnusualCircumstancesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     unusualCircumstancesView,
     preEnrichedActionRefiner(forType = FOR6015),
@@ -34,6 +38,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
   def unusualCircumstancesController6030 = new UnusualCircumstancesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     unusualCircumstancesView,
     preEnrichedActionRefiner(forType = FOR6030),
@@ -42,6 +47,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
   def unusualCircumstancesControllerNone = new UnusualCircumstancesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     unusualCircumstancesView,
     preEnrichedActionRefiner(aboutTheTradingHistory = None),

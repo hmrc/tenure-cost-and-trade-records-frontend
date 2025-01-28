@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansTotalSiteCapacityForm.caravansTotalSiteCapacityForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
@@ -40,6 +41,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class CaravansTotalSiteCapacityController @Inject() (
   caravansTotalSiteCapacityView: caravansTotalSiteCapacity,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -59,6 +61,7 @@ class CaravansTotalSiteCapacityController @Inject() (
     _.copy(totalSiteCapacity = Some(totalSiteCapacity))
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("CaravansTotalSiteCapacity")
     Ok(
       caravansTotalSiteCapacityView(
         savedAnswer.fold(caravansTotalSiteCapacityForm)(caravansTotalSiteCapacityForm.fill),

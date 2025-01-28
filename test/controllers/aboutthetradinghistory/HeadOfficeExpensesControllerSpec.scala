@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -23,9 +24,11 @@ import utils.TestBaseSpec
 
 class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit             = mock[Audit]
   def headOfficeExpensesController =
     new HeadOfficeExpensesController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       headOfficeExpenses6076View,
       preEnrichedActionRefiner(

@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.PremisesCostsForm.premisesCostsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class PremisesCostsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: premisesCosts,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class PremisesCostsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("PremisesCosts")
+
     runWithSessionCheck { case (turnoverSections6076, years) =>
       val premisesCosts = turnoverSections6076.flatMap(_.premisesCosts)
       Ok(

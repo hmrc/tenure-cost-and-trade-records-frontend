@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.TurnoverForm6020.turnoverForm6020
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -39,6 +40,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class NonFuelTurnoverController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   turnoverView: turnover6020,
   withSessionRefiner: WithSessionRefiner,
@@ -48,6 +50,8 @@ class NonFuelTurnoverController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("NonFuelTurnover")
+
     runWithSessionCheck { tradingHistory =>
       val yearEndDates = financialYearEndDates(tradingHistory)
       val years        = yearEndDates.map(_.getYear.toString)

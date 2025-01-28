@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AreYouVATRegisteredForm.areYouVATRegisteredForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -39,6 +40,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class AreYouVATRegisteredController @Inject() (
   areYouVATRegisteredView: areYouVATRegistered,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,6 +51,8 @@ class AreYouVATRegisteredController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("AreYouVATRegistered")
+
     Ok(
       areYouVATRegisteredView(
         tradingHistoryPartOne

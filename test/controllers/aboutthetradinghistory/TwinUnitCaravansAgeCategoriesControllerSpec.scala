@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType
 import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.{FleetHire, PrivateSublet}
@@ -29,6 +30,7 @@ class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
   private val nextPage = aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show().url
 
+  val mockAudit: Audit                        = mock[Audit]
   def twinUnitCaravansAgeCategoriesController =
     new TwinUnitCaravansAgeCategoriesController(
       caravansAgeCategoriesView,
@@ -38,7 +40,8 @@ class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
       mockSessionRepo,
-      stubMessagesControllerComponents()
+      stubMessagesControllerComponents(),
+      mockAudit
     )
 
   "GET /" should {

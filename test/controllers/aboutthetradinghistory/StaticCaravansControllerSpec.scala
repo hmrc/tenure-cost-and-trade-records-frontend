@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import play.api.http.Status
@@ -24,6 +25,8 @@ import play.api.test.Helpers._
 import utils.TestBaseSpec
 
 class StaticCaravansControllerSpec extends TestBaseSpec {
+
+  val mockAudit: Audit = mock[Audit]
 
   private val previousPage = aboutthetradinghistory.routes.FinancialYearsController.show.url
 
@@ -34,6 +37,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
   def staticCaravansController =
     new StaticCaravansController(
       staticCaravansView,
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),

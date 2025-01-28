@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.AdditionalCateringForm
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
@@ -24,6 +25,9 @@ import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class AdditionalCateringControllerSpec extends TestBaseSpec {
+
+  val mockAudit: Audit = mock[Audit]
+
   val years                                                                     = Seq("2023", "2022", "2021")
   private def validFormDataPerYear(idx: Int, weeks: Int): Seq[(String, String)] =
     Seq(
@@ -40,6 +44,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
   def controller =
     new AdditionalCateringController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       additionalCateringView,
       preEnrichedActionRefiner(

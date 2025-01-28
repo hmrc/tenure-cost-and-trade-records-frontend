@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AcceptLowMarginFuelCardForm.acceptLowMarginFuelCardForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -39,6 +40,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class AcceptLowMarginFuelCardController @Inject() (
   acceptLowMarginFuelCardView: acceptLowMarginFuelCard,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,6 +51,8 @@ class AcceptLowMarginFuelCardController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("AcceptLowMarginFuelCard")
+
     Ok(
       acceptLowMarginFuelCardView(
         tradingHistory

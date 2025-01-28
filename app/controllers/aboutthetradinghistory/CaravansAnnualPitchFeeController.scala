@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansAnnualPitchFeeForm.caravansAnnualPitchFeeForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
@@ -41,6 +42,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class CaravansAnnualPitchFeeController @Inject() (
   caravansAnnualPitchFeeView: caravansAnnualPitchFee,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -71,6 +73,8 @@ class CaravansAnnualPitchFeeController @Inject() (
     )
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("CaravansAnnualPitchFee")
+
     Ok(
       caravansAnnualPitchFeeView(
         savedAnswer.fold(caravansAnnualPitchFeeForm)(caravansAnnualPitchFeeForm.fill),

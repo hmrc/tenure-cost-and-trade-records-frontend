@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import models.ForType
 import models.ForType.*
@@ -29,12 +30,15 @@ import utils.TestBaseSpec
 
 class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def editFinancialYearEndDateController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6010,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None
   ): EditFinancialYearEndDateController = new EditFinancialYearEndDateController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     editFinancialYearEndDateView,
     preEnrichedActionRefiner(

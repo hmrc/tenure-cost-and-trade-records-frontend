@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -27,6 +28,7 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
 
   private val nextPage = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
 
+  val mockAudit: Audit                          = mock[Audit]
   def twinUnitCaravansOwnedByOperatorController =
     new TwinUnitCaravansOwnedByOperatorController(
       caravansTrading6045View,
@@ -36,7 +38,8 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
       mockSessionRepo,
-      stubMessagesControllerComponents()
+      stubMessagesControllerComponents(),
+      mockAudit
     )
 
   "GET /" should {

@@ -16,12 +16,15 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
+
+  val mockAudit: Audit = mock[Audit]
 
   private val previousPage = aboutthetradinghistory.routes.AccountingCosts6048Controller.show.url
 
@@ -32,6 +35,7 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
   def administrativeCosts6048Controller =
     new AdministrativeCosts6048Controller(
       administrativeCosts6048View,
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6048),

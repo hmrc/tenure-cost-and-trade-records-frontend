@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, stubMessagesControllerComponents}
@@ -26,9 +27,12 @@ import utils.TestBaseSpec
   */
 class AreYouVATRegisteredControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def areYouVATRegisteredController =
     new AreYouVATRegisteredController(
       areYouVATRegisteredView,
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6048)),
       mockSessionRepo,

@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.IncomeExpenditureSummary6076Form.incomeExpenditureSummary6076Form
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class IncomeExpenditureSummary6076Controller @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: incomeExpenditureSummary6076,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class IncomeExpenditureSummary6076Controller @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("IncomeExpenditureSummary6076")
+
     runWithSessionCheck { turnoverSections6076 =>
       val entries = createEntries(turnoverSections6076)
 

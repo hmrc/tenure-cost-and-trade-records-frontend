@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import connectors.Audit
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -29,6 +30,8 @@ import scala.concurrent.ExecutionContext
 
 class CostOfSalesControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockCostOfSalesView      = mock[costOfSales]
@@ -36,6 +39,7 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
 
   val costOfSalesController = new CostOfSalesController(
     stubMessagesControllerComponents(),
+    mockAudit,
     mockCostOfSalesNavigator,
     mockCostOfSalesView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutYourTradingHistory6015YesSession.aboutTheTradingHistory),

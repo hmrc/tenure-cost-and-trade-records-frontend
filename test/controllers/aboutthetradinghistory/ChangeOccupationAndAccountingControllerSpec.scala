@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
@@ -26,9 +27,12 @@ import utils.TestBaseSpec
   */
 class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def changeOccupationAndAccountingController =
     new ChangeOccupationAndAccountingController(
       changeOccupationAndAccountingInfoView,
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045)),
       mockSessionRepo,

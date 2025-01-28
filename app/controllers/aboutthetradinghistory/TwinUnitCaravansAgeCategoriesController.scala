@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.Twin
 import models.submissions.aboutthetradinghistory.{Caravans, CaravansAge}
 import navigation.AboutTheTradingHistoryNavigator
@@ -38,8 +39,9 @@ class TwinUnitCaravansAgeCategoriesController @Inject() (
   val navigator: AboutTheTradingHistoryNavigator,
   val withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
-  mcc: MessagesControllerComponents
-) extends CaravansAgeCategoriesController(TwinCaravansAgeCategoriesId, Twin, mcc) {
+  mcc: MessagesControllerComponents,
+  audit: Audit
+) extends CaravansAgeCategoriesController(TwinCaravansAgeCategoriesId, Twin, mcc, audit) {
 
   def savedAnswer(implicit
     request: SessionRequest[AnyContent]

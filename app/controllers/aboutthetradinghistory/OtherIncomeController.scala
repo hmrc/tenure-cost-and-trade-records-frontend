@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.OtherIncomeForm.otherIncomeForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
@@ -40,6 +41,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class OtherIncomeController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   otherIncomeView: otherIncome6076,
   withSessionRefiner: WithSessionRefiner,
@@ -49,6 +51,8 @@ class OtherIncomeController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("OtherIncome")
+
     runWithSessionCheck { turnoverSections6076 =>
       val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
       val details = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherIncomeDetails).getOrElse("")

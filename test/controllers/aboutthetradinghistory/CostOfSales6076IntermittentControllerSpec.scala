@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
@@ -24,9 +25,12 @@ import utils.TestBaseSpec
 
 class CostOfSales6076IntermittentControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def costOfSales6076IntermittentController =
     new CostOfSales6076IntermittentController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       costOfSales6076IntermittentView,
       preEnrichedActionRefiner(

@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.UnusualCircumstancesForm.unusualCircumstancesForm
 import models.ForType
@@ -36,6 +37,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class UnusualCircumstancesController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   unusualCircumstancesView: unusualCircumstances,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +47,8 @@ class UnusualCircumstancesController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("UnusualCircumstances")
+
     Ok(
       unusualCircumstancesView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.unusualCircumstances) match {

@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
@@ -24,10 +25,13 @@ import utils.TestBaseSpec
 
 class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   def customerCreditAccountsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
   ) = new CustomerCreditAccountsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     customerCreditAccountsView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
@@ -38,6 +42,7 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistoryNoBunkered)
   ) = new CustomerCreditAccountsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     customerCreditAccountsView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),

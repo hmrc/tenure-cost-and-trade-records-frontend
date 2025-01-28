@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.submissions.Form6010.MonthsYearDuration
@@ -39,6 +40,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class AboutYourTradingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   aboutYourTradingHistoryView: aboutYourTradingHistory,
   withSessionRefiner: WithSessionRefiner,
@@ -49,6 +51,7 @@ class AboutYourTradingHistoryController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("AboutYourTradingHistory")
     Ok(
       aboutYourTradingHistoryView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation) match {

@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.ElectricVehicleChargingPointsForm.electricVehicleChargingPointsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ElectricVehicleChargingPointsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   electricVehicleChargingPointsView: electricVehicleChargingPoints,
   withSessionRefiner: WithSessionRefiner,
@@ -45,6 +47,8 @@ class ElectricVehicleChargingPointsController @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("ElectricVehicleChargingPoints")
+
     Future.successful(
       Ok(
         electricVehicleChargingPointsView(

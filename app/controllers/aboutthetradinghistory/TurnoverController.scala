@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TurnoverForm.turnoverForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class TurnoverController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   turnoverView: turnover,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class TurnoverController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("Turnover")
+
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>

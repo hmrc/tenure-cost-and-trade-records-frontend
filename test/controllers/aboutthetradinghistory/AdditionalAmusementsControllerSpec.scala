@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.AdditionalAmusementsForm
 import play.api.http.Status
 import play.api.http.Status._
@@ -25,6 +26,8 @@ import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class AdditionalAmusementsControllerSpec extends TestBaseSpec {
+  val mockAudit: Audit = mock[Audit]
+
   val years                                                                     = Seq("2023", "2022", "2021")
   private def validFormDataPerYear(idx: Int, weeks: Int): Seq[(String, String)] =
     Seq(
@@ -40,6 +43,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
   def controller =
     new AdditionalAmusementsController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       additionalAmusementsView,
       preEnrichedActionRefiner(

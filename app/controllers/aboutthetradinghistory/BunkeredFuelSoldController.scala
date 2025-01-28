@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.BunkeredFuelSoldForm.bunkeredFuelSoldForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -34,6 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class BunkeredFuelSoldController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: bunkeredFuelSold,
   withSessionRefiner: WithSessionRefiner,
@@ -43,6 +45,8 @@ class BunkeredFuelSoldController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("BunkeredFuelSold")
+
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>

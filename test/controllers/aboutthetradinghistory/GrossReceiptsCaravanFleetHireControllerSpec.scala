@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -27,9 +28,12 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
   private val previousPage = aboutthetradinghistory.routes.CaravansOpenAllYearController.show().url
   private val nextPage     = aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show().url
 
+  val mockAudit: Audit = mock[Audit]
+
   def grossReceiptsCaravanFleetHireController =
     new GrossReceiptsCaravanFleetHireController(
       stubMessagesControllerComponents(),
+      mockAudit,
       aboutYourTradingHistoryNavigator,
       grossReceiptsCaravanFleetHireView,
       preEnrichedActionRefiner(

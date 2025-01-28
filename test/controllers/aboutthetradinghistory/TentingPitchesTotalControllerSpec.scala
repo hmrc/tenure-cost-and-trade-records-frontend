@@ -16,6 +16,7 @@
 
 package controllers.aboutthetradinghistory
 
+import connectors.Audit
 import form.aboutthetradinghistory.TentingPitchesTotalForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
@@ -27,10 +28,12 @@ class TentingPitchesTotalControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
 
+  val mockAudit: Audit = mock[Audit]
   def tentingPitchesTotalController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
   ) = new TentingPitchesTotalController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     tentingPitchesTotalView,
     preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),

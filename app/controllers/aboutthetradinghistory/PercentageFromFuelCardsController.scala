@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.PercentageFromFuelCardsForm.percentageFromFuelCardsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -35,6 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class PercentageFromFuelCardsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   view: percentageFromFuelCards,
   withSessionRefiner: WithSessionRefiner,
@@ -44,6 +46,8 @@ class PercentageFromFuelCardsController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    audit.sendChangeLink("PercentageFromFuelCards")
+
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>

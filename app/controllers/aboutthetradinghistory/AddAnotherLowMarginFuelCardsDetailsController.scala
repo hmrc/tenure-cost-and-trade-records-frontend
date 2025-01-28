@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
+import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAnotherLowMarginFuelCardsDetailsForm
 import form.confirmableActionForm.confirmableActionForm
@@ -37,6 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
+  audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
   addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails,
   genericRemoveConfirmationView: genericRemoveConfirmation,
@@ -57,6 +59,8 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       .map(_.lowMarginFuelCardDetail.name)
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("AddAnotherLowMarginFuelCardsDetails")
+
     val addAnother =
       aboutTheTradingHistoryData
         .flatMap(_.lowMarginFuelCardsDetails.flatMap(_.lift(index)))

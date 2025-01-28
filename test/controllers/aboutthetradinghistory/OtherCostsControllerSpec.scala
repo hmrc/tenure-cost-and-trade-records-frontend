@@ -17,6 +17,7 @@
 package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
+import connectors.Audit
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -24,11 +25,14 @@ import utils.TestBaseSpec
 
 class OtherCostsControllerSpec extends TestBaseSpec {
 
+  val mockAudit: Audit = mock[Audit]
+
   val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
 
   val otherCostsController = new OtherCostsController(
     stubMessagesControllerComponents(),
+    mockAudit,
     aboutYourTradingHistoryNavigator,
     otherCostsView,
     preEnrichedActionRefiner(
