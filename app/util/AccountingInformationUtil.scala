@@ -35,21 +35,18 @@ object AccountingInformationUtil {
 
   private def yearNow                 = YearMonth.now.getYear
   private def monthNow                = YearMonth.now.getMonthValue
-  private val endOfMarch              = LocalDate.of(yearNow, MARCH, 31)
   private val financialYearEndOfMarch = DayMonthsDuration(31, 3)
   private val defaultStart            = MonthsYearDuration(monthNow, yearNow)
 
-  def previousFinancialYear6048 =
+  def previousFinancialYear6048: Int =
     if monthNow > 3 then yearNow
     else yearNow - 1
 
-  def currentFinancialYear6048: Int = previousFinancialYear6048 + 1
+  private def previousFinancialYearStart6048: LocalDate = LocalDate.of(previousFinancialYear6048 - 1, APRIL, 1)
+  private def previousFinancialYearEnd6048: LocalDate   = LocalDate.of(previousFinancialYear6048, MARCH, 31)
 
-  def accommodationLastFinYearFromTo: Seq[YearMonth] =
-    Seq(
-      YearMonth.of(previousFinancialYear6048 - 1, APRIL),
-      YearMonth.of(previousFinancialYear6048, MARCH)
-    )
+  def previousFinancialYearFromTo6048: Seq[LocalDate] =
+    Seq(previousFinancialYearStart6048, previousFinancialYearEnd6048)
 
   def financialYearsRequiredAccommodation6048(
     firstOccupy: Option[MonthsYearDuration],
@@ -58,8 +55,8 @@ object AccountingInformationUtil {
     if isWales then
       Some(financialYearsRequired(firstOccupy.getOrElse(defaultStart), financialYearEndOfMarch))
         .filter(_.nonEmpty)
-        .getOrElse(Seq(endOfMarch))
-    else Seq(endOfMarch)
+        .getOrElse(Seq(previousFinancialYearEnd6048))
+    else Seq(previousFinancialYearEnd6048)
 
   def financialYearsRequired(firstOccupy: MonthsYearDuration, financialYear: DayMonthsDuration): Seq[LocalDate] = {
     val now     = LocalDate.now

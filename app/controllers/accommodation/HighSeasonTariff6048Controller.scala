@@ -22,11 +22,12 @@ import form.accommodation.HighSeasonTariff6048Form.highSeasonTariff6048Form
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
 import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms, HighSeasonTariff}
 import navigation.AccommodationNavigator
-import navigation.identifiers.{AccommodationLettingHistoryPageId, AvailableRoomsPageId, HighSeasonTariffPageId}
+import navigation.identifiers.HighSeasonTariffPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import util.DateUtilLocalised
 import views.html.accommodation.highSeasonTariff6048
 
 import javax.inject.{Inject, Named, Singleton}
@@ -42,7 +43,7 @@ class HighSeasonTariff6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
+)(implicit ec: ExecutionContext, dateUtil: DateUtilLocalised)
     extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {

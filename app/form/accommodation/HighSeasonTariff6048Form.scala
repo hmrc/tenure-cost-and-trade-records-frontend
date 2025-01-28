@@ -16,21 +16,34 @@
 
 package form.accommodation
 
-import form.DateMappings.requiredDateMapping
+import form.DateMappings.{betweenDates, requiredDateMapping}
 import models.submissions.accommodation.HighSeasonTariff
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.i18n.Messages
+import util.{AccountingInformationUtil, DateUtilLocalised}
 
 /**
   * @author Yuriy Tumakha
   */
 object HighSeasonTariff6048Form:
 
-  def highSeasonTariff6048Form(implicit messages: Messages): Form[HighSeasonTariff] =
+  def highSeasonTariff6048Form(using messages: Messages, dateUtil: DateUtilLocalised): Form[HighSeasonTariff] =
+    val Seq(finYearStart, finYearEnd) = AccountingInformationUtil.previousFinancialYearFromTo6048
+
     Form {
       mapping(
-        "fromDate" -> requiredDateMapping("accommodation.highSeasonTariff.fromDate", allowPastDates = true),
+        "fromDate" -> requiredDateMapping("accommodation.highSeasonTariff.fromDate", allowPastDates = true)
+          .verifying(
+            betweenDates(finYearStart, finYearEnd, "error.accommodation.highSeasonTariff.fromDate.range")
+          ),
         "toDate"   -> requiredDateMapping("accommodation.highSeasonTariff.toDate", allowPastDates = true)
+          .verifying(
+            betweenDates(finYearStart, finYearEnd, "error.accommodation.highSeasonTariff.toDate.range")
+          )
       )(HighSeasonTariff.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .verifying(
+          "error.accommodation.highSeasonTariff.fromDate.mustBeBefore.toDate",
+          highSeason => highSeason.fromDate.isBefore(highSeason.toDate)
+        )
     }

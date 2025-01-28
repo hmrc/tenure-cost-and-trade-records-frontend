@@ -1757,6 +1757,11 @@ error.accommodation.lettingHistory.weeksAvailableForPersonalUse.nonNumeric = The
 error.accommodation.lettingHistory.weeksAvailableForPersonalUse.negative = The amount of weeks available for personal use in the year ending {0} cannot be a negative number
 error.accommodation.lettingHistory.weeksAvailableForPersonalUse.maxValue = The amount of weeks available for personal use in the year ending {0} cannot be more than {1}
 accommodation.highSeasonTariff.heading = When was the high-season tariff applied in the 12 months from {0} to {1}?
+fieldName.accommodation.highSeasonTariff.fromDate = the date when the high-season tariff was started
+fieldName.accommodation.highSeasonTariff.toDate = the date when the high-season tariff was ended
+error.accommodation.highSeasonTariff.fromDate.range = The "from date" must be between {0} and {1}
+error.accommodation.highSeasonTariff.toDate.range = The "to date" must be between {0} and {1}
+error.accommodation.highSeasonTariff.fromDate.mustBeBefore.toDate = The "from date" must be before the "to date"
 
 # 6010 TYPES
 ##############################
