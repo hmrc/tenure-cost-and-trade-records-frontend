@@ -30,9 +30,9 @@ object AvailableRooms6048Form:
   val availableRooms6048Form: Form[AvailableRooms] =
     Form {
       mapping(
-        "singleBedrooms"                -> nonNegativeNumber("accommodation.singleBedrooms", "0"),
-        "doubleBedrooms"                -> nonNegativeNumber("accommodation.doubleBedrooms", "0"),
-        "bathrooms"                     -> nonNegativeNumber("accommodation.bathrooms", "0"),
+        "singleBedrooms"                -> nonNegativeNumber("accommodation.singleBedrooms"),
+        "doubleBedrooms"                -> nonNegativeNumber("accommodation.doubleBedrooms"),
+        "bathrooms"                     -> nonNegativeNumber("accommodation.bathrooms"),
         "otherAccommodationDescription" -> optional(
           text.verifying(maxLength(200, "error.accommodation.otherAccommodationDescription.maxLength"))
         ),

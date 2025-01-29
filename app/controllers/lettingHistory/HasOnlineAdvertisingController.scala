@@ -34,7 +34,7 @@ import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
 @Singleton
-class HasOnlineAdvertisingController @Inject()(
+class HasOnlineAdvertisingController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
   theView: HasOnlineAdvertisingView,
