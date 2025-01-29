@@ -23,6 +23,9 @@ import form.aboutyouandtheproperty.CommercialLettingQuestionForm.commercialLetti
 import models.Session
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OccupationalAndAccountingInformation}
+import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CommercialLettingQuestionId
@@ -68,12 +71,31 @@ class CommercialLettingQuestionController @Inject() (
       commercialLettingQuestionForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink(request.sessionData))),
       data => {
-        val updatedData = updateAboutYouAndThePropertyPartTwo(
-          _.copy(commercialLetDate = Option(data), financialEndYearDates = calculateFinancialEndYearDates(data))
+        val updatedSessionWithTradingHistory = updateAboutTheTradingHistory { theTradingHistory =>
+          theTradingHistory.copy(
+            occupationAndAccountingInformation = Option(
+              theTradingHistory.occupationAndAccountingInformation.fold(
+                OccupationalAndAccountingInformation(firstOccupy = data)
+              )(_.copy(firstOccupy = data))
+            )
+          )
+        }
+
+        val updatedSessionWithProperty = updateAboutYouAndThePropertyPartTwo { aboutYou =>
+          aboutYou.copy(
+            commercialLetDate = Option(data),
+            financialEndYearDates = calculateFinancialEndYearDates(data)
+          )
+        }
+
+        val updatedSession = request.sessionData.copy(
+          aboutYouAndThePropertyPartTwo = updatedSessionWithProperty.aboutYouAndThePropertyPartTwo,
+          aboutTheTradingHistory = updatedSessionWithTradingHistory.aboutTheTradingHistory
         )
+
         session
-          .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(CommercialLettingQuestionId, updatedData).apply(updatedData)))
+          .saveOrUpdate(updatedSession)
+          .map(_ => Redirect(navigator.nextPage(CommercialLettingQuestionId, updatedSession).apply(updatedSession)))
       }
     )
   }
