@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
-import models.audit.ChangeLinkAudit
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.ProvideContactDetails

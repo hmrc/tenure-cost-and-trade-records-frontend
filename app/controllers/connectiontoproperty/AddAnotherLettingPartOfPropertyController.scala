@@ -20,7 +20,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
-import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.ConnectionToPropertyNavigator

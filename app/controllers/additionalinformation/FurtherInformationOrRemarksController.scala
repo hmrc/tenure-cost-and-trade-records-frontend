@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
-import models.audit.ChangeLinkAudit
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
 import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import navigation.AdditionalInformationNavigator

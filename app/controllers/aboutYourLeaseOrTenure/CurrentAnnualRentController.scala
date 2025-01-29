@@ -24,7 +24,6 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.up
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.{AnnualRent, Session}
 import models.ForType.*
-import models.audit.ChangeLinkAudit
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
 import play.api.Logging

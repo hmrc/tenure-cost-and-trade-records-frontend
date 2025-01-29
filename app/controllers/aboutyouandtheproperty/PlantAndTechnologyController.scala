@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PlantAndTechnologyForm.plantAndTechnologyForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.AboutYouAndThePropertyNavigator

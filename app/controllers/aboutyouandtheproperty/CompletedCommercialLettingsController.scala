@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CompletedCommercialLettingsForm.completedCommercialLettingsForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CompletedCommercialLettingsId

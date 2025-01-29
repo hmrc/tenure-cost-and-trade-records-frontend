@@ -31,7 +31,6 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.occupiersDetailsList
 import views.html.genericRemoveConfirmation
 import controllers.toOpt
-import models.audit.ChangeLinkAudit
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}

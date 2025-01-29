@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CompletedCommercialLettingsWelshForm.completedCommercialLettingsWelshForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, CompletedLettings, LettingAvailability}
 import navigation.AboutYouAndThePropertyNavigator

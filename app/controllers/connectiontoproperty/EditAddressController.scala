@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
-import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.EditTheAddress
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId

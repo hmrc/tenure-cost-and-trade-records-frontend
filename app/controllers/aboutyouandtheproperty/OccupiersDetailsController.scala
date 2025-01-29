@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.OccupiersDetailsForm.occupiersDetailsForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, OccupiersDetails}
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.OccupiersDetailsId
