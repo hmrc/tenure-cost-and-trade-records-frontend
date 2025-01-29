@@ -91,10 +91,7 @@ class AccommodationLettingHistory6048Controller @Inject() (
           .saveOrUpdate(updatedData)
           .map { _ =>
             Redirect(
-              navigator
-                .nextPage(AccommodationLettingHistoryPageId, updatedData)
-                .apply(updatedData)
-                // TODO: navigator.nextPageWithParam(AccommodationLettingHistoryPageId, updatedData, s"idx=${navigator.idx}")
+              navigator.nextPageWithParam(AccommodationLettingHistoryPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
       }

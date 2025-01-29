@@ -25,6 +25,7 @@ import models.submissions.aboutthetradinghistory.*
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.AnyContent
 
+import java.time.Month.{APRIL, MARCH}
 import java.time.{LocalDate, YearMonth}
 
 /**
@@ -34,9 +35,18 @@ object AccountingInformationUtil {
 
   private def yearNow                 = YearMonth.now.getYear
   private def monthNow                = YearMonth.now.getMonthValue
-  private val endOfMarch              = LocalDate.of(yearNow, 3, 31)
   private val financialYearEndOfMarch = DayMonthsDuration(31, 3)
   private val defaultStart            = MonthsYearDuration(monthNow, yearNow)
+
+  def previousFinancialYear6048: Int =
+    if monthNow > 3 then yearNow
+    else yearNow - 1
+
+  private def previousFinancialYearStart6048: LocalDate = LocalDate.of(previousFinancialYear6048 - 1, APRIL, 1)
+  private def previousFinancialYearEnd6048: LocalDate   = LocalDate.of(previousFinancialYear6048, MARCH, 31)
+
+  def previousFinancialYearFromTo6048: Seq[LocalDate] =
+    Seq(previousFinancialYearStart6048, previousFinancialYearEnd6048)
 
   def financialYearsRequiredAccommodation6048(
     firstOccupy: Option[MonthsYearDuration],
@@ -45,8 +55,8 @@ object AccountingInformationUtil {
     if isWales then
       Some(financialYearsRequired(firstOccupy.getOrElse(defaultStart), financialYearEndOfMarch))
         .filter(_.nonEmpty)
-        .getOrElse(Seq(endOfMarch))
-    else Seq(endOfMarch)
+        .getOrElse(Seq(previousFinancialYearEnd6048))
+    else Seq(previousFinancialYearEnd6048)
 
   def financialYearsRequired(firstOccupy: MonthsYearDuration, financialYear: DayMonthsDuration): Seq[LocalDate] = {
     val now     = LocalDate.now

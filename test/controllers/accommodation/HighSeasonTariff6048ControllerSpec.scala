@@ -19,17 +19,21 @@ package controllers.accommodation
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
+import util.AccountingInformationUtil.previousFinancialYear6048
+import util.DateUtilLocalised
+
+import scala.concurrent.ExecutionContext
 
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec {
+class HighSeasonTariff6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage = controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url + "?idx=0"
+  private val nextPage = "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: Included items for
 
   def accommodationLettingHistory6048Controller =
-    new AccommodationLettingHistory6048Controller(
-      accommodationLettingHistoryView,
+    new HighSeasonTariff6048Controller(
+      highSeasonTariffView,
       accommodationNavigator,
       preEnrichedActionRefiner(
         referenceNumber = "99996048008", // England
@@ -37,13 +41,16 @@ class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec {
       ),
       mockSessionRepo,
       stubMessagesControllerComponents()
-    )
+    )(inject[ExecutionContext], inject[DateUtilLocalised])
 
   private def validFormData: Seq[(String, String)] =
     Seq(
-      "lettingHistory[0].nightsAvailableToLet"         -> "200",
-      "lettingHistory[0].nightsLet"                    -> "150",
-      "lettingHistory[0].weeksAvailableForPersonalUse" -> "10"
+      "fromDate.day"   -> "1",
+      "fromDate.month" -> "5",
+      "fromDate.year"  -> (previousFinancialYear6048 - 1).toString,
+      "toDate.day"     -> "30",
+      "toDate.month"   -> "9",
+      "toDate.year"    -> (previousFinancialYear6048 - 1).toString
     )
 
   "GET /" should {

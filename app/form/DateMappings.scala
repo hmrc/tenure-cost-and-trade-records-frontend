@@ -17,9 +17,11 @@
 package form
 
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.Mapping
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.i18n.Messages
+import util.DateUtilLocalised
 
 import java.time.LocalDate
 
@@ -44,5 +46,17 @@ object DateMappings {
     allow29February: Boolean = false
   )(implicit messages: Messages): Mapping[DayMonthsDuration] =
     of(new DayMonthFormatter(fieldNameKey, allow29February))
+
+  def betweenDates(
+    startDate: LocalDate,
+    endDate: LocalDate,
+    errorMessage: String = "error.range"
+  )(using messages: Messages, dateUtil: DateUtilLocalised): Constraint[LocalDate] =
+    Constraint[LocalDate]("constraint.between.dates", startDate, endDate) { date =>
+      if date.isBefore(startDate) || date.isAfter(endDate) then
+        val rangeStartEnd = Seq(startDate, endDate).map(dateUtil.formatDate)
+        Invalid(ValidationError(errorMessage, rangeStartEnd*))
+      else Valid
+    }
 
 }
