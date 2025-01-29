@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.additionalinformation.FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
-import models.audit.ChangeLinkAudit
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
 import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import navigation.AdditionalInformationNavigator
@@ -45,8 +44,8 @@ class FurtherInformationOrRemarksController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async {
-    implicit request => audit.sendChangeLink("FurtherInformationOrRemarks")
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    audit.sendChangeLink("FurtherInformationOrRemarks")
 
     Future.successful(
       Ok(

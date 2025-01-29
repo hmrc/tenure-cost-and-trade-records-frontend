@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PartsUnavailableForm.partsUnavailableForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator

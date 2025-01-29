@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.LettingPartOfPropertyRentIncludesForm.lettingPartOfPropertyRentIncludesForm
-import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.LettingPartOfPropertyItemsIncludedInRentPageId

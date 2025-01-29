@@ -23,7 +23,6 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.ForType.*
 import models.Session
-import models.audit.ChangeLinkAudit
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}

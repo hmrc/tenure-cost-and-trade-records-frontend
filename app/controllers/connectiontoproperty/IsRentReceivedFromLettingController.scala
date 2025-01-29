@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
-import models.audit.ChangeLinkAudit
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator

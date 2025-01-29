@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.LicensableActivitiesForm.licensableActivitiesForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator

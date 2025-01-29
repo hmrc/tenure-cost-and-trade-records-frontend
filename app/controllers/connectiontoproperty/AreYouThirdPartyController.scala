@@ -20,8 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
-import models.Session
-import models.audit.ChangeLinkAudit
 import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator

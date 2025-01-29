@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.Session
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetails
 import navigation.AboutYouAndThePropertyNavigator

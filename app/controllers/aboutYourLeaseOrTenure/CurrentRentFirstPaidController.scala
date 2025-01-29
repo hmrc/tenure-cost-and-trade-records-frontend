@@ -22,7 +22,6 @@ import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaidForm
 import models.ForType.*
 import models.Session
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import models.submissions.common.AnswerYes

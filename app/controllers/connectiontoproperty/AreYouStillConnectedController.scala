@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
-import models.audit.ChangeLinkAudit
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouStillConnectedPageId
 import play.api.i18n.I18nSupport

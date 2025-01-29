@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
-import models.audit.ChangeLinkAudit
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne

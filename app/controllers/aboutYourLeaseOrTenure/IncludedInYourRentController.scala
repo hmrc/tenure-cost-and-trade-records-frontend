@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.ForType
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
 import navigation.AboutYourLeaseOrTenureNavigator

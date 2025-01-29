@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.RenewablesPlant
 import models.submissions.common.{AnswerNo, AnswerYes}

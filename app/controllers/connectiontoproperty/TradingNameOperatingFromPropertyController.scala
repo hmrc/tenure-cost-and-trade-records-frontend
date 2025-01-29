@@ -23,7 +23,6 @@ import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNam
 import form.connectiontoproperty.TradingNameOperatingFromProperty6048Form.tradingNameOperatingFromProperty6048Form
 import models.ForType
 import models.ForType.*
-import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, TradingNameOperatingFromProperty}
 import navigation.ConnectionToPropertyNavigator

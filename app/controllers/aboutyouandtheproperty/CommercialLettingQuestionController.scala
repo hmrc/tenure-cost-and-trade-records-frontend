@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CommercialLettingQuestionForm.commercialLettingQuestionForm
 import models.Session
-import models.audit.ChangeLinkAudit
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.{AnswerNo, AnswerYes}

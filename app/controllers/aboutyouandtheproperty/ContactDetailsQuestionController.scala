@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutYouAndThePropertyNavigator

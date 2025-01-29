@@ -23,7 +23,6 @@ import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyU
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.ForType.*
 import models.Session
-import models.audit.ChangeLinkAudit
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId

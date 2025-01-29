@@ -27,7 +27,6 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.tradingNameOwnTheProperty
 import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
-import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.identifiers.TradingNameOwnThePropertyPageId
 
