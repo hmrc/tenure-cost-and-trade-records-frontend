@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,11 @@
 
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
-@import models.submissions.lettingHistory.{LettingHistory, ResidentDetail, OccupierDetail, LocalPeriod, AdvertisingDetail}
+@import models.submissions.lettingHistory.LettingHistory
 @import models.submissions.common.AnswersYesNo
-@import views.includes.summary._
 @import views.lettingHistory.checkYourAnswers.Helpers._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import java.time.LocalDate
 
 @this(layout: Layout, govukButton: GovukButton, govukRadios: GovukRadios, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
 

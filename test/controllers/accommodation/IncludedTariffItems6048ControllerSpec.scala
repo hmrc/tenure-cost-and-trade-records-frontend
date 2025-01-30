@@ -19,21 +19,20 @@ package controllers.accommodation
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
-import util.AccountingInformationUtil.previousFinancialYear6048
-import util.DateUtilLocalised
 
 import scala.concurrent.ExecutionContext
 
 /**
   * @author Yuriy Tumakha
   */
-class HighSeasonTariff6048ControllerSpec extends TestBaseSpec {
+class IncludedTariffItems6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage = controllers.accommodation.routes.IncludedTariffItems6048Controller.show.url + "?idx=0"
+  private val nextPage =
+    "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: Accommodation units list
 
-  def highSeasonTariff6048Controller =
-    new HighSeasonTariff6048Controller(
-      highSeasonTariffView,
+  def includedTariffItems6048Controller =
+    new IncludedTariffItems6048Controller(
+      includedTariffItemsView,
       accommodationNavigator,
       preEnrichedActionRefiner(
         referenceNumber = "99996048008", // England
@@ -41,35 +40,31 @@ class HighSeasonTariff6048ControllerSpec extends TestBaseSpec {
       ),
       mockSessionRepo,
       stubMessagesControllerComponents()
-    )(inject[ExecutionContext], inject[DateUtilLocalised])
+    )(inject[ExecutionContext])
 
   private def validFormData: Seq[(String, String)] =
     Seq(
-      "fromDate.day"   -> "1",
-      "fromDate.month" -> "5",
-      "fromDate.year"  -> (previousFinancialYear6048 - 1).toString,
-      "toDate.day"     -> "30",
-      "toDate.month"   -> "9",
-      "toDate.year"    -> (previousFinancialYear6048 - 1).toString
+      "includedTariffItems[0]" -> "bedLinen",
+      "includedTariffItems[1]" -> "gas"
     )
 
   "GET /" should {
     "return 200" in {
-      val result = highSeasonTariff6048Controller.show(fakeRequest)
+      val result = includedTariffItems6048Controller.show(fakeRequest)
       status(result) shouldBe OK
     }
   }
 
   "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = highSeasonTariff6048Controller.submit(
+      val res = includedTariffItems6048Controller.submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "save the form data and redirect to the next page" in {
-      val res = highSeasonTariff6048Controller.submit(
+      val res = includedTariffItems6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER

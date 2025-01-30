@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,6 +135,7 @@ trait FakeViews { this: Injecting =>
   lazy val availableRoomsView: availableRooms6048                           = inject[availableRooms6048]
   lazy val accommodationLettingHistoryView: accommodationLettingHistory6048 = inject[accommodationLettingHistory6048]
   lazy val highSeasonTariffView: highSeasonTariff6048                       = inject[highSeasonTariff6048]
+  lazy val includedTariffItemsView: includedTariffItems6048                 = inject[includedTariffItems6048]
 
   // About your trading history
   lazy val aboutYourTradingHistoryView: aboutYourTradingHistory                                     = inject[aboutYourTradingHistory]

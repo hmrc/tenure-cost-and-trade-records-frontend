@@ -19,7 +19,7 @@ package navigation.lettingHistory
 import controllers.lettingHistory.routes
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
-import navigation.identifiers.{Identifier as PageIdentifier, *}
+import navigation.identifiers.*
 
 trait ForwardNavigation:
   this: Navigator =>

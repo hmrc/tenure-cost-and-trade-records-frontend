@@ -35,3 +35,8 @@ end AccommodationTariffItem
 
 object AccommodationTariffItem:
   implicit val format: Format[AccommodationTariffItem] = Scala3EnumFormat.format
+
+  val stringValues: Seq[String] = AccommodationTariffItem.values.toSeq.map(_.toString)
+
+  def fromName(name: String): Option[AccommodationTariffItem] =
+    AccommodationTariffItem.values.find(_.toString == name)

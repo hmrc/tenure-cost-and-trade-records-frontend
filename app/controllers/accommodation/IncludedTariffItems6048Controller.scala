@@ -18,17 +18,16 @@ package controllers.accommodation
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.accommodation.HighSeasonTariff6048Form.highSeasonTariff6048Form
+import form.accommodation.IncludedTariffItems6048Form.includedTariffItems6048Form
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
-import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms, HighSeasonTariff}
+import models.submissions.accommodation.{AccommodationDetails, AccommodationTariffItem, AccommodationUnit}
 import navigation.AccommodationNavigator
-import navigation.identifiers.HighSeasonTariffPageId
+import navigation.identifiers.IncludedTariffItemsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.DateUtilLocalised
-import views.html.accommodation.highSeasonTariff6048
+import views.html.accommodation.includedTariffItems6048
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -37,37 +36,38 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class HighSeasonTariff6048Controller @Inject() (
-  highSeasonTariff6048View: highSeasonTariff6048,
+class IncludedTariffItems6048Controller @Inject() (
+  includedTariffItems6048View: includedTariffItems6048,
   navigator: AccommodationNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext, dateUtil: DateUtilLocalised)
+)(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      highSeasonTariff6048View(
+      includedTariffItems6048View(
         currentUnit
-          .flatMap(_.highSeasonTariff)
-          .fold(highSeasonTariff6048Form)(highSeasonTariff6048Form.fill),
+          .flatMap(_.includedTariffItems)
+          .fold(includedTariffItems6048Form)(includedTariffItems6048Form.fill),
+        currentUnitName,
         backLink
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[HighSeasonTariff](
-      highSeasonTariff6048Form,
-      formWithErrors => BadRequest(highSeasonTariff6048View(formWithErrors, backLink)),
+    continueOrSaveAsDraft[Seq[AccommodationTariffItem]](
+      includedTariffItems6048Form,
+      formWithErrors => BadRequest(includedTariffItems6048View(formWithErrors, currentUnitName, backLink)),
       data => {
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
-            highSeasonTariff = Some(data)
+            includedTariffItems = Some(data)
           )
         )
 
@@ -75,22 +75,34 @@ class HighSeasonTariff6048Controller @Inject() (
           .saveOrUpdate(updatedData)
           .map { _ =>
             Redirect(
-              navigator.nextPageWithParam(HighSeasonTariffPageId, updatedData, s"idx=${navigator.idx}")
+              navigator
+                .nextPage(IncludedTariffItemsPageId, updatedData)
+                .apply(updatedData)
+                // TODO: navigator.nextPageWithParam(IncludedTariffItemsPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
       }
     )
   }
 
+  private def accommodationDetails(implicit
+    request: SessionRequest[AnyContent]
+  ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+
   private def currentUnit(implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationUnit] =
-    request.sessionData.accommodationDetails
+    accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
+
+  private def currentUnitName(implicit
+    request: SessionRequest[AnyContent]
+  ): String =
+    currentUnit.fold("")(_.unitName)
 
   private def backLink(implicit
     request: SessionRequest[AnyContent]
   ): String =
-    s"${controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=${navigator.idx}"
+    s"${controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=${navigator.idx}"
 
 }
