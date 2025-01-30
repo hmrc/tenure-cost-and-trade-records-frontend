@@ -37,7 +37,7 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
         Actions(items =
           Seq(
             ActionItem(
-              href = "/send-trade-and-cost-information/about-you?from=CYA#fullName",
+              href = "/send-trade-and-cost-information/about-you?from=CYA&change=true#fullName",
               content = Text("Change"),
               visuallyHiddenText = Some("Full name"),
               attributes = Map(
