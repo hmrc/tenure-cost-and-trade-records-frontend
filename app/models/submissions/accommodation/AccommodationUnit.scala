@@ -26,7 +26,8 @@ case class AccommodationUnit(
   unitType: String,
   availableRooms: Option[AvailableRooms] = None,
   lettingHistory: Option[Seq[AccommodationLettingHistory]] = None,
-  highSeasonTariff: Option[HighSeasonTariff] = None
+  highSeasonTariff: Option[HighSeasonTariff] = None,
+  includedTariffItems: Option[Seq[AccommodationTariffItem]] = None
 )
 
 object AccommodationUnit:
