@@ -75,10 +75,7 @@ class HighSeasonTariff6048Controller @Inject() (
           .saveOrUpdate(updatedData)
           .map { _ =>
             Redirect(
-              navigator
-                .nextPage(HighSeasonTariffPageId, updatedData)
-                .apply(updatedData)
-                // TODO: navigator.nextPageWithParam(HighSeasonTariffPageId, updatedData, s"idx=${navigator.idx}")
+              navigator.nextPageWithParam(HighSeasonTariffPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
       }
