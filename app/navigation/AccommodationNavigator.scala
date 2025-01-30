@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
     AccommodationUnitPageId           -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
     AvailableRoomsPageId              -> (_ => accommodation.routes.AccommodationLettingHistory6048Controller.show),
     AccommodationLettingHistoryPageId -> (_ => accommodation.routes.HighSeasonTariff6048Controller.show),
-    HighSeasonTariffPageId            -> (_ =>
+    HighSeasonTariffPageId            -> (_ => accommodation.routes.IncludedTariffItems6048Controller.show),
+    IncludedTariffItemsPageId         -> (_ =>
       controllers.routes.TaskListController.show().withFragment("accommodation-details")
     ) // TODO: Included items for
   )

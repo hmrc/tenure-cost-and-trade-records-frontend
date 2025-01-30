@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.ExclusiveCheckbox
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
@@ -40,6 +41,27 @@
         conditionalHtmlPerValue: Map[String, Html] = Map.empty
 )(implicit messages: Messages)
 
+@items = @{
+    (if(values.contains("none")) {
+        values.dropRight(1) ++ Seq("divider", "none")
+    } else {
+        values
+    }).map(value =>
+        if(value == "divider") {
+            CheckboxItem(
+                divider = Some(messages("checkbox.divider"))
+            )
+        } else {
+            CheckboxItem(
+                id = s"item_$value",
+                content = Text(messages(s"$valueKeyPrefix$value")),
+                value = value,
+                conditionalHtml = conditionalHtmlPerValue.get(value),
+                behaviour = Option.when(value == "none")(ExclusiveCheckbox)
+            )
+        }
+    )
+}
 
 @govukCheckboxes(
     Checkboxes(
@@ -53,13 +75,6 @@
             )
         ),
         hint = hintKey.map(msgKey => Hint(content = Text(messages(msgKey)))),
-        items = values.map(value =>
-            CheckboxItem(
-                id = s"item_$value",
-                content = Text(messages(s"$valueKeyPrefix$value")),
-                value = value,
-                conditionalHtml = conditionalHtmlPerValue.get(value)
-            )
-        )
+        items = items
     ).withFormField(theForm(name))
 )

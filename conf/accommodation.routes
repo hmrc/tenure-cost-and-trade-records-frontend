@@ -11,3 +11,6 @@ POST        /accommodation-letting-history                  controllers.accommod
 
 GET         /high-season-tariff                             controllers.accommodation.HighSeasonTariff6048Controller.show
 POST        /high-season-tariff                             controllers.accommodation.HighSeasonTariff6048Controller.submit
+
+GET         /included-tariff-items                          controllers.accommodation.IncludedTariffItems6048Controller.show
+POST        /included-tariff-items                          controllers.accommodation.IncludedTariffItems6048Controller.submit

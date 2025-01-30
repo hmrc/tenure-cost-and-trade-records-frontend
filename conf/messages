@@ -1791,6 +1791,16 @@ fieldName.accommodation.highSeasonTariff.toDate = the date when the high-season 
 error.accommodation.highSeasonTariff.fromDate.range = The "from date" must be between {0} and {1}
 error.accommodation.highSeasonTariff.toDate.range = The "to date" must be between {0} and {1}
 error.accommodation.highSeasonTariff.fromDate.mustBeBefore.toDate = The "from date" must be before the "to date"
+accommodation.includedTariffItems.heading = Included items for {0}
+label.accommodation.includedTariffItems = Does the tariff include any of the following items?
+accommodation.includedTariffItems.value.bedLinen = Bed linen
+accommodation.includedTariffItems.value.electricity = Electricity
+accommodation.includedTariffItems.value.gas = Gas
+accommodation.includedTariffItems.value.water = Water
+accommodation.includedTariffItems.value.roomHeating = Room heating
+accommodation.includedTariffItems.value.none = No, none of these are included in the tariff
+error.includedTariffItems.required = Select any items included in the tariff or select ’No, none of these are included in the tariff’
+error.includedTariffItems.noneSelectedWithOther = Select any items included in the tariff or select ’No, none of these are included in the tariff’
 
 # 6010 TYPES
 ##############################

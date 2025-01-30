@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
-import models.audit.ChangeLinkAudit
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, VacantProperties}
 import navigation.ConnectionToPropertyNavigator

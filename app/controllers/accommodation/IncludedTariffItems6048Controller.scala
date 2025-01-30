@@ -18,16 +18,16 @@ package controllers.accommodation
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.accommodation.AvailableRooms6048Form.availableRooms6048Form
-import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms}
+import form.accommodation.IncludedTariffItems6048Form.includedTariffItems6048Form
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
+import models.submissions.accommodation.{AccommodationDetails, AccommodationTariffItem, AccommodationUnit}
 import navigation.AccommodationNavigator
-import navigation.identifiers.AvailableRoomsPageId
+import navigation.identifiers.IncludedTariffItemsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.accommodation.availableRooms6048
+import views.html.accommodation.includedTariffItems6048
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -36,8 +36,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class AvailableRooms6048Controller @Inject() (
-  availableRoomsView: availableRooms6048,
+class IncludedTariffItems6048Controller @Inject() (
+  includedTariffItems6048View: includedTariffItems6048,
   navigator: AccommodationNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,10 +49,10 @@ class AvailableRooms6048Controller @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      availableRoomsView(
+      includedTariffItems6048View(
         currentUnit
-          .flatMap(_.availableRooms)
-          .fold(availableRooms6048Form)(availableRooms6048Form.fill),
+          .flatMap(_.includedTariffItems)
+          .fold(includedTariffItems6048Form)(includedTariffItems6048Form.fill),
         currentUnitName,
         backLink
       )
@@ -60,21 +60,26 @@ class AvailableRooms6048Controller @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AvailableRooms](
-      availableRooms6048Form,
-      formWithErrors => BadRequest(availableRoomsView(formWithErrors, currentUnitName, backLink)),
+    continueOrSaveAsDraft[Seq[AccommodationTariffItem]](
+      includedTariffItems6048Form,
+      formWithErrors => BadRequest(includedTariffItems6048View(formWithErrors, currentUnitName, backLink)),
       data => {
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
-            availableRooms = Some(data)
+            includedTariffItems = Some(data)
           )
         )
 
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            Redirect(navigator.nextPageWithParam(AvailableRoomsPageId, updatedData, s"idx=${navigator.idx}"))
+            Redirect(
+              navigator
+                .nextPage(IncludedTariffItemsPageId, updatedData)
+                .apply(updatedData)
+                // TODO: navigator.nextPageWithParam(IncludedTariffItemsPageId, updatedData, s"idx=${navigator.idx}")
+            )
           }
       }
     )
@@ -98,6 +103,6 @@ class AvailableRooms6048Controller @Inject() (
   private def backLink(implicit
     request: SessionRequest[AnyContent]
   ): String =
-    s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
+    s"${controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=${navigator.idx}"
 
 }

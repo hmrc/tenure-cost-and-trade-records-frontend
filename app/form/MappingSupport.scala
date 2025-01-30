@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -261,12 +261,27 @@ object MappingSupport {
       else Invalid(ValidationError(errorMessage))
     }
 
+  def nonEmptySeq[T](errorMessage: String = "error.required"): Constraint[Seq[T]] =
+    Constraint[Seq[T]]("constraint.nonEmptySeq") { seq =>
+      if seq.nonEmpty then Valid
+      else Invalid(ValidationError(errorMessage))
+    }
+
   def noneCantBeSelectedWithOther[T](
     noneOfTheseValue: T,
     errorMessage: String
   ): Constraint[List[T]] =
     Constraint[List[T]]("constraint.noneCantBeSelectedWithOther") { l =>
       if l.size > 1 && l.contains(noneOfTheseValue) then Invalid(ValidationError(errorMessage))
+      else Valid
+    }
+
+  def noneCantBeSelectedWithOtherSeq[T](
+    noneOfTheseValue: T,
+    errorMessage: String
+  ): Constraint[Seq[T]] =
+    Constraint[Seq[T]]("constraint.noneCantBeSelectedWithOtherSeq") { seq =>
+      if seq.size > 1 && seq.contains(noneOfTheseValue) then Invalid(ValidationError(errorMessage))
       else Valid
     }
 
