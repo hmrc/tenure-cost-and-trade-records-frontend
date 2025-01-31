@@ -123,10 +123,7 @@ class CommercialLettingQuestionController @Inject() (
         answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion)) match {
           case Some(AnswerYes) =>
             controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case Some(AnswerNo)  => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-          case _               =>
-            logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
         }
     }
 }

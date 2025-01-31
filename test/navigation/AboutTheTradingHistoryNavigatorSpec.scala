@@ -151,6 +151,12 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutYou6030) shouldBe controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
     }
 
+    "return a function that goes the turnover page when financial-year-end has been completed 6045" in {
+      navigator
+        .nextPage(FinancialYearEndPageId, sessionAboutYou6045)
+        .apply(sessionAboutYou6045) shouldBe controllers.aboutthetradinghistory.routes.FinancialYearsController.show
+    }
+
     "return a function that goes the turnover page when financial-year-end has been completed 6076" in {
       navigator
         .nextPage(FinancialYearEndPageId, sessionAboutYou6076)

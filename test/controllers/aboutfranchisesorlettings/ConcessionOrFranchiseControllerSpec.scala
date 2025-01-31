@@ -56,5 +56,12 @@ class ConcessionOrFranchiseControllerSpec extends TestBaseSpec {
       val res = concessionOrFranchiseController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
+
+    "throw a BAD_REQUEST on empty form submission from CYA" in {
+      val res = concessionOrFranchiseController.submit()(
+        FakeRequest().withFormUrlEncodedBody("from" -> "CYA")
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 }
