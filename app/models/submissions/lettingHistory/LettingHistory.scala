@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,6 +133,12 @@ object LettingHistory
               changeSession {
                 lettingHistory.copy(sectionCompleted = Some(newValue))
               }
+
+  def sectionCompleted(session: Session): Option[Boolean] =
+    for
+      lettingHistory   <- session.lettingHistory
+      sectionCompleted <- lettingHistory.sectionCompleted
+    yield sectionCompleted
 
   given Format[LettingHistory]                   = Json.format
   extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes

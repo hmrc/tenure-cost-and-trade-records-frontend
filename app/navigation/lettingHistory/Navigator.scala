@@ -16,7 +16,7 @@
 
 package navigation.lettingHistory
 
-import controllers.lettingHistory.{isFromCheckYourAnswer, unchangedSession}
+import controllers.lettingHistory.{eventualFromFragment, isFromCheckYourAnswer, isFromTaskList, unchangedSession}
 import actions.SessionRequest
 import app.RoutesPrefix
 import connectors.Audit
@@ -39,14 +39,16 @@ abstract class Navigator(audit: Audit):
   def backLinkUrl(ofPage: PageIdentifier, navigation: NavigationData = Map.empty)(using
     request: SessionRequest[AnyContent]
   ): Option[String] =
-    // TODO if request.isFromTaskList then ...
-    if request.isFromCheckYourAnswer
-    then Some(prefixed(checkYourAnswerCall).url)
-    else
-      backwardNavigationMap
-        .get(ofPage)
-        .flatMap(_.apply(request.unchangedSession, navigation))
-        .map(_.toString)
+    (
+      if request.isFromCheckYourAnswer
+      then Some(checkYourAnswerCall)
+      else if request.isFromTaskList
+      then Some(taskListCall)
+      else
+        backwardNavigationMap
+          .get(ofPage)
+          .flatMap(_.apply(request.unchangedSession, navigation))
+    ) .map(c => toDecorated(c).toString)
 
   val forwardNavigationMap: NavigationMap
 
@@ -55,19 +57,28 @@ abstract class Navigator(audit: Audit):
     request: SessionRequest[AnyContent]
   ): Result =
     val nextCall =
-      if request.isFromCheckYourAnswer && session.notChanged
-      then Some(prefixed(checkYourAnswerCall))
-      else
-        for call <- forwardNavigationMap(currentPage)(session, navigation)
-        yield {
-          audit.sendContinueNextPage(session.data, call.url)
-          call
-        }
+      (
+        if request.isFromCheckYourAnswer && session.notChanged
+        then Some(checkYourAnswerCall)
+        else if request.isFromTaskList && session.notChanged
+        then Some(taskListCall)
+        else
+          for call <- forwardNavigationMap(currentPage)(session, navigation)
+          yield call
+      ) .map(c => toDecorated(c))
 
+    audit.sendContinueNextPage(session.data, nextCall.toString)
     nextCall match
       case Some(call) => Redirect(call)
       case _          => throw new Exception("NavigatorIllegalState : couldn't determine next redirect call")
 
-  // This helper method makes sure the call URL is properly prefixed
-  protected def prefixed(call: Call) =
-    Call(call.method, RoutesPrefix.prefix + call.url)
+  // This helper method makes sure that the call is properly prefixed
+  // and completed with the right fragment
+  protected def toDecorated(call: Call)(using request: SessionRequest[AnyContent]) =
+    val prefixedCall =
+      if !call.url.startsWith(RoutesPrefix.prefix)
+      then Call(call.method, RoutesPrefix.prefix + call.url, call.fragment)
+      else call
+    prefixedCall.withFragment {
+      request.eventualFromFragment.getOrElse(prefixedCall.fragment)
+    }

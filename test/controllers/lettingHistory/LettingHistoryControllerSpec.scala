@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,9 @@ import models.Session
 import models.submissions.lettingHistory.{Address, AdvertisingDetail, LocalPeriod, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
 import play.api.libs.json.Writes
+import play.api.mvc.AnyContent
+import play.api.mvc.request.RequestTarget
+import play.api.test.FakeRequest
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -111,3 +114,9 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   trait SessionCapturingFixture:
     given argumentCaptorToSession: Conversion[ArgumentCaptor[Session], Session] with
       def apply(c: ArgumentCaptor[Session]) = c.getValue
+
+  extension (r: FakeRequest[AnyContent])
+    def withQueryParams(params: (String, String)*) =
+      r.withTarget(RequestTarget(r.uri, r.path, queryString = Map(params.map((k, v) => k -> Seq(v)): _*)))
+    def withFragment(fragment: String)             =
+      r.withTarget(RequestTarget(r.uri, r.path + "#" + fragment, r.queryString))

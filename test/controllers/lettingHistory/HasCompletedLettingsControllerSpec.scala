@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsVie
 
 class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
 
-  "the CompletedLettings controller" when {
+  "the HasCompletedLettings controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
         val result = controller.show(fakeGetRequest)
@@ -43,12 +43,17 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
-            "answer" -> "" // missing
-          )
+          fakePostRequest
+            .withFormUrlEncodedBody(
+              "answer" -> "" // missing
+            )
+            .withQueryParams(
+              "from" -> "TL"
+            )
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
+        page.backLink        shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
         page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to 'CompletedLettingsDetail' page" in new ControllerFixture {

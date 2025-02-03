@@ -154,6 +154,6 @@ trait ForwardNavigation:
         else routes.CheckYourAnswersController.show
     },
     CheckYourAnswersPageId      -> { (_, _) =>
-      Some(prefixed(taskListCall))
+      Some(taskListCall)
     }
   )

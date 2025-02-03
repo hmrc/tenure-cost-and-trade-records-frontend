@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +21,17 @@ import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
+import play.api.mvc.AnyContent
 import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.mvc.request.RequestTarget
+import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView
 
 class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
 
-  "the PermanentResidents controller" when {
+  "the HasPermanentResidents controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
         val result = controller.show(fakeGetRequest)
@@ -43,12 +46,20 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
-            "answer" -> "" // missing
-          )
+          fakePostRequest
+            .withFormUrlEncodedBody(
+              "answer" -> "" // missing
+            )
+            .withQueryParams(
+              "from" -> "CYA;some-fragment"
+            )
+            .withFragment(
+              "permanent-residents"
+            )
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
+        page.backLink        shouldBe routes.CheckYourAnswersController.show.withFragment("some-fragment").toString
         page.error("answer") shouldBe "lettingHistory.hasPermanentResidents.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentDetail' page" in new ControllerFixture {

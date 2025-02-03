@@ -1718,12 +1718,12 @@ lettingHistory.checkYourAnswers.completedLettings.addOneMore = Add a temporary o
 lettingHistory.checkYourAnswers.completedLettings.cardsType = Temporary occupier
 lettingHistory.checkYourAnswers.completedLettings.cardKey1 = Occupier''s details
 
-lettingHistory.checkYourAnswers.lettingIntentions.heading = Letting intention
-lettingHistory.checkYourAnswers.lettingIntentions.nights = Number of nights intended for commercial letting
-lettingHistory.checkYourAnswers.lettingIntentions.hasStopped = Stopped letting commercially?
-lettingHistory.checkYourAnswers.lettingIntentions.whenWasLastLet = Final commercial letting
-lettingHistory.checkYourAnswers.lettingIntentions.isYearlyAvailable = Available for letting all year?
-lettingHistory.checkYourAnswers.lettingIntentions.tradingPeriod = Season details
+lettingHistory.checkYourAnswers.intendedLettings.heading = Letting intention
+lettingHistory.checkYourAnswers.intendedLettings.nights = Number of nights intended for commercial letting
+lettingHistory.checkYourAnswers.intendedLettings.hasStopped = Stopped letting commercially?
+lettingHistory.checkYourAnswers.intendedLettings.whenWasLastLet = Final commercial letting
+lettingHistory.checkYourAnswers.intendedLettings.isYearlyAvailable = Available for letting all year?
+lettingHistory.checkYourAnswers.intendedLettings.tradingPeriod = Season details
 
 lettingHistory.checkYourAnswers.onlineAdvertising.heading = Advertising the property
 lettingHistory.checkYourAnswers.onlineAdvertising.question = Do you advertise online?
@@ -3769,6 +3769,9 @@ error.changeOccupationAndAccountingInfo.required = Select yes if you would like 
 
 # CYA LETTING HISTORY
 checkYourAnswersLettingHistory.residentialTenants = Residential tenants
+checkYourAnswersLettingHistory.temporaryOccupiers = Temporary occupiers
+checkYourAnswersLettingHistory.intendedLettings = Letting intention
+checkYourAnswersLettingHistory.onlineAdvertising = Advertising the property
 
 # CYA ACCOMMODATION DETAILS
 checkYourAnswersAccommodation.accommodationDetails = Accommodation details
