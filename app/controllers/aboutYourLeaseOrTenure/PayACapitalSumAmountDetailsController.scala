@@ -110,10 +110,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
         ) match {
           case Some("yes") =>
             controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-          case _           =>
-            logger.warn(s"Back link for pay capital sum page reached with unknown tenants additions disregarded value")
-            controllers.routes.TaskListController.show().url
+          case _           => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
         }
     }
 }
