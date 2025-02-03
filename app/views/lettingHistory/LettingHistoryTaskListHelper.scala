@@ -17,9 +17,7 @@
 package views.lettingHistory
 
 import actions.SessionRequest
-import models.Session
-import models.submissions.lettingHistory.LettingHistory.{intendedLettings, *}
-import play.api.mvc.AnyContent
+import models.submissions.lettingHistory.LettingHistory.*
 
 object LettingHistoryTaskListHelper:
 

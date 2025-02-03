@@ -26,6 +26,7 @@ import play.api.libs.json.{Json, OFormat}
   */
 case class AccommodationDetails(
   accommodationUnits: List[AccommodationUnit],
+  exceededMaxUnits: Option[Boolean] = None,
   sectionCompleted: Option[AnswersYesNo] = None
 )
 

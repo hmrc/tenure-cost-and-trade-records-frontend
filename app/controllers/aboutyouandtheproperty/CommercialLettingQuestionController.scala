@@ -26,7 +26,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.u
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OccupationalAndAccountingInformation}
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswerYes
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CommercialLettingQuestionId
 import play.api.Logging

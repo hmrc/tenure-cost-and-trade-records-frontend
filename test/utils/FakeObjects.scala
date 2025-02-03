@@ -1845,6 +1845,7 @@ trait FakeObjects {
       ),
       AccommodationUnit("Unit 3", "type")
     ),
+    None,
     AnswerYes
   )
 

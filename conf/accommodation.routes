@@ -14,3 +14,11 @@ POST        /high-season-tariff                             controllers.accommod
 
 GET         /included-tariff-items                          controllers.accommodation.IncludedTariffItems6048Controller.show
 POST        /included-tariff-items                          controllers.accommodation.IncludedTariffItems6048Controller.submit
+
+GET         /accommodation-unit-list                        controllers.accommodation.AccommodationUnitList6048Controller.show
+POST        /accommodation-unit-list                        controllers.accommodation.AccommodationUnitList6048Controller.submit
+GET         /accommodation-unit-remove                      controllers.accommodation.AccommodationUnitList6048Controller.remove
+POST        /accommodation-unit-remove                      controllers.accommodation.AccommodationUnitList6048Controller.removeLast
+
+GET         /added-maximum-accommodation-units              controllers.accommodation.AddedMaximumAccommodationUnits6048Controller.show
+POST        /added-maximum-accommodation-units              controllers.accommodation.AddedMaximumAccommodationUnits6048Controller.submit

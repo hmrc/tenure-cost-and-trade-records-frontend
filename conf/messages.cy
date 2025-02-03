@@ -1768,6 +1768,12 @@ accommodation.includedTariffItems.value.roomHeating = Room heating
 accommodation.includedTariffItems.value.none = No, none of these are included in the tariff
 error.includedTariffItems.required = Select any items included in the tariff or select ’No, none of these are included in the tariff’
 error.includedTariffItems.noneSelectedWithOther = Select any items included in the tariff or select ’No, none of these are included in the tariff’
+accommodation.unitList.heading.removedAll = You have removed all accommodation units
+accommodation.unitList.heading.singular = You have added 1 accommodation unit
+accommodation.unitList.heading.plural = You have added {0} accommodation units
+accommodation.addMoreAccommodationUnits.label = Do you have another accommodation unit to declare?
+error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
+error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
 
 # 6010 TYPES
 ##############################

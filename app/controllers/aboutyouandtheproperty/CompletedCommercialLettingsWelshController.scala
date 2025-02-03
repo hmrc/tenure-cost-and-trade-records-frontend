@@ -82,13 +82,6 @@ class CompletedCommercialLettingsWelshController @Inject() (
                 completedLettings.copy(financialYearEnd = finYearEnd)
               }
             val updatedData        = updateAboutYouAndThePropertyPartTwo { partTwo =>
-              val commercialLetNightsSum = partTwo.commercialLetAvailabilityWelsh
-                .getOrElse(Seq.empty)
-                .map(_.numberOfNights)
-                .sum
-
-              val completedLettingsNightsSum = updatedLettingData.map(_.numberOfNights).sum
-
               partTwo.copy(
                 completedCommercialLettingsWelsh = Option(updatedLettingData)
               )
