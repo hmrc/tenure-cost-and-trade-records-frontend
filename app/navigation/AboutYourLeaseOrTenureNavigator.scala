@@ -334,12 +334,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ) match {
       case Some("yes") =>
         answers.forType match {
-          case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
-          case FOR6030           => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
-          case FOR6045 | FOR6046 =>
+          case FOR6020 | FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show()
-          case FOR6048           => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show()
-          case _                 => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
+          case FOR6030                     => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show()
+          case FOR6048                     => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show()
+          case _                           => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
         }
       case _           =>
         answers.forType match {
@@ -350,20 +349,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def payCapitalSumDetailsRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
-    ) match {
-      case Some("yes") =>
-        answers.forType match {
-          case FOR6048 => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
-          case _       => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
-        }
-      case _           =>
-        answers.forType match {
-          case FOR6048 =>
-            controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
-          case _       => controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
-        }
+    answers.forType match {
+      case FOR6048 => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()
+      case _       => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
     }
 
   private def whatIsYourRentBasedOnRouting: Session => Call    = answers =>
