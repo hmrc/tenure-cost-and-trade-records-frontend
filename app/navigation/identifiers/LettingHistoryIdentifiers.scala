@@ -71,7 +71,7 @@ case object AdvertisingListPageId extends Identifier:
   override def toString: String = "advertisingListPage"
 
 case object AdvertisingRemovePageId extends Identifier:
-  override def toString: String = "AdvertisingRemovePageId"
+  override def toString: String = "advertisingRemovePage"
 
 case object CheckYourAnswersPageId extends Identifier:
   override def toString: String = "checkYourAnswers"
