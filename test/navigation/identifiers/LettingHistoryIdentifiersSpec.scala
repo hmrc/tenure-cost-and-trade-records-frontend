@@ -77,7 +77,7 @@ class LettingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(AdvertisingListPageId.toString.equals("advertisingListPage"))
 
     "Identifier for advertising remove page" in
-      assert(AdvertisingRemovePageId.toString.equals("AdvertisingRemovePageId"))
+      assert(AdvertisingRemovePageId.toString.equals("advertisingRemovePage"))
 
     "Identifier for check your answers page" in
       assert(CheckYourAnswersPageId.toString.equals("checkYourAnswers"))
