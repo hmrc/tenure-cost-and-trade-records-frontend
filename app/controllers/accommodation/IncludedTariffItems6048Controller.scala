@@ -75,10 +75,7 @@ class IncludedTariffItems6048Controller @Inject() (
           .saveOrUpdate(updatedData)
           .map { _ =>
             Redirect(
-              navigator
-                .nextPage(IncludedTariffItemsPageId, updatedData)
-                .apply(updatedData)
-                // TODO: navigator.nextPageWithParam(IncludedTariffItemsPageId, updatedData, s"idx=${navigator.idx}")
+              navigator.nextPageWithParam(IncludedTariffItemsPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
       }

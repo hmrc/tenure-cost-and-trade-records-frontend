@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,50 +20,45 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-import scala.concurrent.ExecutionContext
-
 /**
   * @author Yuriy Tumakha
   */
-class IncludedTariffItems6048ControllerSpec extends TestBaseSpec {
+class AddedMaximumAccommodationUnits6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage = controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url + "?idx=0"
+  private val nextPage =
+    "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: CYA Accommodation details
 
-  def includedTariffItems6048Controller =
-    new IncludedTariffItems6048Controller(
-      includedTariffItemsView,
+  def addedMaximumAccommodationUnits6048Controller =
+    new AddedMaximumAccommodationUnits6048Controller(
+      addedMaximumAccommodationUnitsView,
       accommodationNavigator,
-      preEnrichedActionRefiner(
-        referenceNumber = "99996048008", // England
-        accommodationDetails = Some(prefilledAccommodationDetails)
-      ),
+      preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
       mockSessionRepo,
       stubMessagesControllerComponents()
-    )(inject[ExecutionContext])
+    )
 
   private def validFormData: Seq[(String, String)] =
     Seq(
-      "includedTariffItems[0]" -> "bedLinen",
-      "includedTariffItems[1]" -> "gas"
+      "exceededMaxUnits" -> "true"
     )
 
   "GET /" should {
     "return 200" in {
-      val result = includedTariffItems6048Controller.show(fakeRequest)
+      val result = addedMaximumAccommodationUnits6048Controller.show(fakeRequest)
       status(result) shouldBe OK
     }
   }
 
   "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = includedTariffItems6048Controller.submit(
+      val res = addedMaximumAccommodationUnits6048Controller.submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "save the form data and redirect to the next page" in {
-      val res = includedTariffItems6048Controller.submit(
+      val res = addedMaximumAccommodationUnits6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER

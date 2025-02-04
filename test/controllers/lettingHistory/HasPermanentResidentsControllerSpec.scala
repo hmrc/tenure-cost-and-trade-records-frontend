@@ -21,10 +21,7 @@ import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
-import play.api.mvc.AnyContent
 import play.api.mvc.Codec.utf_8 as UTF_8
-import play.api.mvc.request.RequestTarget
-import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView

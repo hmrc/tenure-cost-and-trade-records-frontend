@@ -117,6 +117,6 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   extension (r: FakeRequest[AnyContent])
     def withQueryParams(params: (String, String)*) =
-      r.withTarget(RequestTarget(r.uri, r.path, queryString = Map(params.map((k, v) => k -> Seq(v)): _*)))
+      r.withTarget(RequestTarget(r.uri, r.path, queryString = Map(params.map((k, v) => k -> Seq(v))*)))
     def withFragment(fragment: String)             =
       r.withTarget(RequestTarget(r.uri, r.path + "#" + fragment, r.queryString))

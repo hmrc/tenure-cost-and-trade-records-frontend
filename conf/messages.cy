@@ -1778,6 +1778,9 @@ accommodation.addedMaximumAccommodationUnits.link1 = Check or update the {0} acc
 accommodation.exceededMaxUnits.label = I confirm that the VOA will contact me about the details I was unable to declare.
 error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
 error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
+accommodation.removeLastUnit.heading = Are you sure you want to remove ’{0}’?
+accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ’{0}’ you will be returned to the start of this section.
+error.accommodation.removeLastUnit.required = Select yes if you would like to remove the only accommodation unit
 
 # 6010 TYPES
 ##############################
