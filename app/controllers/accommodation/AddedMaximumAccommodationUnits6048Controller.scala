@@ -18,16 +18,16 @@ package controllers.accommodation
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.accommodation.AvailableRooms6048Form.availableRooms6048Form
-import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
-import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms}
+import form.accommodation.AddedMaximumAccommodationUnits6048Form.addedMaximumAccommodationUnits6048Form
+import models.submissions.accommodation.AccommodationDetails
+import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
 import navigation.AccommodationNavigator
-import navigation.identifiers.AvailableRoomsPageId
+import navigation.identifiers.AddedMaximumAccommodationUnitsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.accommodation.availableRooms6048
+import views.html.accommodation.addedMaximumAccommodationUnits6048
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -37,7 +37,7 @@ import scala.concurrent.ExecutionContext
   */
 @Singleton
 class AddedMaximumAccommodationUnits6048Controller @Inject() (
-  availableRoomsView: availableRooms6048,
+  addedMaximumAccommodationUnits6048View: addedMaximumAccommodationUnits6048,
   navigator: AccommodationNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -48,25 +48,30 @@ class AddedMaximumAccommodationUnits6048Controller @Inject() (
     with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok("You have added the maximum of 5 accommodation units")
+    Ok(
+      addedMaximumAccommodationUnits6048View(
+        accommodationDetails
+          .map(_.exceededMaxUnits)
+          .fold(addedMaximumAccommodationUnits6048Form)(addedMaximumAccommodationUnits6048Form.fill)
+      )
+    )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AvailableRooms](
-      availableRooms6048Form,
-      formWithErrors => BadRequest(availableRoomsView(formWithErrors, currentUnitName, backLink)),
+    continueOrSaveAsDraft[Option[Boolean]](
+      addedMaximumAccommodationUnits6048Form,
+      formWithErrors => BadRequest(addedMaximumAccommodationUnits6048View(formWithErrors)),
       data => {
-        val updatedData = updateAccommodationUnit(
-          navigator.idx,
+        val updatedData = updateAccommodationDetails(
           _.copy(
-            availableRooms = Some(data)
+            exceededMaxUnits = data
           )
         )
 
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            Redirect(navigator.nextPageWithParam(AvailableRoomsPageId, updatedData, s"idx=${navigator.idx}"))
+            Redirect(navigator.nextPage(AddedMaximumAccommodationUnitsPageId, updatedData).apply(updatedData))
           }
       }
     )
@@ -75,26 +80,5 @@ class AddedMaximumAccommodationUnits6048Controller @Inject() (
   private def accommodationDetails(implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
-
-  private def accommodationUnits(implicit
-    request: SessionRequest[AnyContent]
-  ): List[AccommodationUnit] =
-    accommodationDetails.fold(List.empty)(_.accommodationUnits)
-
-  private def currentUnit(implicit
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
-    accommodationDetails
-      .flatMap(_.accommodationUnits.lift(navigator.idx))
-
-  private def currentUnitName(implicit
-    request: SessionRequest[AnyContent]
-  ): String =
-    currentUnit.fold("")(_.unitName)
-
-  private def backLink(implicit
-    request: SessionRequest[AnyContent]
-  ): String =
-    s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
 
 }

@@ -33,3 +33,6 @@ case object IncludedTariffItemsPageId extends Identifier:
 
 case object AccommodationUnitListPageId extends Identifier:
   override def toString: String = "accommodationUnitListPage"
+
+case object AddedMaximumAccommodationUnitsPageId extends Identifier:
+  override def toString: String = "addedMaximumAccommodationUnitsPage"

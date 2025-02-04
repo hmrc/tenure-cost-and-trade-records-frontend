@@ -60,16 +60,14 @@ class AccommodationUnitList6048Controller @Inject() (
       accommodationUnitList6048Form,
       formWithErrors => BadRequest(accommodationUnitListView(formWithErrors, accommodationUnits, backLink)),
       data =>
-        if data == AnswerYes then
-          Redirect(
-            s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${accommodationUnits.size}"
-          )
-        else
-          Redirect(
-            navigator
-              .nextPage(AccommodationUnitListPageId, request.sessionData)
-              .apply(request.sessionData)
-          )
+        (data == AnswerYes, accommodationUnits.size) match {
+          case (true, size) if size >= AccommodationDetails.maxAccommodationUnits =>
+            Redirect(controllers.accommodation.routes.AddedMaximumAccommodationUnits6048Controller.show)
+          case (true, size)                                                       =>
+            Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$size")
+          case (false, _)                                                         =>
+            Redirect(navigator.nextPage(AccommodationUnitListPageId, request.sessionData).apply(request.sessionData))
+        }
     )
   }
 
@@ -80,6 +78,7 @@ class AccommodationUnitList6048Controller @Inject() (
 
   def removeLast: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     // if yes
+    //TODO: set sectionCompleted = false
     performRemove
     // if no
     Redirect(controllers.accommodation.routes.AccommodationUnitList6048Controller.show)
@@ -89,6 +88,7 @@ class AccommodationUnitList6048Controller @Inject() (
     request: SessionRequest[AnyContent]
   ): Result =
     // TODO: remove accommodationUnit by navigator.idx
+    // TODO: set exceededMaxUnits = None
     if accommodationUnits.isEmpty then // accommodationUnits after removing - !!! inside .map()
       Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=0")
     else Redirect(controllers.accommodation.routes.AccommodationUnitList6048Controller.show)

@@ -1772,6 +1772,10 @@ accommodation.unitList.heading.removedAll = You have removed all accommodation u
 accommodation.unitList.heading.singular = You have added 1 accommodation unit
 accommodation.unitList.heading.plural = You have added {0} accommodation units
 accommodation.addMoreAccommodationUnits.label = Do you have another accommodation unit to declare?
+accommodation.addedMaximumAccommodationUnits.heading = You have added the maximum of {0} accommodation units
+accommodation.addedMaximumAccommodationUnits.p1 = If advertise on {0} or more accommodation units, the VOA will contact you to collect the details you were unable to declare.
+accommodation.addedMaximumAccommodationUnits.link1 = Check or update the {0} accommodation units
+accommodation.exceededMaxUnits.label = I confirm that the VOA will contact me about the details I was unable to declare.
 error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
 error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
 
