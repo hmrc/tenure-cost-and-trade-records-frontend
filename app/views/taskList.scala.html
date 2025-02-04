@@ -267,7 +267,7 @@
     @includes.taskListItem(
         taskId = "residential-tenants",
         taskNameKey = "checkYourAnswersLettingHistory.residentialTenants",
-        taskPage = controllers.lettingHistory.routes.ResidentListController.show,
+        taskPage = controllers.lettingHistory.routes.HasPermanentResidentsController.show,
         sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("residential-tenants"),
         pageAnswer = LettingHistory.hasPermanentResidents(session),
         cannotStartYet = false
@@ -275,7 +275,7 @@
     @includes.taskListItem(
         taskId = "temporary-occupiers",
         taskNameKey = "checkYourAnswersLettingHistory.temporaryOccupiers",
-        taskPage = controllers.lettingHistory.routes.OccupierListController.show,
+        taskPage = controllers.lettingHistory.routes.HasCompletedLettingsController.show,
         sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("temporary-occupiers"),
         pageAnswer = LettingHistory.hasCompletedLettings(session),
         cannotStartYet = false
@@ -291,7 +291,7 @@
     @includes.taskListItem(
         taskId = "online-advertising",
         taskNameKey = "checkYourAnswersLettingHistory.onlineAdvertising",
-        taskPage = controllers.lettingHistory.routes.AdvertisingListController.show,
+        taskPage = controllers.lettingHistory.routes.HasOnlineAdvertisingController.show,
         sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("online-advertising"),
         pageAnswer = LettingHistory.hasOnlineAdvertising(session),
         cannotStartYet = false
