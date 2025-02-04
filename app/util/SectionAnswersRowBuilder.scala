@@ -61,7 +61,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
           Actions(items =
             Seq(
               ActionItem(
-                href = s"${urlPlusParamPrefix(editPage.url)}from=CYA&change=true${editFieldTag(editField)}",
+                href = s"${urlPlusParamPrefix(editPage.url)}from=CYA${editFieldTag(editField)}",
                 content = Text(messages("label.change")),
                 visuallyHiddenText = Some(messages(messageKey)),
                 attributes = Map(
