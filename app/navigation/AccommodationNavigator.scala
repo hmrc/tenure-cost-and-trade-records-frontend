@@ -27,11 +27,15 @@ import javax.inject.Inject
 class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    AccommodationUnitPageId           -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
-    AvailableRoomsPageId              -> (_ => accommodation.routes.AccommodationLettingHistory6048Controller.show),
-    AccommodationLettingHistoryPageId -> (_ => accommodation.routes.HighSeasonTariff6048Controller.show),
-    HighSeasonTariffPageId            -> (_ => accommodation.routes.IncludedTariffItems6048Controller.show),
-    IncludedTariffItemsPageId         -> (_ =>
+    AccommodationUnitPageId              -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
+    AvailableRoomsPageId                 -> (_ => accommodation.routes.AccommodationLettingHistory6048Controller.show),
+    AccommodationLettingHistoryPageId    -> (_ => accommodation.routes.HighSeasonTariff6048Controller.show),
+    HighSeasonTariffPageId               -> (_ => accommodation.routes.IncludedTariffItems6048Controller.show),
+    IncludedTariffItemsPageId            -> (_ => accommodation.routes.AccommodationUnitList6048Controller.show),
+    AccommodationUnitListPageId          -> (_ =>
       controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ) // TODO: Included items for
+    ), // TODO: CYA Accommodation details
+    AddedMaximumAccommodationUnitsPageId -> (_ =>
+      controllers.routes.TaskListController.show().withFragment("accommodation-details")
+    ) // TODO: CYA Accommodation details
   )

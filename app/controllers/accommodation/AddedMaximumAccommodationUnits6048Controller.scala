@@ -18,16 +18,16 @@ package controllers.accommodation
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.accommodation.IncludedTariffItems6048Form.includedTariffItems6048Form
-import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
-import models.submissions.accommodation.{AccommodationDetails, AccommodationTariffItem, AccommodationUnit}
+import form.accommodation.AddedMaximumAccommodationUnits6048Form.addedMaximumAccommodationUnits6048Form
+import models.submissions.accommodation.AccommodationDetails
+import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
 import navigation.AccommodationNavigator
-import navigation.identifiers.IncludedTariffItemsPageId
+import navigation.identifiers.AddedMaximumAccommodationUnitsPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.accommodation.includedTariffItems6048
+import views.html.accommodation.addedMaximumAccommodationUnits6048
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -36,8 +36,8 @@ import scala.concurrent.ExecutionContext
   * @author Yuriy Tumakha
   */
 @Singleton
-class IncludedTariffItems6048Controller @Inject() (
-  includedTariffItems6048View: includedTariffItems6048,
+class AddedMaximumAccommodationUnits6048Controller @Inject() (
+  addedMaximumAccommodationUnits6048View: addedMaximumAccommodationUnits6048,
   navigator: AccommodationNavigator,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
@@ -49,34 +49,29 @@ class IncludedTariffItems6048Controller @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
-      includedTariffItems6048View(
-        currentUnit
-          .flatMap(_.includedTariffItems)
-          .fold(includedTariffItems6048Form)(includedTariffItems6048Form.fill),
-        currentUnitName,
-        backLink
+      addedMaximumAccommodationUnits6048View(
+        accommodationDetails
+          .map(_.exceededMaxUnits)
+          .fold(addedMaximumAccommodationUnits6048Form)(addedMaximumAccommodationUnits6048Form.fill)
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[Seq[AccommodationTariffItem]](
-      includedTariffItems6048Form,
-      formWithErrors => BadRequest(includedTariffItems6048View(formWithErrors, currentUnitName, backLink)),
+    continueOrSaveAsDraft[Option[Boolean]](
+      addedMaximumAccommodationUnits6048Form,
+      formWithErrors => BadRequest(addedMaximumAccommodationUnits6048View(formWithErrors)),
       data => {
-        val updatedData = updateAccommodationUnit(
-          navigator.idx,
+        val updatedData = updateAccommodationDetails(
           _.copy(
-            includedTariffItems = Some(data)
+            exceededMaxUnits = data
           )
         )
 
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            Redirect(
-              navigator.nextPageWithParam(IncludedTariffItemsPageId, updatedData, s"idx=${navigator.idx}")
-            )
+            Redirect(navigator.nextPage(AddedMaximumAccommodationUnitsPageId, updatedData).apply(updatedData))
           }
       }
     )
@@ -85,21 +80,5 @@ class IncludedTariffItems6048Controller @Inject() (
   private def accommodationDetails(implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
-
-  private def currentUnit(implicit
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
-    accommodationDetails
-      .flatMap(_.accommodationUnits.lift(navigator.idx))
-
-  private def currentUnitName(implicit
-    request: SessionRequest[AnyContent]
-  ): String =
-    currentUnit.fold("")(_.unitName)
-
-  private def backLink(implicit
-    request: SessionRequest[AnyContent]
-  ): String =
-    s"${controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=${navigator.idx}"
 
 }

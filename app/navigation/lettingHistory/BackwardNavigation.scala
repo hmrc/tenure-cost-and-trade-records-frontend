@@ -31,7 +31,7 @@ trait BackwardNavigation:
     ResidentDetailPageId        -> { (_, _) =>
       Some(routes.HasPermanentResidentsController.show)
     },
-    ResidentListPageId          -> { (session, _) =>
+    ResidentListPageId          -> { (_, _) =>
       None
     },
     MaxNumberReachedPageId      -> { (_, navigation) =>
@@ -58,7 +58,7 @@ trait BackwardNavigation:
       for case index: Int <- navigation.get("index")
       yield routes.OccupierDetailController.show(index = Some(index))
     },
-    OccupierListPageId          -> { (session, _) =>
+    OccupierListPageId          -> { (_, _) =>
       None
     },
     HowManyNightsPageId         -> { (session, _) =>
@@ -106,7 +106,7 @@ trait BackwardNavigation:
     AdvertisingDetailPageId     -> { (_, _) =>
       Some(routes.HasOnlineAdvertisingController.show)
     },
-    AdvertisingListPageId       -> { (session, _) =>
+    AdvertisingListPageId       -> { (_, _) =>
       None
     },
     CheckYourAnswersPageId      -> { (session, _) =>

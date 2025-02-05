@@ -1768,6 +1768,19 @@ accommodation.includedTariffItems.value.roomHeating = Room heating
 accommodation.includedTariffItems.value.none = No, none of these are included in the tariff
 error.includedTariffItems.required = Select any items included in the tariff or select ’No, none of these are included in the tariff’
 error.includedTariffItems.noneSelectedWithOther = Select any items included in the tariff or select ’No, none of these are included in the tariff’
+accommodation.unitList.heading.removedAll = You have removed all accommodation units
+accommodation.unitList.heading.singular = You have added 1 accommodation unit
+accommodation.unitList.heading.plural = You have added {0} accommodation units
+accommodation.addMoreAccommodationUnits.label = Do you have another accommodation unit to declare?
+accommodation.addedMaximumAccommodationUnits.heading = You have added the maximum of {0} accommodation units
+accommodation.addedMaximumAccommodationUnits.p1 = If advertise on {0} or more accommodation units, the VOA will contact you to collect the details you were unable to declare.
+accommodation.addedMaximumAccommodationUnits.link1 = Check or update the {0} accommodation units
+accommodation.exceededMaxUnits.label = I confirm that the VOA will contact me about the details I was unable to declare.
+error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
+error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
+accommodation.removeLastUnit.heading = Are you sure you want to remove ’{0}’?
+accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ’{0}’ you will be returned to the start of this section.
+error.accommodation.removeLastUnit.required = Select yes if you would like to remove the only accommodation unit
 
 # 6010 TYPES
 ##############################

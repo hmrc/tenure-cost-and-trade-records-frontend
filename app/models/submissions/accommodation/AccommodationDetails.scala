@@ -26,13 +26,17 @@ import play.api.libs.json.{Json, OFormat}
   */
 case class AccommodationDetails(
   accommodationUnits: List[AccommodationUnit],
+  exceededMaxUnits: Option[Boolean] = None,
   sectionCompleted: Option[AnswersYesNo] = None
 )
 
 object AccommodationDetails:
   implicit val format: OFormat[AccommodationDetails] = Json.format
 
-  private val initialAccommodationDetails = AccommodationDetails(List(AccommodationUnit("", "")))
+  val maxAccommodationUnits: Int = 5
+
+  private val initialAccommodationUnit    = AccommodationUnit("", "")
+  private val initialAccommodationDetails = AccommodationDetails(List(initialAccommodationUnit))
 
   def updateAccommodationDetails(
     copy: AccommodationDetails => AccommodationDetails
@@ -47,9 +51,12 @@ object AccommodationDetails:
     update: AccommodationUnit => AccommodationUnit
   )(implicit sessionRequest: SessionRequest[?]): Session =
     updateAccommodationDetails { accommodationDetails =>
-      val accommodationUnit = update(accommodationDetails.accommodationUnits(idx))
+      val accommodationUnits =
+        if accommodationDetails.accommodationUnits.size == idx then
+          accommodationDetails.accommodationUnits :+ initialAccommodationUnit
+        else accommodationDetails.accommodationUnits
 
-      accommodationDetails.copy(accommodationUnits =
-        accommodationDetails.accommodationUnits.updated(idx, accommodationUnit)
-      )
+      val accommodationUnit = update(accommodationUnits(idx))
+
+      accommodationDetails.copy(accommodationUnits = accommodationUnits.updated(idx, accommodationUnit))
     }
