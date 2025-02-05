@@ -62,22 +62,21 @@ object AccountingInformationUtil {
     val now     = LocalDate.now
     val yearNow = now.getYear
 
-    val firstOccupyYear       = firstOccupy.years
-    val financialYearEndDay   = financialYear.days
-    val financialYearEndMonth = financialYear.months
+    val financialYearEndDate = LocalDate.of(yearNow, financialYear.months, financialYear.days)
 
-    val currentFinancialYear =
-      if now.isBefore(LocalDate.of(yearNow, financialYearEndMonth, financialYearEndDay)) then yearNow
-      else yearNow + 1
+    val lastCompleteFinancialYear =
+      if (!now.isAfter(financialYearEndDate)) yearNow - 1
+      else yearNow
 
-    val yearDifference = currentFinancialYear - firstOccupyYear
+    if (firstOccupy.years >= lastCompleteFinancialYear) Seq.empty
+    else {
 
-    (1 to (yearDifference min 3)).map { yearsAgo =>
-      LocalDate.of(
-        currentFinancialYear - yearsAgo,
-        financialYearEndMonth,
-        financialYearEndDay
-      )
+      val yearsSinceFirstOccupy = (lastCompleteFinancialYear - firstOccupy.years) max 0
+      val maxYears              = yearsSinceFirstOccupy min 3
+
+      (0 until maxYears).map { i =>
+        LocalDate.of(lastCompleteFinancialYear - i, financialYear.months, financialYear.days)
+      }
     }
   }
 
