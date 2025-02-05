@@ -44,22 +44,23 @@ class AdvertisingDetailController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport:
 
-  def show(index: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    val onlineAdvertising = (
-      for lettingHistory <- request.sessionData.lettingHistory.toList
-      yield lettingHistory.onlineAdvertising
-    ).flatten
+  def show(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply {
+    implicit request =>
+      val onlineAdvertising = (
+        for lettingHistory <- request.sessionData.lettingHistory.toList
+        yield lettingHistory.onlineAdvertising
+      ).flatten
 
-    if index.isEmpty && onlineAdvertising.sizeIs == MaxNumberOfOnlineAdvertising
-    then Redirect(controllers.routes.TaskListController.show())
-    else
-      val filledForm =
-        for
-          idx          <- index
-          detailsOnIdx <- onlineAdvertising.lift(idx)
-        yield theForm.fill(detailsOnIdx)
+      if maybeIndex.isEmpty && onlineAdvertising.sizeIs == MaxNumberOfOnlineAdvertising
+      then Redirect(routes.AdvertisingListController.show)
+      else
+        val filledForm =
+          for
+            index        <- maybeIndex
+            detailsOnIdx <- onlineAdvertising.lift(index)
+          yield theForm.fill(detailsOnIdx)
 
-      Ok(theView(filledForm.getOrElse(theForm), backLinkUrl, index, request.sessionData.toSummary))
+        Ok(theView(filledForm.getOrElse(theForm), backLinkUrl, maybeIndex, request.sessionData.toSummary))
   }
 
   def submit(index: Option[Int]): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
