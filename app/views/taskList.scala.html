@@ -24,6 +24,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import views.lettingHistory.LettingHistoryTaskListHelper
 @import models.submissions.lettingHistory.LettingHistory
+@import models.submissions.lettingHistory.LettingHistory.toAnswer
 
 
 @this(layout: Layout,
@@ -70,7 +71,7 @@
 @section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
 
 @section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted).map(_.name)}
-@sectionLettingHistoryCompleted = @{ "yes" }
+@sectionLettingHistoryCompleted = @{LettingHistory.sectionCompleted(request.sessionData).map(_.toAnswer.name)}
 
 @completedSections = @{
  (forType match {
@@ -270,7 +271,9 @@
         taskPage = controllers.lettingHistory.routes.HasPermanentResidentsController.show,
         sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("residential-tenants"),
         pageAnswer = LettingHistory.hasPermanentResidents(session),
-        cannotStartYet = false
+        cannotStartYet = {
+          section2Completed.isEmpty
+        }
     )
     @includes.taskListItem(
         taskId = "temporary-occupiers",
@@ -278,7 +281,9 @@
         taskPage = controllers.lettingHistory.routes.HasCompletedLettingsController.show,
         sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("temporary-occupiers"),
         pageAnswer = LettingHistory.hasCompletedLettings(session),
-        cannotStartYet = false
+        cannotStartYet = {
+          LettingHistory.hasPermanentResidents(session).isEmpty
+        }
     )
     @includes.taskListItem(
         taskId = "intended-lettings",
@@ -286,7 +291,9 @@
         taskPage = controllers.lettingHistory.routes.HowManyNightsController.show,
         sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("intended-lettings"),
         pageAnswer = LettingHistory.intendedLettings(session),
-        cannotStartYet = false
+        cannotStartYet = {
+          LettingHistory.hasCompletedLettings(session).isEmpty
+        }
     )
     @includes.taskListItem(
         taskId = "online-advertising",
@@ -294,7 +301,11 @@
         taskPage = controllers.lettingHistory.routes.HasOnlineAdvertisingController.show,
         sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("online-advertising"),
         pageAnswer = LettingHistory.hasOnlineAdvertising(session),
-        cannotStartYet = false
+        cannotStartYet = {
+          LettingHistory.intendedLettingsNights(session).isEmpty ||
+          LettingHistory.intendedLettingsIsYearlyAvailable(session).isEmpty
+          // TODO improve this logic condition
+        }
     )
     </ul>
    </li>
@@ -308,7 +319,7 @@
      controllers.accommodation.routes.AccommodationUnit6048Controller.show,
      section4AccommodationCompleted,
      session.accommodationDetails,
-     section4Completed.isEmpty // TODO: 3. Letting history
+     sectionLettingHistoryCompleted.isEmpty
     )
     </ul>
    </li>
