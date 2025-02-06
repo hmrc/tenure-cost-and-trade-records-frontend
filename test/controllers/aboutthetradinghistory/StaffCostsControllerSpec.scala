@@ -40,6 +40,20 @@ class StaffCostsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
+  def staffCostsBaseloadController =
+    new StaffCostsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      staffCostsView,
+      preEnrichedActionRefiner(
+        aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYesBaseload),
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
+        aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
+      ),
+      mockSessionRepo
+    )
+
   "GET /" should {
     "return 200" in {
       val result = staffCostsController.show(fakeRequest)
@@ -61,6 +75,22 @@ class StaffCostsControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=IES' query param is present" in {
       val result = staffCostsController.show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      )
+    }
+
+    "render back link to CYA if come from CYA Baseload" in {
+      val result  = staffCostsBaseloadController.show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/financial-year-end"
+    }
+
+    "return correct backLink when 'from=IES' query param is present Baseload" in {
+      val result = staffCostsBaseloadController.show()(FakeRequest(GET, "/path?from=IES"))
       val html   = contentAsString(result)
 
       html should include(

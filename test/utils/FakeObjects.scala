@@ -311,7 +311,32 @@ trait FakeObjects {
     costsBreakdown = Some("breakdown")
   )
 
-  val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty = AboutYouAndTheProperty(
+  val prefilledAboutYouAndThePropertyYesBaseload: AboutYouAndTheProperty = AboutYouAndTheProperty(
+    Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
+    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(
+      AlternativeContactDetails(prefilledAlternativeAddress)
+    ),
+    Some(PropertyDetails(CurrentPropertyHotel, None)),
+    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(AnswerYes),
+    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some(AnswerYes),
+    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some(AnswerYes),
+    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some(AnswerYes),
+    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some(AnswerYes),
+    Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
+    charityQuestion = Some(AnswerYes),
+    tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
+    renewablesPlant = Some(RenewablesPlant(BaseLoad)),
+    threeYearsConstructed = Some(AnswerYes),
+    costsBreakdown = Some("breakdown")
+  )
+  val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty   = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerYes)),
     Some(
