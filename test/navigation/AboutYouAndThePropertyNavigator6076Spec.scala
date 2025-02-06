@@ -17,9 +17,9 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, ContactDetailsQuestion}
 import models.submissions.common.{AnswerNo, AnswerYes}
-import navigation.identifiers.{BatteriesCapacityId, ContactDetailsQuestionId, CostsBreakdownId, GeneratorCapacityId, PlantAndTechnologyId, RenewablesPlantPageId, ThreeYearsConstructedPageId}
+import navigation.identifiers.{AlternativeContactDetailsId, BatteriesCapacityId, ContactDetailsQuestionId, CostsBreakdownId, GeneratorCapacityId, OccupiersDetailsId, OccupiersDetailsListId, PlantAndTechnologyId, RenewablesPlantPageId, ThreeYearsConstructedPageId}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -45,6 +45,14 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
         .nextPage(ContactDetailsQuestionId, answers)
         .apply(
           answers
+        ) shouldBe controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+    }
+
+    "return a function that goes to property currently used when alternative contact details filled" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AlternativeContactDetailsId, baseFilled6076Session)
+        .apply(
+          baseFilled6076Session
         ) shouldBe controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
     }
 
@@ -114,6 +122,18 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
           aboutYouAndTheProperty6076Session
         ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
         .show()
+    }
+
+    "return a function that goes to renewable plant page when contact details question have been completed with no123" in {
+
+      val answers = baseFilled6076Session.copy(
+        aboutYouAndThePropertyPartTwo = Some(AboutYouAndThePropertyPartTwo(addAnotherPaidService = Some(AnswerYes)))
+      )
+      aboutYouAndThePropertyNavigator
+        .nextPage(OccupiersDetailsListId, answers)
+        .apply(
+          answers
+        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
     }
   }
 }
