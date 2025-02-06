@@ -19,7 +19,7 @@ package utils
 import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
-import models.submissions.aboutfranchisesorlettings.*
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, *}
 import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 import models.submissions.aboutyouandtheproperty.*
@@ -1238,6 +1238,20 @@ trait FakeObjects {
       IndexedSeq(prefilledLettingSectionIncompleteLetting)
     )
 
+  val prefilledIncompleteCateringDetailAboutFranchiseOrLettings6030: AboutFranchisesOrLettings =
+    AboutFranchisesOrLettings(
+      Some(AnswerYes),
+      Some(AnswerYes),
+      0,
+      None,
+      IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
+      Some(IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails)),
+      Some(AnswerYes),
+      0,
+      None,
+      IndexedSeq(prefilledLettingSectionIncompleteLetting)
+    )
+
   val prefilledAboutFranchiseOrLettingsNo6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),
@@ -1318,6 +1332,10 @@ trait FakeObjects {
   val sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail: Session =
     aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
       Some(prefilledIncompleteCateringDetailAboutFranchiseOrLettings6015)
+    )
+  val sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail: Session =
+    aboutYouAndTheProperty6030YesSession.copy(aboutFranchisesOrLettings =
+      Some(prefilledIncompleteCateringDetailAboutFranchiseOrLettings6030)
     )
   val sessionAboutFranchiseOrLetting6015SIncompleteLetting: Session        =
     aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =

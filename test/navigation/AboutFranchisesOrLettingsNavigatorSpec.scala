@@ -147,6 +147,14 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(0))
     }
 
+    "return a function that goes to concession or franchise page when franchise page has been completed yes 6030" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6030YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6030YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(0))
+    }
+
     "return a function that continue with incomplete section when franchise page has been incomplete in" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6015SIncompleteCatering)
@@ -161,6 +169,14 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(
           sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail
         ) shouldBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(0)
+    }
+
+    "return a function that continue with incomplete section when catering detail page has been incomplete in 6030" in {
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail)
+        .apply(
+          sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0)
     }
 
     "return a function that continue with incomplete section when catering detail page has been incomplete in 6010" in {
