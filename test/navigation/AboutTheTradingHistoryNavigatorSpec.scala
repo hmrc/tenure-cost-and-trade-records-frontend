@@ -200,10 +200,10 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes the task lists page when total payroll cost has been completed" in {
+    "return a function that goes the non fuel turnover page when total payroll cost has been completed" in {
       navigator
-        .nextPage(CheckYourAnswersAboutTheTradingHistoryId, sessionAboutYou)
-        .apply(sessionAboutYou) shouldBe controllers.routes.TaskListController.show().withFragment("tradingHistory")
+        .nextPage(AcceptLowMarginFuelCardsId, sessionAboutYou)
+        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show()
     }
 
     // 6020 specific

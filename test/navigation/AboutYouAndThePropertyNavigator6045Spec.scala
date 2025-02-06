@@ -48,6 +48,14 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
         ) shouldBe controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
     }
 
+    "return a function that goes to property currently used when alternative contact details filled" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AlternativeContactDetailsId, baseFilled6045Session)
+        .apply(
+          baseFilled6045Session
+        ) shouldBe controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+    }
+
     "return a function that goes to property currently used when contact details question have been completed with no 6048" in {
 
       val answers = baseFilled6048Session.copy(
