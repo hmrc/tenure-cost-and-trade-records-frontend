@@ -17,9 +17,9 @@
 package controllers.aboutthetradinghistory
 
 import connectors.Audit
-import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -58,6 +58,13 @@ class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec {
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
+    }
+
+    "Redirect when form data submitted" in {
+      val res = changeOccupationAndAccountingController.submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("changeOccupationAndAccountingInfo" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

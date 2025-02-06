@@ -170,5 +170,14 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
+      navigator
+        .nextPage(TenantsAdditionsDisregardedId, session6045)
+        .apply(
+          session6045
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController
+        .show()
+    }
+
   }
 }

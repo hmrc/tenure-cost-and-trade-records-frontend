@@ -90,7 +90,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   def connectedToLandlordRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
-      case Some("no")  =>
+      case _           =>
         answers.forType match {
           case FOR6011                                         =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
@@ -98,11 +98,6 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
             controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
           case _                                               => controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
         }
-      case _           =>
-        logger.warn(
-          s"Navigation for connected to landlord reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for connected to landlord routing")
     }
 
   private def connectedToLandlordDetailsRouting: Session => Call = answers =>
@@ -169,17 +164,12 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
             controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
           case _                 => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show()
         }
-      case Some("no")  =>
+      case _           =>
         answers.forType match {
           case FOR6020 | FOR6030 =>
             controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
           case _                 => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
         }
-      case _           =>
-        logger.warn(
-          s"Navigation for rent include trade services reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for rent include trade services routing")
     }
 
   private def rentFixtureAndFittingsRouting: Session => Call = answers =>
