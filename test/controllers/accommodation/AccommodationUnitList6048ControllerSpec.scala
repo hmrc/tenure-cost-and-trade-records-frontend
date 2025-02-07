@@ -26,8 +26,7 @@ import utils.TestBaseSpec
   */
 class AccommodationUnitList6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage =
-    "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: CYA Accommodation details
+  private val nextPage = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
 
   def accommodationUnitList6048Controller =
     new AccommodationUnitList6048Controller(

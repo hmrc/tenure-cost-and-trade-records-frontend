@@ -23,13 +23,13 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AvailableRooms6048ControllerSpec extends TestBaseSpec {
+class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage = controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url + "?idx=0"
+  private val nextPage = "/send-trade-and-cost-information/task-list#accommodation-details"
 
-  def availableRooms6048Controller =
-    new AvailableRooms6048Controller(
-      availableRoomsView,
+  def accommodationDetailsCYA6048Controller =
+    new AccommodationDetailsCYA6048Controller(
+      accommodationDetailsCYAView,
       accommodationNavigator,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
       mockSessionRepo,
@@ -38,30 +38,26 @@ class AvailableRooms6048ControllerSpec extends TestBaseSpec {
 
   private def validFormData: Seq[(String, String)] =
     Seq(
-      "singleBedrooms"                -> "2",
-      "doubleBedrooms"                -> "4",
-      "bathrooms"                     -> "6",
-      "otherAccommodationDescription" -> "",
-      "maxGuestsNumber"               -> "10"
+      "sectionCompleted" -> "yes"
     )
 
   "GET /" should {
     "return 200" in {
-      val result = availableRooms6048Controller.show(fakeRequest)
+      val result = accommodationDetailsCYA6048Controller.show(fakeRequest)
       status(result) shouldBe OK
     }
   }
 
-  "SUBMIT /" should {
+  "POST /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = availableRooms6048Controller.submit(
+      val res = accommodationDetailsCYA6048Controller.submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "save the form data and redirect to the next page" in {
-      val res = availableRooms6048Controller.submit(
+      val res = accommodationDetailsCYA6048Controller.submit(
         fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER

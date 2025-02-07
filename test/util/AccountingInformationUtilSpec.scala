@@ -28,10 +28,8 @@ import java.time.{LocalDate, MonthDay, YearMonth}
   */
 class AccountingInformationUtilSpec extends AnyFlatSpec with should.Matchers with Logging:
 
-  private val today    = LocalDate.now
-  private def yearNow  = YearMonth.now.getYear
-  private def monthNow = YearMonth.now.getMonthValue
-  private def dayNow   = today.getDayOfMonth
+  private val today   = LocalDate.now
+  private def yearNow = YearMonth.now.getYear
 
   private val financialYearEnd = DayMonthsDuration(5, 4)
 

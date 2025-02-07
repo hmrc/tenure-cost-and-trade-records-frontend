@@ -32,10 +32,9 @@ class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
     AccommodationLettingHistoryPageId    -> (_ => accommodation.routes.HighSeasonTariff6048Controller.show),
     HighSeasonTariffPageId               -> (_ => accommodation.routes.IncludedTariffItems6048Controller.show),
     IncludedTariffItemsPageId            -> (_ => accommodation.routes.AccommodationUnitList6048Controller.show),
-    AccommodationUnitListPageId          -> (_ =>
+    AccommodationUnitListPageId          -> (_ => accommodation.routes.AccommodationDetailsCYA6048Controller.show),
+    AddedMaximumAccommodationUnitsPageId -> (_ => accommodation.routes.AccommodationDetailsCYA6048Controller.show),
+    AccommodationDetailsCYAPageId        -> (_ =>
       controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ), // TODO: CYA Accommodation details
-    AddedMaximumAccommodationUnitsPageId -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("accommodation-details")
-    ) // TODO: CYA Accommodation details
+    )
   )

@@ -1814,6 +1814,7 @@ error.accommodation.addMoreAccommodationUnits.required = Select yes if you would
 accommodation.removeLastUnit.heading = Are you sure you want to remove ’{0}’?
 accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ’{0}’ you will be returned to the start of this section.
 error.accommodation.removeLastUnit.required = Select yes if you would like to remove the only accommodation unit
+accommodation.CYA.heading = Check your answers - accommodation details
 
 # 6010 TYPES
 ##############################

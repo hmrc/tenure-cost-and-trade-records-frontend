@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,7 @@ import utils.TestBaseSpec
   */
 class AddedMaximumAccommodationUnits6048ControllerSpec extends TestBaseSpec {
 
-  private val nextPage =
-    "/send-trade-and-cost-information/task-list#accommodation-details" // TODO: CYA Accommodation details
+  private val nextPage = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
 
   def addedMaximumAccommodationUnits6048Controller =
     new AddedMaximumAccommodationUnits6048Controller(

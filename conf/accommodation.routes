@@ -22,3 +22,6 @@ POST        /accommodation-unit-remove                      controllers.accommod
 
 GET         /added-maximum-accommodation-units              controllers.accommodation.AddedMaximumAccommodationUnits6048Controller.show
 POST        /added-maximum-accommodation-units              controllers.accommodation.AddedMaximumAccommodationUnits6048Controller.submit
+
+GET         /check-your-answers-accommodation-details       controllers.accommodation.AccommodationDetailsCYA6048Controller.show
+POST        /check-your-answers-accommodation-details       controllers.accommodation.AccommodationDetailsCYA6048Controller.submit
