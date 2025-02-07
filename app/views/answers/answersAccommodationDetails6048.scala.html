@@ -35,3 +35,42 @@
 }
 
 <h2 class="govuk-heading-m">@messages("label.section.accommodation")</h2>
+
+@sectionAnswers.answers.fold(List.empty)(_.accommodationUnits).zipWithIndex.map { case (accommodationUnit, index) =>
+
+    @govukSummaryList(
+        SummaryList(
+            card = Some(Card(
+                title = Some(CardTitle(Text(messages("accommodation.CYA.unit", index + 1)))),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = s"${controllers.accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
+                            content = Text(messages("label.remove"))
+                        )
+                    ),
+                    classes = "govuk-!-font-weight-regular"
+                ))
+            )),
+            rows = sectionAnswers.row("accommodation.CYA.unitDetails",
+                _ => Seq(accommodationUnit.unitName, accommodationUnit.unitType)
+                .map(_.escapedHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
+                Call("GET", s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index"), "unitName",
+                ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.availableRooms",
+                        _ => accommodationUnit.availableRooms.map(r =>
+                            Seq[String](
+                                messages("accommodation.CYA.singleBedrooms", r.singleBedrooms.toString),
+                                messages("accommodation.CYA.doubleBedrooms", r.doubleBedrooms.toString),
+                                messages("accommodation.CYA.bathrooms", r.bathrooms.toString),
+                                r.otherAccommodationDescription.getOrElse("").escapedHtml,
+                                messages("accommodation.CYA.maxGuestsNumber", r.maxGuestsNumber.toString)
+                            )
+                            .filterNot(_.isEmpty).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
+                        ),
+                        Call("GET", s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=$index"), "singleBedrooms",
+                        ("valueAsHtml", _ => None))
+        )
+    )
+
+}

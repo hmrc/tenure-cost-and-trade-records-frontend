@@ -19,9 +19,9 @@ package controllers.accommodation
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.accommodation.AccommodationDetailsCYA6048Form.accommodationDetailsCYA6048Form
-import models.submissions.accommodation.AccommodationDetails
+import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit}
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswerYes, AnswersYesNo}
 import navigation.AccommodationNavigator
 import navigation.identifiers.AccommodationDetailsCYAPageId
 import play.api.Logging
@@ -62,24 +62,35 @@ class AccommodationDetailsCYA6048Controller @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       accommodationDetailsCYA6048Form,
       formWithErrors => BadRequest(accommodationDetailsCYAView(formWithErrors)),
-      data => {
-        val updatedData = updateAccommodationDetails(
-          _.copy(
-            sectionCompleted = Some(data)
+      data =>
+        if accommodationUnits.isEmpty && data == AnswerYes then
+          BadRequest(
+            accommodationDetailsCYAView(
+              accommodationDetailsCYA6048Form.withError("sectionCompleted", "error.accommodationUnits.isEmpty")
+            )
           )
-        )
+        else
+          val updatedData = updateAccommodationDetails(
+            _.copy(
+              sectionCompleted = Some(data)
+            )
+          )
 
-        session
-          .saveOrUpdate(updatedData)
-          .map { _ =>
-            Redirect(navigator.nextPage(AccommodationDetailsCYAPageId, updatedData).apply(updatedData))
-          }
-      }
+          session
+            .saveOrUpdate(updatedData)
+            .map { _ =>
+              Redirect(navigator.nextPage(AccommodationDetailsCYAPageId, updatedData).apply(updatedData))
+            }
     )
   }
 
   private def accommodationDetails(implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+
+  private def accommodationUnits(implicit
+    request: SessionRequest[AnyContent]
+  ): List[AccommodationUnit] =
+    accommodationDetails.fold(List.empty)(_.accommodationUnits)
 
 }

@@ -26,6 +26,8 @@ import javax.inject.Inject
 
 class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
 
+  override def cyaPage: Option[Call] = Some(accommodation.routes.AccommodationDetailsCYA6048Controller.show)
+
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AccommodationUnitPageId              -> (_ => accommodation.routes.AvailableRooms6048Controller.show),
     AvailableRoomsPageId                 -> (_ => accommodation.routes.AccommodationLettingHistory6048Controller.show),
