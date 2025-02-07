@@ -124,7 +124,7 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to renewable plant page when contact details question have been completed with no123" in {
+    "return a function that goes to occupier details page when occupier details list have been completed with yes" in {
 
       val answers = baseFilled6076Session.copy(
         aboutYouAndThePropertyPartTwo = Some(AboutYouAndThePropertyPartTwo(addAnotherPaidService = Some(AnswerYes)))

@@ -51,6 +51,13 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "render back link to CYA if come from CYA" in {
+
+      val result  = telecomMastLettingController().show(Some(0))(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-franchise-or-lettings")
+    }
   }
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
