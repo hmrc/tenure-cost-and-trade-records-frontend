@@ -1822,6 +1822,15 @@ accommodation.CYA.singleBedrooms = {0} single bedrooms
 accommodation.CYA.doubleBedrooms = {0} double bedrooms
 accommodation.CYA.bathrooms = {0} bathrooms
 accommodation.CYA.maxGuestsNumber = Max {0} guests
+accommodation.CYA.lettingHistory = Letting history
+accommodation.CYA.lettingHistory.financialYearEnd = Year ending {0}
+accommodation.CYA.lettingHistory.nightsAvailableToLet = {0} nights available for commercial letting
+accommodation.CYA.lettingHistory.nightsLet = {0} nights let
+accommodation.CYA.lettingHistory.weeksAvailableForPersonalUse = {0} weeks personal use
+accommodation.CYA.highSeason = High season
+accommodation.CYA.highSeason.period = {0} to {1}
+accommodation.CYA.includedItems = Included items
+accommodation.CYA.includedItems.none = None
 error.accommodationUnits.isEmpty = You must include details of at least one self-catering holiday accommodation unit.
 
 # 6010 TYPES

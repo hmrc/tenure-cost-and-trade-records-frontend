@@ -16,7 +16,6 @@
 
 @import actions.SessionRequest
 @import controllers.accommodation
-@import models.submissions.common.AnswerYes
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
 @import util.{DateUtilLocalised, SectionAnswersRowBuilder}
@@ -34,9 +33,21 @@
     SectionAnswersRowBuilder(request.sessionData.accommodationDetails)
 }
 
+@accommodationUnits = @{
+    sectionAnswers.answers.map(_.accommodationUnits).getOrElse(List.empty)
+}
+
+@unitsListDescription = @{
+    accommodationUnits.size match {
+        case 0 => messages("accommodation.unitList.heading.removedAll")
+        case 1 => messages("accommodation.unitList.heading.singular")
+        case size => messages("accommodation.unitList.heading.plural", size)
+    }
+}
+
 <h2 class="govuk-heading-m">@messages("label.section.accommodation")</h2>
 
-@sectionAnswers.answers.fold(List.empty)(_.accommodationUnits).zipWithIndex.map { case (accommodationUnit, index) =>
+@accommodationUnits.zipWithIndex.map { case (accommodationUnit, index) =>
 
     @govukSummaryList(
         SummaryList(
@@ -45,7 +56,7 @@
                 actions = Some(Actions(
                     items = Seq(
                         ActionItem(
-                            href = s"${controllers.accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
+                            href = s"${accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
                             content = Text(messages("label.remove"))
                         )
                     ),
@@ -55,7 +66,7 @@
             rows = sectionAnswers.row("accommodation.CYA.unitDetails",
                 _ => Seq(accommodationUnit.unitName, accommodationUnit.unitType)
                 .map(_.escapedHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
-                Call("GET", s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index"), "unitName",
+                Call("GET", s"${accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index"), "unitName",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("accommodation.CYA.availableRooms",
                         _ => accommodationUnit.availableRooms.map(r =>
@@ -68,9 +79,49 @@
                             )
                             .filterNot(_.isEmpty).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
                         ),
-                        Call("GET", s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=$index"), "singleBedrooms",
+                        Call("GET", s"${accommodation.routes.AvailableRooms6048Controller.show.url}?idx=$index"), "singleBedrooms",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.lettingHistory",
+                        _ => accommodationUnit.lettingHistory.map(
+                            _.map(
+                                l => Seq(
+                                    messages("accommodation.CYA.lettingHistory.financialYearEnd", dateUtil.formatDate(l.financialYearEnd)),
+                                    messages("accommodation.CYA.lettingHistory.nightsAvailableToLet", l.nightsAvailableToLet.getOrElse(0)),
+                                    messages("accommodation.CYA.lettingHistory.nightsLet", l.nightsLet.getOrElse(0)),
+                                    messages("accommodation.CYA.lettingHistory.weeksAvailableForPersonalUse", l.weeksAvailableForPersonalUse.getOrElse(0))
+                                ).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
+                            ).mkString("""<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">""")
+                        ),
+                        Call("GET", s"${accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=$index"), "lettingHistory[0].nightsAvailableToLet",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.highSeason",
+                        _ => accommodationUnit.highSeasonTariff.map(t =>
+                            messages("accommodation.CYA.highSeason.period", dateUtil.formatDate(t.fromDate), dateUtil.formatDate(t.toDate))
+                        ),
+                        Call("GET", s"${accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=$index"), "fromDate.day",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.includedItems",
+                        _ => accommodationUnit.includedTariffItems.map(
+                            _.map(_.toString).map(item =>
+                                if(item == "none") messages("accommodation.CYA.includedItems.none")
+                                else messages(s"accommodation.includedTariffItems.value.$item")
+                            )
+                            .mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
+                        ),
+                        Call("GET", s"${accommodation.routes.IncludedTariffItems6048Controller.show.url}?idx=$index"), "",
                         ("valueAsHtml", _ => None))
         )
     )
 
 }
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            Key(
+                content = Text(unitsListDescription),
+                classes = "govuk-!-width-full"
+            )
+        )
+    )
+))
