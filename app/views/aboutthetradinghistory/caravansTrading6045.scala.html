@@ -21,6 +21,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 
 @this(
@@ -31,7 +33,8 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -46,7 +49,7 @@
     }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "",finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -61,7 +64,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -70,7 +73,7 @@
     )
 }
 
-@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int) = @{
+@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey))
@@ -81,7 +84,7 @@
                     classes = s"govuk-input--width-$styleWidth",
                     attributes = Map(
                         "maxlength" -> maxLength.toString,
-                        "aria-label" -> messages(labelKey)
+                        "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                     ),
                     suffix = Some(PrefixOrSuffix(
                         content = Text(messages(suffixKey))
@@ -145,9 +148,9 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2),
-                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravans.grossReceipts", "turnover.6045.caravans.grossReceipts.hint"),
-                            numericRow(s"turnover[$idx].vans", "turnover.6045.caravans.vans", "turnover.6045.vans.suffix", 4, 6)
+                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2, finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravans.grossReceipts", "turnover.6045.caravans.grossReceipts.hint", finYearEnd = finYearEnd),
+                            numericRow(s"turnover[$idx].vans", "turnover.6045.caravans.vans", "turnover.6045.vans.suffix", 4, 6, finYearEnd = finYearEnd)
                         )
                     ))
                 </td>

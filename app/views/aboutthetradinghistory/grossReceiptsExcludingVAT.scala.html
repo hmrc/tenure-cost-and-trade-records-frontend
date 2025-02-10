@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits._
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
 
 @this(
         layout: Layout,
@@ -27,7 +28,8 @@
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -123,7 +125,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.electricitySales")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.electricitySales", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].electricitySales"))
                                         )
@@ -143,7 +145,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.feedInTariff")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.feedInTariff", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].feedInTariff"))
                                         )
@@ -163,7 +165,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.rocBuyout")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.rocBuyout", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].rocBuyout"))
                                         )
@@ -183,7 +185,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.rocRecycle")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.rocRecycle", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].rocRecycle"))
                                         )
@@ -203,7 +205,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.contractForDifference")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.contractForDifference", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].contractForDifference"))
                                         )
@@ -223,7 +225,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.capacityMarket")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.capacityMarket", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].capacityMarket"))
                                         )
@@ -243,7 +245,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.balancingServices")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.balancingServices", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].balancingServices"))
                                         )
@@ -263,7 +265,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("grossReceipts.embeddedBenefits")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.embeddedBenefits", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"grossReceiptsExcludingVAT[$idx].embeddedBenefits"))
                                         )

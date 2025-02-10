@@ -20,6 +20,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -28,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[Seq[AdministrativeCosts6048]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
@@ -44,7 +47,7 @@
 }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -58,7 +61,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -102,11 +105,11 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees.hint"),
-                            turnoverRow(s"turnover[$idx].telephoneBroadbandStationeryPostage", "turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage"),
-                            turnoverRow(s"turnover[$idx].bookingAgency", "turnover.6048.administrativeCosts.bookingAgency", "turnover.6048.administrativeCosts.bookingAgency.hint"),
-                            turnoverRow(s"turnover[$idx].advertising", "turnover.6048.administrativeCosts.advertising", "turnover.6048.administrativeCosts.advertising.hint"),
-                            turnoverRow(s"turnover[$idx].printing", "turnover.6048.administrativeCosts.printing", "turnover.6048.administrativeCosts.printing.hint"),
+                            turnoverRow(s"turnover[$idx].subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees.hint", finYearEnd = finYearEnd ),
+                            turnoverRow(s"turnover[$idx].telephoneBroadbandStationeryPostage", "turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].bookingAgency", "turnover.6048.administrativeCosts.bookingAgency", "turnover.6048.administrativeCosts.bookingAgency.hint", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].advertising", "turnover.6048.administrativeCosts.advertising", "turnover.6048.administrativeCosts.advertising.hint", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].printing", "turnover.6048.administrativeCosts.printing", "turnover.6048.administrativeCosts.printing.hint", finYearEnd = finYearEnd),
                             Seq(
                                 TableRow(content = HtmlContent(rowLabel("turnover.6048.administrativeCosts.total"))),
                                 TableRow(content = HtmlContent(totalContent(idx)))

@@ -23,6 +23,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -32,7 +34,8 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         hmrcCharacterCount: HmrcCharacterCount,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[(Seq[OperationalCosts6048], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
@@ -50,7 +53,7 @@
 }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "", excludingVAT: Boolean = true) = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", excludingVAT: Boolean = true, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty), excludingVAT))
@@ -64,8 +67,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
-                        )
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd))
                     ).withFormField(form(formField))
                 )
             )
@@ -138,12 +140,12 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"operationalCostsSeq.turnover[$idx].energyBills", "turnover.6048.operationalCosts.energyBills", "turnover.6048.operationalCosts.energyBills.hint"),
-                            turnoverRow(s"operationalCostsSeq.turnover[$idx].laundryCleaning", "turnover.6048.operationalCosts.laundryCleaning"),
-                            turnoverRow(s"operationalCostsSeq.turnover[$idx].repairsRenewalsMaintenance", "turnover.6048.operationalCosts.repairsRenewalsMaintenance"),
-                            turnoverRow(s"operationalCostsSeq.turnover[$idx].tvLicences", "turnover.6048.operationalCosts.tvLicences", "turnover.6048.operationalCosts.tvLicences.hint", excludingVAT = false),
-                            turnoverRow(s"operationalCostsSeq.turnover[$idx].travellingAndMotorExpenses", "turnover.6048.operationalCosts.travellingAndMotorExpenses"),
-                            turnoverRow(s"operationalCostsSeq.turnover[$idx].other", "turnover.6048.operationalCosts.other", "turnover.6048.operationalCosts.other.hint"),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].energyBills", "turnover.6048.operationalCosts.energyBills", "turnover.6048.operationalCosts.energyBills.hint", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].laundryCleaning", "turnover.6048.operationalCosts.laundryCleaning", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].repairsRenewalsMaintenance", "turnover.6048.operationalCosts.repairsRenewalsMaintenance", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].tvLicences", "turnover.6048.operationalCosts.tvLicences", "turnover.6048.operationalCosts.tvLicences.hint", excludingVAT = false, finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].travellingAndMotorExpenses", "turnover.6048.operationalCosts.travellingAndMotorExpenses", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalCostsSeq.turnover[$idx].other", "turnover.6048.operationalCosts.other", "turnover.6048.operationalCosts.other.hint", finYearEnd = finYearEnd),
                             Seq(
                                 TableRow(),
                                 TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))

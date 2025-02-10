@@ -20,14 +20,17 @@
 @import util.DateUtilLocalised
 @import actions.SessionRequest
 @import models.pages.Summary
+@import util.AccessibilityUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[BunkeredFuelSold]], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
@@ -85,7 +88,7 @@
                                             value = form(s"bunkeredFuelSold-$idx").value,
                                             classes = "govuk-input--width-5",
                                             attributes = Map(
-                                                "aria-label" -> messages("bunkeredFuelSold.bunkeredFuel.label")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("bunkeredFuelSold.bunkeredFuel.label", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.litres"))

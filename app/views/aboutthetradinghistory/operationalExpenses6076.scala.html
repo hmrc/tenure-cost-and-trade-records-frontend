@@ -23,6 +23,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -31,7 +33,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         hmrcCharacterCount: HmrcCharacterCount,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[(Seq[OperationalExpenses], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
@@ -46,7 +49,7 @@
 }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "", rowStyle: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", rowStyle: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty))),
@@ -61,7 +64,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -134,12 +137,12 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].advertising", "turnover.6076.expenses.advertising"),
-                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].administration", "turnover.6076.expenses.administration"),
-                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].insurance", "turnover.6076.expenses.insurance"),
-                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].legalFees", "turnover.6076.expenses.legalFees"),
-                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].interest", "turnover.6076.expenses.interest"),
-                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].other", "turnover.6076.expenses.other", "turnover.6076.expenses.other.hint", "no-border-bottom"),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].advertising", "turnover.6076.expenses.advertising", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].administration", "turnover.6076.expenses.administration", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].insurance", "turnover.6076.expenses.insurance", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].legalFees", "turnover.6076.expenses.legalFees", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].interest", "turnover.6076.expenses.interest", finYearEnd = finYearEnd),
+                            turnoverRow(s"operationalExpensesSeq.turnover[$idx].other", "turnover.6076.expenses.other", "turnover.6076.expenses.other.hint", "no-border-bottom", finYearEnd = finYearEnd),
                             Seq(
                                 TableRow(),
                                 TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))

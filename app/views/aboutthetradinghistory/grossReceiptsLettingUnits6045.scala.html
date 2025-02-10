@@ -19,6 +19,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 
 @this(
@@ -28,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -45,7 +48,7 @@
         <span class="govuk-!-font-weight-bold">@messages("turnover.6045.lettingUnits.numberOfUnits")</span>
     </p>
 }
-@turnoverRow(formField: String, labelKey: String) = @{
+@turnoverRow(formField: String, labelKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey))
@@ -60,7 +63,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -107,7 +110,7 @@
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "maxlength" -> "2",
-                                                "aria-label" -> messages("turnover.tradingPeriod")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("turnover.tradingPeriod", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("turnover.weeks"))
@@ -116,7 +119,7 @@
                                     )
                                 )
                             ),
-                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.lettingUnits.grossReceipts"),
+                            turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.lettingUnits.grossReceipts", finYearEnd),
                             Seq(
                                 TableRow(
                                     content = HtmlContent(numberOfUnits)
@@ -128,7 +131,7 @@
                                             classes = "govuk-input--width-5",
                                             attributes = Map(
                                               "maxlength" -> "5",
-                                              "aria-label" -> messages("turnover.6045.lettingUnits.numberOfUnits.label")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("turnover.6045.lettingUnits.numberOfUnits.label", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.units"))

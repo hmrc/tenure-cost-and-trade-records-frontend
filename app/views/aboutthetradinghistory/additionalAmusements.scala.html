@@ -19,6 +19,8 @@
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.AdditionalAmusements
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
 
@@ -28,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         dateUtil: DateUtilLocalised,
-        govukInsetText: GovukInsetText
+        govukInsetText: GovukInsetText,
+        accessibilityUtil: AccessibilityUtil
 
 )
 
@@ -36,7 +39,7 @@
 @(form: Form[Seq[AdditionalAmusements]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: Option[PrefixOrSuffix] = None) = @{
+@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: Option[PrefixOrSuffix] = None,  finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = Text(messages(labelKey))
@@ -47,7 +50,7 @@
                     classes = classes,
                     attributes = Map(
                         "maxlength" -> "13",
-                        "aria-label" -> messages(labelKey)
+                        "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                     ),
                     prefix = prefix
                 ).withFormField(form(formField)))
@@ -98,7 +101,7 @@
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "maxlength" -> "2",
-                                                "aria-label" -> messages("additionalActivities.common.tradingPeriod")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("additionalActivities.common.tradingPeriod", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.weeks"))
@@ -111,7 +114,8 @@
                                 s"additionalAmusements[$idx].receipts",
                                 "additionalAmusements.receipts.label",
                                 "govuk-input--width-5",
-                                PrefixOrSuffix(content = Text(messages("label.pound")))))))
+                                PrefixOrSuffix(content = Text(messages("label.pound"))),
+                                finYearEnd))))
                 </td>
                 }
                 </tr>

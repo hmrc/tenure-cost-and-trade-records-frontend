@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -27,9 +28,9 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
-
 
 @(form: Form[Seq[FixedOperatingExpenses]], fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
@@ -84,7 +85,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("fixedOperatingExpenses.rent")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.rent", finYearEnd)
                                             ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].rent")))
                                     )
@@ -100,7 +101,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("fixedOperatingExpenses.businessRates")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.businessRates", finYearEnd)
                                             ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].business-rates")))
                                     )
@@ -116,7 +117,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("fixedOperatingExpenses.insurance")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.insurance", finYearEnd)
                                             ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].insurance")))
                                     )
@@ -132,8 +133,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("fixedOperatingExpenses.loanInterest")
-                                            ),
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.loanInterest", finYearEnd)),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].loan-interest")))
                                     )
                                 )
@@ -148,7 +148,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("fixedOperatingExpenses.depreciation")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.depreciation", finYearEnd)
                                             ),
                                         ).withFormField(form(s"fixedOperatingExpenses[$idx].depreciation")))
                                     )

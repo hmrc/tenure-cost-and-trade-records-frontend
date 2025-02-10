@@ -21,6 +21,8 @@
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -30,7 +32,8 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         hmrcCharacterCount: HmrcCharacterCount,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -43,7 +46,7 @@
     </p>
 }
 
-@turnoverRow(formField: String, labelKey: String) = @{
+@turnoverRow(formField: String, labelKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey))
@@ -57,7 +60,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -94,7 +97,7 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"headOfficeExpensesSeq.turnover[$idx].headOfficeExpenses", "turnover.6076.headOfficeExpenses")
+                            turnoverRow(s"headOfficeExpensesSeq.turnover[$idx].headOfficeExpenses", "turnover.6076.headOfficeExpenses", finYearEnd)
                         )
                     ))
                 </td>

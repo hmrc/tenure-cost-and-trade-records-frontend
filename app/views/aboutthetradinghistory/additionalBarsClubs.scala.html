@@ -19,6 +19,8 @@
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.AdditionalBarsClubs
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
 
@@ -28,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         dateUtil: DateUtilLocalised,
-        govukInsetText: GovukInsetText
+        govukInsetText: GovukInsetText,
+        accessibilityUtil: AccessibilityUtil
 
 )
 
@@ -42,7 +45,7 @@
     @hint.map { hint => <p class="govuk-hint">@messages(hint)</p> }
     }
 
-@turnoverRow(formField: String, labelKey: String, hint: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hint: String = "",  finYearEnd: LocalDate ) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hint).filterNot(_.isEmpty)))
@@ -54,7 +57,7 @@
                         prefix = PrefixOrSuffix(content = Text(messages("label.pound"))),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))))))
 }
@@ -104,7 +107,7 @@
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "maxlength" -> "2",
-                                                "aria-label" -> messages("additionalActivities.common.tradingPeriod")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("additionalActivities.common.tradingPeriod", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.weeks"))
@@ -115,20 +118,20 @@
                             ),
                             turnoverRow(
                                 s"additionalBarsClubs[$idx].grossBar",
-                                "additionalBarsClubs.grossBar.label"),
+                                "additionalBarsClubs.grossBar.label", finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalBarsClubs[$idx].costBar",
-                                "additionalBarsClubs.costBar.label"),
+                                "additionalBarsClubs.costBar.label", finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalBarsClubs[$idx].grossClubMembership",
-                                "additionalBarsClubs.grossClubMembership.label"),
+                                "additionalBarsClubs.grossClubMembership.label", finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalBarsClubs[$idx].grossFromSeparate",
-                                "additionalBarsClubs.grossFromSeparate.label"),
+                                "additionalBarsClubs.grossFromSeparate.label", finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalBarsClubs[$idx].costOfEntertainment",
                                 "additionalBarsClubs.costOfEntertainment.label",
-                                "additionalBarsClubs.costOfEntertainment.hint"
+                                "additionalBarsClubs.costOfEntertainment.hint", finYearEnd = finYearEnd
                             )
                         )))
                 </td>

@@ -19,6 +19,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 
 @this(
@@ -28,8 +30,10 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[TurnoverSection6020]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
@@ -43,7 +47,7 @@
     }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate ) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -57,7 +61,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -94,12 +98,12 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].shop", "turnover.6020.shop", "turnover.6020.shop.hint"),
-                            turnoverRow(s"turnover[$idx].carWash", "turnover.6020.carWash"),
-                            turnoverRow(s"turnover[$idx].jetWash", "turnover.6020.jetWash"),
-                            turnoverRow(s"turnover[$idx].lottery", "turnover.6020.lottery", "turnover.6020.lottery.hint"),
-                            turnoverRow(s"turnover[$idx].payPointOrZone", "turnover.6020.payPointOrZone"),
-                            turnoverRow(s"turnover[$idx].otherIncome", "turnover.6020.otherIncome")
+                            turnoverRow(s"turnover[$idx].shop", "turnover.6020.shop", "turnover.6020.shop.hint", finYearEnd),
+                            turnoverRow(s"turnover[$idx].carWash", "turnover.6020.carWash", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].jetWash", "turnover.6020.jetWash", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].lottery", "turnover.6020.lottery", "turnover.6020.lottery.hint", finYearEnd),
+                            turnoverRow(s"turnover[$idx].payPointOrZone", "turnover.6020.payPointOrZone", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].otherIncome", "turnover.6020.otherIncome", finYearEnd = finYearEnd)
                         )
                     ))
                 </td>

@@ -19,6 +19,8 @@
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.AdditionalShops
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
 
@@ -28,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         dateUtil: DateUtilLocalised,
-        govukInsetText: GovukInsetText
+        govukInsetText: GovukInsetText,
+        accessibilityUtil: AccessibilityUtil
 
 )
 
@@ -39,7 +42,7 @@
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
 }
 
-@turnoverRow(formField: String, labelKey: String) = @{
+@turnoverRow(formField: String, labelKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey))
@@ -51,7 +54,7 @@
                         prefix = PrefixOrSuffix(content = Text(messages("label.pound"))),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))))))
 }
@@ -99,7 +102,7 @@
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "maxlength" -> "2",
-                                                "aria-label" -> messages("additionalActivities.common.tradingPeriod")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("additionalActivities.common.tradingPeriod", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.weeks"))
@@ -110,10 +113,12 @@
                             ),
                             turnoverRow(
                                 s"additionalShops[$idx].grossReceipts",
-                                "additionalActivities.common.grossReceipts"),
+                                "additionalActivities.common.grossReceipts",
+                                finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalShops[$idx].costOfPurchase",
-                                "additionalActivities.common.costOfPurchase"))))
+                                "additionalActivities.common.costOfPurchase",
+                                finYearEnd = finYearEnd))))
                 </td>
                 }
                 </tr>

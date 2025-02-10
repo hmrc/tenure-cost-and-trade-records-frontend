@@ -24,6 +24,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -32,7 +33,8 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         hmrcCharacterCount: HmrcCharacterCount,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[VariableOperatingExpensesSections], fromLocation:String = "")(implicit request: SessionRequest[?], messages: Messages)
@@ -63,7 +65,9 @@
             errorMessage = form.errors.asTextErrorMessageForField("otherExpensesDetails"),
             label = Label(
                 content = Text(messages("variableOperatingExpenses.otherExpensesDetails"))
-            )
+            ),
+            attributes = Map(
+                "aria-label" -> messages("variableOperatingExpenses.other"))
         ).withFormField(form("otherExpensesDetails"))
     )
 }
@@ -96,7 +100,7 @@
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = fromLocation match {
-        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+        case "TL" => s"${controllers.routes.TaskListController.show().url}#turnover"
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
         case _ =>controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show().url
     },
@@ -134,7 +138,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.energyAndUtilities")
+                                                "aria-label" ->accessibilityUtil.ariaBuilder("variableOperatingExpenses.energyAndUtilities", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].energy-and-utilities")))
                                     )
@@ -150,7 +154,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.cleaningAndLaundry")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.cleaningAndLaundry", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].cleaning-and-laundry")))
                                     )
@@ -166,7 +170,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.buildingMaintenanceAndRepairs")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.buildingMaintenanceAndRepairs", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].building-maintenance-and-repairs")))
                                     )
@@ -182,8 +186,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.fixturesFittingsAndEquipment")
-                                            ),
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.fixturesFittingsAndEquipment", finYearEnd)),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].fixtures-fittings-and-equipment")))
                                     )
                                 )
@@ -198,7 +201,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.advertisingAndPromotions")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.advertisingAndPromotions", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].advertising-and-promotions")))
                                     )
@@ -214,7 +217,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.administrationAndSundries")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.administrationAndSundries", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].administration-and-sundries")))
                                     )
@@ -230,7 +233,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.entertainment")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.entertainment", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].entertainment")))
                                     )
@@ -249,7 +252,7 @@
                                             )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" -> messages("variableOperatingExpenses.other")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.other", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].other")))
                                     ),

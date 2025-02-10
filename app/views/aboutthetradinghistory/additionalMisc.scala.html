@@ -24,6 +24,8 @@
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
 
@@ -35,6 +37,7 @@
         dateUtil: DateUtilLocalised,
         govukInsetText: GovukInsetText,
         hmrcCharacterCount: HmrcCharacterCount,
+        accessibilityUtil: AccessibilityUtil
 
 )
 
@@ -61,7 +64,7 @@
 
 @poundPrefix = @{PrefixOrSuffix(content = Text(messages("label.pound")))}
 
-@turnoverRow(formField: String, labelKey: String, hint: String = "", classes: String = "", prefix: Option[PrefixOrSuffix] = poundPrefix, inputClasses: String = "", explanationMsg: String = "")  = @{
+@turnoverRow(formField: String, labelKey: String, hint: String = "", classes: String = "", prefix: Option[PrefixOrSuffix] = poundPrefix, inputClasses: String = "", explanationMsg: String = "", finYearEnd: LocalDate)  = @{
 
     Seq(
         TableRow(
@@ -75,7 +78,7 @@
                         prefix = prefix,
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)),
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)),
                         classes = inputClasses
                     ).withFormField(form(formField))
                 )
@@ -204,7 +207,7 @@
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "maxlength" -> "2",
-                                                "aria-label" -> messages("additionalActivities.common.tradingPeriod")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("additionalActivities.common.tradingPeriod", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.weeks"))
@@ -216,7 +219,8 @@
                             turnoverRow(
                                 s"additionalMisc.[$idx].leisureReceipts",
                                 "additionalMisc.leisureReceipts.label", "",
-                                "no-border-bottom"),
+                                "no-border-bottom",
+                                finYearEnd = finYearEnd),
                             turnoverRowDetails(
                                 idx,
                                 "details.leisureReceiptsDetails",
@@ -225,16 +229,19 @@
                             turnoverRow(
                                 s"additionalMisc.[$idx].winterStorageReceipts",
                                 "additionalMisc.winterStorageReceipts.label",
-                                classes = "no-border-bottom"),
+                                classes = "no-border-bottom",
+                                finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalMisc.[$idx].numberOfVans",
                                 "additionalMisc.numberOfVans.label",
                                 prefix = None,
-                                inputClasses = "govuk-input--width-3"),
+                                inputClasses = "govuk-input--width-3",
+                                finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalMisc.[$idx].otherActivitiesReceipts",
                                 "additionalMisc.otherActivitiesReceipts.label",
-                                classes = "no-border-bottom"),
+                                classes = "no-border-bottom",
+                                finYearEnd = finYearEnd),
                           turnoverRowDetailsOtherActivities(
                               idx,
                               "details.otherActivitiesReceiptsDetails",
@@ -244,11 +251,13 @@
                                 s"additionalMisc.[$idx].otherServicesReceipts",
                                 "additionalMisc.otherServicesReceipts.label",
                                 "additionalMisc.otherServicesReceipts.hint",
-                                explanationMsg = "additionalMisc.otherServicesReceipts.label.explain"),
+                                explanationMsg = "additionalMisc.otherServicesReceipts.label.explain",
+                                finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"additionalMisc.[$idx].bottledGasReceipts",
                                 "additionalMisc.bottledGasReceipts.label",
-                                explanationMsg = "additionalMisc.bottledGasReceipts.explain")
+                                explanationMsg = "additionalMisc.bottledGasReceipts.explain",
+                                finYearEnd = finYearEnd)
                         )))
                 </td>
                 }

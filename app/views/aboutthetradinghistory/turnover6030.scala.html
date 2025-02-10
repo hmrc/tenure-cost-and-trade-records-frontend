@@ -19,6 +19,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,8 +28,10 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[TurnoverSection6030]],fromLocation:String="")(implicit request: SessionRequest[?], messages: Messages)
 
@@ -45,7 +49,7 @@
     </p>
 }
 
-    @tradingPeriodRow(idx: Int) = @{
+    @tradingPeriodRow(idx: Int, finYearEnd: LocalDate) = @{
         Seq(
             TableRow(
                 content = Text(messages("turnover.tradingPeriod"))
@@ -59,7 +63,7 @@
                         classes = "govuk-input--width-2",
                         attributes = Map(
                             "maxlength" -> "2",
-                            "aria-label" -> messages("turnover.tradingPeriod")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.tradingPeriod", finYearEnd)
                         ),
                         suffix = Some(PrefixOrSuffix(
                             content = Text(messages("turnover.weeks"))
@@ -70,7 +74,7 @@
         )
     }
 
-    @grossIncomeRow(idx: Int) = @{
+    @grossIncomeRow(idx: Int, finYearEnd: LocalDate) = @{
         Seq(
             TableRow(
                 content = HtmlContent(grossIncomeHeading)
@@ -84,7 +88,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages("turnover.grossIncome")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.grossIncome", finYearEnd)
                         ),
                         prefix = Some(PrefixOrSuffix(
                             content = Text("£")
@@ -95,7 +99,7 @@
         )
     }
 
-    @totalVisitorNumbersRow(idx: Int) = @{
+    @totalVisitorNumbersRow(idx: Int, finYearEnd: LocalDate) = @{
         Seq(
             TableRow(
                 content = HtmlContent(totalVisitorNumbersHeading)
@@ -109,7 +113,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages("turnover.totalVisitorNumber")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.totalVisitorNumber", finYearEnd)
                         )
                     ).withFormField(form(s"$idx.totalVisitorNumber")))
                 )
@@ -117,11 +121,11 @@
         )
     }
 
-@renderRows(idx: Int) = @{
+@renderRows(idx: Int, finYearEnd: LocalDate) = @{
     Seq(
-        tradingPeriodRow(idx),
-        grossIncomeRow(idx),
-        totalVisitorNumbersRow(idx)
+        tradingPeriodRow(idx, finYearEnd),
+        grossIncomeRow(idx, finYearEnd),
+        totalVisitorNumbersRow(idx, finYearEnd)
     )
 }
 
@@ -165,7 +169,7 @@
                             )
                         ),
                         firstCellIsHeader = true,
-                        rows = renderRows(idx)
+                        rows = renderRows(idx, finYearEnd)
                     ))
                 </td>
                 }

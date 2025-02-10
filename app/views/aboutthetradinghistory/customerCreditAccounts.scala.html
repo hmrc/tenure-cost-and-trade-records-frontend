@@ -20,6 +20,8 @@
 @import actions.SessionRequest
 @import models.pages.Summary
 @import models.submissions.aboutthetradinghistory.CustomerCreditAccounts
+@import util.AccessibilityUtil
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -27,7 +29,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[Seq[CustomerCreditAccounts]], backlink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
@@ -86,7 +89,7 @@
                                             value = form(s"customerCreditAccounts-$idx").value,
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
-                                                "aria-label" -> messages("customerCreditAcc.label")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("customerCreditAcc.label", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.percent"))
