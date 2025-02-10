@@ -71,6 +71,15 @@ class AccommodationUnitList6048Controller @Inject() (
             Redirect(controllers.accommodation.routes.AddedMaximumAccommodationUnits6048Controller.show)
           case (true, size)                                                       =>
             Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$size")
+          case (false, 0)                                                         =>
+            BadRequest(
+              accommodationUnitListView(
+                accommodationUnitList6048Form
+                  .withError("addMoreAccommodationUnits", "error.accommodationUnits.isEmpty"),
+                accommodationUnits,
+                backLink
+              )
+            )
           case (false, _)                                                         =>
             Redirect(navigator.nextPage(AccommodationUnitListPageId, request.sessionData).apply(request.sessionData))
         }
@@ -89,6 +98,7 @@ class AccommodationUnitList6048Controller @Inject() (
       formWithErrors => BadRequest(removeLastUnit6048View(formWithErrors, selectedUnitName)),
       data =>
         if data == AnswerYes then performRemove(removeLastAllowed = true)
+        else if navigator.from == "CYA" then Redirect(navigator.cyaPage.get)
         else Redirect(controllers.accommodation.routes.AccommodationUnitList6048Controller.show)
     )
   }
@@ -110,7 +120,8 @@ class AccommodationUnitList6048Controller @Inject() (
       .saveOrUpdate(updatedData)
       .map { _ =>
         if updatedData.accommodationDetails.exists(_.accommodationUnits.nonEmpty) then
-          Redirect(controllers.accommodation.routes.AccommodationUnitList6048Controller.show)
+          if navigator.from == "CYA" then Redirect(navigator.cyaPage.get)
+          else Redirect(controllers.accommodation.routes.AccommodationUnitList6048Controller.show)
         else Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=0")
       }
 

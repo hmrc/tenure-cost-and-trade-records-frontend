@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@
 
 @(form: Form[AnswersYesNo], accommodationUnits: List[AccommodationUnit], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@unitsCount = @{ accommodationUnits.size }
-
 @pageTitle = @{
-    if (unitsCount == 0) messages("accommodation.unitList.heading.removedAll")
-    else if (unitsCount == 1) messages("accommodation.unitList.heading.singular")
-    else messages("accommodation.unitList.heading.plural", unitsCount)
+    accommodationUnits.size match {
+        case 0 => messages("accommodation.unitList.heading.removedAll")
+        case 1 => messages("accommodation.unitList.heading.singular")
+        case size => messages("accommodation.unitList.heading.plural", size)
+    }
 }
 
 @layout(
@@ -43,8 +43,12 @@
     summary = request.sessionData.toSummary,
     sectionName = messages("label.section.accommodation"),
     backLinkUrl = backLink,
-    theForm = form
+    theForm = form,
+    showH1 = false,
+    fullWidth = true
 ) {
+
+    <h1 class="govuk-heading-l govuk-!-width-full">@pageTitle</h1>
 
     @govukSummaryList(SummaryList(
         rows = accommodationUnits.zipWithIndex.map { (accommodationUnit, index) =>
@@ -68,7 +72,7 @@
                 ))
             )
         },
-        classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+        classes = "hmrc-list-with-actions hmrc-list-with-actions--short govuk-!-width-two-thirds"
     ))
 
     @formWithCSRF(action = controllers.accommodation.routes.AccommodationUnitList6048Controller.submit) {

@@ -1,0 +1,161 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.accommodation
+@import models.submissions.accommodation.AccommodationDetails.maxAccommodationUnits
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.NumberUtil.*
+@import util.{DateUtilLocalised, SectionAnswersRowBuilder}
+
+
+@this(
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised
+)
+
+
+@()(implicit request: SessionRequest[?], messages: Messages)
+
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(request.sessionData.accommodationDetails)
+}
+
+@accommodationUnits = @{
+    sectionAnswers.answers.map(_.accommodationUnits).getOrElse(List.empty)
+}
+
+@unitsSize = @{
+    accommodationUnits.size
+}
+
+@unitsListDescription = @{
+    unitsSize match {
+        case 0 => messages("accommodation.unitList.heading.removedAll")
+        case 1 => messages("accommodation.unitList.heading.singular")
+        case size => messages("accommodation.unitList.heading.plural", size)
+    }
+}
+
+<h2 class="govuk-heading-m">@messages("label.section.accommodation")</h2>
+
+@accommodationUnits.zipWithIndex.map { case (accommodationUnit, index) =>
+
+    @govukSummaryList(
+        SummaryList(
+            card = Some(Card(
+                title = Some(CardTitle(Text(messages("accommodation.CYA.unit", index + 1)))),
+                actions = Some(Actions(
+                    items = Seq(
+                        ActionItem(
+                            href = s"${accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
+                            content = Text(messages("label.remove")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.remove")} ${messages("accommodation.CYA.unit", index + 1)}"
+                            )
+                        )
+                    ),
+                    classes = "govuk-!-font-weight-regular"
+                ))
+            )),
+            rows = sectionAnswers.row("accommodation.CYA.unitDetails",
+                _ => Seq(accommodationUnit.unitName, accommodationUnit.unitType)
+                .map(_.escapedHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
+                Call("GET", s"${accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index"), "unitName",
+                ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.availableRooms",
+                        _ => accommodationUnit.availableRooms.map(r =>
+                            Seq[String](
+                                messages("accommodation.CYA.singleBedrooms", r.singleBedrooms.toString),
+                                messages("accommodation.CYA.doubleBedrooms", r.doubleBedrooms.toString),
+                                messages("accommodation.CYA.bathrooms", r.bathrooms.toString),
+                                r.otherAccommodationDescription.getOrElse("").escapedHtml,
+                                messages("accommodation.CYA.maxGuestsNumber", r.maxGuestsNumber.toString)
+                            )
+                            .filterNot(_.isEmpty).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
+                        ),
+                        Call("GET", s"${accommodation.routes.AvailableRooms6048Controller.show.url}?idx=$index"), "singleBedrooms",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.lettingHistory",
+                        _ => accommodationUnit.lettingHistory.map(
+                            _.map(
+                                l => Seq(
+                                    messages("accommodation.CYA.lettingHistory.financialYearEnd", dateUtil.formatDate(l.financialYearEnd)),
+                                    messages("accommodation.CYA.lettingHistory.nightsAvailableToLet", l.nightsAvailableToLet.getOrElse(0)),
+                                    messages("accommodation.CYA.lettingHistory.nightsLet", l.nightsLet.getOrElse(0)),
+                                    messages("accommodation.CYA.lettingHistory.weeksAvailableForPersonalUse", l.weeksAvailableForPersonalUse.getOrElse(0))
+                                ).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
+                            ).mkString("""<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">""")
+                        ),
+                        Call("GET", s"${accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=$index"), "lettingHistory[0].nightsAvailableToLet",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.highSeason",
+                        _ => accommodationUnit.highSeasonTariff.map(t =>
+                            messages("accommodation.CYA.highSeason.period", dateUtil.formatDate(t.fromDate), dateUtil.formatDate(t.toDate))
+                        ),
+                        Call("GET", s"${accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=$index"), "fromDate.day",
+                        ("valueAsHtml", _ => None)) ++
+                    sectionAnswers.row("accommodation.CYA.includedItems",
+                        _ => accommodationUnit.includedTariffItems.map(
+                            _.map(_.toString).map(item =>
+                                if(item == "none") messages("accommodation.CYA.includedItems.none")
+                                else messages(s"accommodation.includedTariffItems.value.$item")
+                            )
+                            .mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
+                        ),
+                        Call("GET", s"${accommodation.routes.IncludedTariffItems6048Controller.show.url}?idx=$index"), "",
+                        ("valueAsHtml", _ => None))
+        )
+    )
+
+}
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            key = Key(
+                content = Text(unitsListDescription),
+                classes = "govuk-!-width-full"
+            ),
+            actions = Actions(items =
+                if(unitsSize < maxAccommodationUnits) {
+                    Seq(
+                        ActionItem(
+                            href = s"${accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$unitsSize",
+                            content = Text(messages("accommodation.CYA.unit.add"))
+                        )
+                    )
+                } else {
+                    Seq.empty
+                }
+            )
+        )
+    )
+))
+
+@if(sectionAnswers.answers.flatMap(_.exceededMaxUnits).contains(true)) {
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(
+                    content = Text(messages("accommodation.exceededMaxUnits.label")),
+                    classes = "govuk-!-width-one-half"
+                ),
+                classes = "govuk-!-width-full"
+            )
+        )
+    ))
+}

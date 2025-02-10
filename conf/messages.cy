@@ -1781,6 +1781,25 @@ error.accommodation.addMoreAccommodationUnits.required = Select yes if you would
 accommodation.removeLastUnit.heading = Are you sure you want to remove ’{0}’?
 accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ’{0}’ you will be returned to the start of this section.
 error.accommodation.removeLastUnit.required = Select yes if you would like to remove the only accommodation unit
+accommodation.CYA.heading = Check your answers - accommodation details
+accommodation.CYA.unit = Unit {0}
+accommodation.CYA.unitDetails = Unit details
+accommodation.CYA.availableRooms = Available rooms
+accommodation.CYA.singleBedrooms = {0} single bedrooms
+accommodation.CYA.doubleBedrooms = {0} double bedrooms
+accommodation.CYA.bathrooms = {0} bathrooms
+accommodation.CYA.maxGuestsNumber = Max {0} guests
+accommodation.CYA.lettingHistory = Letting history
+accommodation.CYA.lettingHistory.financialYearEnd = Year ending {0}
+accommodation.CYA.lettingHistory.nightsAvailableToLet = {0} nights available for commercial letting
+accommodation.CYA.lettingHistory.nightsLet = {0} nights let
+accommodation.CYA.lettingHistory.weeksAvailableForPersonalUse = {0} weeks personal use
+accommodation.CYA.highSeason = High season
+accommodation.CYA.highSeason.period = {0} to {1}
+accommodation.CYA.includedItems = Included items
+accommodation.CYA.includedItems.none = None
+accommodation.CYA.unit.add = Add a unit
+error.accommodationUnits.isEmpty = You must include details of at least one self-catering holiday accommodation unit.
 
 # 6010 TYPES
 ##############################

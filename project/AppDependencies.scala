@@ -5,7 +5,7 @@ object AppDependencies {
 
   val bootstrapVersion    = "9.8.0"
   val playFrontendVersion = "11.11.0"
-  val mongoVersion        = "2.4.0"
+  val mongoVersion        = "2.5.0"
   val cryptoJsonVersion   = "8.1.0"
 
   // Test dependencies
