@@ -26,6 +26,7 @@ GET         /timeout                                            controllers.Save
 GET         /sessiontimeout                                     controllers.SaveAsDraftController.sessionTimeout
 
 GET         /task-list                                          controllers.TaskListController.show()
+GET         /improved-task-list                                 controllers.ImprovedTaskListController.show
 
 # SAVE AS DRAFT
 GET         /saved                                              controllers.SaveAsDraftController.customPassword(path)

@@ -1926,7 +1926,9 @@ hint.aboutYou = If you''re renting or leasing the property, even as a charity or
 # TASK LIST
 ###########
 taskList.heading = Declaration summary – check your progress
-taskList.subHeading = You can save your declaration and come back later. You have 90 days from the first time you save to complete this declaration or your information will be deleted.
+taskList.status.completed = Declaration completed
+taskList.status.incomplete = Declaration incomplete
+taskList.status.description = You have completed {0} of {1} sections.
 taskList.status.completed = Completed
 taskList.status.inProgress = In progress
 taskList.status.cannotStart = Cannot start yet
