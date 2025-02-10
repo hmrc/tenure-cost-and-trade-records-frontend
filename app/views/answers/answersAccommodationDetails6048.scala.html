@@ -16,6 +16,7 @@
 
 @import actions.SessionRequest
 @import controllers.accommodation
+@import models.submissions.accommodation.AccommodationDetails.maxAccommodationUnits
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
 @import util.{DateUtilLocalised, SectionAnswersRowBuilder}
@@ -37,8 +38,12 @@
     sectionAnswers.answers.map(_.accommodationUnits).getOrElse(List.empty)
 }
 
+@unitsSize = @{
+    accommodationUnits.size
+}
+
 @unitsListDescription = @{
-    accommodationUnits.size match {
+    unitsSize match {
         case 0 => messages("accommodation.unitList.heading.removedAll")
         case 1 => messages("accommodation.unitList.heading.singular")
         case size => messages("accommodation.unitList.heading.plural", size)
@@ -118,10 +123,36 @@
 @govukSummaryList(SummaryList(rows =
     Seq(
         SummaryListRow(
-            Key(
+            key = Key(
                 content = Text(unitsListDescription),
                 classes = "govuk-!-width-full"
+            ),
+            actions = Actions(items =
+                if(unitsSize < maxAccommodationUnits) {
+                    Seq(
+                        ActionItem(
+                            href = s"${accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$unitsSize",
+                            content = Text(messages("accommodation.CYA.unit.add"))
+                        )
+                    )
+                } else {
+                    Seq.empty
+                }
             )
         )
     )
 ))
+
+@if(sectionAnswers.answers.flatMap(_.exceededMaxUnits).contains(true)) {
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            SummaryListRow(
+                key = Key(
+                    content = Text(messages("accommodation.exceededMaxUnits.label")),
+                    classes = "govuk-!-width-one-half"
+                ),
+                classes = "govuk-!-width-full"
+            )
+        )
+    ))
+}

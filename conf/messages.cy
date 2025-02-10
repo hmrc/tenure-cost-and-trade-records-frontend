@@ -1798,6 +1798,7 @@ accommodation.CYA.highSeason = High season
 accommodation.CYA.highSeason.period = {0} to {1}
 accommodation.CYA.includedItems = Included items
 accommodation.CYA.includedItems.none = None
+accommodation.CYA.unit.add = Add a unit
 error.accommodationUnits.isEmpty = You must include details of at least one self-catering holiday accommodation unit.
 
 # 6010 TYPES
