@@ -63,7 +63,6 @@
                         ActionItem(
                             href = s"${accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
                             content = Text(messages("label.remove")),
-                            visuallyHiddenText = Some(messages("accommodation.CYA.unit", index + 1)),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.remove")} ${messages("accommodation.CYA.unit", index + 1)}"
                             )
