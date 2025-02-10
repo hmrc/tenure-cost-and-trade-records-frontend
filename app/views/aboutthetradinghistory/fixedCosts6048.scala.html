@@ -20,6 +20,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -28,8 +30,10 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[FixedCosts6048]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
@@ -43,7 +47,7 @@
 }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "",  finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -57,7 +61,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -101,9 +105,9 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].insurance", "turnover.6048.fixedCosts.insurance"),
-                            turnoverRow(s"turnover[$idx].businessRatesOrCouncilTax", "turnover.6048.fixedCosts.businessRatesOrCouncilTax"),
-                            turnoverRow(s"turnover[$idx].rent", "turnover.6048.fixedCosts.rent", "turnover.6048.fixedCosts.rent.hint"),
+                            turnoverRow(s"turnover[$idx].insurance", "turnover.6048.fixedCosts.insurance", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].businessRatesOrCouncilTax", "turnover.6048.fixedCosts.businessRatesOrCouncilTax", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].rent", "turnover.6048.fixedCosts.rent", "turnover.6048.fixedCosts.rent.hint", finYearEnd = finYearEnd),
                             Seq(
                                 TableRow(content = HtmlContent(rowLabel("turnover.6048.fixedCosts.total"))),
                                 TableRow(content = HtmlContent(totalContent(idx)))

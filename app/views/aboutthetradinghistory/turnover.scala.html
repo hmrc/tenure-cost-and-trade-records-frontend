@@ -21,6 +21,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -29,8 +31,10 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[TurnoverSection]],fromLocation:String="")(implicit request: SessionRequest[?], messages: Messages)
 
@@ -139,7 +143,7 @@
     request.sessionData.forType
 }
 
-    @tradingPeriodRow(idx: Int) = @{
+    @tradingPeriodRow(idx: Int, tradingPeriod: LocalDate) = @{
         Seq(
             TableRow(
                 content = Text(messages("turnover.tradingPeriod"))
@@ -153,7 +157,7 @@
                         classes = "govuk-input--width-2",
                         attributes = Map(
                             "maxlength" -> "2",
-                            "aria-label" -> messages("turnover.tradingPeriod")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.tradingPeriod", tradingPeriod)
                         ),
                         suffix = Some(PrefixOrSuffix(
                             content = Text(messages("turnover.weeks"))
@@ -164,7 +168,7 @@
         )
     }
 
-    @accommodationRow(idx: Int) = @{
+    @accommodationRow(idx: Int, tradingPeriod: LocalDate) = @{
         Seq(
             TableRow(
                 content = HtmlContent(accommodationHeading)
@@ -178,7 +182,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages("turnover.accommodation")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.accommodation.aria", tradingPeriod)
                         ),
                         prefix = Some(PrefixOrSuffix(
                             content = Text("£")
@@ -189,7 +193,7 @@
         )
     }
 
-    @averageOccupancyRateRow(idx: Int) = @{
+    @averageOccupancyRateRow(idx: Int, tradingPeriod: LocalDate) = @{
         Seq(
             TableRow(
                 content = HtmlContent(averageOccupancyRateHeading)
@@ -203,7 +207,7 @@
                         classes = "govuk-input--width-3",
                         attributes = Map(
                             "maxlength" -> "5",
-                            "aria-label" -> messages("turnover.averageOccupancyRate")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.averageOccupancyRate", tradingPeriod)
                         ),
                         suffix = Some(PrefixOrSuffix(
                             content = Text("%")
@@ -214,7 +218,7 @@
         )
     }
 
-    @foodRow(idx: Int) = @{
+    @foodRow(idx: Int, tradingPeriod: LocalDate) = @{
         Seq(
             TableRow(
                 content = HtmlContent(foodHeading)
@@ -228,7 +232,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages("turnover.food")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.food.aria", tradingPeriod)
                         ),
                         prefix = Some(PrefixOrSuffix(
                             content = Text("£")
@@ -238,7 +242,7 @@
             )
         )
     }
-    @drinksRow(idx: Int) = @{
+    @drinksRow(idx: Int, tradingPeriod: LocalDate) = @{
         Seq(
             TableRow(
                 content = HtmlContent(alcoholicDrinksHeading)
@@ -252,7 +256,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages("turnover.alcoholicDrinks")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.alcoholicDrinks.aria", tradingPeriod)
                         ),
                         prefix = Some(PrefixOrSuffix(
                             content = Text("£")
@@ -262,7 +266,7 @@
             )
         )
     }
-    @otherReceiptsRow(idx: Int) = @{
+    @otherReceiptsRow(idx: Int, tradingPeriod: LocalDate) = @{
         Seq(
             TableRow(
                 content = HtmlContent(otherReceiptsHeading)
@@ -276,7 +280,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages("turnover.otherReceipts")
+                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.otherReceipts.aria", tradingPeriod)
                         ),
                         prefix = Some(PrefixOrSuffix(
                             content = Text("£")
@@ -298,38 +302,34 @@
         )
     }
 
-    @for60156016Rows(idx: Int) = @{
+    @for60156016Rows(idx: Int, tradingPeriod: LocalDate) = @{
          Seq(
-            tradingPeriodRow(idx),
-            accommodationRow(idx),
-            averageOccupancyRateRow(idx),
-            foodRow(idx),
-            drinksRow(idx),
-            otherReceiptsRow(idx),
+            tradingPeriodRow(idx, tradingPeriod),
+            accommodationRow(idx, tradingPeriod),
+            averageOccupancyRateRow(idx, tradingPeriod),
+            foodRow(idx, tradingPeriod),
+            drinksRow(idx, tradingPeriod),
+            otherReceiptsRow(idx, tradingPeriod),
             totalSalesRevenueRow(idx)
         )
     }
 
-    @for60106011Rows(idx: Int) = @{
+    @for60106011Rows(idx: Int, tradingPeriod: LocalDate) = @{
         Seq(
-            tradingPeriodRow(idx),
-            drinksRow(idx),
-            foodRow(idx),
-            otherReceiptsRow(idx),
-            accommodationRow(idx),
-            averageOccupancyRateRow(idx)
+            tradingPeriodRow(idx, tradingPeriod),
+            drinksRow(idx, tradingPeriod),
+            foodRow(idx, tradingPeriod),
+            otherReceiptsRow(idx, tradingPeriod),
+            accommodationRow(idx, tradingPeriod),
+            averageOccupancyRateRow(idx, tradingPeriod)
         )
     }
 
-@renderRows(idx: Int) = @{
-    if(forType == FOR6010 || forType == FOR6011) {
-        for60106011Rows(idx)
-    }else {
-        if(forType == FOR6015 || forType == FOR6016) {
-            for60156016Rows(idx)
-        }else{
-            Seq.empty
-        }
+@renderRows(idx: Int, tradingPeriod: LocalDate) = @{
+    forType match {
+        case FOR6010 | FOR6011 => for60106011Rows(idx, tradingPeriod)
+        case FOR6015 | FOR6016 => for60156016Rows(idx, tradingPeriod)
+        case _                 => Seq.empty
     }
 }
 
@@ -343,8 +343,7 @@
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = fromLocation match {
-        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
-
+        case "TL" => s"${controllers.routes.TaskListController.show().url}#turnover"
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
         case _ =>
             if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
@@ -394,7 +393,7 @@
                             )
                         ),
                         firstCellIsHeader = true,
-                        rows = renderRows(idx)
+                        rows = renderRows(idx, finYearEnd))
                     ))
                 </td>
                 }

@@ -18,6 +18,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 
 @this(
@@ -26,7 +28,8 @@
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -42,7 +45,7 @@
     }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String) = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -54,7 +57,7 @@
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -98,7 +101,7 @@
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "maxlength" -> "2",
-                                                "aria-label" -> messages("turnover.6076.weeks")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("turnover.6076.weeks", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("turnover.weeks"))
@@ -107,7 +110,7 @@
                                     )
                                 )
                             ),
-                            turnoverRow(s"turnover[$idx].electricityGenerated", "turnover.6076.electricityGenerated", "turnover.6076.electricityGenerated.hint")
+                            turnoverRow(s"turnover[$idx].electricityGenerated", "turnover.6076.electricityGenerated", "turnover.6076.electricityGenerated.hint", finYearEnd)
                         )
                     ))
                 </td>

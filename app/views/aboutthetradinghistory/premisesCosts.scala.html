@@ -19,13 +19,16 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.PremisesCosts
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[Seq[PremisesCosts]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
@@ -44,7 +47,7 @@
     </p>
 }
 
-@costRow(key: String, idx: Int, hint: Boolean = false ) = @{
+@costRow(key: String, idx: Int, hint: Boolean = false, finYearEnd: LocalDate ) = @{
     Seq(
         TableRow(content = HtmlContent(headingContent(key, hint))),
         TableRow(
@@ -55,7 +58,7 @@
                     )),
                     attributes = Map(
                         "maxlength" -> "13",
-                        "aria-label" -> messages(s"premisesCosts.$key")
+                        "aria-label" -> accessibilityUtil.ariaBuilder(s"premisesCosts.$key", finYearEnd)
                     ),
                 ).withFormField(form(s"premisesCosts.[$idx].$key"))))
         ))
@@ -86,12 +89,12 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            costRow("energyAndUtilities", idx ,true),
-                            costRow("buildingRepairAndMaintenance", idx),
-                            costRow("repairsAndRenewalsOfFixtures", idx),
-                            costRow("rent", idx),
-                            costRow("businessRates", idx),
-                            costRow("buildingInsurance", idx),
+                            costRow("energyAndUtilities", idx ,hint = true, finYearEnd = finYearEnd),
+                            costRow("buildingRepairAndMaintenance", idx, finYearEnd = finYearEnd),
+                            costRow("repairsAndRenewalsOfFixtures", idx, finYearEnd = finYearEnd),
+                            costRow("rent", idx, finYearEnd = finYearEnd),
+                            costRow("businessRates", idx, finYearEnd = finYearEnd),
+                            costRow("buildingInsurance", idx, finYearEnd = finYearEnd),
                                Seq(
                                   TableRow(content = Text(messages("premisesCosts.total"))),
                                   TableRow(content = HtmlContent(totalContent(idx)))))))

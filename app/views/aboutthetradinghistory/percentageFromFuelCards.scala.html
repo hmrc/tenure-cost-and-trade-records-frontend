@@ -20,6 +20,7 @@
 @import util.DateUtilLocalised
 @import actions.SessionRequest
 @import models.pages.Summary
+@import util.AccessibilityUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -27,7 +28,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -84,7 +86,7 @@
                                             value = form(s"percentageFromFuelCards-$idx").value,
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
-                                                "aria-label" -> messages("percentageFromFuelCards.label")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("percentageFromFuelCards.label", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.percent"))

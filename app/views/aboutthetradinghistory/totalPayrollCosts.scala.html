@@ -22,6 +22,7 @@
 @import util.DateUtilLocalised
 @import util.NumberUtil._
 @import actions.SessionRequest
+@import util.AccessibilityUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -29,8 +30,10 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
@@ -52,7 +55,7 @@
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = fromLocation match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+      case "TL" => s"${controllers.routes.TaskListController.show().url}#turnover"
       case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
       case _ =>controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
   },
@@ -96,8 +99,8 @@
                                         content = Text("£")
                                     )),
                                     attributes = Map(
-                                        "maxlength" -> "13",
-                                        "aria-label" -> messages("totalPayrollCosts.managersAndStaff")
+                                        "maxlength"  -> "13",
+                                        "aria-label" -> accessibilityUtil.ariaBuilder("totalPayrollCosts.managersAndStaff", finYearEnd)
                                     ),
                                 ).withFormField(form(s"totalPayrollCosts[$idx].managers-and-staff"))
                     )
@@ -118,8 +121,8 @@
                                         content = Text("£")
                                     )),
                                     attributes = Map(
-                                        "maxlength" -> "13",
-                                        "aria-label" -> messages("totalPayrollCosts.directorsRemuneration")
+                                        "maxlength"  -> "13",
+                                        "aria-label" -> accessibilityUtil.ariaBuilder("totalPayrollCosts.directorsRemuneration", finYearEnd)
                                     ),
                                 ).withFormField(form(s"totalPayrollCosts[$idx].directors-remuneration"))
                             )

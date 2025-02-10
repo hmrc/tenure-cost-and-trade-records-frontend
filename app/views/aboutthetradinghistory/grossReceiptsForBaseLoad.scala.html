@@ -19,14 +19,18 @@
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.GrossReceiptsForBaseLoad
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import java.time.LocalDate
+@import util.AccessibilityUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[GrossReceiptsForBaseLoad]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
@@ -44,7 +48,7 @@
     </p>
 }
 
-@costRow(key: String, idx: Int, hint: Boolean = false ) = @{
+@costRow(key: String, idx: Int, hint: Boolean = false, finYearEnd: LocalDate ) = @{
     Seq(
         TableRow(content = HtmlContent(headingContent(key, hint))),
         TableRow(
@@ -55,7 +59,7 @@
                     )),
                     attributes = Map(
                         "maxlength" -> "13",
-                        "aria-label" -> messages(s"grossReceiptsForBaseLoad.$key")
+                        "aria-label" -> accessibilityUtil.ariaBuilder(s"grossReceiptsForBaseLoad.$key", finYearEnd)
                     ),
                 ).withFormField(form(s"grossReceiptsForBaseLoad.[$idx].$key"))))
         ))
@@ -86,11 +90,11 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            costRow("renewableHeatIncentiveBioMethane", idx ,true),
-                            costRow("renewableHeatIncentiveBioMass", idx ,true),
-                            costRow("byProductSales", idx, true),
-                            costRow("hotWaterHeatOrSteamSales", idx),
-                            costRow("gateIncomeFromWaste", idx),
+                            costRow("renewableHeatIncentiveBioMethane", idx ,hint = true, finYearEnd = finYearEnd),
+                            costRow("renewableHeatIncentiveBioMass", idx ,hint = true, finYearEnd = finYearEnd),
+                            costRow("byProductSales", idx, hint = true, finYearEnd = finYearEnd),
+                            costRow("hotWaterHeatOrSteamSales", idx, finYearEnd = finYearEnd),
+                            costRow("gateIncomeFromWaste", idx, finYearEnd = finYearEnd),
                                Seq(
                                   TableRow(content = Text(messages("grossReceiptsForBaseLoad.total"))),
                                   TableRow(content = HtmlContent(totalContent(idx)))))))

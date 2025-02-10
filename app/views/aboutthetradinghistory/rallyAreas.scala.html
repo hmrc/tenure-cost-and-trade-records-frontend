@@ -19,6 +19,8 @@
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.RallyAreasTradingData
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
 
@@ -28,7 +30,9 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         dateUtil: DateUtilLocalised,
-        govukInsetText: GovukInsetText
+        govukInsetText: GovukInsetText,
+        accessibilityUtil: AccessibilityUtil
+
 
 )
 
@@ -39,7 +43,7 @@
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
 }
 
-@turnoverRow(formField: String, labelKey: String, prefix: Option[PrefixOrSuffix]) = @{
+@turnoverRow(formField: String, labelKey: String, prefix: Option[PrefixOrSuffix], finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey))
@@ -51,7 +55,7 @@
                         prefix = prefix,
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))))))
 }
@@ -104,7 +108,7 @@
                                             classes = "govuk-input--width-2",
                                             attributes = Map(
                                                 "maxlength" -> "2",
-                                                "aria-label" -> messages("tentingPitches.common.tradingPeriod")
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("tentingPitches.common.tradingPeriod", finYearEnd)
                                             ),
                                             suffix = Some(PrefixOrSuffix(
                                                 content = Text(messages("label.weeks"))
@@ -116,11 +120,13 @@
                             turnoverRow(
                                 s"rallyAreas[$idx].grossReceipts",
                                 "tentingPitches.common.grossReceipts",
-                                PrefixOrSuffix(content = Text(messages("label.pound")))),
+                                PrefixOrSuffix(content = Text(messages("label.pound"))),
+                                finYearEnd = finYearEnd),
                             turnoverRow(
                                 s"rallyAreas[$idx].areasInHectares",
                                 "tentingPitches.common.areaInHectares",
-                                None))))
+                                None,
+                                finYearEnd = finYearEnd))))
                 </td>
                 }
                 </tr>

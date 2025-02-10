@@ -23,6 +23,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -30,7 +32,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         hmrcCharacterCount: HmrcCharacterCount,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -51,7 +54,7 @@
  </p>
 }
 
-@costRow(key: String, idx: Int, classes: String = "", hint: Boolean = false ) = @{
+@costRow(key: String, idx: Int, classes: String = "", hint: Boolean = false, finYearEnd: LocalDate ) = @{
  Seq(
   TableRow(content = HtmlContent(headingContent(key, hint)), classes = classes),
   TableRow(
@@ -62,7 +65,7 @@
      )),
      attributes = Map(
       "maxlength" -> "13",
-      "aria-label" -> messages(s"costOfSales6076.$key")
+      "aria-label" -> accessibilityUtil.ariaBuilder(s"costOfSales6076.$key", finYearEnd)
      ),
     ).withFormField(form(s"costOfSales6076.[$idx].$key")))),
    classes = classes))
@@ -124,11 +127,11 @@
         ),
         firstCellIsHeader = true,
         rows = Seq(
-         costRow("fuelOrFeedstock", idx),
-         costRow("importedPower", idx),
-         costRow("TNuoS", idx),
-         costRow("BSuoS", idx),
-         costRow("otherSales", idx, "no-border-bottom", true),
+         costRow("fuelOrFeedstock", idx, finYearEnd = finYearEnd),
+         costRow("importedPower", idx, finYearEnd = finYearEnd),
+         costRow("TNuoS", idx, finYearEnd = finYearEnd),
+         costRow("BSuoS", idx, finYearEnd = finYearEnd),
+         costRow("otherSales", idx, "no-border-bottom", hint = true, finYearEnd = finYearEnd),
          Seq(
           TableRow(),
           TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))),

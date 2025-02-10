@@ -20,6 +20,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -28,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[Seq[AccountingCosts6048]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
@@ -43,7 +46,7 @@
 }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -57,7 +60,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -101,11 +104,11 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].wagesAndNationalInsurance", "turnover.6048.accountingCosts.wagesAndNationalInsurance"),
-                            turnoverRow(s"turnover[$idx].depreciationBuildings", "turnover.6048.accountingCosts.depreciationBuildings", "turnover.6048.accountingCosts.depreciationBuildings.hint"),
-                            turnoverRow(s"turnover[$idx].depreciationContents", "turnover.6048.accountingCosts.depreciationContents", "turnover.6048.accountingCosts.depreciationContents.hint"),
-                            turnoverRow(s"turnover[$idx].bookkeepingOrAccountancy", "turnover.6048.accountingCosts.bookkeepingOrAccountancy"),
-                            turnoverRow(s"turnover[$idx].bankCharges", "turnover.6048.accountingCosts.bankCharges", "turnover.6048.accountingCosts.bankCharges.hint"),
+                            turnoverRow(s"turnover[$idx].wagesAndNationalInsurance", "turnover.6048.accountingCosts.wagesAndNationalInsurance", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].depreciationBuildings", "turnover.6048.accountingCosts.depreciationBuildings", "turnover.6048.accountingCosts.depreciationBuildings.hint", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].depreciationContents", "turnover.6048.accountingCosts.depreciationContents", "turnover.6048.accountingCosts.depreciationContents.hint", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].bookkeepingOrAccountancy", "turnover.6048.accountingCosts.bookkeepingOrAccountancy", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].bankCharges", "turnover.6048.accountingCosts.bankCharges", "turnover.6048.accountingCosts.bankCharges.hint", finYearEnd = finYearEnd),
                             Seq(
                                 TableRow(content = HtmlContent(rowLabel("turnover.6048.accountingCosts.total"))),
                                 TableRow(content = HtmlContent(totalContent(idx)))

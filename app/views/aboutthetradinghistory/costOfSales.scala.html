@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits._
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
 
 
 @this(
@@ -30,7 +31,8 @@
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
         govukDetails: GovukDetails,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -137,7 +139,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("costOfSales.accommodation")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.accommodation", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"costOfSales[$idx].accommodation"))
                                         )
@@ -157,7 +159,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("costOfSales.food")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.food", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"costOfSales[$idx].food"))
                                         )
@@ -177,7 +179,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("costOfSales.drinks")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.drinks", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"costOfSales[$idx].drinks"))
                                         )
@@ -197,7 +199,7 @@
                                                 )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
-                                                    "aria-label" -> messages("costOfSales.otherSales")
+                                                    "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.otherSales", finYearEnd)
                                                 ),
                                             ).withFormField(form(s"costOfSales[$idx].other"))
                                         )

@@ -19,14 +19,18 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.StaffCosts
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
+
 
 @(form: Form[Seq[StaffCosts]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
@@ -44,7 +48,7 @@
     </p>
 }
 
-@costRow(key: String, idx: Int, hint: Boolean = false ) = @{
+@costRow(key: String, idx: Int, hint: Boolean = false, finYearEnd: LocalDate ) = @{
     Seq(
         TableRow(content = HtmlContent(headingContent(key, hint))),
         TableRow(
@@ -55,7 +59,7 @@
                     )),
                     attributes = Map(
                         "maxlength" -> "13",
-                        "aria-label" -> messages(s"staffCosts.$key")
+                        "aria-label" -> accessibilityUtil.ariaBuilder(s"staffCosts.$key", finYearEnd)
                     ),
                 ).withFormField(form(s"staffCosts.[$idx].$key"))))
         ))
@@ -86,10 +90,10 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            costRow("wages"         ,idx, true),
-                            costRow("NI"           , idx      ),
-                            costRow("pension"      , idx      ),
-                            costRow("remunerations", idx      ),
+                            costRow("wages"         ,idx, hint = true, finYearEnd),
+                            costRow("NI"           , idx, finYearEnd = finYearEnd),
+                            costRow("pension"      , idx, finYearEnd = finYearEnd),
+                            costRow("remunerations", idx, finYearEnd = finYearEnd),
                                Seq(
                                   TableRow(content = Text(messages("staffCosts.total"))),
                                   TableRow(content = HtmlContent(totalContent(idx)))))))

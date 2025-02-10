@@ -21,6 +21,8 @@
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
+@import java.time.LocalDate
+@import util.AccessibilityUtil
 
 @this(
         layout: Layout,
@@ -29,7 +31,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         hmrcCharacterCount: HmrcCharacterCount,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[(Seq[Option[BigDecimal]], String)], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
@@ -44,7 +47,7 @@
     }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String) = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
@@ -58,7 +61,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -92,7 +95,7 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"otherIncomeSeq.turnover[$idx].otherIncome", "turnover.6076.otherIncome", "turnover.6076.otherIncome.hint")
+                            turnoverRow(s"otherIncomeSeq.turnover[$idx].otherIncome", "turnover.6076.otherIncome", "turnover.6076.otherIncome.hint", finYearEnd)
                         )
                     ))
                 </td>

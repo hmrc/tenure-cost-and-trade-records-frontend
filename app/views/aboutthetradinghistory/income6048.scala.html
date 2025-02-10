@@ -20,6 +20,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
+@import util.AccessibilityUtil
+@import java.time.LocalDate
 
 @this(
         layout: Layout,
@@ -28,7 +30,8 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 @(form: Form[Seq[(Int, Income6048)]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
@@ -46,7 +49,7 @@
 }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "") = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, excludingVAT = true, Option(hintKey).filterNot(_.isEmpty)))
@@ -60,7 +63,7 @@
                         )),
                         attributes = Map(
                             "maxlength" -> "13",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                         )
                     ).withFormField(form(formField))
                 )
@@ -69,7 +72,7 @@
     )
 }
 
-@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int) = @{
+@numericRow(formField: String, labelKey: String, suffixKey: String, styleWidth: Int, maxLength: Int, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey))
@@ -80,7 +83,7 @@
                     classes = s"govuk-input--width-$styleWidth",
                     attributes = Map(
                         "maxlength" -> maxLength.toString,
-                        "aria-label" -> messages(labelKey)
+                        "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                     ),
                     suffix = Some(PrefixOrSuffix(
                         content = Text(messages(suffixKey))
@@ -128,10 +131,10 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2),
-                            turnoverRow(s"turnover[$idx].income.letting", "turnover.6048.income.letting"),
-                            turnoverRow(s"turnover[$idx].income.serviceProvision", "turnover.6048.income.serviceProvision", "turnover.6048.income.serviceProvision.hint"),
-                            turnoverRow(s"turnover[$idx].income.other", "turnover.6048.income.other", "turnover.6048.income.other.hint"),
+                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2, finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].income.letting", "turnover.6048.income.letting", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].income.serviceProvision", "turnover.6048.income.serviceProvision", "turnover.6048.income.serviceProvision.hint", finYearEnd = finYearEnd),
+                            turnoverRow(s"turnover[$idx].income.other", "turnover.6048.income.other", "turnover.6048.income.other.hint", finYearEnd = finYearEnd),
                             Seq(
                                 TableRow(content = HtmlContent(rowLabel("turnover.6048.income.total"))),
                                 TableRow(content = HtmlContent(totalContent(idx)))
