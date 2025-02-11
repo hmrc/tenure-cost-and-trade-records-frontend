@@ -4003,8 +4003,10 @@ error.includedPartsSum.graterThanAnnualRent = The combined sum {0} included to c
 # Date fields validation
 error.date.required = Enter {0}
 error.date.mustInclude = {0} must include {1}
-error.date.invalid = {0} must be a real date
+error.date.invalid = {0} must be a valid date
+error.date.day.invalidCharacter = The day must be a number
 error.date.day.invalid = The day must be a number from 1 to 31
+error.date.month.invalidCharacter = The month must be a number
 error.date.month.invalid = The month must be a number from 1 to 12
 error.date.year.invalid = The year must be a 4-digit number
 error.date.before1900 = {0} must be after December 1899

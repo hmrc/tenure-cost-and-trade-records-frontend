@@ -18,13 +18,13 @@ package form
 
 import models.submissions.Form6010.DayMonthsDuration
 import play.api.data.FormError
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.format.Formatter
 import play.api.i18n.Messages
 
 import java.time.LocalDate
 import scala.collection.immutable.Seq
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 /**
   * Handles binding [dd] [mm] fields to DayMonthsDuration and unbinding DayMonthsDuration to [dd] [mm] fields.
@@ -77,7 +77,9 @@ class DayMonthFormatter(
           Left(
             Seq(
               Option.when(day == 0)(FormError(dayKey, "error.date.day.invalid")),
-              Option.when(month == 0)(FormError(monthKey, "error.date.month.invalid"))
+              Option.when(day == -1)(FormError(dayKey, "error.date.day.invalidCharacter")),
+              Option.when(month == 0)(FormError(monthKey, "error.date.month.invalid")),
+              Option.when(month == -1)(FormError(monthKey, "error.date.month.invalidCharacter"))
             ).flatten
           )
     }
@@ -90,7 +92,11 @@ class DayMonthFormatter(
     )
 
   private def parseNumber(str: String, allowedRange: Range): Int =
-    Try(str.trim.toInt).filter(allowedRange.contains).getOrElse(0)
+    Try(str.trim.toInt) match {
+      case Success(num) if allowedRange contains num => num
+      case Success(_)                                => 0
+      case Failure(_)                                => -1
+    }
 
   private def oneError(key: String, message: String, args: Seq[Any]): Left[Seq[FormError], DayMonthsDuration] =
     Left(Seq(FormError(key, message, args)))
