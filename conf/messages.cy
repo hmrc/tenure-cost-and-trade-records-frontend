@@ -1268,20 +1268,16 @@ error.methodToFixCurrentRents.required = Dewiswch sut y cytunwyd ar y rhent pres
 # HOW IS CURRENT RENT FIXED
 ##########################
 howIsCurrentRentFixed.heading = Gosod y rhent presennol
+howIsCurrentRentFixed.subheading = How was the current rent fixed?
 label.newLeaseAgreement = Ar ddechrau prydles neu gytundeb newydd
 label.interimRent = Fel rhent interim o dan y Ddeddf Landlord a Thenant
 label.rentReview = Mewn adolygiad rhent
 label.renewalLeaseTenancy = Wrth adnewyddu prydles
 label.saleLeaseback = Fel rhan o drafodiad gwerthu ac adlesu
 label.rentActuallyAgreed = Pryd cafodd y rhent ei gytuno arno neu ei osod mewn gwirionedd?
-help.rentActuallyAgreed.title = Os nad ydych yn siŵr pa ddyddiad i’w ddefnyddio
-help.rentActuallyAgreed.p1 = Y dyddiad y cafodd y rhent ei gytuno arno neu ei osod fel arfer yw dyddiad:
-help.rentActuallyAgreed.list1.item1 = llofnodi prydles neu gytundeb newydd
-help.rentActuallyAgreed.list1.item2 = sefydlu rhent interim
-help.rentActuallyAgreed.list1.item3 = sefydlu rhent newydd yn dilyn adolygiad rhent
-help.rentActuallyAgreed.list1.item4 = adnewyddu prydles
-help.rentActuallyAgreed.list1.item5 = cytuno ar werthu ac adlesu
-help.rentActuallyAgreed.p2 = Efallai nad dyma’r dyddiad meddiannu na’r dyddiad y telir y rhent am y tro cyntaf.
+help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
+help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed option happened. It may not be the date of occupation, or the date the rent was first paid.
+help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei bennu
 

@@ -40,19 +40,12 @@
 
 @rentActuallyAgreedHelp = {
     <p>@messages("help.rentActuallyAgreed.p1")</p>
-    <ul class="govuk-list govuk-list--bullet">
-        <li>@messages("help.rentActuallyAgreed.list1.item1")</li>
-        <li>@messages("help.rentActuallyAgreed.list1.item2")</li>
-        <li>@messages("help.rentActuallyAgreed.list1.item3")</li>
-        <li>@messages("help.rentActuallyAgreed.list1.item4")</li>
-        <li>@messages("help.rentActuallyAgreed.list1.item5")</li>
-    </ul>
     <p>@messages("help.rentActuallyAgreed.p2")</p>
 }
 
 @layout(
     pageHeading = messages("howIsCurrentRentFixed.heading"),
-    showH1 = false,
+    showH1 = true,
     showSection = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -67,8 +60,8 @@
             govukRadios,
             theForm,
             "howIsCurrentRentFixed",
-            "howIsCurrentRentFixed.heading",
-            "govuk-fieldset__legend--l",
+            "howIsCurrentRentFixed.subheading",
+            "govuk-fieldset__legend--m",
             items = Seq(
                 "newLeaseAgreement" -> messages("label.newLeaseAgreement"),
                 "interimRent" -> messages("label.interimRent"),
@@ -80,7 +73,6 @@
                 checked = radioItem._1.equals(theForm("howIsCurrentRentFixed").value.getOrElse("")),
                 value = Option(radioItem._1)
             )),
-            isHeading = true,
             inline = false
         )
 
@@ -88,8 +80,9 @@
             form = theForm,
             field = "rentActuallyAgreed",
             govukDate = govukDateInput,
-            helpText = "",
-            showDays = true
+            helpText = messages("hint.date.example"),
+            showDays = true,
+            customClass = "govuk-fieldset__legend--m"
         )
 
         @govukDetails(Details(
