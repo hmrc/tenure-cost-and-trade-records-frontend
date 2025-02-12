@@ -112,7 +112,7 @@
 
         tradingHistoryOne.row(
             "cYa.additionalActivities.activities.onSite.label",
-            _.additionalActivities.flatMap(_.additionalActivitiesOnSite.flatMap(x => messages(s"label.${x.name}"))).orElse(""),
+            _.additionalActivities.flatMap(_.additionalActivitiesOnSite.flatMap((x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")))),
             controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities") ++
         tradingHistoryOne.conditionRow(_.additionalActivities.flatMap(_.additionalActivitiesOnSite).exists(_ == AnswerYes),
            "cYa.additionalActivities.activities.allYear.label",

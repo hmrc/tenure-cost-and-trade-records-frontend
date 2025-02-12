@@ -1101,6 +1101,7 @@ addTradeService.heading = You have added {0} service {2}
 addTradeServicePlural.heading = You have added {0} services {2}
 addTradeService.heading.landlord = provided by the landlord
 addTradeService.heading.rent = included in your rent
+addTradeService.heading.rentPlural = included in your rent
 addTradeServiceZero.heading = You have removed all the services provided by your landlord
 addTradeService.label = Would you like to add another service which is included in the rent?
 addTradeService.label6020 = Would you like to add another service?

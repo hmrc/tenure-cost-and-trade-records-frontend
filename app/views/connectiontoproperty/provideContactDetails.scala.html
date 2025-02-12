@@ -17,11 +17,12 @@
 @import models.submissions.connectiontoproperty.ProvideContactDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @this(layout: Layout,
   govukButton: GovukButton,
   govukInput: GovukInput,
-  govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
   formWithCSRF: FormWithCSRF
 )
 
@@ -43,7 +44,7 @@
     @includes.textInput(govukInput, theForm, "yourContactDetails.fullName", "govuk-!-width-two-thirds", "fullName")
     @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.email", "govuk-!-width-two-thirds", "email")
     @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.phone", "govuk-!-width-two-thirds", "phone")
-    @includes.textInputCharCount(govukCharacterCount, theForm, "yourContactDetails.provideContactDetailsAdditionalInformation", "provideContactDetailsAdditionalInformation.heading","",1000,"provideContactDetailsAdditionalInformation.hint")
+    @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "yourContactDetails.provideContactDetailsAdditionalInformation", "provideContactDetailsAdditionalInformation.heading","", false, "provideContactDetailsAdditionalInformation.hint", charCount = 1000)
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }
