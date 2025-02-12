@@ -46,6 +46,6 @@
         ),
         label = if(optional) Label(content = Text(s"${messages(s"label.$labelContent")} ${messages("hintText.optional")}"), classes = labelClasses)
                 else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
-        hint = if(hintMsg.nonEmpty) Some(Hint(content = Text(messages(s"hint.$hintMsg")))) else None
+        hint = Some(Hint(content = Text(messages(hintMsg)))),
     ).withFormField(theForm(id))
 )

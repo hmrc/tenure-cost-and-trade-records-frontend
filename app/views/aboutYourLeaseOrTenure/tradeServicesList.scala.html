@@ -50,7 +50,17 @@
     }
 }
 
-@rentOrLandlordSfx = @{if(request.sessionData.forType == FOR6020) messages("addTradeService.heading.rent") else messages("addTradeService.heading.landlord")}
+    @rentOrLandlordSfx = @{
+        session.forType match {
+            case FOR6020 =>
+            numberOfServices.size > 1 match {
+                case true => messages("addTradeService.heading.rentPlural")
+                case _ => messages("addTradeService.heading.rent")
+            }
+            case _ => messages("addTradeService.heading.landlord")
+
+        }}
+
 
 @hint                      = @{if(request.sessionData.forType == FOR6020) messages("addTradeService.label6020") else messages("addTradeService.label")}
 

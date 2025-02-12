@@ -116,7 +116,7 @@
 
             tradingHistoryOne.row(
                 "cYa.touringAndTentingPitches.pitches.label",
-                _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => messages(s"label.${x.name}"))).orElse(""),
+                _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
                 controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
                 "tentingPitchesOnSite") ++
                     tradingHistoryOne.conditionRow(

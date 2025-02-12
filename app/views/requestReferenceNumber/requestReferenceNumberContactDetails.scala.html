@@ -18,12 +18,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.submissions.requestReferenceNumber.RequestReferenceNumberContactDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+
 
 @this(layout: Layout,
   govukButton: GovukButton,
   govukInput: GovukInput,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
   formWithCSRF: FormWithCSRF
 )
 
@@ -45,7 +46,7 @@
       @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetailsFullName", "govuk-!-width-two-thirds", "requestReferenceNumberContactDetailsFullName")
       @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.phone", "govuk-!-width-two-thirds", "phone")
       @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.email", "govuk-!-width-two-thirds", "email")
-      @includes.textInputCharCount(govukCharacterCount, theForm, "requestReferenceNumberContactDetailsAdditionalInformation", "requestReferenceNumberContactDetailsAdditionalInformation.heading")
+      @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "requestReferenceNumberContactDetailsAdditionalInformation", "requestReferenceNumberContactDetailsAdditionalInformation.heading", charCount = 2000)
 
       @includes.continueButton(govukButton)
   }

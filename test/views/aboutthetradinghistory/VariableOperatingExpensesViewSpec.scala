@@ -57,6 +57,12 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
       assert(sectionText.contains(messages("label.section.aboutYourTradingHistory")))
     }
 
+    "Page heading is visible" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val sectionText = doc.getElementsByClass("govuk-heading-l").text()
+      assert(sectionText == messages("variableOperatingExpenses.heading"))
+    }
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
