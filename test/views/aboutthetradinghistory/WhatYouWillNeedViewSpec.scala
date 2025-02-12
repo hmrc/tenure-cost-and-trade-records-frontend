@@ -23,7 +23,7 @@ import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
+class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
 
   private val sessionRequest = SessionRequest(baseFilled6076Session, fakeRequest)
 
