@@ -36,5 +36,14 @@ class AccommodationIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for included tariff items page" in
       assert(IncludedTariffItemsPageId.toString.equals("includedTariffItemsPage"))
+
+    "Identifier for accommodation unit list page" in
+      assert(AccommodationUnitListPageId.toString.equals("accommodationUnitListPage"))
+
+    "Identifier for added maximum accommodation units page" in
+      assert(AddedMaximumAccommodationUnitsPageId.toString.equals("addedMaximumAccommodationUnitsPage"))
+
+    "Identifier for accommodation details CYA page" in
+      assert(AccommodationDetailsCYAPageId.toString.equals("accommodationDetailsCYAPage"))
   }
 }

@@ -48,10 +48,40 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "return OK for FOR6010" in {
+      val result = whatYouWillNeedController(FOR6010).show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return HTML FOR6010" in {
+      val result = whatYouWillNeedController(FOR6010).show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return OK for FOR6011" in {
+      val result = whatYouWillNeedController(FOR6011).show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+    }
+
+    "return HTML FOR6011" in {
+      val result = whatYouWillNeedController(FOR6011).show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
     "return OK for FOR6045" in {
       val result = whatYouWillNeedController(FOR6045).show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
+    }
+
+    "return HTML FOR6045" in {
+      val result = whatYouWillNeedController(FOR6045).show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "return OK for FOR6046" in {
@@ -60,16 +90,34 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
     }
 
+    "return HTML FOR6046" in {
+      val result = whatYouWillNeedController(FOR6046).show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
     "return OK for FOR6048" in {
       val result = whatYouWillNeedController(FOR6048).show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
     }
 
+    "return HTML FOR6048" in {
+      val result = whatYouWillNeedController(FOR6048).show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
     "return OK for FOR6076" in {
       val result = whatYouWillNeedController(FOR6076).show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
+    }
+
+    "return HTML FOR6076" in {
+      val result = whatYouWillNeedController(FOR6076).show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 

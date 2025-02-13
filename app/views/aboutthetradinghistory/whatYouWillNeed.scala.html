@@ -28,6 +28,15 @@
 
 @forType = @{ request.sessionData.forType }
 
+    @forTypeList = @{
+        forType match {
+            case FOR6010 | FOR6011=> includes.whatYouWillNeedContent.whatYouWillNeed60106011()
+            case FOR6045 | FOR6046 => includes.whatYouWillNeedContent.whatYouWillNeed60456046()
+            case FOR6048 => includes.whatYouWillNeedContent.whatYouWillNeed6048()
+            case FOR6076 => includes.whatYouWillNeedContent.whatYouWillNeed6076()
+        }
+    }
+
 @layout(
     pageHeading = messages("whatYouWillNeed.heading"),
     showSection = true,
@@ -51,117 +60,9 @@
         <p class="govuk-body">@messages("whatYouWillNeed.text3")</p>
 
         <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-            @if(forType == FOR6010){
-                <li>
-                    <strong>@messages("whatYouWillNeed.6045.l1")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6045.p1")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6010.l1")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6010.p1")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6010.l2")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6010.p2")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6010.l3")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6010.p3")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6010.l4")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6010.p4")</p>
-                </li>
-            }
-            @if(forType == FOR6045 || forType == FOR6046) {
-                <li>
-                    <strong>@messages("whatYouWillNeed.6045.l1")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6045.p1")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6045.l2")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6045.p2")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6045.l3")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6045.p3")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6045.l4")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6045.p4")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6045.l5")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6045.p5")</p>
-                </li>
-            }
-            @if(forType == FOR6048) {
-                <li>
-                    <strong>@messages("whatYouWillNeed.6048.l1")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6048.p1")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6048.l2")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6048.p2")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6048.l3")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6048.p3")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6048.l4")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6048.p4")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6048.l5")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6048.p5")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6048.l6")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6048.p6")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.6048.l7")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.6048.p7")</p>
-                </li>
-            }
-            @if(forType == FOR6076) {
-                <li>
-                    <strong>@messages("whatYouWillNeed.l1")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p1")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l2")</strong>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l3")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p3")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l4")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p4")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l5")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p5")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l6")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p6")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l7")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p7")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l8")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p8")</p>
-                </li>
-                <li>
-                    <strong>@messages("whatYouWillNeed.l9")</strong>
-                    <p class="govuk-body">@messages("whatYouWillNeed.p9")</p>
-                </li>
-            }
+
+            @forTypeList
+
         </ul>
 
         <h2 class="govuk-heading-m">@messages("whatYouWillNeed.subheading2")</h2>

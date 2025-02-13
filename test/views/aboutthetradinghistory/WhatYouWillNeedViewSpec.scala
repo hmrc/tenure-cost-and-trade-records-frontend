@@ -25,12 +25,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
 
-  private val sessionRequest = SessionRequest(baseFilled6076Session, fakeRequest)
+  private val sessionRequest     = SessionRequest(baseFilled6076Session, fakeRequest)
+  private val sessionRequest6010 = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val messageKeyPrefix = "whatYouWillNeed"
   override val form    = WhatYouWillNeedForm.whatYouWillNeedForm
 
   def createView = () => whatYouWillNeedView(form, Summary("99996076001"))(sessionRequest, messages)
+
+  def createView6010 = () => whatYouWillNeedView(form, Summary("99996010001"))(sessionRequest6010, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
     whatYouWillNeedView(form, Summary("99996076001"))(sessionRequest, messages)
@@ -52,6 +55,13 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
       assert(doc.toString.contains(messages("whatYouWillNeed.header1")))
     }
 
+    "contain whatYouWillNeed.text" in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("whatYouWillNeed.text1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.text2")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.text3")))
+    }
+
     "contain list" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("whatYouWillNeed.l1")))
@@ -71,6 +81,17 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
       assert(doc.toString.contains(messages("whatYouWillNeed.p8")))
       assert(doc.toString.contains(messages("whatYouWillNeed.l9")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p9")))
+    }
+
+    "contain list 6010" in {
+      val doc = asDocument(createView6010())
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l2")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l3")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p3")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l4")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p4")))
     }
 
     "Section heading is visible" in {

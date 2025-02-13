@@ -92,6 +92,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
     )
 
+  val sessionAboutYou6010             = sessionAboutYou.copy(referenceNumber = "99996010004", forType = FOR6010)
   val sessionAboutYou6015             = sessionAboutYou.copy(referenceNumber = "99996015004", forType = FOR6015)
   val sessionAboutYou6020             = sessionAboutYou.copy(referenceNumber = "99996020004", forType = FOR6020)
   val sessionAboutYou6030             = sessionAboutYou.copy(referenceNumber = "99996030004", forType = FOR6030)
@@ -116,6 +117,13 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(WhatYouWillNeedPageId, sessionAboutYou6076)
         .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .show()
+    }
+
+    "return a function that goes financial-year-end page when what you will need has been completed 6010" in {
+      navigator
+        .nextPage(WhatYouWillNeedPageId, sessionAboutYou6010)
+        .apply(sessionAboutYou6010) shouldBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
         .show()
     }
 
