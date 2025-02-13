@@ -100,9 +100,9 @@ class AboutYourTradingHistoryController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
+      case FOR6010 | FOR6011 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
         controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
-      case _                                     => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
+      case _                                               => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
     }
 
 }

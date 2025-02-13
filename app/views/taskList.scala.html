@@ -332,7 +332,7 @@
    <ul class="app-task-list__items">
     @includes.taskListItem("about-your-trading-history",
      if(forType == FOR6048) "aboutYourTradingHistory.6048.heading" else "aboutYourTradingHistory.heading",
-     if(forType == FOR6045 || forType == FOR6046 || forType == FOR6048 || forType == FOR6076) {
+     if(forType == FOR6010 || forType == FOR6011 ||forType == FOR6045 || forType == FOR6046 || forType == FOR6048 || forType == FOR6076) {
       controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show()
      } else { controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show() },
      section3Completed,
