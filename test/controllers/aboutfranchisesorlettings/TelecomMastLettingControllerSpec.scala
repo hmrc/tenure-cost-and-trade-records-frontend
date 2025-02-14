@@ -40,7 +40,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
       val result = telecomMastLettingController().show(Some(0))(fakeRequest)
       status(result) shouldBe OK
@@ -52,6 +52,13 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
   }
+
+  "render back link to CYA if come from CYA" in {
+    val result  = telecomMastLettingController().show(Some(0))(fakeRequestFromCYA)
+    val content = contentAsString(result)
+    content should include("/check-your-answers-about-franchise-or-lettings")
+  }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
       val res = telecomMastLettingController().submit(Some(0))(
