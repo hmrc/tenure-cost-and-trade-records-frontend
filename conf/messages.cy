@@ -3393,6 +3393,7 @@ whatYouWillNeed.payrollCosts = Payroll costs
 whatYouWillNeed.variableOperatingExpenses = Variable Operating Expenses
 whatYouWillNeed.fixedOperatingExpenses = Fixed Operating Expenses
 whatYouWillNeed.otherCosts = Other Costs
+whatYouWillNeed.accommodation = Accommodation
 
 whatYouWillNeed.p1 = When you built or took over the property, and your financial year end.
 whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives.
@@ -3416,6 +3417,9 @@ whatYouWillNeed.6015.p3 = Including any director’s remuneration and the wages,
 whatYouWillNeed.6015.p4 = Including: energy and utilities; cleaning and laundry; building maintenance and repairs; repairs and renewals of fixtures and equipment; advertising and marketing; administration and sundries; entertainment; and any other variable operating expenses.
 whatYouWillNeed.6015.p5 = Including rent, business rates, insurance, loan interest and depreciation.
 whatYouWillNeed.6015.p6 = Including any contributions to head office and any other costs not listed here
+
+whatYouWillNeed.6016.p1 = Income from providing accommodation, and your average occupancy rate.
+whatYouWillNeed.6016.p4 = Including hire of function rooms, conference rooms and telephones. Also include income from any concessions or franchises such as restuarents, or lettings such as phone masts.
 
 whatYouWillNeed.6045.p1 = When you bought or took over the property, and your financial year end.
 whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.
