@@ -58,6 +58,17 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       )
     }
 
+    "return 200 and HTML with Rent Payable Vary On Quantity Of Beers Details Yes in the session for 6048" in {
+      val controller = howIsCurrentRentFixedController(forType = FOR6048)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
+      )
+    }
+
     "return 200 and HTML with Rent Payable Vary On Quantity Of Beers Details No in the session for 6010" in {
       val controller =
         howIsCurrentRentFixedController(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo))

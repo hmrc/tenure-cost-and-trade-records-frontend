@@ -27,6 +27,7 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
 
   private val sessionRequest     = SessionRequest(baseFilled6076Session, fakeRequest)
   private val sessionRequest6010 = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
 
   val messageKeyPrefix = "whatYouWillNeed"
   override val form    = WhatYouWillNeedForm.whatYouWillNeedForm
@@ -34,6 +35,8 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
   def createView = () => whatYouWillNeedView(form, Summary("99996076001"))(sessionRequest, messages)
 
   def createView6010 = () => whatYouWillNeedView(form, Summary("99996010001"))(sessionRequest6010, messages)
+
+  def createView6015 = () => whatYouWillNeedView(form, Summary("99996015001"))(sessionRequest6015, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
     whatYouWillNeedView(form, Summary("99996076001"))(sessionRequest, messages)
@@ -64,34 +67,51 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
 
     "contain list" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("whatYouWillNeed.l1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.occupationAccountingInformation")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p1")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l2")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l3")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.powerGenerated")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.grossReceipts")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p3")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l4")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.otherIncome")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p4")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l5")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.costOfSales")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p5")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l6")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.staffCosts")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p6")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l7")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.premisesCosts")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p7")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l8")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.operationalAdministrativeExpenses")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p8")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.l9")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.headOfficeExpenses")))
       assert(doc.toString.contains(messages("whatYouWillNeed.p9")))
     }
 
     "contain list 6010" in {
       val doc = asDocument(createView6010())
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.drinks")))
       assert(doc.toString.contains(messages("whatYouWillNeed.6010.p1")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l2")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l3")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.food")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p2")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.otherReceipts")))
       assert(doc.toString.contains(messages("whatYouWillNeed.6010.p3")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.l4")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.turnover")))
       assert(doc.toString.contains(messages("whatYouWillNeed.6010.p4")))
+    }
+
+    "contain list 6015" in {
+      val doc = asDocument(createView6015())
+      assert(doc.toString.contains(messages("whatYouWillNeed.turnover")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6015.p1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.costOfSales")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6015.p2")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.payrollCosts")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6015.p3")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.variableOperatingExpenses")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6015.p4")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.fixedOperatingExpenses")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6015.p5")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.otherCosts")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6015.p6")))
     }
 
     "Section heading is visible" in {
