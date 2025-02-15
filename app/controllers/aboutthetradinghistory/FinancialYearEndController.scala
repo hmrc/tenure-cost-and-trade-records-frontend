@@ -78,19 +78,19 @@ class FinancialYearEndController @Inject() (
         continueOrSaveAsDraft[(DayMonthsDuration, Boolean)](
           accountingInformationForm,
           formWithErrors => BadRequest(financialYearEndView(formWithErrors)),
-          data => {
+          (newFinancialYear, newYearEndChanged) => {
             val occupationAndAccounting        = aboutTheTradingHistory.occupationAndAccountingInformation.get
             val firstOccupy                    = occupationAndAccounting.firstOccupy
             val newOccupationAndAccounting     =
-              OccupationalAndAccountingInformation(firstOccupy, Some(data._1), Some(data._2))
-            val isFinancialYearEndDayUnchanged = occupationAndAccounting.financialYear.contains(data._1)
+              OccupationalAndAccountingInformation(firstOccupy, Some(newFinancialYear), Some(newYearEndChanged))
+            val isFinancialYearEndDayUnchanged = occupationAndAccounting.financialYear.contains(newFinancialYear)
             val isFinancialYearsListUnchanged  = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears
 
             val updatedData: Session = request.sessionData.forType match {
               case FOR6020           =>
                 buildUpdateData6020(
                   firstOccupy,
-                  data._1,
+                  newFinancialYear,
                   aboutTheTradingHistory,
                   newOccupationAndAccounting,
                   isFinancialYearEndDayUnchanged,
@@ -99,7 +99,7 @@ class FinancialYearEndController @Inject() (
               case FOR6030           =>
                 buildUpdateData6030(
                   firstOccupy,
-                  data._1,
+                  newFinancialYear,
                   aboutTheTradingHistory,
                   newOccupationAndAccounting,
                   isFinancialYearEndDayUnchanged,
@@ -126,7 +126,7 @@ class FinancialYearEndController @Inject() (
               case _                 =>
                 buildUpdateData(
                   firstOccupy,
-                  data._1,
+                  newFinancialYear,
                   aboutTheTradingHistory,
                   newOccupationAndAccounting,
                   isFinancialYearEndDayUnchanged,
@@ -138,7 +138,7 @@ class FinancialYearEndController @Inject() (
               .map(_ =>
                 navigator.cyaPage
                   .filter(_ =>
-                    navigator.from == "CYA" && !data._2 &&
+                    navigator.from == "CYA" && !newYearEndChanged &&
                       (isFinancialYearsListUnchanged || (
                         request.sessionData.forType == FOR6076 && request.sessionData.aboutTheTradingHistoryPartOne
                           .flatMap(_.turnoverSections6076)
@@ -184,7 +184,7 @@ class FinancialYearEndController @Inject() (
     isFinancialYearEndDayUnchanged: Boolean,
     isFinancialYearsListUnchanged: Boolean
   )(implicit request: SessionRequest[AnyContent]) = {
-    def turnoverSections =
+    val turnoverSections =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
         aboutTheTradingHistory.turnoverSections
       } else if (isFinancialYearsListUnchanged) {
@@ -205,7 +205,7 @@ class FinancialYearEndController @Inject() (
         }
       }
 
-    def costOfSales = if (aboutTheTradingHistory.costOfSales.size == turnoverSections.size) {
+    val costOfSales = if (aboutTheTradingHistory.costOfSales.size == turnoverSections.size) {
       (aboutTheTradingHistory.costOfSales zip turnoverSections.map(_.financialYearEnd)).map {
         case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
       }
@@ -213,7 +213,7 @@ class FinancialYearEndController @Inject() (
       turnoverSections.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
     }
 
-    def totalPayrollCosts = if (aboutTheTradingHistory.totalPayrollCostSections.size == turnoverSections.size) {
+    val totalPayrollCosts = if (aboutTheTradingHistory.totalPayrollCostSections.size == turnoverSections.size) {
       (aboutTheTradingHistory.totalPayrollCostSections zip turnoverSections.map(_.financialYearEnd)).map {
         case (totalPayrollCosts, finYearEnd) => totalPayrollCosts.copy(financialYearEnd = finYearEnd)
       }
