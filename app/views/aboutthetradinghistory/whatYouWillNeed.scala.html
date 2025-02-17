@@ -18,6 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.ForType.*
 @import models.pages.Summary
+@import play.api.Logging
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -36,6 +37,7 @@
             case FOR6045 | FOR6046 => includes.whatYouWillNeedContent.whatYouWillNeed60456046()
             case FOR6048 => includes.whatYouWillNeedContent.whatYouWillNeed6048()
             case FOR6076 => includes.whatYouWillNeedContent.whatYouWillNeed6076()
+            case _ => includes.whatYouWillNeedContent.whatYouWillNeed60106011()
         }
     }
 
