@@ -31,21 +31,10 @@
 
 @(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-@forType = @{
-    request.sessionData.forType
-}
-
-    @heading = @{
-        if(forType == FOR6076 || forType == FOR6048 || forType == FOR6045 || forType == FOR6046) messages("areYouThirdParty6076.heading") else messages("areYouThirdParty.heading")
-    }
-
-    @showH1 = @{
-        if(forType == FOR6076 || forType == FOR6048 || forType == FOR6045 || forType == FOR6046) true else false
-    }
 
 @layout(
-  pageHeading = heading,
-  showH1 = showH1,
+  pageHeading = messages("areYouThirdParty6076.heading"),
+  showH1 = true,
   showSection = true,
   summary = Some(summary),
   sectionName = messages("label.section.connectionToTheProperty"),
@@ -55,7 +44,6 @@
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
 
-      @if(forType == FOR6076 || forType == FOR6048 || forType == FOR6045 || forType == FOR6046) {
 
           <p class="govuk-body">@{
               messages("areYouThirdParty6076.p1", tradingName)
@@ -81,33 +69,6 @@
               classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
           )
 
-      } else {
-      @govukRadios(
-          Radios(
-              name = "areYouThirdParty",
-              idPrefix = Option("areYouThirdParty"),
-              items = Seq(
-                  RadioItem(
-                      content = Text(messages("label.yes.ydw")),
-                      value = Some("yes"),
-                      hint = Some(Hint(content = Text(messages("hint.areYouThirdParty.yes", tradingName)))),
-                  ),
-                  RadioItem(
-                      content = Text(messages("label.no.nac.ydw")),
-                      value = Some("no"),
-                      hint = Some(Hint(content = Text(messages("hint.areYouThirdParty.no", tradingName)))),
-                  )),
-              errorMessage = theForm.errors.asTextErrorMessageForField("areYouThirdParty"),
-              fieldset = Option(Fieldset(
-                  legend = Option(Legend(
-                      content = Text(messages("areYouThirdParty.title", tradingName)),
-                      isPageHeading = true,
-                      classes = "govuk-fieldset__legend--l"
-                  ))
-              ))
-          ).withFormField(theForm("areYouThirdParty"))
-      )
-      }
 
 
       @includes.continueSaveAsDraftButtons(govukButton)

@@ -89,16 +89,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
           assertEqualsValue(
             doc,
             "title",
-            messages("service.title", messages("areYouThirdParty.heading"))
-          )
-        }
-
-        "display the correct page title" in {
-          val doc = asDocument(createView())
-          assertEqualsValue(
-            doc,
-            "h1",
-            messages("areYouThirdParty.title", "Wombles Inc")
+            messages("service.title", messages("areYouThirdParty6076.heading"))
           )
         }
 
@@ -111,20 +102,6 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
           assert(LangToggle.toString.contains("/send-trade-and-cost-information/hmrc-frontend/language/cy"))
         }
       }
-    }
-
-    "contain radio buttons for the value yes with hint" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(doc, "areYouThirdParty", "areYouThirdParty", AnswerYes.name, false)
-      assertContainsText(doc, messages("label.yes"))
-      assertContainsText(doc, messages("hint.areYouThirdParty.yes", "Wombles Inc"))
-    }
-
-    "contain radio buttons for the value no with hint" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(doc, "areYouThirdParty-2", "areYouThirdParty", AnswerNo.name, false)
-      assertContainsText(doc, messages("label.no"))
-      assertContainsText(doc, messages("hint.areYouThirdParty.no", "Wombles Inc"))
     }
 
     "contain radio buttons for the value yes with hint 6076" in {

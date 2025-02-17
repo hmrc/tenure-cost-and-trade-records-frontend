@@ -50,6 +50,13 @@ class AtmLettingControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "render back link to CYA if come from CYA Baseload" in {
+      val result  = atmLettingController().show(Some(0))(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-franchise-or-lettings")
+      content should not include "/financial-year-end"
+    }
   }
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
@@ -66,6 +73,7 @@ class AtmLettingControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+
   }
 
   "handle valid form submissions by updating session data and redirecting correctly" in {
