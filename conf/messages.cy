@@ -323,12 +323,6 @@ error.tradingNamePayingRent.missing = Dewiswch ‘iawn’ os yw’r sefydliad yn
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
-areYouThirdParty.heading = Are you a third party?
-areYouThirdParty.title = A ydych chi’n drydydd parti, sy’n gweithio ar ran {0}?
-hint.areYouThirdParty.yes = Dewiswch ‘ydw’ os yw {0} wedi’ch contractio i lenwi’r datganiad.
-hint.areYouThirdParty.no = Dewiswch ‘nac ydw’ os ydych yn berchennog, cyfarwyddwr neu gyflogai uniongyrchol o {0}, neu os ydych yn llenwi’r datganiad hwn ar eu rhan mewn capasiti answyddogol.
-error.areYouThirdParty.missing = Dewiswch ‘ydw’ os ydych yn gweithredu ar ran y sefydliad
-
 areYouThirdParty.label = Are you a third party completing this declaration on behalf of {0}?
 areYouThirdParty6076.heading = Third parties
 areYouThirdParty6076.p1 = We need to know if you are completing this declaration on behalf of {0} in an official capacity.

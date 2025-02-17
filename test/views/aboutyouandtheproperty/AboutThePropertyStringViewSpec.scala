@@ -39,6 +39,9 @@ class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[PropertyDeta
   def createViewUsingForm: Form[PropertyDetailsString] => Html = (form: Form[PropertyDetailsString]) =>
     aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(fakeRequest, messages)
 
+  def createViewUsingForm6020: Form[PropertyDetailsString] => Html = (form: Form[PropertyDetailsString]) =>
+    aboutThePropertyStringView(form, FOR6020, Summary("99996020001"), backLink)(fakeRequest, messages)
+
   "About the property view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
@@ -59,6 +62,11 @@ class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[PropertyDeta
 
     "contain an input for how the property is used" in {
       val doc = asDocument(createViewUsingForm(form))
+      assertRenderedById(doc, "propertyCurrentlyUsedString")
+    }
+
+    "contain a hint text for text box for 6020" in {
+      val doc = asDocument(createViewUsingForm6020(form))
       assertRenderedById(doc, "propertyCurrentlyUsedString")
     }
 
