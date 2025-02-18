@@ -31,18 +31,20 @@ class CheckYourAnswersControllerSpec extends LettingHistoryControllerSpec:
   "the CheckYourAnswers controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET by replying 200 with the empty form" in new ControllerFixture(
-        lettingHistory = Some(LettingHistory(
-          hasOnlineAdvertising = Some(false)
-        ))
+        lettingHistory = Some(
+          LettingHistory(
+            hasOnlineAdvertising = Some(false)
+          )
+        )
       ) {
         val result = controller.show(fakeGetRequest)
         contentType(result).value shouldBe HTML
-        charset(result).value shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading shouldBe "lettingHistory.checkYourAnswers.heading"
-        page.backLink shouldBe routes.HasOnlineAdvertisingController.show.url
+        page.heading           shouldBe "lettingHistory.checkYourAnswers.heading"
+        page.backLink          shouldBe routes.HasOnlineAdvertisingController.show.url
         page.radios("answer") shouldNot be(empty)
-        page.radios("answer") should haveNoneChecked
+        page.radios("answer")    should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
@@ -51,24 +53,26 @@ class CheckYourAnswersControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page = contentAsJsoup(result)
+        val page   = contentAsJsoup(result)
         page.error("answer") shouldBe "error.checkYourAnswersRadio.required"
       }
     }
-    "the user has already answered" should {
+    "the user has already answered"            should {
       "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
-        lettingHistory = Some(LettingHistory(
-          hasOnlineAdvertising = Some(true),
-          sectionCompleted = Some(true)
-        ))
+        lettingHistory = Some(
+          LettingHistory(
+            hasOnlineAdvertising = Some(true),
+            sectionCompleted = Some(true)
+          )
+        )
       ) {
         val result = controller.show(fakeGetRequest)
-        status(result) shouldBe OK
+        status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
         page.radios("answer") shouldNot be(empty)
-        page.radios("answer") should haveChecked("yes")
+        page.radios("answer")    should haveChecked("yes")
         page.radios("answer") shouldNot haveChecked("no")
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'TaskList' page" in new ControllerFixture {
@@ -78,15 +82,18 @@ class CheckYourAnswersControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
+        redirectLocation(result).value shouldBe controllers.routes.TaskListController
+          .show()
+          .withFragment("letting-history")
+          .toString
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        sectionCompleted(data).value shouldBe true
+        sectionCompleted(data).value   shouldBe true
       }
     }
   }
 
   trait ControllerFixture(lettingHistory: Option[LettingHistory] = None)
-    extends MockRepositoryFixture
+      extends MockRepositoryFixture
       with SessionCapturingFixture:
 
     val controller = new CheckYourAnswersController(

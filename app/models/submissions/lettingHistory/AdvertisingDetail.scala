@@ -21,7 +21,12 @@ import play.api.libs.json.{Format, Json}
 case class AdvertisingDetail(
   websiteAddress: String,
   propertyReferenceNumber: String
-)
+):
+  override def equals(that: Any): Boolean = that match {
+    case AdvertisingDetail(websiteAddress, propertyReferenceNumber) =>
+      this.websiteAddress == websiteAddress && this.propertyReferenceNumber == propertyReferenceNumber
+    case _                                                          => false
+  }
 
 object AdvertisingDetail:
   given Format[AdvertisingDetail]                               = Json.format

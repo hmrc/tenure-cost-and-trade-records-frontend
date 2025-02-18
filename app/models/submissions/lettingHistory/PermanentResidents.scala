@@ -18,6 +18,7 @@ package models.submissions.lettingHistory
 
 import models.Session
 import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
+import scala.collection.mutable
 
 trait PermanentResidents:
 
@@ -73,23 +74,16 @@ trait PermanentResidents:
           )
         }
       case Some(lettingHistory) =>
-        val maybeExistingIndex =
-          maybeIndex.orElse {
-            lettingHistory.permanentResidents.zipWithIndex
-              .find((existing, _) => existing.name == newResident.name)
-              .map((_, index) => index)
-          }
-
-        maybeExistingIndex match
-          case None                =>
+        maybeIndex match
+          case None        =>
             // the given resident is actually new ... therefore append it to the list
             changeSession {
               lettingHistory
                 .copy(hasPermanentResidents = Some(true))
                 .copy(permanentResidents = lettingHistory.permanentResidents :+ newResident)
             }
-          case Some(existingIndex) =>
-            val oldResident = lettingHistory.permanentResidents(existingIndex)
+          case Some(index) =>
+            val oldResident = lettingHistory.permanentResidents(index)
             if newResident == oldResident
             then
               // the given resident detail is NOT changing the existing one
@@ -99,9 +93,7 @@ trait PermanentResidents:
               changeSession {
                 lettingHistory
                   .copy(hasPermanentResidents = Some(true))
-                  .copy(permanentResidents =
-                    lettingHistory.permanentResidents.patch(existingIndex, List(newResident), 1)
-                  )
+                  .copy(permanentResidents = lettingHistory.permanentResidents.patch(index, List(newResident), 1))
               }
 
   def byRemovingPermanentResidentAt(index: Int)(using session: Session): SessionWrapper =

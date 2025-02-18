@@ -21,7 +21,11 @@ import play.api.libs.json.{Format, Json}
 case class ResidentDetail(
   name: String,
   address: String
-)
+):
+  override def equals(that: Any): Boolean = that match {
+    case ResidentDetail(name, address) => this.name == name && this.address == address
+    case _                             => false
+  }
 
 object ResidentDetail:
   def unapply(obj: ResidentDetail): Option[(String, String)] = Some(obj.name, obj.address)

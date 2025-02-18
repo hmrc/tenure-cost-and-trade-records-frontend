@@ -84,7 +84,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
       "confirm resident address which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
-        val session = byAddingOrUpdatingPermanentResident(johnBrown)
+        val session = byAddingOrUpdatingPermanentResident(johnBrown, maybeIndex = Some(0))
         session.changed mustBe false
         hasPermanentResidents(session.data).value mustBe true
         permanentResidents(session.data) must have size 1
@@ -98,7 +98,8 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
           ResidentDetail(
             name = johnBrown.name,
             address = newAddress
-          )
+          ),
+          maybeIndex = Some(0)
         )
         session.changed mustBe true
         hasPermanentResidents(session.data).value mustBe true

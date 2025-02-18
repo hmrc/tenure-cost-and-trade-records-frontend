@@ -126,7 +126,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.county"   -> "Nowhere",
             "address.postcode" -> "BN124AX"
           )
-          val result  = controller.submit()(request)
+          val result  = controller.submit(maybeIndex = Some(1))(request)
           status(result)                          shouldBe SEE_OTHER
           redirectLocation(result).value          shouldBe routes.RentalPeriodController.show(index = Some(1)).url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])

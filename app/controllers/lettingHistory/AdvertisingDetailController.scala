@@ -20,10 +20,11 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.AdvertisingDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising}
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising, hasBeenAlreadyEntered}
 import models.submissions.lettingHistory.AdvertisingDetail
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.AdvertisingDetailPageId
+import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.*
 import repositories.SessionRepo
@@ -60,22 +61,38 @@ class AdvertisingDetailController @Inject() (
             detailsOnIdx <- onlineAdvertising.lift(index)
           yield theForm.fill(detailsOnIdx)
 
-        Ok(theView(filledForm.getOrElse(theForm), backLinkUrl, maybeIndex, request.sessionData.toSummary))
+        Ok(theView(filledForm.getOrElse(theForm), backLinkUrl, maybeIndex))
   }
 
-  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
+  def submit(maybeIndex: Option[Int]): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AdvertisingDetail](
       theForm,
-      theFormWithErrors =>
-        successful(BadRequest(theView(theFormWithErrors, backLinkUrl, index, request.sessionData.toSummary))),
-      details =>
+      theFormWithErrors => badRequestWith(theView, theFormWithErrors, maybeIndex),
+      occupier =>
         given Session = request.sessionData
-        for
-          newSession   <- byAddingOrUpdatingOnlineAdvertising(index, details)
-          savedSession <- repository.saveOrUpdateSession(newSession)
-        yield navigator.redirect(currentPage = AdvertisingDetailPageId, savedSession)
+        if hasBeenAlreadyEntered(occupier, at = maybeIndex)
+        then
+          badRequestWith(
+            theView,
+            theForm
+              .fill(occupier)
+              .withError("duplicate", request.messages()("lettingHistory.advertisingDetail.duplicate")),
+            maybeIndex
+          )
+        else
+          for
+            newSession   <- successful(byAddingOrUpdatingOnlineAdvertising(maybeIndex, occupier))
+            savedSession <- repository.saveOrUpdateSession(newSession)
+          yield navigator.redirect(currentPage = AdvertisingDetailPageId, savedSession)
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = AdvertisingDetailPageId)
+
+  private def badRequestWith(
+    theView: OnlineAdvertisingDetailView,
+    theFormWithErrors: Form[AdvertisingDetail],
+    maybeIndex: Option[Int]
+  )(using request: SessionRequest[AnyContent]) =
+    successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex)))

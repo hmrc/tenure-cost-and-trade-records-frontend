@@ -75,15 +75,8 @@ trait CompletedLettings:
           }
         )
       case Some(lettingHistory) =>
-        val maybeExistingIndex =
-          maybeIndex.orElse {
-            lettingHistory.completedLettings.zipWithIndex
-              .find((existing, _) => existing.name == newOccupier.name)
-              .map((_, index) => index)
-          }
-
-        maybeExistingIndex match
-          case None                =>
+        maybeIndex match
+          case None        =>
             // the given occupier is actually new ... therefore APPEND it to the list
             val lastIndex                 = lettingHistory.completedLettings.size
             val extendedCompletedLettings = lettingHistory.completedLettings :+ newOccupier
@@ -95,22 +88,22 @@ trait CompletedLettings:
                   .copy(completedLettings = extendedCompletedLettings)
               }
             )
-          case Some(existingIndex) =>
-            val oldOccupier = lettingHistory.completedLettings(existingIndex)
+          case Some(index) =>
+            val oldOccupier = lettingHistory.completedLettings(index)
             if newOccupier == oldOccupier
             then
               // the given occupier detail is NOT changing the existing one
-              (existingIndex, unchangedSession)
+              (index, unchangedSession)
             else
               // the given occupier detail are changing the existing one ... therefore PATCH the list
               val patchedOccupier          =
                 lettingHistory
-                  .completedLettings(existingIndex)
+                  .completedLettings(index)
                   .copy(name = newOccupier.name, address = newOccupier.address)
               val patchedCompletedLettings =
-                lettingHistory.completedLettings.patch(existingIndex, List(patchedOccupier), 1)
+                lettingHistory.completedLettings.patch(index, List(patchedOccupier), 1)
               (
-                existingIndex,
+                index,
                 changeSession {
                   lettingHistory
                     .copy(hasCompletedLettings = Some(true))

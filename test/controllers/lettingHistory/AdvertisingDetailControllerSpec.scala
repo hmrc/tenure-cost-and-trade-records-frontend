@@ -112,7 +112,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         ) {
           val result = controller.show(maybeIndex = None)(fakeGetRequest)
           status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe controllers.routes.TaskListController.show().url // TODO !!!
+          redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
         }
       }
     }

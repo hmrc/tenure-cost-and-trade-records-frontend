@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.RentalPeriodForm.theForm
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{LettingHistory, LocalPeriod}
+import models.submissions.lettingHistory.{LettingHistory, LocalPeriod, OccupierDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.RentalPeriodPageId
 import play.api.data.Form
@@ -60,22 +60,31 @@ class RentalPeriodController @Inject (
         rentalPeriod     <- completedLetting.rentalPeriod
       yield theForm.fill(rentalPeriod)
 
-    withOccupierAt(maybeIndex) { (partiallyAppliedView, _) =>
-      successful(Ok(partiallyAppliedView.apply(filledForm.getOrElse(freshForm))))
+    withOccupierAt(maybeIndex) { (thePartiallyAppliedView, _, _) =>
+      successful(Ok(thePartiallyAppliedView.apply(filledForm.getOrElse(freshForm))))
     }
   }
 
-  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    withOccupierAt(index) { (partiallyAppliedView, index) =>
+  def submit(maybeIndex: Option[Int]): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
+    withOccupierAt(maybeIndex) { (thePartiallyAppliedView, occupier, index) =>
       continueOrSaveAsDraft[LocalPeriod](
         theForm,
-        theFormWithErrors => successful(BadRequest(partiallyAppliedView.apply(theFormWithErrors))),
+        theFormWithErrors => badRequestWith(thePartiallyAppliedView, theFormWithErrors),
         rental =>
           given Session = request.sessionData
-          for
-            newSession   <- successful(byUpdatingOccupierRentalPeriod(index, rental))
-            savedSession <- repository.saveOrUpdateSession(newSession)
-          yield navigator.redirect(currentPage = RentalPeriodPageId, savedSession)
+          if hasBeenAlreadyEntered(occupier.copy(rentalPeriod = Some(rental)), at = Some(index))
+          then
+            badRequestWith(
+              thePartiallyAppliedView,
+              theForm
+                .fill(rental)
+                .withError("duplicate", request.messages()("lettingHistory.occupierDetail.duplicate"))
+            )
+          else
+            for
+              newSession   <- successful(byUpdatingOccupierRentalPeriod(index, rental))
+              savedSession <- repository.saveOrUpdateSession(newSession)
+            yield navigator.redirect(currentPage = RentalPeriodPageId, savedSession)
       )
     }
   }
@@ -83,7 +92,7 @@ class RentalPeriodController @Inject (
   private def withOccupierAt(
     maybeIndex: Option[Int]
   )(
-    generateResult: (PartiallyAppliedView, Int) => Future[Result]
+    generateResult: (PartiallyAppliedView, OccupierDetail, Int) => Future[Result]
   )(using request: SessionRequest[AnyContent]): Future[Result] = {
 
     val result =
@@ -91,8 +100,8 @@ class RentalPeriodController @Inject (
         index          <- maybeIndex
         occupierDetail <- completedLettings(request.sessionData).lift(index)
       yield {
-        val partiallyAppliedView = theView.apply(_, occupierDetail.name, index, backLinkUrl(index))
-        generateResult.apply(partiallyAppliedView, index)
+        val thePartiallyAppliedView = theView.apply(_, occupierDetail.name, index, backLinkUrl(index))
+        generateResult.apply(thePartiallyAppliedView, occupierDetail, index)
       }
 
     result.getOrElse(successful(Redirect(routes.OccupierListController.show)))
@@ -101,3 +110,12 @@ class RentalPeriodController @Inject (
   private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
     val navigationData = Map("index" -> index)
     navigator.backLinkUrl(ofPage = RentalPeriodPageId, navigationData)
+
+  private def badRequestWith(thePartiallyAppliedView: PartiallyAppliedView, theFormWithErrors: Form[LocalPeriod]) =
+    successful(
+      BadRequest(
+        thePartiallyAppliedView.apply(
+          theFormWithErrors
+        )
+      )
+    )
