@@ -104,10 +104,7 @@ class CustomerCreditAccountsController @Inject() (
         answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).map(_.bunkeredFuelQuestion) match {
           case Some(AnswerYes) =>
             routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
-          case Some(AnswerNo)  => routes.BunkeredFuelQuestionController.show().url
-          case _               =>
-            logger.warn(s"Back link for customer credit account page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
+          case _               => routes.BunkeredFuelQuestionController.show().url
         }
     }
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
