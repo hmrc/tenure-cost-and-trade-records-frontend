@@ -64,7 +64,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled values" in new ControllerFixture(
           oneAdvertising
         ) {
-          val result = controller.show(index = Some(0))(fakeGetRequest)
+          val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF_8.charset
@@ -110,9 +110,9 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /detail by replying 303 redirect to the 'Advertising Online List' page" in new ControllerFixture(
           fiveAdvertising
         ) {
-          val result = controller.show(index = None)(fakeGetRequest)
+          val result = controller.show(maybeIndex = None)(fakeGetRequest)
           status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe controllers.routes.TaskListController.show().url // TODO !!!
+          redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
         }
       }
     }

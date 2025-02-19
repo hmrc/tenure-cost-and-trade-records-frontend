@@ -85,7 +85,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "confirm resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val (index, session) = byAddingOrUpdatingOccupier(johnBrown)
+        val (index, session) = byAddingOrUpdatingOccupier(johnBrown, maybeIndex = Some(0))
         session.changed mustBe false
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1
@@ -94,8 +94,8 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "change resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val (index, session) =
-          byAddingOrUpdatingOccupier(OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None))
+        val updatedJohnBrown = OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None)
+        val (index, session) = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1

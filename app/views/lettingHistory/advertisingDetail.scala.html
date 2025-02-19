@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.pages.Summary
+@import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.AdvertisingDetail
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
@@ -22,11 +22,11 @@
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton)
 
 
-@(theForm: Form[AdvertisingDetail], backLink: Option[String], index: Option[Int], summary: Summary)(implicit request: Request[AnyContent], messages: Messages)
+@(theForm: Form[AdvertisingDetail], backLink: Option[String], index: Option[Int])(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 @layout(
  theForm = theForm,
- summary = Some(summary),
+ summary = Some(request.sessionData.toSummary),
  pageHeading = messages("lettingHistory.advertisingDetail.heading"),
  backLinkUrl = backLink,
  showSection = true,

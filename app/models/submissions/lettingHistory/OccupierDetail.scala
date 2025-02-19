@@ -22,7 +22,12 @@ case class OccupierDetail(
   name: String,
   address: Address,
   rentalPeriod: Option[LocalPeriod]
-)
+):
+  override def equals(that: Any): Boolean = that match {
+    case OccupierDetail(name, address, rentalPeriod) =>
+      this.name == name && this.address == address && this.rentalPeriod == rentalPeriod
+    case _                                           => false
+  }
 
 object OccupierDetail:
   def unapply(obj: OccupierDetail): Option[(String, Address, Option[LocalPeriod])] =

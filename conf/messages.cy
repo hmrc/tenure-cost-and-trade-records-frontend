@@ -1578,6 +1578,7 @@ lettingHistory.residentDetail.name.required = Enter the name of the permanent re
 lettingHistory.residentDetail.address.label = Resident''s address
 lettingHistory.residentDetail.address.required = Enter the address of the permanent resident
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
+lettingHistory.residentDetail.duplicate = You have already added this permanent resident
 
 lettingHistory.residentList.heading.singular = You have added {0} permanent resident
 lettingHistory.residentList.heading.plural = You have added {0} permanent residents
@@ -1605,6 +1606,7 @@ lettingHistory.rentalPeriod.fromDate.error = The "from date" must be greater tha
 fieldName.toDate = to date
 lettingHistory.rentalPeriod.toDate.error = The "to date" must be less than or equal to {0}
 lettingHistory.rentalPeriod.error = The "from date" must be less than or equal to the "to date"
+lettingHistory.occupierDetail.duplicate = You have already added this temporary occupier
 
 lettingHistory.occupierList.heading.removedAll = You have removed all temporary occupiers of the property
 lettingHistory.occupierList.heading.singular = You have added {0} temporary occupier
@@ -1622,6 +1624,7 @@ label.lettingHistory.advertisingDetail.websiteAddress = Website address
 hint.lettingHistory.advertisingDetail.websiteAddress = Paste a direct link to your property, if known.
 label.lettingHistory.advertisingDetail.propertyReferenceNumber = Property reference number
 hint.lettingHistory.advertisingDetail.propertyReferenceNumber = Leave blank if not known.
+lettingHistory.advertisingDetail.duplicate = You have already added this online advertising
 
 lettingHistory.advertisingList.heading.removedAll = You have removed all your holiday lettings websites
 lettingHistory.advertisingList.heading.singular = You have added {0} holiday lettings website

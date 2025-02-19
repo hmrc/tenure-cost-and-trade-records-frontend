@@ -20,10 +20,11 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfPermanentResidents, byAddingOrUpdatingPermanentResident}
+import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.ResidentDetailPageId
+import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -68,15 +69,34 @@ class ResidentDetailController @Inject() (
     (Action andThen sessionRefiner).async { implicit request =>
       continueOrSaveAsDraft[ResidentDetail](
         theForm,
-        theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex))),
-        residentDetail =>
+        theFormWithErrors => badRequestWith(theView, theFormWithErrors, maybeIndex),
+        resident =>
           given Session = request.sessionData
-          for
-            newSession   <- successful(byAddingOrUpdatingPermanentResident(residentDetail, maybeIndex))
-            savedSession <- repository.saveOrUpdateSession(newSession)
-          yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
+          if hasBeenAlreadyEntered(resident, at = maybeIndex)
+          then
+            badRequestWith(
+              theView,
+              theForm
+                .fill(resident)
+                .withError("duplicate", request.messages()("lettingHistory.residentDetail.duplicate")),
+              maybeIndex
+            )
+          else
+            for
+              newSession   <- successful(byAddingOrUpdatingPermanentResident(resident, maybeIndex))
+              savedSession <- repository.saveOrUpdateSession(newSession)
+            yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
       )
     }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = ResidentDetailPageId)
+
+  private def badRequestWith(
+    theView: ResidentDetailView,
+    theFormWithErrors: Form[ResidentDetail],
+    maybeIndex: Option[Int]
+  )(using
+    request: SessionRequest[AnyContent]
+  ) =
+    successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex)))

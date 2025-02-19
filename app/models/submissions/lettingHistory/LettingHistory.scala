@@ -35,6 +35,8 @@ case class LettingHistory(
   sectionCompleted: Option[Boolean] = None
 )
 
+type Entry = ResidentDetail | OccupierDetail | AdvertisingDetail
+
 object LettingHistory
     extends Object
     with PermanentResidents
@@ -102,7 +104,7 @@ object LettingHistory
       }
     yield hasEntries
 
-  def countEntitiesOf[T](kind: String, session: Session): Option[Int] =
+  def countEntitiesOf(kind: String, session: Session): Option[Int] =
     for
       lettingHistory <- session.lettingHistory
       count          <- {
@@ -113,6 +115,14 @@ object LettingHistory
           case _                    => Some(0)
       }
     yield count
+
+  def hasBeenAlreadyEntered(entry: Entry, at: Option[Int])(using session: Session): Boolean =
+    val entries = entry match
+      case _: ResidentDetail    => permanentResidents(session)
+      case _: OccupierDetail    => completedLettings(session)
+      case _: AdvertisingDetail => onlineAdvertising(session)
+
+    at.fold(entries)(entries.patch(_, Nil, 1)).contains(entry)
 
   def withSectionCompleted(newValue: Boolean)(using session: Session): SessionWrapper =
     session.lettingHistory match

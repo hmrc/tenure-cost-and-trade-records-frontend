@@ -57,7 +57,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           "toDate.month"   -> "3",
           "toDate.year"    -> previousFiscalYearEnd.toString
         )
-        val result  = controller.submit(index = Some(0))(request)
+        val result  = controller.submit(maybeIndex = Some(0))(request)
         status(result)                                           shouldBe SEE_OTHER
         redirectLocation(result).value                           shouldBe routes.OccupierListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
@@ -101,7 +101,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(index = Some(0))(
+        val result = controller.submit(maybeIndex = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "fromDate.day"   -> "",
             "fromDate.month" -> "",

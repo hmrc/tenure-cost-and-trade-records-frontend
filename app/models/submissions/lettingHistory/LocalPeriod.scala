@@ -23,7 +23,12 @@ import java.time.LocalDate
 case class LocalPeriod(
   fromDate: LocalDate,
   toDate: LocalDate
-)
+):
+  override def equals(that: Any): Boolean = that match {
+    case LocalPeriod(fromDate, toDate) =>
+      this.fromDate == fromDate && this.toDate == toDate
+    case _                             => false
+  }
 
 object LocalPeriod:
   def unapply(obj: LocalPeriod): Option[(LocalDate, LocalDate)] = Some((obj.fromDate, obj.toDate))
