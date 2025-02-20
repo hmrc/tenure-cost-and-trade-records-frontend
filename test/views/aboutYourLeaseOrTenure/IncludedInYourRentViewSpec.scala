@@ -28,7 +28,8 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
 
   val messageKeyPrefix = "includedInYourRent"
 
-  private val forType = FOR6011
+  private val forType     = FOR6011
+  private val forType6045 = FOR6045
 
   override val form: Form[IncludedInYourRentDetails] = IncludedInYourRentForm.includedInYourRentForm(forType)
 
@@ -36,6 +37,9 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
 
   def createViewUsingForm = (form: Form[IncludedInYourRentDetails]) =>
     includedInYourRentView(form, Summary("99996010001"), forType)(fakeRequest, messages)
+
+  def createViewUsingForm6045 = (form: Form[IncludedInYourRentDetails]) =>
+    includedInYourRentView(form, Summary("99996045001"), forType6045)(fakeRequest, messages)
 
   "Included in rent view" must {
 
@@ -77,6 +81,17 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
       val doc = asDocument(createViewUsingForm(form))
       assertContainsCheckBox(doc, "none", "includedInYourRent[]", "none", false)
       assertContainsText(doc, messages("label.includedInYourRent.noneOfThese"))
+    }
+
+    "contain an input for vatValue" in {
+      val doc = asDocument(createViewUsingForm6045(form))
+      assertRenderedById(doc, "vatValue")
+    }
+
+    "contain continue button with the value Continue" in {
+      val doc         = asDocument(createViewUsingForm(form))
+      val loginButton = doc.getElementById("continue").text()
+      assert(loginButton == messages("button.label.continue"))
     }
 
   }

@@ -638,9 +638,10 @@
 
     <h2 class="govuk-heading-l">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravans.section")</h2>
 
+
     @govukSummaryList(SummaryList(rows =
         sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite",
-            _.caravans.flatMap(_.anyStaticLeisureCaravansOnSite).map(yesNo => messages(s"label.${yesNo.name}")),
+            _.caravans.flatMap(_.anyStaticLeisureCaravansOnSite).flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
             aboutthetradinghistory.routes.StaticCaravansController.show(), "staticCaravans")
     ))
 
@@ -648,7 +649,7 @@
 
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear",
-                _.caravans.map(_.openAllYear.map(yesNo => messages(s"label.${yesNo.name}"))),
+                _.caravans.map(_.openAllYear.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
                 aboutthetradinghistory.routes.CaravansOpenAllYearController.show(), "areCaravansOpenAllYear",
                 (messages("label.no"), _.caravans.flatMap(_.weeksPerYear).map(messages("checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks", _)))
             )

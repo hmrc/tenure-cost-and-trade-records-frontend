@@ -20,7 +20,7 @@ import connectors.Audit
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
@@ -71,6 +71,11 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
       status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = contactDetailsQuestionController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
 
     "SUBMIT /" should {

@@ -46,6 +46,20 @@ class FixedOperatingExpensesControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = fixedOperatingExpensesController.show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
+    "return correct backLink when 'from=IES' query param is present" in {
+      val result = fixedOperatingExpensesController.show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      )
+    }
   }
 
   "SUBMIT /" should {

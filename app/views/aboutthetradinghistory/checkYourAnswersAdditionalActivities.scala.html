@@ -116,7 +116,7 @@
             controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities") ++
         tradingHistoryOne.conditionRow(_.additionalActivities.flatMap(_.additionalActivitiesOnSite).exists(_ == AnswerYes),
            "cYa.additionalActivities.activities.allYear.label",
-           _.additionalActivities.map(_.additionalActivitiesAllYear.map(yesNo => messages(s"label.${yesNo.additionalActivitiesAllYear.name}"))),
+           _.additionalActivities.map(_.additionalActivitiesAllYear.map(yesNo => if(yesNo.additionalActivitiesAllYear == AnswerYes) messages(s"label.yes.ydy") else messages(s"label.no.nac.ydy"))),
            controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show(),
            "additionalActivitiesAllYear",
            (messages("label.no"), _.additionalActivities.flatMap(_.additionalActivitiesAllYear).flatMap(_.weeksOpen).map {
