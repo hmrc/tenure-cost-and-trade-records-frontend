@@ -35,6 +35,9 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     connectedToLandlordView(form, Summary("99996010001"), FOR6010)(fakeRequest, messages)
 
+  def createViewUsingForm6020 = (form: Form[AnswersYesNo]) =>
+    connectedToLandlordView(form, Summary("99996020001"), FOR6020)(fakeRequest, messages)
+
   "Connected to landlord view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
@@ -51,6 +54,16 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+    }
+
+    "contain heading for 6020 question" in {
+      val doc = asDocument(createViewUsingForm6020(form))
+      assert(doc.toString.contains(messages("connectedToLandlord.heading.6020")))
+    }
+
+    "contain hint for 6020 question" in {
+      val doc = asDocument(createViewUsingForm6020(form))
+      assert(doc.toString.contains(messages("hint.connectedToLandlord.6020")))
     }
 
     "contain radio buttons for are you connected with the value yes" in {

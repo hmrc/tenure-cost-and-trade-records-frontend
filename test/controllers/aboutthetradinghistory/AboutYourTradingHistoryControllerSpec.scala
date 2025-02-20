@@ -101,7 +101,7 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
+        controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url
       )
     }
 

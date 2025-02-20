@@ -50,6 +50,27 @@ class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = grossReceiptsExcludingVATController.show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
+    "render back link to CYA if come from CYA" in {
+      val result  = grossReceiptsExcludingVATController.show(fakeRequestFromCYA)
+      val content = contentAsString(result)
+      content should include("/check-your-answers-about-the-trading-history")
+      content should not include "/financial-year-end"
+    }
+
+    "return correct backLink when 'from=IES' query param is present" in {
+      val result = grossReceiptsExcludingVATController.show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      )
+    }
   }
 
   "SUBMIT /" should {

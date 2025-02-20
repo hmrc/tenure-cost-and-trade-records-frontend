@@ -72,6 +72,11 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = licensableActivitiesController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = licensableActivitiesController().submit(

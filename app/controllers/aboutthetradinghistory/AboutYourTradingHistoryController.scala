@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import connectors.Audit
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -100,9 +100,10 @@ class AboutYourTradingHistoryController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
+      case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6045 | FOR6046 | FOR6076 =>
         controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
-      case _                                                                             => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
+      case FOR6048                                                             => controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url
+      case _                                                                   => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
     }
 
 }

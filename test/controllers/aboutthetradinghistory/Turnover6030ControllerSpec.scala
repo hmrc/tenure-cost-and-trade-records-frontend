@@ -21,7 +21,7 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 class Turnover6030ControllerSpec extends TestBaseSpec {
@@ -48,6 +48,20 @@ class Turnover6030ControllerSpec extends TestBaseSpec {
       val result = turnoverController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in {
+      val result = turnoverController().show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+    }
+
+    "return correct backLink when 'from=IES' query param is present" in {
+      val result = turnoverController().show()(FakeRequest(GET, "/path?from=IES"))
+      val html   = contentAsString(result)
+
+      html should include(
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+      )
     }
 
     "SUBMIT /" should {
