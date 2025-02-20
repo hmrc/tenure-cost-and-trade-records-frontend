@@ -507,7 +507,7 @@
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
-@if(Seq(FOR6010, FOR6011, FOR6015, FOR6045, FOR6046, FOR6048) contains forType) {
+@if(Seq(FOR6010, FOR6011, FOR6015, FOR6016, FOR6045, FOR6046, FOR6048) contains forType) {
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row(
             messageKey ="checkYourAnswersAboutTheTradingHistory.occupationDate",

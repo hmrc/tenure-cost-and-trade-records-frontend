@@ -88,7 +88,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     s.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
       case Some(true) =>
         s.forType match {
-          case FOR6010 | FOR6011 | FOR6015 | FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
+          case FOR6010 | FOR6011 | FOR6015 | FOR6016 |FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
           case _                                               => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
         }
@@ -97,7 +97,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         s.forType match {
           case FOR6020                     => aboutthetradinghistory.routes.TotalFuelSoldController.show()
           case FOR6030                     => aboutthetradinghistory.routes.Turnover6030Controller.show()
-          case FOR6010 | FOR6011 | FOR6015 | FOR6045 | FOR6046 | FOR6048 => aboutthetradinghistory.routes.FinancialYearsController.show
+          case FOR6010 | FOR6011 | FOR6015 |  FOR6016 | FOR6045 | FOR6046 | FOR6048 => aboutthetradinghistory.routes.FinancialYearsController.show
           case FOR6076                     => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
           case _                           => aboutthetradinghistory.routes.TurnoverController.show()
         }
@@ -114,16 +114,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     _.forType match {
       case FOR6020                     => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case FOR6030                     => aboutthetradinghistory.routes.Turnover6030Controller.show()
-      case FOR6010 | FOR6011 | FOR6015 | FOR6045 | FOR6046 | FOR6048 => aboutthetradinghistory.routes.FinancialYearsController.show
+      case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6045 | FOR6046 | FOR6048 => aboutthetradinghistory.routes.FinancialYearsController.show
       case FOR6076                     => aboutthetradinghistory.routes.ElectricityGeneratedController.show()
       case _                           => aboutthetradinghistory.routes.TurnoverController.show()
     }
 
   private def financialYearsRouting: Session => Call =
     _.forType match {
-      case FOR6010           => aboutthetradinghistory.routes.TurnoverController.show()
-      case FOR6011           => aboutthetradinghistory.routes.TurnoverController.show()
-      case FOR6015           => aboutthetradinghistory.routes.TurnoverController.show()
       case FOR6020           => aboutthetradinghistory.routes.TotalFuelSoldController.show()
       case FOR6030           => aboutthetradinghistory.routes.Turnover6030Controller.show()
       case FOR6045 | FOR6046 => aboutthetradinghistory.routes.StaticCaravansController.show()
