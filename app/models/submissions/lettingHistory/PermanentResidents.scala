@@ -18,7 +18,6 @@ package models.submissions.lettingHistory
 
 import models.Session
 import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
-import scala.collection.mutable
 
 trait PermanentResidents:
 

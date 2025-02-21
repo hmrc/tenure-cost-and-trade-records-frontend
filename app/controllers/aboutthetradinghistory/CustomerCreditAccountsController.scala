@@ -23,11 +23,10 @@ import form.aboutthetradinghistory.CustomerCreditAccountsForm.customerCreditAcco
 import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CustomerCreditAccounts}
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswerYes
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CustomerCreditAccountsId
 import play.api.i18n.I18nSupport
-import play.api.i18n.Lang.logger.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.customerCreditAccounts
