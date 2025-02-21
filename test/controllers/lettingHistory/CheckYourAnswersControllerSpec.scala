@@ -20,7 +20,7 @@ import models.Session
 import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier

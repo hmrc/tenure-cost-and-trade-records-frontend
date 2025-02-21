@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{Entry, LettingHistory, OccupierDetail, ResidentDetail}
+import models.submissions.lettingHistory.{LettingHistory, OccupierDetail, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
