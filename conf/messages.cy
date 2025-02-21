@@ -3391,6 +3391,14 @@ whatYouWillNeed.variableOperatingExpenses = Variable Operating Expenses
 whatYouWillNeed.fixedOperatingExpenses = Fixed Operating Expenses
 whatYouWillNeed.otherCosts = Other Costs
 whatYouWillNeed.accommodation = Accommodation
+whatYouWillNeed.volumeFuelSold = Volume of retail fuel sold
+whatYouWillNeed.bunkeredFuel = Bunkered fuel
+whatYouWillNeed.customerCreditAccounts = Customer credit accounts
+whatYouWillNeed.lowmarginFuelCards = Low-margin fuel cards
+whatYouWillNeed.nonfuelTurnover = Non-fuel turnover
+whatYouWillNeed.evChargingPoints = Electric vehicle (EV) charging points
+whatYouWillNeed.grossIncome = Gross income
+whatYouWillNeed.totalVisitorNumbers = Total visitor numbers
 
 whatYouWillNeed.p1 = When you built or took over the property, and your financial year end.
 whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives.
@@ -3417,6 +3425,16 @@ whatYouWillNeed.6015.p6 = Including any contributions to head office and any oth
 
 whatYouWillNeed.6016.p1 = Income from providing accommodation, and your average occupancy rate.
 whatYouWillNeed.6016.p4 = Including hire of function rooms, conference rooms and telephones. Also include income from any concessions or franchises such as restuarents, or lettings such as phone masts.
+
+whatYouWillNeed.6020.p1 = Volume of all retail fuel sold excluding bunkered fuel.
+whatYouWillNeed.6020.p2 = Volume of any bunkered fuel sold, and the details of any accepted bunker fuel cards.
+whatYouWillNeed.6020.p3 = Percentage of total fuel sales sold on customer credit accounts.
+whatYouWillNeed.6020.p4 = Percentage of total fuel sales sold on low-margin fuel cards, and the details of any accepted low-margin fuel cards.
+whatYouWillNeed.6020.p5 = Turnover from any shop, car wash, jet wash, lottery sales, Paypoint or Payzone sales, and any other non-fuel turnover.
+whatYouWillNeed.6020.p6 = The number of EV charging point spaces or bays operated by the business at the property.
+
+whatYouWillNeed.6030.p1 = All your income, excluding any payments received from concessions or franchises such as tearooms or carwashes, or from lettings such as car parks or phone masts.
+whatYouWillNeed.6030.p2 = Also include concessions and free entries. If your property is a car park, enter 0 in this section.
 
 whatYouWillNeed.6045.p1 = When you bought or took over the property, and your financial year end.
 whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.

@@ -29,10 +29,11 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
   private val sessionRequest6010 = SessionRequest(baseFilled6010Session, fakeRequest)
   private val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
   private val sessionRequest6016 = SessionRequest(baseFilled6016Session, fakeRequest)
+  private val sessionRequest6020 = SessionRequest(baseFilled6020Session, fakeRequest)
+  private val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
   private val sessionRequest6045 = SessionRequest(baseFilled6045Session, fakeRequest)
   private val sessionRequest6048 = SessionRequest(baseFilled6048Session, fakeRequest)
   private val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
-  private val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
 
   val messageKeyPrefix = "whatYouWillNeed"
   override val form    = WhatYouWillNeedForm.whatYouWillNeedForm
@@ -44,10 +45,11 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
   def createView6015 = () => whatYouWillNeedView(form, Summary("99996015001"))(sessionRequest6015, messages)
 
   def createView6016 = () => whatYouWillNeedView(form, Summary("99996016001"))(sessionRequest6016, messages)
+  def createView6020 = () => whatYouWillNeedView(form, Summary("99996020001"))(sessionRequest6020, messages)
+  def createView6030 = () => whatYouWillNeedView(form, Summary("99996030001"))(sessionRequest6030, messages)
   def createView6045 = () => whatYouWillNeedView(form, Summary("99996045001"))(sessionRequest6045, messages)
   def createView6048 = () => whatYouWillNeedView(form, Summary("99996048001"))(sessionRequest6048, messages)
   def createView6076 = () => whatYouWillNeedView(form, Summary("99996076001"))(sessionRequest6076, messages)
-  def createView6030 = () => whatYouWillNeedView(form, Summary("99996030001"))(sessionRequest6030, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
     whatYouWillNeedView(form, Summary("99996076001"))(sessionRequest, messages)
@@ -109,18 +111,6 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
       assert(doc.toString.contains(messages("whatYouWillNeed.6010.p4")))
     }
 
-    "contain list 6030" in {
-      val doc = asDocument(createView6010())
-      assert(doc.toString.contains(messages("whatYouWillNeed.drinks")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p1")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.food")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p2")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.otherReceipts")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p3")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.turnover")))
-      assert(doc.toString.contains(messages("whatYouWillNeed.6010.p4")))
-    }
-
     "contain list 6015" in {
       val doc = asDocument(createView6015())
       assert(doc.toString.contains(messages("whatYouWillNeed.turnover")))
@@ -147,6 +137,30 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
       assert(doc.toString.contains(messages("whatYouWillNeed.6010.p2")))
       assert(doc.toString.contains(messages("whatYouWillNeed.otherReceipts")))
       assert(doc.toString.contains(messages("whatYouWillNeed.6016.p4")))
+    }
+
+    "contain list 6020" in {
+      val doc = asDocument(createView6020())
+      assert(doc.toString.contains(messages("whatYouWillNeed.volumeFuelSold")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6020.p1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.bunkeredFuel")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6020.p2")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.customerCreditAccounts")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6020.p3")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.lowmarginFuelCards")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6020.p4")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.nonfuelTurnover")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6020.p4")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.evChargingPoints")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6020.p4")))
+    }
+
+    "contain list 6030" in {
+      val doc = asDocument(createView6030())
+      assert(doc.toString.contains(messages("whatYouWillNeed.grossIncome")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6030.p1")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.totalVisitorNumbers")))
+      assert(doc.toString.contains(messages("whatYouWillNeed.6030.p2")))
     }
 
     "contain list 6045" in {
