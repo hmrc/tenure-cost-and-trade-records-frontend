@@ -40,7 +40,10 @@
                     items = Seq(
                         ActionItem(
                             href = changeAction.toString,
-                            content = Text(messages("label.change"))
+                            content = Text(messages("label.change")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages(messageKey)}"
+                            )
                         )
                     ),
                     classes = "govuk-!-font-size-14"

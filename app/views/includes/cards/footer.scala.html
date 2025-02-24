@@ -19,15 +19,16 @@
 
 @(govukSummaryList: GovukSummaryList, messageKey: String, valueAsInt: Int, addActionMessage: String, addActionCall: Call)(implicit request: SessionRequest[?], messages: Messages)
 
+@pluralizedMessageKey = @{
+    s"""${messageKey}${if(valueAsInt > 1) "Plural" else "Singular"}"""
+}
+
 @govukSummaryList(
     SummaryList(
         rows = Seq(
             SummaryListRow(
                 key = Key(
-                    content = Text(messages(
-                        s"""${messageKey}${if(valueAsInt > 1) "Plural" else "Singular"}""",
-                        valueAsInt
-                    )),
+                    content = Text(messages(pluralizedMessageKey, valueAsInt)),
                     classes = "govuk-!-width-one-half"
                 ),
                 value = Value(
@@ -37,7 +38,10 @@
                     items = Seq(
                         ActionItem(
                             href = addActionCall.toString,
-                            content = Text(addActionMessage)
+                            content = Text(addActionMessage),
+                            attributes = Map(
+                                "aria-label" -> messages(pluralizedMessageKey, valueAsInt)
+                            )
                         )
                     ),
                     classes = "govuk-!-font-size-14"

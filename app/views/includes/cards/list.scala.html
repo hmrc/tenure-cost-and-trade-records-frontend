@@ -31,7 +31,10 @@
                     items = Seq(
                         ActionItem(
                             href = data.removeAction.toString,
-                            content = Text(messages("label.remove"))
+                            content = Text(messages("label.remove")),
+                            attributes = Map(
+                                "aria-label" -> (messages("label.remove") + s" $cardsType ${data.index + 1}")
+                            )
                         )
                     ),
                     classes = "govuk-!-font-size-14"
@@ -51,7 +54,10 @@
                         items = Seq(
                             ActionItem(
                                 href = entry.changeAction.toString,
-                                content = Text(messages("label.change"))
+                                content = Text(messages("label.change")),
+                                attributes = Map(
+                                    "aria-label" -> (messages("label.change") + s" ${entry.key}")
+                                )
                             )
                         ),
                         classes = "govuk-!-font-size-14"
