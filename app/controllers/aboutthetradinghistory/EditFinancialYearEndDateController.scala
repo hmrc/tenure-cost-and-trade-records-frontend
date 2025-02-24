@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDateForm.financialYearEndDateForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, CostOfSales, OccupationalAndAccountingInformation}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost}
 import models.ForType.*
 import models.Session
 import navigation.AboutTheTradingHistoryNavigator
@@ -212,11 +212,20 @@ class EditFinancialYearEndDateController @Inject() (
       turnoverSections.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
     }
 
+    val totalPayrollCosts =
+      if aboutTheTradingHistory.totalPayrollCostSections.size == turnoverSections.size
+      then
+        aboutTheTradingHistory.totalPayrollCostSections.zip(turnoverSections.map(_.financialYearEnd)).map {
+          case (totalPayrollCosts, finYearEnd) => totalPayrollCosts.copy(financialYearEnd = finYearEnd)
+        }
+      else turnoverSections.map(_.financialYearEnd).map(TotalPayrollCost(_, None, None))
+
     val updatedData = updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccounting),
         turnoverSections = turnoverSections,
-        costOfSales = costOfSales
+        costOfSales = costOfSales,
+        totalPayrollCostSections = totalPayrollCosts
       )
     )
     updatedData

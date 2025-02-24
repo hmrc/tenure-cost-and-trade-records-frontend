@@ -501,23 +501,35 @@
         additionalParagraph)
 }
 
+@yearEndChanged = @{
+    sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.yearEndChanged).contains(true)
+}
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
-@if(Seq(FOR6045, FOR6046, FOR6048) contains forType) {
+@if(Seq(FOR6010, FOR6011, FOR6015, FOR6016, FOR6045, FOR6046, FOR6048) contains forType) {
     @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
-            _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
-            aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show, "").map(_.copy(classes = "no-border-bottom")) ++
-                answerOpt("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
-                    sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay)
-                ) ++
-                SummaryListRow(
-                    key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"))),
-                    value = Value(HtmlContent(
-                        sectionAnswers.answers.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t)))
-                    ))
-                )
+        sectionAnswers.row(
+            messageKey ="checkYourAnswersAboutTheTradingHistory.occupationDate",
+            getAnswerValue = _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
+            editPage = aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show,
+            editField = "",
+        ).map(_.copy(
+            classes = "no-border-bottom"
+        )) ++
+        answerOpt(
+            valueLabelKey = "checkYourAnswersAboutTheTradingHistory.financialYearEnd",
+            valueOpt = sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
+            classes = if(!yearEndChanged) "" else "no-border-bottom"
+        ) ++
+        (if(yearEndChanged)
+            SummaryListRow(
+                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"))),
+                value = Value(HtmlContent(
+                    sectionAnswers.answers.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t)))
+                ))
+            )
+        else Seq.empty)
     ))
 } else {
     @govukSummaryList(SummaryList(rows =
@@ -530,7 +542,7 @@
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                     _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                     forType match {
-                        case FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
+                        case FOR6020 | FOR6076 =>
                             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
                         case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                     },

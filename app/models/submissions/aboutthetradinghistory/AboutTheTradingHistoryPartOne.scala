@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.*
 
 case class AboutTheTradingHistoryPartOne(
-  isFinancialYearEndDatesCorrect: Option[Boolean] = Some(false),
+  isFinancialYearEndDatesCorrect: Option[Boolean] = None,
   isFinancialYearsCorrect: Option[Boolean] = None,
   // 6076
   whatYouWillNeed: Option[String] = None, // Added July 2024

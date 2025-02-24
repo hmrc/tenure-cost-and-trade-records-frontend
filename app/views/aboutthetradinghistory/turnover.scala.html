@@ -345,12 +345,7 @@
     backLinkUrl = fromLocation match {
         case "TL" => s"${controllers.routes.TaskListController.show().url}#turnover"
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-        case _ =>
-            if(request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)).contains(true)) {
-                controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
-            } else {
-                controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
-            }
+        case _ => controllers.aboutthetradinghistory.routes.FinancialYearsController.show.url
     },
     fullWidth = true,
     theForm = form
@@ -394,7 +389,7 @@
                         ),
                         firstCellIsHeader = true,
                         rows = renderRows(idx, finYearEnd))
-                    ))
+                    )
                 </td>
                 }
                 </tr>

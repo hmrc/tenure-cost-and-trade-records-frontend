@@ -92,7 +92,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
           ) // aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.TurnoverController.show().url)
+        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.FinancialYearsController.show.url)
       }
 
       "return to CYA " in {
