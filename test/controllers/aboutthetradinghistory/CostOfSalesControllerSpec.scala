@@ -64,6 +64,13 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
       val res = costOfSalesController.submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
+
+    "throw a BAD_REQUEST on empty form submission from CYA" in {
+      val res = costOfSalesController.submit()(
+        FakeRequest().withFormUrlEncodedBody("from" -> "CYA")
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
   }
 
 }

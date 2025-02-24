@@ -214,6 +214,11 @@ trait FakeObjects {
     Some(prefilledProvideContactDetails)
   )
 
+  val prefilledAboutLeaseOrAgreementPartThreeNoDevelopedLand: AboutLeaseOrAgreementPartThree =
+    AboutLeaseOrAgreementPartThree(
+      rentDevelopedLand = Some(AnswerNo)
+    )
+
   val prefilledStillConnectedDetailsNo: StillConnectedDetails = StillConnectedDetails(Some(AddressConnectionTypeNo))
   val stillConnectedDetailsYesSession: Session                =
     baseFilled6010Session.copy(stillConnectedDetails = Some(prefilledStillConnectedDetailsYes))

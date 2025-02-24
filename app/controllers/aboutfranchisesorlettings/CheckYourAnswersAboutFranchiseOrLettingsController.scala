@@ -105,11 +105,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
           case Some("yes") =>
             controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
-          case Some("no")  =>
-            controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
           case _           =>
-            logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
+            controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
         }
       case FOR6020           =>
         val answersYesNo: Option[AnswersYesNo] =
