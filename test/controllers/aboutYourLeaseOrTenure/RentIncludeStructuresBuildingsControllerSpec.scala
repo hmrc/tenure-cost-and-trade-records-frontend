@@ -23,6 +23,8 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
+import controllers.toOpt
+import utils.toOpt
 
 import scala.language.reflectiveCalls
 
@@ -72,6 +74,17 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec {
 
     "return 200 and HTML when no rent Include Structures Buildings in the session with no rentDevelopedLand" in {
       val controller = rentIncludeStructuresBuildingsController(aboutLeaseOrAgreementPartThree = None)
+      val result     = controller.show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show().url
+      )
+    }
+
+    "return 200 and HTML when no rent Include Structures Buildings in the session with no rentDevelopedLand123" in {
+      val controller = rentIncludeStructuresBuildingsController(prefilledAboutLeaseOrAgreementPartThreeNoDevelopedLand)
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
