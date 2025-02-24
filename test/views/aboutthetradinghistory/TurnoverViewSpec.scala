@@ -53,7 +53,7 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.FinancialYearsController.show.url
     }
 
     "Section heading is visible" in {

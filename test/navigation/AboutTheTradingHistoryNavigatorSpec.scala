@@ -144,7 +144,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the turnover page when financial-year-end has been completed" in {
       navigator
         .nextPage(FinancialYearEndPageId, sessionAboutYou)
-        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.TurnoverController.show()
+        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.FinancialYearsController.show
     }
 
     "return a function that goes the turnover page when financial-year-end has been completed 6020" in {
@@ -284,7 +284,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the correct turnover page when financial end year has been completed" in {
       navigator
         .nextPage(FinancialYearEndDatesPageId, sessionAboutYou)
-        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.TurnoverController.show()
+        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.FinancialYearsController.show
     }
 
     "return a function that goes the total fuel sold page if the form is 6020 when financial end year has been completed" in {
