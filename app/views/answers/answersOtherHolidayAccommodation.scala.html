@@ -171,7 +171,7 @@
 
     @pageAnswers("turnover.6045.subLetUnits.grossReceipts.heading",
         aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show(),
-        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsSubLetUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
+        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsLettingUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
         answer6045("checkYourAnswersOtherHolidayAccommodation.grossReceipts", _.grossReceiptsSubLetUnits.flatMap(_.grossReceipts)),
         answer6045("checkYourAnswersOtherHolidayAccommodation.numberOfUnits", _.grossReceiptsSubLetUnits.flatMap(_.numberOfUnits))
     )

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -656,9 +656,9 @@ trait FakeObjects {
       TurnoverSection6045(
         today,
         grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire(),
-        singleCaravansOwnedByOperator = CaravansTrading6045(52, 3000, 30),
-        singleCaravansSublet = CaravansTrading6045(52, 1000, 10),
-        twinUnitCaravansOwnedByOperator = CaravansTrading6045(26, 2000, 20),
+        singleCaravansOwnedByOperator = CaravansTrading6045(3000, 30),
+        singleCaravansSublet = CaravansTrading6045(1000, 10),
+        twinUnitCaravansOwnedByOperator = CaravansTrading6045(2000, 20),
         twinUnitCaravansSublet = CaravansTrading6045(),
         pitchesForCaravans = Some(
           TentingPitchesTradingData(

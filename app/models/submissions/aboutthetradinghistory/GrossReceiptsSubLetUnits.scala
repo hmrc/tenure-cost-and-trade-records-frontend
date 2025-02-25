@@ -19,7 +19,6 @@ package models.submissions.aboutthetradinghistory
 import play.api.libs.json.{Json, OFormat}
 
 case class GrossReceiptsSubLetUnits(
-  tradingPeriod: Int = 52,
   grossReceipts: Option[BigDecimal] = None,
   numberOfUnits: Option[Int] = None
 )

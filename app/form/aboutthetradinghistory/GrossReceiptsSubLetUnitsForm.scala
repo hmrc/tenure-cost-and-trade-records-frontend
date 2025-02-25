@@ -26,7 +26,6 @@ object GrossReceiptsSubLetUnitsForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[GrossReceiptsSubLetUnits] =
     mapping(
-      "weeks"         -> tradingPeriodWeeks(year),
       "grossReceipts" -> turnoverSalesMappingWithYear("turnover.6045.subLetUnits.grossReceipts", year),
       "numberOfUnits" -> nonNegativeNumberWithYear("subLetUnits.numberOfUnits", year)
     )(GrossReceiptsSubLetUnits.apply)(o => Some(Tuple.fromProductTyped(o)))

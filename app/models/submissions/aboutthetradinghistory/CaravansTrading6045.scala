@@ -24,7 +24,6 @@ import play.api.libs.json.{Json, OFormat}
   * @author Yuriy Tumakha
   */
 case class CaravansTrading6045(
-  tradingPeriod: Int = -1,
   grossReceipts: Option[BigDecimal] = None,
   vans: Option[Int] = None
 )

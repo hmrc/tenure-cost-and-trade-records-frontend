@@ -19,7 +19,7 @@ package form.aboutthetradinghistory
 import form.MappingSupport.*
 import models.submissions.aboutthetradinghistory.Caravans.{CaravanLettingType, CaravanUnitType}
 import models.submissions.aboutthetradinghistory.CaravansTrading6045
-import play.api.data.Forms.{ignored, mapping}
+import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
@@ -43,7 +43,6 @@ object CaravansTradingForm {
     messages: Messages
   ): Mapping[CaravansTrading6045] =
     mapping(
-      "weeks"         -> ignored(-1),
       "grossReceipts" -> turnoverSalesMappingWithYear(s"turnover.6045.$combinedKey.grossReceipts", year),
       "vans"          -> nonNegativeNumberWithYear(s"$combinedKey.vans", year)
     )(CaravansTrading6045.apply)(o => Some(Tuple.fromProductTyped(o)))
