@@ -153,7 +153,7 @@ object FeedbackFormMapper {
   val feedbackForm = Form(
     mapping(
       "feedback-rating"   -> optional(text).verifying("feedback.rating.required", _.isDefined),
-      "feedback-comments" -> optional(text).verifying("feedback.comments.maxLength", it => it.forall(_.length <= 1200))
+      "feedback-comments" -> optional(text).verifying("feedback.comments.maxLength", it => it.forall(_.length <= 2000))
     )(Feedback.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

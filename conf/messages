@@ -3946,7 +3946,7 @@ feedback.comments.label=Comments (optional)
 feedback.bottomCopy=Do not include any personal or financial information, for example your National Insurance or credit card numbers.
 
 feedback.rating.required=Select how satisfied you are with this service
-feedback.comments.maxLength=Comments must be 1200 characters or fewer
+feedback.comments.maxLength=Comments must be 2000 characters or fewer
 confirmation.feedback.subheading=How did you feel about this service?
 confirmation.feedback.title=Feedback
 
