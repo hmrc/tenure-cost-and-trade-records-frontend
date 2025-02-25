@@ -29,6 +29,7 @@ object IncomeRecord {
   implicit val format: OFormat[IncomeRecord] = {
     val concessionFormat = Json.format[ConcessionIncomeRecord]
     val lettingFormat    = Json.format[LettingIncomeRecord]
+    val franchiseFormat  = Json.format[FranchiseIncomeRecord]
 
     new OFormat[IncomeRecord] {
 
@@ -41,11 +42,22 @@ object IncomeRecord {
 
       def writes(record: IncomeRecord): JsObject =
         record match {
+          case franchise: FranchiseIncomeRecord   => franchiseFormat.writes(franchise)
           case concession: ConcessionIncomeRecord => concessionFormat.writes(concession)
           case letting: LettingIncomeRecord       => lettingFormat.writes(letting)
         }
     }
   }
+}
+
+case class FranchiseIncomeRecord(
+  sourceType: TypeOfIncome = TypeConcessionOrFranchise,
+  businessDetails: Option[CateringOperationDetails] = None,
+  addAnotherRecord: Option[AnswersYesNo] = None
+) extends IncomeRecord
+
+object FranchiseIncomeRecord {
+  implicit val format: OFormat[FranchiseIncomeRecord] = Json.format
 }
 
 case class ConcessionIncomeRecord(

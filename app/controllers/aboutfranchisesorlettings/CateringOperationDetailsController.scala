@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
+import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm.franchiseTypeDetailsForm
 import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -57,8 +57,8 @@ class CateringOperationDetailsController @Inject() (
     audit.sendChangeLink("CateringOperationDetails")
     Ok(
       cateringOperationDetailsView(
-        existingDetails.fold(cateringOperationOrLettingAccommodationForm)(
-          cateringOperationOrLettingAccommodationForm.fill
+        existingDetails.fold(franchiseTypeDetailsForm)(
+          franchiseTypeDetailsForm.fill
         ),
         index,
         "concessionDetails",
@@ -72,7 +72,7 @@ class CateringOperationDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CateringOperationDetails](
-      cateringOperationOrLettingAccommodationForm,
+      franchiseTypeDetailsForm,
       formWithErrors =>
         BadRequest(
           cateringOperationDetailsView(

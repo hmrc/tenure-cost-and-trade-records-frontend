@@ -17,6 +17,7 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.TypeOfIncomeForm
+import models.ForType.FOR6045
 import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.{TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
 import play.api.data.Form
@@ -32,10 +33,11 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
   override val form: Form[TypeOfIncome] = TypeOfIncomeForm.typeOfIncomeForm
 
   def createView: () => Html = () =>
-    typeOfIncomeView(form, None, Summary("99996045001"), backLink)(fakeRequest, messages)
+    typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(fakeRequest, messages)
 
   def createViewUsingForm: Form[TypeOfIncome] => Html =
-    (form: Form[TypeOfIncome]) => typeOfIncomeView(form, None, Summary("99996045001"), backLink)(fakeRequest, messages)
+    (form: Form[TypeOfIncome]) =>
+      typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(fakeRequest, messages)
 
   "Type of income view" must {
 
