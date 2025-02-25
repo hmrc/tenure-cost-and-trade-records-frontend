@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,11 @@
 
 
 @(form: Form[Seq[CaravansTrading6045]], formAction: Call, messageKeyPrefix: String, showHelpText: Option[CaravanUnitType], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@tradingPeriodSeq = @{
+    request.sessionData.aboutTheTradingHistoryPartOne
+    .flatMap(_.turnoverSections6045).map(_.flatMap(_.grossReceiptsCaravanFleetHire.map(_.tradingPeriod))).getOrElse(Seq.empty)
+}
 
 @rowLabel(labelKey: String, hintKey: Option[String] = None) = {
     <p class="govuk-body">
@@ -148,7 +153,15 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            numericRow(s"turnover[$idx].weeks", "turnover.tradingPeriod", "turnover.weeks", 2, 2, finYearEnd = finYearEnd),
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("turnover.tradingPeriod"))
+                                ),
+                                TableRow(
+                                    content = Text(s"${tradingPeriodSeq(idx)} ${messages("turnover.weeks")}"),
+                                    classes = "govuk-!-font-weight-bold"
+                                )
+                            ),
                             turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravans.grossReceipts", "turnover.6045.caravans.grossReceipts.hint", finYearEnd = finYearEnd),
                             numericRow(s"turnover[$idx].vans", "turnover.6045.caravans.vans", "turnover.6045.vans.suffix", 4, 6, finYearEnd = finYearEnd)
                         )

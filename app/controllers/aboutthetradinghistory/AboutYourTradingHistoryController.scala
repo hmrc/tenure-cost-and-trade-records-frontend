@@ -103,7 +103,6 @@ class AboutYourTradingHistoryController @Inject() (
       case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6076 =>
         controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
       case FOR6048                                                                                 => controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url
-      case _                                                                                       => controllers.routes.TaskListController.show().url + "#about-your-trading-history"
     }
 
 }
