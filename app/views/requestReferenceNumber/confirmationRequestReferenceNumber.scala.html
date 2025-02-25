@@ -104,7 +104,7 @@
                     name = "feedback-comments",
                     value = theForm("feedback-comments").value,
                     rows = 8,
-                    maxLength = Some(1200),
+                    maxLength = Some(2000),
                     errorMessage = theForm.errors.asTextErrorMessageForField("feedback-comments"),
                     label = Label(
                         classes = "govuk-!-font-weight-bold",
@@ -117,7 +117,7 @@
             @govukButton(
                 Button(
                     attributes = Map("id" -> "send"),
-                    content = Text(messages("label.submit")),
+                    content = Text(messages("button.label.sendYourFeedback")),
                     name = Some("send"),
                     value = Some("send"),
                     inputType = Some("submit")

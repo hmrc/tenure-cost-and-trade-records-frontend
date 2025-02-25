@@ -55,7 +55,7 @@ class CheckYourAnswersRequestReferenceNumberViewSpec
     "contain submit and send button with the value Accept and send" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.send"))
+      assert(loginButton == messages("button.label.confirm"))
     }
   }
 }
