@@ -1480,9 +1480,9 @@ financialYearEndDatesSummary.isFinancialYearEndDatesCorrect = These financial ye
 error.financialYearEndDates.incorrect = Select if these financial year end dates are correct
 
 # FINANCIAL YEARS CYA
-financialYears.heading = Check your answers - occupation and accounting information
-financialYears.p1 = You must check these dates before you complete the rest of this section.
-financialYears.warning = If you change your occupation date or your financial year end at any point after this page, you will have to enter all your trading history information again.
+financialYears.heading = Check your answers - accounting information
+financialYears.p1 = You must check this date before you complete the rest of this section.
+financialYears.warning = If you change your financial year end at any point after this page, you will have to enter all your trading history information again.
 financialYears.isFinancialYearsCorrect = The occupation and accounting information is correct
 error.financialYears.incorrect = Select if the occupation and accounting information is correct
 
