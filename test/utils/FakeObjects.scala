@@ -668,15 +668,13 @@ trait FakeObjects {
           )
         ),
         pitchesForGlamping = Some(
-          TentingPitchesTradingData(
-            tradingPeriod = 52,
+          TentingPitchesData(
             grossReceipts = Some(BigDecimal(4000)),
             numberOfPitches = Some(15)
           )
         ),
         rallyAreas = Some(
           RallyAreasTradingData(
-            tradingPeriod = 52,
             grossReceipts = Some(BigDecimal(2000)),
             areaInHectares = Some(BigDecimal(1.5))
           )
@@ -690,14 +688,12 @@ trait FakeObjects {
         ),
         additionalCatering = Some(
           AdditionalCatering(
-            tradingPeriod = 52,
             grossReceipts = Some(BigDecimal(2500)),
             costOfPurchase = Some(BigDecimal(1200))
           )
         ),
         additionalBarsClubs = Some(
           AdditionalBarsClubs(
-            tradingPeriod = 52,
             grossReceiptsBars = Some(BigDecimal(3500)),
             barPurchases = Some(BigDecimal(1800)),
             grossClubMembership = Some(BigDecimal(2000)),
@@ -707,7 +703,6 @@ trait FakeObjects {
         ),
         additionalAmusements = Some(
           AdditionalAmusements(
-            tradingPeriod = 52,
             receipts = Some(BigDecimal(2500))
           )
         ),

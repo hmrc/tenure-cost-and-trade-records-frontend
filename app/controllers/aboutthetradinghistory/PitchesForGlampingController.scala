@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.TentingPitchesTradingDataForm.tentingPitchesTradingDataForm
+import form.aboutthetradinghistory.TentingPitchesDataForm.tentingPitchesDataForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{TentingPitchesTradingData, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{TentingPitchesData, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.PitchesForGlampingId
 import play.api.i18n.I18nSupport
@@ -52,11 +52,8 @@ class PitchesForGlampingController @Inject() (
 
       Ok(
         view(
-          tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(section =>
-              val tradingPeriod = section.pitchesForCaravans.fold(52)(_.tradingPeriod)
-              section.pitchesForGlamping.getOrElse(TentingPitchesTradingData(tradingPeriod))
-            )
+          tentingPitchesDataForm(years).fill(
+            turnoverSections6045.map(section => section.pitchesForGlamping.getOrElse(TentingPitchesData()))
           ),
           getBackLink
         )
@@ -68,8 +65,8 @@ class PitchesForGlampingController @Inject() (
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[Seq[TentingPitchesTradingData]](
-        tentingPitchesTradingDataForm(years),
+      continueOrSaveAsDraft[Seq[TentingPitchesData]](
+        tentingPitchesDataForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =

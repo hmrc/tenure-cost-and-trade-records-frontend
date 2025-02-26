@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ case class TurnoverSection6045(
   grossReceiptsSubLetUnits: Option[GrossReceiptsSubLetUnits] = None,
   // 3.2.0 Touring and tenting pitches
   pitchesForCaravans: Option[TentingPitchesTradingData] = None,
-  pitchesForGlamping: Option[TentingPitchesTradingData] = None,
+  pitchesForGlamping: Option[TentingPitchesData] = None,
   rallyAreas: Option[RallyAreasTradingData] = None,
   // 3.3.0 Additional activities
   additionalShops: Option[AdditionalShops] = None,
