@@ -27,9 +27,18 @@ case class Address(
 ):
   override def equals(that: Any): Boolean = that match {
     case Address(line1, line2, town, county, postcode) =>
-      this.line1 == line1 && this.line2 == line2 && this.town == town && this.county == county && this.postcode == postcode
+      this.line1.equalsIgnoreCase(line1) && this.line2.equalsIgnoreCase(line2) && this.town.equalsIgnoreCase(
+        town
+      ) && this.county.equalsIgnoreCase(county) && this.postcode.equalsIgnoreCase(postcode)
     case _                                             => false
   }
+
+  extension (opt: Option[String])
+    def equalsIgnoreCase(that: Option[String]): Boolean = (opt, that) match {
+      case (Some(a), Some(b)) => a.equalsIgnoreCase(b)
+      case (None, None)       => true
+      case _                  => false
+    }
 
 object Address:
   def unapply(obj: Address): Option[(String, Option[String], String, Option[String], String)] =
