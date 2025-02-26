@@ -1135,7 +1135,28 @@ trait FakeObjects {
 
   // Fake objects for Franchise/ Concession / Lettings:
 
-  val lettingIncomeRecord = LettingIncomeRecord(
+  val franchiseIncomeRecord: FranchiseIncomeRecord = FranchiseIncomeRecord(
+    businessDetails = Some(
+      CateringOperationDetails(
+        operatorName = "Bob Green",
+        typeOfBusiness = "Bob's buisness",
+        cateringAddress = prefilledCateringAddress
+      )
+    )
+  )
+
+  val concessionIncomeRecord: ConcessionIncomeRecord = ConcessionIncomeRecord(
+    businessDetails = Some(
+      CateringOperationBusinessDetails(
+        operatorName = "Operator",
+        typeOfBusiness = "Bar",
+        howBusinessPropertyIsUsed = "Leased"
+      )
+    ),
+    feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 2023))))
+  )
+
+  val lettingIncomeRecord: LettingIncomeRecord = LettingIncomeRecord(
     operatorDetails = Some(
       LettingOtherPartOfPropertyInformationDetails(
         operatorName = "Letting Operator",
@@ -1160,37 +1181,14 @@ trait FakeObjects {
   val prefilledAboutFranchiseOrLettings6010and6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
     rentalIncome = Some(
-      IndexedSeq(
-        FranchiseIncomeRecord(
-          businessDetails = Some(
-            CateringOperationDetails(
-              operatorName = "Bob Green",
-              typeOfBusiness = "Bob's buisness",
-              cateringAddress = prefilledCateringAddress
-            )
-          )
-        ),
-        lettingIncomeRecord
-      )
+      IndexedSeq(franchiseIncomeRecord, lettingIncomeRecord)
     )
   )
 
   val prefilledAboutFranchiseOrLettings6045: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
     rentalIncome = Some(
-      IndexedSeq(
-        ConcessionIncomeRecord(
-          businessDetails = Some(
-            CateringOperationBusinessDetails(
-              operatorName = "Operator",
-              typeOfBusiness = "Bar",
-              howBusinessPropertyIsUsed = "Leased"
-            )
-          ),
-          feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 2023))))
-        ),
-        lettingIncomeRecord
-      )
+      IndexedSeq(concessionIncomeRecord, lettingIncomeRecord)
     )
   )
 
