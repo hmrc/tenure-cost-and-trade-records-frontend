@@ -24,7 +24,9 @@ case class AdvertisingDetail(
 ):
   override def equals(that: Any): Boolean = that match {
     case AdvertisingDetail(websiteAddress, propertyReferenceNumber) =>
-      this.websiteAddress == websiteAddress && this.propertyReferenceNumber == propertyReferenceNumber
+      this.websiteAddress.equalsIgnoreCase(websiteAddress) && this.propertyReferenceNumber.equalsIgnoreCase(
+        propertyReferenceNumber
+      )
     case _                                                          => false
   }
 
