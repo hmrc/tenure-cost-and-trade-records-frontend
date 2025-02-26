@@ -20,7 +20,9 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfIncomeForm.typeOfIncomeForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
+import models.ForType
+import models.ForType.*
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -59,7 +61,8 @@ class TypeOfIncomeController @Inject() (
         existingDetails.fold(typeOfIncomeForm)(typeOfIncomeForm.fill),
         index,
         request.sessionData.toSummary,
-        getBackLink
+        getBackLink,
+        forType
       )
     )
   }
@@ -82,11 +85,12 @@ class TypeOfIncomeController @Inject() (
               formWithErrors,
               index,
               request.sessionData.toSummary,
-              getBackLink
+              getBackLink,
+              forType
             )
           ),
         data => {
-          val newIncomeRecord       = createIncomeRecord(data)
+          val newIncomeRecord       = createIncomeRecord(data, forType)
           val existingIncomeRecords =
             request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
 
@@ -128,32 +132,42 @@ class TypeOfIncomeController @Inject() (
       )
     )
     session.saveOrUpdate(updatedSession).map { _ =>
-      Redirect(toSpecificController(source, updatedIndex))
+      Redirect(toSpecificController(source, forType, updatedIndex))
     }
   }
 
-  private def createIncomeRecord(sourceType: TypeOfIncome): IncomeRecord =
-    sourceType match {
+  private def createIncomeRecord(sourceType: TypeOfIncome, forType: ForType): IncomeRecord =
+    sourceType match
       case TypeConcessionOrFranchise =>
-        ConcessionIncomeRecord(
-          sourceType = TypeConcessionOrFranchise
-        )
-
-      case TypeLetting =>
+        forType match
+          case FOR6010 | FOR6011 | FOR6015 | FOR6016 =>
+            FranchiseIncomeRecord(
+              sourceType = TypeConcessionOrFranchise
+            )
+          case _                                     =>
+            ConcessionIncomeRecord(
+              sourceType = TypeConcessionOrFranchise
+            )
+      case TypeLetting               =>
         LettingIncomeRecord(
           sourceType = TypeLetting
         )
-    }
 
-  private def toSpecificController(typeOfLetting: TypeOfIncome, index: Option[Int]): Call = {
+  private def toSpecificController(typeOfLetting: TypeOfIncome, forType: ForType, index: Option[Int]): Call = {
     val targetIndex = index.getOrElse(0)
     typeOfLetting match {
       case TypeConcessionOrFranchise =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
+        forType match
+          case FOR6010 | FOR6011 | FOR6015 | FOR6016 =>
+            controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(targetIndex)
+          case _                                     =>
+            controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
       case TypeLetting               =>
         controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
     }
   }
+
+  private def forType(implicit request: SessionRequest[AnyContent]): ForType = request.sessionData.forType
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {

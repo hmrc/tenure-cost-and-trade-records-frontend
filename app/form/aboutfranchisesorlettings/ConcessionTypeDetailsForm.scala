@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ConcessionTypeDetailsForm {
 
-  val concessionTypeDetailsForm = Form(
+  val concessionTypeDetailsForm: Form[CateringOperationBusinessDetails] = Form(
     mapping(
       "operatorName"   -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.concessionTypeDetails.operator.required"),

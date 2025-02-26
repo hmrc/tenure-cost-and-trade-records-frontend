@@ -1133,46 +1133,30 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSectionIncomplete)
   )
 
-  val prefilledAboutFranchiseOrLettings6045: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
-    Some(AnswerYes),
-    rentalIncome = Some(
-      IndexedSeq(
-        ConcessionIncomeRecord(
-          businessDetails = Some(
-            CateringOperationBusinessDetails(
-              operatorName = "Operator",
-              typeOfBusiness = "Bar",
-              howBusinessPropertyIsUsed = "Leased"
-            )
-          ),
-          feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 2023))))
-        ),
-        LettingIncomeRecord(
-          operatorDetails = Some(
-            LettingOtherPartOfPropertyInformationDetails(
-              operatorName = "Letting Operator",
-              typeOfBusiness = "Property Letting",
-              lettingAddress = LettingAddress(
-                buildingNameNumber = "123",
-                street1 = Some("Main Street"),
-                town = "Bristol",
-                county = Some("Bristol"),
-                postcode = "AN12 3YZ"
-              )
-            )
-          ),
-          rent = Some(
-            LettingOtherPartOfPropertyRentDetails(
-              annualRent = 15000.00,
-              dateInput = LocalDate.of(2021, 1, 1)
-            )
-          )
-        )
+  // Fake objects for Franchise/ Concession / Lettings:
+
+  val franchiseIncomeRecord: FranchiseIncomeRecord = FranchiseIncomeRecord(
+    businessDetails = Some(
+      CateringOperationDetails(
+        operatorName = "Bob Green",
+        typeOfBusiness = "Bob's buisness",
+        cateringAddress = prefilledCateringAddress
       )
     )
   )
 
-  val lettingIncomeRecord                                                                      = LettingIncomeRecord(
+  val concessionIncomeRecord: ConcessionIncomeRecord = ConcessionIncomeRecord(
+    businessDetails = Some(
+      CateringOperationBusinessDetails(
+        operatorName = "Operator",
+        typeOfBusiness = "Bar",
+        howBusinessPropertyIsUsed = "Leased"
+      )
+    ),
+    feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 2023))))
+  )
+
+  val lettingIncomeRecord: LettingIncomeRecord = LettingIncomeRecord(
     operatorDetails = Some(
       LettingOtherPartOfPropertyInformationDetails(
         operatorName = "Letting Operator",
@@ -1193,6 +1177,21 @@ trait FakeObjects {
       )
     )
   )
+
+  val prefilledAboutFranchiseOrLettings6010and6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+    Some(AnswerYes),
+    rentalIncome = Some(
+      IndexedSeq(franchiseIncomeRecord, lettingIncomeRecord)
+    )
+  )
+
+  val prefilledAboutFranchiseOrLettings6045: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+    Some(AnswerYes),
+    rentalIncome = Some(
+      IndexedSeq(concessionIncomeRecord, lettingIncomeRecord)
+    )
+  )
+
   val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings                           = AboutFranchisesOrLettings(
     Some(AnswerNo),
     Some(AnswerNo),

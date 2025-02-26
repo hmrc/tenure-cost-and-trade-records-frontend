@@ -25,10 +25,11 @@ import play.api.libs.json.{JsError, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
+import utils.FakeObjects
 
 import java.time.LocalDate
 
-class TypeOfIncomeControllerSpec extends TestBaseSpec {
+class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
   val mockAudit: Audit = mock[Audit]
   def typeOfIncomeController(
@@ -47,42 +48,22 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec {
 
   "IncomeRecord" should {
 
-    "serialize and deserialize correctly for ConcessionIncomeRecord" in {
-      val incomeRecord = LettingIncomeRecord(
-        sourceType = TypeLetting,
-        operatorDetails = Some(
-          LettingOtherPartOfPropertyInformationDetails(
-            operatorName = "Michal the Operator",
-            typeOfBusiness = "Letting",
-            lettingAddress = LettingAddress(
-              buildingNameNumber = "123",
-              street1 = Some("orange St"),
-              town = "Bristol",
-              county = Some("Bristol"),
-              postcode = "AB12C"
-            )
-          )
-        ),
-        rent = Some(
-          LettingOtherPartOfPropertyRentDetails(
-            annualRent = BigDecimal(12000),
-            dateInput = LocalDate.parse("2023-10-01")
-          )
-        ),
-        itemsIncluded = Some(List("noneOfThese"))
-      )
-      val json         = Json.toJson(incomeRecord: IncomeRecord)
-      json.as[IncomeRecord] shouldBe incomeRecord
+    "serialize and deserialize correctly for LettingIncomeRecord" in {
+      val incomeRecord = lettingIncomeRecord
+      val json         = Json.toJson(incomeRecord: LettingIncomeRecord)
+      json.as[LettingIncomeRecord] shouldBe incomeRecord
     }
 
-    "serialize and deserialize correctly for LettingIncomeRecord" in {
-      val incomeRecord = ConcessionIncomeRecord(
-        sourceType = TypeConcessionOrFranchise,
-        businessDetails = None,
-        feeReceived = None
-      )
-      val json         = Json.toJson(incomeRecord: IncomeRecord)
-      json.as[IncomeRecord] shouldBe incomeRecord
+    "serialize and deserialize correctly for ConcessionIncomeRecord" in {
+      val incomeRecord = concessionIncomeRecord
+      val json         = Json.toJson(incomeRecord: ConcessionIncomeRecord)
+      json.as[ConcessionIncomeRecord] shouldBe incomeRecord
+    }
+
+    "serialize and deserialize correctly for FranchiseIncomeRecord" in {
+      val incomeRecord = franchiseIncomeRecord
+      val json         = Json.toJson(incomeRecord: FranchiseIncomeRecord)
+      json.as[FranchiseIncomeRecord] shouldBe incomeRecord
     }
     "fail to deserialize for unknown sourceType" in {
       val json = Json.obj("sourceType" -> "unknownType")

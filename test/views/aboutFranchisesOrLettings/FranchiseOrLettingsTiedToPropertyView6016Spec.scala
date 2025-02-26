@@ -27,7 +27,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class FranchiseOrLettingsTiedToPropertyView6016Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "franchiseLettingsIncome"
+  val messageKeyPrefix = "franchiseLettings"
 
   val backLink = s"${controllers.routes.TaskListController.show().url}#franchise-or-lettings-tied-to-property"
 

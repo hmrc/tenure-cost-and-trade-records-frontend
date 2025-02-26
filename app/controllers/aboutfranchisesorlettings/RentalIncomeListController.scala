@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentalIncomeListForm.rentalIncomeListForm
 import form.confirmableActionForm.confirmableActionForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, IncomeRecord, LettingIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.i18n.I18nSupport
@@ -132,13 +132,13 @@ class RentalIncomeListController @Inject() (
   }
 
   private def update(
-    letting: IncomeRecord,
+    incomeRecord: IncomeRecord,
     answer: Option[AnswersYesNo]
-  ): IncomeRecord =
-    letting match {
-      case concession: ConcessionIncomeRecord => concession.copy(addAnotherRecord = answer)
-      case letting: LettingIncomeRecord       => letting.copy(addAnotherRecord = answer)
-    }
+  ): IncomeRecord = incomeRecord match {
+    case franchise: FranchiseIncomeRecord   => franchise.copy(addAnotherRecord = answer)
+    case concession: ConcessionIncomeRecord => concession.copy(addAnotherRecord = answer)
+    case letting: LettingIncomeRecord       => letting.copy(addAnotherRecord = answer)
+  }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     getOperatorName(idx)

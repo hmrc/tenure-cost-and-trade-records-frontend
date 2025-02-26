@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,29 +24,31 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, status, stu
 import utils.JsoupHelpers.contentAsJsoup
 import utils.TestBaseSpec
 
-class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
+class FranchiseTypeDetailsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
   def controller(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6010and6016)
   ) =
-    new ConcessionTypeDetailsController(
+    new FranchiseTypeDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutFranchisesOrLettingsNavigator,
-      concessionTypeDetailsView,
+      franchiseTypeDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 
-  "GET /"    should {
+  "GET /" should {
+
+    val result = controller().show(0)(fakeRequest)
+    val html   = contentAsJsoup(result)
+
     "return 200" in {
-      val result = controller().show(0)(fakeRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -55,17 +57,25 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
       val result = controller().show(1)(fakeRequest)
       val html   = contentAsJsoup(result)
 
-      Option(html.getElementById("operatorName").`val`()).value   shouldBe ""
-      Option(html.getElementById("typeOfBusiness").`val`()).value shouldBe ""
-      Option(html.getElementById("howIsUsed").`val`()).value      shouldBe ""
+      Option(html.getElementById("operatorName").`val`()).value                       shouldBe ""
+      Option(html.getElementById("typeOfBusiness").`val`()).value                     shouldBe ""
+      Option(html.getElementById("cateringAddress.buildingNameNumber").`val`()).value shouldBe ""
+      Option(html.getElementById("cateringAddress.street1").`val`()).value            shouldBe ""
+      Option(html.getElementById("cateringAddress.town").`val`()).value               shouldBe ""
+      Option(html.getElementById("cateringAddress.county").`val`()).value             shouldBe ""
+      Option(html.getElementById("cateringAddress.postcode").`val`()).value           shouldBe ""
     }
-    "render a page with non empty form if data present" in {
-      val result = controller().show(0)(fakeRequest)
-      val html   = contentAsJsoup(result)
 
-      Option(html.getElementById("operatorName").`val`()).value   shouldBe "Operator"
-      Option(html.getElementById("typeOfBusiness").`val`()).value shouldBe "Bar"
-      Option(html.getElementById("howIsUsed").`val`()).value      shouldBe "Leased"
+    "render a page with non empty form if data present" in {
+
+      Option(html.getElementById("operatorName").`val`()).value   shouldBe "Bob Green"
+      Option(html.getElementById("typeOfBusiness").`val`()).value shouldBe "Bob's buisness"
+
+      Option(html.getElementById("cateringAddress.buildingNameNumber").`val`()).value shouldBe "004"
+      Option(html.getElementById("cateringAddress.street1").`val`()).value            shouldBe "GORING ROAD"
+      Option(html.getElementById("cateringAddress.town").`val`()).value               shouldBe "GORING-BY-SEA, WORTHING"
+      Option(html.getElementById("cateringAddress.county").`val`()).value             shouldBe "West sussex"
+      Option(html.getElementById("cateringAddress.postcode").`val`()).value           shouldBe "BN12 4AX"
     }
 
     "render back link to CYA if come from CYA" in {
