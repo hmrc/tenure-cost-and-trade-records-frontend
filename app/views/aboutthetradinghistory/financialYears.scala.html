@@ -42,6 +42,10 @@
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
 }
 
+@sectionAnswersPartOne = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+}
+
 @forType = @{
     request.sessionData.forType
 }
@@ -95,19 +99,19 @@
     @govukSummaryList(SummaryList(rows =
         Seq(
             SummaryListRow(
-                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.occupationDate"))),
+                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"))),
                 value = Value(
-                    Text(sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth).getOrElse(""))
+                    Text(sectionAnswersPartOne.answers.flatMap(_.areYouVATRegistered.flatMap(_.name.capitalize).getOrElse("")).getOrElse(""))
                 ),
                 actions = Some(
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url,
+                                href = aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url,
                                 content = Text(messages("label.change")),
-                                visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.occupationDate")),
+                                visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered")),
                                 attributes = Map(
-                                    "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.occupationDate")}"
+                                    "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered")}"
                                 )
                             )
                         )

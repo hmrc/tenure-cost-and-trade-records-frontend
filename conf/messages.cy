@@ -3673,6 +3673,7 @@ checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Yn cael
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Yn cael ei defnyddio at ddibenion elusennol
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other = Other
 checkYourAnswersAboutTheTradingHistory.occupationDate = Dyddiad meddiannu
+checkYourAnswersAboutTheTradingHistory.areYouVATRegistered = Are you VAT registered?
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Diwedd y flwyddyn ariannol
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu
 checkYourAnswersAboutTheTradingHistory.drinks = Diodydd
