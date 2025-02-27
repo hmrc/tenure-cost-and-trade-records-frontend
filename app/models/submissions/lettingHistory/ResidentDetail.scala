@@ -23,7 +23,7 @@ case class ResidentDetail(
   address: String
 ):
   override def equals(that: Any): Boolean = that match {
-    case ResidentDetail(name, address) => this.name == name && this.address == address
+    case ResidentDetail(name, address) => this.name.equalsIgnoreCase(name) && this.address.equalsIgnoreCase(address)
     case _                             => false
   }
 

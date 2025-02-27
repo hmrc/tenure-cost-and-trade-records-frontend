@@ -19,6 +19,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails
 @import models.pages.Summary
+@import models.ForType.*
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -29,20 +30,42 @@
 
 @(theForm: Form[LettingOtherPartOfPropertyInformationDetails], index: Int, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
+@sectionName = @{
+    forType match {
+        case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
+        case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
+        case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+    }
+}
+@hintMsg = @{
+    forType match {
+        case FOR6010 | FOR6011  => "descriptionOfLetting"
+        case FOR6015 | FOR6016  => "lettingTypeDetails6015"
+        case _                  => "lettingTypeDetails"
+    }
+}
+@pageHeading = @{
+    forType match {
+        case FOR6015 | FOR6016  => messages("lettingDetails.heading")
+        case _                  => messages("lettingOtherPartOfPropertyDetails.heading")
+    }
+}
+
 
 @layout(
-    pageHeading = messages("lettingOtherPartOfPropertyDetails.heading"),
+    pageHeading = pageHeading,
     showSection = true,
     summary = Some(summary),
-    sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+    sectionName = sectionName,
     backLinkUrl = backLink,
-    theForm = theForm
+    theForm = theForm,
+    fullWidth = true
 ) {
 
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.submit(index)) {
 
             @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "lettingOperatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "lettingTypeDetails")
+            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "lettingTypeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = hintMsg)
 
             <p class="govuk-body">
                 <b>@messages("label.correspondenceAddress")</b>
@@ -50,9 +73,9 @@
 
             @includes.textInput(govukInput, theForm, "lettingAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
             @includes.textInput(govukInput, theForm, "lettingAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
-            @includes.textInput(govukInput, theForm, "lettingAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
-            @includes.textInput(govukInput, theForm, "lettingAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
-            @includes.textInput(govukInput, theForm, "lettingAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
+            @includes.textInput(govukInput, theForm, "lettingAddress.town", "govuk-input--width-10", "town", formGroupClasses = "address-field-three address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.county", "govuk-input--width-10", "county", optional = true, formGroupClasses = "address-field-four address-fields")
+            @includes.textInput(govukInput, theForm, "lettingAddress.postcode", "govuk-input--width-5", "postcode", formGroupClasses = "address-field-postcode")
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }

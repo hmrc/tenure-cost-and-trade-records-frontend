@@ -36,20 +36,19 @@
 
 @label = @{
   forType match {
-      case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
+      case FOR6015 | FOR6016          => messages("label.section.aboutTheFranchiseConcessions")
       case FOR6020                    => messages("label.section.aboutTheLettings")
-      case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
-      case _                                   => messages("label.section.aboutTheFranchiseLettings")
+      case FOR6045 | FOR6046          => messages("label.section.aboutTheConcessionsFranchisesLettings")
+      case _                          => messages("label.section.aboutTheFranchiseLettings")
   }
 }
 
 @heading = @{
     forType match {
-        case FOR6015 | FOR6016 => messages("franchiseLettingsIncome.heading")
         case FOR6020                    => messages("franchiseLettings.6020.heading")
         case FOR6030                    => messages("franchiseLettings.6030.heading")
-        case FOR6045 | FOR6046 => messages("franchiseLettings.6045.heading")
-        case _                                   => messages("franchiseLettings.heading")
+        case FOR6045 | FOR6046          => messages("franchiseLettings.6045.heading")
+        case _                          => messages("franchiseLettings.heading")
     }
 }
 @layout(

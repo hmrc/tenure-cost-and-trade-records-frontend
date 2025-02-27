@@ -22,7 +22,8 @@ import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSe
 import models.ForType
 import models.ForType.*
 import models.Session
-import navigation.identifiers._
+import models.submissions.common.AnswerYes
+import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.Call
 
@@ -63,22 +64,20 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
   )
 
   private def franchiseOrLettingConditionsRouting: Session => Call = answers =>
-    answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty.map(_.name)) match {
-      case Some("yes") =>
+    answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
+      case Some(AnswerYes) =>
         answers.forType match {
-          case FOR6015 | FOR6016 =>
-            controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
-          case FOR6030           =>
-            controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show()
-          case FOR6020           =>
-            val idx: Int = answers.aboutFranchisesOrLettings.map(_.lettings.map(_.size).getOrElse(0)).getOrElse(0)
-            controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(idx))
-          case FOR6045 | FOR6046 =>
+          case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6045 | FOR6046 =>
             controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
-          case _                 =>
+          case FOR6030                                                   =>
+            controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show()
+          case FOR6020                                                   =>
+            val idx: Int = answers.aboutFranchisesOrLettings.fold(0)(_.lettings.fold(0)(_.size))
+            controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Option(idx))
+          case _                                                         =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
         }
-      case _           =>
+      case _               =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
 
@@ -250,6 +249,16 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     }
   }
 
+  private def concessionTypeDetailsRouting: Session => Call = answers =>
+    answers.forType match {
+      case FOR6010 | FOR6011 =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
+      case FOR6015 | FOR6016 =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
+      case _                 =>
+        controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
+    }
+
   private def addAnotherConcessionRouting: Session => Call = answers => {
     def getLastCateringOperationConcessionIndex(session: Session): Option[Int] =
       session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
@@ -356,6 +365,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     ),
     FeeReceivedPageId                          -> (answers =>
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
+    ),
+    FranchiseTypeDetailsId                     -> (answers =>
+      controllers.routes.TaskListController.show() // TODO !!!
     ),
     ConcessionTypeDetailsId                    -> (answers =>
       controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))

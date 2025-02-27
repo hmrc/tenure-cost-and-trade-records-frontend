@@ -16,7 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm
+import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
@@ -31,7 +31,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
   val messageKeyPrefix = "concessionOrFranchise"
 
   override val form: Form[CateringOperationDetails] =
-    CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
+    FranchiseTypeDetailsForm.franchiseTypeDetailsForm
 
   def createView: () => Html = () =>
     concessionOrFranchiseView(

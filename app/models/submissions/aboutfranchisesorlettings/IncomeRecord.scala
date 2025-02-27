@@ -26,26 +26,17 @@ sealed trait IncomeRecord {
 }
 
 object IncomeRecord {
-  implicit val format: OFormat[IncomeRecord] = {
-    val concessionFormat = Json.format[ConcessionIncomeRecord]
-    val lettingFormat    = Json.format[LettingIncomeRecord]
+  implicit val format: OFormat[IncomeRecord] = Json.format[IncomeRecord]
+}
 
-    new OFormat[IncomeRecord] {
+case class FranchiseIncomeRecord(
+  sourceType: TypeOfIncome = TypeConcessionOrFranchise,
+  businessDetails: Option[CateringOperationDetails] = None,
+  addAnotherRecord: Option[AnswersYesNo] = None
+) extends IncomeRecord
 
-      def reads(json: JsValue): JsResult[IncomeRecord] =
-        (json \ "sourceType").validate[String].flatMap {
-          case "typeConcessionOrFranchise" => concessionFormat.reads(json)
-          case "typeLetting"               => lettingFormat.reads(json)
-          case other                       => JsError(s"Unknown type: $other")
-        }
-
-      def writes(record: IncomeRecord): JsObject =
-        record match {
-          case concession: ConcessionIncomeRecord => concessionFormat.writes(concession)
-          case letting: LettingIncomeRecord       => lettingFormat.writes(letting)
-        }
-    }
-  }
+object FranchiseIncomeRecord {
+  implicit val format: OFormat[FranchiseIncomeRecord] = Json.format
 }
 
 case class ConcessionIncomeRecord(

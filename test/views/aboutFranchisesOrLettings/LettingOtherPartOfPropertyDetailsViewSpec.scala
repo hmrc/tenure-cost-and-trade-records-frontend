@@ -16,7 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationForm
+import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
 import org.scalatest.matchers.must.Matchers._
@@ -29,7 +29,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[C
   val messageKeyPrefix     = "lettingOtherPartOfPropertyDetails"
   val messageKeyPrefix6015 = "concessionDetails"
 
-  override val form = CateringOperationOrLettingAccommodationForm.cateringOperationOrLettingAccommodationForm
+  override val form = FranchiseTypeDetailsForm.franchiseTypeDetailsForm
 
   def createView = () =>
     cateringOperationDetailsView(

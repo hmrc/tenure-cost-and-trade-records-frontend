@@ -25,7 +25,7 @@ case class OccupierDetail(
 ):
   override def equals(that: Any): Boolean = that match {
     case OccupierDetail(name, address, rentalPeriod) =>
-      this.name == name && this.address == address && this.rentalPeriod == rentalPeriod
+      this.name.equalsIgnoreCase(name) && this.address == address && this.rentalPeriod == rentalPeriod
     case _                                           => false
   }
 

@@ -22,6 +22,7 @@
 @import models.pages.Summary
 @import models.submissions.aboutfranchisesorlettings.TypeOfIncome
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import models.ForType._
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -30,14 +31,36 @@
 )
 
 
-@(theForm: Form[TypeOfIncome], index: Option[Int] = None, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[TypeOfIncome], index: Option[Int] = None, summary: Summary, backLink: String, forType: ForType)(implicit request: Request[?], messages: Messages)
 
+@sectionName = @{
+  forType match {
+      case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
+      case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
+      case _                 => messages("label.section.aboutTheFranchiseLettings")
+    }
+}
+
+@concessionLabel = @{
+  forType match {
+      case FOR6011 | FOR6010 => messages("typeOfIncome.6010.concession.label")
+      case FOR6015 | FOR6016 => messages("typeOfIncome.6015.concession.label")
+      case _                 => messages("typeOfIncome.concession.label")
+  }
+}
+
+@concessionHint= @{
+    forType match {
+        case FOR6015 | FOR6016 => messages("typeOfIncome.concession.6015.hint")
+        case _ => messages("typeOfIncome.concession.hint")
+    }
+}
     @layout(
         pageHeading = messages("typeOfIncome.heading"),
         showH1 = true,
         showSection = true,
         summary = Some(summary),
-        sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+        sectionName = sectionName,
         backLinkUrl = backLink,
         theForm = theForm
     ) {
@@ -50,9 +73,9 @@
                 "typeOfIncome",
                 items = Seq(
                     RadioItem(
-                        content = Text(messages("typeOfIncome.concession.label")),
-                        value = Some("typeConcessionOrFranchise"),
-                        hint = Some(Hint(content = Text(messages("typeOfIncome.concession.hint"))))
+                        content = Text(concessionLabel),
+                        value   = Option("typeConcessionOrFranchise"),
+                        hint    = Option(Hint(content = Text(concessionHint)))
 
                     ),
                     RadioItem(

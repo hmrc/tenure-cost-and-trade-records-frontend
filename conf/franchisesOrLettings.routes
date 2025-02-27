@@ -7,6 +7,9 @@ POST         /franchise-or-lettings-tied-to-property                controllers.
 GET          /type-of-income                                        controllers.aboutfranchisesorlettings.TypeOfIncomeController.show(idx: Option[Int] ?= None)
 POST         /type-of-income                                        controllers.aboutfranchisesorlettings.TypeOfIncomeController.submit(idx: Option[Int])
 
+GET          /franchise-type-details                                controllers.aboutfranchisesorlettings.FranchiseTypeDetailsController.show(idx: Int)
+POST         /franchise-type-details                                controllers.aboutfranchisesorlettings.FranchiseTypeDetailsController.submit(idx: Int)
+
 GET          /concession-type-details                               controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.show(idx: Int)
 POST         /concession-type-details                               controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.submit(idx: Int)
 

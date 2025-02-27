@@ -692,17 +692,21 @@ partialTieConditional.textbox = Give details of your partial tie
 error.tiedForGoodsDetails.required = Select which type of tie you have
 
 # TYPE OF INCOME
+#################
 typeOfIncome.heading = Select a source of rental income
-typeOfIncome.p = You will have the option to add multiple sources of rental income if required
+typeOfIncome.p = You will have the option to add multiple sources of rental income if required.
 typeOfIncome.concession.label = Concession or franchise
+typeOfIncome.6010.concession.label = Separate business operate from the property
+typeOfIncome.6015.concession.label = Concession or franchise fees
 typeOfIncome.concession.hint = For example, accommodation or catering businesses.
 typeOfIncome.letting.label = Letting other parts of the property
 typeOfIncome.letting.hint = For example, advertising billboards, telephone masts or car parking.
 error.typeOfIncome.required = Select a source of rental income
 
 # CONCESSION TYPE DETAILS
-concessionTypeDetails.heading = Provide the operators’s details
-concessionTypeDetails.operator = Operators’s name
+###########################
+concessionTypeDetails.heading = Provide the operator’s details
+concessionTypeDetails.operator = Operator’s name
 concessionTypeDetails.describeType = Describe the type of business
 hint.concessionTypeDetails.describeType = For example, bar, club, restaurant
 concessionTypeDetails.describeUse = Describe how the property is used
@@ -717,7 +721,9 @@ error.concessionTypeDetails.describeUse.required = Enter a description how the p
 error.concessionTypeDetails.describeUse.maxLength = Description of use of the property must be 100 characters or fewer
 
 # LETTING TYPE DETAILS
+######################
 hint.lettingTypeDetails = For example, a billboard or car parking
+hint.lettingTypeDetails6015 = For example restaurants or car hire kiosks
 
 # RENTAL INCOME LIST
 ####################
@@ -1480,9 +1486,9 @@ financialYearEndDatesSummary.isFinancialYearEndDatesCorrect = These financial ye
 error.financialYearEndDates.incorrect = Select if these financial year end dates are correct
 
 # FINANCIAL YEARS CYA
-financialYears.heading = Check your answers - occupation and accounting information
-financialYears.p1 = You must check these dates before you complete the rest of this section.
-financialYears.warning = If you change your occupation date or your financial year end at any point after this page, you will have to enter all your trading history information again.
+financialYears.heading = Check your answers - accounting information
+financialYears.p1 = You must check this date before you complete the rest of this section.
+financialYears.warning = If you change your financial year end at any point after this page, you will have to enter all your trading history information again.
 financialYears.isFinancialYearsCorrect = The occupation and accounting information is correct
 error.financialYears.incorrect = Select if the occupation and accounting information is correct
 
@@ -3673,6 +3679,7 @@ checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Yn cael
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Yn cael ei defnyddio at ddibenion elusennol
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other = Other
 checkYourAnswersAboutTheTradingHistory.occupationDate = Dyddiad meddiannu
+checkYourAnswersAboutTheTradingHistory.areYouVATRegistered = Are you VAT registered?
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Diwedd y flwyddyn ariannol
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu
 checkYourAnswersAboutTheTradingHistory.drinks = Diodydd
