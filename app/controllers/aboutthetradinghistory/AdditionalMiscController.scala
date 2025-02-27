@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,10 +56,7 @@ class AdditionalMiscController @Inject() (
         view(
           additionalMiscForm(years).fill(
             (
-              turnoverSections6045.map(section =>
-                val tradingPeriod = section.additionalShops.fold(52)(_.tradingPeriod)
-                section.additionalMisc.getOrElse(AdditionalMisc(tradingPeriod))
-              ),
+              turnoverSections6045.map(_.additionalMisc.getOrElse(AdditionalMisc())),
               details
             )
           ),

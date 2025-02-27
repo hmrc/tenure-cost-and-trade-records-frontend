@@ -707,7 +707,7 @@ trait FakeObjects {
           )
         ),
         additionalMisc = Some(
-          AdditionalMisc(52, Some(100.00), Some(100.00), Some(10), Some(100.00), Some(100.00))
+          AdditionalMisc(Some(100.00), Some(100.00), Some(10), Some(100.00), Some(100.00))
         )
       ),
       TurnoverSection6045(

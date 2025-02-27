@@ -27,10 +27,9 @@ import utils.TestBaseSpec
 class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
 
-  val years                                                                     = Seq("2023", "2022", "2021")
-  private def validFormDataPerYear(idx: Int, weeks: Int): Seq[(String, String)] =
+  val years                                                         = Seq("2023", "2022", "2021")
+  private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
-      s"additionalBarsClubs[$idx].weeks"               -> weeks.toString,
       s"additionalBarsClubs[$idx].grossBar"            -> "10000",
       s"additionalBarsClubs[$idx].costBar"             -> "10000",
       s"additionalBarsClubs[$idx].grossClubMembership" -> "10000",
@@ -38,10 +37,14 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
       s"additionalBarsClubs[$idx].costOfEntertainment" -> "10000"
     )
 
-  private def formData(weeks: Int): Seq[(String, String)] =
-    validFormDataPerYear(0, weeks) ++
-      validFormDataPerYear(1, weeks) ++
-      validFormDataPerYear(2, weeks)
+  private def validFormData: Seq[(String, String)] =
+    validFormDataPerYear(0) ++
+      validFormDataPerYear(1) ++
+      validFormDataPerYear(2)
+
+  private def invalidFormData: Seq[(String, String)] =
+    validFormDataPerYear(0) ++
+      validFormDataPerYear(1)
 
   def controller =
     new AdditionalBarsClubsController(
@@ -90,7 +93,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(52)*)
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
@@ -98,12 +101,14 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 400 and error message for invalid weeks" in {
+    "return 400 and error message for invalid form data" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(53)*)
+        fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
-      contentAsString(res) should include("""<a href="#additionalBarsClubs[0].weeks">error.weeksMapping.invalid</a>""")
+      contentAsString(res) should include(
+        """<a href="#additionalBarsClubs[2].grossBar">error.additionalBarsClubs.grossBar.required</a>"""
+      )
     }
 
     "return 400 and error message for invalid gross receipts" in {

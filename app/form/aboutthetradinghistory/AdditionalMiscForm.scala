@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
-import form.MappingSupport.{mappingPerYear, nonNegativeNumberWithYear, tradingPeriodWeeks, turnoverSalesMappingWithYear}
+import form.MappingSupport.{mappingPerYear, nonNegativeNumberWithYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails}
 import play.api.data.Forms.{mapping, tuple}
 import play.api.data.validation.Constraints.maxLength
@@ -28,7 +28,6 @@ object AdditionalMiscForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdditionalMisc] =
     mapping(
-      "tradingPeriod"           -> tradingPeriodWeeks(year),
       "leisureReceipts"         -> turnoverSalesMappingWithYear("additionalMisc.leisureReceipts", year),
       "winterStorageReceipts"   -> turnoverSalesMappingWithYear("additionalMisc.winterStorageReceipts", year),
       "numberOfVans"            -> nonNegativeNumberWithYear("additionalMisc.numberOfVans", year),

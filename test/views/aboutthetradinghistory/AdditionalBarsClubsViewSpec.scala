@@ -62,13 +62,6 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
       assert(doc.toString.contains(messages("additionalBarsClubs.p")))
     }
 
-    s"contain an input for weeks" in {
-      val doc = asDocument(createView())
-      assertRenderedById(doc, "additionalBarsClubs[0].weeks")
-      assertRenderedById(doc, "additionalBarsClubs[1].weeks")
-      assertRenderedById(doc, "additionalBarsClubs[2].weeks")
-    }
-
     s"contain an input for gross bar receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalBarsClubs[0].grossBar")

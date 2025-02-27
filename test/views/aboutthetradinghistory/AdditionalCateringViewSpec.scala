@@ -63,13 +63,6 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
       assert(doc.toString.contains(messages("catering.additionalActivitiesOnSite.p2")))
     }
 
-    s"contain an input for weeks" in {
-      val doc = asDocument(createView())
-      assertRenderedById(doc, "additionalCatering[0].weeks")
-      assertRenderedById(doc, "additionalCatering[1].weeks")
-      assertRenderedById(doc, "additionalCatering[2].weeks")
-    }
-
     s"contain an input for gross receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalCatering[0].grossReceipts")

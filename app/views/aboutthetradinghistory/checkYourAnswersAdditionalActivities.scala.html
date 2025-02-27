@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,58 +36,62 @@
 
 @(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@tradingHistory = @{SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)}
+@tradingHistory = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
+}
 
-@tradingHistoryOne = @{SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)}
+@tradingHistoryOne = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+}
 
 @tableRow(values: Seq[String]) = {
-    @values.map { value =>
-        <div class="hmrc-turnover-table-column">
-            @value
-        </div>
-       }
-    }
+@values.map { value =>
+    <div class="hmrc-turnover-table-column">
+        @value
+    </div>
+}
+}
 
 @answer(valueLabelKey: String, getAnswer: TurnoverSection6045 => String) = @{
 
-        SummaryListRow(
-            key = Key(Text(messages(valueLabelKey))),
-            value = Value(HtmlContent(
-                tableRow(tradingHistoryOne.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer)).body
-            )),
-            classes = "no-border-bottom"
-        )
-    }
+    SummaryListRow(
+        key = Key(Text(messages(valueLabelKey))),
+        value = Value(HtmlContent(
+            tableRow(tradingHistoryOne.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer)).body
+        )),
+        classes = "no-border-bottom"
+    )
+}
 
 @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
-        request.sessionData.financialYearEndDates6045.map(_._1)
-    }
+    request.sessionData.financialYearEndDates6045.map(_._1)
+}
 
 @financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
-        SummaryListRow(
-            key = Key(Text(messages("turnover.financialYearEnd"))),
-            value = Value(HtmlContent(
-                tableRow(
-                    tradingHistory.answers.map(financialYearEndDates).fold(Seq(""))(_.map(dateUtil.formatDayMonthAbbrYear))
-                ).body
-            )),
-            actions = Some(
-                Actions(items =
-                    Seq(
-                        ActionItem(
-                            href = s"$editPage?from=CYA",
-                            content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages(pageHeadingKey)),
-                            attributes = Map(
-                                "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
-                            )
+    SummaryListRow(
+        key = Key(Text(messages("turnover.financialYearEnd"))),
+        value = Value(HtmlContent(
+            tableRow(
+                tradingHistory.answers.map(financialYearEndDates).fold(Seq(""))(_.map(dateUtil.formatDayMonthAbbrYear))
+            ).body
+        )),
+        actions = Some(
+            Actions(items =
+                Seq(
+                    ActionItem(
+                        href = s"$editPage?from=CYA",
+                        content = Text(messages("label.change")),
+                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        attributes = Map(
+                            "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
                         )
                     )
                 )
-            ),
-            classes = "no-border-bottom"
-        )
-    }
+            )
+        ),
+        classes = "no-border-bottom"
+    )
+}
 @pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
 
     <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
@@ -112,22 +116,19 @@
 
         tradingHistoryOne.row(
             "cYa.additionalActivities.activities.onSite.label",
-            _.additionalActivities.flatMap(_.additionalActivitiesOnSite.flatMap((x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")))),
+            _.additionalActivities.flatMap(_.additionalActivitiesOnSite.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
             controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities") ++
-        tradingHistoryOne.conditionRow(_.additionalActivities.flatMap(_.additionalActivitiesOnSite).exists(_ == AnswerYes),
-           "cYa.additionalActivities.activities.allYear.label",
-           _.additionalActivities.map(_.additionalActivitiesAllYear.map(yesNo => if(yesNo.additionalActivitiesAllYear == AnswerYes) messages(s"label.yes.ydy") else messages(s"label.no.nac.ydy"))),
-           controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show(),
-           "additionalActivitiesAllYear",
-           (messages("label.no"), _.additionalActivities.flatMap(_.additionalActivitiesAllYear).flatMap(_.weeksOpen).map {
-               weeksOpen =>
-                   weeksOpen match {
-                            case 1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek" , weeksOpen)
-                            case _ => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOpen)
-                        }
+                tradingHistoryOne.conditionRow(_.additionalActivities.flatMap(_.additionalActivitiesOnSite).contains(AnswerYes),
+                    "cYa.additionalActivities.activities.allYear.label",
+                    _.additionalActivities.map(_.additionalActivitiesAllYear.map(yesNo => if(yesNo.additionalActivitiesAllYear == AnswerYes) messages(s"label.yes.ydy") else messages(s"label.no.nac.ydy"))),
+                    controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show(),
+                    "additionalActivitiesAllYear",
+                    (messages("label.no"), _.additionalActivities.flatMap(_.additionalActivitiesAllYear).flatMap(_.weeksOpen).map {
+                        case weeksOpen@1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek", weeksOpen)
+                        case weeksOpen => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOpen)
                     })
                 )
-             ))
+    ))
 
     @if(tradingHistoryOne.answers.flatMap(_.additionalActivities).flatMap(_.additionalActivitiesOnSite).contains(AnswerYes)) {
         @pageAnswers("cYa.additionalActivities.shops.heading",
@@ -140,14 +141,14 @@
         @pageAnswers("cYa.additionalActivities.catering.heading",
             aboutthetradinghistory.routes.AdditionalCateringController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.additionalCatering.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.gross", _.additionalCatering.flatMap(_.grossReceipts)),
-            answer("cYa.additionalActivities.costOfPurchases", _.additionalCatering.flatMap(_.tradingPeriod)),
+            answer("cYa.additionalActivities.costOfPurchases", _.additionalCatering.flatMap(_.costOfPurchase)),
         )
         @pageAnswers("cYa.additionalActivities.bars.heading",
             aboutthetradinghistory.routes.AdditionalBarsClubsController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.additionalBarsClubs.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.grossFromBars", _.additionalBarsClubs.flatMap(_.grossReceiptsBars)),
             answer("cYa.additionalActivities.costOfBars", _.additionalBarsClubs.flatMap(_.barPurchases)),
             answer("cYa.additionalActivities.grossFromMembership", _.additionalBarsClubs.flatMap(_.grossClubMembership)),
@@ -157,13 +158,13 @@
         @pageAnswers("cYa.additionalActivities.amusements.heading",
             aboutthetradinghistory.routes.AdditionalAmusementsController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.additionalAmusements.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.receipts", _.additionalAmusements.flatMap(_.receipts)),
         )
         @pageAnswers("cYa.additionalActivities.miscellaneous.heading",
             aboutthetradinghistory.routes.AdditionalMiscController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.additionalMisc.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.grossFromOther", _.additionalMisc.flatMap(_.leisureReceipts)),
             answer("cYa.additionalActivities.storageOfCaravans", _.additionalMisc.flatMap(_.winterStorageReceipts)),
             answer("cYa.additionalActivities.numberOfVans", _.additionalMisc.flatMap(_.numberOfVans)),
