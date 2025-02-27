@@ -336,8 +336,15 @@
       controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show()
      } else { controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show() },
      section3Completed,
-     session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation),
-     if(forType == FOR6048) section4AccommodationCompleted.isEmpty else section2Completed.isEmpty
+     if(forType == FOR6048) { session.aboutTheTradingHistoryPartOne.flatMap(_.areYouVATRegistered)} else {session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)},
+     cannotStartYet = {
+      if(forType == FOR6048) {
+       sectionLettingHistoryCompleted.isEmpty
+      } else {
+       section2Completed.isEmpty
+      }
+     }
+
     )
 
     @if(!(Seq(FOR6020, FOR6076, FOR6045, FOR6046, FOR6048) contains forType)) {
