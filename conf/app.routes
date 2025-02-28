@@ -12,6 +12,10 @@
 GET         /assets/*file                                       controllers.Assets.versioned(path = "/public", file: Asset)
 # Dummy start page
 GET         /                                                   controllers.Application.index
+
+# Guidance pages
+GET         /reference-number                                   controllers.GuidanceController.show
+
 # Sign in page
 GET         /login                                              controllers.LoginController.show
 POST        /login                                              controllers.LoginController.submit
