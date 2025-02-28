@@ -364,15 +364,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage6045(TentingPitchesOnSiteId, sessionWithYesTentingPitchesOnSite, navigator.cyaPageForTentingPitches)
         .apply(
           sessionWithYesTentingPitchesOnSite
-        ) shouldBe controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController
-        .show()
-    }
-
-    "return a function that goes pitches for caravan  page when tenting pitches all year completed" in {
-      navigator
-        .nextPage(TentingPitchesAllYearId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe controllers.aboutthetradinghistory.routes.PitchesForCaravansController
-        .show()
+        ) shouldBe controllers.aboutthetradinghistory.routes.PitchesForCaravansController.show()
     }
 
     "return a function that goes the cya additional activities page when additional activities on site completed with no" in {
@@ -418,7 +410,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           navigator.cyaPageForAdditionalActivities
         )
         .apply(sessionWithYesAdditionalActivitiesOnSite) shouldBe
-        controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show()
+        controllers.aboutthetradinghistory.routes.AdditionalShopsController.show()
     }
 
     "return a function that goes to other holiday accommodation details page when other holiday accommodation completed with yes" in {
@@ -440,7 +432,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           navigator.cyaPageForAdditionalActivities
         )
         .apply(session) shouldBe
-        controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show()
+        controllers.aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show()
     }
 
     "return a function that goes to bunkered fuel sold page when benefits given has been completed for yes answer " in {
@@ -493,14 +485,6 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         )
         .apply(session) shouldBe
         controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
-    }
-
-    "return a function that goes to shops  page when tenting pitches all year completed" in {
-      navigator
-        .nextPage(AdditionalActivitiesAllYearId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe
-        controllers.aboutthetradinghistory.routes.AdditionalShopsController
-          .show()
     }
 
     "return a function that goes to Pitches For Glamping  page when Pitches For Caravans is completed" in {

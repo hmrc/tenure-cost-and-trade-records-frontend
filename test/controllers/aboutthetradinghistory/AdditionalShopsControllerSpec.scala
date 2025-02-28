@@ -72,10 +72,10 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
       content should include("/check-your-answers-additional-activities")
     }
 
-    "render a correct back link to additional activities all year page if no query parameters in the url " in {
+    "render a correct back link to additional activities on site page" in {
       val result  = controller.show(fakeRequest)
       val content = contentAsString(result)
-      content should include("/additional-activities-all-year")
+      content should include("/additional-activities-on-site")
     }
 
   }

@@ -118,20 +118,7 @@
                 "cYa.touringAndTentingPitches.pitches.label",
                 _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
                 controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
-                "tentingPitchesOnSite") ++
-                    tradingHistoryOne.conditionRow(
-                        _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite).exists(_ == AnswerYes),
-                        "cYa.touringAndTentingPitches.pitchesAllYear.label",
-                        _.touringAndTentingPitches.map(_.tentingPitchesAllYear.map(yesNo => messages(s"label.${yesNo.tentingPitchesAllYear.name}"))),
-                        controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(),
-                        "tentingPitchesAllYear",
-                        (messages("label.no"), _.touringAndTentingPitches.flatMap(_.tentingPitchesAllYear).flatMap(_.weekOfPitchesUse).map { weeksOfPitchesUse =>
-                            weeksOfPitchesUse match {
-                                case 1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek" , weeksOfPitchesUse)
-                                case _ => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOfPitchesUse)
-                            }
-                        })
-                    )
+                "tentingPitchesOnSite")
         ))
 
     @if(tradingHistoryOne.answers.flatMap(_.touringAndTentingPitches).flatMap(_.tentingPitchesOnSite).contains(AnswerYes)) {

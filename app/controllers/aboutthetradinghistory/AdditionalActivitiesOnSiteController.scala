@@ -89,7 +89,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
               case (Some(AnswerYes), AnswerYes, "CYA") =>
                 controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
               case (Some(AnswerNo), AnswerYes, _)      =>
-                controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show()
+                controllers.aboutthetradinghistory.routes.AdditionalShopsController.show()
               case _                                   =>
                 navigator
                   .nextPage6045(

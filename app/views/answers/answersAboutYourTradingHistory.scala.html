@@ -659,14 +659,6 @@
 
     @if(sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).contains(AnswerYes)) {
 
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear",
-                _.caravans.map(_.openAllYear.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
-                aboutthetradinghistory.routes.CaravansOpenAllYearController.show(), "areCaravansOpenAllYear",
-                (messages("label.no"), _.caravans.flatMap(_.weeksPerYear).map(messages("checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks", _)))
-            )
-        ))
-
         @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
             aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",

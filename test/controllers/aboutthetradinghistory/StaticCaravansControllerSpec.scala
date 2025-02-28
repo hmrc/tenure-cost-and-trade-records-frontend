@@ -30,7 +30,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
 
   private val previousPage = aboutthetradinghistory.routes.FinancialYearsController.show.url
 
-  private val nextPageOnYes = aboutthetradinghistory.routes.CaravansOpenAllYearController.show().url
+  private val nextPageOnYes = aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
 
   private val nextPageOnNo = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 

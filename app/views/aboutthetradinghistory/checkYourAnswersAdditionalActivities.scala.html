@@ -117,17 +117,7 @@
         tradingHistoryOne.row(
             "cYa.additionalActivities.activities.onSite.label",
             _.additionalActivities.flatMap(_.additionalActivitiesOnSite.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
-            controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities") ++
-                tradingHistoryOne.conditionRow(_.additionalActivities.flatMap(_.additionalActivitiesOnSite).contains(AnswerYes),
-                    "cYa.additionalActivities.activities.allYear.label",
-                    _.additionalActivities.map(_.additionalActivitiesAllYear.map(yesNo => if(yesNo.additionalActivitiesAllYear == AnswerYes) messages(s"label.yes.ydy") else messages(s"label.no.nac.ydy"))),
-                    controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show(),
-                    "additionalActivitiesAllYear",
-                    (messages("label.no"), _.additionalActivities.flatMap(_.additionalActivitiesAllYear).flatMap(_.weeksOpen).map {
-                        case weeksOpen@1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek", weeksOpen)
-                        case weeksOpen => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOpen)
-                    })
-                )
+            controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(), "additionalActivities")
     ))
 
     @if(tradingHistoryOne.answers.flatMap(_.additionalActivities).flatMap(_.additionalActivitiesOnSite).contains(AnswerYes)) {

@@ -721,8 +721,6 @@ trait FakeObjects {
     ),
     caravans = Caravans( // 6045/46
       anyStaticLeisureCaravansOnSite = AnswerYes,
-      openAllYear = AnswerNo,
-      weeksPerYear = 26,
       singleCaravansAge = CaravansAge(
         fleetHire = CaravansPerAgeCategory(10, 20, 30, 40),
         privateSublet = CaravansPerAgeCategory(5, 6, 7, 8)
@@ -744,12 +742,6 @@ trait FakeObjects {
     touringAndTentingPitches = Some(
       TouringAndTentingPitches(
         tentingPitchesOnSite = Some(AnswerYes),
-        tentingPitchesAllYear = Some(
-          TentingPitchesAllYear(
-            tentingPitchesAllYear = AnswerNo,
-            weekOfPitchesUse = Some(26)
-          )
-        ),
         tentingPitchesTotal = Some(50),
         tentingPitchesCertificated = Some(AnswerYes),
         checkYourAnswersTentingPitches = Some(AnswerNo)
@@ -757,13 +749,7 @@ trait FakeObjects {
     ),
     additionalActivities = Some(
       AdditionalActivities(
-        additionalActivitiesOnSite = Some(AnswerYes),
-        additionalActivitiesAllYear = Some(
-          AdditionalActivitiesAllYear(
-            additionalActivitiesAllYear = AnswerNo,
-            weeksOpen = Some(30)
-          )
-        )
+        additionalActivitiesOnSite = Some(AnswerYes)
       )
     ),
     additionalMiscDetails = Some(
@@ -831,7 +817,6 @@ trait FakeObjects {
     otherHolidayAccommodation = Some(
       OtherHolidayAccommodation(
         Some(AnswerYes),
-        OtherHolidayAccommodationDetails(AnswerYes),
         TotalSiteCapacity(20, 5, 15),
         None
       )

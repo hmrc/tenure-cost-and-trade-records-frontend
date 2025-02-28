@@ -30,8 +30,6 @@ import play.api.libs.json.{Format, Json, OFormat}
   */
 case class Caravans(
   anyStaticLeisureCaravansOnSite: Option[AnswersYesNo] = None,
-  openAllYear: Option[AnswersYesNo] = None,
-  weeksPerYear: Option[Int] = None,
   singleCaravansAge: Option[CaravansAge] = None,
   twinUnitCaravansAge: Option[CaravansAge] = None,
   totalSiteCapacity: Option[CaravansTotalSiteCapacity] = None,

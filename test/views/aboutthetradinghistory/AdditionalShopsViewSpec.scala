@@ -32,7 +32,7 @@ class AdditionalShopsViewSpec extends QuestionViewBehaviours[Seq[AdditionalShops
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show().url
+  val backLink = controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
 
   def createView = () => additionalShopsView(form, backLink)(sessionRequest, messages)
 
@@ -48,7 +48,7 @@ class AdditionalShopsViewSpec extends QuestionViewBehaviours[Seq[AdditionalShops
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show().url
+      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
     }
 
     "Section heading is visible" in {

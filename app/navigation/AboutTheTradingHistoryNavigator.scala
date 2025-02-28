@@ -160,7 +160,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
 
   private def staticCaravansRouting: Session => Call =
     _.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite) match {
-      case Some(AnswerYes) => aboutthetradinghistory.routes.CaravansOpenAllYearController.show()
+      case Some(AnswerYes) => aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()
       case _               => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     }
 
@@ -183,7 +183,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutTheTradingHistoryPartOne.flatMap(
       _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)
     ) match {
-      case Some(AnswerYes) => aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show()
+      case Some(AnswerYes) => aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show()
       case _               => aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
     }
 
@@ -191,7 +191,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutTheTradingHistoryPartOne.flatMap(
       _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
     ) match {
-      case Some(AnswerYes) => aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
+      case Some(AnswerYes) => aboutthetradinghistory.routes.PitchesForCaravansController.show()
       case _               => aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
     }
 
@@ -199,7 +199,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     answers.aboutTheTradingHistoryPartOne.flatMap(
       _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
     ) match {
-      case Some(AnswerYes) => aboutthetradinghistory.routes.AdditionalActivitiesAllYearController.show()
+      case Some(AnswerYes) => aboutthetradinghistory.routes.AdditionalShopsController.show()
       case _               => aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
     }
 
@@ -265,7 +265,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     OperationalExpensesId                       -> (_ => aboutthetradinghistory.routes.HeadOfficeExpensesController.show()),
     HeadOfficeExpensesId                        -> (_ => aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()),
     StaticCaravansId                            -> staticCaravansRouting,
-    CaravansOpenAllYearId                       -> (_ => aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show()),
     GrossReceiptsCaravanFleetHireId             -> (_ =>
       aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show()
     ),
@@ -283,21 +282,16 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     ),
     OtherHolidayAccommodationId                 -> otherHolidayAccommodationRouting,
-    OtherHolidayAccommodationDetailsId          -> (_ =>
-      aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show()
-    ),
     GrossReceiptsHolidayUnitsId                 -> (_ => aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show()),
     GrossReceiptsSubLetUnitsId                  -> (_ => aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show()),
     TotalSiteCapacityId                         -> (_ =>
       aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
     ),
     TentingPitchesOnSiteId                      -> tentingPitchesOnSiteRouting,
-    TentingPitchesAllYearId                     -> (_ => aboutthetradinghistory.routes.PitchesForCaravansController.show()),
     PitchesForCaravansId                        -> (_ => aboutthetradinghistory.routes.PitchesForGlampingController.show()),
     PitchesForGlampingId                        -> (_ => aboutthetradinghistory.routes.RallyAreasController.show()),
     RallyAreasId                                -> (_ => aboutthetradinghistory.routes.TentingPitchesTotalController.show()),
     AdditionalActivitiesOnSiteId                -> additionalActivitiesOnSiteRouting,
-    AdditionalActivitiesAllYearId               -> (_ => aboutthetradinghistory.routes.AdditionalShopsController.show()),
     AdditionalShopsId                           -> (_ => controllers.aboutthetradinghistory.routes.AdditionalCateringController.show()),
     AdditionalCateringId                        -> (_ => controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show()),
     AdditionalBarsClubsId                       -> (_ => controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show()),

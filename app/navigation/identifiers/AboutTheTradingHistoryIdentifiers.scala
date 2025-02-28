@@ -160,10 +160,6 @@ case object StaticCaravansId extends Identifier {
   override def toString: String = "staticCaravansPage"
 }
 
-case object CaravansOpenAllYearId extends Identifier {
-  override def toString: String = "caravansOpenAllYearPage"
-}
-
 case object GrossReceiptsCaravanFleetHireId extends Identifier {
   override def toString: String = "grossReceiptsCaravanFleetHirePage"
 }
@@ -225,9 +221,6 @@ case object TentingPitchesTotalId extends Identifier {
 case object TentingPitchesCertificatedId extends Identifier {
   override def toString: String = "tentingPitchesCertificatedPage"
 }
-case object TentingPitchesAllYearId extends Identifier {
-  override def toString: String = "tentingPitchesAllYearPage"
-}
 
 case object PitchesForCaravansId extends Identifier {
   override def toString: String = "pitchesForCaravansPage"
@@ -243,10 +236,6 @@ case object RallyAreasId extends Identifier {
 
 case object AdditionalActivitiesOnSiteId extends Identifier {
   override def toString: String = "additionalActivitiesOnSitePage"
-}
-
-case object AdditionalActivitiesAllYearId extends Identifier {
-  override def toString: String = "additionalActivitiesAllYearPage"
 }
 
 case object AdditionalShopsId extends Identifier {
@@ -275,10 +264,6 @@ case object CheckYourAnswersTentingPitchesId extends Identifier {
 
 case object CheckYourAnswersAdditionalActivitiesId extends Identifier {
   override def toString: String = "checkYourAnswersAdditionalActivitiesPage"
-}
-
-case object OtherHolidayAccommodationDetailsId extends Identifier {
-  override def toString: String = "otherHolidayAccommodationDetailsPage"
 }
 
 case object CheckYourAnswersOtherHolidayAccommodationId extends Identifier {

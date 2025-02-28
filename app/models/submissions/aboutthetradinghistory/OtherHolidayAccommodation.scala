@@ -21,7 +21,6 @@ import play.api.libs.json.{Json, OFormat}
 
 case class OtherHolidayAccommodation(
   otherHolidayAccommodation: Option[AnswersYesNo] = None,
-  otherHolidayAccommodationDetails: Option[OtherHolidayAccommodationDetails] = None,
   totalSiteCapacity: Option[TotalSiteCapacity] = None,
   checkYourAnswersOtherHolidayAccommodation: Option[CheckYourAnswersOtherHolidayAccommodation] = None
 )
