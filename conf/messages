@@ -128,26 +128,27 @@ label.section.additionalInformation = Additional information
 # DUMMY START PAGE FULL INFORMATION
 ##############################
 start.page.heading = Send your business trade and cost information to the Valuation Office Agency
-start.desc = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
-start.desc1 = The information you provide will be used by the local authority to help calculate business rates in your area.
 start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
-start.subheading = What you’ll need:
+start.subheading = What you’ll need to begin
 start.item1 = the reference number and postcode from the letter you were sent by the Valuation Office Agency (VOA)
-start.item2 = trading information for the last 3 financial years, or since you occupied the property
-start.item3 = details of any franchises or lettings run from the property as a separate business (if applicable)
-start.subheading2 = If you do not own the property, you’ll also need:
-start.item4 = your lease or agreement, including the current rent you pay
-start.item5 = information about any recent rent changes, or any rent-free period
-start.item6 = information about any changes you’ve made to the property that could affect its value
-start.desc3 = If you no longer occupy, or have never occupied the property you must still use this service to notify us.
-start.desc4 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later.
-start.subheading3 = If you need help
+start.item2 = the postcode of the property as printed on the letter - if the postcode shown is incorrect, you can let us know during your declaration
+start.subheading2 = What you'll be asked
+start.item3 = whether your business owns the property, or occupies it under a lease or agreement
+start.item4 = details of your trading history
+start.item5 = if any parts of the property are let out to businesses or individuals
+start.item6 = if any concessions o franchises operate from the property as separate businesses
+start.link1 = Visit our guidance page
+start.desc1 = to see how to complete your declaration. It also lists the information your must provide.
+start.desc2 = If you no longer occupy, or have never occupied the property you must still use this service to notify us.
+start.subheading3 = If you need a break, or do not have information to hand
+start.desc3 = If you need to stop for any reason, select save as draft. You'll be asked to create a password which will allow you to save your progress, and return to complete your declaration at another time.
+start.subheading4 = If you need help
 start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
 start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers%20form&body=Please%20email%20us%20your%20reference%20number,%20email%20address%20and/or%20telephone%20number%20only.%20If%20we%20require%20any%20further%20information%20we%20will%20contact%20you%20in%20due%20course." target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
-start.subheading4 = Alternative formats
+start.subheading5 = Alternative formats
 start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href={0} class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
-start.subheading5 = Explore the topic
+start.subheading6 = Explore the topic
 start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales.
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.button = Start now
