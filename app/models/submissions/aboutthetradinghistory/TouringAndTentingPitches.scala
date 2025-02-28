@@ -21,7 +21,6 @@ import play.api.libs.json.{Json, OFormat}
 
 case class TouringAndTentingPitches(
   tentingPitchesOnSite: Option[AnswersYesNo] = None,
-  tentingPitchesAllYear: Option[TentingPitchesAllYear] = None,
   tentingPitchesTotal: Option[Int] = None,
   tentingPitchesCertificated: Option[AnswersYesNo] = None,
   checkYourAnswersTentingPitches: Option[AnswersYesNo] = None

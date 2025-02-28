@@ -24,7 +24,6 @@ class GrossReceiptsSubLetUnitsSpec extends PlaySpec {
   "GrossReceiptsSubLetUnits" should {
     "serialize and deserialize correctly" in {
       val grossReceiptsSubLetUnits = GrossReceiptsSubLetUnits(
-        52,
         Some(100.00),
         Some(1)
       )

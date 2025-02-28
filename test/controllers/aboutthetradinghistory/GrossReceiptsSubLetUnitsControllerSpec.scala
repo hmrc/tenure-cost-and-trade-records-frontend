@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,9 +68,8 @@ class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
     }
   }
 
-  private def validFormDataPerYear(idx: Int, weeks: Int = 52): Seq[(String, String)] =
+  private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
-      s"turnover[$idx].weeks"         -> weeks.toString,
       s"turnover[$idx].grossReceipts" -> (idx * 1000).toString,
       s"turnover[$idx].numberOfUnits" -> (idx * 10).toString
     )
@@ -80,10 +79,10 @@ class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1) ++
       validFormDataPerYear(2)
 
-  private def invalidWeeksFormData: Seq[(String, String)] =
-    validFormDataPerYear(0, 53) ++
+  private def invalidFormData: Seq[(String, String)] =
+    validFormDataPerYear(0) ++
       validFormDataPerYear(1) ++
-      validFormDataPerYear(2)
+      validFormDataPerYear(7)
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
@@ -96,10 +95,12 @@ class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
 
     "return 400 and error message for invalid weeks" in {
       val res = grossReceiptsSubLetUnitsController.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
+        fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
-      contentAsString(res) should include("""<a href="#turnover[0].weeks">error.weeksMapping.invalid</a>""")
+      contentAsString(res) should include(
+        """<a href="#turnover[2].grossReceipts">error.turnover.6045.subLetUnits.grossReceipts.required</a>"""
+      )
     }
 
     "return 400 for empty turnoverSections" in {

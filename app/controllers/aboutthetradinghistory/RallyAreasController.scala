@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,10 +52,7 @@ class RallyAreasController @Inject() (
       Ok(
         view(
           rallyAreasTradingDataForm(years).fill(
-            turnoverSections6045.map(section =>
-              val tradingPeriod = section.pitchesForCaravans.fold(52)(_.tradingPeriod)
-              section.rallyAreas.getOrElse(RallyAreasTradingData(tradingPeriod))
-            )
+            turnoverSections6045.map(section => section.rallyAreas.getOrElse(RallyAreasTradingData()))
           ),
           getBackLink
         )

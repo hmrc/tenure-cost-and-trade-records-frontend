@@ -154,13 +154,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
                 _.otherHolidayAccommodation.map(yesNo => messages(s"label.${yesNo.name}")),
-                controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation") ++
-                sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.openAllYear",
-                _.otherHolidayAccommodationDetails.map(otherHolidayAccommodationDetails => "<p class=\"govuk-body\">" + messages(s"label.${otherHolidayAccommodationDetails.otherHolidayAccommodationOpenAllYear.name}") + "</p>"
-                        + sectionOtherHolidayAccommodation.answers.filter(_ => otherHolidayAccommodationDetails.otherHolidayAccommodationOpenAllYear.name == "no").flatMap(
-                    _.otherHolidayAccommodationDetails.flatMap(_.weeksOpen)).fold("")(v => s"<p class=\"govuk-body\">${messages("checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks",v)}</p>")),
-                controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show(),"otherHolidayAccommodation", ("valueAsHtml", _ => None))
-
+                controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
         ))
     @pageAnswers("turnover.6045.lettingUnits.grossReceipts.heading",
         aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show(),
@@ -171,7 +165,7 @@
 
     @pageAnswers("turnover.6045.subLetUnits.grossReceipts.heading",
         aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show(),
-        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsSubLetUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
+        answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsLettingUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
         answer6045("checkYourAnswersOtherHolidayAccommodation.grossReceipts", _.grossReceiptsSubLetUnits.flatMap(_.grossReceipts)),
         answer6045("checkYourAnswersOtherHolidayAccommodation.numberOfUnits", _.grossReceiptsSubLetUnits.flatMap(_.numberOfUnits))
     )

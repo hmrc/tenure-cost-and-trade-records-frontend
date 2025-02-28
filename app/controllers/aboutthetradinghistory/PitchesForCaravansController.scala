@@ -52,7 +52,7 @@ class PitchesForCaravansController @Inject() (
       Ok(
         view(
           tentingPitchesTradingDataForm(years).fill(
-            turnoverSections6045.map(_.pitchesForCaravans getOrElse initialPitchesForCaravans)
+            turnoverSections6045.map(_.pitchesForCaravans getOrElse TentingPitchesTradingData())
           ),
           getBackLink
         )
@@ -95,16 +95,6 @@ class PitchesForCaravansController @Inject() (
     }
   }
 
-  private def initialPitchesForCaravans(implicit
-    request: SessionRequest[AnyContent]
-  ): TentingPitchesTradingData =
-    val tradingPeriod = request.sessionData.aboutTheTradingHistoryPartOne
-      .flatMap(_.touringAndTentingPitches)
-      .flatMap(_.tentingPitchesAllYear)
-      .flatMap(_.weekOfPitchesUse)
-      .getOrElse(52)
-    TentingPitchesTradingData(tradingPeriod)
-
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
   )(implicit request: SessionRequest[AnyContent]): Future[Result] =
@@ -116,7 +106,7 @@ class PitchesForCaravansController @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => navigator.cyaPageForTentingPitches.url
-      case _     => controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show().url
+      case _     => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{mappingPerYear, tradingPeriodWeeks, turnoverSalesMappingWithYear}
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.AdditionalBarsClubs
 import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
@@ -26,7 +26,6 @@ object AdditionalBarsClubsForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdditionalBarsClubs] =
     mapping(
-      "weeks"               -> tradingPeriodWeeks(year),
       "grossBar"            -> turnoverSalesMappingWithYear("additionalBarsClubs.grossBar", year),
       "costBar"             -> turnoverSalesMappingWithYear("additionalBarsClubs.costBar", year),
       "grossClubMembership" -> turnoverSalesMappingWithYear("additionalBarsClubs.grossClubMembership", year),

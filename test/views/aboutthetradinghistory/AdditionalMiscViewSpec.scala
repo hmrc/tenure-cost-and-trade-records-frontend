@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,13 +60,6 @@ class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc]
     "contains paragraph details" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("additionalMisc.p")))
-    }
-
-    s"contain an input for trading period" in {
-      val doc = asDocument(createView())
-      assertRenderedById(doc, "additionalMisc.[0].tradingPeriod")
-      assertRenderedById(doc, "additionalMisc.[1].tradingPeriod")
-      assertRenderedById(doc, "additionalMisc.[2].tradingPeriod")
     }
 
     s"contain an input for gross leisure Receipts" in {

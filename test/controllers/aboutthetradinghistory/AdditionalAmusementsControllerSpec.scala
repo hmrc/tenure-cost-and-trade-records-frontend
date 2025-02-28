@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,18 +27,21 @@ import utils.TestBaseSpec
 
 class AdditionalAmusementsControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
+  val years            = Seq("2023", "2022", "2021")
 
-  val years                                                                     = Seq("2023", "2022", "2021")
-  private def validFormDataPerYear(idx: Int, weeks: Int): Seq[(String, String)] =
+  private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
-      s"additionalAmusements[$idx].weeks"    -> weeks.toString,
       s"additionalAmusements[$idx].receipts" -> "10000"
     )
 
-  private def formData(weeks: Int): Seq[(String, String)] =
-    validFormDataPerYear(0, weeks) ++
-      validFormDataPerYear(1, weeks) ++
-      validFormDataPerYear(2, weeks)
+  private def validFormData: Seq[(String, String)] =
+    validFormDataPerYear(0) ++
+      validFormDataPerYear(1) ++
+      validFormDataPerYear(2)
+
+  private def invalidFormData: Seq[(String, String)] =
+    validFormDataPerYear(0) ++
+      validFormDataPerYear(1)
 
   def controller =
     new AdditionalAmusementsController(
@@ -87,7 +90,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(52)*)
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
@@ -97,10 +100,12 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
 
     "return 400 and error message for invalid weeks" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(53)*)
+        fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
-      contentAsString(res) should include("""<a href="#additionalAmusements[0].weeks">error.weeksMapping.invalid</a>""")
+      contentAsString(res) should include(
+        """<a href="#additionalAmusements[2].receipts">error.additionalAmusements.receipts.required</a>"""
+      )
     }
 
     "return 400 and error message for invalid receipts" in {
@@ -110,7 +115,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
       val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(messages).bind(formData)
       mustContainError(
         "additionalAmusements[0].receipts",
-        messages("error.additionalAmusements.receipts.range", 2023.toString),
+        messages("error.additionalAmusements.receipts.range", "2023"),
         form
       )
     }
@@ -122,7 +127,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
       val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(messages).bind(formData)
       mustContainError(
         "additionalAmusements[1].receipts",
-        messages("error.additionalAmusements.receipts.required", 2022.toString),
+        messages("error.additionalAmusements.receipts.required", "2022"),
         form
       )
     }
@@ -134,7 +139,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
       val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(messages).bind(formData)
       mustContainError(
         "additionalAmusements[2].receipts",
-        messages("error.additionalAmusements.receipts.negative", 2021.toString),
+        messages("error.additionalAmusements.receipts.negative", "2021"),
         form
       )
     }

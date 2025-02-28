@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,20 +118,7 @@
                 "cYa.touringAndTentingPitches.pitches.label",
                 _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
                 controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
-                "tentingPitchesOnSite") ++
-                    tradingHistoryOne.conditionRow(
-                        _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite).exists(_ == AnswerYes),
-                        "cYa.touringAndTentingPitches.pitchesAllYear.label",
-                        _.touringAndTentingPitches.map(_.tentingPitchesAllYear.map(yesNo => messages(s"label.${yesNo.tentingPitchesAllYear.name}"))),
-                        controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show(),
-                        "tentingPitchesAllYear",
-                        (messages("label.no"), _.touringAndTentingPitches.flatMap(_.tentingPitchesAllYear).flatMap(_.weekOfPitchesUse).map { weeksOfPitchesUse =>
-                            weeksOfPitchesUse match {
-                                case 1 => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeek" , weeksOfPitchesUse)
-                                case _ => messages("cYa.touringAndTentingPitches.pitchesAllYear.openWeeks", weeksOfPitchesUse)
-                            }
-                        })
-                    )
+                "tentingPitchesOnSite")
         ))
 
     @if(tradingHistoryOne.answers.flatMap(_.touringAndTentingPitches).flatMap(_.tentingPitchesOnSite).contains(AnswerYes)) {
@@ -147,14 +134,14 @@
         @pageAnswers("cya.pitchesForGlamping.heading",
             aboutthetradinghistory.routes.PitchesForGlampingController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.pitchesForGlamping.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.pitchesForGlamping.flatMap(_.grossReceipts)),
             answer("tentingPitches.common.numberOfPitches", _.pitchesForGlamping.flatMap(_.numberOfPitches)),
         )
         @pageAnswers("cya.rallyAreas.heading",
             aboutthetradinghistory.routes.RallyAreasController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.rallyAreas.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.rallyAreas.flatMap(_.grossReceipts)),
             answer("tentingPitches.common.areaInHectares", _.rallyAreas.flatMap(_.areaInHectares).map(_.toString())),
         )

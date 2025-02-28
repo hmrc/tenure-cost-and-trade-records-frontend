@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,11 +28,10 @@ import utils.TestBaseSpec
 class AdditionalMiscControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+  val years            = Seq("2023", "2022", "2021")
 
-  val years                                                                     = Seq("2023", "2022", "2021")
-  private def validFormDataPerYear(idx: Int, weeks: Int): Seq[(String, String)] =
+  private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
-      s"additionalMisc.[$idx].tradingPeriod"           -> weeks.toString,
       s"additionalMisc.[$idx].leisureReceipts"         -> "10000",
       s"additionalMisc.[$idx].winterStorageReceipts"   -> "10000",
       s"additionalMisc.[$idx].numberOfVans"            -> "1",
@@ -43,10 +42,14 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
       s"details.leisureReceiptsDetails"                -> "some details"
     )
 
-  private def formData(weeks: Int): Seq[(String, String)] =
-    validFormDataPerYear(0, weeks) ++
-      validFormDataPerYear(1, weeks) ++
-      validFormDataPerYear(2, weeks)
+  private def validFormData: Seq[(String, String)] =
+    validFormDataPerYear(0) ++
+      validFormDataPerYear(1) ++
+      validFormDataPerYear(2)
+
+  private def invalidFormData: Seq[(String, String)] =
+    validFormDataPerYear(0) ++
+      validFormDataPerYear(1)
 
   def controller =
     new AdditionalMiscController(
@@ -95,7 +98,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
     "save the form data and redirect to the next page" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(52)*)
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
@@ -105,11 +108,11 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
     "return 400 and error message for invalid weeks" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(53)*)
+        fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(
-        """<a href="#additionalMisc.[0].tradingPeriod">error.weeksMapping.invalid</a>"""
+        """<a href="#additionalMisc.[2].leisureReceipts">error.additionalMisc.leisureReceipts.required</a>"""
       )
     }
 

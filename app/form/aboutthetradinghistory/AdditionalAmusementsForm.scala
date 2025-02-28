@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,19 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{mappingPerYear, tradingPeriodWeeks, turnoverSalesMappingWithYear}
+import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.AdditionalAmusements
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
 object AdditionalAmusementsForm {
 
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdditionalAmusements] =
-    mapping(
-      "weeks"    -> tradingPeriodWeeks(year),
+    single(
       "receipts" -> turnoverSalesMappingWithYear("additionalAmusements.receipts", year)
-    )(AdditionalAmusements.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .transform(AdditionalAmusements.apply, _.receipts)
+    )
 
   def additionalAmusementsForm(
     years: Seq[String]

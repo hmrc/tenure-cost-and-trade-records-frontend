@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -656,9 +656,9 @@ trait FakeObjects {
       TurnoverSection6045(
         today,
         grossReceiptsCaravanFleetHire = GrossReceiptsCaravanFleetHire(),
-        singleCaravansOwnedByOperator = CaravansTrading6045(52, 3000, 30),
-        singleCaravansSublet = CaravansTrading6045(52, 1000, 10),
-        twinUnitCaravansOwnedByOperator = CaravansTrading6045(26, 2000, 20),
+        singleCaravansOwnedByOperator = CaravansTrading6045(3000, 30),
+        singleCaravansSublet = CaravansTrading6045(1000, 10),
+        twinUnitCaravansOwnedByOperator = CaravansTrading6045(2000, 20),
         twinUnitCaravansSublet = CaravansTrading6045(),
         pitchesForCaravans = Some(
           TentingPitchesTradingData(
@@ -668,15 +668,13 @@ trait FakeObjects {
           )
         ),
         pitchesForGlamping = Some(
-          TentingPitchesTradingData(
-            tradingPeriod = 52,
+          TentingPitchesData(
             grossReceipts = Some(BigDecimal(4000)),
             numberOfPitches = Some(15)
           )
         ),
         rallyAreas = Some(
           RallyAreasTradingData(
-            tradingPeriod = 52,
             grossReceipts = Some(BigDecimal(2000)),
             areaInHectares = Some(BigDecimal(1.5))
           )
@@ -690,14 +688,12 @@ trait FakeObjects {
         ),
         additionalCatering = Some(
           AdditionalCatering(
-            tradingPeriod = 52,
             grossReceipts = Some(BigDecimal(2500)),
             costOfPurchase = Some(BigDecimal(1200))
           )
         ),
         additionalBarsClubs = Some(
           AdditionalBarsClubs(
-            tradingPeriod = 52,
             grossReceiptsBars = Some(BigDecimal(3500)),
             barPurchases = Some(BigDecimal(1800)),
             grossClubMembership = Some(BigDecimal(2000)),
@@ -707,12 +703,11 @@ trait FakeObjects {
         ),
         additionalAmusements = Some(
           AdditionalAmusements(
-            tradingPeriod = 52,
             receipts = Some(BigDecimal(2500))
           )
         ),
         additionalMisc = Some(
-          AdditionalMisc(52, Some(100.00), Some(100.00), Some(10), Some(100.00), Some(100.00))
+          AdditionalMisc(Some(100.00), Some(100.00), Some(10), Some(100.00), Some(100.00))
         )
       ),
       TurnoverSection6045(
@@ -726,8 +721,6 @@ trait FakeObjects {
     ),
     caravans = Caravans( // 6045/46
       anyStaticLeisureCaravansOnSite = AnswerYes,
-      openAllYear = AnswerNo,
-      weeksPerYear = 26,
       singleCaravansAge = CaravansAge(
         fleetHire = CaravansPerAgeCategory(10, 20, 30, 40),
         privateSublet = CaravansPerAgeCategory(5, 6, 7, 8)
@@ -749,12 +742,6 @@ trait FakeObjects {
     touringAndTentingPitches = Some(
       TouringAndTentingPitches(
         tentingPitchesOnSite = Some(AnswerYes),
-        tentingPitchesAllYear = Some(
-          TentingPitchesAllYear(
-            tentingPitchesAllYear = AnswerNo,
-            weekOfPitchesUse = Some(26)
-          )
-        ),
         tentingPitchesTotal = Some(50),
         tentingPitchesCertificated = Some(AnswerYes),
         checkYourAnswersTentingPitches = Some(AnswerNo)
@@ -762,13 +749,7 @@ trait FakeObjects {
     ),
     additionalActivities = Some(
       AdditionalActivities(
-        additionalActivitiesOnSite = Some(AnswerYes),
-        additionalActivitiesAllYear = Some(
-          AdditionalActivitiesAllYear(
-            additionalActivitiesAllYear = AnswerNo,
-            weeksOpen = Some(30)
-          )
-        )
+        additionalActivitiesOnSite = Some(AnswerYes)
       )
     ),
     additionalMiscDetails = Some(
@@ -836,7 +817,6 @@ trait FakeObjects {
     otherHolidayAccommodation = Some(
       OtherHolidayAccommodation(
         Some(AnswerYes),
-        OtherHolidayAccommodationDetails(AnswerYes),
         TotalSiteCapacity(20, 5, 15),
         None
       )

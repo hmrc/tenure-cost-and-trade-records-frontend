@@ -16,25 +16,25 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
-import models.submissions.aboutthetradinghistory.AdditionalCatering
+import form.MappingSupport.{mappingPerYear, nonNegativeNumberWithYear, turnoverSalesMappingWithYear}
+import models.submissions.aboutthetradinghistory.TentingPitchesData
 import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object AdditionalCateringForm {
+object TentingPitchesDataForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdditionalCatering] =
+  private def columnMapping(year: String)(implicit messages: Messages): Mapping[TentingPitchesData] =
     mapping(
-      "grossReceipts"  -> turnoverSalesMappingWithYear("additionalCatering.grossReceipts", year),
-      "costOfPurchase" -> turnoverSalesMappingWithYear("additionalCatering.costOfPurchase", year)
-    )(AdditionalCatering.apply)(o => Some(Tuple.fromProductTyped(o)))
+      "grossReceipts"   -> turnoverSalesMappingWithYear("tentingPitches.grossReceipts", year),
+      "numberOfPitches" -> nonNegativeNumberWithYear("tentingPitches.numberOfPitches", year)
+    )(TentingPitchesData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def additionalCateringForm(
+  def tentingPitchesDataForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[AdditionalCatering]] =
+  )(implicit messages: Messages): Form[Seq[TentingPitchesData]] =
     Form {
-      mappingPerYear(years, (year, idx) => s"additionalCatering[$idx]" -> columnMapping(year))
+      mappingPerYear(years, (year, idx) => s"tentingPitches[$idx]" -> columnMapping(year))
     }
 
 }

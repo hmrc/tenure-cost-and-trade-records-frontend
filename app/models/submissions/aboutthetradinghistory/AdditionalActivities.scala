@@ -21,7 +21,6 @@ import play.api.libs.json.{Json, OFormat}
 
 case class AdditionalActivities(
   additionalActivitiesOnSite: Option[AnswersYesNo] = None,
-  additionalActivitiesAllYear: Option[AdditionalActivitiesAllYear] = None,
   checkYourAnswersAdditionalActivities: Option[AnswersYesNo] = None
 )
 object AdditionalActivities {

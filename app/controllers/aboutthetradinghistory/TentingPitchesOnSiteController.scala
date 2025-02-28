@@ -87,7 +87,7 @@ class TentingPitchesOnSiteController @Inject() (
             case (Some(AnswerYes), AnswerYes, "CYA") =>
               controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
             case (Some(AnswerNo), AnswerYes, _)      =>
-              controllers.aboutthetradinghistory.routes.TentingPitchesAllYearController.show()
+              controllers.aboutthetradinghistory.routes.PitchesForCaravansController.show()
             case _                                   =>
               navigator
                 .nextPage6045(

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import play.api.libs.json.{Json, OFormat}
   * @author Yuriy Tumakha
   */
 case class CaravansTrading6045(
-  tradingPeriod: Int = 52,
   grossReceipts: Option[BigDecimal] = None,
   vans: Option[Int] = None
 )

@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -659,14 +659,6 @@
 
     @if(sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).contains(AnswerYes)) {
 
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear",
-                _.caravans.map(_.openAllYear.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
-                aboutthetradinghistory.routes.CaravansOpenAllYearController.show(), "areCaravansOpenAllYear",
-                (messages("label.no"), _.caravans.flatMap(_.weeksPerYear).map(messages("checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks", _)))
-            )
-        ))
-
         @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
             aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
@@ -676,14 +668,14 @@
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.single.ownedByOperator",
             aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.singleCaravansOwnedByOperator.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.singleCaravansOwnedByOperator.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.singleCaravansOwnedByOperator.flatMap(_.vans))
         )
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.single.subletByOperator",
             aboutthetradinghistory.routes.SingleCaravansSubletController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.singleCaravansSublet.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.singleCaravansSublet.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.singleCaravansSublet.flatMap(_.vans))
         )
@@ -712,14 +704,14 @@
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator",
             aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.twinUnitCaravansOwnedByOperator.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.twinUnitCaravansOwnedByOperator.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.twinUnitCaravansOwnedByOperator.flatMap(_.vans))
         )
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator",
             aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
-                t => s"${t.twinUnitCaravansSublet.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
+                t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.twinUnitCaravansSublet.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.twinUnitCaravansSublet.flatMap(_.vans))
         )

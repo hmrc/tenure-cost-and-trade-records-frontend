@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,13 +60,6 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
     "contains paragraph details" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("additionalBarsClubs.p")))
-    }
-
-    s"contain an input for weeks" in {
-      val doc = asDocument(createView())
-      assertRenderedById(doc, "additionalBarsClubs[0].weeks")
-      assertRenderedById(doc, "additionalBarsClubs[1].weeks")
-      assertRenderedById(doc, "additionalBarsClubs[2].weeks")
     }
 
     s"contain an input for gross bar receipts" in {

@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 
 class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
 
-  private val previousPage = aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show().url
+  private val previousPage = aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
 
   private val nextPage = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
 

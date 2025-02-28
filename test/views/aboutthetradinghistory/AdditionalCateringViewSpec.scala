@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,13 +61,6 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("catering.additionalActivitiesOnSite.p1")))
       assert(doc.toString.contains(messages("catering.additionalActivitiesOnSite.p2")))
-    }
-
-    s"contain an input for weeks" in {
-      val doc = asDocument(createView())
-      assertRenderedById(doc, "additionalCatering[0].weeks")
-      assertRenderedById(doc, "additionalCatering[1].weeks")
-      assertRenderedById(doc, "additionalCatering[2].weeks")
     }
 
     s"contain an input for gross receipts" in {

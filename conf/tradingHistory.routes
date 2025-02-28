@@ -48,9 +48,6 @@ POST        /electric-vehicle-charging-points                      controllers.a
 GET         /static-caravans                                       controllers.aboutthetradinghistory.StaticCaravansController.show()
 POST        /static-caravans                                       controllers.aboutthetradinghistory.StaticCaravansController.submit()
 
-GET         /are-caravans-open-all-year                            controllers.aboutthetradinghistory.CaravansOpenAllYearController.show()
-POST        /are-caravans-open-all-year                            controllers.aboutthetradinghistory.CaravansOpenAllYearController.submit()
-
 GET         /gross-receipts-fleet-caravans                         controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.show()
 POST        /gross-receipts-fleet-caravans                         controllers.aboutthetradinghistory.GrossReceiptsCaravanFleetHireController.submit()
 
@@ -87,9 +84,6 @@ POST        /other-holiday-accommodation                           controllers.a
 GET         /tenting-pitches-on-site                               controllers.aboutthetradinghistory.TentingPitchesOnSiteController.show()
 POST        /tenting-pitches-on-site                               controllers.aboutthetradinghistory.TentingPitchesOnSiteController.submit()
 
-GET         /tenting-pitches-all-year                              controllers.aboutthetradinghistory.TentingPitchesAllYearController.show()
-POST        /tenting-pitches-all-year                              controllers.aboutthetradinghistory.TentingPitchesAllYearController.submit()
-
 GET         /pitches-for-caravans                                  controllers.aboutthetradinghistory.PitchesForCaravansController.show()
 POST        /pitches-for-caravans                                  controllers.aboutthetradinghistory.PitchesForCaravansController.submit()
 
@@ -105,9 +99,6 @@ POST        /tenting-pitches-total                                 controllers.a
 GET         /tenting-pitches-certificated                          controllers.aboutthetradinghistory.TentingPitchesCertificatedController.show()
 POST        /tenting-pitches-certificated                          controllers.aboutthetradinghistory.TentingPitchesCertificatedController.submit()
 
-GET         /other-holiday-accommodation-open-all-year             controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.show()
-POST        /other-holiday-accommodation-open-all-year             controllers.aboutthetradinghistory.OtherHolidayAccommodationDetailsController.submit()
-
 GET         /gross-receipts-letting-units                          controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.show()
 POST        /gross-receipts-letting-units                          controllers.aboutthetradinghistory.GrossReceiptsLettingUnitsController.submit()
 
@@ -119,9 +110,6 @@ POST        /total-site-capacity                                   controllers.a
 
 GET         /additional-activities-on-site                         controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.show()
 POST        /additional-activities-on-site                         controllers.aboutthetradinghistory.AdditionalActivitiesOnSiteController.submit()
-
-GET         /additional-activities-all-year                        controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.show()
-POST        /additional-activities-all-year                        controllers.aboutthetradinghistory.AdditionalActivitiesAllYearController.submit()
 
 GET         /additional-shops                                      controllers.aboutthetradinghistory.AdditionalShopsController.show()
 POST        /additional-shops                                      controllers.aboutthetradinghistory.AdditionalShopsController.submit()

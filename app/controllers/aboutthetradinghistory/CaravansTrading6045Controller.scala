@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,10 +120,7 @@ abstract class CaravansTrading6045Controller(
       .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
 
   private def getSavedAnswers(turnoverSections6045: Seq[TurnoverSection6045]): Seq[CaravansTrading6045] =
-    turnoverSections6045.map(section =>
-      val tradingPeriod = section.grossReceiptsCaravanFleetHire.fold(52)(_.tradingPeriod)
-      getSavedAnswer(section).getOrElse(CaravansTrading6045(tradingPeriod))
-    )
+    turnoverSections6045.map(section => getSavedAnswer(section).getOrElse(CaravansTrading6045()))
 
   private def formAction: Call =
     tradingPage match {

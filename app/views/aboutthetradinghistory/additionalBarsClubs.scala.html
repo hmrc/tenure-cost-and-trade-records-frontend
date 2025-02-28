@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,14 +38,19 @@
 
 @(form: Form[Seq[AdditionalBarsClubs]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-    @rowLabel(labelKey: String, hint: Option[String] = None) = {
-        <p class="govuk-body">
-            <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
-        </p>
-    @hint.map { hint => <p class="govuk-hint">@messages(hint)</p> }
-    }
+@tradingPeriodSeq = @{
+    request.sessionData.aboutTheTradingHistoryPartOne
+    .flatMap(_.turnoverSections6045).map(_.map(_.additionalShops.fold(0)(_.tradingPeriod))).getOrElse(Seq.empty)
+}
 
-@turnoverRow(formField: String, labelKey: String, hint: String = "",  finYearEnd: LocalDate ) = @{
+@rowLabel(labelKey: String, hint: Option[String] = None) = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+    </p>
+@hint.map { hint => <p class="govuk-hint">@messages(hint)</p> }
+}
+
+@turnoverRow(formField: String, labelKey: String, hint: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hint).filterNot(_.isEmpty)))
@@ -61,7 +66,6 @@
                         )
                     ).withFormField(form(formField))))))
 }
-
 
 
 @layout(
@@ -82,9 +86,6 @@
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.submit()) {
 
 
-
-
-
         <table class="hmrc-responsive-table govuk-!-width-full">
             <tbody>
                 <tr>
@@ -102,18 +103,8 @@
                                     content = Text(messages("additionalActivities.common.tradingPeriod"))
                                 ),
                                 TableRow(
-                                    content = HtmlContent(
-                                        govukInput(Input(
-                                            classes = "govuk-input--width-2",
-                                            attributes = Map(
-                                                "maxlength" -> "2",
-                                                "aria-label" -> accessibilityUtil.ariaBuilder("additionalActivities.common.tradingPeriod", finYearEnd)
-                                            ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.weeks"))
-                                            ))
-                                        ).withFormField(form(s"additionalBarsClubs[$idx].weeks")))
-                                    )
+                                    content = Text(s"${tradingPeriodSeq(idx)} ${messages("turnover.weeks")}"),
+                                    classes = "govuk-!-font-weight-bold"
                                 )
                             ),
                             turnoverRow(

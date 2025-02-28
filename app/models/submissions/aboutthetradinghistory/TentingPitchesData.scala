@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,13 @@
 
 package models.submissions.aboutthetradinghistory
 
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
-case class TentingPitchesAllYear(
-  tentingPitchesAllYear: AnswersYesNo,
-  weekOfPitchesUse: Option[Int]
+case class TentingPitchesData(
+  grossReceipts: Option[BigDecimal] = None,
+  numberOfPitches: Option[Int] = None
 )
 
-object TentingPitchesAllYear {
-  implicit val format: OFormat[TentingPitchesAllYear] = Json.format
+object TentingPitchesData {
+  implicit val format: OFormat[TentingPitchesData] = Json.format
 }

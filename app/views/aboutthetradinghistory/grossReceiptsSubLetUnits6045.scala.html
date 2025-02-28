@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,11 @@
 
 
 @(form: Form[Seq[GrossReceiptsSubLetUnits]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@tradingPeriodSeq = @{
+    request.sessionData.aboutTheTradingHistoryPartOne
+    .flatMap(_.turnoverSections6045).map(_.map(_.grossReceiptsLettingUnits.fold(0)(_.tradingPeriod))).getOrElse(Seq.empty)
+}
 
 @rowLabel(labelKey: String) = {
     <p class="govuk-body govuk-!-font-weight-bold">
@@ -105,25 +110,14 @@
                                     content = Text(messages("turnover.tradingPeriod"))
                                 ),
                                 TableRow(
-                                    content = HtmlContent(
-                                        govukInput(Input(
-                                            classes = "govuk-input--width-2",
-                                            attributes = Map(
-                                                "maxlength" -> "2",
-                                                "aria-label" -> accessibilityUtil.ariaBuilder("turnover.tradingPeriod", finYearEnd)
-                                            ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("turnover.weeks"))
-                                            ))
-                                        ).withFormField(form(s"turnover[$idx].weeks")))
-                                    )
+                                    content = Text(s"${tradingPeriodSeq(idx)} ${messages("turnover.weeks")}"),
+                                    classes = "govuk-!-font-weight-bold"
                                 )
                             ),
                             turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.lettingUnits.grossReceipts", finYearEnd),
                             Seq(
                                 TableRow(
                                     content = HtmlContent(numberOfUnits)
-
                                 ),
                                 TableRow(
                                     content = HtmlContent(

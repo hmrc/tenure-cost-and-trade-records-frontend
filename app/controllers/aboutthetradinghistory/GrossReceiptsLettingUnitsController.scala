@@ -53,7 +53,7 @@ class GrossReceiptsLettingUnitsController @Inject() (
       Ok(
         view(
           grossReceiptsLettingUnitsForm(years).fill(
-            turnoverSections6045.map(_.grossReceiptsLettingUnits getOrElse initialGrossReceiptsLettingUnits)
+            turnoverSections6045.map(_.grossReceiptsLettingUnits getOrElse GrossReceiptsLettingUnits())
           ),
           getBackLink
         )
@@ -94,16 +94,6 @@ class GrossReceiptsLettingUnitsController @Inject() (
     }
   }
 
-  private def initialGrossReceiptsLettingUnits(implicit
-    request: SessionRequest[AnyContent]
-  ): GrossReceiptsLettingUnits =
-    val tradingPeriod = request.sessionData.aboutTheTradingHistoryPartOne
-      .flatMap(_.otherHolidayAccommodation)
-      .flatMap(_.otherHolidayAccommodationDetails)
-      .flatMap(_.weeksOpen)
-      .getOrElse(52)
-    GrossReceiptsLettingUnits(tradingPeriod)
-
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
   )(implicit request: SessionRequest[AnyContent]): Future[Result] =
@@ -116,7 +106,7 @@ class GrossReceiptsLettingUnitsController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show().url
-      case _     => aboutthetradinghistory.routes.OtherHolidayAccommodationDetailsController.show().url
+      case _     => aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
     }
 
 }

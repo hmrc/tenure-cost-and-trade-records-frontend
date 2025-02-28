@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,6 @@ object CaravansTradingForm {
     messages: Messages
   ): Mapping[CaravansTrading6045] =
     mapping(
-      "weeks"         -> tradingPeriodWeeks(year),
       "grossReceipts" -> turnoverSalesMappingWithYear(s"turnover.6045.$combinedKey.grossReceipts", year),
       "vans"          -> nonNegativeNumberWithYear(s"$combinedKey.vans", year)
     )(CaravansTrading6045.apply)(o => Some(Tuple.fromProductTyped(o)))

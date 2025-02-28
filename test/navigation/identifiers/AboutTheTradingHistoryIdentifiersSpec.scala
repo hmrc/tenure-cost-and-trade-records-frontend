@@ -85,8 +85,6 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(PremisesCostsId.toString.equals("premisesCostsPage"))
     "Identifier for tenting Pitches On Site page" in
       assert(TentingPitchesOnSiteId.toString.equals("tentingPitchesOnSitePage"))
-    "Identifier for tenting Pitches All Year page" in
-      assert(TentingPitchesAllYearId.toString.equals("tentingPitchesAllYearPage"))
     "Identifier for pitches for caravans page" in
       assert(PitchesForCaravansId.toString.equals("pitchesForCaravansPage"))
     "Identifier for pitches for glamping  page" in
@@ -101,9 +99,6 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
     "Identifier for additional activities on site" in
       assert(AdditionalActivitiesOnSiteId.toString.equals("additionalActivitiesOnSitePage"))
 
-    "Identifier for additional activities all year" in
-      assert(AdditionalActivitiesAllYearId.toString.equals("additionalActivitiesAllYearPage"))
-
     "Identifier for additional activities shops" in
       assert(AdditionalShopsId.toString.equals("additionalShopsPage"))
 
@@ -117,9 +112,6 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for additional misc" in
       assert(AdditionalMiscId.toString.equals("additionalMiscPage"))
-
-    "Identifier for caravans open all year" in
-      assert(CaravansOpenAllYearId.toString.equals("caravansOpenAllYearPage"))
 
     "Identifier for gross receipts holiday unit page" in
       assert(GrossReceiptsHolidayUnitsId.toString.equals("grossReceiptsHolidayUnitsPage"))
@@ -181,8 +173,6 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(LowMarginFuelCardsDetailsId.toString.equals("lowMarginFuelCardsDetailsPage"))
     "Identifier for bunker fuel card details page" in
       assert(BunkerFuelCardsDetailsId.toString.equals("bunkerFuelCardsDetailsPage"))
-    "Identifier for other holiday accommodation details page" in
-      assert(OtherHolidayAccommodationDetailsId.toString.equals("otherHolidayAccommodationDetailsPage"))
     "Identifier for other CYA holiday accommodation details page" in
       assert(CheckYourAnswersOtherHolidayAccommodationId.toString.equals("checkYourAnswersOtherHolidayAccommodation"))
 
