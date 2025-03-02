@@ -16,22 +16,24 @@
 
 package views.downloadFORTypeForm
 
-import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm
-import models.submissions.downloadFORTypeForm.DownloadPDFReferenceNumber
-import org.scalatest.matchers.must.Matchers._
+import controllers.downloadFORTypeForm.routes
+import form.ReferenceNumberForm
+import models.submissions.ReferenceNumber
+import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[DownloadPDFReferenceNumber] {
+class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[ReferenceNumber] {
 
-  val messageKeyPrefix = "downloadPdfReferenceNumber"
+  val messageKeyPrefix = "referenceNumber"
 
-  override val form = DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm
+  override val form = ReferenceNumberForm.theForm
 
-  def createView = () => downloadPDFReferenceNumberView(form)(fakeRequest, messages)
+  def createView = () =>
+    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[DownloadPDFReferenceNumber]) =>
-    downloadPDFReferenceNumberView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[ReferenceNumber]) =>
+    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(fakeRequest, messages)
 
   "Download PDF reference number view" must {
 
@@ -39,7 +41,7 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Download
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "downloadPdfReferenceNumber"
+      "referenceNumber"
     )
 
     "has a link marked with back.link.label leading to the Login Page" in {
@@ -47,17 +49,17 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Download
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.LoginController.show.url
+      backlinkUrl shouldBe controllers.routes.Application.index.url
     }
 
     "paragraph text" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("downloadPdfReferenceNumber.p1")))
+      assert(doc.toString.contains(messages("referenceNumber.paragraph")))
     }
 
     "hint text" in {
       val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("hint.downloadPdfReferenceNumber")))
+      assert(doc.toString.contains(messages("hint.referenceNumber")))
     }
 
     "contain link for I do not have a reference number" in {

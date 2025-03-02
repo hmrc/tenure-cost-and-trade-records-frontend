@@ -16,17 +16,17 @@
 
 package form
 
-import form.downloadFORTypeForm.DownloadPDFReferenceNumberForm.downloadPDFReferenceNumberForm as theForm
-import models.submissions.downloadFORTypeForm.DownloadPDFReferenceNumber
+import ReferenceNumberForm.theForm as theForm
+import models.submissions.ReferenceNumber
 import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 
-class DownloadPDFReferenceNumberFormSpec extends AnyFlatSpec with Matchers with OptionValues:
+class ReferenceNumberFormSpec extends AnyFlatSpec with Matchers with OptionValues:
 
   it should "bind good data as expected" in {
     val data  = Map(
-      "downloadPdfReferenceNumber" -> "0123456789"
+      "referenceNumber" -> "0123456789"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
@@ -34,13 +34,13 @@ class DownloadPDFReferenceNumberFormSpec extends AnyFlatSpec with Matchers with 
   }
 
   it should "unbind good data as expected" in {
-    val referenceNumber = DownloadPDFReferenceNumber(
-      downloadPDFReferenceNumber = "0123456789"
+    val referenceNumber = ReferenceNumber(
+      value = "0123456789"
     )
     val filled          = theForm.fill(referenceNumber)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "downloadPdfReferenceNumber" -> "0123456789"
+      "referenceNumber" -> "0123456789"
     )
   }
 
@@ -48,5 +48,5 @@ class DownloadPDFReferenceNumberFormSpec extends AnyFlatSpec with Matchers with 
     val bound = theForm.bind(Map.empty)
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound.error("downloadPdfReferenceNumber").value.message mustBe "error.downloadPdfReferenceNumber.required"
+    bound.error("referenceNumber").value.message mustBe "error.referenceNumber.required"
   }

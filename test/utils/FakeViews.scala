@@ -25,7 +25,7 @@ import views.html.aboutyouandtheproperty._
 import views.html.accommodation._
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
 import views.html.connectiontoproperty._
-import views.html.downloadFORTypeForm.{downloadPDF, downloadPDFReferenceNumber}
+import views.html.downloadFORTypeForm.downloadPDF
 import views.html.error.{JsonParseError, error}
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.notconnected._
@@ -57,7 +57,7 @@ trait FakeViews { this: Injecting =>
   lazy val connectionToThePropertyView: connectionToTheProperty                                   = inject[connectionToTheProperty]
   lazy val editAddressView: editAddress                                                           = inject[editAddress]
   lazy val requestReferenceAddressView: requestReferenceNumber                                    = inject[requestReferenceNumber]
-  lazy val downloadPDFReferenceNumberView: downloadPDFReferenceNumber                             = inject[downloadPDFReferenceNumber]
+  lazy val referenceNumberView: referenceNumber                                                   = inject[referenceNumber]
   lazy val downloadPDFView: downloadPDF                                                           = inject[downloadPDF]
   lazy val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails         =
     inject[requestReferenceNumberContactDetails]

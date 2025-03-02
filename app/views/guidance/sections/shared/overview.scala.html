@@ -1,0 +1,56 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@(govukInsetText : GovukInsetText)(implicit request: Request[AnyContent], messages: Messages)
+
+<h2 class="govuk-heading-m">@messages("guidance.contents.overview")</h2>
+
+<p class="govuk-body-s">
+    The Valuation Office Agency (VOA) is responsible for valuing every non-domestic property in England
+    and Wales. To do this, the VOA sends forms of return to non-domestic premises which must be
+    completed by the business or organisation operating from the property.
+</p>
+
+<p class="govuk-body-s">
+    People who should complete these declarations include:
+</p>
+<ul class="govuk-body-s govuk-list govuk-list--bullet">
+    <li>businesses or organisations who own and occupy the property</li>
+    <li>businesses or organisations who occupy the property under a lease or agreement</li>
+    <li>landlords of a vacant property where no lease or agreement is in place</li>
+</ul>
+
+<p class="govuk-body-s">
+    You can also ask third parties to complete the declaration on your behalf.
+</p>
+
+
+<p class="govuk-body-s">
+    Declarations are divided into different sections. The amount of information you need to provide in
+    each section will depend on:
+</p>
+<ul class="govuk-body-s govuk-list govuk-list--bullet">
+    <li>whether your business or organisation owns or rents the property</li>
+    <li>the complexity of your business or organisation</li>
+</ul>
+
+@govukInsetText(InsetText(
+    content = HtmlContent(
+        """<p class="govuk-body-s"> You do not have to complete your declaration in one sitting. Select <b>Save as draft</b> to create a password so you can return later to complete your declaration."""
+    ),
+))

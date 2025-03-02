@@ -145,7 +145,7 @@ start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
 start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers%20form&body=Please%20email%20us%20your%20reference%20number,%20email%20address%20and/or%20telephone%20number%20only.%20If%20we%20require%20any%20further%20information%20we%20will%20contact%20you%20in%20due%20course." target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
 start.subheading5 = Alternative formats
-start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href={0} class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
+start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href="{0}" class="govuk-link">download a PDF version</a> of this declaration which you can complete and return to the VOA.
 start.subheading6 = Explore the topic
 start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales.
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
@@ -226,16 +226,21 @@ label.requestReferenceNumberContactDetailsFullName = Enw llawn
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Gwybodaeth ychwanegol (dewisol)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
-# DOWNLOAD FORM SECTION
-#######################
-
-# DOWNLOAD PDF REFERENCE NUMBER
+# REFERENCE NUMBER
 ###############################
-downloadPdfReferenceNumber.heading = Beth yw’ch cyfeirnod?
-downloadPdfReferenceNumber.p1 = Bydd angen y rhif cyfeirnod arnoch o’r llythyr a gawsoch gan y VOA.
-label.downloadPdfReferenceNumber = Cyfeirnod
-error.downloadPdfReferenceNumber.required = Enter your reference number
-hint.downloadPdfReferenceNumber = Er enghraifft, 10000001/101.
+referenceNumber.heading = Beth yw’ch cyfeirnod?
+referenceNumber.paragraph = Bydd angen y rhif cyfeirnod arnoch o’r llythyr a gawsoch gan y VOA.
+label.referenceNumber = Cyfeirnod
+error.referenceNumber.required = Enter your reference number
+hint.referenceNumber = Er enghraifft, 10000001/101.
+
+# GUIDANCE
+###############################
+guidance.section = Guidance
+guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
+guidance.subheading = Find out which parts of the declaration apply to your business, and the information you’ll need to find to complete your declaration.
+guidance.contents = Contents
+guidance.contents.overview = Overview
 
 # DOWNLOAD PDF
 ##############

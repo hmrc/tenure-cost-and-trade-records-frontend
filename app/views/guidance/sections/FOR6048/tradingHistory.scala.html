@@ -1,0 +1,59 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@()(implicit request: Request[AnyContent], messages: Messages)
+
+<h2 id="trading-history" class="govuk-heading-m">@messages("label.section.aboutYourTradingHistory")</h2>
+
+
+<h3 class="govuk-heading-s">What you'll be asked</h3>
+<p class="govuk-body-s">How much:</p>
+<ul class="govuk-body-s govuk-list govuk-list--bullet">
+    <li>revenue your self-catering holiday accommodation business generates</li>
+    <li>it costs to operate your business</li>
+</ul>
+
+
+<h3 class="govuk-heading-s">What you'll need</h3>
+
+<p class="govuk-body-s">
+ <b>If your business has occupied the property for longer than 3 years</b><br>
+ You'll need trading figures from the 3 most recent financial years.
+</p>
+
+<p class="govuk-body-s">
+    <b>If your business has occupied the property for less than 3 years</b><br>
+    You’ll be asked for figures from all completed financial years since you occupied the property.
+</p>
+
+<p class="govuk-body-s">
+    You’ll only be asked for figures from the categories listed here. If any information we need does not
+    apply to your property, enter the number 0.
+</p>
+<ul class="govuk-body-s govuk-list govuk-list--bullet">
+    <li><b>Accounting information</b><br/>Your VAT registration status and your financial year end</li>
+    <li><b>Income</b><br/>Including all letting income and income from providing services such as electricity, laundry or meals</li>
+    <li><b>Fixed costs</b><br/>Details of costs such as insurance, business rates or rent</li>
+    <li><b>Cost of sales</b><br/>Details of any costs incurred</li>
+    <li><b>Accounting costs</b><br/>Details of any wages, National Insurance, depreciation, accountancy fees and bank charges</li>
+    <li><b>Administrative costs</b><br/>Including subscriptions, telephone and broadband, booking agency fees, advertising and printing</li>
+    <li><b>Operational costs</b><br/>Including any utilities, laundry and cleaning, repairs and maintenance, TV licences, travelling expenses and other costs</li>
+</ul>
+
+<h3 class="govuk-heading-s">Important dates</h3>
+<p class="govuk-body-s">
+    When your financial year ends.
+</p>
