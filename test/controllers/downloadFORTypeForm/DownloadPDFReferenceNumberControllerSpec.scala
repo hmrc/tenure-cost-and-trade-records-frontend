@@ -36,21 +36,21 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
         status(result)            shouldBe Status.OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        content                     should include("downloadPdfReferenceNumber.heading")
+        content                     should include("referenceNumber.heading")
       }
     }
     "handling POST /" should {
       "reply 400 with error message when downloadPdfReferenceNumber is missing" in new ControllerAndConnectorFixture {
         val result = controller.submit(fakePostRequest)
         status(result)        shouldBe BAD_REQUEST
-        contentAsString(result) should include("error.downloadPdfReferenceNumber.required")
+        contentAsString(result) should include("error.referenceNumber.required")
       }
       "reply 303 redirect to the 'Download PDF' page when downloadPdfReferenceNumber is unknown" in new ControllerAndConnectorFixture {
         when(connector.retrieveFORType(any[String], any[HeaderCarrier]))
           .thenReturn(failed(new Exception("cannot determine forType")))
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "downloadPdfReferenceNumber" -> "unknown"
+            "referenceNumber" -> "unknown"
           )
         )
         status(result) shouldBe SEE_OTHER
@@ -62,7 +62,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
         when(connector.retrieveFORType(any[String], any[HeaderCarrier])).thenReturn(successful("FOR6010"))
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
-            "downloadPdfReferenceNumber" -> "99996010004" // this resembles a good one!
+            "referenceNumber" -> "99996010004" // this resembles a good one!
           )
         )
         status(result) shouldBe SEE_OTHER
@@ -79,6 +79,6 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
     val givenReferenceNumber = captor[String]
     val controller           = new DownloadPDFReferenceNumberController(
       stubMessagesControllerComponents(),
-      downloadPDFReferenceNumberView,
-      connector
+      connector,
+      referenceNumberView
     )
