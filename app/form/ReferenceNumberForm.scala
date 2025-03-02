@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package form.downloadFORTypeForm
+package form
 
-import models.submissions.downloadFORTypeForm.DownloadPDFReferenceNumber
+import models.submissions.ReferenceNumber
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-object DownloadPDFReferenceNumberForm {
+object ReferenceNumberForm {
 
-  val downloadPDFReferenceNumberForm = Form(
+  val theForm = Form[ReferenceNumber](
     mapping(
-      "downloadPdfReferenceNumber" ->
+      "referenceNumber" ->
         default(text, "").verifying(
-          nonEmpty(errorMessage = "error.downloadPdfReferenceNumber.required")
+          nonEmpty(errorMessage = "error.referenceNumber.required")
         )
-    )(DownloadPDFReferenceNumber.apply)(o => Some(o.downloadPDFReferenceNumber))
+    )(ReferenceNumber.apply)(ReferenceNumber.unapply)
   )
 }

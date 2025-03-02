@@ -19,7 +19,7 @@ package utils
 import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, *}
+import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 import models.submissions.aboutyouandtheproperty.*
@@ -27,7 +27,8 @@ import models.submissions.accommodation.*
 import models.submissions.additionalinformation.*
 import models.submissions.common.*
 import models.submissions.connectiontoproperty.*
-import models.submissions.downloadFORTypeForm.{DownloadPDF, DownloadPDFDetails, DownloadPDFReferenceNumber}
+import models.submissions.downloadFORTypeForm.*
+import models.submissions.ReferenceNumber
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
@@ -1837,7 +1838,7 @@ trait FakeObjects {
   )
 
   val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(
-    Some(DownloadPDFReferenceNumber(referenceNumber)),
+    Some(ReferenceNumber(referenceNumber)),
     Some(DownloadPDF(FOR6010.toString))
   )
 
