@@ -23,7 +23,6 @@ import views.html.guidance.guidancePage as GuidancePageView
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class GuidancePageController @Inject() (
@@ -33,7 +32,9 @@ class GuidancePageController @Inject() (
     extends FrontendController(mcc):
 
   def show(forType: String): Action[AnyContent] = Action { implicit request =>
-    ForType.find(forType).fold(NotFound(s"Invalid forType: $forType")) { tpe =>
-      Ok(guidancePageView(tpe, request.session.get("referenceNumber")))
-    }
+    ForType
+      .find(forType)
+      .fold(NotFound(s"Invalid forType: $forType")) { tpe =>
+        Ok(guidancePageView(tpe, request.session.get("referenceNumber")))
+      }
   }
