@@ -339,7 +339,7 @@
      if(forType == FOR6048) { session.aboutTheTradingHistoryPartOne.flatMap(_.areYouVATRegistered)} else {session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)},
      cannotStartYet = {
       if(forType == FOR6048) {
-       sectionLettingHistoryCompleted.isEmpty
+       section4AccommodationCompleted.isEmpty
       } else {
        section2Completed.isEmpty
       }

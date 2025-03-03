@@ -120,7 +120,7 @@ object Helpers:
       // regardless of meeting lettings criteria, add the following entries
 
       val isYearlyAvailable = LettingHistory.intendedLettingsIsYearlyAvailable(request.sessionData)
-    
+
       if isYearlyAvailable.getOrElse(false)
       then
         data += SummaryEntry(
