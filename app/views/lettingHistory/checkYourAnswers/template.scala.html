@@ -94,24 +94,38 @@
     <h2 id="online-advertising" class="govuk-heading-m govuk-!-static-margin-top-9">
     @messages("lettingHistory.checkYourAnswers.onlineAdvertising.heading")
     </h2>
-    @includes.cards.header(
-        govukSummaryList,
-        messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.question",
-        valueAsBoolean = LettingHistory.hasEntitiesOf(kind = "onlineAdvertising", request.sessionData),
-        changeAction = routes.HasOnlineAdvertisingController.show.withFromCheckYourAnswer(fragment = "online-advertising")
-    )
-    @includes.cards.list(
-        govukSummaryList,
-        cardsType = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardsType"),
-        cardsData = onlineAdvertisingCardsData(fragment = "online-advertising"),
-    )
-    @includes.cards.footer(
-        govukSummaryList,
-        messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.added",
-        valueAsInt = LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData).getOrElse(0),
-        addActionMessage = messages("lettingHistory.checkYourAnswers.onlineAdvertising.addOneMore"),
-        addActionCall = routes.AdvertisingDetailController.show(index = None).withFromCheckYourAnswer(fragment = "online-advertising")
-    )
+    @if(LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData) == Some(0)) {
+        @includes.cards.header(
+            govukSummaryList,
+            messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.question",
+            valueAsBoolean = LettingHistory.hasEntitiesOf(kind = "onlineAdvertising", request.sessionData),
+            changeAction = routes.HasOnlineAdvertisingController.show.withFromCheckYourAnswer(fragment = "online-advertising")
+        )
+        @includes.cards.list(
+            govukSummaryList,
+            cardsType = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardsType"),
+            cardsData = onlineAdvertisingCardsData(fragment = "online-advertising"),
+        )
+    } else {
+        @includes.cards.header(
+            govukSummaryList,
+            messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.question",
+            valueAsBoolean = LettingHistory.hasEntitiesOf(kind = "onlineAdvertising", request.sessionData),
+            changeAction = routes.HasOnlineAdvertisingController.show.withFromCheckYourAnswer(fragment = "online-advertising")
+        )
+        @includes.cards.list(
+            govukSummaryList,
+            cardsType = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardsType"),
+            cardsData = onlineAdvertisingCardsData(fragment = "online-advertising"),
+        )
+        @includes.cards.footer(
+            govukSummaryList,
+            messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.added",
+            valueAsInt = LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData).getOrElse(0),
+            addActionMessage = messages("lettingHistory.checkYourAnswers.onlineAdvertising.addOneMore"),
+            addActionCall = routes.AdvertisingDetailController.show(index = None).withFromCheckYourAnswer(fragment = "online-advertising")
+        )
+    }
 
     <div class="govuk-heading-m govuk-!-static-margin-bottom-9"></div>
 

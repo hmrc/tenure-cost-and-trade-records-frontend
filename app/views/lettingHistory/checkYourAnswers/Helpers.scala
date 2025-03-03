@@ -118,18 +118,31 @@ object Helpers:
         )
 
       // regardless of meeting lettings criteria, add the following entries
-      data ++= Seq(
-        SummaryEntry(
+
+      val isYearlyAvailable = LettingHistory.intendedLettingsIsYearlyAvailable(request.sessionData)
+    
+      if isYearlyAvailable.getOrElse(false)
+      then
+        data += SummaryEntry(
           key = messages("lettingHistory.checkYourAnswers.intendedLettings.isYearlyAvailable"),
-          maybeValue = mapBool2String(LettingHistory.intendedLettingsIsYearlyAvailable(request.sessionData)),
+          maybeValue = mapBool2String(isYearlyAvailable),
           changeAction = routes.IsYearlyAvailableController.show.withFromCheckYourAnswer(fragment)
-        ),
-        SummaryEntry(
-          key = messages("lettingHistory.checkYourAnswers.intendedLettings.tradingPeriod"),
-          maybeValue = mapPeriod2String(LettingHistory.intendedLettingsTradingPeriod(request.sessionData), dateUtil),
-          changeAction = routes.TradingSeasonController.show.withFromCheckYourAnswer(fragment)
         )
-      )
+
+      if isYearlyAvailable == Some(false)
+      then
+        data ++= Seq(
+          SummaryEntry(
+            key = messages("lettingHistory.checkYourAnswers.intendedLettings.isYearlyAvailable"),
+            maybeValue = mapBool2String(LettingHistory.intendedLettingsIsYearlyAvailable(request.sessionData)),
+            changeAction = routes.IsYearlyAvailableController.show.withFromCheckYourAnswer(fragment)
+          ),
+          SummaryEntry(
+            key = messages("lettingHistory.checkYourAnswers.intendedLettings.tradingPeriod"),
+            maybeValue = mapPeriod2String(LettingHistory.intendedLettingsTradingPeriod(request.sessionData), dateUtil),
+            changeAction = routes.TradingSeasonController.show.withFromCheckYourAnswer(fragment)
+          )
+        )
       data.toSeq
     else data.toSeq
   }
