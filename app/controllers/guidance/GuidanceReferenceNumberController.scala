@@ -16,7 +16,6 @@
 
 package controllers.guidance
 
-import play.api.Logging
 import connectors.BackendConnector
 import form.ReferenceNumberForm.theForm
 import models.submissions.ReferenceNumber
@@ -34,12 +33,14 @@ class GuidanceReferenceNumberController @Inject() (
   connector: BackendConnector,
   referenceNumberView: ReferenceNumberView
 )(using ec: ExecutionContext)
-    extends FrontendController(mcc)
-    with Logging:
+    extends FrontendController(mcc):
 
   def show: Action[AnyContent] = Action { implicit request =>
     val eventuallyFilledForm =
-      request.session.get("referenceNumber").fold(theForm)(value => theForm.fill(ReferenceNumber(value)))
+      request.session
+        .get("referenceNumber")
+        .fold(theForm)(value => theForm.fill(ReferenceNumber(value)))
+
     Ok(referenceNumberView(eventuallyFilledForm, call = routes.GuidanceReferenceNumberController.submit))
   }
 
@@ -61,11 +62,8 @@ class GuidanceReferenceNumberController @Inject() (
                 request.session + ("referenceNumber" -> referenceNumber.value)
               )
             }
-            .recover { case _ =>
-              logger.error(s"Failed to retrieve a FOR Type for ${referenceNumber.value}")
-              Redirect(
-                controllers.guidance.routes.GuidancePageController.show("invalidType")
-              )
+            .recover { case ex =>
+              InternalServerError(ex.getMessage)
             }
       )
   }
