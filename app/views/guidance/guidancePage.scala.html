@@ -1,0 +1,82 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.ForType
+@import models.ForType._
+@import controllers.guidance.GuidancePage
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+
+@this(layout: Layout, govukInsetText : GovukInsetText)
+
+@(forType: ForType, referenceNumber: Option[String])(implicit request: Request[AnyContent], messages: Messages)
+
+
+@guidancePage = @{
+    forType match {
+        case FOR6010 => {
+            GuidancePage(
+                contentsItems = Seq.empty,
+                sections = Seq.empty,
+                startCall = controllers.routes.LoginController.show
+            )
+        }
+        case FOR6048 => {
+            GuidancePage(
+                contentsItems = Seq(
+                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
+                    ("#letting-history"            , "label.section.lettingHistory"),
+                    ("#accomodation-details"       , "label.section.accommodation"),
+                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
+                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information"     , "label.section.additionalInformation"),
+                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                ),
+                sections = Seq(
+                    () =>  sections.FOR6048.connectionToTheProperty(),
+                    () =>  sections.FOR6048.aboutYouAndTheProperty(),
+                    () =>  sections.FOR6048.lettingHistory(),
+                    () =>  sections.FOR6048.accommodationDetails(),
+                    () =>  sections.FOR6048.tradingHistory(),
+                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
+                    () =>  sections.shared.additionalInformation()
+                ),
+                startCall = controllers.lettingHistory.routes.HasPermanentResidentsController.show
+            )
+        }
+        // add more cases here ...
+    }
+}
+
+@layout(
+    showSection = true,
+    sectionName = messages("guidance.section"),
+    pageHeading = messages(s"guidance.$forType.heading"),
+    backLinkUrl = controllers.guidance.routes.GuidanceReferenceNumberController.show.url
+) {
+
+    <p class="govuk-body">@messages("guidance.subheading")</p>
+
+    @sections.shared.contentsList(items = guidancePage.contentsItems)
+
+    @sections.shared.overview(govukInsetText)
+
+    @for(section <- guidancePage.sections) { @section.apply() }
+
+    @sections.shared.startingDeclaration(startCall = guidancePage.startCall)
+
+}

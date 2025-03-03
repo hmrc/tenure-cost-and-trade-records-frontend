@@ -19,62 +19,59 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 
-@this(layout: Layout,
-        govukButton: GovukButton
-)
+@this(layout: Layout, govukButton: GovukButton)
 
-@()(implicit request: Request[?], messages: Messages)
+@()(implicit request: Request[AnyContent], messages: Messages)
+
+@htmlOf(txt: String) = @{ HtmlContent(txt).asHtml }
 
 @layout(
- pageHeading = messages("start.page.heading"),
- showBanner = true,
- showAccountInfo = false,
- withTimeoutDialog = false
+    pageHeading = messages("start.page.heading"),
+    showBanner = true,
+    showAccountInfo = false,
+    withTimeoutDialog = false
 ) {
 
- <h2 class="govuk-heading-m">@{messages("start.subheading")}</h2>
+    <h2 class="govuk-heading-m">@{messages("start.subheading")}</h2>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@{messages("start.item1")}</li>
+        <li>@{messages("start.item2")}</li>
+    </ul>
 
- <ul class="govuk-list govuk-list--bullet">
-  <li>@{messages("start.item1")}</li>
-  <li>@{messages("start.item2")}</li>
-  <li>@{messages("start.item3")}</li>
- </ul>
 
- <h2 class="govuk-heading-m">@{messages("start.subheading2")}</h2>
+    <h2 class="govuk-heading-m">@{messages("start.subheading2")}</h2>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@{messages("start.item3")}</li>
+        <li>@{messages("start.item4")}</li>
+        <li>@{messages("start.item5")}</li>
+        <li>@{messages("start.item6")}</li>
+    </ul>
+    <p class="govuk-body"><a href="@{controllers.guidance.routes.GuidanceReferenceNumberController.show}" class="govuk-link">@{messages("start.link1")}</a>  @{messages("start.desc1")}</p>
+    <p class="govuk-body">@{messages("start.desc2")}</p>
 
- <ul class="govuk-list govuk-list--bullet">
-  <li>@{messages("start.item4")}</li>
-  <li>@{messages("start.item5")}</li>
-  <li>@{messages("start.item6")}</li>
- </ul>
 
- <p class="govuk-body">@{messages("start.desc3")}</p>
+    <h2 class="govuk-heading-m">@{messages("start.subheading3")}</h2>
+    <p class="govuk-body">@{messages("start.desc3")}</p>
 
- <p class="govuk-body">@{messages("start.desc4")}</p>
+    <h2 class="govuk-heading-m">@{messages("start.subheading4")}</h2>
+    <p class="govuk-body govuk-!-margin-bottom-1">@messages("start.telephone")</p>
+    <p class="govuk-body govuk-!-margin-bottom-1">@messages("start.openingDays")</p>
+    <p class="govuk-body">@{htmlOf(messages("start.email"))}</p>
 
- @govukButton(
-  Button(
-   isStartButton = true,
-   content = Text(messages("start.button")),
-   href = Some(routes.LoginController.show.url)
-  )
- )
+    <h2 class="govuk-heading-m">@{messages("start.subheading5")}</h2>
+    <p class="govuk-body">@{htmlOf(messages("start.desc5", controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url))}</p>
 
- <h2 class="govuk-heading-m">@{messages("start.subheading3")}</h2>
-
- <p class="govuk-body govuk-!-margin-bottom-1">@messages("start.telephone")</p>
- <p class="govuk-body govuk-!-margin-bottom-1">@messages("start.openingDays")</p>
- <p class="govuk-body">@{HtmlContent(messages("start.email")).asHtml}</p>
-
- <h2 class="govuk-heading-m">@{messages("start.subheading4")}</h2>
-
- <p class="govuk-body">@{HtmlContent(messages("start.desc5", controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url)).asHtml}</p>
-
- <h2 class="govuk-heading-m">@{messages("start.subheading5")}</h2>
-
- <p class="govuk-body">@{HtmlContent(messages("start.desc6")).asHtml}</p>
- <p class="govuk-body">@{HtmlContent(messages("start.desc7")).asHtml}</p>
- <p class="govuk-body">@{HtmlContent(messages("start.desc8")).asHtml}</p>
+    @govukButton(
+        Button(
+            isStartButton = true,
+            content = Text(messages("start.button")),
+            href = Some(routes.LoginController.show.url)
+        )
+    )
+    <h2 class="govuk-heading-m">@{messages("start.subheading6")}</h2>
+    <p class="govuk-body">@{htmlOf(messages("start.desc6"))}</p>
+    <p class="govuk-body">@{htmlOf(messages("start.desc7"))}</p>
+    <p class="govuk-body">@{htmlOf(messages("start.desc8"))}</p>
 
 }
 
