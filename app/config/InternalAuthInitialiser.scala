@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,14 @@
 package config
 
 import models.Done
+import play.api.http.Status.{CREATED, OK}
 import play.api.libs.json.Json
 import play.api.libs.ws.writeableOf_JsValue
 import play.api.{Configuration, Logging}
+import uk.gov.hmrc.http.HeaderNames.authorisation
 import uk.gov.hmrc.http.HttpReads.Implicits.readRaw
 import uk.gov.hmrc.http.client.HttpClientV2
-import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.duration.DurationInt
@@ -40,22 +42,18 @@ class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenIni
 @Singleton
 class InternalAuthTokenInitialiserImpl @Inject() (
   configuration: Configuration,
-  httpClient: HttpClientV2
+  httpClientV2: HttpClientV2
 )(implicit ec: ExecutionContext)
     extends InternalAuthTokenInitialiser
     with Logging {
 
-  private val internalAuthService: Service =
-    configuration.get[Service]("microservice.services.internal-auth")
+  private val internalAuthService: Service = configuration.get[Service]("microservice.services.internal-auth")
+  private val internalAuthToken            = configuration.get[String]("internalAuthToken")
+  private val appName                      = configuration.get[String]("appName")
+  private val tokenURL                     = url"${internalAuthService.baseUrl}/test-only/token"
+  private val emptyHeaderCarrier           = HeaderCarrier()
 
-  private val internalAuthToken: String =
-    configuration.get[String]("internalAuthToken")
-
-  private val appName: String =
-    configuration.get[String]("appName")
-
-  override val initialised: Future[Done] =
-    ensureAuthToken()
+  override val initialised: Future[Done] = ensureAuthToken()
 
   Await.result(initialised, 30.seconds)
 
@@ -72,8 +70,8 @@ class InternalAuthTokenInitialiserImpl @Inject() (
   private def createClientAuthToken(): Future[Done] = {
     logger.info("Initialising auth token")
 
-    httpClient
-      .post(url"${internalAuthService.baseUrl}/test-only/token")(HeaderCarrier())
+    httpClientV2
+      .post(tokenURL)(emptyHeaderCarrier)
       .withBody(
         Json.obj(
           "token"       -> internalAuthToken,
@@ -87,9 +85,9 @@ class InternalAuthTokenInitialiserImpl @Inject() (
           )
         )
       )
-      .execute
+      .execute[HttpResponse]
       .flatMap { response =>
-        if (response.status == 201) {
+        if (response.status == CREATED) {
           logger.info("Auth token initialised")
           Future.successful(Done)
         } else {
@@ -99,9 +97,10 @@ class InternalAuthTokenInitialiserImpl @Inject() (
   }
 
   private def authTokenIsValid(): Future[Boolean] =
-    httpClient
-      .get(url"${internalAuthService.baseUrl}/test-only/token")(HeaderCarrier())
-      .setHeader("Authorization" -> internalAuthToken)
-      .execute
-      .map(_.status == 200)
+    httpClientV2
+      .get(tokenURL)(emptyHeaderCarrier)
+      .setHeader(authorisation -> internalAuthToken)
+      .execute[HttpResponse]
+      .map(_.status == OK)
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,12 +22,12 @@ import connectors.{Audit, SubmissionConnector}
 import models.submissions.RequestReferenceNumberSubmission
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
-import play.api.test.Helpers._
-import uk.gov.hmrc.http.HeaderCarrier
+import play.api.test.Helpers.*
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
-import scala.language.reflectiveCalls
 
+import scala.language.reflectiveCalls
 import scala.concurrent.Future
 
 class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec {
@@ -99,13 +99,16 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
           mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
             any[HeaderCarrier]
           )
-        ).thenReturn(Future.successful(()))
+        ).thenReturn(Future.successful(HttpResponse(CREATED)))
+
         val result = controller.submit()(fakeRequest)
+
         status(result) shouldBe Status.SEE_OTHER
+
         header(
           "Location",
           result
-        ).value        shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+        ).value shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
           .confirmation()
           .url
       }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,11 @@ import models.AddressLookup
 import play.api.Logging
 import play.api.i18n.Lang
 import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.JsonBodyWritables.writeableOf_JsValue
 import play.api.mvc.Call
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
+import uk.gov.hmrc.http.HttpReads.Implicits.*
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import javax.inject.Inject
@@ -32,48 +35,51 @@ class AddressLookupConnector @Inject() (
   appConfig: AppConfig,
   servicesConfig: ServicesConfig,
   addressLookupConfig: AddressLookupConfig,
-  http: HttpClient
+  httpClientV2: HttpClientV2
 )(implicit executionContext: ExecutionContext)
     extends Logging {
 
-  private val serviceUrl                                                                                            = servicesConfig.baseUrl("address-lookup-frontend")
-  def initialise(call: Call, from: String = "")(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
+  private val serviceUrl        = servicesConfig.baseUrl("address-lookup-frontend")
+  private val hostUrl           = appConfig.tctrFrontendUrl
+  private val addressLookupURL  = url"$serviceUrl/api/v2/init"
+  private val getAddressByIdUrl = s"$serviceUrl/api/confirmed?id="
+  private val feedbackUrl       = s"$hostUrl/send-trade-and-cost-information/feedback"
 
-    lazy val hostUrl     = appConfig.tctrFrontendUrl
-    lazy val continueUrl = from match {
+  def initialise(call: Call, from: String = "")(implicit hc: HeaderCarrier, language: Lang): Future[Option[String]] = {
+    val continueUrl = from match {
       case "CYA" => hostUrl + call.url + "?from=CYA"
       case "TL"  => hostUrl + call.url + "?from=TL"
       case _     => hostUrl + call.url
     }
 
-    lazy val feedbackUrl = s"$hostUrl/send-trade-and-cost-information/feedback"
+    val addressConfig = Json.toJson(addressLookupConfig.config(continueUrl = continueUrl, feedbackUrl = feedbackUrl))
 
-    val addressLookupUrl = s"$serviceUrl/api/v2/init"
-    val addressConfig    = Json.toJson(addressLookupConfig.config(continueUrl = continueUrl, feedbackUrl = feedbackUrl))
-    http
-      .POST[JsValue, HttpResponse](addressLookupUrl, body = addressConfig, Seq.empty)
+    httpClientV2
+      .post(addressLookupURL)
+      .withBody(addressConfig)
+      .execute[HttpResponse]
       .map { response =>
         response.status match {
           case 202   =>
             Some(
               response
                 .header(key = "Location")
-                .getOrElse(s"[AddressLookupConnector][initialise] - Failed to obtain location from $addressLookupUrl")
+                .getOrElse(s"[AddressLookupConnector][initialise] - Failed to obtain location from $addressLookupURL")
             )
           case other =>
-            logger.warn(s"[AddressLookupConnector][initialise] - received HTTP status $other from $addressLookupUrl")
+            logger.warn(s"[AddressLookupConnector][initialise] - received HTTP status $other from $addressLookupURL")
             None
         }
       }
       .recover { case e: Exception =>
-        logger.warn(s"[AddressLookupConnector][initialise] - connection to $addressLookupUrl failed", e)
+        logger.warn(s"[AddressLookupConnector][initialise] - connection to $addressLookupURL failed", e)
         None
       }
   }
 
-  def getAddress(id: String)(implicit hc: HeaderCarrier): Future[AddressLookup] = {
+  def getAddress(id: String)(implicit hc: HeaderCarrier): Future[AddressLookup] =
+    httpClientV2
+      .get(url"$getAddressByIdUrl$id")
+      .execute[AddressLookup]
 
-    val getAddressUrl = s"$serviceUrl/api/confirmed?id=$id"
-    http.GET[AddressLookup](getAddressUrl, Seq.empty, Seq.empty)
-  }
 }
