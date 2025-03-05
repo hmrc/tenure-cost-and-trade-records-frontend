@@ -23,8 +23,12 @@ sealed trait TypeOfIncome extends NamedEnum {
   override def key: String = "typeOfIncome"
 }
 
-object TypeConcessionOrFranchise extends TypeOfIncome {
-  override def name: String = "typeConcessionOrFranchise"
+object TypeFranchise extends TypeOfIncome {
+  override def name: String = "typeFranchise"
+}
+
+object TypeConcession extends TypeOfIncome {
+  override def name: String = "typeConcession"
 }
 
 object TypeLetting extends TypeOfIncome {
@@ -35,7 +39,8 @@ object TypeOfIncome extends NamedEnumSupport[TypeOfIncome] {
   implicit val format: Format[TypeOfIncome] = EnumFormat(TypeOfIncome)
 
   override def all: Seq[TypeOfIncome] = List(
-    TypeConcessionOrFranchise,
+    TypeFranchise,
+    TypeConcession,
     TypeLetting
   )
 

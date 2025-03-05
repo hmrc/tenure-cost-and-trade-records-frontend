@@ -27,18 +27,18 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class LettingTypeRentControllerSpec extends TestBaseSpec {
+class RentalIncomeRentControllerSpec extends TestBaseSpec {
 
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
   val mockAudit: Audit                       = mock[Audit]
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
   ) =
-    new LettingTypeRentController(
+    new RentalIncomeRentController(
       stubMessagesControllerComponents(),
       mockAudit,
       mockAboutFranchisesOrLettingsNavigator,
-      lettingTypeRentView,
+      rentalIncomeRentView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
@@ -89,10 +89,26 @@ class LettingTypeRentControllerSpec extends TestBaseSpec {
       content should include("/check-your-answers-about-franchise-or-lettings")
     }
 
-    "render a correct back link to letting type details if no query parameters in the url " in {
-      val result  = controller().show(0)(fakeRequest)
+    "render a correct back link to franchise type details if no query parameters in the url for 6010 " in {
+      // franchise is on index 0
+      val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010and6016))
+      val result         = controller6010.show(0)(fakeRequest)
+      val content        = contentAsString(result)
+      content should include("/franchise-type-details?idx=0")
+    }
+    "render a correct back link to letting type details if no query parameters in the url for 6010 " in {
+      // letting on index 1
+      val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010and6016))
+      val result         = controller6010.show(1)(fakeRequest)
+      val content        = contentAsString(result)
+      content should include("/letting-type-details?idx=1")
+    }
+
+    "render a correct back link to letting type details if no query parameters in the url for 6045 " in {
+      // letting on index 1
+      val result  = controller().show(1)(fakeRequest)
       val content = contentAsString(result)
-      content should include("/letting-type-details?idx=0")
+      content should include("/letting-type-details?idx=1")
     }
   }
 

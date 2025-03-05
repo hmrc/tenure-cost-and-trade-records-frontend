@@ -16,7 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm
+import form.aboutfranchisesorlettings.IncomeRecordRentForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
 import org.scalatest.matchers.must.Matchers._
@@ -30,7 +30,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
   val messageKeyPrefix = "lettingOtherPartOfPropertyRentDetails"
 
   val backLink      = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
-  override val form = LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm(messages)
+  override val form = IncomeRecordRentForm.incomeRecordRentForm(messages)
 
   def createView = () =>
     lettingOtherPartOfPropertyRentDetailsView(

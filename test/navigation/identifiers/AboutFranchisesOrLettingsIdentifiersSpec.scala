@@ -49,10 +49,10 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
       assert(LettingTypeDetailsId.toString.equals("lettingTypeDetailsPage"))
 
     "Identifier for letting type  rent page" in
-      assert(LettingTypeRentId.toString.equals("lettingTypeRentPage"))
+      assert(RentalIncomeRentId.toString.equals("rentalIncomePage"))
 
     "Identifier for letting type included page" in
-      assert(LettingTypeIncludedId.toString.equals("lettingTypeIncludedPage"))
+      assert(RentalIncomeIncludedId.toString.equals("rentalIncomeIncludedPage"))
 
     "Identifier for catering operations details page" in
       assert(CateringOperationDetailsPageId.toString.equals("cateringOperationDetailsPage"))

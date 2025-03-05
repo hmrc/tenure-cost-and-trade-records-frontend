@@ -52,12 +52,12 @@ case object LettingTypeDetailsId extends Identifier {
   override def toString: String = "lettingTypeDetailsPage"
 }
 
-case object LettingTypeRentId extends Identifier {
-  override def toString: String = "lettingTypeRentPage"
+case object RentalIncomeRentId extends Identifier {
+  override def toString: String = "rentalIncomePage"
 }
 
-case object LettingTypeIncludedId extends Identifier {
-  override def toString: String = "lettingTypeIncludedPage"
+case object RentalIncomeIncludedId extends Identifier {
+  override def toString: String = "rentalIncomeIncludedPage"
 }
 
 case object CateringOperationDetailsPageId extends Identifier {

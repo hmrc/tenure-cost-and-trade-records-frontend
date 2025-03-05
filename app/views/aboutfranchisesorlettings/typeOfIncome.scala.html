@@ -23,13 +23,13 @@
 @import models.submissions.aboutfranchisesorlettings.TypeOfIncome
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import models.ForType._
+@import models.submissions.aboutfranchisesorlettings.{TypeConcession, TypeFranchise}
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[TypeOfIncome], index: Option[Int] = None, summary: Summary, backLink: String, forType: ForType)(implicit request: Request[?], messages: Messages)
 
@@ -55,6 +55,13 @@
         case _ => messages("typeOfIncome.concession.hint")
     }
 }
+@concessionOrfranchise = @{
+    forType match {
+        case FOR6011 | FOR6010 | FOR6015 | FOR6016 => TypeFranchise.name
+        case _                                     => TypeConcession.name
+    }
+}
+
     @layout(
         pageHeading = messages("typeOfIncome.heading"),
         showH1 = true,
@@ -74,7 +81,7 @@
                 items = Seq(
                     RadioItem(
                         content = Text(concessionLabel),
-                        value   = Option("typeConcessionOrFranchise"),
+                        value   = Option(concessionOrfranchise),
                         hint    = Option(Hint(content = Text(concessionHint)))
 
                     ),
