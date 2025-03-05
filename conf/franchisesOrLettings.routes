@@ -19,11 +19,11 @@ POST         /concession-type-fees                                  controllers.
 GET          /letting-type-details                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.show(idx: Int)
 POST         /letting-type-details                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.submit(idx: Int)
 
-GET         /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.show(idx: Int)
-POST        /letting-type-rent                                      controllers.aboutfranchisesorlettings.LettingTypeRentController.submit(idx: Int)
+GET         /rental-income-rent                                     controllers.aboutfranchisesorlettings.RentalIncomeRentController.show(idx: Int)
+POST        /rental-income-rent                                     controllers.aboutfranchisesorlettings.RentalIncomeRentController.submit(idx: Int)
 
-GET         /letting-type-included                                  controllers.aboutfranchisesorlettings.LettingTypeIncludedController.show(idx: Int)
-POST        /letting-type-included                                  controllers.aboutfranchisesorlettings.LettingTypeIncludedController.submit(idx: Int)
+GET         /rental-income-included                                 controllers.aboutfranchisesorlettings.RentalIncomeIncludedController.show(idx: Int)
+POST        /rental-income-included                                 controllers.aboutfranchisesorlettings.RentalIncomeIncludedController.submit(idx: Int)
 
 GET          /rental-income-list                                    controllers.aboutfranchisesorlettings.RentalIncomeListController.show(idx: Int)
 POST         /rental-income-list                                    controllers.aboutfranchisesorlettings.RentalIncomeListController.submit(idx: Int)

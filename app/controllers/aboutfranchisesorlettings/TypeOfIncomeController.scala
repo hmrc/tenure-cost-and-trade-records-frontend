@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfIncomeForm.typeOfIncomeForm
 import models.ForType
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcession, TypeFranchise, TypeLetting, TypeOfIncome}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -48,18 +48,20 @@ class TypeOfIncomeController @Inject() (
     with Logging {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val existingIncomeRecords                 =
+      request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
+    val updatedIndex                          = index match {
+      case Some(idx) => idx
+      case None      => existingIncomeRecords.length
+    }
     val existingDetails: Option[TypeOfIncome] =
-      for {
-        requestedIndex  <- index
-        allRecords      <- request.sessionData.aboutFranchisesOrLettings.map(_.rentalIncome.getOrElse(IndexedSeq.empty))
-        requestedRecord <- allRecords.lift(requestedIndex)
-      } yield requestedRecord.sourceType
+      existingIncomeRecords.lift(updatedIndex).map(_.sourceType)
     audit.sendChangeLink("TypeOfIncome")
 
     Ok(
       view(
         existingDetails.fold(typeOfIncomeForm)(typeOfIncomeForm.fill),
-        index,
+        Some(updatedIndex),
         request.sessionData.toSummary,
         getBackLink,
         forType
@@ -90,7 +92,7 @@ class TypeOfIncomeController @Inject() (
             )
           ),
         data => {
-          val newIncomeRecord       = createIncomeRecord(data, forType)
+          val newIncomeRecord       = createIncomeRecord(data)
           val existingIncomeRecords =
             request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
 
@@ -132,38 +134,33 @@ class TypeOfIncomeController @Inject() (
       )
     )
     session.saveOrUpdate(updatedSession).map { _ =>
-      Redirect(toSpecificController(source, forType, updatedIndex))
+      Redirect(toSpecificController(source, updatedIndex))
     }
   }
 
-  private def createIncomeRecord(sourceType: TypeOfIncome, forType: ForType): IncomeRecord =
+  private def createIncomeRecord(sourceType: TypeOfIncome): IncomeRecord =
     sourceType match
-      case TypeConcessionOrFranchise =>
-        forType match
-          case FOR6010 | FOR6011 | FOR6015 | FOR6016 =>
-            FranchiseIncomeRecord(
-              sourceType = TypeConcessionOrFranchise
-            )
-          case _                                     =>
-            ConcessionIncomeRecord(
-              sourceType = TypeConcessionOrFranchise
-            )
-      case TypeLetting               =>
+      case TypeFranchise  =>
+        FranchiseIncomeRecord(
+          sourceType = TypeFranchise
+        )
+      case TypeConcession =>
+        ConcessionIncomeRecord(
+          sourceType = TypeConcession
+        )
+      case TypeLetting    =>
         LettingIncomeRecord(
           sourceType = TypeLetting
         )
 
-  private def toSpecificController(typeOfLetting: TypeOfIncome, forType: ForType, index: Option[Int]): Call = {
+  private def toSpecificController(typeOfLetting: TypeOfIncome, index: Option[Int]): Call = {
     val targetIndex = index.getOrElse(0)
     typeOfLetting match {
-      case TypeConcessionOrFranchise =>
-        forType match
-          case FOR6010 | FOR6011 | FOR6015 | FOR6016 =>
-            controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(targetIndex)
-          case _                                     =>
-            controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
-      case TypeLetting               =>
-        controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
+      case TypeFranchise  =>
+        controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(targetIndex)
+      case TypeConcession =>
+        controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
+      case TypeLetting    => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
     }
   }
 

@@ -107,7 +107,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
   "update income and redirect to concession/franchise details if type selected is concessionFranchise type" in {
     val controller     = typeOfIncomeController()
     val request        = FakeRequest(POST, "/submit-path")
-      .withFormUrlEncodedBody("typeOfIncome" -> "typeConcessionOrFranchise")
+      .withFormUrlEncodedBody("typeOfIncome" -> "typeConcession")
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6045, request)
     val result         = controller.submit(Some(0))(sessionRequest)
 
@@ -149,7 +149,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
   }
 
   "redirect to MaxOfLettingsReachedController when rental income records exceed the limit for concession" in {
-    val maxRentalRecords = IndexedSeq.fill(5)(ConcessionIncomeRecord(sourceType = TypeConcessionOrFranchise))
+    val maxRentalRecords = IndexedSeq.fill(5)(ConcessionIncomeRecord(sourceType = TypeConcession))
     val controller       = typeOfIncomeController(
       Option(
         prefilledAboutFranchiseOrLettings6045.copy(

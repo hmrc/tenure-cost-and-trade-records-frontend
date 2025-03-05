@@ -413,7 +413,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       "return a function that goes to add another income page when  letting type included finished" in {
 
         aboutFranchisesOrLettingsNavigator
-          .nextPage(LettingTypeIncludedId, sessionAboutFranchiseOrLetting6045)
+          .nextPage(RentalIncomeIncludedId, sessionAboutFranchiseOrLetting6045)
           .apply(
             sessionAboutFranchiseOrLetting6045
           ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)

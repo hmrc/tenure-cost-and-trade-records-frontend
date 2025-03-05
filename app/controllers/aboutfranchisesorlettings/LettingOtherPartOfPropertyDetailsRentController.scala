@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRent6015Form.lettingOtherPartOfPropertyRent6015Form
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentForm.lettingOtherPartOfPropertyRentForm
+import form.aboutfranchisesorlettings.IncomeRecordRentForm.incomeRecordRentForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertyRent6015Details, LettingOtherPartOfPropertyRentDetails}
@@ -73,8 +73,8 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
       val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(index))
       existingSection.fold(Redirect(routes.LettingOtherPartOfPropertyDetailsController.show(None))) { lettingSection =>
         val lettingDetailsForm = lettingSection.lettingOtherPartOfPropertyRentDetails.fold(
-          lettingOtherPartOfPropertyRentForm
-        )(lettingOtherPartOfPropertyRentForm.fill)
+          incomeRecordRentForm
+        )(incomeRecordRentForm.fill)
         Ok(
           cateringOperationOrLettingAccommodationRentDetailsView(
             lettingDetailsForm,
@@ -126,7 +126,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
       )
     } else {
       continueOrSaveAsDraft[LettingOtherPartOfPropertyRentDetails](
-        lettingOtherPartOfPropertyRentForm,
+        incomeRecordRentForm,
         formWithErrors =>
           BadRequest(
             cateringOperationOrLettingAccommodationRentDetailsView(

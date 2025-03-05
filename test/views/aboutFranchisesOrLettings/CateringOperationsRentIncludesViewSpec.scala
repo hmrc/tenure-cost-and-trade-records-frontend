@@ -16,7 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
+import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -29,7 +29,7 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
 
   val backLink      = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0).url
   // No form for checkboxes TODO Add form
-  override val form = cateringOperationOrLettingAccommodationRentIncludesForm
+  override val form = incomeRecordIncludedForm
 
   def createView = () =>
     cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(

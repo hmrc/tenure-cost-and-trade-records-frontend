@@ -16,7 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesForm.lettingOtherPartOfPropertyRentIncludesForm
+import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -30,7 +30,7 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
   val backLink      =
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
   // No form for checkboxes TODO Add form
-  override val form = lettingOtherPartOfPropertyRentIncludesForm
+  override val form = incomeRecordIncludedForm
 
   def createView = () =>
     cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(

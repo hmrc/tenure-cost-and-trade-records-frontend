@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentIncludesForm.lettingOtherPartOfPropertyRentIncludesForm
+import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationRentIncludesPageId
@@ -49,7 +49,7 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
       .fold(
         startRedirect
       ) { currentSection =>
-        val rentIncludesForm = lettingOtherPartOfPropertyRentIncludesForm.fill(currentSection.itemsInRent)
+        val rentIncludesForm = incomeRecordIncludedForm.fill(currentSection.itemsInRent)
         audit.sendChangeLink("LettingOtherPartOfPropertyRentIncludes")
 
         Ok(
@@ -73,7 +73,7 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
       existingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections)
       currentSection   <- existingSections.lift(index)
     } yield continueOrSaveAsDraft[List[String]](
-      lettingOtherPartOfPropertyRentIncludesForm,
+      incomeRecordIncludedForm,
       formWithErrors =>
         BadRequest(
           cateringOperationOrLettingAccommodationRentIncludesView(

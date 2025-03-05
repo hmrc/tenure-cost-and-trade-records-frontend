@@ -27,7 +27,7 @@
         govukRadios: GovukRadios,
         answersSectionAboutTheFranchiseLettings: answersAboutTheFranchiseLettings,
         answersLetting: answersLettings,
-        answers6045: answersConcessionAndLettings6045,
+        answers: answersConcessionAndLettings6045,
         formWithCSRF: FormWithCSRF
 )
 
@@ -36,19 +36,19 @@
 @label         = @{
     request.sessionData.forType match {
         case  FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
-        case  FOR6020 =>                     messages("label.section.aboutTheLettings")
+        case  FOR6020            => messages("label.section.aboutTheLettings")
         case  FOR6045 | FOR6046  => messages("label.section.aboutTheConcessionsFranchisesLettings")
-        case _                                     => messages("label.section.aboutTheFranchiseLettings")
+        case _                   => messages("label.section.aboutTheFranchiseLettings")
     }
 }
 
 
 @pageHeading = @{
-  request.sessionData.forType match {
-      case  FOR6015 | FOR6016  => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
-      case  FOR6020                     => messages("checkYourAnswersLettings.heading")
-      case  FOR6045 | FOR6046  => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
-      case _                                     => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
+    request.sessionData.forType match {
+        case  FOR6015 | FOR6016  => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
+        case  FOR6020            => messages("checkYourAnswersLettings.heading")
+        case  FOR6045 | FOR6046  => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
+        case _                   => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
   }
 }
 
@@ -63,9 +63,9 @@
     ) {
         @{
             request.sessionData.forType match {
-                case FOR6020           =>  answersLetting()
-                case FOR6045 | FOR6046 =>  answers6045()
-                case _                 =>  answersSectionAboutTheFranchiseLettings()
+                case FOR6010 | FOR6011 | FOR6045 | FOR6046 =>  answers()
+                case FOR6020                               =>  answersLetting()
+                case _                                     =>  answersSectionAboutTheFranchiseLettings()
             }
         }
         @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {

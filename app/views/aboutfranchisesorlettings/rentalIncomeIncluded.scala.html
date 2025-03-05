@@ -26,6 +26,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import models.pages.Summary
+@import models.ForType.*
 
 
 @this(layout: Layout,
@@ -37,16 +38,26 @@
 
 @(form: Form[?], index: Int, operatorName: String, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
+
+@sectionName = @{
+    forType match {
+        case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
+        case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
+        case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+    }
+}
+
+
 @layout(
     pageHeading = messages("cateringOperationOrLettingAccommodationCheckboxesDetails.heading"),
     showSection = true,
     showH1 = false,
-    sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+    sectionName = sectionName,
     backLinkUrl = backLink,
     theForm = form
 ) {
 
-    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingTypeIncludedController.submit(index)
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.submit(index)
     ) {
 
         @govukCheckboxes(

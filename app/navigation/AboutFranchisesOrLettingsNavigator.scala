@@ -367,7 +367,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
     ),
     FranchiseTypeDetailsId                     -> (answers =>
-      controllers.routes.TaskListController.show() // TODO !!!
+      controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))
     ),
     ConcessionTypeDetailsId                    -> (answers =>
       controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
@@ -376,12 +376,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),
     LettingTypeDetailsId                       -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.LettingTypeRentController.show(getRentalIncomeIndex(answers))
+      controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))
     ),
-    LettingTypeRentId                          -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.LettingTypeIncludedController.show(getRentalIncomeIndex(answers))
+    RentalIncomeRentId                         -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
     ),
-    LettingTypeIncludedId                      -> (answers =>
+    RentalIncomeIncludedId                     -> (answers =>
       controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),
     CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,

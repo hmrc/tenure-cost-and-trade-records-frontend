@@ -23,9 +23,9 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.Messages
 
-object LettingOtherPartOfPropertyRentForm {
+object IncomeRecordRentForm {
 
-  def lettingOtherPartOfPropertyRentForm(implicit messages: Messages): Form[LettingOtherPartOfPropertyRentDetails] =
+  def incomeRecordRentForm(implicit messages: Messages): Form[LettingOtherPartOfPropertyRentDetails] =
     Form(
       mapping(
         "annualRent" -> currencyMapping(".annualRent"),

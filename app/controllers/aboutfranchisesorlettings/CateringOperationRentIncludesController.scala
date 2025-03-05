@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.CateringOperationOrLettingAccommodationRentIncludesForm.cateringOperationOrLettingAccommodationRentIncludesForm
+import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm as theForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -51,7 +51,7 @@ class CateringOperationRentIncludesController @Inject() (
       .fold(
         startRedirect
       ) { currentSection =>
-        val rentIncludesForm = cateringOperationOrLettingAccommodationRentIncludesForm.fill(currentSection.itemsInRent)
+        val rentIncludesForm = theForm.fill(currentSection.itemsInRent)
         audit.sendChangeLink("CateringOperationRentIncludes")
         Ok(
           cateringOperationOrLettingAccommodationDetailsCheckboxesView(
@@ -72,7 +72,7 @@ class CateringOperationRentIncludesController @Inject() (
       existingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections)
       currentSection   <- existingSections.lift(index)
     } yield continueOrSaveAsDraft[List[String]](
-      cateringOperationOrLettingAccommodationRentIncludesForm,
+      theForm,
       formWithErrors =>
         BadRequest(
           cateringOperationOrLettingAccommodationDetailsCheckboxesView(

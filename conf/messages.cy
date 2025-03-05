@@ -3508,6 +3508,7 @@ checkYourAnswersAboutFranchiseOrLettings.operatorCount = Business {0}
 checkYourAnswersAboutFranchiseOrLettings.operatorName = Name and address
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Letting {0}
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s details
+checkYourAnswersAboutFranchiseOrLettings.businessOperatorName = Business details
 checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
 checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover = Included in turnover
 checkYourAnswersAboutFranchiseOrLettings.rentNotIncluded = Not included in turnover

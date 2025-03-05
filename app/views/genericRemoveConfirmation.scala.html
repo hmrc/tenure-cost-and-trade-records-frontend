@@ -17,6 +17,7 @@
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
+@import models.ForType.*
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -24,14 +25,23 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], name: String, sectionLabel: String, summary: Summary, idx: Int, confirmAction: Call, cancelAction: Call)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], name: String, sectionLabel: String, summary: Summary, idx: Int, confirmAction: Call, cancelAction: Call, forType: Option[ForType] = None)(implicit request: Request[?], messages: Messages)
+
+
+@sectionName = @{
+    forType match {
+        case Some(FOR6010 | FOR6011)  => messages("label.section.aboutTheFranchiseLettings")
+        case Some(FOR6015 | FOR6016)  => messages("label.section.aboutTheFranchiseConcessions")
+        case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+    }
+}
 
 @layout(
     pageHeading = messages("genericRemoveConfirmation.heading",name),
     showSection = true,
     showH1 = false,
     summary = Some(summary),
-    sectionName = messages(sectionLabel),
+    sectionName = sectionName,
     backLinkUrl = cancelAction.url,
     theForm = theForm
 ) {
