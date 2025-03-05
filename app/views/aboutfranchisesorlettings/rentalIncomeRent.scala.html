@@ -24,6 +24,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 @import models.pages.Summary
+@import models.ForType.*
 
 @this(layout: Layout,
         govukInput: GovukInput,
@@ -35,17 +36,25 @@
 
 @(theForm: Form[?], index: Int, operatorName: String, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
+@sectionName = @{
+    forType match {
+        case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
+        case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
+        case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+    }
+}
+
 @layout(
-    pageHeading = messages("lettingOtherPartOfPropertyRentDetails.heading"),
+    pageHeading = messages("lettingOtherPartOfPropertyRentDetails.heading", operatorName),
     showSection = true,
     showH1 = false,
     summary = Some(summary),
-    sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+    sectionName = sectionName,
     backLinkUrl = backLink,
     theForm = theForm
 ) {
     @formWithCSRF(action = {
-     controllers.aboutfranchisesorlettings.routes.LettingTypeRentController.submit(index)
+     controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.submit(index)
     }
     ) {
 

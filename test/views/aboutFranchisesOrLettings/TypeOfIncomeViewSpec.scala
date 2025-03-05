@@ -19,7 +19,7 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.TypeOfIncomeForm
 import models.ForType.FOR6045
 import models.pages.Summary
-import models.submissions.aboutfranchisesorlettings.{TypeConcessionOrFranchise, TypeLetting, TypeOfIncome}
+import models.submissions.aboutfranchisesorlettings.{TypeConcession, TypeLetting, TypeOfIncome}
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -57,13 +57,13 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
       assert(sectionText == messages("label.section.aboutTheConcessionsFranchisesLettings"))
     }
 
-    "contain radio buttons for the value typeConcessionOrFranchise" in {
+    "contain radio buttons for the value typeConcession" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsRadioButton(
         doc,
         "typeOfIncome",
         "typeOfIncome",
-        TypeConcessionOrFranchise.name,
+        TypeConcession.name,
         isChecked = false
       )
       assertContainsText(doc, messages("typeOfIncome.concession.label"))

@@ -55,6 +55,7 @@ class RentalIncomeListController @Inject() (
     franchisesOrLettingsData.flatMap { data =>
       data.rentalIncome.flatMap { incomeRecord =>
         incomeRecord.lift(idx).map {
+          case franchise: FranchiseIncomeRecord   => franchise.businessDetails.fold("")(_.operatorName)
           case concession: ConcessionIncomeRecord => concession.businessDetails.map(_.operatorName).getOrElse("")
           case letting: LettingIncomeRecord       => letting.operatorDetails.map(_.operatorName).getOrElse("")
         }
@@ -76,7 +77,8 @@ class RentalIncomeListController @Inject() (
         view(
           addAnother.fold(rentalIncomeListForm)(rentalIncomeListForm.fill),
           index,
-          getBackLink(index)
+          getBackLink(index),
+          request.sessionData.forType
         )
       )
     )
@@ -93,7 +95,8 @@ class RentalIncomeListController @Inject() (
           view(
             formWithErrors,
             index,
-            getBackLink(index)
+            getBackLink(index),
+            request.sessionData.forType
           )
         ),
       answer =>
@@ -152,7 +155,8 @@ class RentalIncomeListController @Inject() (
               request.sessionData.toSummary,
               idx,
               controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
-              controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
+              controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx),
+              Some(request.sessionData.forType)
             )
           )
         )
@@ -175,7 +179,8 @@ class RentalIncomeListController @Inject() (
                   request.sessionData.toSummary,
                   idx,
                   controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
-                  controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
+                  controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx),
+                  Some(request.sessionData.forType)
                 )
               )
             )
@@ -216,11 +221,13 @@ class RentalIncomeListController @Inject() (
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _     =>
         rentalIncomeData.flatMap(_.lift(idx)) match {
-          case Some(concession: ConcessionIncomeRecord) =>
+          case Some(incomeRecord: FranchiseIncomeRecord)  =>
+            controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
+          case Some(incomeRecord: ConcessionIncomeRecord) =>
             controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(idx).url
-          case Some(letting: LettingIncomeRecord)       =>
-            controllers.aboutfranchisesorlettings.routes.LettingTypeIncludedController.show(idx).url
-          case _                                        =>
+          case Some(incomeRecord: LettingIncomeRecord)    =>
+            controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
+          case _                                          =>
             controllers.routes.TaskListController.show().url
         }
 

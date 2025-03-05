@@ -68,10 +68,10 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return LettingTypeIncludedController back link for letting" in {
+    "return IncomeRecordIncludedController back link for letting" in {
       val result = controller().show(1)(fakeRequest)
       contentAsString(result) should include(
-        controllers.aboutfranchisesorlettings.routes.LettingTypeIncludedController.show(1).url
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(1).url
       )
     }
 

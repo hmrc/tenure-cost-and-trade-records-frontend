@@ -21,17 +21,42 @@ import play.api.libs.json.{JsError, JsObject, JsResult, JsValue, Json, OFormat}
 
 sealed trait IncomeRecord {
   def sourceType: TypeOfIncome
+
   def addAnotherRecord: Option[AnswersYesNo]
 
 }
 
 object IncomeRecord {
-  implicit val format: OFormat[IncomeRecord] = Json.format[IncomeRecord]
+  implicit val format: OFormat[IncomeRecord] = {
+    val franchiseFormat  = Json.format[FranchiseIncomeRecord]
+    val concessionFormat = Json.format[ConcessionIncomeRecord]
+    val lettingFormat    = Json.format[LettingIncomeRecord]
+
+    new OFormat[IncomeRecord] {
+
+      def reads(json: JsValue): JsResult[IncomeRecord] =
+        (json \ "sourceType").validate[String].flatMap {
+          case "typeFranchise"  => franchiseFormat.reads(json)
+          case "typeConcession" => concessionFormat.reads(json)
+          case "typeLetting"    => lettingFormat.reads(json)
+          case other            => JsError(s"Unknown type: $other")
+        }
+
+      def writes(record: IncomeRecord): JsObject =
+        record match {
+          case franchise: FranchiseIncomeRecord   => franchiseFormat.writes(franchise)
+          case concession: ConcessionIncomeRecord => concessionFormat.writes(concession)
+          case letting: LettingIncomeRecord       => lettingFormat.writes(letting)
+        }
+    }
+  }
 }
 
 case class FranchiseIncomeRecord(
-  sourceType: TypeOfIncome = TypeConcessionOrFranchise,
+  sourceType: TypeOfIncome = TypeFranchise,
   businessDetails: Option[CateringOperationDetails] = None,
+  rent: Option[LettingOtherPartOfPropertyRentDetails] = None,
+  itemsIncluded: Option[List[String]] = None,
   addAnotherRecord: Option[AnswersYesNo] = None
 ) extends IncomeRecord
 
@@ -40,7 +65,7 @@ object FranchiseIncomeRecord {
 }
 
 case class ConcessionIncomeRecord(
-  sourceType: TypeOfIncome = TypeConcessionOrFranchise,
+  sourceType: TypeOfIncome = TypeConcession,
   businessDetails: Option[CateringOperationBusinessDetails] = None,
   feeReceived: Option[FeeReceived] = None,
   addAnotherRecord: Option[AnswersYesNo] = None

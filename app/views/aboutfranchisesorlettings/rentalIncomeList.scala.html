@@ -31,6 +31,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.ForType.*
+@import models.submissions.aboutfranchisesorlettings.FranchiseIncomeRecord
 
 @import models.pages.Summary
 
@@ -42,7 +44,15 @@
 )
 
 
-@(theForm: Form[?], index: Int, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], index: Int, backLink: String, forType: ForType)(implicit request: SessionRequest[?], messages: Messages)
+
+@sectionName = @{
+    forType match {
+        case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
+        case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
+        case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+    }
+}
 
 
 @pageHeading = @{
@@ -58,10 +68,15 @@
     val records = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
     records.zipWithIndex.map { case (record, index) =>
         record match {
+            case franchise: FranchiseIncomeRecord =>
+                (franchise.businessDetails.fold("")(_.operatorName),
+                 controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession: ConcessionIncomeRecord =>
-                (concession.businessDetails.flatMap(_.operatorName).getOrElse("No name specified"), controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url)
+                (concession.businessDetails.fold("")(_.operatorName),
+                 controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url)
             case letting: LettingIncomeRecord =>
-                (letting.operatorDetails.flatMap(_.operatorName).getOrElse("No name specified"), controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
+                (letting.operatorDetails.fold("")(_.operatorName),
+                 controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
         }
     }
 
@@ -86,7 +101,7 @@
     pageHeading = pageHeading,
     showSection = true,
     summary = Some(request.sessionData.toSummary),
-    sectionName = messages("label.section.aboutTheConcessionsFranchisesLettings"),
+    sectionName = sectionName,
     backLinkUrl = backLink,
     theForm = theForm
 ) {
