@@ -45,88 +45,34 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.submit()) {
 
-  @govukRadios(
-   Radios(
-    name = "commenceWithinThreeYears",
-    idPrefix = Option("commenceWithinThreeYears"),
-    items = Seq(
-     "yes" -> messages("label.yes.do"),
-     "no" -> messages("label.no.naddo")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("commenceWithinThreeYears").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    classes = "govuk-radios--inline",
-    errorMessage =  theForm.errors.asTextErrorMessageForField("commenceWithinThreeYears"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.commenceWithinThreeYears")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
+  @includes.radioButtonsYesNo(
+   govukRadios,
+   theForm,
+   "commenceWithinThreeYears",
+   "label.commenceWithinThreeYears",
+   "label.yes.do",
+   "label.no.naddo",
+   "govuk-fieldset__legend--m govuk-heading-m"
   )
 
-  @govukRadios(
-   Radios(
-    name = "agreedReviewedAlteredThreeYears",
-    idPrefix = Option("agreedReviewedAlteredThreeYears"),
-    items = Seq(
-     "yes" -> messages("label.yes.do"),
-     "no" -> messages("label.no.naddo")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("agreedReviewedAlteredThreeYears").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    classes = "govuk-radios--inline",
-    errorMessage =  theForm.errors.asTextErrorMessageForField("agreedReviewedAlteredThreeYears"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.agreedReviewedAlteredThreeYears")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
+  @includes.radioButtonsYesNo(
+   govukRadios,
+   theForm,
+   "agreedReviewedAlteredThreeYears",
+   "label.agreedReviewedAlteredThreeYears",
+   "label.yes.do",
+   "label.no.naddo",
+   "govuk-fieldset__legend--m govuk-heading-m"
   )
 
-  @govukRadios(
-   Radios(
-    name = "rentUnderReviewNegotiated",
-    idPrefix = Option("rentUnderReviewNegotiated"),
-    items = Seq(
-     "yes" -> messages("label.yes.ydy"),
-     "no" -> messages("label.no.nac.ydy")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("rentUnderReviewNegotiated").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    classes = "govuk-radios--inline",
-    errorMessage =  theForm.errors.asTextErrorMessageForField("rentUnderReviewNegotiated"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("label.rentUnderReviewNegotiated")),
-        classes = "govuk-!-font-weight-bold"
-       )
-      )
-     )
-    )
-   )
+  @includes.radioButtonsYesNo(
+   govukRadios,
+   theForm,
+   "rentUnderReviewNegotiated",
+   "label.rentUnderReviewNegotiated",
+   "label.yes.do",
+   "label.no.naddo",
+   "govuk-fieldset__legend--m govuk-heading-m"
   )
 
   @includes.continueSaveAsDraftButtons(govukButton)
