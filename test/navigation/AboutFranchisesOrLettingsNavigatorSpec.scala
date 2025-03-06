@@ -343,7 +343,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to add another letting page when fee received comleted" in {
+    "return a function that goes to add another letting page when fee received completed" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(FeeReceivedPageId, sessionAboutFranchiseOrLetting6030YesSession)
         .apply(
@@ -357,6 +357,17 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
         ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
+    }
+
+    // TEST FOR SINGLE LOOP 6045
+
+    "return a function that goes to rental income rent page when franchise type details page has been completed" in {
+
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(FranchiseTypeDetailsId, sessionAboutFranchiseOrLetting6010YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(0)
     }
 
     // TESTS FOR FORMS 6045 AND 6046
@@ -407,6 +418,25 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           .apply(
             sessionAboutFranchiseOrLetting6045
           ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
+
+      }
+      "return a function that goes to rental  income rent page rent when  letting type details finished" in {
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(LettingTypeDetailsId, sessionAboutFranchiseOrLetting6045)
+          .apply(
+            sessionAboutFranchiseOrLetting6045
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(0)
+
+      }
+
+      "return a function that goes to rental income  included page rent when  rental  income rent page finished" in {
+
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(RentalIncomeRentId, sessionAboutFranchiseOrLetting6045)
+          .apply(
+            sessionAboutFranchiseOrLetting6045
+          ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(0)
 
       }
 

@@ -21,11 +21,14 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.*
 import play.api.http.Status.*
-import play.api.libs.json.{JsError, Json}
+import play.api.libs.json.{JsError, Json, Json as json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 import utils.FakeObjects
+import utils.FormBindingTestAssertions.shouldBe
+
+import java.time.LocalDate
 
 class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
@@ -45,30 +48,54 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
     )
 
   "IncomeRecord" should {
-
-    "serialize and deserialize correctly for IncomeRecord" in {
-      val incomeRecord = lettingIncomeRecord
-      val json         = Json.toJson(incomeRecord: IncomeRecord)
-      json.as[IncomeRecord] shouldBe incomeRecord
+    "serialize and deserialize correctly for FranchiseIncomeRecord with complete details" in {
+      val incomeRecord = franchiseIncomeRecord
+      val json         = Json.toJson(incomeRecord: FranchiseIncomeRecord)
+      json.as[FranchiseIncomeRecord] shouldBe incomeRecord
     }
 
-    "serialize and deserialize correctly for LettingIncomeRecord" in {
-      val incomeRecord = lettingIncomeRecord
-      val json         = Json.toJson(incomeRecord: LettingIncomeRecord)
-      json.as[LettingIncomeRecord] shouldBe incomeRecord
-    }
-
-    "serialize and deserialize correctly for ConcessionIncomeRecord" in {
+    "serialize and deserialize correctly for ConcessionIncomeRecord with complete details" in {
       val incomeRecord = concessionIncomeRecord
       val json         = Json.toJson(incomeRecord: ConcessionIncomeRecord)
       json.as[ConcessionIncomeRecord] shouldBe incomeRecord
     }
 
-    "serialize and deserialize correctly for FranchiseIncomeRecord" in {
-      val incomeRecord = franchiseIncomeRecord
-      val json         = Json.toJson(incomeRecord: FranchiseIncomeRecord)
-      json.as[FranchiseIncomeRecord] shouldBe incomeRecord
+    "serialize and deserialize correctly for LettingIncomeRecord with complete details" in {
+      val incomeRecord = lettingIncomeRecord
+      val json         = Json.toJson(incomeRecord: LettingIncomeRecord)
+      json.as[LettingIncomeRecord] shouldBe incomeRecord
     }
+
+    "serialize and deserialize correctly for ConcessionIncomeRecord with optional fields missing" in {
+      val incomeRecord = ConcessionIncomeRecord(
+        sourceType = TypeConcession,
+        businessDetails = None,
+        feeReceived = None
+      )
+      val json         = Json.toJson(incomeRecord: IncomeRecord)
+      json.as[IncomeRecord] shouldBe incomeRecord
+    }
+
+    "serialize and deserialize correctly FranchiseIncomeRecord with optional fields missing" in {
+      val incomeRecord = FranchiseIncomeRecord(
+        sourceType = TypeFranchise,
+        businessDetails = None
+      )
+      val json         = Json.toJson(incomeRecord: IncomeRecord)
+      json.as[IncomeRecord] shouldBe incomeRecord
+    }
+
+    "serialize and deserialize correctly for LettingIncomeRecord with optional fields missing" in {
+      val incomeRecord = LettingIncomeRecord(
+        sourceType = TypeLetting,
+        operatorDetails = None,
+        rent = None,
+        itemsIncluded = None
+      )
+      val json         = Json.toJson(incomeRecord: IncomeRecord)
+      json.as[IncomeRecord] shouldBe incomeRecord
+    }
+
     "fail to deserialize for unknown sourceType" in {
       val json = Json.obj("sourceType" -> "unknownType")
       json.validate[IncomeRecord] shouldBe a[JsError]
