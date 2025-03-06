@@ -28,7 +28,7 @@ import util.DateUtilLocalised
 
 import java.time.LocalDate
 
-object RentalPeriodForm extends Object with RentalPeriodSupport:
+object RentalPeriodForm extends RentalPeriodSupport:
 
   def theForm(using
     request: SessionRequest[AnyContent],
