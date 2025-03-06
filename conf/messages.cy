@@ -851,7 +851,7 @@ error.typeOfLetting.required = Please select the type of letting
 
 #LETTINGS ATM 6020
 ##############################
-label.atmLetting.heading = Provide the ATM operator''s details
+label.atmLetting.heading = Provide the ATM operator’s details
 label.bankOrCompany = Name of bank or company operating the machine
 error.bankOrCompany.required = Enter name of bank or company operating the machine
 error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer
@@ -859,24 +859,24 @@ error.correspondenceAddress.required = Enter correspondence address
 
 #TELECOM MAST LETTING 6020
 ##############################
-label.telecomMastLetting.heading = Provide the telecom mast''s details
-label.operatingCompanyName = Operating company''s name
+label.telecomMastLetting.heading = Provide the telecom mast’s details
+label.operatingCompanyName = Operating company’s name
 label.siteOfMast = Where on the site is the mast situated?
-error.operatingCompanyName.required = Enter operating company''s name
+error.operatingCompanyName.required = Enter operating company’s name
 error.siteOfMast.required = Enter where on the site is the mast situated
-error.operatingCompanyName.maxLength = Operating company''s name must be 500 characters or fewer
+error.operatingCompanyName.maxLength = Operating company’s name must be 500 characters or fewer
 error.siteOfMast.maxLength = The site where the mast situated must be 500 characters or fewer
 
 #LETTINGS ADVERTISING RIGHT 6020
 ##############################
-label.advertisingRightLetting.heading = Provide the advertising right''s details
+label.advertisingRightLetting.heading = Provide the advertising right’s details
 label.descriptionOfSpace = Describe the advertising space
 hint.descriptionOfSpace = For example, billboard or hoarding
-label.advertisingCompanyName = Advertising company''s name
+label.advertisingCompanyName = Advertising company’s name
 error.descriptionOfSpace.required = Enter description of the advertising space
-error.advertisingCompanyName.required = Enter advertising company''s name
+error.advertisingCompanyName.required = Enter advertising company’s name
 error.descriptionOfSpace.maxLength = Description of the advertising space must be 500 characters or fewer
-error.advertisingCompanyName.maxLength = Advertising company''s name must be 500 characters or fewer
+error.advertisingCompanyName.maxLength = Advertising company’s name must be 500 characters or fewer
 
 #LETTINGS OTHER LETTING 6020
 ##############################
@@ -899,13 +899,13 @@ checkYourAnswersAboutFranchiseOrLettings.addedLetting = Rydych wedi ychwanegu {0
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPruel = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.rentReceived = Rent received from lettings?
 checkYourAnswersAboutFranchiseOrLettings.typeOfLetting = Type of letting
-checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails = ATM operator''s details
+checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails = ATM operator’s details
 checkYourAnswersAboutFranchiseOrLettings.rentDetails = Annual rent
 checkYourAnswersAboutFranchiseOrLettings.addedLettings = Rydych wedi ychwanegu {0} gosodiad
 checkYourAnswersAboutFranchiseOrLettings.addedLettingsPlural = You have added {0} lettings
-checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails = Operation company''s details
-checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails = Advertising company''s details
-checkYourAnswersAboutFranchiseOrLettings.otherDetails = Other letting operator''s details
+checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails = Operation company’s details
+checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails = Advertising company’s details
+checkYourAnswersAboutFranchiseOrLettings.otherDetails = Other letting operator’s details
 
 #ADD OR REMOVE LETTING 6020
 aboutTheLettings.heading = Rydych wedi ychwanegu {0} gosodiad
@@ -1577,11 +1577,11 @@ lettingHistory.hasPermanentResidents.legend = Is any part of the property used a
 lettingHistory.hasPermanentResidents.hint = Include any commercial residential lettings and staff accommodation.
 lettingHistory.hasPermanentResidents.required = Select yes if the property is used as permanent residence.
 
-lettingHistory.residentDetail.heading = Resident''s details
+lettingHistory.residentDetail.heading = Resident’s details
 lettingHistory.residentDetail.subheading = We need the contact details of one person for each part of the property used as a main residence by a tenant or employee. You will have the opportunity to add additional households if required.
-label.lettingHistory.residentDetail.name.label = Resident''s name
+label.lettingHistory.residentDetail.name.label = Resident’s name
 lettingHistory.residentDetail.name.required = Enter the name of the permanent resident
-lettingHistory.residentDetail.address.label = Resident''s address
+lettingHistory.residentDetail.address.label = Resident’s address
 lettingHistory.residentDetail.address.required = Enter the address of the permanent resident
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
 lettingHistory.residentDetail.duplicate = You have already added this permanent resident
@@ -1600,15 +1600,15 @@ lettingHistory.hasCompletedLettings.paragraph.3.point.2 = let out to staff or pe
 lettingHistory.hasCompletedLettings.legend = Was any part of your property let in periods of 29 nights and longer between {0} and {1}.
 lettingHistory.hasCompletedLettings.required = Select yes if the property had any completed lettings in the period.
 
-lettingHistory.occupierDetail.heading = Temporary occupier''s details
+lettingHistory.occupierDetail.heading = Temporary occupier’s details
 lettingHistory.occupierDetail.subheading = We need the contact details of each occupier who rented part of your property for 29 nights or more between {0} and {1}. Do not include any holiday lettings from this period. You will have the opportunity to add additional occupiers if required.
-label.lettingHistory.occupierDetail.name.label = Occupier''s name
+label.lettingHistory.occupierDetail.name.label = Occupier’s name
 lettingHistory.occupierDetail.name.required = Enter the name of the temporary occupier
-lettingHistory.occupierDetail.address.legend = Occupier''s address
+lettingHistory.occupierDetail.address.legend = Occupier’s address
 lettingHistory.occupierDetail.address.hint = This should be the address they provided when they rented the property.
 lettingHistory.rentalPeriod.heading = When did {0} rent part of your property?
 fieldName.fromDate = from date
-lettingHistory.rentalPeriod.fromDate.error = The "from date" must be greater than or equal to {0}
+lettingHistory.rentalPeriod.fromDate.error = The from date must be on or after {0}
 fieldName.toDate = to date
 lettingHistory.rentalPeriod.toDate.error = The "to date" must be less than or equal to {0}
 lettingHistory.rentalPeriod.error = The "from date" must be less than or equal to the "to date"
@@ -1675,7 +1675,7 @@ lettingHistory.checkYourAnswers.permanentResidents.addedSingular = You have adde
 lettingHistory.checkYourAnswers.permanentResidents.addedPlural = You have added {0} residents
 lettingHistory.checkYourAnswers.permanentResidents.addOneMore = Add a resident
 lettingHistory.checkYourAnswers.permanentResidents.cardsType = Resident
-lettingHistory.checkYourAnswers.permanentResidents.cardKey1 = Resident''s details
+lettingHistory.checkYourAnswers.permanentResidents.cardKey1 = Resident’s details
 
 lettingHistory.checkYourAnswers.completedLettings.heading = Temporary occupiers
 lettingHistory.checkYourAnswers.completedLettings.question = Completed commercial lettings - 29 nights or longer?
@@ -1683,7 +1683,7 @@ lettingHistory.checkYourAnswers.completedLettings.addedSingular = You have added
 lettingHistory.checkYourAnswers.completedLettings.addedPlural = You have added {0} temporary occupiers
 lettingHistory.checkYourAnswers.completedLettings.addOneMore = Add a temporary occupier
 lettingHistory.checkYourAnswers.completedLettings.cardsType = Temporary occupier
-lettingHistory.checkYourAnswers.completedLettings.cardKey1 = Occupier''s details
+lettingHistory.checkYourAnswers.completedLettings.cardKey1 = Occupier’s details
 
 lettingHistory.checkYourAnswers.intendedLettings.heading = Letting intention
 lettingHistory.checkYourAnswers.intendedLettings.nights = Number of nights intended for commercial letting
@@ -3530,7 +3530,7 @@ checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How
 cya.rentalIncomeList.heading = You have added 1 source of rental income
 cya.rentalIncomeList.plural.heading = You have added {0} sources of rental income
 cya.concessionOrFranchise.operatorNumber = Concession or franchise {0}
-cya.concessionOrFranchise.operatorDetails = Operator''s details
+cya.concessionOrFranchise.operatorDetails = Operator’s details
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Gwiriwch eich atebion – eich prydles neu eich cytundeb
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
@@ -3651,7 +3651,7 @@ checkYourAnswersAboutTheProperty.completedCommercial = Completed commercial lett
 checkYourAnswersAboutTheProperty.familyUse.heading = Family use
 checkYourAnswersAboutTheProperty.mainResidence = Main residence or second home not available for rent?
 checkYourAnswersAboutTheProperty.occupiersLabel= Occupier {0}
-checkYourAnswersAboutTheProperty.occupiersDetails = Occupier''s details
+checkYourAnswersAboutTheProperty.occupiersDetails = Occupier’s details
 checkYourAnswersAboutTheProperty.occupierCount = You have added {0} occupier
 checkYourAnswersAboutTheProperty.occupiersCount = You have added {0} occupiers
 checkYourAnswersAboutTheProperty.occupiersAdd = Add or remove an occupier

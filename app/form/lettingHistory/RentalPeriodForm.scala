@@ -26,12 +26,29 @@ import play.api.i18n.Messages
 import play.api.mvc.AnyContent
 import util.DateUtilLocalised
 
+import java.time.LocalDate
+
 object RentalPeriodForm extends Object with RentalPeriodSupport:
 
-  def theForm(using request: SessionRequest[AnyContent], messages: Messages, dateUtil: DateUtilLocalised) =
+  def theForm(using
+    request: SessionRequest[AnyContent],
+    messages: Messages,
+    dateUtil: DateUtilLocalised
+  ): Form[LocalPeriod] =
+    val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
+      .flatMap(_.commercialLetDate)
+      .fold(LocalDate.EPOCH)(_.toYearMonth.atDay(1))
+
     Form[LocalPeriod](
       mapping(
-        "fromDate" -> constrainedLocalDate("lettingHistory.rentalPeriod", "fromDate", previousRentalPeriod),
+        "fromDate" -> constrainedLocalDate("lettingHistory.rentalPeriod", "fromDate", previousRentalPeriod)
+          .verifying(
+            messages(
+              "lettingHistory.rentalPeriod.fromDate.error",
+              dateUtil.formatDate(commercialLetFirstAvailableDate)
+            ),
+            !_.isBefore(commercialLetFirstAvailableDate)
+          ),
         "toDate"   -> constrainedLocalDate("lettingHistory.rentalPeriod", "toDate", previousRentalPeriod)
       )(LocalPeriod.apply)(LocalPeriod.unapply).verifying(
         error = messages("lettingHistory.rentalPeriod.error"),
