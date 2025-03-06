@@ -19,8 +19,12 @@ package form.lettingHistory
 import actions.SessionRequest
 import controllers.lettingHistory.FiscalYearSupport
 import form.lettingHistory.RentalPeriodForm.theForm
+import models.submissions.Form6010.MonthsYearDuration
+import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.mvc.AnyContent
+import util.DateUtilLocalised
+import utils.toOpt
 
 import java.time.LocalDate
 
@@ -90,8 +94,8 @@ class RentalPeriodFormSpec extends FormSpec:
     )
     bound.hasErrors mustBe true
     bound.errors must have size 2
-    bound.error("fromDate").value.message must include("""The from date must be on or after """)
-    bound.error("toDate").value.message   must include("""The "to date" must be less than or equal to""")
+    bound.error("fromDate").value.message mustBe s"The from date must be on or after $startDateWales"
+    bound.error("toDate").value.message mustBe s"""The "to date" must be less than or equal to $endDate"""
   }
 
   it should "detect errors related to fields being constrained according to the English journey" in new SessionFixture(
@@ -109,8 +113,36 @@ class RentalPeriodFormSpec extends FormSpec:
     )
     bound.hasErrors mustBe true
     bound.errors must have size 2
-    bound.error("fromDate").value.message must include("""The from date must be on or after """)
-    bound.error("toDate").value.message   must include("""The "to date" must be less than or equal to""")
+    bound.error("fromDate").value.message mustBe s"The from date must be on or after $startDateEnglish"
+    bound.error("toDate").value.message mustBe s"""The "to date" must be less than or equal to $endDate"""
+  }
+
+  it should "return error when from date is before first available for commercial letting" in new SessionFixture(
+    isWelsh = false
+  ) {
+    given sessionReq: SessionRequest[AnyContent] = sessionRequest(false).copy(
+      sessionData = sessionRequest(false).sessionData.copy(
+        aboutYouAndThePropertyPartTwo =
+          AboutYouAndThePropertyPartTwo(commercialLetDate = MonthsYearDuration(2, previousFiscalYearEnd))
+      )
+    )
+
+    val commercialLetFirstAvailable =
+      implicitly[DateUtilLocalised].formatDate(LocalDate.of(previousFiscalYearEnd, 2, 1))
+
+    val bound = theForm.bind(
+      Map(
+        "fromDate.day"   -> "31",
+        "fromDate.month" -> "1",
+        "fromDate.year"  -> previousFiscalYearEnd.toString,
+        "toDate.day"     -> "1",
+        "toDate.month"   -> "3",
+        "toDate.year"    -> previousFiscalYearEnd.toString
+      )
+    )
+    bound.hasErrors mustBe true
+    bound.errors must have size 1
+    bound.error("fromDate").value.message mustBe s"The from date must be on or after $commercialLetFirstAvailable"
   }
 
   it should "detect errors related to the from date being greater than the to date" in new SessionFixture(
@@ -128,7 +160,7 @@ class RentalPeriodFormSpec extends FormSpec:
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound.errors.head.message must include("""The "from date" must be less than or equal to the "to date"""")
+    bound.errors.head.message mustBe """The "from date" must be less than or equal to the "to date""""
   }
 
   trait SessionFixture(isWelsh: Boolean) extends FiscalYearSupport:
