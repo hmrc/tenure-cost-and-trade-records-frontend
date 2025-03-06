@@ -480,5 +480,33 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .apply(session6010) shouldBe controllers.routes.TaskListController.show().withFragment("leaseOrAgreement")
     }
 
+    "return a function that goes to does rent include fixture and fittings  when payment for trade service has been completed" in {
+      navigator
+        .nextPage(PaymentForTradeServicesId, session6010)
+        .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController
+        .show()
+    }
+
+    "return a function that goes to is parking rent paid separately  when does rent include parking has been completed" in {
+      navigator
+        .nextPage(DoesRentIncludeParkingId, session6010)
+        .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController
+        .show()
+    }
+
+    "return a function that goes to does rent include fixture and fittings  when is parking rent paid separately has been completed" in {
+      navigator
+        .nextPage(IsParkingRentPaidSeparatelyId, session6010)
+        .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController
+        .show()
+    }
+
+    "return a function that goes to lease surrendered early page when disregarded addition details has been completed123123 " in {
+      navigator
+        .nextPage(IncentivesPaymentsConditionsId, session6010)
+        .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController
+        .show()
+    }
+
   }
 }

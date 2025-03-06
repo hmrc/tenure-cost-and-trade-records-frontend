@@ -278,18 +278,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
     ) match {
       case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show()
-      case Some("no")  =>
+      case _           =>
         answers.forType match {
           case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
           case FOR6045 | FOR6046 =>
             controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
           case _                 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
         }
-      case _           =>
-        logger.warn(
-          s"Navigation for tenants additions disregarded reached without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for tenants additions disregarded routing")
     }
 
   private def tenantsAdditionsDisregardedDetailsRouting: Session => Call = answers =>
@@ -472,16 +467,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case FOR6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
           case _       => aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
         }
-      case Some("no")  =>
+      case _           =>
         answers.forType match {
           case FOR6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
           case _       => controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
         }
-      case _           =>
-        logger.warn(
-          s"Navigation for property use leaseback agreement without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for property use leaseback agreement routing")
     }
 
   private def rentDevelopedLandRouting: Session => Call =
@@ -506,12 +496,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
             controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show()
           case _                           => aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
         }
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
-      case _           =>
-        logger.warn(
-          s"Navigation for incentive payments conditions without correct selection of conditions by controller"
-        )
-        throw new RuntimeException("Invalid option exception for incentive payments conditions routing")
+      case _           => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     }
 
   private def workCarriedOutConditionRouting: Session => Call = answers =>
