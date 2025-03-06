@@ -90,7 +90,7 @@ class RentalPeriodFormSpec extends FormSpec:
     )
     bound.hasErrors mustBe true
     bound.errors must have size 2
-    bound.error("fromDate").value.message must include("""The "from date" must be greater than or equal to""")
+    bound.error("fromDate").value.message must include("""The from date must be on or after """)
     bound.error("toDate").value.message   must include("""The "to date" must be less than or equal to""")
   }
 
@@ -109,7 +109,7 @@ class RentalPeriodFormSpec extends FormSpec:
     )
     bound.hasErrors mustBe true
     bound.errors must have size 2
-    bound.error("fromDate").value.message must include("""The "from date" must be greater than or equal to""")
+    bound.error("fromDate").value.message must include("""The from date must be on or after """)
     bound.error("toDate").value.message   must include("""The "to date" must be less than or equal to""")
   }
 
