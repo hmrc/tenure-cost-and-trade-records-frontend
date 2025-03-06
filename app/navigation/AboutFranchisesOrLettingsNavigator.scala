@@ -249,16 +249,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     }
   }
 
-  private def concessionTypeDetailsRouting: Session => Call = answers =>
-    answers.forType match {
-      case FOR6010 | FOR6011 =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-      case FOR6015 | FOR6016 =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-      case _                 =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
-    }
-
   private def addAnotherConcessionRouting: Session => Call = answers => {
     def getLastCateringOperationConcessionIndex(session: Session): Option[Int] =
       session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
