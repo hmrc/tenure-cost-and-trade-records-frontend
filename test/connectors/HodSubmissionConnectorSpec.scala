@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,88 +16,76 @@
 
 package connectors
 
-import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
 import org.scalatest.RecoverMethods.recoverToExceptionIf
-import play.api.libs.json.Format
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse}
+import play.api.http.Status.{BAD_REQUEST, CREATED}
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier}
 import utils.TestBaseSpec
 
-import scala.concurrent.{ExecutionContext, Future}
+import java.net.URL
 
 class SubmissionConnectorSpec extends TestBaseSpec {
 
-  val mockHttpClient = mock[HttpClient]
-  val refNumber      = "12345678"
+  val refNumber = "12345678"
 
-  val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, mockHttpClient)
+  private def httpPutMock(responseStatus: Int): HttpClientV2 =
+    val httpClientV2Mock = mock[HttpClientV2]
+    when(
+      httpClientV2Mock.put(any[URL])(any[HeaderCarrier])
+    ).thenReturn(RequestBuilderStub(Right(responseStatus)))
+    httpClientV2Mock
 
   "SubmissionConnector" when {
 
     "submitNotConnected is called" should {
 
       "make a PUT request and handle success response" in {
-        when(
-          mockHttpClient.PUT[NotConnectedSubmission, HttpResponse](
-            startsWith(s"${connector.serviceUrl}/tenure-cost-and-trade-records/submissions/notConnected/"),
-            argThat[NotConnectedSubmission](_ => true), // Matching any NotConnectedSubmission here
-            any[Seq[(String, String)]]
-          )(
-            any[Format[NotConnectedSubmission]],
-            any[HttpReads[HttpResponse]],
-            any[HeaderCarrier],
-            any[ExecutionContext]
-          )
-        )
-          .thenReturn(Future.successful(HttpResponse(201, "")))
+        val httpMock  = httpPutMock(CREATED)
+        val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, httpMock)
 
-        val result = connector.submitNotConnected(refNumber, notConnectedSubmission)
+        val result = connector.submitNotConnected(refNumber, notConnectedSubmission).futureValue
 
-        await(result) shouldBe ()
+        result.status shouldBe CREATED
+        result.body     should include(""""previouslyConnected":false,""")
+
+        verify(httpMock)
+          .put(any[URL])(any[HeaderCarrier])
       }
 
       "handle BadRequestException response" in {
-        when(
-          mockHttpClient.PUT[NotConnectedSubmission, HttpResponse](
-            startsWith(s"${connector.serviceUrl}/tenure-cost-and-trade-records/submissions/notConnected/"),
-            argThat[NotConnectedSubmission](_ => true), // Matching any NotConnectedSubmission here
-            any[Seq[(String, String)]]
-          )(
-            any[Format[NotConnectedSubmission]],
-            any[HttpReads[HttpResponse]],
-            any[HeaderCarrier],
-            any[ExecutionContext]
-          )
-        )
-          .thenReturn(Future.successful(HttpResponse(400, "Bad Request")))
+        val httpMock  = httpPutMock(BAD_REQUEST)
+        val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, httpMock)
 
-        recoverToExceptionIf[BadRequestException] {
+        val exception = recoverToExceptionIf[BadRequestException] {
           connector.submitNotConnected(refNumber, notConnectedSubmission)
-        } map { exception =>
-          exception shouldBe a[BadRequestException]
-          // exception.getMessage should include("Bad Request")
-        }
-      }
+        }.futureValue
 
+        exception.getMessage should include(""""previouslyConnected":false,""")
+
+        verify(httpMock)
+          .put(any[URL])(any[HeaderCarrier])
+      }
     }
 
     "submitConnected is called" should {
 
       "make a PUT request and handle success response" in {
-        when(
-          mockHttpClient.PUT[ConnectedSubmission, HttpResponse](
-            startsWith(s"${connector.serviceUrl}/tenure-cost-and-trade-records/submissions/connected/"),
-            argThat[ConnectedSubmission](_ => true), // Matching any ConnectedSubmission here
-            any[Seq[(String, String)]]
-          )(any[Format[ConnectedSubmission]], any[HttpReads[HttpResponse]], any[HeaderCarrier], any[ExecutionContext])
+        val httpMock  = httpPutMock(CREATED)
+        val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, httpMock)
+
+        val result = connector.submitConnected(refNumber, connectedSubmission).futureValue
+
+        result.status shouldBe CREATED
+        result.body     should include(
+          """"stillConnectedDetails":{"tradingNameOperatingFromProperty":{"tradingName":"ABC LTD"},"""
         )
-          .thenReturn(Future.successful(HttpResponse(201, "")))
 
-        val result = connector.submitConnected(refNumber, connectedSubmission)
-
-        await(result) shouldBe ()
+        verify(httpMock)
+          .put(any[URL])(any[HeaderCarrier])
       }
 
     }
 
   }
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import models.submissions.ConnectedSubmission
 import org.mockito.Mockito.spy
 import play.api.libs.json.JsObject
 import play.api.mvc.{Request, Result}
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import stub.StubSessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import utils.TestBaseSpec
 import views.html.confirmation
 
@@ -36,10 +36,11 @@ import scala.concurrent.{ExecutionContext, Future}
   */
 class FormSubmissionControllerSpec extends TestBaseSpec {
 
-  private val sessionRepo              = StubSessionRepo()
-  val submissionConnector              = mock[SubmissionConnector]
-  val errorHandler                     = mock[ErrorHandler]
-  val audit                            = spy(inject[Audit])
+  private val sessionRepo = StubSessionRepo()
+  val submissionConnector = mock[SubmissionConnector]
+  val errorHandler        = mock[ErrorHandler]
+  val audit               = spy(inject[Audit])
+
   private def formSubmissionController = new FormSubmissionController(
     stubMessagesControllerComponents(),
     submissionConnector,
@@ -54,7 +55,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
     "handle submit form with all sections" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
       when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
-        .thenReturn(Future.successful(()))
+        .thenReturn(Future.successful(HttpResponse(CREATED)))
       val result = formSubmissionController.submit(fakeRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(controllers.routes.FormSubmissionController.confirmation().url)

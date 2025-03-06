@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,94 +19,114 @@ package connectors
 import com.google.inject.ImplementedBy
 import config.AppConfig
 import models.{Credentials, FORLoginResponse, SubmissionDraft}
-import play.api.libs.json.Writes
-import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpClient, HttpReads, HttpResponse, UpstreamErrorResponse}
+import play.api.libs.json.Json
+import play.api.libs.ws.JsonBodyWritables.writeableOf_JsValue
+import uk.gov.hmrc.http.HttpReads.Implicits.readRaw
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpReads, HttpResponse, StringContextOps, UpstreamErrorResponse}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import java.net.URL
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DefaultBackendConnector @Inject() (servicesConfig: ServicesConfig, appConfig: AppConfig, http: HttpClient)(
-  implicit ec: ExecutionContext
-) extends BackendConnector {
+class DefaultBackendConnector @Inject() (
+  servicesConfig: ServicesConfig,
+  appConfig: AppConfig,
+  httpClientV2: HttpClientV2
+)(implicit
+  ec: ExecutionContext
+) extends BackendConnector:
 
-  private val serviceUrl         = servicesConfig.baseUrl("tenure-cost-and-trade-records")
-  private val backendBaseUrl     = s"$serviceUrl/tenure-cost-and-trade-records"
-  private val saveAsDraftBaseUrl = s"$backendBaseUrl/saveAsDraft"
-  private val internalAuthToken  = appConfig.internalAuthToken
+  private val serviceUrl        = servicesConfig.baseUrl("tenure-cost-and-trade-records")
+  private val backendBaseUrl    = s"$serviceUrl/tenure-cost-and-trade-records"
+  private val internalAuthToken = Some(Authorization(appConfig.internalAuthToken))
 
   private def cleanedRefNumber(refNumber: String) = refNumber.replaceAll("[^0-9]", "")
 
-  private def saveAsDraftUrl(referenceNumber: String) = s"$saveAsDraftBaseUrl/${cleanedRefNumber(referenceNumber)}"
+  private val authenticateURL: URL = url"$backendBaseUrl/authenticate"
 
-  private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
+  private def getFORTypeURL(refNumber: String): URL = url"$backendBaseUrl/${cleanedRefNumber(refNumber)}/forType"
 
-  private def readsHack(implicit httpReads: HttpReads[FORLoginResponse]): HttpReads[FORLoginResponse] =
-    (method: String, url: String, response: HttpResponse) =>
-      response.status match {
-        case 400 => throw new BadRequestException(response.body)
-        case 401 => throw UpstreamErrorResponse(response.body, 401, 401)
-        case _   => httpReads.read(method, url, response)
-      }
+  private def saveAsDraftURL(refNumber: String): URL = url"$backendBaseUrl/saveAsDraft/${cleanedRefNumber(refNumber)}"
 
   override def verifyCredentials(refNumber: String, postcode: String)(implicit
     hc: HeaderCarrier
-  ): Future[FORLoginResponse] = {
-    val credentials    = Credentials(cleanedRefNumber(refNumber), postcode)
-    val wrtCredentials = implicitly[Writes[Credentials]]
+  ): Future[FORLoginResponse] =
+    val credentials = Credentials(cleanedRefNumber(refNumber), postcode)
 
-    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
-    http.POST[Credentials, FORLoginResponse](
-      url("authenticate"),
-      credentials,
-      Seq.empty
-    )(wrtCredentials, readsHack, headerCarrier, ec)
-  }
+    httpClientV2
+      .post(authenticateURL)(headerCarrier)
+      .withBody(Json.toJson(credentials))
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case 200    => Future.successful(Json.parse(response.body).as[FORLoginResponse])
+          case 400    => Future.failed(new BadRequestException(response.body))
+          case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
+        }
+      }
 
-  override def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] = {
-    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+  override def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] =
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
-    http
-      .GET(url(s"${cleanedRefNumber(referenceNumber)}/forType"))(HttpReads.Implicits.readRaw, headerCarrier, ec)
+    httpClientV2
+      .get(getFORTypeURL(referenceNumber))(headerCarrier)
+      .execute[HttpResponse]
       .map(res => (res.json \ "FORType").as[String])
-  }
 
   override def saveAsDraft(
     referenceNumber: String,
     submissionDraft: SubmissionDraft,
     hc: HeaderCarrier
-  ): Future[Unit] = {
-    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+  ): Future[Unit] =
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
-    http.PUT(
-      saveAsDraftUrl(referenceNumber),
-      submissionDraft
-    ) map { _ =>
-      ()
-    }
-  }
+    httpClientV2
+      .put(saveAsDraftURL(referenceNumber))(headerCarrier)
+      .withBody(Json.toJson(submissionDraft))
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case 201    => Future.unit
+          case 400    => Future.failed(new BadRequestException(response.body))
+          case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
+        }
+      }
 
-  override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] = {
-    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+  override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] =
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
-    http.GET[Option[SubmissionDraft]](
-      saveAsDraftUrl(referenceNumber)
-    )(HttpReads.Implicits.readOptionOfNotFound[SubmissionDraft], headerCarrier, ec)
-  }
+    httpClientV2
+      .get(saveAsDraftURL(referenceNumber))(headerCarrier)
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case 200    => Future.successful(Json.parse(response.body).asOpt[SubmissionDraft])
+          case 404    => Future.successful(None)
+          case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
+        }
+      }
 
-  override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] = {
-    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
+  override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] =
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
-    http
-      .DELETE(saveAsDraftUrl(referenceNumber))
-      .map(res => (res.json \ "deletedCount").as[Int])
-  }
-}
+    httpClientV2
+      .delete(saveAsDraftURL(referenceNumber))(headerCarrier)
+      .execute[HttpResponse]
+      .flatMap { response =>
+        response.status match {
+          case 200    => Future.successful((response.json \ "deletedCount").as[Int])
+          case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
+        }
+      }
 
 @ImplementedBy(classOf[DefaultBackendConnector])
-trait BackendConnector {
+trait BackendConnector:
+
   def verifyCredentials(refNumber: String, postcode: String)(implicit hc: HeaderCarrier): Future[FORLoginResponse]
 
   def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String]
@@ -116,4 +136,3 @@ trait BackendConnector {
   def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]]
 
   def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int]
-}
