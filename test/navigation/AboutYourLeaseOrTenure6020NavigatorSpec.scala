@@ -393,10 +393,24 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to is rent under review when intervals of rent has been completed " in {
+      navigator
+        .nextPage(IntervalsOfRentReviewId, session6020)
+        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController
+        .show()
+    }
+
     "return a function that goes to how was the current rent agreed  when setting the current rent has been completed " in {
       navigator
         .nextPage(HowIsCurrentRentFixedId, session6020)
         .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+        .show()
+    }
+
+    "return a function that goes to does rent include parking  when payment for trade service has been completed   qw" in {
+      navigator
+        .nextPage(PaymentForTradeServicesId, session6020)
+        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController
         .show()
     }
 

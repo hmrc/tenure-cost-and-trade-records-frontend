@@ -20,7 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.Session
-import navigation.identifiers.*
+import navigation.identifiers.{UltimatelyResponsibleBusinessInsurancePageId, *}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -62,6 +62,16 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(HowIsCurrentRentFixedId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+        .show()
+    }
+
+    "return a function that goes to how rent is currently fixed  page when UR building insurance is completed123" in {
+      val answers = session6048.copy(
+        aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
+      )
+      navigator
+        .nextPage(UltimatelyResponsibleBusinessInsurancePageId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
         .show()
     }
 
