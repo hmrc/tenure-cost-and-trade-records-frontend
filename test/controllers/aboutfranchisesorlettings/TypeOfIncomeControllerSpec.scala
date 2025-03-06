@@ -46,6 +46,12 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
   "IncomeRecord" should {
 
+    "serialize and deserialize correctly for IncomeRecord" in {
+      val incomeRecord = lettingIncomeRecord
+      val json         = Json.toJson(incomeRecord: IncomeRecord)
+      json.as[IncomeRecord] shouldBe incomeRecord
+    }
+
     "serialize and deserialize correctly for LettingIncomeRecord" in {
       val incomeRecord = lettingIncomeRecord
       val json         = Json.toJson(incomeRecord: LettingIncomeRecord)
