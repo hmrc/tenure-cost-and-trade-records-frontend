@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,87 +18,79 @@ package connectors
 
 import com.google.inject.ImplementedBy
 import config.AppConfig
-
-import javax.inject.{Inject, Singleton}
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, RequestReferenceNumberSubmission}
-
-import scala.concurrent.{ExecutionContext, Future}
-import uk.gov.hmrc.http._
+import play.api.libs.json.{Json, Writes}
+import play.api.libs.ws.JsonBodyWritables.writeableOf_JsValue
+import uk.gov.hmrc.http.HttpReads.Implicits.readRaw
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, HttpResponse, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
-@Singleton
-class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppConfig, http: HttpClient)(implicit
-  ec: ExecutionContext
-) extends SubmissionConnector {
+import java.net.URL
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
-  val serviceUrl: String        = config.baseUrl("tenure-cost-and-trade-records")
-  val internalAuthToken: String = appConfig.internalAuthToken
-  private def url(path: String) = s"$serviceUrl/tenure-cost-and-trade-records/$path"
+@Singleton
+class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppConfig, httpClientV2: HttpClientV2)(
+  implicit ec: ExecutionContext
+) extends SubmissionConnector:
+
+  private val serviceUrl        = config.baseUrl("tenure-cost-and-trade-records")
+  private val internalAuthToken = Some(Authorization(appConfig.internalAuthToken))
 
   private def cleanedRefNumber(refNumber: String) = refNumber.replaceAll("[^0-9]", "")
 
+  private def connectedSubmissionURL(refNumber: String): URL =
+    url"$serviceUrl/tenure-cost-and-trade-records/submissions/connected/${cleanedRefNumber(refNumber)}"
+
+  private def notConnectedSubmissionURL(refNumber: String): URL =
+    url"$serviceUrl/tenure-cost-and-trade-records/submissions/notConnected/${cleanedRefNumber(refNumber)}"
+
+  private val requestRefNumURL: URL = url"$serviceUrl/tenure-cost-and-trade-records/submissions/requestRefNum"
+
   override def submitRequestReferenceNumber(submission: RequestReferenceNumberSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit] =
-    http
-      .PUT[RequestReferenceNumberSubmission, HttpResponse](
-        url(s"submissions/requestRefNum"),
-        submission,
-        Seq("Authorization" -> internalAuthToken)
-      )
-      .flatMap { response =>
-        response.status match {
-          case 201 => Future.successful(())
-          case 400 => Future.failed(new BadRequestException(response.body))
-          case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
-        }
-      }
+  ): Future[HttpResponse] =
+    sendSubmission(requestRefNumURL, submission)
 
   override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit] = {
-    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
-    http
-      .PUT[NotConnectedSubmission, HttpResponse](
-        url(s"submissions/notConnected/${cleanedRefNumber(refNumber)}"),
-        submission
-      )(NotConnectedSubmission.format, HttpReads.Implicits.readRaw, headerCarrier, ec)
-      .flatMap { response =>
-        response.status match {
-          case 201 => Future.successful(())
-          case 400 => Future.failed(new BadRequestException(response.body))
-          case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
-        }
-      }
-  }
+  ): Future[HttpResponse] =
+    sendSubmission(notConnectedSubmissionURL(refNumber), submission)
 
   override def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit] = {
-    implicit val headerCarrier = hc.copy(authorization = Some(Authorization(internalAuthToken)))
-    http
-      .PUT[ConnectedSubmission, HttpResponse](
-        url(s"submissions/connected/${cleanedRefNumber(refNumber)}"),
-        submission
-      )(ConnectedSubmission.format, HttpReads.Implicits.readRaw, headerCarrier, ec)
+  ): Future[HttpResponse] =
+    sendSubmission(connectedSubmissionURL(refNumber), submission)
+
+  private def sendSubmission[T](url: URL, submission: T)(implicit
+    tjs: Writes[T],
+    hc: HeaderCarrier
+  ): Future[HttpResponse] =
+    implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
+
+    httpClientV2
+      .put(url)(headerCarrier)
+      .withBody(Json.toJson(submission))
+      .execute[HttpResponse]
       .flatMap { response =>
         response.status match {
-          case 201 => Future.successful(())
-          case 400 => Future.failed(new BadRequestException(response.body))
-          // Handle other cases if necessary
-          case _   => Future.failed(new Exception(s"Unexpected response: ${response.status}"))
+          case 201    => Future.successful(response)
+          case 400    => Future.failed(new BadRequestException(response.body))
+          case status => Future.failed(new Exception(s"Unexpected response: $status"))
         }
       }
-  }
-}
 
 @ImplementedBy(classOf[HodSubmissionConnector])
-trait SubmissionConnector {
+trait SubmissionConnector:
   def submitRequestReferenceNumber(submission: RequestReferenceNumberSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit]
+  ): Future[HttpResponse]
+
   def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
     hc: HeaderCarrier
-  ): Future[Unit]
-  def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit hc: HeaderCarrier): Future[Unit]
-}
+  ): Future[HttpResponse]
+
+  def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
+    hc: HeaderCarrier
+  ): Future[HttpResponse]

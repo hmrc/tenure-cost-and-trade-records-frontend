@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@ package controllers.connectiontoproperty
 import config.ErrorHandler
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
-import play.api.test.Helpers.{status, stubMessagesControllerComponents}
+import play.api.test.Helpers.{CREATED, status, stubMessagesControllerComponents}
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
 import play.api.mvc.Request
 import play.twirl.api.Html
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import utils.TestBaseSpec
 
 import scala.concurrent.Future
@@ -53,7 +53,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
     "submission is successful" should {
       "redirect (HTTP 303)" in {
         when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
-          .thenReturn(Future.successful(()))
+          .thenReturn(Future.successful(HttpResponse(CREATED)))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)
         status(result) shouldBe Status.SEE_OTHER
       }
