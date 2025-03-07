@@ -22,7 +22,6 @@ import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsFo
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CheckYourAnswersAboutFranchiseOrLettings}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import models.ForType.*
 import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId
@@ -93,9 +92,9 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     answers: Session
   ): String =
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
-      case AnswerNo =>
+      case Some(AnswerNo) =>
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-      case _        =>
+      case _              =>
         answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
           case Some(AnswerYes) =>
             controllers.aboutfranchisesorlettings.routes.RentalIncomeListController
