@@ -41,21 +41,6 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
-      "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
-          fakePostRequest
-            .withFormUrlEncodedBody(
-              "answer" -> "" // missing
-            )
-            .withQueryParams(
-              "from" -> "TL"
-            )
-        )
-        status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
-        page.backLink        shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
-        page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
-      }
       "be handling POST answer='yes' by replying 303 redirect to 'CompletedLettingsDetail' page" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -131,6 +116,23 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           hasCompletedLettings(data).value shouldBe true
           completedLettings(data)            should have size 5
         }
+      }
+    }
+    "regardless of the user providing answers" should {
+      "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
+        val result = controller.submit(
+          fakePostRequest
+            .withFormUrlEncodedBody(
+              "answer" -> "" // missing
+            )
+            .withQueryParams(
+              "from" -> "TL"
+            )
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page   = contentAsJsoup(result)
+        page.backLink        shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
+        page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
       }
     }
   }

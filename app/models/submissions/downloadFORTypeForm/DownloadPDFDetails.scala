@@ -18,10 +18,11 @@ package models.submissions.downloadFORTypeForm
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.ReferenceNumber
 import play.api.libs.json.{Json, OFormat}
 
 case class DownloadPDFDetails(
-  downloadPDFReferenceNumber: Option[DownloadPDFReferenceNumber] = None,
+  referenceNumber: Option[ReferenceNumber] = None,
   downloadPDF: Option[DownloadPDF] = None
 )
 

@@ -41,24 +41,6 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
-      "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
-          fakePostRequest
-            .withFormUrlEncodedBody(
-              "answer" -> "" // missing
-            )
-            .withQueryParams(
-              "from" -> "CYA;some-fragment"
-            )
-            .withFragment(
-              "permanent-residents"
-            )
-        )
-        status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
-        page.backLink        shouldBe routes.CheckYourAnswersController.show.withFragment("some-fragment").toString
-        page.error("answer") shouldBe "lettingHistory.hasPermanentResidents.required"
-      }
       "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentDetail' page" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -132,6 +114,26 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           hasPermanentResidents(data).value shouldBe true
           permanentResidents(data)            should have size 5
         }
+      }
+    }
+    "regardless of the user providing answers" should {
+      "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
+        val result = controller.submit(
+          fakePostRequest
+            .withFormUrlEncodedBody(
+              "answer" -> "" // missing
+            )
+            .withQueryParams(
+              "from" -> "CYA;some-fragment"
+            )
+            .withFragment(
+              "permanent-residents"
+            )
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page   = contentAsJsoup(result)
+        page.backLink        shouldBe routes.CheckYourAnswersController.show.withFragment("some-fragment").toString
+        page.error("answer") shouldBe "lettingHistory.hasPermanentResidents.required"
       }
     }
   }

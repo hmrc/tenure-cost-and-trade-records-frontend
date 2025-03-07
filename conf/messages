@@ -70,9 +70,9 @@ label.no.na = No
 # CYA RADIO BUTTONS
 ##############
 checkYourAnswersRadio.heading = Have you completed this section?
-checkYourAnswersRadio.yes = Yes, I’ve completed this section
-checkYourAnswersRadio.no = No, I’ll come back to it later
-error.checkYourAnswersRadio.required = Select yes if you’ve completed this section
+checkYourAnswersRadio.yes = Yes, I''ve completed this section
+checkYourAnswersRadio.no = No, I''ll come back to it later
+error.checkYourAnswersRadio.required = Select yes if you''ve completed this section
 
 # COMMON LABELS
 ###############
@@ -128,28 +128,29 @@ label.section.additionalInformation = Additional information
 # DUMMY START PAGE FULL INFORMATION
 ##############################
 start.page.heading = Send your business trade and cost information to the Valuation Office Agency
-start.desc = You must send the Valuation Office Agency (VOA) information about your business property if they’ve asked you to. You need to do this even if you no longer own or rent the property.
-start.desc1 = The information you provide will be used by the local authority to help calculate business rates in your area.
 start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
-start.subheading = What you’ll need:
+start.subheading = What you''ll need to begin
 start.item1 = the reference number and postcode from the letter you were sent by the Valuation Office Agency (VOA)
-start.item2 = trading information for the last 3 financial years, or since you occupied the property
-start.item3 = details of any franchises or lettings run from the property as a separate business (if applicable)
-start.subheading2 = If you do not own the property, you’ll also need:
-start.item4 = your lease or agreement, including the current rent you pay
-start.item5 = information about any recent rent changes, or any rent-free period
-start.item6 = information about any changes you’ve made to the property that could affect its value
-start.desc3 = If you no longer occupy, or have never occupied the property you must still use this service to notify us.
-start.desc4 = You do not have to complete the form in one go. You can save what you’ve done and return to finish it later.
-start.subheading3 = If you need help
+start.item2 = the postcode of the property as printed on the letter - if the postcode shown is incorrect, you can let us know during your declaration
+start.subheading2 = What you''ll be asked
+start.item3 = whether your business owns the property, or occupies it under a lease or agreement
+start.item4 = details of your trading history
+start.item5 = if any parts of the property are let out to businesses or individuals
+start.item6 = if any concessions o franchises operate from the property as separate businesses
+start.link1 = Visit our guidance page
+start.desc1 = to see how to complete your declaration. It also lists the information your must provide.
+start.desc2 = If you no longer occupy, or have never occupied the property you must still use this service to notify us.
+start.subheading3 = If you need a break, or do not have information to hand
+start.desc3 = If you need to stop for any reason, select save as draft. You'll be asked to create a password which will allow you to save your progress, and return to complete your declaration at another time.
+start.subheading4 = If you need help
 start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
 start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers%20form&body=Please%20email%20us%20your%20reference%20number,%20email%20address%20and/or%20telephone%20number%20only.%20If%20we%20require%20any%20further%20information%20we%20will%20contact%20you%20in%20due%20course." target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
-start.subheading4 = Alternative formats
-start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href={0} class="govuk-link" target="_blank">download a PDF version</a> of this declaration which you can complete and return to the VOA.
-start.subheading5 = Explore the topic
+start.subheading5 = Alternative formats
+start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href="{0}" class="govuk-link">download a PDF version</a> of this declaration which you can complete and return to the VOA.
+start.subheading6 = Explore the topic
 start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales.
-start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
+start.desc7 = If you''d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.button = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
 start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
@@ -171,7 +172,7 @@ error.json.page.start = Start again
 #LOGIN
 ##############################
 login.heading = What is your reference number and postcode?
-label.letter = You’ll find your reference number and postcode in the letter you received from the VOA.
+label.letter = You''ll find your reference number and postcode in the letter you received from the VOA.
 label.referenceNumber = Reference number
 hint.referenceNumber = For example, 1000001/101.
 label.postcode = Postcode
@@ -195,7 +196,7 @@ error.login.attemptsleft= You have {0} remaining attempts to enter the correct d
 error.login.attemptsleftSubheading = If the system does not recognise you reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
 error.login.1.attempt.left=You have one remaining attempt to enter the correct details before your account is locked for 2 hours.
 heading.login.lockedOut=Access withdrawn for 2 hours
-error.login.lockedOut=You’ve exceeded the permitted number of login attempts. For security, you won’t be able to access your declaration for 2 hours.
+error.login.lockedOut=You''ve exceeded the permitted number of login attempts. For security, you won''t be able to access your declaration for 2 hours.
 error.login.lockedOut.p1=Your login details are the reference number and postcode from the letter you received from the VOA. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA</a> if these details no longer give you access to your declaration.
 label.retryLogin=Try again
 
@@ -208,7 +209,7 @@ logout.loginAgain=Log in again
 # NO REFERENCE NUMBER
 ##############################
 requestReferenceNumber.heading = If you do not have a reference number
-requestReferenceNumber.subheading = If you’ve not received a letter from the VOA
+requestReferenceNumber.subheading = If you''ve not received a letter from the VOA
 requestReferenceNumber.p1 = You only need to declare your business trade and cost information when the VOA have asked you to do so. If you think you should have received a letter, you can request a replacement from the VOA.
 requestReferenceNumber.subheading2 = If you need a replacement letter
 requestReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
@@ -228,16 +229,107 @@ label.requestReferenceNumberContactDetailsFullName = Full name
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Additional information (optional)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
-# DOWNLOAD FORM SECTION
-#######################
-
-# DOWNLOAD PDF REFERENCE NUMBER
+# REFERENCE NUMBER
 ###############################
-downloadPdfReferenceNumber.heading = What is your reference number?
-downloadPdfReferenceNumber.p1 = You’ll need the reference number from the letter you received from the VOA
-label.downloadPdfReferenceNumber = Reference number
-error.downloadPdfReferenceNumber.required = Enter your reference number
-hint.downloadPdfReferenceNumber = For example, 1000001/101.
+referenceNumber.heading = What is your reference number?
+referenceNumber.paragraph = You''ll need the reference number from the letter you received from the VOA
+label.referenceNumber = Reference number
+error.referenceNumber.required = Enter your reference number
+hint.referenceNumber = For example, 1000001/101.
+
+# GUIDANCE
+###############################
+guidance.section = Guidance
+guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
+guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
+
+guidance.sentence.whatYouWillBeAsked = What you''ll be asked
+guidance.sentence.whatYouWillNeed = What you''ll need
+guidance.sentence.importantDates = Important dates
+guidance.sentence.youMustTellUs = You must tell us:
+guidance.sentence.recordsContaining = Records containing any:
+guidance.sentence.howMuch = How much:
+guidance.sentence.weNeedToKnow = We need to know:
+guidance.sentence.youShouldHave = You should have:
+guidance.sentence.when = When:
+
+guidance.sections.shared.startingDeclaration.a2.shared.overview.h1 = Overview
+guidance.sections.shared.overview.p1 = The Valuation Office Agency (VOA) is responsible for valuing every non-domestic property in England and Wales. To do this, the VOA sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
+guidance.sections.shared.overview.p2 = People who should complete these declarations include:
+guidance.sections.shared.overview.li1 = businesses or organisations who own and occupy the property
+guidance.sections.shared.overview.li2 = businesses or organisations who occupy the property under a lease or agreement
+guidance.sections.shared.overview.li3 = landlords of a vacant property where no lease or agreement is in place
+guidance.sections.shared.overview.p3 = You can also ask third parties to complete the declaration on your behalf.
+guidance.sections.shared.overview.p4 = Declarations are divided into different sections. The amount of information you need to provide in each section will depend on:
+guidance.sections.shared.overview.li4 = whether your business or organisation owns or rents the property
+guidance.sections.shared.overview.li5 = the complexity of your business or organisation
+guidance.sections.shared.overview.p5 = You do not have to complete your declaration in one sitting. Select <b>Save as draft</b> to create a password so you can return later to complete your declaration.
+
+guidance.sections.FOR6048.connectionToTheProperty.li1 = if the property is vacant
+guidance.sections.FOR6048.connectionToTheProperty.li2 = the name of the business or organisation operating from the property
+guidance.sections.FOR6048.connectionToTheProperty.li3 = whether the business or organisation owns or rents the property
+guidance.sections.FOR6048.connectionToTheProperty.li4 = if the declaration is being completed by a third party
+guidance.sections.FOR6048.connectionToTheProperty.p1 = If the property is vacant, but you receive rental income from lettings such as phone masts, advertising billboards or car parking, you''ll need those tenancy agreements.
+guidance.sections.FOR6048.connectionToTheProperty.p2 = If the property is vacant, we need to know when it became vacant.
+
+guidance.sections.FOR6048.aboutYouAndTheProperty.li1 = your contact details
+guidance.sections.FOR6048.aboutYouAndTheProperty.li2 = details of the property's availability and completed commercial lets of up to 28 nights
+guidance.sections.FOR6048.aboutYouAndTheProperty.li3 = if parts of the property are unavailable for rent because they are used by your family
+guidance.sections.FOR6048.aboutYouAndTheProperty.p1 = Records containing details of the number of nights the property was:
+guidance.sections.FOR6048.aboutYouAndTheProperty.li4 = available for lets of up to 28 nights
+guidance.sections.FOR6048.aboutYouAndTheProperty.li5 = occupied for lets of up to 28 nights
+guidance.sections.FOR6048.aboutYouAndTheProperty.p2 = When the property was first available for commercial lets of up to 28 nights.
+
+guidance.sections.FOR6048.lettingHistory.li1 = if any parts of the property are used as a permanent residence by tenants or employees
+guidance.sections.FOR6048.lettingHistory.li2 = if any parts of the property are used for commercial lets of 29 nights or longer
+guidance.sections.FOR6048.lettingHistory.li3 = how many nights you intend to let the property in the coming year
+guidance.sections.FOR6048.lettingHistory.li4 = details of your letting season
+guidance.sections.FOR6048.lettingHistory.li5 = if you advertise online
+guidance.sections.FOR6048.lettingHistory.li6 = details of any permanent residents
+guidance.sections.FOR6048.lettingHistory.li7 = details of any commercial lets of 29 nights or longer
+guidance.sections.FOR6048.lettingHistory.li8 = URLs of the websites where you advertise, and any property reference number if known
+guidance.sections.FOR6048.lettingHistory.p1 = If you have stopped letting the property commercially, we need to know the date when you last hosted a paying guest.
+
+guidance.sections.FOR6048.accommodationDetails.li1 = the number and types of rooms you let out
+guidance.sections.FOR6048.accommodationDetails.li2 = when your high-season tariff is applied
+guidance.sections.FOR6048.accommodationDetails.li3 = what services are included with each letting
+guidance.sections.FOR6048.accommodationDetails.p1 = Details of your letting history, broken down into individual units if you have multiple units of self-catering holiday accommodation.
+guidance.sections.FOR6048.accommodationDetails.p2 = The start and end dates of your high-season tariff.
+
+guidance.sections.FOR6048.tradingHistory.li1 = revenue your self-catering holiday accommodation business generates
+guidance.sections.FOR6048.tradingHistory.li2 = it costs to operate your business
+guidance.sections.FOR6048.tradingHistory.p1 = <b>If your business has occupied the property for longer than 3 years</b><br>You'll need trading figures from the 3 most recent financial years.
+guidance.sections.FOR6048.tradingHistory.p2 = <b>If your business has occupied the property for less than 3 years</b><br>You''ll be asked for figures from all completed financial years since you occupied the property.
+guidance.sections.FOR6048.tradingHistory.p3 = You''ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
+guidance.sections.FOR6048.tradingHistory.li3 = <b>Accounting information</b><br/>Your VAT registration status and your financial year end
+guidance.sections.FOR6048.tradingHistory.li4 = <b>Income</b><br/>Including all letting income and income from providing services such as electricity, laundry or meals
+guidance.sections.FOR6048.tradingHistory.li5 = <b>Fixed costs</b><br/>Details of costs such as insurance, business rates or rent
+guidance.sections.FOR6048.tradingHistory.li6 = <b>Cost of sales</b><br/>Details of any costs incurred
+guidance.sections.FOR6048.tradingHistory.li7 = <b>Accounting costs</b><br/>Details of any wages, National Insurance, depreciation, accountancy fees and bank charges
+guidance.sections.FOR6048.tradingHistory.li8 = <b>Administrative costs</b><br/>Including subscriptions, telephone and broadband, booking agency fees, advertising and printing
+guidance.sections.FOR6048.tradingHistory.li9 = <b>Operational costs</b><br/>Including any utilities, laundry and cleaning, repairs and maintenance, TV licences, travelling expenses and other costs
+guidance.sections.FOR6048.tradingHistory.p3 = When your financial year ends.
+
+guidance.sections.FOR6048.yourLeaseOrAgreement.p1 = If your business owns the property, or occupies the property on a permanent rent-free arrangement, you will not have to fill out this section.
+guidance.sections.FOR6048.yourLeaseOrAgreement.li1 = your landlord''s details
+guidance.sections.FOR6048.yourLeaseOrAgreement.li2 = details of your lease
+guidance.sections.FOR6048.yourLeaseOrAgreement.li3 = if any items or services are included in your rent
+guidance.sections.FOR6048.yourLeaseOrAgreement.li4 = how the rent was calculated
+guidance.sections.FOR6048.yourLeaseOrAgreement.li5 = if any exclusions, restrictions or incentives are included in your lease or agreement
+guidance.sections.FOR6048.yourLeaseOrAgreement.li6 = a copy of your lease
+guidance.sections.FOR6048.yourLeaseOrAgreement.li7 = a record of any rent reviews
+guidance.sections.FOR6048.yourLeaseOrAgreement.li8 = if applicable, details of any improvements you have made to the property which increased its value, such as parking, extensions, or extensive renovations
+guidance.sections.FOR6048.yourLeaseOrAgreement.li9  = the current rent was first paid under the terms of the lease or agreement
+guidance.sections.FOR6048.yourLeaseOrAgreement.li10 = the current lease began
+guidance.sections.FOR6048.yourLeaseOrAgreement.li11 = the current lease was agreed or set
+guidance.sections.FOR6048.yourLeaseOrAgreement.li12 = the next rent revue is due, if applicable
+
+guidance.sections.shared.startingDeclaration.h1 = Starting your declaration
+guidance.sections.shared.startingDeclaration.p1 = It will be easier to complete your declaration if you have all the information listed on this page to hand. You must complete your declaration within 56 days of the date on your invitation letter.
+guidance.sections.shared.startingDeclaration.a1 = Go to the start page
+guidance.sections.shared.startingDeclaration.a2 = Contents
+
+
 
 # DOWNLOAD PDF
 ##############
@@ -280,7 +372,7 @@ genericRemoveConfirmation.heading = Are you sure you want to remove {0}?
 areYouConnected.title = Are you still connected to: {0}?
 areYouConnected.heading = Are you still connected to the property?
 label.areYouConnected.addressUpdate = Yes, and I want to edit the address
-hint.noConnection = Choose this if you’re no longer connected to the property, or have never had a connection to the property.
+hint.noConnection = Choose this if you''re no longer connected to the property, or have never had a connection to the property.
 
 # EDIT ADDRESS
 ##############
@@ -291,10 +383,10 @@ editAddress.heading = How do you expect the connected address to be shown?
 connectionToTheProperty.heading = What is your connection to the property?
 label.occupierTrustee = Occupier or trustee for occupier
 label.ownerTrustee = Owner or trustee for owner
-label.occupierAgent = Occupier’s agent
-label.ownerAgent = Owner’s agent
-hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a leaseback arrangement.
-hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property.
+label.occupierAgent = Occupier''s agent
+label.ownerAgent = Owner''s agent
+hint.occupierTrustee = Select this if you''re renting or leasing the property, even through a leaseback arrangement.
+hint.ownerTrustee = Select this if you own and occupy the property - you''re considered an occupier if you own the property and lease it back to a business you operate from the property.
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
@@ -310,9 +402,9 @@ error.tradingNameFromProperty6048.maxLength = The name of the person or company 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
 tradingNameOwnTheProperty.heading = Do you own the property?
-hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
+hint.tradingNameOwnTheProperty = Only select ‘yes'' if you own the premises or land used by the business.
 tradingNameOwnTheProperty.title = Does {0} own the property?
-hint.tradingNameOwnTheProperty = Only select ‘yes’ if you own the premises or land used by the business.
+hint.tradingNameOwnTheProperty = Only select ‘yes'' if you own the premises or land used by the business.
 error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns the property
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
@@ -320,8 +412,8 @@ error.tradingNameOwnTheProperty.missing = Select yes if the organisation owns th
 tradingNamePayingRent.heading = Paying rent
 tradingNamePayingRent.title = Does {0} pay rent on the property?
 tradingNamePayingRent.p1 = You must declare whether you pay rent under the terms of your lease or agreement.
-tradingNamePayingRent.p2 = You should select ‘yes’ even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
-tradingNamePayingRent.p3 = Select ‘no’ if the owner of the property allows you to occupy it on a permanent rent-free agreement.
+tradingNamePayingRent.p2 = You should select ‘yes'' even if you pay rent under an informal agreement, or have a temporary rent-free agreement.
+tradingNamePayingRent.p3 = Select ‘no'' if the owner of the property allows you to occupy it on a permanent rent-free agreement.
 error.tradingNamePayingRent.missing = Select yes if the organisation pays rent on the property
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
@@ -407,13 +499,13 @@ lettingPartOfPropertyCheckboxesDetails.title = Are any of the following included
 hint.lettingPartOfPropertyCheckboxesDetails = Select all that apply
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount
-label.percentageTurnover = A percentage of turnover of the occupier’s business
+label.percentageTurnover = A percentage of turnover of the occupier''s business
 label.indexed = Indexed to the retail price index (RPI) or another index
 label.stepped = Stepped rent arrangement
 label.other = Other (for example, combination of the above)
 label.currentRentBasedOn.percentageOpenMarket = A percentage of open market value
 label.currentRentBasedOn.fixed = A fixed amount
-label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
+label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier''s business
 label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
 label.currentRentBasedOn.stepped = Stepped rent arrangement
 label.currentRentBasedOn.other = Other
@@ -424,8 +516,8 @@ checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
 checkbox.divider = or
-error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
-error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ''No, none of these items are included in the rent''
+error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ''No, none of these items are included in the rent''
 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
@@ -502,7 +594,7 @@ error.pastConnectionType = Select yes if you ever had a connection to the proper
 # REMOVE CONNECTION
 ###################
 removeConnection.heading = Provide your contact details
-removeConnection.subheading = We’ll only use these details if we need to contact you before removing your connection to this property.
+removeConnection.subheading = We''ll only use these details if we need to contact you before removing your connection to this property.
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the date you last occupied the property.
 error.fullName.required = Enter your name
@@ -538,8 +630,8 @@ error.propertyCurrentlyUsed.maxLength = Your description must be 200 characters 
 # ABOUT THE PROPERTY STRING (6020/6030)
 ####################
 hint.propertyCurrentlyUsedString = For example, petrol station, petrol station with living accommodation.
-error.propertyCurrentlyUsedString.required = Enter the property’s current use
-error.propertyCurrentlyUsedString.maxLength = The property’s use must be described in 200 characters or fewer
+error.propertyCurrentlyUsedString.required = Enter the property''s current use
+error.propertyCurrentlyUsedString.maxLength = The property''s use must be described in 200 characters or fewer
 
 #ABOUT THE PROPERTY/ HOW IS THE PROPERTY CURRENTLY USED 6045/46
 
@@ -552,7 +644,7 @@ label.propertyCurrentlyUsed.touringSite = Touring site
 label.propertyCurrentlyUsed.holidayCentre = Holiday centre
 label.propertyCurrentlyUsed.other = Other
 label.anotherUseDetails = Give details if the property has another use
-error.anotherUseDetails.maxLength = The property’s use must be described in 200 characters or fewer
+error.anotherUseDetails.maxLength = The property''s use must be described in 200 characters or fewer
 error.anotherUseDetails.required = Describe the use of your property if not listed.
 
 # WEBSITE FOR PROPERTY
@@ -582,7 +674,7 @@ error.tradingActivity.maxLength = Your description of the trading activity must 
 ######################################
 premisesLicenseGranted.heading = Is there a current premises licence in place for the property?
 help.premisesLicenseGranted.title = Help with your premises licence
-help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
+help.premisesLicenseGranted.text = We''re interested to know if you''re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
 error.premisesLicenseGranted.missing = Select yes if a premises licence has been granted
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
@@ -592,7 +684,7 @@ help.premisesLicenseGrantedInformation.title = Help with your description
 help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
 help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
 help.premisesLicenseGrantedInformation.heading2 = Describing restrictions on the use of the property
-help.premisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
+help.premisesLicenseGrantedInformation.p2 = You''re only required to write a short description of the conditions we''re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseGrantedInformation.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseGrantedInformation.list.p2 = A maximum 200 people allowed in the function room at any time
 help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
@@ -608,9 +700,9 @@ help.licensableActivities.list1.p1 = the retail sale of alcohol
 help.licensableActivities.list1.p2 = the supply of alcohol in clubs
 help.licensableActivities.list1.p3 = the provision of late-night refreshment
 help.licensableActivities.list1.p4 = the provision of regulated entertainment
-help.licensableActivities.p2 = In this instance, ‘clubs’ is a cover-all term covering establishment categories covered by this form.
-help.licensableActivities.p3 = ‘Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
-help.licensableActivities.p4 = ‘Regulated entertainment’ is defined as:
+help.licensableActivities.p2 = In this instance, ‘clubs'' is a cover-all term covering establishment categories covered by this form.
+help.licensableActivities.p3 = ‘Late-night refreshment'' is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
+help.licensableActivities.p4 = ‘Regulated entertainment'' is defined as:
 help.licensableActivities.list2.p1 = a performance of a play
 help.licensableActivities.list2.p2 = showing a film
 help.licensableActivities.list2.p3 = an indoor sporting event
@@ -625,7 +717,7 @@ error.licensableActivities.missing = Select yes if licensable activities regular
 licensableActivitiesDetails.heading = Describe the licensable activities regularly occurring before 10am or after 11.30pm
 help.licensableActivitiesDetails.title = Help with describing your licensable activities
 help.licensableActivitiesDetails.heading = Describing your licensable activities
-help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
+help.licensableActivitiesDetails.p1 = You''re only required to write a short description of the licensable activities we''re concerned with. Examples of acceptable descriptions include:
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
@@ -639,7 +731,7 @@ hint.premisesLicenseConditions = For example, no drinks outside after 10pm.
 help.premisesLicenseConditions.title = Help with conditions restricting the use of your property
 help.premisesLicenseConditions.heading = Conditions restricting the use of your property
 help.premisesLicenseConditions.p1 = Sometimes, a premises licence is only granted if the holder of the licence agrees to special conditions. These can include restrictions on the use of certain parts of the property.
-help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. You'll find any special conditions stated clearly on there.
+help.premisesLicenseConditions.p2 = Check your premises licence if you''re not sure. You'll find any special conditions stated clearly on there.
 error.premisesLicenseConditions.missing = Select yes if your premises licence has conditions restricting the use of your property
 
 # PREMISES LICENCE CONDITIONS DETAILS
@@ -647,7 +739,7 @@ error.premisesLicenseConditions.missing = Select yes if your premises licence ha
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
 help.premisesLicenseConditionsDetails.heading = Describing restrictions on the use of the property
-help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
+help.premisesLicenseConditionsDetails.p1 = You''re only required to write a short description of the conditions we''re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
@@ -668,7 +760,7 @@ error.enforcementActionBeenTaken.missing = Select yes if any enforcement action 
 enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.title = Help with describing the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.heading = Describing the enforcement action taken
-help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the enforcement action taken against your premises. Examples of acceptable descriptions include:
+help.enforcementActionHasBeenTakenDetails.p1 = You''re only required to write a short description of the enforcement action taken against your premises. Examples of acceptable descriptions include:
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
@@ -712,8 +804,8 @@ error.typeOfIncome.required = Select a source of rental income
 
 # CONCESSION TYPE DETAILS
 ###########################
-concessionTypeDetails.heading = Provide the operator’s details
-concessionTypeDetails.operator = Operator’s name
+concessionTypeDetails.heading = Provide the operator''s details
+concessionTypeDetails.operator = Operator''s name
 concessionTypeDetails.describeType = Describe the type of business
 hint.concessionTypeDetails.describeType = For example, bar, club, restaurant
 concessionTypeDetails.describeUse = Describe how the property is used
@@ -731,7 +823,7 @@ error.concessionTypeDetails.describeUse.maxLength = Description of use of the pr
 ######################
 hint.lettingTypeDetails = For example, a billboard or car parking
 hint.lettingTypeDetails6015 = For example restaurants or car hire kiosks
-lettingDetails.heading = Provide the tenant or operator’s details
+lettingDetails.heading = Provide the tenant or operator''s details
 
 # RENTAL INCOME LIST
 ####################
@@ -769,10 +861,10 @@ error.franchiseOrLettings.missing = Select yes if you receive any rental income 
 # ABOUT YOUR LANDLORD
 #####################
 aboutYourLandlord.heading = Your landlord
-label.landlordFullName = Landlord’s name
-label.landlordAddress.address = Landlord’s address
-error.landlordFullName.required = If you do not know the landlord’s name, enter unknown
-error.landlordFullName.maxLength = Landlord’s name must be 50 characters or fewer
+label.landlordFullName = Landlord''s name
+label.landlordAddress.address = Landlord''s address
+error.landlordFullName.required = If you do not know the landlord''s name, enter unknown
+error.landlordFullName.maxLength = Landlord''s name must be 50 characters or fewer
 
 # TYPE OF TENURE
 ################
@@ -803,7 +895,7 @@ includedInYourRentApply.subheading = Select any that apply.
 includedInYourRent.vatValue = State the amount of VAT included in the rent
 label.vat = VAT
 label.nondomesticRates = Non-domestic rates
-label.waterCharges = A percentage of turnover of the occupier’s business
+label.waterCharges = A percentage of turnover of the occupier''s business
 label.indexed = Water charges
 label.none = No, none of these are included in the rent
 label.includedInYourRent.vat = VAT
@@ -815,8 +907,8 @@ hint.includedInYourRent = Select all that apply.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
-error.includedInYourRent.required = Select any items included in your rent, or select ’No, none of these items are included in the rent’
-error.includedInYourRent.noneSelectedWithOther = Select any items included in your rent, or select ’No, none of these items are included in the rent’
+error.includedInYourRent.required = Select any items included in your rent, or select ''No, none of these items are included in the rent''
+error.includedInYourRent.noneSelectedWithOther = Select any items included in your rent, or select ''No, none of these items are included in the rent''
 error.includedInYourRent.vatValue.required = State the amount of VAT included in the rent
 error.includedInYourRent.vatValue.range = VAT figure must be a number like 100 or 100.00 and be greater than 0
 
@@ -945,7 +1037,7 @@ error.currentAnnualRent.lessThanIncludedPartsSum = The annual rent cannot be les
 # RENT OPEN MARKET VALUE
 #######################
 rentOpenMarketValue.heading = When the current rent was agreed, was it based on the open market value at that time?
-help.rentOpenMarketValue.title = If you’re not sure what the rent is based on
+help.rentOpenMarketValue.title = If you''re not sure what the rent is based on
 help.rentOpenMarketValue.p1 = If your rent is not based on open market value, it may simply be a fixed amount agreed between both parties, or linked to another factor. If you are unsure, it may be stipulated in your lease or agreement.
 error.rentOpenMarketValue.missing = Select yes if the rent was based on the open market value
 
@@ -957,15 +1049,15 @@ checkbox.rentPayable.proprietor = Living accommodation for proprietors or staff
 checkbox.rentPayable.otherProperty = Other property
 checkbox.rentPayable.onlyPart = Only part of the property
 checkbox.rentPayable.onlyLand = Only to land (excluding buildings)
-checkbox.rentPayable.shellUnit = A ‘shell’ unit you had to fit out yourself
+checkbox.rentPayable.shellUnit = A ‘shell'' unit you had to fit out yourself
 checkbox.rentPayable.parkingSpaceGarage = Parking spaces or garages
 checkbox.rentPayable.noneOfThese = No, the rent payable does not include any of these options
 checkbox.rentPayable.noneOfThese6045 = No, the rent payable does not include or relate to any of these options
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Give details
 hint.detailsToQuestions = Examples of acceptable descriptions include "the rent includes residential accommodation", or "also includes the premises next door".
-error.doesTheRentPayable.required = Select items included in your rent, or select ’No, the rent does not include any of these options’
-error.doesTheRentPayable.noneSelectedWithOther = Select items included in your rent, or select ’No, the rent does not include any of these options’
+error.doesTheRentPayable.required = Select items included in your rent, or select ''No, the rent does not include any of these options''
+error.doesTheRentPayable.noneSelectedWithOther = Select items included in your rent, or select ''No, the rent does not include any of these options''
 error.detailsToQuestions.required = Please provide further information
 error.detailsToQuestions.maxLength = Details provided must be {0} characters or fewer
 
@@ -1028,7 +1120,7 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilities = Give details of any shared responsibilities
-hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally'', or ‘landlord covers 75% for outside repairs, tenant pays 25%''.
 error.sharedResponsibilities.maxLength = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilities = The description of any shared responsibilities must be 500 characters or fewer
 error.outsideRepairs.required = Select who is responsible for outside repairs
@@ -1045,7 +1137,7 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesIR = Give details of any shared responsibilities
-hint.sharedResponsibilitiesIR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+hint.sharedResponsibilitiesIR = For example, ‘business insurance costs are shared equally'', or ‘landlord covers 75% for outside repairs, tenant pays 25%''.
 error.sharedResponsibilitiesIR.maxLength = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesIR = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesIR.required = Please give details of any shared responsibilities for inside repairs to public and business areas
@@ -1059,7 +1151,7 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesOR = Give details of any shared responsibilities
-hint.sharedResponsibilitiesOR = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+hint.sharedResponsibilitiesOR = For example, ‘business insurance costs are shared equally'', or ‘landlord covers 75% for outside repairs, tenant pays 25%''.
 error.sharedResponsibilitiesOR.maxLength = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesOR = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesOR.required = Please give details of any shared responsibilities for outside repairs
@@ -1073,7 +1165,7 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilitiesBI = Give details of any shared responsibilities
-hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+hint.sharedResponsibilitiesBI = For example, ‘business insurance costs are shared equally'', or ‘landlord covers 75% for outside repairs, tenant pays 25%''.
 error.sharedResponsibilitiesBI.maxLength = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesBI = The description of any shared responsibilities must be 500 characters or fewer
 error.sharedResponsibilitiesBI.required = Please give details of any shared responsibilities for building insurance
@@ -1198,7 +1290,7 @@ error.canRentBeReducedOnReview.missing = Select yes if the rent can be reduced o
 # PROPERTY UPDATES DURING THE CURRENT LEASE
 ##########################################
 propertyUpdates.heading = Property updates during the current lease
-propertyUpdates.declare = You must declare any work you have done to the property during the current lease. Only include any alterations, improvements, refurbishment, initial fitting out or initial repairs that may have affected the property’s value.
+propertyUpdates.declare = You must declare any work you have done to the property during the current lease. Only include any alterations, improvements, refurbishment, initial fitting out or initial repairs that may have affected the property''s value.
 propertyUpdates.assign  = If the lease was assigned to you by another party, you must declare any works carried out by them under current lease.
 propertyUpdates.label   = Has the property been altered, improved or updated in any way during the current lease?
 error.propertyUpdates.missing = Select yes if the property been altered, improved or updated in any way during the current lease
@@ -1226,7 +1318,7 @@ error.rentFreePeriodDetails.maxLength = Description of given rent-free period, p
 
 # PAY A CAPITAL SUM
 ##################
-payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants’ inventory?
+payACapitalSum.heading = Did you pay a capital sum or premium for your lease or agreement, ignoring tenants'' inventory?
 hint.payACapitalSum = The sum could be paid to the landlord or a previous lessee.
 error.payACapitalSum.missing = Select yes if you paid a capital sum or premium for your lease
 
@@ -1246,7 +1338,7 @@ error.maxCurrencyAmountExceeded.capitalSumPaidDetails = Capital sum cannot be gr
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################
 receivePaymentWhenLeaseGranted.heading = Did you receive any payment when the lease was granted, or following assignment of the lease or agreement?
-hint.receivePaymentWhenLeaseGranted = Select ‘no’ if your rent has been reviewed since you received the payment.
+hint.receivePaymentWhenLeaseGranted = Select ‘no'' if your rent has been reviewed since you received the payment.
 error.receivePaymentWhenLeaseGranted.missing = Select yes if you received any payment when the lease was granted
 
 # RENT INCREASE ANNUALLY WITH RPI
@@ -1276,22 +1368,22 @@ label.rentReview = At a rent review
 label.renewalLeaseTenancy = At a lease renewal
 label.saleLeaseback = As part of a sale and leaseback transaction
 label.rentActuallyAgreed = When was the rent actually agreed or set?
-help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
+help.rentActuallyAgreed.title = If you''re not sure when the rent was agreed
 help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed option happened. It may not be the date of occupation, or the date the rent was first paid.
-help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement
+help.rentActuallyAgreed.p2 = If you''re still unsure, refer to your lease or agreement
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Select how the current rent was fixed
 
 # CATERING OPERATION OR LETTING DETAILS
 #######################################
-cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
-concessionDetails.heading = Provide the concession’s details
-lettingDetails.heading = Provide the tenant or operator’s details
-lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
+cateringOperationOrLettingAccommodationDetails.heading = Provide the business''s details
+concessionDetails.heading = Provide the concession''s details
+lettingDetails.heading = Provide the tenant or operator''s details
+lettingOtherPartOfPropertyDetails.heading = Provide the tenant''s details
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
-label.operatorName = Operator’s name
-label.operatorName6030 = Operator’s name
-label.lettingOperatorName = Tenant’s name
+label.operatorName = Operator''s name
+label.operatorName6030 = Operator''s name
+label.lettingOperatorName = Tenant''s name
 label.tradingName = Trading name
 label.typeOfBusiness = Describe the type of business
 label.lettingTypeOfBusiness = Description of letting
@@ -1356,8 +1448,8 @@ checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Inside repairs
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = No, none of these are included in the rent
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select any items included in your rent or select ’No, none of these items are included in the rent’
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ’No, none of these items are included in the rent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Select any items included in your rent or select ''No, none of these items are included in the rent''
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ''No, none of these items are included in the rent''
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
@@ -1396,7 +1488,7 @@ tenantsAdditionsDisregarded.p2 = Examples of additions or improvements could inc
 tenantsAdditionsDisregarded.list1 = fitting out a shell
 tenantsAdditionsDisregarded.list2 = adding parking
 tenantsAdditionsDisregarded.list3 = upgrading accommodation
-tenantsAdditionsDisregarded.subheading = Were any tenants’ additions or improvements disregarded at the time the rent was agreed or determined?
+tenantsAdditionsDisregarded.subheading = Were any tenants'' additions or improvements disregarded at the time the rent was agreed or determined?
 error.tenantsAdditionsDisregarded.missing = Select yes if any additions or improvements were disregarded
 
 # TENANTS ADDITIONS DISREGARDED DETAILS
@@ -1555,7 +1647,7 @@ label.currentLeaseOrAgreementBegin.help = For example, 9 2017.
 intervalsOfRentReview.heading = Rent reviews
 intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
 intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’.
+intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue''.
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = For example, every 18 months or every 2 years.
 label.nextReview = When is the next rent review due?
@@ -1583,13 +1675,13 @@ currentRentBasedOn.heading = What is the rent based on?
 hint.currentRentBasedOn = Select any that apply and give details.
 label.percentageOpenMarket = A percentage of open market value
 label.fixed = A fixed amount
-label.percentageTurnover = A percentage of turnover of the occupier’s business
+label.percentageTurnover = A percentage of turnover of the occupier''s business
 label.indexed = Indexed to the retail price index (RPI) or another index
 label.stepped = Stepped rent arrangement
 label.other = The rent is based on something else
 label.currentRentBasedOn.percentageOpenMarket = A percentage of open market value
 label.currentRentBasedOn.fixed = A fixed amount
-label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier’s business
+label.currentRentBasedOn.percentageTurnover = A percentage of turnover of the occupier''s business
 label.currentRentBasedOn.indexed = Indexed to the retail price index (RPI) or another index
 label.currentRentBasedOn.stepped = Stepped rent arrangement
 label.currentRentBasedOn.other = Other
@@ -1798,8 +1890,8 @@ accommodation.includedTariffItems.value.gas = Gas
 accommodation.includedTariffItems.value.water = Water
 accommodation.includedTariffItems.value.roomHeating = Room heating
 accommodation.includedTariffItems.value.none = No, none of these are included in the tariff
-error.includedTariffItems.required = Select any items included in the tariff or select ’No, none of these are included in the tariff’
-error.includedTariffItems.noneSelectedWithOther = Select any items included in the tariff or select ’No, none of these are included in the tariff’
+error.includedTariffItems.required = Select any items included in the tariff or select ''No, none of these are included in the tariff''
+error.includedTariffItems.noneSelectedWithOther = Select any items included in the tariff or select ''No, none of these are included in the tariff''
 accommodation.unitList.heading.removedAll = You have removed all accommodation units
 accommodation.unitList.heading.singular = You have added 1 accommodation unit
 accommodation.unitList.heading.plural = You have added {0} accommodation units
@@ -1810,8 +1902,8 @@ accommodation.addedMaximumAccommodationUnits.link1 = Check or update the {0} acc
 accommodation.exceededMaxUnits.label = I confirm that the VOA will contact me about the details I was unable to declare.
 error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
 error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
-accommodation.removeLastUnit.heading = Are you sure you want to remove ’{0}’?
-accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ’{0}’ you will be returned to the start of this section.
+accommodation.removeLastUnit.heading = Are you sure you want to remove ''{0}''?
+accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ''{0}'' you will be returned to the start of this section.
 error.accommodation.removeLastUnit.required = Select yes if you would like to remove the only accommodation unit
 accommodation.CYA.heading = Check your answers - accommodation details
 accommodation.CYA.unit = Unit {0}
@@ -1838,11 +1930,11 @@ error.accommodationUnits.isEmpty = You must include details of at least one self
 userType.occupierTrustee = Occupier or trustee for occupier
 userType.lesseeTrustee = Lessee or trustee for lessee
 userType.ownerTrustee = Owner or trustee for owner
-userType.occupier = Occupier’s agent
-userType.lessee = Lessee’s agent
-userType.owner = Owner’s agent
+userType.occupier = Occupier''s agent
+userType.lessee = Lessee''s agent
+userType.owner = Owner''s agent
 label.userType = What is your relationship to the property?
-hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ‘Owner or trustee for owner’.
+hint.aboutYou = If you''re renting or leasing the property, even as a charity or non-profit organisation, you''re considered the occupier. If you are both the owner and the occupier, select ‘Owner or trustee for owner''.
 
 # TASK LIST
 ###########
@@ -1867,7 +1959,7 @@ taskList.additionalActivities = Additional activities
 taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid = Lease start date and rent paid
 declaration.heading = Now send your declaration
 request.heading = Now send your request
-request.information = Check the details you’ve provided are correct as the VOA may need to contact you about your request.
+request.information = Check the details you''ve provided are correct as the VOA may need to contact you about your request.
 declaration.information = By submitting this declaration you are confirming that, to the best of your knowledge, the details you are providing are correct.
 hint.declaration = You could be taken to court if you submit false information.
 taskList.fuelSales = Fuel sales
@@ -1887,7 +1979,7 @@ taskList.6076.operationalExpenses = Operating expenses
 # COST OF SALES OR GROSS PROFIT
 #########
 costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or your gross profits?
-hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you’d like to provide these figures for your cost of sales, or gross profits.
+hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you''d like to provide these figures for your cost of sales, or gross profits.
 label.costOfSales = Cost of sales
 label.grossProfit = Gross profits
 error.costOfSales.maxColumns = Number of columns must be between 1 and 3
@@ -1931,10 +2023,10 @@ turnover.details.6015.p1 = Do not include VAT in any of the figures you declare 
 turnover.details.6015.p2 = If you have not broken down your turnover into separate categories, or if you have recorded certain categories together - such as all food and drinks - you can declare them together in a single field.
 turnover.details.6015.h1 = General guidance
 turnover.details.6015.h3 = Leisure Activities
-turnover.details.6015.p4 = You must declare any income received from leisure activities such as golf, fitness, or spa activities. Declare these in the ‘other’ category.
+turnover.details.6015.p4 = You must declare any income received from leisure activities such as golf, fitness, or spa activities. Declare these in the ‘other'' category.
 turnover.details.6015.h4 = Income from franchises, concessions and lettings
 turnover.details.6015.p5 = You must declare any income received from any franchise, concessions, or lettings attached to the property. This should be recorded in the appropriate turnover category.
-turnover.details.6015.p6 = For example, rental income from a restaurant concession should be declared under ‘food’.
+turnover.details.6015.p6 = For example, rental income from a restaurant concession should be declared under ‘food''.
 turnover.grossIncome = Gross income
 turnover.grossIncomeCaption.p1 = (excluding VAT)
 turnover.grossIncomeCaption.p2 = Excluding any payments received for concessions, franchises, licences or lettings.
@@ -2033,7 +2125,7 @@ turnover.6045.caravanFleetHire.grossReceipts.heading = Gross receipts from all s
 turnover.6045.caravanFleetHire.p1 = Include the income received from fleet hire of single and twin-unit static caravans:
 turnover.6045.caravanFleetHire.list1.item1 = owned by the operator
 turnover.6045.caravanFleetHire.list1.item2 = sub-let by the operator to holidaymakers on behalf of private owners
-turnover.6045.caravanFleetHire.p2 = All figures should exclude VAT, but include any charges made for gas and electricity. State all totals before the deduction of any agents’ letting commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravanFleetHire.p2 = All figures should exclude VAT, but include any charges made for gas and electricity. State all totals before the deduction of any agents'' letting commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 turnover.6045.caravanFleetHire.grossReceipts = Gross receipts
 turnover.6045.excludingVAT = (excluding VAT)
 error.turnover.6045.caravanFleetHire.grossReceipts.required = Enter 0 if you did not have any gross receipts from static caravan fleet hire in the year ending {0}
@@ -2041,7 +2133,7 @@ error.turnover.6045.caravanFleetHire.grossReceipts.range = Gross receipts in the
 error.turnover.6045.caravanFleetHire.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 
 turnover.6045.caravans.single.ownedByOperator.heading = Single caravans owned by the operator and used for fleet hire
-turnover.6045.caravans.single.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.single.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents'' commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 turnover.6045.caravans.single.ownedByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 turnover.6045.caravans.single.ownedByOperator.help.link = Help with single caravans
 turnover.6045.caravans.single.ownedByOperator.help.p1 = A single caravan is transported onto the site in one piece and mounted on a pitch.
@@ -2058,7 +2150,7 @@ error.caravans.single.ownedByOperator.vans.required = Enter 0 if you do not have
 error.caravans.single.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 turnover.6045.caravans.single.subletByOperator.heading = Single caravans sub-let by the operator to holidaymakers on behalf of private owners as fleet hire
-turnover.6045.caravans.single.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.single.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents'' commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 turnover.6045.caravans.single.subletByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans sub-let by the operator in the year ending {0}
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
@@ -2067,7 +2159,7 @@ error.caravans.single.subletByOperator.vans.required = Enter 0 if you do not hav
 error.caravans.single.subletByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 turnover.6045.caravans.twin.ownedByOperator.heading = Twin-unit caravans owned by the operator and used for fleet hire
-turnover.6045.caravans.twin.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.twin.ownedByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents'' commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 turnover.6045.caravans.twin.ownedByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 turnover.6045.caravans.twin.ownedByOperator.help.link = Help with twin-unit caravans
 turnover.6045.caravans.twin.ownedByOperator.help.p1 = A twin-unit caravan is transported onto the site in no more than two parts which are then assembled by the means of bolts, clamps or other devices.
@@ -2079,7 +2171,7 @@ error.caravans.twin.ownedByOperator.vans.required = Enter 0 if you do not have a
 error.caravans.twin.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.twin.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
 turnover.6045.caravans.twin.subletByOperator.heading = Twin-unit caravans sub-let to holidaymakers by the operator on behalf of private owners as fleet hire
-turnover.6045.caravans.twin.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents’ commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
+turnover.6045.caravans.twin.subletByOperator.p1 = Enter your gross receipts from hire fleet caravans excluding VAT but before deduction of agents'' commission. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
 turnover.6045.caravans.twin.subletByOperator.inset = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans sub-let in the year ending {0}
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
@@ -2517,7 +2609,7 @@ staffCosts.wages = Wages and salaries
 staffCosts.wages.hint = Excluding National Insurance and pension contributions
 staffCosts.NI = National Insurance
 staffCosts.pension = Pension contributions
-staffCosts.remunerations = Director’s remuneration
+staffCosts.remunerations = Director''s remuneration
 staffCosts.total = Total staff costs
 error.staffCosts.wages.required = Enter 0 if you did not have any wages or salaries in the year ending {0}
 error.staffCosts.wages.range = Wages and salaries in the year ending {0} must be a number, for example 100 or 100.00
@@ -2528,9 +2620,9 @@ error.staffCosts.NI.negative = National Insurance costs in the year ending {0} c
 error.staffCosts.pension.required = Enter 0 if you did not have any pension contributions in the year ending {0}
 error.staffCosts.pension.range = Pension contributions in the year ending {0} must be a number, for example 100 or 100.00
 error.staffCosts.pension.negative = Pension contributions in the year ending {0} cannot be a negative number
-error.staffCosts.remunerations.required = Enter 0 if you did not have any director’s remunerations in the year ending {0}
-error.staffCosts.remunerations.range = Director’s remunerations in the year ending {0} must be a number, for example 100 or 100.00
-error.staffCosts.remunerations.negative = Director’s remunerations in the year ending {0} cannot be a negative number
+error.staffCosts.remunerations.required = Enter 0 if you did not have any director''s remunerations in the year ending {0}
+error.staffCosts.remunerations.range = Director''s remunerations in the year ending {0} must be a number, for example 100 or 100.00
+error.staffCosts.remunerations.negative = Director''s remunerations in the year ending {0} cannot be a negative number
 
 
 #INCOME EXPENDITURE SUMMARY 6076
@@ -2696,7 +2788,7 @@ common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sale
 ############################
 
 totalFuelSold.heading = What is the total volume of all fuel sold in the financial years shown?
-totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you’ll be asked about this separately.
+totalFuelSold.bunkered = Do not include bunkered fuel in these figures. If you sell bunkered fuel, where you only charge a handling fee, you''ll be asked about this separately.
 totalFuelSold.fuel.label = Petrol, diesel, LPG and other total fuel sales
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
@@ -3258,15 +3350,15 @@ partsUnavailable.label = Do you or your family occupy any part of the property a
 error.partsUnavailable.required = Select yes  if you or your family occupy any part of the property
 
 #OCCUPIERS DETAILS
-aboutYou.occupiersDetails.heading = Occupier’s details
+aboutYou.occupiersDetails.heading = Occupier''s details
 aboutYou.occupiersDetails.paragraph = We need the contact details for the person for each part of the property used as main residence, or a second home. You will have the opportunity to add additional households if required.
-label.aboutYou.occupiersDetails.name= Occupier’s name
-aboutYou.occupiersDetails.address.label = Occupier’s address
+label.aboutYou.occupiersDetails.name= Occupier''s name
+aboutYou.occupiersDetails.address.label = Occupier''s address
 aboutYou.occupiersDetails.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy
-error.aboutYou.occupiersDetails.name.required = Enter the occupier’s  name
-error.aboutYou.occupiersDetails.name.maxLength = Occupier’s name should be 100 characters or fewer
-error.aboutYou.occupiersDetails.address.required = Enter the occupier’s address
-error.aboutYou.occupiersDetails.address.maxLength = Occupier’s address should be 1000 characters or fewer
+error.aboutYou.occupiersDetails.name.required = Enter the occupier''s  name
+error.aboutYou.occupiersDetails.name.maxLength = Occupier''s name should be 100 characters or fewer
+error.aboutYou.occupiersDetails.address.required = Enter the occupier''s address
+error.aboutYou.occupiersDetails.address.maxLength = Occupier''s address should be 1000 characters or fewer
 
 # OCCUPIERS DETAILS LIST
 occupiersDetailsList.heading = You have added {0} part{1} of your property for family use
@@ -3416,12 +3508,12 @@ error.rentPayableDetails.required = Please give details of selected items includ
 error.rentPayableDetails.maxLength = Description of selected items included in rent payable must be {0} characters or fewer
 
 # WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
-whatYouWillNeed.heading = What you’ll need to complete this section
+whatYouWillNeed.heading = What you''ll need to complete this section
 whatYouWillNeed.header1 = If your business has occupied the property for longer than 3 years
-whatYouWillNeed.text1 = You’ll need trading figures from the 3 most recent financial years.
+whatYouWillNeed.text1 = You''ll need trading figures from the 3 most recent financial years.
 whatYouWillNeed.header2 = If your business has occupied the property for less than 3 years
-whatYouWillNeed.text2 = You’ll be asked for figures from all completed financial years since you occupied the property.
-whatYouWillNeed.text3 = You’ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
+whatYouWillNeed.text2 = You''ll be asked for figures from all completed financial years since you occupied the property.
+whatYouWillNeed.text3 = You''ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
 
 whatYouWillNeed.powerGenerated = How much power you generated
 whatYouWillNeed.grossReceipts = Gross receipts
@@ -3464,21 +3556,21 @@ whatYouWillNeed.p1 = When you built or took over the property, and your financia
 whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives.
 whatYouWillNeed.p4 = Any other income not listed in your gross receipts.
 whatYouWillNeed.p5 = Details of any costs incurred.
-whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration.
+whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director''s remuneration.
 whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
 whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees.
 whatYouWillNeed.p9 = If applicable.
 whatYouWillNeed.subheading2 = If you do not have this information to hand
-whatYouWillNeed.p10 = Select <b>Save as draft</b> and complete the declaration when you’re ready.
+whatYouWillNeed.p10 = Select <b>Save as draft</b> and complete the declaration when you''re ready.
 
 whatYouWillNeed.6010.p1 = Any income from alcoholic and soft drinks, crisps and nuts.
 whatYouWillNeed.6010.p2 = Any income from serving prepared snacks and meals.
 whatYouWillNeed.6010.p3 = Any other income such as admission charges, or the provision of camping pitches.
-whatYouWillNeed.6010.p4 = Income from letting rooms. If your business is listed as a lodge or a hotel, you’ll also need to include your average occupancy rate.
+whatYouWillNeed.6010.p4 = Income from letting rooms. If your business is listed as a lodge or a hotel, you''ll also need to include your average occupancy rate.
 
 whatYouWillNeed.6015.p1 = Any income from providing accommodation, food, drinks, and other services such as function room hire and leisure activities. Also include income from any concessions or franchises such as restuarants, or any lettings such as phone masts.
 whatYouWillNeed.6015.p2 = Expenses incurred from providing accommodation, food, drinks, and other services such as function room hire and leisure activities.
-whatYouWillNeed.6015.p3 = Including any director’s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
+whatYouWillNeed.6015.p3 = Including any director''s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
 whatYouWillNeed.6015.p4 = Including: energy and utilities; cleaning and laundry; building maintenance and repairs; repairs and renewals of fixtures and equipment; advertising and marketing; administration and sundries; entertainment; and any other variable operating expenses.
 whatYouWillNeed.6015.p5 = Including rent, business rates, insurance, loan interest and depreciation.
 whatYouWillNeed.6015.p6 = Including any contributions to head office and any other costs not listed here
@@ -3497,7 +3589,7 @@ whatYouWillNeed.6030.p1 = All your income, excluding any payments received from 
 whatYouWillNeed.6030.p2 = Also include concessions and free entries. If your property is a car park, enter 0 in this section.
 
 whatYouWillNeed.6045.p1 = When you bought or took over the property, and your financial year end.
-whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.
+whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You''ll also be asked about the age of your vans and services you provide.
 whatYouWillNeed.6045.p3 = Including chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units.
 whatYouWillNeed.6045.p4 = Including pitches for caravans, motorhomes, tents, rally areas, or glamping pitches for pre-erected or mobile structures like yurts, tipis or shepherd huts.
 whatYouWillNeed.6045.p5 = Including shops, catering, bars and clubs, and amusements.
@@ -3562,7 +3654,7 @@ checkYourAnswersAboutFranchiseOrLettings.operatorCount = Business {0}
 checkYourAnswersAboutFranchiseOrLettings.operatorName = Name and address
 
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Letting {0}
-checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s details
+checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant''s details
 checkYourAnswersAboutFranchiseOrLettings.businessOperatorName = Business details
 checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
 checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated = How rent was calculated
@@ -3591,7 +3683,7 @@ cya.concessionOrFranchise.operatorDetails = Operator’s details
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
-checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s details
+checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord''s details
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Connected to landlord?
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails = Relationship to the landlord
 checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading = Changes to your lease
@@ -3868,7 +3960,7 @@ confirmation.unableToRetrieveAnswers.list.1 = retrieve your answers once you lea
 confirmation.unableToRetrieveAnswers.list.2 = access your answers from the confirmation email
 confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office Agency (VOA)
 confirmation.businessRatesBill = Your business rates bill
-confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
+confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property''s rateable value if you think it''s wrong.
 confirmation.businessRatesBill.list.2 = Our <a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
 confirmation.whatNext = What happens next
 confirmation.list.1 = We have sent your declaration to the Valuation Office Agency.
@@ -3893,33 +3985,33 @@ currentRentFirstPaid.listBlock.p1 = a rent review
 currentRentFirstPaid.listBlock.p2 = a lease renewal or alteration
 currentRentFirstPaid.listBlock.p3 = the assignment of an existing lease from another party
 currentRentFirstPaid.listBlock.p4 = an initial rent-free period
-currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don’t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales performance, or fluctuations in the retail price index.
+currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don''t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales performance, or fluctuations in the retail price index.
 
 # SAVE AS DRAFT
 ###############
 saveAsDraft.preHeader=Draft saved successfully
 saveAsDraft.preHeaderTimeout=You have been logged out, but your information has been saved.
-saveAsDraft.info=Make a note of this password because you’ll need it to retrieve your saved information
+saveAsDraft.info=Make a note of this password because you''ll need it to retrieve your saved information
 saveAsDraft.info.chooseMemorablePassword=Choose a memorable password. You will not be able to retrieve it if you forget it.
 saveAsDraft.info.willBeSaved=Your draft will be saved but will not be sent now. You can continue completing the form when you return.
 saveAsDraft.password.rules.header=Your password must:
 saveAsDraft.password.rule1=contain at least 8 characters
 saveAsDraft.password.rule2=have at least one number (0-9)
 saveAsDraft.password.rule3=have at least one letter (a-z)
-saveAsDraft.password.rule4=not contain any common words like ‘password’, for example
+saveAsDraft.password.rule4=not contain any common words like ‘password'', for example
 error.password.minLength=Password must contain at least {0} characters
 error.password.atLeastOneNumber=Password must have at least one number
 error.password.atLeastOneLetter=Password must have at least one letter
-saveAsDraft.info.p.1=Your information has been saved but not yet been sent. You’ll need to come back later to declare your business’s details.
-saveAsDraft.info.p.2=You’ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
-saveAsDraft.paragraph=We’ll remove unsent information on
+saveAsDraft.info.p.1=Your information has been saved but not yet been sent. You''ll need to come back later to declare your business''s details.
+saveAsDraft.info.p.2=You''ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
+saveAsDraft.paragraph=We''ll remove unsent information on
 saveAsDraft.paragraph.unsentInfo=Any unsent information will be removed on
 saveAsDraft.password=Password
 saveAsDraft.confirmPassword=Confirm password
 saveAsDraft.validPassword=Password must be at least 8 characters.
 saveAsDraft.error.passwordsDontMatch=Passwords do not match
-saveAsDraft.createPassword.header=Create a password to retrieve the information you’ve already added
-saveAsDraft.login.parameters.header=When you return to complete the form you’ll need:
+saveAsDraft.createPassword.header=Create a password to retrieve the information you''ve already added
+saveAsDraft.login.parameters.header=When you return to complete the form you''ll need:
 saveAsDraft.login.parameter1=your password
 saveAsDraft.login.parameter2=the reference number shown on the letter you received
 saveAsDraft.login.parameter3=the postcode shown on the letter you received
@@ -3930,7 +4022,7 @@ saveAsDraft.passwordReminder=Enter the password you created when you signed out 
 saveAsDraft.passwordHint=This will either be the password you created or the one given to you when you were timed out of the service.
 saveAsDraft.error.invalidPassword=The password you entered is not correct
 saveAsDraft.startAgain=Start a new declaration
-saveAsDraft.forgotPassword=If you’ve forgotten your password, you will have to start the form again.
+saveAsDraft.forgotPassword=If you''ve forgotten your password, you will have to start the form again.
 saveAsDraft.timeout.login=Log in again
 
 # Feedback
