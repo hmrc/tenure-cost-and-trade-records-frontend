@@ -29,7 +29,11 @@ trait FiscalYearSupport:
     then now.getYear
     else now.getYear - 1
 
-  def currentFiscalYearEnd: Int = previousFiscalYearEnd + 1
+  def currentFiscalYearEnd =
+    val now = LocalDate.now()
+    if now.getMonth.getValue > 3
+    then now.getYear + 2
+    else now.getYear + 1
 
   def startDateEnglish(using messages: Messages, dateUtil: DateUtilLocalised): String =
     dateUtil.formatDate(LocalDate.of(previousFiscalYearEnd - 1, 4, 1))
