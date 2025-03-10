@@ -16,8 +16,6 @@
 
 package models.submissions.downloadFORTypeForm
 
-import actions.SessionRequest
-import models.Session
 import models.submissions.ReferenceNumber
 import play.api.libs.json.{Json, OFormat}
 
@@ -28,19 +26,4 @@ case class DownloadPDFDetails(
 
 object DownloadPDFDetails {
   implicit val format: OFormat[DownloadPDFDetails] = Json.format
-
-  def updateDownloadPDFDetails(
-    copy: DownloadPDFDetails => DownloadPDFDetails
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
-
-    val currentDownloadPDFDetails = sessionRequest.sessionData.downloadPDFDetails
-
-    val updatedDownloadPDFDetails = currentDownloadPDFDetails match {
-      case Some(_) => sessionRequest.sessionData.downloadPDFDetails.map(copy)
-      case _       => Some(copy(DownloadPDFDetails()))
-    }
-
-    sessionRequest.sessionData.copy(downloadPDFDetails = updatedDownloadPDFDetails)
-
-  }
 }
