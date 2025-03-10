@@ -56,8 +56,8 @@
             isHeading = true,
             legend = Some(messages(
                 "lettingHistory.hasCompletedLettings.legend",
-                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.fromDate),
-                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.toDate)
+                dateUtil.formatDate(fiscalPeriod.fromDate),
+                dateUtil.formatDate(fiscalPeriod.toDate)
             )),
         )
         @includes.continueSaveAsDraftButtons(govukButton)

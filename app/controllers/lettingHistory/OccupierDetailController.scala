@@ -62,7 +62,7 @@ class OccupierDetailController @Inject (
             occupierDetail <- completedLettings.lift(index)
           yield freshForm.fill(occupierDetail)
 
-        Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl, maybeIndex))
+        Ok(theView(filledForm.getOrElse(freshForm), effectiveRentalPeriod, backLinkUrl, maybeIndex))
   }
 
   def submit(maybeIndex: Option[Int] = None): Action[AnyContent] =
@@ -70,7 +70,7 @@ class OccupierDetailController @Inject (
       continueOrSaveAsDraft[OccupierDetail](
         theForm,
         theFormWithErrors =>
-          successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl, maybeIndex))),
+          successful(BadRequest(theView(theFormWithErrors, effectiveRentalPeriod, backLinkUrl, maybeIndex))),
         occupierDetail =>
           given Session                       = request.sessionData
           val (occupierIndex, updatedSession) = byAddingOrUpdatingOccupier(occupierDetail, maybeIndex)

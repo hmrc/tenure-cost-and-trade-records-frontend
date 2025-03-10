@@ -23,7 +23,6 @@ import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import play.api.test.Helpers.{contentType, status, stubMessagesControllerComponents}
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.taskList

@@ -109,8 +109,8 @@
             name = "answer",
             legend = messages(
                 "lettingHistory.occupiersList.hadMoreOccupiers.label",
-                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.fromDate),
-                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.toDate)
+                dateUtil.formatDate(fiscalPeriod.fromDate),
+                dateUtil.formatDate(fiscalPeriod.toDate)
             ),
             legendKey = "", // ignored!
             classes = "govuk-fieldset__legend--m",
