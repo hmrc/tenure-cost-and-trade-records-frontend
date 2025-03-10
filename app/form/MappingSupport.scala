@@ -25,7 +25,6 @@ import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import models.submissions.*
 import form.Formats.*
-import form.Formats.userTypeFormat
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
 import models.submissions.Form6010.*

@@ -53,7 +53,7 @@ class OccupierListController @Inject() (
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    Ok(theListView(theListForm, previousRentalPeriod, completedLettings(request.sessionData), backLinkUrl))
+    Ok(theListView(theListForm, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl))
   }
 
   def remove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
@@ -93,7 +93,7 @@ class OccupierListController @Inject() (
       theFormWithErrors =>
         successful(
           BadRequest(
-            theListView(theFormWithErrors, previousRentalPeriod, completedLettings(request.sessionData), backLinkUrl)
+            theListView(theFormWithErrors, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl)
           )
         ),
       answer =>
