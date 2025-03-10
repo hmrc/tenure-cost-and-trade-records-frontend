@@ -21,14 +21,12 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.*
 import play.api.http.Status.*
-import play.api.libs.json.{JsError, Json, Json as json}
+import play.api.libs.json.{JsError, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 import utils.FakeObjects
 import utils.FormBindingTestAssertions.shouldBe
-
-import java.time.LocalDate
 
 class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 

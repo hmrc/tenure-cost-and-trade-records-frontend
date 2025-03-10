@@ -61,6 +61,11 @@ POST        /download-pdf-reference-number                      controllers.down
 
 GET         /download-pdf/:forType                              controllers.downloadFORTypeForm.DownloadPDFController.show(forType: String)
 
+# Guidance pages
+GET         /guidance-reference-number                          controllers.guidance.GuidanceReferenceNumberController.show
+POST        /guidance-reference-number                          controllers.guidance.GuidanceReferenceNumberController.submit
+GET         /guidance-page/:forType                             controllers.guidance.GuidancePageController.show(forType: String)
+
 # Not connected
 GET         /past-connection-type                               controllers.notconnected.PastConnectionController.show()
 POST        /past-connection-type                               controllers.notconnected.PastConnectionController.submit()

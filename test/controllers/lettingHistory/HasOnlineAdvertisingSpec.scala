@@ -29,7 +29,7 @@ import views.html.lettingHistory.hasOnlineAdvertising as HasOnlineAdvertisingVie
 class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
 
   "the HasOnlineAdvertising controller" when {
-    "the user session is fresh"     should {
+    "the user session is fresh"                should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture(
         isYearlyAvailable = Some(true)
       ) {
@@ -43,19 +43,6 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
-      "be handling invalid POST answer=null and reply 400 with error message" in new ControllerFixture(
-        isYearlyAvailable = Some(false)
-      ) {
-        val result = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
-            "answer" -> "" // missing
-          )
-        )
-        status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
-        page.backLink        shouldBe routes.TradingSeasonController.show.url
-        page.error("answer") shouldBe "lettingHistory.hasOnlineAdvertising.required"
-      }
       "be handling POST answer='yes' and reply 303 redirect to the 'OnlineAdvertisingDetail' page" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -68,7 +55,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         hasOnlineAdvertising(data).value shouldBe true
       }
     }
-    "the user has already answered" should {
+    "the user has already answered"            should {
       "regardless of the given number of online advertising" should {
         "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
           onlineAdvertising = oneAdvertising
@@ -129,6 +116,21 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           hasOnlineAdvertising(data).value shouldBe true
           onlineAdvertising(data)            should have size 5
         }
+      }
+    }
+    "regardless of the user providing answers" should {
+      "be handling invalid POST answer=null and reply 400 with error message" in new ControllerFixture(
+        isYearlyAvailable = Some(false)
+      ) {
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "answer" -> "" // missing
+          )
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page   = contentAsJsoup(result)
+        page.backLink        shouldBe routes.TradingSeasonController.show.url
+        page.error("answer") shouldBe "lettingHistory.hasOnlineAdvertising.required"
       }
     }
   }
