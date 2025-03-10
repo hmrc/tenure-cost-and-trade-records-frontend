@@ -26,4 +26,8 @@ trait FiscalYearSupport:
     then now.getYear
     else now.getYear - 1
 
-  def currentFiscalYearEnd = previousFiscalYearEnd + 1
+  def currentFiscalYearEnd =
+    val now = LocalDate.now()
+    if now.getMonth.getValue > 3
+    then now.getYear + 2
+    else now.getYear + 1
