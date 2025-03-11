@@ -64,6 +64,8 @@ label.yes.oedd=Oedd
 label.no.nac.oedd=Nac oedd
 label.yes.iawn = Iawn
 label.no.na = Na
+label.yes.hoffwn = Yes
+label.no.na.hoffwn = No
 
 #CYA RADIO BUTTONS
 ##############
@@ -391,8 +393,8 @@ tradingNameFromProperty.heading = Beth yw enw masnachu''r busnes neu''r sefydlia
 error.tradingNameFromProperty.required = Nodwch enw masnachu''r busnes neu''r sefydliad
 error.tradingNameFromProperty.maxLength = Mae''n rhaid i''r enw masnachu fod yn 50 o gymeriadau neu lai
 label.tradingNameFromPropertyHeadingLabel = Enw masnachu
-label.tradingNameFromPropertyHeadingLabel6048 = Enw
-tradingNameFromProperty4068.heading = What is the name of the person or company operating the self-catering business from the property?
+label.tradingNameFromPropertyHeadingLabel6048 = Enw llawn
+tradingNameFromProperty4068.heading = Beth yw enw’r person neu’r cwmni sy’n gweithredu’r gwasanaeth hunanddarpar o’r eiddo?
 error.tradingNameFromProperty6048.required = Enter the name of the person or company
 error.tradingNameFromProperty6048.maxLength = The name of the person or company must be 50 characters or fewer
 
@@ -1805,14 +1807,14 @@ error.accommodation.unitName.required = Enter the name of the accommodation unit
 error.accommodation.unitName.maxLength = The unit name must be {0} characters or fewer
 error.accommodation.unitType.required = Enter the type of the unit
 error.accommodation.unitType.maxLength = The unit type must be {0} characters or fewer
-accommodation.availableRooms.heading = Available rooms in {0}
-accommodation.availableRooms.p1 = You must declare the number of rooms for let in {0}. If any of the room categories are not applicable to this unit, add the number 0
-accommodation.singleBedrooms = Single bedrooms
-accommodation.doubleBedrooms = Double bedrooms
-accommodation.bathrooms = Bathrooms
-accommodation.maxGuestsNumber = Maximum number of guests
-label.otherAccommodationDescription = Other accommodation
-hint.otherAccommodationDescription = For example, games rooms.
+accommodation.availableRooms.heading = Ystafelloedd ar gael yn {0}
+accommodation.availableRooms.p1 = Mae’n rhaid i chi ddatgan nifer yr ystafelloedd sydd i’w rhoi ar osod yn {0}. Os nad yw unrhyw un o’r categorïau ystafell yn berthnasol i’r uned hon, ychwanegwch y rhif 0.
+accommodation.singleBedrooms = Ystafelloedd wely sengl
+accommodation.doubleBedrooms = Ystafelloedd wely dwbl
+accommodation.bathrooms = Ystafelloedd ymolchi
+accommodation.maxGuestsNumber = Uchafswm nifer y gwesteion
+label.otherAccommodationDescription = Llety arall
+hint.otherAccommodationDescription = Er enghraifft, ystafelloedd chwaraeon.
 error.accommodation.singleBedrooms.required = Enter 0 if there are no single bedrooms in this unit
 error.accommodation.singleBedrooms.nonNumeric = Single bedrooms must be a number
 error.accommodation.singleBedrooms.negative = The amount of single bedrooms cannot be a negative number
@@ -3268,7 +3270,7 @@ fieldName.commercialLettingQuestion =  the {0} when property first become availa
 #COMMERCIAL LETTING AVAILABILITY
 ################################
 
-commercialLettingAvailability.heading = Availability for commercial lettings - up to 28 nights
+commercialLettingAvailability.heading = Argaeledd ar gyfer gosoddiadau masnachol – hyd at 28 noson
 commercialLettingAvailability.declare = Declare how many nights your property was available for letting commercially - in periods not longer than 28 nights - within the stated timeframe. This includes any nights when the property was vacant, even though it was open for commercial lettings.
 commercialLettingAvailability.list = Do not include any parts of property:
 commercialLettingAvailability.list.p1 = used by family or friends
@@ -3287,9 +3289,9 @@ error.commercialLettingAvailability.welsh.range = Number of nights in the year e
 
 #PARTS OF THE PROPERTY UNAVAILABLE TO RENT
 
-partsUnavailable.heading = Parts of the property unavailable for rent
-partsUnavailable.p = You must declare if parts of the property are unavailable for rent as they are occupied by you or your family. This includes any accommodation used as main residence or as a second home.
-partsUnavailable.label = Do you or your family occupy any part of the property as a main residence or a second home?
+partsUnavailable.heading = Rhannau o’r eiddo nad yw ar gael i’w rhentu
+partsUnavailable.p = Mae’n rhaid i chi ddatgan os nad yw rhannau o’r eiddo ar gael i’w rhentu oherwydd eich bod chi neu’ch teulu yn eu meddiannu. Mae hyn yn cynnwys unrhyw lety sy’n cael ei ddefnyddio fel prif fan preswylio neu fel ail gartref.
+partsUnavailable.label = A ydych chi neu’ch teulu’n meddiannu unrhyw ran o’r eiddo fel prif fan preswylio neu fel ail gartref?
 error.partsUnavailable.required = Select yes  if you or your family occupy any part of the property
 
 #OCCUPIERS DETAILS
@@ -3704,16 +3706,16 @@ checkYourAnswersAboutYourLeaseOrTenure.typeOfTenure = Type of tenure
 checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput = Rhent yn amrywio yn ôl y trwygyrch?
 checkYourAnswersAboutYourLeaseOrTenure.howThroughputAffectsRent = Sut mae trwygyrch yn effeithio ar rent
 checkYourAnswersAboutYourLeaseOrTenure.vatPayable = TAW yn daladwy?
-checkYourAnswersAboutTheProperty.heading = Check your answers – about you and the property
-checkYourAnswersAboutTheProperty.aboutYou.heading = Contact information
-checkYourAnswersAboutTheProperty.contact.details = Contact details
+checkYourAnswersAboutTheProperty.heading = Gwiriwch eich atebion – amdanoch chi a’r eiddo
+checkYourAnswersAboutTheProperty.aboutYou.heading = Gwybodaeth cyswllt
+checkYourAnswersAboutTheProperty.contact.details = Manylion cyswllt
 checkYourAnswersAboutTheProperty.aboutProperty.technologyType = Technology type
 checkYourAnswersAboutTheProperty.aboutProperty.renewable = Renewable plant type
 checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls = Site construction details
 checkYourAnswersAboutTheProperty.aboutProperty.3yrs =Constructed within the last 3 years?
 checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails = Details of construction costs
 checkYourAnswersAboutTheProperty.aboutProperty.heading = How the property is used
-checkYourAnswersAboutTheProperty.alternative.address = Use alternative address?
+checkYourAnswersAboutTheProperty.alternative.address = Defnyddio cyfeiriad gwahanol?
 checkYourAnswersAboutTheProperty.alternative.correspondence.address = Alternative correspondence address
 checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = Property use
@@ -3736,17 +3738,17 @@ checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails
 checkYourAnswersAboutTheProperty.tiedForGoods = Tied goods?
 checkYourAnswersAboutTheProperty.tiedForGoodsDetails = Type of tie
 
-checkYourAnswersAboutTheProperty.lettingAvailability.heading = Letting availability
-checkYourAnswersAboutTheProperty.firstAvailable = First available for commercial letting
-checkYourAnswersAboutTheProperty.availabilityCommercial = Availability for commercial lettings - up to 28 nights
-checkYourAnswersAboutTheProperty.completedCommercial = Completed commercial lettings - up to 28 nights
-checkYourAnswersAboutTheProperty.familyUse.heading = Family use
-checkYourAnswersAboutTheProperty.mainResidence = Main residence or second home not available for rent?
-checkYourAnswersAboutTheProperty.occupiersLabel= Occupier {0}
-checkYourAnswersAboutTheProperty.occupiersDetails = Occupier’s details
-checkYourAnswersAboutTheProperty.occupierCount = You have added {0} occupier
-checkYourAnswersAboutTheProperty.occupiersCount = You have added {0} occupiers
-checkYourAnswersAboutTheProperty.occupiersAdd = Add or remove an occupier
+checkYourAnswersAboutTheProperty.lettingAvailability.heading = Argaeledd fel eiddo ar osod
+checkYourAnswersAboutTheProperty.firstAvailable = Ar gael i’w osod yn fasnachol am y tro cyntaf
+checkYourAnswersAboutTheProperty.availabilityCommercial = Argaeledd ar gyfer gosoddiadau masnachol – hyd at 28 noson
+checkYourAnswersAboutTheProperty.completedCommercial = Gosodiau masnachol wedi’u cwblhau – hyd at 28 noson
+checkYourAnswersAboutTheProperty.familyUse.heading = Defnydd teuluol
+checkYourAnswersAboutTheProperty.mainResidence = Prif fan preswylio neu ail gartref nad yw ar gael i’w roi ar osod?
+checkYourAnswersAboutTheProperty.occupiersLabel= Meddiannydd {0}
+checkYourAnswersAboutTheProperty.occupiersDetails = Manylion y meddiannydd
+checkYourAnswersAboutTheProperty.occupierCount = Rydych wedi ychwanegu {0} meddiannydd
+checkYourAnswersAboutTheProperty.occupiersCount = Rydych wedi ychwanegu {0} feddiannydd
+checkYourAnswersAboutTheProperty.occupiersAdd = Ychwanegu neu ddileu meddiannydd
 checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
 
 checkYourAnswersAboutTheTradingHistory.heading = Gwiriwch eich atebion – hanes masnachu
