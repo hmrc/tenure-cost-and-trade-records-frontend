@@ -64,8 +64,8 @@ label.yes.oedd=Oedd
 label.no.nac.oedd=Nac oedd
 label.yes.iawn = Iawn
 label.no.na = Na
-label.yes.hoffwn = Yes
-label.no.na.hoffwn = No
+label.yes.hoffwn = Hoffwn
+label.no.na.hoffwn = Na hoffwn
 
 #CYA RADIO BUTTONS
 ##############
@@ -3277,7 +3277,7 @@ commercialLettingAvailability.list.p1 = used by family or friends
 commercialLettingAvailability.list.p2 = let out to staff or permanent residents
 commercialLettingAvailability.list.p3 = used for lettings longer than 28 nights
 commercialLettingAvailability.label = How many nights was the property available, in periods up to 28 nights between 1 April 2023 and 31 March 2024?
-commercialLettingAvailability.label.nights = nights
+commercialLettingAvailability.label.nights = noson
 error.commercialLettingAvailability.required = State how many nights was the property available
 commercialLettingAvailability.label.welsh = How many nights was the property available in periods up to 28 nights, in the following years?
 commercialLettingAvailability.label.welsh.year = Year ending

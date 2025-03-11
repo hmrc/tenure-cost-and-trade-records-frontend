@@ -173,7 +173,7 @@
      @govukSummaryList(SummaryList(rows =
          sectionAnswersPartTwo.row(
              "checkYourAnswersAboutTheProperty.mainResidence",
-             _.partsUnavailable.map(x => x.name.capitalize),
+             _.partsUnavailable.map(x => if(x.contains(AnswerYes)) messages(s"label.yes.oes") else messages(s"label.no.nac.oes")),
              aboutyouandtheproperty.routes.PartsUnavailableController.show(),
              "partsUnavailable",
              ("valueAsHtml", _ => None))
