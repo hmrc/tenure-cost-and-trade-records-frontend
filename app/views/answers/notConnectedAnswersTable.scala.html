@@ -15,12 +15,11 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.Session
 @import util.SectionAnswersRowBuilder
 
 @this(govukSummaryList: GovukSummaryList)
 
-@(session: Session)(implicit messages: Messages)
+@(session: models.Session)(implicit messages: Messages)
 
 @stillConnectedDetailsAnswers = @{
     SectionAnswersRowBuilder(session.stillConnectedDetails)

@@ -22,14 +22,12 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.guidance.guidancePage as GuidancePageView
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class GuidancePageController @Inject() (
   mcc: MessagesControllerComponents,
   guidancePageView: GuidancePageView
-)(using ec: ExecutionContext)
-    extends FrontendController(mcc):
+) extends FrontendController(mcc):
 
   def show(forType: String): Action[AnyContent] = Action { implicit request =>
     ForType

@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutyouandtheproperty
 @import util.DateUtilLocalised
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
@@ -88,13 +87,13 @@
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.contact.details",
         _.customerDetails.flatMap(x => s"<p class=\"govuk-body\">${x.fullName.escapedHtml}</p><p class=\"govuk-body\">${x.contactDetails.email}</p><p class=\"govuk-body\">${x.contactDetails.phone}</p>"),
-        aboutyouandtheproperty.routes.AboutYouController.show(),
+        controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
         ("valueAsHtml", _ => None)) ++
             sectionAnswers.row(
                 "checkYourAnswersAboutTheProperty.alternative.address",
                 _.altDetailsQuestion.map(_.contactDetailsQuestion.name).map(v => messages(s"label.$v")),
-                aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
+                controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
                 "contactDetailsQuestion",
                 ("valueAsHtml", _ => None)
             ) ++
@@ -105,7 +104,7 @@
                     val contactDetails = x.alternativeContactAddress.escapedHtml
                     contactDetails
                 },
-                aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
+                controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
                 "",
                 ("valueAsHtml", _ => None)
             )
@@ -117,7 +116,7 @@
         sectionAnswersPartTwo.row(
             "checkYourAnswersAboutTheProperty.firstAvailable",
             _.commercialLetDate.fold("")(x => dateUtil.formatYearMonth(x.toYearMonth)),
-            aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
+            controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
             "commercialLettingQuestion",
             ("valueAsHtml", _ => None))
     ))
@@ -126,7 +125,7 @@
         @govukSummaryList(SummaryList(rows =
             Seq(
                 yearEndingRow(
-                    aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show(),
+                    controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show(),
                     messages("checkYourAnswersAboutTheProperty.availabilityCommercial"),
                     sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
                     .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
@@ -142,7 +141,7 @@
         @govukSummaryList(SummaryList(rows =
             Seq(
                 yearEndingRow(
-                    aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show(),
+                    controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show(),
                     messages("checkYourAnswersAboutTheProperty.completedCommercial"),
                     sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
                     .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
@@ -158,13 +157,13 @@
             sectionAnswersPartTwo.row(
                 "checkYourAnswersAboutTheProperty.availabilityCommercial",
                 _.commercialLetAvailability.map(x => s"${x.getOrElse(0)} ${messages("commercialLettingAvailability.label.nights")}"),
-                aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show(),
+                controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show(),
                 "commercialLettingAvailability",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswersPartTwo.row(
                         "checkYourAnswersAboutTheProperty.completedCommercial",
                         _.completedCommercialLettings.map(x => s"${x.getOrElse(0)} ${messages("commercialLettingAvailability.label.nights")}"),
-                        aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show(),
+                        controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show(),
                         "completedCommercialLettings",
                         ("valueAsHtml", _ => None)
                     )))
@@ -175,7 +174,7 @@
          sectionAnswersPartTwo.row(
              "checkYourAnswersAboutTheProperty.mainResidence",
              _.partsUnavailable.map(x => x.name.capitalize),
-             aboutyouandtheproperty.routes.PartsUnavailableController.show(),
+             controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
              "partsUnavailable",
              ("valueAsHtml", _ => None))
      ))
@@ -189,7 +188,7 @@
              @govukSummaryList(SummaryList(rows =
                  sectionAnswers.row("checkYourAnswersAboutTheProperty.occupiersDetails",
                      _ => occupier.name + s"<p class=\"govuk-body\"> ${occupier.address} </p>",
-                     aboutyouandtheproperty.routes.OccupiersDetailsController.show(
+                     controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(
                          idx),
                      "",
                      ("valueAsHtml", _ => None))
@@ -203,7 +202,7 @@
                          items =
                              List(
                                  ActionItem(
-                                     s"${aboutyouandtheproperty.routes.OccupiersDetailsListController.show(occupiersListSize - 1).url}&from=CYA",
+                                     s"${controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(occupiersListSize - 1).url}&from=CYA",
                                      Text(messages("checkYourAnswersAboutTheProperty.occupiersAdd")))),
                          classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
                  )
@@ -219,7 +218,7 @@
             sectionAnswers.row(
                 "checkYourAnswersAboutTheProperty.aboutProperty.renewable",
                 _.renewablesPlant.map(x => x.renewablesPlant.name.capitalize),
-                aboutyouandtheproperty.routes.RenewablesPlantController.show(),
+                controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
                 "renewablesPlant",
                 ("valueAsHtml", _ => None))
         )
@@ -231,14 +230,14 @@
             sectionAnswers.row(
                 "checkYourAnswersAboutTheProperty.aboutProperty.3yrs",
                 _.threeYearsConstructed.map(x => x.name.capitalize),
-                aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
+                controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
                 "threeYearsConstructed",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers.conditionRow(
                         _.threeYearsConstructed.contains(AnswerYes),
                         "checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails",
                         _.costsBreakdown.map(_.escapedHtml),
-                        aboutyouandtheproperty.routes.CostsBreakdownController.show(),
+                        controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show(),
                         "costsBreakdown",
                         ("valueAsHtml", _ => None)
                     )
@@ -255,7 +254,7 @@
             sectionAnswers.row(
                 "checkYourAnswersAboutTheProperty.propertyUsage",
                 _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
-                aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+                controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
                 "propertyCurrentlyUsedString",
                 ("valueAsHtml", _ => None)
             )
@@ -267,7 +266,7 @@
         sectionAnswers.row(
             "checkYourAnswersAboutTheProperty.propertyUsage",
             _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
-            aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+            controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
             "propertyCurrentlyUsedString",
             ("valueAsHtml", _ => None)
         ) ++
@@ -277,14 +276,14 @@
                         """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
                                 + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
                             _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                    aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+                    controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
                     "buildingOperatingHaveAWebsite",
                     ("valueAsHtml", _ => None)
                 ) ++
                 sectionAnswers.row(
                     "checkYourAnswersAboutTheProperty.charity",
                     _.charityQuestion.map(x => s"<p class=\"govuk-body\">${x.name.capitalize} </p>"),
-                    aboutyouandtheproperty.routes.CharityQuestionController.show(),
+                    controllers.aboutyouandtheproperty.routes.CharityQuestionController.show(),
                     "propertyCurrentlyUsedString",
                     ("valueAsHtml", _ => None)
                 ) ++
@@ -295,7 +294,7 @@
                         """<p class="govuk-body">""" + x.name.capitalize + "</p>"
                                 + sectionAnswers.answers.filter(_ => AnswerYes.name).flatMap(
                             _.tradingActivity.flatMap(_.tradingActivityDetails.map(_.escapedHtml))).fold("")(details => s"<p class=\"govuk-body\">$details</p>")),
-                    aboutyouandtheproperty.routes.TradingActivityController.show(),
+                    controllers.aboutyouandtheproperty.routes.TradingActivityController.show(),
                     "buildingOperatingHaveAWebsite",
                     ("valueAsHtml", _ => None)
                 )
@@ -308,21 +307,21 @@
         sectionAnswersPartTwo.row(
             "checkYourAnswersAboutTheProperty.plantDescription",
             _.plantAndTechnology.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
-            aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
+            controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
             "plantAndTechnology",
             ("valueAsHtml", _ => None)
         ) ++
                 sectionAnswersPartTwo.row(
                     "checkYourAnswersAboutTheProperty.generator",
                     _.generatorCapacity.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
-                    aboutyouandtheproperty.routes.GeneratorCapacityController.show(),
+                    controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show(),
                     "generatorCapacity",
                     ("valueAsHtml", _ => None)
                 ) ++
                 sectionAnswersPartTwo.row(
                     "checkYourAnswersAboutTheProperty.battery",
                     _.batteriesCapacity.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
-                    aboutyouandtheproperty.routes.BatteriesCapacityController.show(),
+                    controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show(),
                     "batteriesCapacity",
                     ("valueAsHtml", _ => None)
                 )))
@@ -340,7 +339,7 @@
                     sectionAnswersPartTwo.answers.filter(_ => checkboxOther.get).flatMap(
                         _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>"))),
 
-            aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
+            controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
             ("valueAsHtml", _ => None)) ++
                 sectionAnswers.optionalRow(
                     "checkYourAnswersAboutTheProperty.hasWebsite",
@@ -348,7 +347,7 @@
                         """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
                                 + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
                             _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                    aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+                    controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
                     "buildingOperatingHaveAWebsite",
                     ("valueAsHtml", _ => None)
                 )))
@@ -359,7 +358,7 @@
                 usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
                         + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField.map(_.escapedHtml))).fold("")(v => s"<p class=\"govuk-body\">$v")
             ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
-            aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+            controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
             ("valueAsHtml", _ => None)) ++
                 sectionAnswers.optionalRow(
                     "checkYourAnswersAboutTheProperty.hasWebsite",
@@ -368,7 +367,7 @@
                         """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
                                 + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
                             _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                    aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+                    controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
                     "buildingOperatingHaveAWebsite",
                     ("valueAsHtml", _ => None)
                 )
@@ -378,39 +377,39 @@
     @if(sectionAnswers.answers.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>
 
-        @govukSummaryList(SummaryList(rows = sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail", _.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.${yesNo.name}")), aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show(), "premisesLicenseGranted") ++
+        @govukSummaryList(SummaryList(rows = sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail", _.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.${yesNo.name}")), controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show(), "premisesLicenseGranted") ++
                 sectionAnswers.conditionRow(_.premisesLicenseGrantedDetail.map(_.name).contains("yes"),
                     "checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails",
                     _.premisesLicenseGrantedInformationDetails.map(_.premisesLicenseGrantedInformationDetails),
-                    aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(), "premisesLicenseGrantedInformation") ++
+                    controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(), "premisesLicenseGrantedInformation") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.licensableActivities",
                     _.licensableActivities.map(yesNo => messages(s"label.${yesNo.name}")),
-                    aboutyouandtheproperty.routes.LicensableActivitiesController.show(), "licensableActivities") ++
+                    controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(), "licensableActivities") ++
                 sectionAnswers.conditionRow(_.licensableActivities.map(_.name).contains("yes"),
                     "checkYourAnswersAboutTheProperty.licensableActivitiesDetails",
                     _.licensableActivitiesInformationDetails.map(_.licensableActivitiesDetails),
-                    aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(), "licensableActivitiesDetails") ++
+                    controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(), "licensableActivitiesDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseConditions",
                     _.premisesLicenseConditions.map(yesNo => messages(s"label.${yesNo.name}")),
-                    aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show(), "premisesLicenseConditions") ++
+                    controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show(), "premisesLicenseConditions") ++
                 sectionAnswers.conditionRow(_.premisesLicenseConditions.map(_.name).contains("yes"),
                     "checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails",
                     _.premisesLicenseConditionsDetails.map(_.premisesLicenseConditionsDetails),
-                    aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
+                    controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.enforcementAction",
                     _.enforcementAction.map(yesNo => messages(s"label.${yesNo.name}")),
-                    aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementActionBeenTaken") ++
+                    controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementActionBeenTaken") ++
                 sectionAnswers.conditionRow(_.enforcementAction.map(_.name).contains("yes"),
                     "checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails",
                     _.enforcementActionHasBeenTakenInformationDetails.map(_.enforcementActionHasBeenTakenDetails),
-                    aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(), "enforcementActionHasBeenTakenDetails") ++
+                    controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(), "enforcementActionHasBeenTakenDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.tiedForGoods",
                     _.tiedForGoods.map(yesNo => messages(s"label.${yesNo.name}")),
-                    aboutyouandtheproperty.routes.TiedForGoodsController.show(), "tiedForGoods") ++
+                    controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show(), "tiedForGoods") ++
                 sectionAnswers.conditionRow(_.tiedForGoods.map(_.name).contains("yes"),
                     "checkYourAnswersAboutTheProperty.tiedForGoodsDetails",
                     _.tiedForGoodsDetails.map(_.tiedGoodsDetails).map(details => s"${details.key}.${details.name}"),
-                    aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
+                    controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
                     ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
         ))
     }

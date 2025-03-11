@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.ForType.*
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -198,7 +197,7 @@
         Actions(items =
             Seq(
                 ActionItem(
-                    href = s"${aboutthetradinghistory.routes.TurnoverController.show().url}?from=CYA",
+                    href = s"${controllers.aboutthetradinghistory.routes.TurnoverController.show().url}?from=CYA",
                     content = Text(messages("label.change")),
                     visuallyHiddenText = Some(messages("turnover.heading")),
                     attributes = Map(
@@ -214,7 +213,7 @@
         Actions(items =
             Seq(
                 ActionItem(
-                    href = s"${aboutthetradinghistory.routes.Turnover6030Controller.show().url}?from=CYA",
+                    href = s"${controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url}?from=CYA",
                     content = Text(messages("label.change")),
                     visuallyHiddenText = Some(messages("turnover.heading")),
                     attributes = Map(
@@ -512,7 +511,7 @@
         sectionAnswers.row(
             messageKey ="checkYourAnswersAboutTheTradingHistory.occupationDate",
             getAnswerValue = _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
-            editPage = aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show,
+            editPage = controllers.aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show,
             editField = "",
         ).map(_.copy(
             classes = "no-border-bottom"
@@ -535,16 +534,16 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
             _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
-            aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
+            controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
                     _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
-                    aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
+                    controllers.aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                     _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                     forType match {
                         case FOR6020 | FOR6076 =>
-                            aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-                        case _ => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+                            controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
+                        case _ => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                     },
                     "", ("valueAsHtml", _ => None))
     ))
@@ -595,7 +594,7 @@
 @if(forType == FOR6048) {
 
     @pageAnswers("turnover.6048.income.heading",
-        aboutthetradinghistory.routes.Income6048Controller.show,
+        controllers.aboutthetradinghistory.routes.Income6048Controller.show,
         answer6048("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
         answer6048("turnover.6048.income.letting", _.income.flatMap(_.letting)),
         answer6048("checkYourAnswersAboutTheTradingHistory.income.serviceProvision", _.income.flatMap(_.serviceProvision)),
@@ -604,7 +603,7 @@
     )
 
     @pageAnswers("turnover.6048.fixedCosts.heading",
-        aboutthetradinghistory.routes.FixedCosts6048Controller.show,
+        controllers.aboutthetradinghistory.routes.FixedCosts6048Controller.show,
         answer6048("turnover.6048.fixedCosts.insurance", _.fixedCosts.flatMap(_.insurance)),
         answer6048("checkYourAnswersAboutTheTradingHistory.fixedCosts.businessRatesOrCouncilTax", _.fixedCosts.flatMap(_.businessRatesOrCouncilTax)),
         answer6048("turnover.6048.fixedCosts.rent", _.fixedCosts.flatMap(_.rent)),
@@ -612,7 +611,7 @@
     )
 
     @pageAnswers("turnover.6048.accountingCosts.heading",
-        aboutthetradinghistory.routes.AccountingCosts6048Controller.show,
+        controllers.aboutthetradinghistory.routes.AccountingCosts6048Controller.show,
         answer6048("turnover.6048.accountingCosts.wagesAndNationalInsurance", _.accountingCosts.flatMap(_.wagesAndNationalInsurance)),
         answer6048("checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationBuildings", _.accountingCosts.flatMap(_.depreciationBuildings)),
         answer6048("checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents", _.accountingCosts.flatMap(_.depreciationContents)),
@@ -622,7 +621,7 @@
     )
 
     @pageAnswers("turnover.6048.administrativeCosts.heading",
-        aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show,
+        controllers.aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show,
         answer6048("checkYourAnswersAboutTheTradingHistory.administrativeCosts.subscriptionsAndFees", _.administrativeCosts.flatMap(_.subscriptionsAndFees)),
         answer6048("checkYourAnswersAboutTheTradingHistory.administrativeCosts.telephoneBroadbandStationeryPostage", _.administrativeCosts.flatMap(_.telephoneBroadbandStationeryPostage)),
         answer6048("turnover.6048.administrativeCosts.bookingAgency", _.administrativeCosts.flatMap(_.bookingAgency)),
@@ -632,7 +631,7 @@
     )
 
     @pageAnswers("turnover.6048.operationalCosts.heading",
-        aboutthetradinghistory.routes.OperationalCosts6048Controller.show,
+        controllers.aboutthetradinghistory.routes.OperationalCosts6048Controller.show,
         answer6048("turnover.6048.operationalCosts.energyBills", _.operationalCosts.flatMap(_.energyBills)),
         answer6048("turnover.6048.operationalCosts.laundryCleaning", _.operationalCosts.flatMap(_.laundryCleaning)),
         answer6048("turnover.6048.operationalCosts.repairsRenewalsMaintenance", _.operationalCosts.flatMap(_.repairsRenewalsMaintenance)),
@@ -654,26 +653,26 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers1.row("checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite",
             _.caravans.flatMap(_.anyStaticLeisureCaravansOnSite).flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-            aboutthetradinghistory.routes.StaticCaravansController.show(), "staticCaravans")
+            controllers.aboutthetradinghistory.routes.StaticCaravansController.show(), "staticCaravans")
     ))
 
     @if(sectionAnswers1.answers.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).contains(AnswerYes)) {
 
         @pageAnswers("turnover.6045.caravanFleetHire.grossReceipts.heading",
-            aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
+            controllers.aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.grossReceiptsCaravanFleetHire.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.grossReceiptsCaravanFleetHire.flatMap(_.grossReceipts)),
         )
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.single.ownedByOperator",
-            aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show(),
+            controllers.aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.singleCaravansOwnedByOperator.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.singleCaravansOwnedByOperator.flatMap(_.vans))
         )
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.single.subletByOperator",
-            aboutthetradinghistory.routes.SingleCaravansSubletController.show(),
+            controllers.aboutthetradinghistory.routes.SingleCaravansSubletController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.singleCaravansSublet.flatMap(_.grossReceipts)),
@@ -683,7 +682,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
                 _ => singleCaravansAge.map(_.fleetHire.years0_5).map(caravansWithSuffix),
-                aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                controllers.aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
                     Seq(
                         answerOpt("turnover.6045.caravans.age.years6_10", singleCaravansAge.map(_.fleetHire.years6_10).map(caravansWithSuffix)),
                         answerOpt("turnover.6045.caravans.age.years11_15", singleCaravansAge.map(_.fleetHire.years11_15).map(caravansWithSuffix)),
@@ -694,7 +693,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
                 _ => singleCaravansAge.map(_.privateSublet.years0_5).map(caravansWithSuffix),
-                aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                controllers.aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
                     Seq(
                         answerOpt("turnover.6045.caravans.age.years6_10", singleCaravansAge.map(_.privateSublet.years6_10).map(caravansWithSuffix)),
                         answerOpt("turnover.6045.caravans.age.years11_15", singleCaravansAge.map(_.privateSublet.years11_15).map(caravansWithSuffix)),
@@ -702,14 +701,14 @@
                     )
         ))
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator",
-            aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show(),
+            controllers.aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.twinUnitCaravansOwnedByOperator.flatMap(_.grossReceipts)),
             answer6045("turnover.6045.caravans.vans", _.twinUnitCaravansOwnedByOperator.flatMap(_.vans))
         )
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator",
-            aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show(),
+            controllers.aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show(),
             answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.grossReceiptsCaravanFleetHire.fold(0)(_.tradingPeriod)} ${messages("turnover.weeks")}"),
             answer6045("turnover.6045.caravanFleetHire.grossReceipts", _.twinUnitCaravansSublet.flatMap(_.grossReceipts)),
@@ -719,7 +718,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
                 _ => twinUnitCaravansAge.map(_.fleetHire.years0_5).map(caravansWithSuffix),
-                aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                controllers.aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "fleetHire.years0_5").map(_.copy(classes = "no-border-bottom")) ++
                     Seq(
                         answerOpt("turnover.6045.caravans.age.years6_10", twinUnitCaravansAge.map(_.fleetHire.years6_10).map(caravansWithSuffix)),
                         answerOpt("turnover.6045.caravans.age.years11_15", twinUnitCaravansAge.map(_.fleetHire.years11_15).map(caravansWithSuffix)),
@@ -730,7 +729,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("turnover.6045.caravans.age.years0_5",
                 _ => twinUnitCaravansAge.map(_.privateSublet.years0_5).map(caravansWithSuffix),
-                aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
+                controllers.aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show(), "privateSublet.years0_5").map(_.copy(classes = "no-border-bottom")) ++
                     Seq(
                         answerOpt("turnover.6045.caravans.age.years6_10", twinUnitCaravansAge.map(_.privateSublet.years6_10).map(caravansWithSuffix)),
                         answerOpt("turnover.6045.caravans.age.years11_15", twinUnitCaravansAge.map(_.privateSublet.years11_15).map(caravansWithSuffix)),
@@ -741,7 +740,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers1.row("turnover.6045.caravansTotalSiteCapacity.ownedByOperatorForFleetHire",
                 _ => caravansTotalSiteCapacity.map(_.ownedByOperatorForFleetHire).map(caravansWithSuffix),
-                aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show(), "ownedByOperatorForFleetHire").map(_.copy(classes = "no-border-bottom")) ++
+                controllers.aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show(), "ownedByOperatorForFleetHire").map(_.copy(classes = "no-border-bottom")) ++
                     Seq(
                         answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily", caravansTotalSiteCapacity.map(_.privatelyOwnedForOwnerAndFamily).map(caravansWithSuffix)),
                         answerOpt("checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator", caravansTotalSiteCapacity.map(_.subletByOperator).map(caravansWithSuffix)),
@@ -758,7 +757,7 @@
                     Seq(messages("turnover.6045.caravansPerService.fleetWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.fleetElectricityOnly")),
                     Seq(c.fleetWaterElectricityDrainage, c.fleetElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>")
                 )).body),
-                aboutthetradinghistory.routes.CaravansPerServiceController.show(), "fleetWaterElectricityDrainage", ("valueAsHtml", _ => None))
+                controllers.aboutthetradinghistory.routes.CaravansPerServiceController.show(), "fleetWaterElectricityDrainage", ("valueAsHtml", _ => None))
             .map(_.copy(classes = "no-border-bottom")) ++
                     sectionAnswers1.rowWithoutActions("turnover.6045.caravansPerService.private",
                         _.caravans.flatMap(_.caravansPerService).fold("")(c => table(Seq(
@@ -786,7 +785,7 @@
                         Option.when(fee.servicesIncludedInPitchFee.contains(Other))(fee.otherPitchFeeDetails.getOrElse("")),
                     ).filter(_.nonEmpty).map(v => s"<div class=\"govuk-!-margin-left-9\">${v.getOrElse("")} ${messages("turnover.6045.perYear.suffix")}</div>")
                 )).body),
-                aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show(), "totalPitchFee", ("valueAsHtml", _ => None))
+                controllers.aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show(), "totalPitchFee", ("valueAsHtml", _ => None))
         ))
     }
 
@@ -795,13 +794,13 @@
 @if(forType == FOR6076) {
 
     @pageAnswers("taskList.6076.powerGenerated",
-        aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
+        controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
         answer6076("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
         answer6076("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated)
     )
 
     @pageAnswers("taskList.6076.grossReceipts",
-        aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
+        controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
         answer6076("grossReceipts.electricitySales", _.grossReceiptsExcludingVAT.flatMap(_.electricitySales)),
         answer6076("grossReceipts.feedInTariff", _.grossReceiptsExcludingVAT.flatMap(_.feedInTariff)),
         answer6076("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.grossReceiptsExcludingVAT.flatMap(_.rocBuyout)),
@@ -815,7 +814,7 @@
 
     @if(request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant).exists(_.renewablesPlant == BaseLoad)) {
         @pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
-            aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
+            controllers.aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
             answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),
             answer6076("checkYourAnswersAboutTheTradingHistory.bioMass", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMass)),
             answer6076("grossReceiptsForBaseLoad.byProductSales", _.grossReceiptsForBaseLoad.flatMap(_.byProductSales)),
@@ -826,14 +825,14 @@
     }
 
     @pageAnswers("turnover.6076.otherIncome",
-        aboutthetradinghistory.routes.OtherIncomeController.show(),
+        controllers.aboutthetradinghistory.routes.OtherIncomeController.show(),
         answer6076("turnover.6076.otherIncome", _.otherIncome, sectionAnswers1.answers.flatMap(_.otherIncomeDetails))
     )
 
     @if(intermittentAnswer) {
 
         @pageAnswers("costOfSales6076.heading",
-            aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show(),
+            controllers.aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show(),
             answer6076("costOfSales6076.importedPower", _.costOfSales6076IntermittentSum.flatMap(_.importedPower)),
             answer6076("checkYourAnswersAboutTheTradingHistory.TNuoS", _.costOfSales6076IntermittentSum.flatMap(_.TNuoS)),
             answer6076("checkYourAnswersAboutTheTradingHistory.BSuoS", _.costOfSales6076IntermittentSum.flatMap(_.BSuoS)),
@@ -843,7 +842,7 @@
             answer6076("checkYourAnswersAboutTheTradingHistory.totalCosts", _.costOfSales6076IntermittentSum.map(_.total))
         )} else {
     @pageAnswers("costOfSales6076.heading",
-        aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
+        controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
         answer6076("costOfSales6076.fuelOrFeedstock", _.costOfSales6076Sum.flatMap(_.fuelOrFeedstock)),
         answer6076("costOfSales6076.importedPower", _.costOfSales6076Sum.flatMap(_.importedPower)),
         answer6076("checkYourAnswersAboutTheTradingHistory.TNuoS", _.costOfSales6076Sum.flatMap(_.TNuoS)),
@@ -856,7 +855,7 @@
     }
 
     @pageAnswers("staffCosts.heading",
-        aboutthetradinghistory.routes.StaffCostsController.show(),
+        controllers.aboutthetradinghistory.routes.StaffCostsController.show(),
         answer6076("staffCosts.wages", _.staffCosts.flatMap(_.wagesAndSalaries)),
         answer6076("staffCosts.NI", _.staffCosts.flatMap(_.nationalInsurance)),
         answer6076("staffCosts.pension", _.staffCosts.flatMap(_.pensionContributions)),
@@ -865,7 +864,7 @@
     )
 
     @pageAnswers("premisesCosts.heading",
-        aboutthetradinghistory.routes.PremisesCostsController.show(),
+        controllers.aboutthetradinghistory.routes.PremisesCostsController.show(),
         answer6076("premisesCosts.energyAndUtilities", _.premisesCosts.flatMap(_.energyAndUtilities)),
         answer6076("premisesCosts.buildingRepairAndMaintenance", _.premisesCosts.flatMap(_.buildingRepairAndMaintenance)),
         answer6076("premisesCosts.repairsAndRenewalsOfFixtures", _.premisesCosts.flatMap(_.repairsAndRenewalsOfFixtures)),
@@ -876,7 +875,7 @@
     )
 
     @pageAnswers("taskList.6076.operationalExpenses",
-        aboutthetradinghistory.routes.OperationalExpensesController.show(),
+        controllers.aboutthetradinghistory.routes.OperationalExpensesController.show(),
         answer6076("checkYourAnswersAboutTheTradingHistory.advertising", _.operationalExpenses.flatMap(_.advertising)),
         answer6076("turnover.6076.expenses.administration", _.operationalExpenses.flatMap(_.administration)),
         answer6076("turnover.6076.expenses.insurance", _.operationalExpenses.flatMap(_.insurance)),
@@ -889,12 +888,12 @@
     )
 
     @pageAnswers("turnover.6076.headOfficeExpenses.heading",
-        aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
+        controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
         answer6076("turnover.6076.headOfficeExpenses.heading", _.headOfficeExpenses, sectionAnswers1.answers.flatMap(_.furtherInformationOrRemarks))
     )
 
     @pageAnswers("incomeExpenditureSummary6076.heading",
-        aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
         answer6076("incomeExpenditureSummary6076.profitOrLoss", _.incomeAndExpenditureSummary.map(_.netProfitOrLoss)),
         answer("incomeExpenditureSummary6076.label", Seq.empty,
             if (sectionAnswers1.answers.flatMap(_.incomeExpenditureConfirmation6076).contains("confirmed")) { messages("label.yes.iawn") } else {
@@ -908,7 +907,7 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030",
             _.unusualCircumstances.map(_.unusualCircumstances),
-            aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
+            controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
     ))
 }
 
@@ -919,7 +918,7 @@
     @govukSummaryList(SummaryList(rows =
         Seq(
             financialYearRow6020(
-                aboutthetradinghistory.routes.TotalFuelSoldController.show(),
+                controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
                 messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
                 sectionAnswers.answers.flatMap(_.totalFuelSold)
                 .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
@@ -942,7 +941,7 @@
         sectionAnswers.row(
             "checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question",
             _.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion).map(answerYesNo => answerYesNo.name.capitalize),
-            aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
+            controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
             "bunkeredFuelQuestion"
         )
     )
@@ -952,7 +951,7 @@
         @govukSummaryList(SummaryList(rows =
             Seq(
                 financialYearRow6020(
-                    aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
+                    controllers.aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
                     messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
                     sectionAnswers.answers.flatMap(_.bunkeredFuelSold)
                     .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
@@ -976,7 +975,7 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails",
                     _ => card.bunkerFuelCardDetails.name + s"<p class=\"govuk-body\">${card.bunkerFuelCardDetails.handlingFee + " " + messages("bunkerFuelCardDetails.handlingFee.unit")}</p>",
-                    aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1),
+                    controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1),
                     "",
                     ("valueAsHtml", _ => None))
             ))
@@ -991,7 +990,7 @@
                         items =
                             List(
                                 ActionItem(
-                                    s"${aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1).url}&from=CYA",
+                                    s"${controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1).url}&from=CYA",
                                     Text(messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove")))),
                         classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
                 )
@@ -1003,7 +1002,7 @@
     @govukSummaryList(SummaryList(rows =
         Seq(
             financialYearRow6020(
-                aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
+                controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
                 messages("checkYourAnswersAboutTheTradingHistory.customerCreditAcc"),
                 sectionAnswers.answers.flatMap(_.customerCreditAccounts)
                 .fold(Seq.empty[String])(_.map(cca => dateUtil.formatDayMonthAbbrYear(cca.financialYearEnd)))
@@ -1026,7 +1025,7 @@
         sectionAnswers.row(
             "acceptLowMarginFuelCard.heading",
             _.doYouAcceptLowMarginFuelCard.map(_.name.capitalize),
-            aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show(),
+            controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show(),
             "acceptLowMarginFuelCard"
         )
     ))
@@ -1035,7 +1034,7 @@
         @govukSummaryList(SummaryList(rows =
             Seq(
                 financialYearRow6020(
-                    aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
+                    controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
                     messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards"),
                     sectionAnswers.answers.flatMap(_.percentageFromFuelCards)
                     .fold(Seq.empty[String])(_.map(card => dateUtil.formatDayMonthAbbrYear(card.financialYearEnd)))
@@ -1059,7 +1058,7 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.lowMarginCard.details",
                     _ => card.lowMarginFuelCardDetail.name + s"<p class=\"govuk-body\">${card.lowMarginFuelCardDetail.handlingFee + " " + messages("bunkerFuelCardDetails.handlingFee.unit")}</p>",
-                    aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1),
+                    controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1),
                     "",
                     ("valueAsHtml", _ => None))
             ))
@@ -1074,7 +1073,7 @@
                         items =
                             List(
                                 ActionItem(
-                                    s"${aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1).url}&from=CYA",
+                                    s"${controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1).url}&from=CYA",
                                     Text(messages("checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove")))),
                         classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
                 )
@@ -1083,7 +1082,7 @@
     }
 
     @pageAnswers("turnover.6020.heading",
-        aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+        controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
         answer6020("turnover.6020.shop", _.shop),
         answer6020("turnover.6020.carWash", _.carWash),
         answer6020("turnover.6020.jetWash", _.jetWash),
@@ -1100,7 +1099,7 @@
                 """<p class="govuk-body">""" + messages(if(hasEVPoint.name.contains("yes")) {"label.yes.ydw"} else {"label.no.nac.ydw"}) + "</p>"
                         + sectionAnswers.answers.filter(_ => hasEVPoint.name == "yes").flatMap(
                     _.electricVehicleChargingPoints.flatMap(_.spacesOrBays)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-            aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(), "electricVehicleChargingPoints", ("valueAsHtml", _ => None))
+            controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(), "electricVehicleChargingPoints", ("valueAsHtml", _ => None))
     ))
 }
 
@@ -1116,7 +1115,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = s"${aboutthetradinghistory.routes.CostOfSalesController.show().url}?from=CYA",
+                                href = s"${controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url}?from=CYA",
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("costOfSales.heading")),
                                 attributes = Map(
@@ -1141,7 +1140,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = s"${aboutthetradinghistory.routes.TotalPayrollCostsController.show().url}?from=CYA",
+                                href = s"${controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show().url}?from=CYA",
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")),
                                 attributes = Map(
@@ -1166,7 +1165,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = s"${aboutthetradinghistory.routes.VariableOperatingExpensesController.show().url}?from=CYA",
+                                href = s"${controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show().url}?from=CYA",
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("variableOperatingExpenses.heading")),
                                 attributes = Map(
@@ -1196,7 +1195,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = s"${aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url}?from=CYA",
+                                href = s"${controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url}?from=CYA",
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("fixedOperatingExpenses.heading")),
                                 attributes = Map(
@@ -1221,7 +1220,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = s"${aboutthetradinghistory.routes.OtherCostsController.show().url}?from=CYA",
+                                href = s"${controllers.aboutthetradinghistory.routes.OtherCostsController.show().url}?from=CYA",
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("otherCosts.heading")),
                                 attributes = Map(
@@ -1251,7 +1250,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = s"${aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url}?from=CYA",
+                                href = s"${controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url}?from=CYA",
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.profitSummary")),
                                 attributes = Map(
@@ -1268,6 +1267,6 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances",
             _.unusualCircumstances.map(_.unusualCircumstances),
-            aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
+            controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
     ))
 }

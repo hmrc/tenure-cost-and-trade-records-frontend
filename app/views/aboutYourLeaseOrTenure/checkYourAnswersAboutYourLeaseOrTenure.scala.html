@@ -15,11 +15,10 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutYourLeaseOrTenure
-@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 @import models.pages.Summary
 @import views.html.answers.answersAboutYourLeaseOrTenure
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -44,7 +43,7 @@
 
         @answersSectionAboutYourLeaseOrTenure()
 
-        @formWithCSRF(action = aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
+        @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,
