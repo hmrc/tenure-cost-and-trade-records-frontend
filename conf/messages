@@ -66,6 +66,8 @@ label.yes.oedd=Yes
 label.no.nac.oedd=No
 label.yes.iawn = Yes
 label.no.na = No
+label.yes.hoffwn = Yes
+label.no.na.hoffwn = No
 
 # CYA RADIO BUTTONS
 ##############
