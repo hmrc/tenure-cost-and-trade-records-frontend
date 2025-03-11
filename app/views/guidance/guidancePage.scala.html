@@ -25,14 +25,13 @@
 
 @guidancePage = @{
     forType match {
-        case FOR6010 => {
+        case FOR6010 =>
             GuidancePage(
                 contentsItems = Seq.empty,
                 sections = Seq.empty,
                 startCall = controllers.routes.LoginController.show
             )
-        }
-        case FOR6048 => {
+        case FOR6048 =>
             GuidancePage(
                 contentsItems = Seq(
                     ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
@@ -56,8 +55,8 @@
                 ),
                 startCall = controllers.lettingHistory.routes.HasPermanentResidentsController.show
             )
-        }
         // add more cases here ...
+        case _ => ???
     }
 }
 
