@@ -26,7 +26,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import models.submissions.aboutfranchisesorlettings.{LettingIncomeRecord,ConcessionIncomeRecord}
+@import models.submissions.aboutfranchisesorlettings.{LettingIncomeRecord,ConcessionIncomeRecord, Concession6015IncomeRecord}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
@@ -42,7 +42,6 @@
         govukSummaryList: GovukSummaryList,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[?], index: Int, backLink: String, forType: ForType)(implicit request: SessionRequest[?], messages: Messages)
 
@@ -70,6 +69,9 @@
         record match {
             case franchise: FranchiseIncomeRecord =>
                 (franchise.businessDetails.fold("")(_.operatorName),
+                 controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
+            case concession6015: Concession6015IncomeRecord =>
+                (concession6015.businessDetails.fold("")(_.operatorName),
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession: ConcessionIncomeRecord =>
                 (concession.businessDetails.fold("")(_.operatorName),

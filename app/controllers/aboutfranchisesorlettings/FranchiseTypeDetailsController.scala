@@ -46,7 +46,7 @@ class FranchiseTypeDetailsController @Inject() (
     with Logging {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[CateringOperationDetails] = for {
+    val existingDetails: Option[BusinessDetails] = for {
       requestedIndex  <- Some(index)
       allRecords      <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       existingRecord  <- allRecords.lift(requestedIndex)
@@ -71,7 +71,7 @@ class FranchiseTypeDetailsController @Inject() (
   }
 
   def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CateringOperationDetails](
+    continueOrSaveAsDraft[BusinessDetails](
       franchiseTypeDetailsForm,
       formWithErrors =>
         BadRequest(
@@ -86,9 +86,15 @@ class FranchiseTypeDetailsController @Inject() (
       data => {
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
           if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
-
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
-              records.updated(idx, records(idx).asInstanceOf[FranchiseIncomeRecord].copy(businessDetails = Some(data)))
+              records.updated(
+                idx,
+                records(idx) match {
+                  case franchise: FranchiseIncomeRecord       => franchise.copy(businessDetails = Some(data))
+                  case concession: Concession6015IncomeRecord => concession.copy(businessDetails = Some(data))
+                  case _                                      => throw new IllegalStateException("Unknown income record type")
+                }
+              )
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
           } else {

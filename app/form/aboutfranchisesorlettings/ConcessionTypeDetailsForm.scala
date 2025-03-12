@@ -16,14 +16,14 @@
 
 package form.aboutfranchisesorlettings
 
-import models.submissions.aboutfranchisesorlettings.CateringOperationBusinessDetails
+import models.submissions.aboutfranchisesorlettings.ConcessionBusinessDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ConcessionTypeDetailsForm {
 
-  val concessionTypeDetailsForm: Form[CateringOperationBusinessDetails] = Form(
+  val concessionTypeDetailsForm: Form[ConcessionBusinessDetails] = Form(
     mapping(
       "operatorName"   -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.concessionTypeDetails.operator.required"),
@@ -37,6 +37,6 @@ object ConcessionTypeDetailsForm {
         nonEmpty(errorMessage = "error.concessionTypeDetails.describeUse.required"),
         maxLength(100, "error.concessionTypeDetails.describeUse.maxLength")
       )
-    )(CateringOperationBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )(ConcessionBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

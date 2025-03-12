@@ -16,12 +16,11 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.RentReceivedFromForm.rentReceivedFromForm
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.RentReceivedFrom
+import form.aboutfranchisesorlettings.RentReceivedFromForm.rentReceivedFromForm as theForm
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, IncomeRecord, RentReceivedFrom}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentReceivedFromPageId
 import play.api.i18n.I18nSupport
@@ -29,9 +28,10 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.rentReceivedFrom
 
-import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.{Inject, Named, Singleton}
+import scala.concurrent.ExecutionContext
 
+@Singleton
 class RentReceivedFromController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
@@ -41,60 +41,60 @@ class RentReceivedFromController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with FranchiseAndLettingSupport
     with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.flatMap(
-      _.cateringOperationSections.lift(index)
-    )
-    existingSection.fold(
-      Redirect(routes.CateringOperationDetailsController.show(None))
-    ) { cateringOperationOrLettingAccommodationSection =>
-      val rentDetailsForm =
-        cateringOperationOrLettingAccommodationSection.rentReceivedFrom.fold(
-          rentReceivedFromForm
-        )(rentReceivedFromForm.fill)
-      audit.sendChangeLink("RentReceivedFrom")
+    val existingDetails = getIncomeRecord(index).collect {
+      case concession: Concession6015IncomeRecord => concession.rent
+      case _                                      => None
+    }.flatten
 
-      Ok(
-        rentReceivedFromView(
-          rentDetailsForm,
-          index,
-          existingSection.get.cateringOperationDetails.operatorName,
-          request.sessionData.toSummary
-        )
+    audit.sendChangeLink("RentReceivedFrom")
+
+    Ok(
+      rentReceivedFromView(
+        existingDetails.fold(theForm)(theForm.fill),
+        index,
+        getOperatorName(index),
+        request.sessionData.toSummary
       )
-    }
+    )
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection = request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections).get(index)
-
     continueOrSaveAsDraft[RentReceivedFrom](
-      rentReceivedFromForm,
+      theForm,
       formWithErrors =>
         BadRequest(
           rentReceivedFromView(
             formWithErrors,
             index,
-            existingSection.cateringOperationDetails.operatorName,
+            getOperatorName(index),
             request.sessionData.toSummary
           )
         ),
-      data =>
-        request.sessionData.aboutFranchisesOrLettings.fold(
-          Future.successful(Redirect(routes.CateringOperationDetailsController.show(None)))
-        ) { aboutFranchisesOrLettings =>
-          val existingSections = aboutFranchisesOrLettings.cateringOperationSections
-          val updatedSections  = existingSections.updated(
-            index,
-            existingSections(index).copy(rentReceivedFrom = Some(data))
-          )
-          val updatedData      = updateAboutFranchisesOrLettings(_.copy(cateringOperationSections = updatedSections))
-          session.saveOrUpdate(updatedData).map { _ =>
-            Redirect(navigator.nextPage(RentReceivedFromPageId, updatedData).apply(updatedData))
-          }
+      data => {
+        val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
+          if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(index))) {
+            val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
+              records.updated(
+                index,
+                records(index) match {
+                  case concession: Concession6015IncomeRecord => concession.copy(rent = Some(data))
+                  case _                                      => throw new IllegalStateException("Unknown income record type")
+                }
+              )
+            }
+            aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
+          } else aboutFranchisesOrLettings
+        }(request)
+
+        session.saveOrUpdate(updatedSession).map { _ =>
+          Redirect(navigator.nextPage(RentReceivedFromPageId, updatedSession).apply(updatedSession))
+
         }
+      }
     )
   }
 }

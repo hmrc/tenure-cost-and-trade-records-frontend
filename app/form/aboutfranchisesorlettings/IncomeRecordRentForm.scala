@@ -18,19 +18,19 @@ package form.aboutfranchisesorlettings
 
 import form.DateMappings.requiredDateMapping
 import form.MappingSupport.currencyMapping
-import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
+import models.submissions.aboutfranchisesorlettings.PropertyRentDetails
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.Messages
 
 object IncomeRecordRentForm {
 
-  def incomeRecordRentForm(implicit messages: Messages): Form[LettingOtherPartOfPropertyRentDetails] =
+  def incomeRecordRentForm(implicit messages: Messages): Form[PropertyRentDetails] =
     Form(
       mapping(
         "annualRent" -> currencyMapping(".annualRent"),
         "dateInput"  -> requiredDateMapping("lettingOtherPartOfPropertyFixedRentDate", allowPastDates = true)
-      )(LettingOtherPartOfPropertyRentDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+      )(PropertyRentDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 
 }

@@ -18,14 +18,13 @@ package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.IncomeRecordRentForm
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyRentDetails
+import models.submissions.aboutfranchisesorlettings.PropertyRentDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
 
-class LettingOtherPartOfPropertyRentDetailsViewSpec
-    extends QuestionViewBehaviours[LettingOtherPartOfPropertyRentDetails] {
+class LettingOtherPartOfPropertyRentDetailsViewSpec extends QuestionViewBehaviours[PropertyRentDetails] {
 
   val messageKeyPrefix = "lettingOtherPartOfPropertyRentDetails"
 
@@ -43,7 +42,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec
       FOR6010
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LettingOtherPartOfPropertyRentDetails]) =>
+  def createViewUsingForm = (form: Form[PropertyRentDetails]) =>
     lettingOtherPartOfPropertyRentDetailsView(
       form,
       0,

@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.IncomeRecordRentForm.incomeRecordRentForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, LettingOtherPartOfPropertyRentDetails, TypeLetting}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, PropertyRentDetails, TypeLetting}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentalIncomeRentId
 import play.api.Logging
@@ -43,23 +43,9 @@ class RentalIncomeRentController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with FranchiseAndLettingSupport
     with I18nSupport
     with Logging {
-
-  private def getIncomeRecord(index: Int)(implicit request: SessionRequest[?]): Option[IncomeRecord] =
-    for {
-      allRecords <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-      record     <- allRecords.lift(index)
-    } yield record
-
-  private def getOperatorName(index: Int)(implicit request: SessionRequest[?]): String =
-    getIncomeRecord(index)
-      .collect {
-        case letting: LettingIncomeRecord     => letting.operatorDetails.fold("")(_.operatorName)
-        case franchise: FranchiseIncomeRecord => franchise.businessDetails.fold("")(_.operatorName)
-        case _                                => ""
-      }
-      .getOrElse("")
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {
@@ -68,14 +54,13 @@ class RentalIncomeRentController @Inject() (
       case _                                => None
     }.flatten
 
-    val operatorName = getOperatorName(index)
     audit.sendChangeLink("LettingTypeRent")
 
     Ok(
       view(
         existingDetails.fold(theForm)(theForm.fill),
         index,
-        operatorName,
+        getOperatorName(index),
         calculateBackLink(index),
         request.sessionData.toSummary,
         request.sessionData.forType
@@ -84,16 +69,14 @@ class RentalIncomeRentController @Inject() (
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val operatorName = getOperatorName(idx)
-
-    continueOrSaveAsDraft[LettingOtherPartOfPropertyRentDetails](
+    continueOrSaveAsDraft[PropertyRentDetails](
       theForm,
       formWithErrors =>
         BadRequest(
           view(
             formWithErrors,
             idx,
-            operatorName,
+            getOperatorName(idx),
             calculateBackLink(idx),
             request.sessionData.toSummary,
             request.sessionData.forType

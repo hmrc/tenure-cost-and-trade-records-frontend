@@ -17,7 +17,7 @@
 package form.aboutfranchisesorlettings
 
 import form.MappingSupport.lettingOtherPartAddressMapping
-import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails
+import models.submissions.aboutfranchisesorlettings.OperatorDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
@@ -35,6 +35,6 @@ object LettingOtherPartOfPropertyForm {
         maxLength(50, "error.lettingTypeOfBusiness.maxLength")
       ),
       "lettingAddress"        -> lettingOtherPartAddressMapping
-    )(LettingOtherPartOfPropertyInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )(OperatorDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

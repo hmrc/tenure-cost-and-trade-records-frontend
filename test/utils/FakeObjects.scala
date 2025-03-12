@@ -77,8 +77,8 @@ trait FakeObjects {
   val prefilledFakePhoneNo                                              = "12345678901"
   val prefilledFakeEmail                                                = "test@email.com"
   val prefilledFakeTradingName                                          = "TRADING NAME"
-  val prefilledCateringAddress: CateringAddress                         =
-    CateringAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledCateringAddress: BusinessAddress                         =
+    BusinessAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLettingAddress: LettingAddress                           =
     LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
   val prefilledLandlordAddress: LandlordAddress                         =
@@ -956,7 +956,7 @@ trait FakeObjects {
 
   // Franchises or lettings
   val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
-    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
+    BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(RentReceivedFrom(BigDecimal(1500), true)),
     Some(CalculatingTheRent("test", prefilledDateInput)),
@@ -965,13 +965,13 @@ trait FakeObjects {
   )
 
   val prefilledCateringOperationBusinessSectionYes: CateringOperationBusinessSection = CateringOperationBusinessSection(
-    CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+    ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business"),
     Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 52, Some(1000))), Some("Fee calculation details"))),
     Some(AnswerYes)
   )
 
   val prefilledCateringOperationSectionIncompleteCatering: CateringOperationSection = CateringOperationSection(
-    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
+    BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(RentReceivedFrom(BigDecimal(1500), true)),
     Some(CalculatingTheRent("test", prefilledDateInput))
@@ -979,21 +979,21 @@ trait FakeObjects {
 
   val prefilledCateringOperationBusinessSectionIncompleteCatering: CateringOperationBusinessSection =
     CateringOperationBusinessSection(
-      CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business")
+      ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business")
     )
 
   val prefilledCateringOperationSectionIncompleteCateringRentDetails: CateringOperationSection =
     CateringOperationSection(
-      CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress)
+      BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress)
     )
 
   val prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails: CateringOperationBusinessSection =
     CateringOperationBusinessSection(
-      CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business")
+      ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business")
     )
 
   val prefilledCateringOperationSectionNo: CateringOperationSection = CateringOperationSection(
-    CateringOperationDetails("Operator Name", "Type of Business", prefilledCateringAddress),
+    BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress),
     Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(RentReceivedFrom(BigDecimal(1500), true)),
     Some(CalculatingTheRent("test", prefilledDateInput)),
@@ -1002,47 +1002,47 @@ trait FakeObjects {
   )
 
   val prefilledCateringOperationBusinessSectionNo: CateringOperationBusinessSection = CateringOperationBusinessSection(
-    CateringOperationBusinessDetails("Operator Name", "Type of Business", "Describe business"),
+    ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business"),
     None,
     Some(AnswerNo)
   )
 
   val prefilledLettingSectionYes: LettingSection               = LettingSection(
-    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
+    aboutfranchisesorlettings.OperatorDetails(
       "Operator Name",
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true)),
     Some(AnswerYes),
     itemsInRent = List("Other")
   )
   val prefilledLettingSectionIncompleteLetting: LettingSection = LettingSection(
-    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
+    aboutfranchisesorlettings.OperatorDetails(
       "Operator Name",
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true))
   )
   val prefilledLettingSectionIncomplete: LettingSection        = LettingSection(
-    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
+    aboutfranchisesorlettings.OperatorDetails(
       "Operator Name",
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true))
   )
   val prefilledLettingSectionNo: LettingSection                = LettingSection(
-    aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails(
+    aboutfranchisesorlettings.OperatorDetails(
       "Operator Name",
       "Type of Business",
       prefilledLettingAddress
     ),
-    Some(LettingOtherPartOfPropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
+    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
     Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true)),
     Some(AnswerNo),
     itemsInRent = List("Other")
@@ -1118,7 +1118,7 @@ trait FakeObjects {
 
   val franchiseIncomeRecord: FranchiseIncomeRecord = FranchiseIncomeRecord(
     businessDetails = Some(
-      CateringOperationDetails(
+      BusinessDetails(
         operatorName = "Bob Green",
         typeOfBusiness = "Bob's buisness",
         cateringAddress = prefilledCateringAddress
@@ -1128,7 +1128,7 @@ trait FakeObjects {
 
   val concessionIncomeRecord: ConcessionIncomeRecord = ConcessionIncomeRecord(
     businessDetails = Some(
-      CateringOperationBusinessDetails(
+      ConcessionBusinessDetails(
         operatorName = "Operator",
         typeOfBusiness = "Bar",
         howBusinessPropertyIsUsed = "Leased"
@@ -1137,9 +1137,21 @@ trait FakeObjects {
     feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 2023))))
   )
 
+  val concession6015IncomeRecord: Concession6015IncomeRecord = Concession6015IncomeRecord(
+    businessDetails = Some(
+      BusinessDetails(
+        operatorName = "Operator",
+        typeOfBusiness = "Bar",
+        cateringAddress = prefilledCateringAddress
+      )
+    ),
+    rent = RentReceivedFrom(BigDecimal(100), true),
+    calculatingTheRent = CalculatingTheRent("test", LocalDate.of(2021, 1, 1))
+  )
+
   val lettingIncomeRecord: LettingIncomeRecord = LettingIncomeRecord(
     operatorDetails = Some(
-      LettingOtherPartOfPropertyInformationDetails(
+      OperatorDetails(
         operatorName = "Letting Operator",
         typeOfBusiness = "Property Letting",
         lettingAddress = LettingAddress(
@@ -1152,17 +1164,23 @@ trait FakeObjects {
       )
     ),
     rent = Some(
-      LettingOtherPartOfPropertyRentDetails(
+      PropertyRentDetails(
         annualRent = 15000.00,
         dateInput = LocalDate.of(2021, 1, 1)
       )
     )
   )
 
-  val prefilledAboutFranchiseOrLettings6010and6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+  val prefilledAboutFranchiseOrLettings6010: AboutFranchisesOrLettings     = AboutFranchisesOrLettings(
     Some(AnswerYes),
     rentalIncome = Some(
       IndexedSeq(franchiseIncomeRecord, lettingIncomeRecord)
+    )
+  )
+  val prefilledAboutFranchiseOrLettings60156016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
+    Some(AnswerYes),
+    rentalIncome = Some(
+      IndexedSeq(concession6015IncomeRecord, lettingIncomeRecord)
     )
   )
 
@@ -1297,7 +1315,7 @@ trait FakeObjects {
     )
   )
   val sessionAboutFranchiseOrLetting6010YesSession: Session                           =
-    aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings))
+    aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6010))
   val sessionAboutFranchiseOrLetting6010Incomplete: Session                           =
     aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings =
       Some(prefilledAboutFranchiseOrLettingsIncompleteLetting)
@@ -1309,7 +1327,9 @@ trait FakeObjects {
     stillConnectedDetails6045NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6045))
 
   val sessionAboutFranchiseOrLetting6015YesSession: Session                =
-    aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6015))
+    aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
+      Some(prefilledAboutFranchiseOrLettings60156016)
+    )
   val sessionAboutFranchiseOrLetting6015SIncompleteCatering: Session       =
     aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
       Some(prefilledIncompleteAboutFranchiseOrLettings6015)

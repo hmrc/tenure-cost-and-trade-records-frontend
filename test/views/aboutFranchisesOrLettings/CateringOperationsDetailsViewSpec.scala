@@ -19,12 +19,12 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm
 import models.ForType.*
 import models.pages.Summary
-import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
+import models.submissions.aboutfranchisesorlettings.BusinessDetails
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
+class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[BusinessDetails] {
 
   val messageKeyPrefix     = "cateringOperationOrLettingAccommodationDetails"
   val messageKeyPrefix6015 = "concessionDetails"
@@ -42,7 +42,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[CateringO
       FOR6010
     )(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CateringOperationDetails]) =>
+  def createViewUsingForm = (form: Form[BusinessDetails]) =>
     cateringOperationDetailsView(
       form,
       Some(0),

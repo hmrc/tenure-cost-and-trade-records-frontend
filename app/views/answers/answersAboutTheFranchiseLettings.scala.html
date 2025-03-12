@@ -42,9 +42,6 @@
     request.sessionData.forType
 }
 
-@forType6015_6016 = @{
-    forType == FOR6015 || forType == FOR6016
-}
 
 @separateBusinessesIncomeMsgKey = @{
   forType match {
@@ -175,34 +172,6 @@
         @if(sectionAnswers.answers.flatMap(_.cateringConcessionOrFranchise).contains(AnswerYes)) {
             @for((cateringOperation, idx) <- sectionAnswers.answers.map(_.cateringOperationSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
                 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.operatorCount",idx+1)</h2>
-                @if(forType6015_6016) {
-                    @govukSummaryList(SummaryList(rows =
-                        operatorNameRow(cateringOperation, idx) ++
-                                sectionAnswers.row(
-                                    "checkYourAnswersAboutFranchiseOrLettings.annualRent",
-                                    _ => Seq(
-                                        cateringOperation.rentReceivedFrom.map(_.annualRent.asMoney).getOrElse(""),
-                                        messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")
-                                    ).map("""<p class="govuk-body">""" + _ + "</p>").mkString,
-                                    controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx), "annualRent",
-                                    ("valueAsHtml", _ => None)
-                                ) ++
-                                sectionAnswers.row(
-                                    "checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated",
-                                    _ => cateringOperation.calculatingTheRent.map(_.description.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
-                                            cateringOperation.calculatingTheRent.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", dateUtil.formatDayMonthAbbrYear(x.dateInput)))
-                                                    .getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
-                                    controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx), "rentDetails",
-                                    ("valueAsHtml", _ => None)
-                                ) ++
-                                sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
-                                    _ => Option(cateringOperation.itemsInRent.filter(_ != "noneOfThese")).filter(_.nonEmpty).fold(List("none"))(identity)
-                                            .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
-                                            .mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
-                                    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx), "itemsInRent",
-                                    ("valueAsHtml", _ => None))
-                    ))
-                } else {
                     @govukSummaryList(SummaryList(rows =
                         operatorNameRow(cateringOperation, idx) ++
                                 sectionAnswers.row(
@@ -220,19 +189,8 @@
                                     controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx), "itemsInRent",
                                     ("valueAsHtml", _ => None))
                     ))
-                }
             }
             @if(request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections).getOrElse(IndexedSeq.empty).length <= 1) {
-                @if(forType6015_6016) {
-                    @govukSummaryList(SummaryList(rows =
-                        List(
-                            SummaryListRow(
-                                Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusiness", request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem((navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData)).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
-                            )
-                        )
-                    ))
-                } else {
                     @govukSummaryList(SummaryList(rows =
                         List(
                             SummaryListRow(
@@ -241,18 +199,7 @@
                             )
                         )
                     ))
-                }
             } else {
-                @if(forType6015_6016) {
-                    @govukSummaryList(SummaryList(rows =
-                        List(
-                            SummaryListRow(
-                                Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusinessPlural", request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(CateringOperationRentIncludesPageId)(request.sessionData).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addBusiness"))))))
-                            )
-                        )
-                    ))
-                } else {
                     @govukSummaryList(SummaryList(rows =
                         List(
                             SummaryListRow(
@@ -261,7 +208,7 @@
                             )
                         )
                     ))
-                }
+
             }
         }
     }
@@ -277,31 +224,6 @@
         @if(sectionAnswers.answers.flatMap(_.lettingOtherPartOfProperty).contains(AnswerYes)) {
             @for((letting, idx) <- sectionAnswers.answers.map(_.lettingSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
                 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",idx+1)</h2>
-                @if(forType6015_6016) {
-                    @govukSummaryList(SummaryList(rows =
-                        sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
-                            _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
-                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness.escapedHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
-                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.escapedHtml).getOrElse(""),
-                            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingOperatorName",
-                            ("valueAsHtml", _ => None)) ++
-                                sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
-                                    _ => Seq(
-                                        letting.lettingOtherPartOfPropertyRent6015Details.map(_.annualRent.asMoney).getOrElse(""),
-                                        letting.lettingOtherPartOfPropertyRent6015Details
-                                        .map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed", dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse(""),
-                                        messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")
-                                    ).map("""<p class="govuk-body">""" + _ + "</p>").mkString,
-                                    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(idx), "annualRent",
-                                    ("valueAsHtml", _ => None)) ++
-                                sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
-                                    _ => Option(letting.itemsInRent.filter(_ != "noneOfThese")).filter(_.nonEmpty).fold(List("none"))(identity)
-                                    .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
-                                    .mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
-                                    controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx), "itemsInRent",
-                                    ("valueAsHtml", _ => None))
-                    ))
-                } else {
                     @govukSummaryList(SummaryList(rows =
                         sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
                             _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
@@ -322,19 +244,8 @@
                                     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx), "itemsInRent",
                                     ("valueAsHtml", _ => None))
                     ))
-                }
             }
             @if(request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length <= 1) {
-                @if(forType6015_6016) {
-                    @govukSummaryList(SummaryList(rows =
-                        List(
-                            SummaryListRow(
-                                Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedLetting6015", request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
-                            )
-                        )
-                    ))
-                } else {
                     @govukSummaryList(SummaryList(rows =
                         List(
                             SummaryListRow(
@@ -343,18 +254,7 @@
                             )
                         )
                     ))
-                }
             } else {
-                @if(forType6015_6016) {
-                    @govukSummaryList(SummaryList(rows =
-                        List(
-                            SummaryListRow(
-                                Key(Text(messages("checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015", request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingSections).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
-                                actions = Some(Actions(items = List(ActionItem(navigator.routeMap(LettingAccommodationRentIncludesPageId)(request.sessionData).url+"&from=CYA", Text(messages("checkYourAnswersAboutFranchiseOrLettings.addLetting"))))))
-                            )
-                        )
-                    ))
-                } else {
                     @govukSummaryList(SummaryList(rows =
                         List(
                             SummaryListRow(
@@ -363,7 +263,6 @@
                             )
                         )
                     ))
-                }
             }
         }
     }

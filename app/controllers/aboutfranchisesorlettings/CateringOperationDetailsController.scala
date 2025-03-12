@@ -23,7 +23,7 @@ import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm.franchiseTypeDeta
 import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationDetails, CateringOperationSection}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, BusinessDetails, CateringOperationSection}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationDetailsPageId
 import play.api.i18n.I18nSupport
@@ -47,14 +47,14 @@ class CateringOperationDetailsController @Inject() (
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[CateringOperationDetails] = for {
+    val existingDetails: Option[BusinessDetails] = for {
       requestedIndex                <- index
       existingAccommodationSections <-
         request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections)
       // lift turns exception-throwing access by index into an option-returning safe operation
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
     } yield requestedAccommodationSection.cateringOperationDetails
-    audit.sendChangeLink("CateringOperationDetails")
+    audit.sendChangeLink("BusinessDetails")
     Ok(
       cateringOperationDetailsView(
         existingDetails.fold(franchiseTypeDetailsForm)(
@@ -71,7 +71,7 @@ class CateringOperationDetailsController @Inject() (
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CateringOperationDetails](
+    continueOrSaveAsDraft[BusinessDetails](
       franchiseTypeDetailsForm,
       formWithErrors =>
         BadRequest(

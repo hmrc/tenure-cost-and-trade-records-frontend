@@ -17,7 +17,7 @@
 package models.submissions
 
 import models.submissions.aboutYourLeaseOrTenure.LandlordAddress
-import models.submissions.aboutfranchisesorlettings.{CateringAddress, LettingAddress}
+import models.submissions.aboutfranchisesorlettings.{BusinessAddress, LettingAddress}
 import models.submissions.common.Address
 import utils.TestBaseSpec
 
@@ -38,9 +38,9 @@ class AddressesSpec extends TestBaseSpec {
 
   // Test Catering Address
   val cateringAddress =
-    CateringAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
+    BusinessAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
 
-  "CateringAddress" should {
+  "BusinessAddress" should {
     "return the address as a single line" in {
       val result = cateringAddress.singleLine
       result shouldBe "001, GORING ROAD, GORING-BY-SEA, WORTHING, SUSSEX, BN12 4AX"

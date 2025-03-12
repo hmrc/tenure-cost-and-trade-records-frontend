@@ -91,6 +91,50 @@
         ))
     }
 
+@concession6015Entry(concession :Concession6015IncomeRecord, index: Int) = {
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-0" id="rental-income-entry-@index">@messages(
+        "checkYourAnswersAboutFranchiseOrLettings.operatorCount",
+        recordIndex(
+            request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty),
+            index,
+            classOf[Concession6015IncomeRecord]
+        ))
+        <h2/>
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row(
+                "checkYourAnswersAboutFranchiseOrLettings.businessOperatorName",
+                _ => Option(
+                    concession.businessDetails.fold("")(_.operatorName)).mkString("""<p class="govuk-body">""", "", "</p>") +
+                        concession.businessDetails.fold("")(_.typeOfBusiness).mkString("""<p class="govuk-body">""", "", "</p>") +
+                        concession.businessDetails.fold("")(_.cateringAddress.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
+                controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
+                "franchiseOperatorName",
+                ("valueAsHtml", _ => None)) ++
+            sectionAnswers.row(
+                 "checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                 _ => Seq(concession.rent.map(_.annualRent.asMoney).getOrElse(""),
+                 messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")).map("""<p class="govuk-body">""" + _ + "</p>").mkString,
+                 controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(index),
+                 "annualRent",
+                 ("valueAsHtml", _ => None)) ++
+            sectionAnswers.row(
+                  "checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated",
+                  _ => concession.calculatingTheRent.map(_.description.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
+                  concession.calculatingTheRent.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+                  dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
+                  controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(index), "rentDetails",
+                  ("valueAsHtml", _ => None)) ++
+            sectionAnswers.row(
+                  "checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
+                  _ => concession.itemsIncluded.map(_.filterNot(_ == "noneOfThese")).filter(_.nonEmpty).getOrElse(List.empty)
+                    .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
+                    .mkString("""<p class="govuk-body">""", "<br/>", "</p>"),
+                   controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
+                   "itemsInRent",
+                   ("valueAsHtml", _ => None))
+        ))
+    }
+
 @concessionEntry(concession:ConcessionIncomeRecord, index: Int) = {
 
     <h2 class="govuk-heading-m" id="rental-income-entry-@index">@messages(
@@ -202,9 +246,11 @@
 
 @rowForIncomeRecord(record: IncomeRecord, index: Int) = @{
     record match {
-        case franchise: FranchiseIncomeRecord   => franchiseEntry  (franchise, index)
-        case concession: ConcessionIncomeRecord => concessionEntry (concession, index)
-        case letting: LettingIncomeRecord       => lettingEntry    (letting, index)
+        case franchise: FranchiseIncomeRecord           => franchiseEntry     (franchise, index)
+        case concession6015: Concession6015IncomeRecord => concession6015Entry(concession6015, index)
+        case concession: ConcessionIncomeRecord         => concessionEntry    (concession, index)
+        case letting: LettingIncomeRecord               => lettingEntry       (letting, index)
+        case _                                          => ""
     }
 }
 <h2 class="govuk-heading-m ">@messages("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading")</h2>
