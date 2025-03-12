@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.additionalinformation
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 
@@ -34,5 +33,5 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("label.furtherInformation",
         _.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails).filter(_.trim != "").orElse(Some(messages(s"label.no"))),
-        additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
+        controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
 ))

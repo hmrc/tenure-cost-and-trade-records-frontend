@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.ForType.*
 @import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
@@ -68,7 +67,7 @@
                 case _                                     =>  answersSectionAboutTheFranchiseLettings()
             }
         }
-        @formWithCSRF(action = aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
+        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,

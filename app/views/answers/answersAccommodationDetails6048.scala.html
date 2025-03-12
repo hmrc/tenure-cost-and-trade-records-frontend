@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.accommodation
 @import models.submissions.accommodation.AccommodationDetails.maxAccommodationUnits
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
@@ -61,7 +60,7 @@
                 actions = Some(Actions(
                     items = Seq(
                         ActionItem(
-                            href = s"${accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
+                            href = s"${controllers.accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
                             content = Text(messages("label.remove")),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.remove")} ${messages("accommodation.CYA.unit", index + 1)}"
@@ -74,7 +73,7 @@
             rows = sectionAnswers.row("accommodation.CYA.unitDetails",
                 _ => Seq(accommodationUnit.unitName, accommodationUnit.unitType)
                 .map(_.escapedHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
-                Call("GET", s"${accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index"), "unitName",
+                Call("GET", s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index"), "unitName",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("accommodation.CYA.availableRooms",
                         _ => accommodationUnit.availableRooms.map(r =>
@@ -87,7 +86,7 @@
                             )
                             .filterNot(_.isEmpty).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
                         ),
-                        Call("GET", s"${accommodation.routes.AvailableRooms6048Controller.show.url}?idx=$index"), "singleBedrooms",
+                        Call("GET", s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=$index"), "singleBedrooms",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("accommodation.CYA.lettingHistory",
                         _ => accommodationUnit.lettingHistory.map(
@@ -100,13 +99,13 @@
                                 ).mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
                             ).mkString("""<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">""")
                         ),
-                        Call("GET", s"${accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=$index"), "lettingHistory[0].nightsAvailableToLet",
+                        Call("GET", s"${controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=$index"), "lettingHistory[0].nightsAvailableToLet",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("accommodation.CYA.highSeason",
                         _ => accommodationUnit.highSeasonTariff.map(t =>
                             messages("accommodation.CYA.highSeason.period", dateUtil.formatDate(t.fromDate), dateUtil.formatDate(t.toDate))
                         ),
-                        Call("GET", s"${accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=$index"), "fromDate.day",
+                        Call("GET", s"${controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=$index"), "fromDate.day",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("accommodation.CYA.includedItems",
                         _ => accommodationUnit.includedTariffItems.map(
@@ -116,7 +115,7 @@
                             )
                             .mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
                         ),
-                        Call("GET", s"${accommodation.routes.IncludedTariffItems6048Controller.show.url}?idx=$index"), "",
+                        Call("GET", s"${controllers.accommodation.routes.IncludedTariffItems6048Controller.show.url}?idx=$index"), "",
                         ("valueAsHtml", _ => None))
         )
     )
@@ -134,7 +133,7 @@
                 if(unitsSize < maxAccommodationUnits) {
                     Seq(
                         ActionItem(
-                            href = s"${accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$unitsSize",
+                            href = s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$unitsSize",
                             content = Text(messages("accommodation.CYA.unit.add"))
                         )
                     )

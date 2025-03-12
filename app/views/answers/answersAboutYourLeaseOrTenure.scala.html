@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutYourLeaseOrTenure
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
 @import util.NumberUtil._
@@ -111,7 +110,7 @@
         _.typeOfTenure.map(t =>
             t.typeOfTenure.map(item => messages(s"label.typeOfTenure.$item")) :+ t.typeOfTenureDetails.getOrElse("")
         ).map(_.map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-        aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(), "",
+        controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(), "",
         ("valueAsHtml", _ => None))))
 }
 
@@ -125,16 +124,16 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordDetails",
         _.aboutTheLandlord.flatMap(l => l.landlordAddress.map( add => s"<p class=\"govuk-body\">${l.landlordFullName.escapedHtml}</p>${add.escapedHtml}")),
-        aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
         ("valueAsHtml", _ => None)) ++
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord",
                 _.connectedToLandlord.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.ydw") else messages("label.no.nac.ydw")),
-                aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show(), "connectedToLandlord") ++
+                controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show(), "connectedToLandlord") ++
             sectionAnswers.conditionRow(
                 _.connectedToLandlord.map(_.name).contains("yes"),
                 "checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails",
                 _.connectedToLandlordDetails.map(_.connectedToLandlordInformationDetails),
-                aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
+                controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
 ))
 
 @if(commenceWithinThreeYears.contains("no") && agreedReviewedAlteredThreeYears.contains("no") && rentUnderReviewNegotiated.contains("no")) {
@@ -152,14 +151,14 @@
                         messages(s"checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.$c"))
                             .mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                 },
-                aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "",
+                controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
                         _.currentRentPayableWithin12Months.map(r => Seq(
                             messages(s"label.${r.currentRentWithin12Months.name}"),
                             r.rentActuallyAgreed.map(x => messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", r.rentActuallyAgreed.map(date => dateUtil.formatDayMonthAbbrYear(date).getOrElse("")).getOrElse(""))).getOrElse("")
                         ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                        aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
                         ("valueAsHtml", _ => None))
         ))
     }
@@ -178,7 +177,7 @@
                     messages(s"checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.$c"))
                 .mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
             },
-            aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "",
+            controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(), "",
             ("valueAsHtml", _ => None))
     ))
 }
@@ -190,17 +189,17 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
             _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-            aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
+            controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
                     _.annualRent.map(_.amount.asMoney),
-                    aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
+                    controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
                     _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
-                    aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
+                    controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                     _.currentLeaseOrAgreementBegin
                     .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor.escapedHtml}"),
-                    aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
+                    controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                     ("valueAsHtml", _ => None))
     ))
 }
@@ -210,23 +209,23 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
             _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-            aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
+            controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
                     _.annualRent.map(_.amount.asMoney),
-                    aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
+                    controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput",
                     _.throughputAffectsRent.map(_.doesRentVaryToThroughput.name).flatMap(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                    aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show(), "throughputAffectsRent") ++
+                    controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show(), "throughputAffectsRent") ++
                 sectionAnswers3.conditionalOptionalRow(_.throughputAffectsRent.map(_.doesRentVaryToThroughput.name).contains("yes"),"checkYourAnswersAboutYourLeaseOrTenure.howThroughputAffectsRent",
             _.throughputAffectsRent.map(_.throughputAffectsRentDetails).flatMap(v => v.map(s => s)),
-            aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show(), "throughputAffectsRentDetails") ++
+                    controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show(), "throughputAffectsRentDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
                     _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
-                    aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
+                    controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                     _.currentLeaseOrAgreementBegin
                             .map(lease => s"${dateUtil.formatYearMonth(lease.leaseBegin.toYearMonth)}<br/>${lease.grantedFor.escapedHtml}"),
-                    aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
+                    controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.show(), "leaseBegin",
                     ("valueAsHtml", _ => None))
     ))
 }
@@ -237,16 +236,16 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
             _.annualRent.map(_.amount.asMoney),
-            aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
+            controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat",
                     _.rentIncludesVat.map(_.rentIncludesVatAnswer.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                     Call("GET", "rent-includes-vat"), "rentIncludesVat") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
                     _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
-                    aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.day") ++
+                    controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.day") ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
                     _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire).map(v => dateUtil.formatDayMonthAbbrYear(v)),
-                    aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
+                    controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
     ))
 }
 
@@ -256,10 +255,10 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
                 _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
+                controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
                     sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease",
             _.provideDetailsOfYourLease.map(v => v),
-            aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(), "provideDetailsOfYourLease")
+                        controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(), "provideDetailsOfYourLease")
 
 
         ))
@@ -275,48 +274,48 @@
                 _.includedInYourRentDetails.map(r =>
                     r.includedInYourRent.map(item => messages(s"label.includedInYourRent.$item"))
                 ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
+                controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",
                         _.doesTheRentPayable.map(r =>
                             r.rentPayable.map(item => messages(s"checkbox.rentPayable.$item")) :+ r.detailsToQuestions.getOrElse("")
                         ).map(_.map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                        aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers3.conditionalOptionalRow(_ => sectionAnswers3.answers.flatMap(_.rentDevelopedLand).isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand",
                         _.rentDevelopedLand.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show(), "rentDevelopedLand") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show(), "rentDevelopedLand") ++
                     sectionAnswers3.conditionalOptionalRow(_ => sectionAnswers3.answers.flatMap(_.rentDevelopedLand).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails",
                         _.rentDevelopedLandDetails,
-                        aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show(), "rentDevelopedLandDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show(), "rentDevelopedLandDetails") ++
                     sectionAnswers4.conditionalOptionalRow(_ => sectionAnswers4.answers.flatMap(_.rentIncludeStructuresBuildings).isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings",
                         _.rentIncludeStructuresBuildings.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show(), "rentIncludeStructuresBuildings") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show(), "rentIncludeStructuresBuildings") ++
                     sectionAnswers4.conditionalOptionalRow(_ => sectionAnswers4.answers.flatMap(_.rentIncludeStructuresBuildings).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails",
                         _.rentIncludeStructuresBuildingsDetails,
-                        aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show(), "rentIncludeStructuresBuildingsDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show(), "rentIncludeStructuresBuildingsDetails") ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR",
                         _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
                                 _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR",
                         _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
                                 _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                         _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
                             """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
                                 _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None))  ))
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None))  ))
     } else {
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row(
@@ -324,77 +323,77 @@
                 _.includedInYourRentDetails.map(r =>
                     r.includedInYourRent.map(item => messages(s"label.includedInYourRent.$item"))
                 ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
+                controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",
                         _.doesTheRentPayable.map(r =>
                             r.rentPayable.map(item => messages(s"checkbox.rentPayable.$item")) :+ r.detailsToQuestions.getOrElse("")
                         ).map(_.map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                        aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers3.conditionalOptionalRow(_ => sectionAnswers3.answers.flatMap(_.rentDevelopedLand).isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand",
                         _.rentDevelopedLand.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show(), "rentDevelopedLand") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show(), "rentDevelopedLand") ++
                     sectionAnswers3.conditionalOptionalRow(_ => sectionAnswers3.answers.flatMap(_.rentDevelopedLand).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails",
                         _.rentDevelopedLandDetails,
-                        aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show(), "rentDevelopedLandDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show(), "rentDevelopedLandDetails") ++
                     sectionAnswers4.conditionalOptionalRow(_ => sectionAnswers4.answers.flatMap(_.rentIncludeStructuresBuildings).isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings",
                         _.rentIncludeStructuresBuildings.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show(), "rentIncludeStructuresBuildings") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show(), "rentIncludeStructuresBuildings") ++
                     sectionAnswers4.conditionalOptionalRow(_ => sectionAnswers4.answers.flatMap(_.rentIncludeStructuresBuildings).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails",
                         _.rentIncludeStructuresBuildingsDetails,
-                        aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show(), "rentIncludeStructuresBuildingsDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show(), "rentIncludeStructuresBuildingsDetails") ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR",
                         _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
                                 _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR",
                         _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
                                 _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                         _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
                             """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
                                 _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                         _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "rentIncludeTradeServices") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "rentIncludeTradeServices") ++
                     sectionAnswers.conditionRow(answers => answers.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes") && answers.rentIncludeTradeServicesInformation.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                         _.rentIncludeTradeServicesInformation.map(info =>
                             Seq(info.sumIncludedInRent.map(_.asMoney), Option(info.describeTheServices))
                                     .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers3.conditionRow(
                         _.rentIncludeTradeServicesDetailsTextArea.isDefined && sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).map(_.rentIncludeTradeServices).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                         _.rentIncludeTradeServicesDetailsTextArea,
-                        aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "describeServicesTextArea") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "describeServicesTextArea") ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails",
                         _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "rentIncludeFixturesAndFittings") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "rentIncludeFixturesAndFittings") ++
                     sectionAnswers.conditionRow(
                         answers => answers.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails.name).contains("yes") && answers.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent).isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent",
                         _.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent.map(_.asMoney)),
-                        aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "rentIncludeFixturesAndFittingsDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "rentIncludeFixturesAndFittingsDetails") ++
                     sectionAnswers3.conditionRow(
                         _.rentIncludeFixtureAndFittingsDetailsTextArea.isDefined && sectionAnswers.answers.flatMap(_.rentIncludeFixturesAndFittingsDetails).map(_.rentIncludeFixturesAndFittingsDetails).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent",
                         _.rentIncludeFixtureAndFittingsDetailsTextArea,
-                        aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "describeFittingsTextArea")
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show(), "describeFittingsTextArea")
         ))
     }
 }
@@ -408,34 +407,34 @@
                 _.includedInYourRentDetails.map(r =>
                     r.includedInYourRent.map(item => messages(s"label.includedInYourRent.$item"))
                 ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
+                controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers3.conditionalOptionalRow(_ => {
                         request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails.map(_.includedInYourRent.contains("vat"))).getOrElse(false)},"checkYourAnswersAboutYourLeaseOrTenure.vatPayable",
                         _.isVATPayableForWholeProperty.map(_.name).flatMap(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show(), "isVatPayable")
+                        controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show(), "isVatPayable")
                     ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR",
                         _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
                                 _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show(), "ultimatelyResponsibleOR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR",
                         _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
                             """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
                                 _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show(), "ultimatelyResponsibleIR", ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                         _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
                             """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
                                     + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
                                 _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI).map(_.escapedHtml)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
+                        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(), "ultimatelyResponsibleBI", ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                         _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "rentIncludeTradeServices")
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "rentIncludeTradeServices")
         ))
     }
 
@@ -446,7 +445,7 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeService",
                     _ => Option(tradingService.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
-                    aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(idx)), "tradeServiceDescription", ("valueAsHtml", _ => None))))
+                    controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(idx)), "tradeServiceDescription", ("valueAsHtml", _ => None))))
         }
         @govukSummaryList(SummaryList(rows =
             List(
@@ -460,7 +459,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.paymentForTradeServices",
                 _.paymentForTradeServices.map(_.paymentForTradeService.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show(), "paymentForTradeServices")
+                controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show(), "paymentForTradeServices")
         ))
     @if(sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService contains AnswerYes)) {
         @for((servicePaid, idx) <- sectionAnswers3.answers.map(_.servicesPaid).getOrElse(IndexedSeq.empty).zipWithIndex) {
@@ -468,10 +467,10 @@
             @govukSummaryList(SummaryList(rows =
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfPaidService",
                     _ => Option(servicePaid.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
-                    aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(idx)), "paidServiceDescription", ("valueAsHtml", _ => None)) ++
+                    controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(idx)), "paidServiceDescription", ("valueAsHtml", _ => None)) ++
                         sectionAnswers3.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.costOfPaidService",
                             _ => servicePaid.annualCharge.map(_.annualCharge.asMoney),
-                            aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(idx), "costOfPaidService")
+                            controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(idx), "costOfPaidService")
             ))
         }
         @govukSummaryList(SummaryList(rows =
@@ -486,19 +485,19 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludeParking",
             _.carParking.flatMap(_.doesRentIncludeParkingOrGarage.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
-            aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show(), "rentIncludeParking") ++
+            controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show(), "rentIncludeParking") ++
                 sectionAnswers3.conditionalOptionalRow(_.carParking.flatMap(_.doesRentIncludeParkingOrGarage.map(_.name).map(v => v.contains("yes"))).getOrElse(false),"checkYourAnswersAboutYourLeaseOrTenure.spacesIncludedInRent",
                     _.carParking
                             .map(spaces => spaces.includedInRentSpaces.map(space => s"${openSpaceMsg(space.openSpaces)}<br/>${coveredSpaceMsg(space.coveredSpaces)}<br/>${garageMsg(space.garages)}").getOrElse("")),
-                    aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show(), "spacesIncludedInRent",
+                    controllers.aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show(), "spacesIncludedInRent",
                     ("valueAsHtml", _ => None)) ++
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.isParkingRentPaidSeparately",
                     _.carParking.flatMap(_.isRentPaidSeparately.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.oes"))),
-                    aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show(), "isParkingRentPaidSeparately") ++
+                    controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show(), "isParkingRentPaidSeparately") ++
                 sectionAnswers3.conditionalOptionalRow(_.carParking.flatMap(_.isRentPaidSeparately.map(_.name).map(v => v.contains("yes"))).getOrElse(false),"checkYourAnswersAboutYourLeaseOrTenure.separatelyRentedSpaces",
                     _.carParking
                             .map(spaces => spaces.rentedSeparatelySpaces.map(space => s"${openSpaceMsg(space.openSpaces)}<br/>${coveredSpaceMsg(space.coveredSpaces)}<br/>${garageMsg(space.garages)}").getOrElse("")),
-                    aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show(), "separatelyRentedSpaces",
+                    controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show(), "separatelyRentedSpaces",
                     ("valueAsHtml", _ => None)) ++
                 sectionAnswers3.conditionalOptionalRow(_.carParking.flatMap(_.isRentPaidSeparately.map(_.name).map(v => v.contains("yes"))).getOrElse(false),
                     "checkYourAnswersAboutYourLeaseOrTenure.parkingCostsDetails",
@@ -508,23 +507,23 @@
                                     date <- spaces.fixedRentFrom
                         } yield rent.asMoney + "</br>" + dateUtil.formatDate(date)
                     },
-                    aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show(),
+                    controllers.aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show(),
                     "separatelyRentedSpaces",
                     ("valueAsHtml", _ => None)
                 ) ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludeEquipment",
                     _.rentIncludeFixturesAndFittingsDetails.flatMap(_.rentIncludeFixturesAndFittingsDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                    aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "rentIncludeFixtureAndFittingsController") ++
+                    controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show(), "rentIncludeFixtureAndFittingsController") ++
                 sectionAnswers3.conditionalOptionalRow(_ => sectionAnswers.answers
                         .flatMap(_.rentIncludeFixturesAndFittingsDetails.flatMap(_.rentIncludeFixturesAndFittingsDetails.name.contains("yes")))
                         .getOrElse(false),"checkYourAnswersAboutYourLeaseOrTenure.descriptionOfEquipment",
                     _.rentedEquipmentDetails,
-                    aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show(), "rentEquipmentDetails") ++
+                    controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show(), "rentEquipmentDetails") ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates",
                     _.doesTheRentPayable.map(t =>
                         t.rentPayable.map(item => messages(s"checkbox.rentPayable.$item")) :+ t.detailsToQuestions.getOrElse("")
                     ).map(_.map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                    aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show(), "",
+                    controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show(), "",
                     ("valueAsHtml", _ => None))
     ))
 
@@ -535,7 +534,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
                 _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => if(v.equals("yes")) messages("label.yes.oedd") else messages("label.no.nac.oedd")),
-                aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
+                controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
                     sectionAnswers.conditionRow(
                         _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
                         "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
@@ -543,70 +542,70 @@
                             Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
                                     ++ r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                        aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers.conditionRow(
                         _.rentIncreasedAnnuallyWithRPIDetails.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
                         _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
                     sectionAnswers2.conditionRow(
                         _.rentPayableVaryAccordingToGrossOrNetDetails.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
                         _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
                     sectionAnswers2.conditionRow(
                         _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails",
                         _.rentPayableVaryAccordingToGrossOrNetInformationDetails.map(_.rentPayableVaryAccordingToGrossOrNet),
-                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks",
                         _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show(), "rentPayableVaryOnQuantityOfBeers") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show(), "rentPayableVaryOnQuantityOfBeers") ++
                     sectionAnswers2.conditionRow(
                         _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails",
                         _.rentPayableVaryOnQuantityOfBeersInformationDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails),
-                        aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(), "rentPayableVaryOnQuantityOfBeersDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show(), "rentPayableVaryOnQuantityOfBeersDetails") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
                         _.howIsCurrentRentFixed.map(r =>
                             Seq(messages(s"label.${r.currentRentFixed.name}"),
                                 dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
                         _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
-                        aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
+                        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
                             .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
                         _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                        aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
+                        controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
                         _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
+                        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
+                        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
                     sectionAnswers2.conditionRow(
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
                         _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
-                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
+                        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
 
         ))
     } else if (forType != FOR6020) {
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
                 _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => if(v.equals("yes")) messages("label.yes.oedd") else messages("label.no.nac.oedd")),
-                aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
+                controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
                     sectionAnswers.conditionRow(
                         _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
                         "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
@@ -614,52 +613,52 @@
                             Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
                                     ++ r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                        aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers.conditionRow(
                         _.rentIncreasedAnnuallyWithRPIDetails.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex",
                         _.rentIncreasedAnnuallyWithRPIDetails.map(_.rentIncreasedAnnuallyWithRPIDetails.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show(), "rentIncreasedAnnuallyWithRPIs") ++
                     sectionAnswers2.conditionRow(
                         _.rentPayableVaryAccordingToGrossOrNetDetails.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover",
                         _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show(), "rentPayableVaryAccordingToGrossOrNet") ++
                     sectionAnswers2.conditionRow(
                         _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails",
                         _.rentPayableVaryAccordingToGrossOrNetInformationDetails.map(_.rentPayableVaryAccordingToGrossOrNet),
-                        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show(), "rentPayableVaryAccordingToGrossOrNetDetails") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
                         _.howIsCurrentRentFixed.map(r =>
                             Seq(messages(s"label.${r.currentRentFixed.name}"),
                                 dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
                         _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
-                        aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
+                        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
                     sectionAnswers3.conditionRow(
                         _.isRentUnderReview.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview",
                         _.isRentUnderReview.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                        aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show(), "isRentUnderReview") ++
+                        controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show(), "isRentUnderReview") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
                             .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
                         _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                        aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
+                        controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
                         _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
+                        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
                     sectionAnswers4.conditionRow(
                         _.surrenderedLeaseAgreementDetails.isDefined && sectionAnswers2.answers.flatMap(_.incentivesPaymentsConditionsDetails).map(_.formerLeaseSurrendered).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails",
@@ -669,26 +668,26 @@
                                 messages("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months", details.surrenderedLeaseAgreementMonths.escapedHtml)
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
+                        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
                     sectionAnswers2.conditionRow(
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
                         _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
-                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails") ++
                     sectionAnswers3.conditionRow(
                         _.propertyUpdates.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs",
                         _.propertyUpdates.map(_.updates).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show(), "propertyUpdates") ++
+                        controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show(), "propertyUpdates") ++
                     sectionAnswers3.conditionRow(
                         _.propertyUpdates.map(_.updates).contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork",
                         _.workCarriedOutDetails.map(_.workCarriedOutDetails),
-                        aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(), "workCarriedOutDetails")
+                        controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(), "workCarriedOutDetails")
         ))
     }
 
@@ -696,7 +695,7 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue",
             _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).map(v => if(v.equals("yes")) messages("label.yes.oedd") else messages("label.no.nac.oedd")),
-            aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
+            controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show(), "rentOpenMarketValue") ++
                 sectionAnswers.conditionRow(
                     _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name).contains("no"),
                     "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
@@ -704,7 +703,7 @@
                         Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
                                 ++ r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                     ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                    aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
+                    controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                     ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
                     _.howIsCurrentRentFixed.map(r =>
@@ -712,41 +711,41 @@
                             dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
                         ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                     ),
-                    aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
+                    controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
                     ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
                     _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
-                    aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
+                    controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                     _.intervalsOfRentReview.map(r =>
                         Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
                         .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                     ),
-                    aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
+                    controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                     ("valueAsHtml", _ => None)) ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
                     _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                    aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
+                    controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs",
                     _.propertyUpdates.map(_.updates.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                    aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show(), "alternationImprovementsOrRepairs") ++
+                    controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show(), "alternationImprovementsOrRepairs") ++
                 sectionAnswers3.conditionalOptionalRow(_.propertyUpdates.map(_.updates.name.contains("yes")),"checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork",
                     _.workCarriedOutDetails.map(_.workCarriedOutDetails),
-                    aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(), "detailsOfWork") ++
+                    controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(), "detailsOfWork") ++
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition",
                     _.workCarriedOutCondition.map(_.workCarriedOutCondition.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                    aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
+                    controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
                     _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                    aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
+                    controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
                 sectionAnswers2.conditionRow(
                     _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
                     "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
                     _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
-                    aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails") ++
+                    controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails") ++
                 sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
                     _.leaseSurrenderedEarly.map(_.leaseSurrenderedEarly.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                    aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show(), "formerLeaseSurrendered")
+                    controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show(), "formerLeaseSurrendered")
 
     ))
     }
@@ -763,7 +762,7 @@
                             Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item"))
                                     ++ r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
-                        aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
                         _.howIsCurrentRentFixed.map(r =>
@@ -771,24 +770,24 @@
                                 dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
                         _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
-                        aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
+                        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
                                     .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
                         _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                        aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
+                        controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(), "rentReducedOnReview") ++
                             sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
                                 _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                                aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
+                                controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(), "formerLeaseSurrendered") ++
                             sectionAnswers4.conditionRow(
                                 _.surrenderedLeaseAgreementDetails.isDefined && sectionAnswers2.answers.flatMap(_.incentivesPaymentsConditionsDetails).map(_.formerLeaseSurrendered).contains(AnswerYes),
                                 "checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048",
@@ -798,19 +797,19 @@
                                         messages("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months", details.surrenderedLeaseAgreementMonths.escapedHtml)
                                     ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                                 ),
-                                aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show(), "",
+                                controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show(), "",
                                 ("valueAsHtml", _ => None)) ++
                     sectionAnswers3.conditionalOptionalRow(_.propertyUpdates.map(_.updates.name.contains("yes")),"checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork",
                         _.workCarriedOutDetails.map(_.workCarriedOutDetails),
-                        aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(), "detailsOfWork") ++
+                        controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(), "detailsOfWork") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
+                        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(), "tenantsAdditionsDisregarded") ++
                     sectionAnswers2.conditionRow(
                         _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
                         _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
-                        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
+                        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails")
 
         ))
 
@@ -825,40 +824,40 @@
                     _.workCarriedOutCondition.isDefined,
                     "checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition",
                     _.workCarriedOutCondition.map(_.workCarriedOutCondition).map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                    aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
+                    controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
                         sectionAnswers4.conditionRow(
                             _.isGivenRentFreePeriod.isDefined,
                             "checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven",
                             _.isGivenRentFreePeriod.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show(), "isGivenRentFreePeriod") ++
+                            controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show(), "isGivenRentFreePeriod") ++
                         sectionAnswers4.conditionRow(
                             _.isGivenRentFreePeriod.contains(AnswerYes),
                             "checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails",
                             _.rentFreePeriodDetails,
-                            aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show(), "rentFreePeriodDetails") ++
+                            controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show(), "rentFreePeriodDetails") ++
                         sectionAnswers2.row(
                             if(forType == FOR6045 || forType == FOR6046) "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020" else "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium",
                             _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
+                            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                         sectionAnswers2.conditionRow(
                             _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).contains("yes"),
                             "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails",
                             _.payACapitalSumAmountDetails.map(_.capitalSumPaidAmountDetails.asMoney).getOrElse(""),
-                            aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show(), "",
+                            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show(), "",
                             ("valueAsHtml", _ => None)) ++
                         sectionAnswers2.conditionRow(
                             _.paymentWhenLeaseIsGrantedDetails.isDefined,
                             "checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted",
                             _.paymentWhenLeaseIsGrantedDetails.map(_.receivePaymentWhenLeaseGranted.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
+                            controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",
                             _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
+                            controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
                         sectionAnswers2.conditionRow(
                             _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).contains("yes"),
                             "checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails",
                             _.legalOrPlanningRestrictionsDetails.map(_.legalPlanningRestrictions),
-                            aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
+                            controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
             ))
         } else if(forType == FOR6010 || forType == FOR6011 ||forType == FOR6015 ||forType == FOR6016 || forType == FOR6030 || forType == FOR6076) {
             @govukSummaryList(SummaryList(rows =
@@ -866,21 +865,21 @@
                     _.workCarriedOutCondition.isDefined,
                     "checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition",
                     _.workCarriedOutCondition.map(_.workCarriedOutCondition).map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                    aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
+                    controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
                         sectionAnswers4.conditionRow(
                             _.isGivenRentFreePeriod.isDefined,
                             "checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven",
                             _.isGivenRentFreePeriod.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show(), "isGivenRentFreePeriod") ++
+                            controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show(), "isGivenRentFreePeriod") ++
                         sectionAnswers4.conditionRow(
                             _.isGivenRentFreePeriod.contains(AnswerYes),
                             "checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails",
                             _.rentFreePeriodDetails,
-                            aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show(), "rentFreePeriodDetails") ++
+                            controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show(), "rentFreePeriodDetails") ++
                         sectionAnswers2.row(
                             if(forType == FOR6045 || forType == FOR6046) "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020" else "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium",
                             _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
+                            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                         sectionAnswers2.conditionRow(
                             _.payACapitalSumInformationDetails.isDefined,
                             "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails",
@@ -889,42 +888,42 @@
                                     r.capitalSumPaidDetailsDateInput.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
                                 ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                             ),
-                            aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show(), "",
+                            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show(), "",
                             ("valueAsHtml", _ => None)) ++
                         sectionAnswers2.conditionRow(
                             _.paymentWhenLeaseIsGrantedDetails.isDefined,
                             "checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted",
                             _.paymentWhenLeaseIsGrantedDetails.map(_.receivePaymentWhenLeaseGranted.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
+                            controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",
                             _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                            aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
+                            controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
                         sectionAnswers2.conditionRow(
                             _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).contains("yes"),
                             "checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails",
                             _.legalOrPlanningRestrictionsDetails.map(_.legalPlanningRestrictions),
-                            aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
+                            controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
             ))
         } else {            @govukSummaryList(SummaryList(rows =
             sectionAnswers3.conditionRow(
                 _.workCarriedOutCondition.isDefined,
                 "checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition",
                 _.workCarriedOutCondition.map(_.workCarriedOutCondition).map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
-                aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
+                controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(), "workCarriedOutCondition") ++
                     sectionAnswers4.conditionRow(
                         _.isGivenRentFreePeriod.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven",
                         _.isGivenRentFreePeriod.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show(), "isGivenRentFreePeriod") ++
+                        controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show(), "isGivenRentFreePeriod") ++
                     sectionAnswers4.conditionRow(
                         _.isGivenRentFreePeriod.contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails",
                         _.rentFreePeriodDetails,
-                        aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show(), "rentFreePeriodDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show(), "rentFreePeriodDetails") ++
                     sectionAnswers2.row(
                         if(forType == FOR6045 || forType == FOR6046) "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020" else "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium",
                         _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
+                        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                     sectionAnswers2.conditionRow(
                         _.payACapitalSumInformationDetails.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails",
@@ -933,27 +932,27 @@
                                 r.capitalSumPaidDetailsDateInput.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
-                        aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.conditionRow(
                         _.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
                         _.capitalSumDescription.map(_.capitalSumDescription.escapedHtml),
-                        aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "capitalSumDescription",
+                        controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "capitalSumDescription",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.conditionRow(
                         _.paymentWhenLeaseIsGrantedDetails.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted",
                         _.paymentWhenLeaseIsGrantedDetails.map(_.receivePaymentWhenLeaseGranted.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
+                        controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show(), "receivePaymentWhenLeaseGranted") ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",
                         _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
+                        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
                     sectionAnswers2.conditionRow(
                         _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails",
                         _.legalOrPlanningRestrictionsDetails.map(_.legalPlanningRestrictions),
-                        aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
+                        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
         ))}
     }
 
@@ -961,27 +960,27 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven",
                 _.benefitsGiven.map(_.benefitsGiven.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                aboutYourLeaseOrTenure.routes.BenefitsGivenController.show(), "benefitGiven") ++
+                controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show(), "benefitGiven") ++
                     sectionAnswers3.conditionRow(
                         _.benefitsGiven.map(_.benefitsGiven.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails",
                         _.benefitsGivenDetails.map(_.benefitsGivenDetails),
-                        aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show(), "benefitsGivenDetails") ++
+                        controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show(), "benefitsGivenDetails") ++
             sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020",
                 _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
+                controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
                     sectionAnswers2.conditionalOptionalRow(_.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
                         _.capitalSumDescription.map(_.capitalSumDescription.escapedHtml),
-                        aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "",
+                        controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "",
                         ("valueAsHtml", _ => None)) ++
                     sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",
                         _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).map(v => if(v.equals("yes")) messages("label.yes.do") else messages("label.no.naddo")),
-                        aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
+                        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
                     sectionAnswers2.conditionRow(
                         _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name).contains("yes"),
                         "checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails",
                         _.legalOrPlanningRestrictionsDetails.map(_.legalPlanningRestrictions),
-                        aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
+                        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
         ))
     }
 }
