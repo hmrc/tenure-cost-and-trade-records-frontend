@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswerYes
 @import util.DateUtilLocalised
@@ -121,7 +120,7 @@
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentReceived",
                 _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")),
-                aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
+                controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
         ))
         @for((letting, idx) <- sectionAnswers.answers.flatMap(_.lettings).getOrElse(IndexedSeq.empty).zipWithIndex) {
             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber", idx + 1)</h2>
@@ -147,6 +146,6 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentReceived",
             _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")),
-            aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
+            controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
     ))
 }

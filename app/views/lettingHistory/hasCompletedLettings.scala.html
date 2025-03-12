@@ -52,12 +52,12 @@
             idPrefix = "lettingHistoryHasCompletedLettings",
             name = "answer",
             legendKey = "", // see legend instead
-            classes = "govuk-fieldset__legend--s",
+            classes = "govuk-fieldset__legend--m",
             isHeading = true,
             legend = Some(messages(
                 "lettingHistory.hasCompletedLettings.legend",
-                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.fromDate),
-                dateUtil.formatDayMonthAbbrYear(fiscalPeriod.toDate)
+                dateUtil.formatDate(fiscalPeriod.fromDate),
+                dateUtil.formatDate(fiscalPeriod.toDate)
             )),
         )
         @includes.continueSaveAsDraftButtons(govukButton)

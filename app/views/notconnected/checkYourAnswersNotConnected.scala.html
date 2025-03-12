@@ -17,7 +17,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import models.Session
 @import views.html.answers.notConnectedAnswersTable
 
 @this(
@@ -28,7 +27,7 @@
         notConnectedAnswers: notConnectedAnswersTable
 )
 
-@(session: Session)(implicit request: Request[?], messages: Messages)
+@(session: models.Session)(implicit request: Request[?], messages: Messages)
 
     @layout(
         pageHeading = messages("checkYourAnswersNotConnected.heading"),

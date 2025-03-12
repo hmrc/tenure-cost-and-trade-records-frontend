@@ -37,6 +37,14 @@ trait RentalPeriodSupport extends FiscalYearSupport:
       toDate = LocalDate.of(currentFiscalYearEnd, MARCH, 31)
     )
 
+  def effectiveRentalPeriod(using request: SessionRequest[AnyContent]): LocalPeriod =
+    val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
+      .flatMap(_.commercialLetDate)
+      .fold(LocalDate.EPOCH)(_.toYearMonth.atDay(1))
+
+    if !commercialLetFirstAvailableDate.isAfter(previousRentalPeriod.fromDate) then previousRentalPeriod
+    else previousRentalPeriod.copy(fromDate = commercialLetFirstAvailableDate)
+
   // The Welsh journey requires 3 years of data instead of 1 year
   private def numberOfYearsBack(using request: SessionRequest[AnyContent]) =
     val numberOfYearsBack = if request.sessionData.isWelsh then 3 else 1

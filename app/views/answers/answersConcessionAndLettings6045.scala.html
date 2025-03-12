@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutfranchisesorlettings
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.submissions.common.AnswerYes
 @import util.DateUtilLocalised
@@ -67,7 +66,7 @@
                     franchise.businessDetails.fold("")(_.operatorName)).mkString("""<p class="govuk-body">""", "", "</p>") +
                     franchise.businessDetails.fold("")(_.typeOfBusiness).mkString("""<p class="govuk-body">""", "", "</p>") +
                     franchise.businessDetails.fold("")(_.cateringAddress.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
-                aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
+                controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
                 "franchiseOperatorName",
                 ("valueAsHtml", _ => None)) ++
             sectionAnswers.row(
@@ -78,7 +77,7 @@
                                     dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse(""),
                     messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover"))
                         .map("""<p class="govuk-body">""" + _ + "</p>").mkString,
-                aboutfranchisesorlettings.routes.RentalIncomeRentController.show(index),
+                controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(index),
                 "annualRent",
                 ("valueAsHtml", _ => None)) ++
             sectionAnswers.row(
@@ -86,7 +85,7 @@
                 _ => franchise.itemsIncluded.fold(List.empty)(_.filterNot(_ == "noneOfThese")).filter(_.nonEmpty)
                 .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
                 .mkString("""<p class="govuk-body">""", "<br/>", "</p>"),
-                aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
+                controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
                 "itemsInRent",
                 ("valueAsHtml", _ => None))
         ))
@@ -132,7 +131,7 @@
                         Actions(items =
                             Seq(
                                 ActionItem(
-                                    href = s"${aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(index).url}&from=CYA",
+                                    href = s"${controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(index).url}&from=CYA",
                                     content = Text(messages("label.change")),
                                     visuallyHiddenText = Some(messages("checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading")),
                                     attributes = Map(
@@ -176,7 +175,7 @@
             .mkString("""<p class="govuk-body">""", "", "</p>") +
             letting.operatorDetails.flatMap(_.lettingAddress.escapedHtml).getOrElse("")
             .mkString("""<p class="govuk-body">""", "", "</p>"),
-        aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index),
+        controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index),
         "lettingOperatorName",
         ("valueAsHtml", _ => None)) ++
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
@@ -187,14 +186,14 @@
                 dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse(""),
                 messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover"))
                 .map("""<p class="govuk-body">""" + _ + "</p>").mkString,
-        aboutfranchisesorlettings.routes.RentalIncomeRentController.show(index),
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(index),
         "annualRent",
         ("valueAsHtml", _ => None)) ++
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
           _ => letting.itemsIncluded.map(_.filterNot(_ == "noneOfThese")).filter(_.nonEmpty).getOrElse(List.empty)
                .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
                .mkString("""<p class="govuk-body">""", "<br/>", "</p>"),
-          aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
+          controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
           "itemsInRent",
           ("valueAsHtml", _ => None))
 ))
@@ -213,7 +212,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings",
         _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")),
-        aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
+        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
 ))
 @if(sectionAnswers.answers.flatMap(_.franchisesOrLettingsTiedToProperty).contains(AnswerYes)) {
     @if(sectionAnswers.answers.flatMap(_.rentalIncome).isDefined) {

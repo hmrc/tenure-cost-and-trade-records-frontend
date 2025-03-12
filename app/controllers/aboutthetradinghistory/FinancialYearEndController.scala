@@ -186,7 +186,13 @@ class FinancialYearEndController @Inject() (
   )(implicit request: SessionRequest[AnyContent]) = {
     val turnoverSections =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        aboutTheTradingHistory.turnoverSections
+        if (!newOccupationAndAccounting.yearEndChanged.get) {
+          (aboutTheTradingHistory.turnoverSections zip financialYearsRequired(firstOccupy, financialYear)).map {
+            case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
+          }
+        } else {
+          aboutTheTradingHistory.turnoverSections
+        }
       } else if (isFinancialYearsListUnchanged) {
         (aboutTheTradingHistory.turnoverSections zip financialYearsRequired(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)

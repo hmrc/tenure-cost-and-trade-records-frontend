@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswerNo
@@ -157,20 +156,20 @@
                 controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
         ))
     @pageAnswers("turnover.6045.lettingUnits.grossReceipts.heading",
-        aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show(),
+        controllers.aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show(),
         answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsLettingUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
         answer6045("checkYourAnswersOtherHolidayAccommodation.grossReceipts", _.grossReceiptsLettingUnits.flatMap(_.grossReceipts)),
         answer6045("checkYourAnswersOtherHolidayAccommodation.numberOfUnits", _.grossReceiptsLettingUnits.flatMap(_.numberOfUnits))
     )
 
     @pageAnswers("turnover.6045.subLetUnits.grossReceipts.heading",
-        aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show(),
+        controllers.aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show(),
         answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsLettingUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
         answer6045("checkYourAnswersOtherHolidayAccommodation.grossReceipts", _.grossReceiptsSubLetUnits.flatMap(_.grossReceipts)),
         answer6045("checkYourAnswersOtherHolidayAccommodation.numberOfUnits", _.grossReceiptsSubLetUnits.flatMap(_.numberOfUnits))
     )
     @pageAnswersTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading",
-        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting", t => s"${t.availableForLetting}",None,action("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading", aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show()),true),
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting", t => s"${t.availableForLetting}",None,action("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading", controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show()),true),
         answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff",t=>  s"${t.occupiedBySeasonalStuff}"),
         answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.privatelyOwned", t=>  s"${t.privatelyOwned}"),
         answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalLettingUnits", t=>  s"${t.total}")

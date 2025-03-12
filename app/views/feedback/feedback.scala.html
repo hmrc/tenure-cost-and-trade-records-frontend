@@ -14,11 +14,8 @@
  * limitations under the License.
  *@
 
-@import controllers.routes
 @import form.Feedback
 
-@import play.api.i18n.Messages
-@import play.api.mvc.Request
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
@@ -27,7 +24,6 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.{RadioItem, Radios}
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.charactercount.CharacterCount
-@import views.html.Layout
 
 @this(
         layout: Layout,
@@ -48,7 +44,7 @@
     <p class="govuk-body">@messages("label.feedback.p1")</p>
 
     @formWithCSRF(
-        action = routes.FeedbackController.feedbackSharedSubmit,
+        action = controllers.routes.FeedbackController.feedbackSharedSubmit,
         args = Symbol("novalidate") -> "novalidate" ) {
 
         <div class="govuk-form-group">

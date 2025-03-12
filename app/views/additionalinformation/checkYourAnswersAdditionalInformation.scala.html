@@ -15,10 +15,8 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.additionalinformation
 @import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.Session
 @import views.html.answers.answersAdditionalInformation
 
 @this(layout: Layout,
@@ -28,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAdditionalInformation], session: Session)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[CheckYourAnswersAdditionalInformation], session: models.Session)(implicit request: SessionRequest[?], messages: Messages)
 
     @layout(
         pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
@@ -42,7 +40,7 @@
 
         @answersSectionAdditionalInformation()
 
-        @formWithCSRF(action = additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
+        @formWithCSRF(action = controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,

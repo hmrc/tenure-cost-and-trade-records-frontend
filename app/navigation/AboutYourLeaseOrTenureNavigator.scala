@@ -388,13 +388,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController
               .show(getLastTradeServicesIndex(answers))
-          case Some(AnswerNo)  =>
-            controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
           case _               =>
-            logger.warn(
-              s"Navigation for add another service reached without correct selection of conditions by controller"
-            )
-            throw new RuntimeException("Invalid option exception for add another service conditions routing")
+            controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
         }
     }
   }

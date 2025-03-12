@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import controllers.aboutthetradinghistory
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
 @import util.SectionAnswersRowBuilder
@@ -125,21 +124,21 @@
 
 
         @pageAnswers("cYa.pitchesForCaravans.heading",
-            aboutthetradinghistory.routes.PitchesForCaravansController.show(),
+            controllers.aboutthetradinghistory.routes.PitchesForCaravansController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.pitchesForCaravans.flatMap(_.grossReceipts)),
             answer("tentingPitches.common.numberOfPitches", _.pitchesForCaravans.flatMap(_.numberOfPitches)),
         )
         @pageAnswers("cya.pitchesForGlamping.heading",
-            aboutthetradinghistory.routes.PitchesForGlampingController.show(),
+            controllers.aboutthetradinghistory.routes.PitchesForGlampingController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.pitchesForGlamping.flatMap(_.grossReceipts)),
             answer("tentingPitches.common.numberOfPitches", _.pitchesForGlamping.flatMap(_.numberOfPitches)),
         )
         @pageAnswers("cya.rallyAreas.heading",
-            aboutthetradinghistory.routes.RallyAreasController.show(),
+            controllers.aboutthetradinghistory.routes.RallyAreasController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("tentingPitches.common.grossReceipts",   _.rallyAreas.flatMap(_.grossReceipts)),
