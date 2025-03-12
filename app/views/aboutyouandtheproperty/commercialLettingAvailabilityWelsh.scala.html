@@ -88,6 +88,7 @@
            value = theForm(s"lettingAvailAbility-$idx").value,
            classes = "govuk-input--width-2",
            attributes = Map(
+            "maxlength" -> "3",
             "aria-label" -> messages("commercialLettingAvailability.label.welsh.nights")
            ),
            suffix = Some(PrefixOrSuffix(
