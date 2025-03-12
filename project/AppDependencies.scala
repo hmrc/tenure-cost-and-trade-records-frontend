@@ -5,7 +5,7 @@ object AppDependencies {
 
   val bootstrapVersion    = "9.11.0"
   val playFrontendVersion = "11.12.0"
-  val mongoVersion        = "2.5.0"
+  val mongoVersion        = "2.6.0"
   val cryptoJsonVersion   = "8.2.0"
 
   // Test dependencies
@@ -15,7 +15,7 @@ object AppDependencies {
   val scalaTestPlusMockitoVersion    = "3.2.19.0"
   val flexMarkVersion                = "0.64.8"
   val wiremockVersion                = "3.9.1"
-  val jsoupVersion                   = "1.18.3"
+  val jsoupVersion                   = "1.19.1"
 
   private val compile = Seq(
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30" % bootstrapVersion,
