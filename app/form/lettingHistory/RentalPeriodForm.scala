@@ -35,21 +35,10 @@ object RentalPeriodForm extends RentalPeriodSupport:
     messages: Messages,
     dateUtil: DateUtilLocalised
   ): Form[LocalPeriod] =
-    val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
-      .flatMap(_.commercialLetDate)
-      .fold(LocalDate.EPOCH)(_.toYearMonth.atDay(1))
-
     Form[LocalPeriod](
       mapping(
-        "fromDate" -> constrainedLocalDate("lettingHistory.rentalPeriod", "fromDate", previousRentalPeriod)
-          .verifying(
-            messages(
-              "lettingHistory.rentalPeriod.fromDate.error",
-              dateUtil.formatDate(commercialLetFirstAvailableDate)
-            ),
-            !_.isBefore(commercialLetFirstAvailableDate)
-          ),
-        "toDate"   -> constrainedLocalDate("lettingHistory.rentalPeriod", "toDate", previousRentalPeriod)
+        "fromDate" -> constrainedLocalDate("lettingHistory.rentalPeriod", "fromDate", effectiveRentalPeriod),
+        "toDate"   -> constrainedLocalDate("lettingHistory.rentalPeriod", "toDate", effectiveRentalPeriod)
       )(LocalPeriod.apply)(LocalPeriod.unapply).verifying(
         error = messages("lettingHistory.rentalPeriod.error"),
         constraint = period => period.fromDate.isBefore(period.toDate) || period.fromDate.isEqual(period.toDate)

@@ -53,13 +53,13 @@ class HasCompletedLettingsController @Inject (
         hasCompletedLettings <- lettingHistory.hasCompletedLettings
       yield freshForm.fill(hasCompletedLettings.toAnswer)
 
-    Ok(theView(filledForm.getOrElse(freshForm), previousRentalPeriod, backLinkUrl))
+    Ok(theView(filledForm.getOrElse(freshForm), effectiveRentalPeriod, backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, previousRentalPeriod, backLinkUrl))),
+      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, effectiveRentalPeriod, backLinkUrl))),
       answer =>
         given Session = request.sessionData
         for

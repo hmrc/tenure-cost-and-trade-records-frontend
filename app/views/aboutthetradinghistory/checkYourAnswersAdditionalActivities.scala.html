@@ -16,7 +16,6 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-@import controllers.aboutthetradinghistory
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswersYesNo
@@ -122,21 +121,21 @@
 
     @if(tradingHistoryOne.answers.flatMap(_.additionalActivities).flatMap(_.additionalActivitiesOnSite).contains(AnswerYes)) {
         @pageAnswers("cYa.additionalActivities.shops.heading",
-            aboutthetradinghistory.routes.AdditionalShopsController.show(),
+            controllers.aboutthetradinghistory.routes.AdditionalShopsController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.gross", _.additionalShops.flatMap(_.grossReceipts)),
             answer("cYa.additionalActivities.costOfPurchases", _.additionalShops.flatMap(_.tradingPeriod)),
         )
         @pageAnswers("cYa.additionalActivities.catering.heading",
-            aboutthetradinghistory.routes.AdditionalCateringController.show(),
+            controllers.aboutthetradinghistory.routes.AdditionalCateringController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.gross", _.additionalCatering.flatMap(_.grossReceipts)),
             answer("cYa.additionalActivities.costOfPurchases", _.additionalCatering.flatMap(_.costOfPurchase)),
         )
         @pageAnswers("cYa.additionalActivities.bars.heading",
-            aboutthetradinghistory.routes.AdditionalBarsClubsController.show(),
+            controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.grossFromBars", _.additionalBarsClubs.flatMap(_.grossReceiptsBars)),
@@ -146,13 +145,13 @@
             answer("cYa.additionalActivities.costOfEntertainment", _.additionalBarsClubs.flatMap(_.costOfEntertainment))
         )
         @pageAnswers("cYa.additionalActivities.amusements.heading",
-            aboutthetradinghistory.routes.AdditionalAmusementsController.show(),
+            controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.receipts", _.additionalAmusements.flatMap(_.receipts)),
         )
         @pageAnswers("cYa.additionalActivities.miscellaneous.heading",
-            aboutthetradinghistory.routes.AdditionalMiscController.show(),
+            controllers.aboutthetradinghistory.routes.AdditionalMiscController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
             answer("cYa.additionalActivities.grossFromOther", _.additionalMisc.flatMap(_.leisureReceipts)),

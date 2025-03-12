@@ -18,7 +18,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import actions.SessionRequest
-@import controllers.aboutthetradinghistory
 @import models.ForType.*
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import util.SectionAnswersRowBuilder
@@ -107,7 +106,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url,
+                                href = controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url,
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered")),
                                 attributes = Map(
@@ -127,7 +126,7 @@
                     Actions(items =
                         Seq(
                             ActionItem(
-                                href = aboutthetradinghistory.routes.FinancialYearEndController.show().url,
+                                href = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url,
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd")),
                                 attributes = Map(
@@ -150,9 +149,9 @@
                             ActionItem(
                                 href = forType match {
                                     case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
-                                        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+                                        controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
                                     case _ =>
-                                        aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
+                                        controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
                                 },
                                 content = Text(messages("label.change")),
                                 visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates")),
