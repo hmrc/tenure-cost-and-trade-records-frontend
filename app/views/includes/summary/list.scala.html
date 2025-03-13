@@ -24,29 +24,31 @@
     SummaryList(
         rows =
             summaryData
-            .filter { _.hasValue }
-            .map { case SummaryEntry(key, Some(value), changeAction) =>
-                SummaryListRow(
-                    key = Key(
-                        content = Text(key),
-                        classes = "govuk-!-width-one-half"
-                    ),
-                    value = Value(
-                        content = HtmlContent(value)
-                    ),
-                    actions = Some(Actions(
-                        items = Seq(
-                            ActionItem(
-                                href = changeAction.toString,
-                                content = Text(messages("label.change")),
-                                attributes = Map(
-                                    "aria-label" -> (messages("label.change") + s" $key")
-                                )
-                            )
+            .filter(_.hasValue)
+            .map {
+                case SummaryEntry(key, Some(value), changeAction) =>
+                    SummaryListRow(
+                        key = Key(
+                            content = Text(key),
+                            classes = "govuk-!-width-one-half"
                         ),
-                        classes = "govuk-!-font-size-14"
-                    ))
-                )
+                        value = Value(
+                            content = HtmlContent(value)
+                        ),
+                        actions = Some(Actions(
+                            items = Seq(
+                                ActionItem(
+                                    href = changeAction.toString,
+                                    content = Text(messages("label.change")),
+                                    attributes = Map(
+                                        "aria-label" -> (messages("label.change") + s" $key")
+                                    )
+                                )
+                            ),
+                            classes = "govuk-!-font-size-14"
+                        ))
+                    )
+                case _ => SummaryListRow()
             },
         classes = "govuk-!-margin-bottom-9"
     )

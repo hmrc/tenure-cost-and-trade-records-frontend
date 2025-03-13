@@ -18,8 +18,6 @@ package navigation
 
 import models.submissions.common.AnswerNo
 import navigation.identifiers._
-import play.api.mvc.AnyContentAsEmpty
-import play.api.test.FakeRequest
 import utils.TestBaseSpec
 
 class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {

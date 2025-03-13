@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.calculatingTheRentFor
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CalculatingTheRentForController @Inject() (
