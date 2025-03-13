@@ -21,8 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfIncomeForm.typeOfIncomeForm
 import models.ForType
-import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcession, TypeFranchise, TypeLetting, TypeOfIncome}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcession, TypeConcession6015, TypeFranchise, TypeLetting, TypeOfIncome}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -140,15 +139,19 @@ class TypeOfIncomeController @Inject() (
 
   private def createIncomeRecord(sourceType: TypeOfIncome): IncomeRecord =
     sourceType match
-      case TypeFranchise  =>
+      case TypeFranchise      =>
         FranchiseIncomeRecord(
           sourceType = TypeFranchise
         )
-      case TypeConcession =>
+      case TypeConcession6015 =>
+        ConcessionIncomeRecord(
+          sourceType = TypeConcession6015
+        )
+      case TypeConcession     =>
         ConcessionIncomeRecord(
           sourceType = TypeConcession
         )
-      case TypeLetting    =>
+      case TypeLetting        =>
         LettingIncomeRecord(
           sourceType = TypeLetting
         )
@@ -156,11 +159,11 @@ class TypeOfIncomeController @Inject() (
   private def toSpecificController(typeOfLetting: TypeOfIncome, index: Option[Int]): Call = {
     val targetIndex = index.getOrElse(0)
     typeOfLetting match {
-      case TypeFranchise  =>
+      case TypeFranchise | TypeConcession6015 =>
         controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(targetIndex)
-      case TypeConcession =>
+      case TypeConcession                     =>
         controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
-      case TypeLetting    => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
+      case TypeLetting                        => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
     }
   }
 

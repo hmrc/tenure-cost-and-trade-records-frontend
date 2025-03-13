@@ -20,7 +20,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class CateringOperationBusinessSection(
-  cateringOperationBusinessDetails: CateringOperationBusinessDetails,
+  cateringOperationBusinessDetails: ConcessionBusinessDetails,
   feeReceived: Option[FeeReceived] = None,
   addAnotherOperationToProperty: Option[AnswersYesNo] = None
 )

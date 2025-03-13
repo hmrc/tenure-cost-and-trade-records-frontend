@@ -52,6 +52,12 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
       json.as[FranchiseIncomeRecord] shouldBe incomeRecord
     }
 
+    "serialize and deserialize correctly for Concession6015IncomeRecord with complete details" in {
+      val incomeRecord = concession6015IncomeRecord
+      val json         = Json.toJson(incomeRecord: Concession6015IncomeRecord)
+      json.as[Concession6015IncomeRecord] shouldBe incomeRecord
+    }
+
     "serialize and deserialize correctly for ConcessionIncomeRecord with complete details" in {
       val incomeRecord = concessionIncomeRecord
       val json         = Json.toJson(incomeRecord: ConcessionIncomeRecord)
@@ -69,6 +75,16 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
         sourceType = TypeConcession,
         businessDetails = None,
         feeReceived = None
+      )
+      val json         = Json.toJson(incomeRecord: IncomeRecord)
+      json.as[IncomeRecord] shouldBe incomeRecord
+    }
+
+    "serialize and deserialize correctly for Concession6015IncomeRecord with optional fields missing" in {
+      val incomeRecord = Concession6015IncomeRecord(
+        sourceType = TypeConcession6015,
+        businessDetails = None,
+        rent = None
       )
       val json         = Json.toJson(incomeRecord: IncomeRecord)
       json.as[IncomeRecord] shouldBe incomeRecord
@@ -135,7 +151,31 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
     }
   }
 
-  "update income and redirect to concession/franchise details if type selected is concessionFranchise type" in {
+  "update income and redirect to franchise details if type selected is concession6015 type" in {
+    val controller     = typeOfIncomeController()
+    val request        = FakeRequest(POST, "/submit-path")
+      .withFormUrlEncodedBody("typeOfIncome" -> "typeConcession6015")
+    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6015YesSession, request)
+    val result         = controller.submit(Some(0))(sessionRequest)
+
+    status(result)           shouldBe SEE_OTHER
+    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/franchise-type-details?idx=0")
+    verify(mockSessionRepo).saveOrUpdate(any)(any, any)
+  }
+
+  "update income and redirect to franchise details if type selected is Franchise type" in {
+    val controller     = typeOfIncomeController()
+    val request        = FakeRequest(POST, "/submit-path")
+      .withFormUrlEncodedBody("typeOfIncome" -> "typeFranchise")
+    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6010YesSession, request)
+    val result         = controller.submit(Some(0))(sessionRequest)
+
+    status(result)           shouldBe SEE_OTHER
+    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/franchise-type-details?idx=0")
+    verify(mockSessionRepo, times(2)).saveOrUpdate(any)(any, any)
+  }
+
+  "update income and redirect to concession details if type selected is concession type" in {
     val controller     = typeOfIncomeController()
     val request        = FakeRequest(POST, "/submit-path")
       .withFormUrlEncodedBody("typeOfIncome" -> "typeConcession")
@@ -144,7 +184,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/concession-type-details?idx=0")
-    verify(mockSessionRepo).saveOrUpdate(any)(any, any)
+    verify(mockSessionRepo, times(3)).saveOrUpdate(any)(any, any)
   }
 
   "update income and redirect to letting details if type selected is letting type" in {
@@ -190,7 +230,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
     )
 
     val request        = FakeRequest(POST, "/submit-path")
-      .withFormUrlEncodedBody("typeOfIncome" -> "typeConcessionOrFranchise")
+      .withFormUrlEncodedBody("typeOfIncome" -> "typeConcession")
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6045, request)
     val result         = controller.submit(None)(sessionRequest)
 

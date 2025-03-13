@@ -33,14 +33,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutFranchiseOrLetting6010YesSession) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to catering operation page when concession page has been completed yes" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
-    }
-
     "return a function that goes to catering operation page when lettings page has been completed yes" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010NoSession)
@@ -98,14 +90,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(0)
     }
 
-    "return a function that goes to catering operation details page when rent from concession is completed yes 6015" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(RentFromConcessionId, sessionAboutFranchiseOrLetting6015YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6015YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
-    }
-
     "return a function that goes to catering operation details page when rent from concession is completed no 6015" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(RentFromConcessionId, sessionAboutFranchiseOrLetting6015NoSession)
@@ -123,28 +107,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to catering operation details page when catering operation page has been completed yes" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(0))
-    }
-
     "return a function that goes to letting page when catering operation page has been completed no" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6010NoSession)
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
         ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
-    "return a function that goes to concession or franchise page when franchise page has been completed yes 6015" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6015YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6015YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(0))
     }
 
     "return a function that goes to concession or franchise page when franchise page has been completed yes 6030" in {
@@ -155,36 +123,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(0))
     }
 
-    "return a function that continue with incomplete section when franchise page has been incomplete in" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6015SIncompleteCatering)
-        .apply(
-          sessionAboutFranchiseOrLetting6015SIncompleteCatering
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0)
-    }
-
-    "return a function that continue with incomplete section when catering detail page has been incomplete in 6015" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail)
-        .apply(
-          sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(0)
-    }
-
     "return a function that continue with incomplete section when catering detail page has been incomplete in 6030" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail)
         .apply(
           sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail
         ) shouldBe controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0)
-    }
-
-    "return a function that continue with incomplete section when catering detail page has been incomplete in 6010" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6010Incomplete)
-        .apply(
-          sessionAboutFranchiseOrLetting6010Incomplete
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0)
     }
 
     "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
@@ -203,12 +147,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0)
     }
 
-    "return a function that goes to catering operation rent calculated from page when rent received from page has been completed" in {
+    "return a function that goes to rental income included page when rent received from page has been completed" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CalculatingTheRentForPageId, sessionAboutFranchiseOrLetting6015YesSession)
         .apply(
           sessionAboutFranchiseOrLetting6015YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0)
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(0)
     }
 
     "return a function that goes to catering operation rent included page when rent received calculation page has been completed" in {
@@ -235,38 +179,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
     }
 
-    "return a function that goes to franchise details page when franchise rent includes has been completed yes" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(1))
-    }
-
-    "return a function that goes to Catering details page when adding another catering business yes" in {
-      val requestFromCYA: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/?from=CYA")
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLetting6010YesSession)(hc, requestFromCYA)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(1))
-    }
-
     "return a function that goes to lettings page when letting page has been completed no" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLetting6010NoSession)
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
         ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
-    "return a function that goes to lettings details page when letting page has been completed yes" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(LettingAccommodationPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
-        .show(Some(0))
     }
 
     "return a function that goes to task list page when letting page has been completed no" in {
@@ -300,15 +218,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(
           sessionAboutFranchiseOrLetting6010YesSession
         ) shouldBe controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)
-    }
-
-    "return a function that goes to lettings details page when lettings rent includes has been completed yes" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(AddAnotherLettingAccommodationPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
-        .show(Some(1))
     }
 
     "return a function that goes to rent includes if the section has not been completed" in {
@@ -359,7 +268,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
     }
 
-    // TEST FOR SINGLE LOOP 6045
+    // TEST FOR SINGLE RENTAL INCOME LOOP LOOP 6010
 
     "return a function that goes to rental income rent page when franchise type details page has been completed" in {
 
@@ -368,6 +277,62 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(
           sessionAboutFranchiseOrLetting6010YesSession
         ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(0)
+    }
+
+    "return a function that goes to rental income rent page when letting type details page has been completed" in {
+
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(LettingTypeDetailsId, sessionAboutFranchiseOrLetting6010YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(0)
+    }
+
+    "return a function that goes to rental income included page when rental income rent page has been completed" in {
+
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(RentalIncomeRentId, sessionAboutFranchiseOrLetting6010YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(0)
+    }
+
+    "return a function that goes to rental income list page when rental income rent page has been completed" in {
+
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(RentalIncomeIncludedId, sessionAboutFranchiseOrLetting6010YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6010YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
+    }
+
+    // TEST FOR SINGLE RENTAL INCOME LOOP LOOP 6015 AND 6015
+
+    "return a function that goes to rent received from page when concession type details page has been completed" in {
+
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(FranchiseTypeDetailsId, sessionAboutFranchiseOrLetting6015YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6015YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(0)
+    }
+
+    "return a function that goes to calculating rent for when rent received from page has been completed" in {
+
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(RentReceivedFromPageId, sessionAboutFranchiseOrLetting6015YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6015YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(0)
+    }
+
+    "return a function that goes to rental income included when rent calculating the rent for  page has been completed" in {
+
+      aboutFranchisesOrLettingsNavigator
+        .nextPage(CalculatingTheRentForPageId, sessionAboutFranchiseOrLetting6015YesSession)
+        .apply(
+          sessionAboutFranchiseOrLetting6015YesSession
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(0)
     }
 
     // TESTS FOR FORMS 6045 AND 6046

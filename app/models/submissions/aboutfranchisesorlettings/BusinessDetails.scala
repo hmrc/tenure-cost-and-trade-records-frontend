@@ -16,17 +16,14 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import models.submissions.PrintableAddress
 import play.api.libs.json.{Json, OFormat}
 
-case class CateringAddress(
-  buildingNameNumber: String,
-  street1: Option[String],
-  town: String,
-  county: Option[String],
-  postcode: String
-) extends PrintableAddress
+case class BusinessDetails(
+  operatorName: String,
+  typeOfBusiness: String,
+  cateringAddress: BusinessAddress
+)
 
-object CateringAddress {
-  implicit val format: OFormat[CateringAddress] = Json.format
+object BusinessDetails {
+  implicit val format: OFormat[BusinessDetails] = Json.format
 }

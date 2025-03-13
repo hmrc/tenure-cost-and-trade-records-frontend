@@ -20,8 +20,8 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class LettingSection(
-  lettingOtherPartOfPropertyInformationDetails: LettingOtherPartOfPropertyInformationDetails,
-  lettingOtherPartOfPropertyRentDetails: Option[LettingOtherPartOfPropertyRentDetails] = None,
+  lettingOtherPartOfPropertyInformationDetails: OperatorDetails,
+  lettingOtherPartOfPropertyRentDetails: Option[PropertyRentDetails] = None,
   lettingOtherPartOfPropertyRent6015Details: Option[LettingOtherPartOfPropertyRent6015Details] = None,
   addAnotherLettingToProperty: Option[AnswersYesNo] = None,
   itemsInRent: List[String] = List.empty

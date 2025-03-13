@@ -16,7 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
-import models.submissions.aboutfranchisesorlettings.CateringOperationBusinessDetails
+import models.submissions.aboutfranchisesorlettings.ConcessionBusinessDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
@@ -37,6 +37,6 @@ object CateringOperationBusinessDetails6030Form {
         nonEmpty(errorMessage = "error.howBusinessPropertyIsUsed.required"),
         maxLength(50, "error.howBusinessPropertyIsUsed.maxLength")
       )
-    )(CateringOperationBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )(ConcessionBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

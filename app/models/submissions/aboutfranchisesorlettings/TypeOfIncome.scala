@@ -27,6 +27,10 @@ object TypeFranchise extends TypeOfIncome {
   override def name: String = "typeFranchise"
 }
 
+object TypeConcession6015 extends TypeOfIncome {
+  override def name: String = "typeConcession6015"
+}
+
 object TypeConcession extends TypeOfIncome {
   override def name: String = "typeConcession"
 }
@@ -40,6 +44,7 @@ object TypeOfIncome extends NamedEnumSupport[TypeOfIncome] {
 
   override def all: Seq[TypeOfIncome] = List(
     TypeFranchise,
+    TypeConcession6015,
     TypeConcession,
     TypeLetting
   )

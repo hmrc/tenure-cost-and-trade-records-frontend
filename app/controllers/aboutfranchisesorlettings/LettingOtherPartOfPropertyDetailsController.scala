@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingOtherPartOfPropertyInformationDetails, LettingSection}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection, OperatorDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationDetailsPageId
 import play.api.i18n.I18nSupport
@@ -45,7 +45,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[LettingOtherPartOfPropertyInformationDetails] = for {
+    val existingDetails: Option[OperatorDetails] = for {
       requestedIndex          <- index
       existingLettingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections)
       // lift turns exception-throwing access by index into an option-returning safe operation
@@ -67,7 +67,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[LettingOtherPartOfPropertyInformationDetails](
+    continueOrSaveAsDraft[OperatorDetails](
       lettingOtherPartOfPropertyForm,
       formWithErrors =>
         BadRequest(

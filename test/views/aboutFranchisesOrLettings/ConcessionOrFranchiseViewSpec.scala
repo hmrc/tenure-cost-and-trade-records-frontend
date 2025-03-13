@@ -18,7 +18,7 @@ package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
+import models.submissions.aboutfranchisesorlettings.BusinessDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
@@ -26,11 +26,11 @@ import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
 import play.twirl.api.Html
 
-class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOperationDetails] {
+class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[BusinessDetails] {
 
   val messageKeyPrefix = "concessionOrFranchise"
 
-  override val form: Form[CateringOperationDetails] =
+  override val form: Form[BusinessDetails] =
     FranchiseTypeDetailsForm.franchiseTypeDetailsForm
 
   def createView: () => Html = () =>
@@ -42,7 +42,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[CateringOpera
       FOR6010
     )(fakeRequest, messages)
 
-  def createViewUsingForm: Form[CateringOperationDetails] => Html = (form: Form[CateringOperationDetails]) =>
+  def createViewUsingForm: Form[BusinessDetails] => Html = (form: Form[BusinessDetails]) =>
     concessionOrFranchiseView(
       form,
       messageKeyPrefix,

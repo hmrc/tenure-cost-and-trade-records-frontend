@@ -17,7 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.submissions.aboutfranchisesorlettings.LettingOtherPartOfPropertyInformationDetails
+@import models.submissions.aboutfranchisesorlettings.OperatorDetails
 @import models.pages.Summary
 @import models.ForType.*
 
@@ -28,7 +28,7 @@
 )
 
 
-@(theForm: Form[LettingOtherPartOfPropertyInformationDetails], index: Int, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[OperatorDetails], index: Int, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
 @sectionName = @{
     forType match {

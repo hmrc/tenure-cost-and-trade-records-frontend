@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.cateringOperationBusinessDetails6030Form
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetailsForm.cateringOperationBusinessDetailsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationBusinessDetails, CateringOperationBusinessSection}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationBusinessSection, ConcessionBusinessDetails}
 import models.ForType
 import models.ForType.*
 import models.Session
@@ -52,7 +52,7 @@ class CateringOperationBusinessDetailsController @Inject() (
     request.sessionData.forType
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[CateringOperationBusinessDetails] = for {
+    val existingDetails: Option[ConcessionBusinessDetails] = for {
       requestedIndex                <- index
       existingAccommodationSections <-
         request.sessionData.aboutFranchisesOrLettings.map(
@@ -62,7 +62,7 @@ class CateringOperationBusinessDetailsController @Inject() (
       requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
     } yield requestedAccommodationSection.cateringOperationBusinessDetails
 
-    audit.sendChangeLink("CateringOperationBusinessDetails")
+    audit.sendChangeLink("ConcessionBusinessDetails")
     Ok(
       cateringOperationDetailsView(
         if (forType == FOR6030) {
@@ -85,7 +85,7 @@ class CateringOperationBusinessDetailsController @Inject() (
   }
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CateringOperationBusinessDetails](
+    continueOrSaveAsDraft[ConcessionBusinessDetails](
       if (forType == FOR6030) {
         cateringOperationBusinessDetails6030Form
       } else {

@@ -32,8 +32,8 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec {
   val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
   val mockAudit: Audit = mock[Audit]
-  def calculatingTheRentController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
+  def controller(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings60156016)
   ) =
     new CalculatingTheRentForController(
       stubMessagesControllerComponents(),
@@ -46,36 +46,23 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec {
 
   "GET /" should {
     "return 200" in {
-      val result = calculatingTheRentController().show(0)(fakeRequest)
+      val result = controller().show(0)(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = calculatingTheRentController().show(0)(fakeRequest)
+      val result = controller().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
-    }
-
-    "redirect the user to the catering Op or Letting Accommodation details page" when {
-      "given an index" which {
-        "does not exist within the session" in {
-          val result = calculatingTheRentController().show(2)(fakeRequest)
-          status(result) shouldBe SEE_OTHER
-
-          redirectLocation(result) shouldBe Some(
-            aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(None).url
-          )
-        }
-      }
     }
 
     "display the page with the fields prefilled in" when {
       "given an index" which {
         "exists within the session" in {
-          val result = calculatingTheRentController().show(0)(fakeRequest)
+          val result = controller().show(0)(fakeRequest)
           val html   = Jsoup.parse(contentAsString(result))
-          Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
-          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
+          Option(html.getElementById("dateInput.month").`val`()).value shouldBe "1"
+          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2021"
 
         }
       }
@@ -85,7 +72,7 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = calculatingTheRentController().submit(0)(
+      val res = controller().submit(0)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST

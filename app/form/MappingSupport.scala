@@ -178,13 +178,13 @@ object MappingSupport {
     "postcode"           -> postcodeAlternativeContact
   )(AlternativeAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def cateringAddressMapping: Mapping[CateringAddress] = mapping(
+  def cateringAddressMapping: Mapping[BusinessAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(CateringAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
+  )(BusinessAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def lettingOtherPartAddressMapping: Mapping[LettingAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
