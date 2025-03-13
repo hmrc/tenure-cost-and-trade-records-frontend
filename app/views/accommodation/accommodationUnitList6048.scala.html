@@ -29,9 +29,6 @@
 
 @(form: Form[AnswersYesNo], accommodationUnits: List[AccommodationUnit], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@accommodationName = @{ request.sessionData.accommodationDetails.map(_.accommodationUnits.map(_.unitName))
-
-}
 @pageTitle = @{
     accommodationUnits.size match {
         case 0 => messages("accommodation.unitList.heading.removedAll")
