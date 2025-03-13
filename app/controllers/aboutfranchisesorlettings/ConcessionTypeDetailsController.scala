@@ -46,7 +46,7 @@ class ConcessionTypeDetailsController @Inject() (
     with Logging {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[CateringOperationBusinessDetails] = for {
+    val existingDetails: Option[ConcessionBusinessDetails] = for {
       requestedIndex   <- Some(index)
       allRecords       <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       existingRecord   <- allRecords.lift(requestedIndex)
@@ -70,7 +70,7 @@ class ConcessionTypeDetailsController @Inject() (
   }
 
   def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CateringOperationBusinessDetails](
+    continueOrSaveAsDraft[ConcessionBusinessDetails](
       concessionTypeDetailsForm,
       formWithErrors =>
         BadRequest(

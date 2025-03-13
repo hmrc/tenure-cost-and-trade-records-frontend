@@ -34,7 +34,12 @@
  source match {
   case "connection"   => messages("label.section.connectionToTheProperty")
   case "lettings"     => messages("label.section.aboutTheLettings")
-  case "rentalIncome" => messages("label.section.aboutTheConcessionsFranchisesLettings")
+  case "rentalIncome" =>
+    request.sessionData.forType match {
+     case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
+     case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
+     case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+    }
   case _              => messages("label.section.aboutTheFranchiseConcessions")
  }
 }

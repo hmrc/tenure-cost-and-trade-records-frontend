@@ -91,16 +91,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
       case Some("yes") =>
         answers.forType match {
-          case FOR6010 | FOR6011 | FOR6015 | FOR6016 =>
-            val maybeCatering = answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lastOption)
-            val idx           = getCateringOperationsIndex(answers)
-            maybeCatering match {
-              case Some(catering) if isCateringDetailsIncomplete(catering, answers.forType) =>
-                getIncompleteCateringCall(catering, idx, answers.forType)
-              case _                                                                        =>
-                controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
-            }
-          case FOR6030                               =>
+          case FOR6030 =>
             val maybeCatering =
               answers.aboutFranchisesOrLettings.flatMap(
                 _.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty).lastOption
@@ -112,7 +103,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
               case _                                                                   =>
                 controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
             }
-          case _                                     =>
+          case _       =>
             logger.warn(
               s"Navigation for franchise or letting reached without a valid FOR Type"
             )
@@ -191,6 +182,16 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     else controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx))
   }
 
+  private def franchiseTypeDetailsRouting: Session => Call = answers =>
+    answers.forType match {
+      case FOR6015 | FOR6016 =>
+        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController
+          .show(getRentalIncomeIndex(answers))
+      case _                 =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController
+          .show(getRentalIncomeIndex(answers))
+    }
+
   private def cateringOperationsDetailsConditionsRouting: Session => Call = answers =>
     answers.forType match {
       case FOR6015 | FOR6016 =>
@@ -200,14 +201,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
           .show(getCateringOperationsIndex(answers))
     }
-
-  private def rentReceivedFromRouting: Session => Call = answers =>
-    controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController
-      .show(getCateringOperationsIndex(answers))
-
-  private def calculatingTheRentForRouting: Session => Call = answers =>
-    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
-      .show(getCateringOperationsIndex(answers))
 
   private def cateringOperationsRentDetailsConditionsRouting: Session => Call = answers =>
     controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
@@ -356,9 +349,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     FeeReceivedPageId                          -> (answers =>
       aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
     ),
-    FranchiseTypeDetailsId                     -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))
-    ),
+    FranchiseTypeDetailsId                     -> franchiseTypeDetailsRouting,
     ConcessionTypeDetailsId                    -> (answers =>
       controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
     ),
@@ -379,8 +370,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,
     AddAnotherCateringOperationPageId          -> addAnotherCateringOperationsConditionsRouting,
     AddAnotherConcessionPageId                 -> addAnotherConcessionRouting,
-    RentReceivedFromPageId                     -> rentReceivedFromRouting,
-    CalculatingTheRentForPageId                -> calculatingTheRentForRouting,
+    RentReceivedFromPageId                     -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(getRentalIncomeIndex(answers))
+    ),
+    CalculatingTheRentForPageId                -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
+    ),
     LettingAccommodationPageId                 -> lettingAccommodationConditionsRouting,
     LettingAccommodationDetailsPageId          -> lettingsDetailsConditionsRouting,
     LettingAccommodationRentDetailsPageId      -> lettingsRentDetailsConditionsRouting,

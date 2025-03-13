@@ -18,12 +18,12 @@ package models.submissions.aboutfranchisesorlettings
 
 import play.api.libs.json.{Json, OFormat}
 
-import java.time.LocalDate
-
-case class LettingOtherPartOfPropertyRentDetails(
-  annualRent: BigDecimal,
-  dateInput: LocalDate
+case class OperatorDetails(
+  operatorName: String,
+  typeOfBusiness: String,
+  lettingAddress: LettingAddress
 )
-object LettingOtherPartOfPropertyRentDetails {
-  implicit val format: OFormat[LettingOtherPartOfPropertyRentDetails] = Json.format
+
+object OperatorDetails {
+  implicit val format: OFormat[OperatorDetails] = Json.format
 }

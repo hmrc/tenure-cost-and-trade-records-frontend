@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentalIncomeIncludedId
 import play.api.Logging
@@ -43,30 +43,16 @@ class RentalIncomeIncludedController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
+    with FranchiseAndLettingSupport
     with Logging {
-
-  private def getIncomeRecord(index: Int)(implicit request: SessionRequest[?]): Option[IncomeRecord] =
-    for {
-      allRecords <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-      record     <- allRecords.lift(index)
-    } yield record
-
-  private def getOperatorName(index: Int)(implicit request: SessionRequest[?]): String =
-    getIncomeRecord(index)
-      .collect {
-        case franchise: FranchiseIncomeRecord => franchise.businessDetails.fold("")(_.operatorName)
-        case letting: LettingIncomeRecord     => letting.operatorDetails.fold("")(_.operatorName)
-        case _                                => ""
-      }
-      .getOrElse("")
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {
-      case letting: LettingIncomeRecord     => letting.itemsIncluded
-      case franchise: FranchiseIncomeRecord => franchise.itemsIncluded
-      case _                                => None
+      case letting: LettingIncomeRecord               => letting.itemsIncluded
+      case concession6015: Concession6015IncomeRecord => concession6015.itemsIncluded
+      case franchise: FranchiseIncomeRecord           => franchise.itemsIncluded
+      case _                                          => None
     }.flatten
-    val operatorName    = getOperatorName(index)
     audit.sendChangeLink("LettingTypeIncluded")
 
     Ok(
@@ -75,7 +61,7 @@ class RentalIncomeIncludedController @Inject() (
           theForm.fill
         ),
         index,
-        operatorName,
+        getOperatorName(index),
         calculateBackLink(index),
         request.sessionData.toSummary,
         request.sessionData.forType
@@ -84,9 +70,6 @@ class RentalIncomeIncludedController @Inject() (
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-
-    val operatorName = getOperatorName(idx)
-
     continueOrSaveAsDraft[List[String]](
       theForm,
       formWithErrors =>
@@ -94,7 +77,7 @@ class RentalIncomeIncludedController @Inject() (
           view(
             formWithErrors,
             idx,
-            operatorName,
+            getOperatorName(idx),
             calculateBackLink(idx),
             request.sessionData.toSummary,
             request.sessionData.forType
@@ -107,9 +90,10 @@ class RentalIncomeIncludedController @Inject() (
               records.updated(
                 idx,
                 records(idx) match {
-                  case franchise: FranchiseIncomeRecord => franchise.copy(itemsIncluded = Some(data))
-                  case letting: LettingIncomeRecord     => letting.copy(itemsIncluded = Some(data))
-                  case _                                => throw new IllegalStateException("Unknown income record type")
+                  case franchise: FranchiseIncomeRecord       => franchise.copy(itemsIncluded = Some(data))
+                  case concession: Concession6015IncomeRecord => concession.copy(itemsIncluded = Some(data))
+                  case letting: LettingIncomeRecord           => letting.copy(itemsIncluded = Some(data))
+                  case _                                      => throw new IllegalStateException("Unknown income record type")
                 }
               )
             }
@@ -129,6 +113,12 @@ class RentalIncomeIncludedController @Inject() (
     request.getQueryString("from") match {
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-      case _           => controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(idx).url
+      case _           =>
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).flatMap(_.lift(idx)) match {
+          case Some(incomeRecord: Concession6015IncomeRecord) =>
+            controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx).url
+          case _                                              =>
+            controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(idx).url
+        }
     }
 }

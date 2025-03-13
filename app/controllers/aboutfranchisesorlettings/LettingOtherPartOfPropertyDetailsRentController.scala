@@ -23,7 +23,7 @@ import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyRent6015Form.let
 import form.aboutfranchisesorlettings.IncomeRecordRentForm.incomeRecordRentForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertyRent6015Details, LettingOtherPartOfPropertyRentDetails}
+import models.submissions.aboutfranchisesorlettings.{LettingOtherPartOfPropertyRent6015Details, PropertyRentDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationRentDetailsPageId
 import play.api.i18n.I18nSupport
@@ -125,7 +125,7 @@ class LettingOtherPartOfPropertyDetailsRentController @Inject() (
           }
       )
     } else {
-      continueOrSaveAsDraft[LettingOtherPartOfPropertyRentDetails](
+      continueOrSaveAsDraft[PropertyRentDetails](
         incomeRecordRentForm,
         formWithErrors =>
           BadRequest(

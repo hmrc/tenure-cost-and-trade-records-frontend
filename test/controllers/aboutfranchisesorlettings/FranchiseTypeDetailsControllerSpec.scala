@@ -28,7 +28,7 @@ class FranchiseTypeDetailsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
   def controller(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6010and6016)
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6010)
   ) =
     new FranchiseTypeDetailsController(
       stubMessagesControllerComponents(),

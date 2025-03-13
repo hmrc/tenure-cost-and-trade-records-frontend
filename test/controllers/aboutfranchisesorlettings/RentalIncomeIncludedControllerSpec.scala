@@ -96,14 +96,14 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec {
 
   "render a correct back link to franchise type details if no query parameters in the url for 6010 " in {
     // franchise is on index 0
-    val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010and6016))
+    val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))
     val result         = controller6010.show(0)(fakeRequest)
     val content        = contentAsString(result)
     content should include("/rental-income-rent?idx=0")
   }
   "render a correct back link to letting type details if no query parameters in the url for 6010 " in {
     // letting is on index 1
-    val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010and6016))
+    val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))
     val result         = controller6010.show(1)(fakeRequest)
     val content        = contentAsString(result)
     content should include("/rental-income-rent?idx=1")

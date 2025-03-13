@@ -17,14 +17,14 @@
 package form.aboutfranchisesorlettings
 
 import form.MappingSupport.cateringAddressMapping
-import models.submissions.aboutfranchisesorlettings.CateringOperationDetails
+import models.submissions.aboutfranchisesorlettings.BusinessDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object FranchiseTypeDetailsForm {
 
-  val franchiseTypeDetailsForm: Form[CateringOperationDetails] = Form(
+  val franchiseTypeDetailsForm: Form[BusinessDetails] = Form(
     mapping(
       "operatorName"    -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName.required"),
@@ -35,6 +35,6 @@ object FranchiseTypeDetailsForm {
         maxLength(50, "error.typeOfBusiness.maxLength")
       ),
       "cateringAddress" -> cateringAddressMapping
-    )(CateringOperationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )(BusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

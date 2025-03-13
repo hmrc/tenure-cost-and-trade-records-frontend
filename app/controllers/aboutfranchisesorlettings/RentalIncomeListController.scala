@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentalIncomeListForm.rentalIncomeListForm
 import form.confirmableActionForm.confirmableActionForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.i18n.I18nSupport
@@ -44,28 +44,13 @@ class RentalIncomeListController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with FranchiseAndLettingSupport
     with I18nSupport {
-
-  private def franchisesOrLettingsData(implicit
-    request: SessionRequest[AnyContent]
-  ): Option[AboutFranchisesOrLettings] =
-    request.sessionData.aboutFranchisesOrLettings
-
-  private def getOperatorName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
-    franchisesOrLettingsData.flatMap { data =>
-      data.rentalIncome.flatMap { incomeRecord =>
-        incomeRecord.lift(idx).map {
-          case franchise: FranchiseIncomeRecord   => franchise.businessDetails.fold("")(_.operatorName)
-          case concession: ConcessionIncomeRecord => concession.businessDetails.map(_.operatorName).getOrElse("")
-          case letting: LettingIncomeRecord       => letting.operatorDetails.map(_.operatorName).getOrElse("")
-        }
-      }
-    }
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
 
     val addAnother: Option[AnswersYesNo] = for {
-      data      <- franchisesOrLettingsData
+      data      <- request.sessionData.aboutFranchisesOrLettings
       income    <- data.rentalIncome
       record    <- income.lift(index)
       addRecord <- record.addAnotherRecord
@@ -138,13 +123,14 @@ class RentalIncomeListController @Inject() (
     incomeRecord: IncomeRecord,
     answer: Option[AnswersYesNo]
   ): IncomeRecord = incomeRecord match {
-    case franchise: FranchiseIncomeRecord   => franchise.copy(addAnotherRecord = answer)
-    case concession: ConcessionIncomeRecord => concession.copy(addAnotherRecord = answer)
-    case letting: LettingIncomeRecord       => letting.copy(addAnotherRecord = answer)
+    case franchise: FranchiseIncomeRecord           => franchise.copy(addAnotherRecord = answer)
+    case concession: ConcessionIncomeRecord         => concession.copy(addAnotherRecord = answer)
+    case concession6015: Concession6015IncomeRecord => concession6015.copy(addAnotherRecord = answer)
+    case letting: LettingIncomeRecord               => letting.copy(addAnotherRecord = answer)
   }
 
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    getOperatorName(idx)
+    Some(getOperatorName(idx))
       .map { operatorName =>
         Future.successful(
           Ok(
@@ -168,7 +154,7 @@ class RentalIncomeListController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
-        getOperatorName(idx)
+        Some(getOperatorName(idx))
           .map { operatorName =>
             Future.successful(
               BadRequest(
@@ -213,24 +199,23 @@ class RentalIncomeListController @Inject() (
     )
   }
 
-  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String = {
-    val rentalIncomeData = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-
+  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _     =>
-        rentalIncomeData.flatMap(_.lift(idx)) match {
-          case Some(incomeRecord: FranchiseIncomeRecord)  =>
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).flatMap(_.lift(idx)) match {
+          case Some(incomeRecord: FranchiseIncomeRecord)      =>
             controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
-          case Some(incomeRecord: ConcessionIncomeRecord) =>
+          case Some(incomeRecord: Concession6015IncomeRecord) =>
+            controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
+          case Some(incomeRecord: ConcessionIncomeRecord)     =>
             controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(idx).url
-          case Some(incomeRecord: LettingIncomeRecord)    =>
+          case Some(incomeRecord: LettingIncomeRecord)        =>
             controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
-          case _                                          =>
+          case _                                              =>
             controllers.routes.TaskListController.show().url
         }
 
     }
-  }
 }

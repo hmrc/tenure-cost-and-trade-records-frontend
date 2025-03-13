@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord, LettingOtherPartOfPropertyInformationDetails}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord, OperatorDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
 import play.api.Logging
@@ -46,7 +46,7 @@ class LettingTypeDetailsController @Inject() (
     with Logging {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[LettingOtherPartOfPropertyInformationDetails] = for {
+    val existingDetails: Option[OperatorDetails] = for {
       requestedIndex <- Some(index)
       allRecords     <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       existingRecord <- allRecords.lift(requestedIndex)
@@ -69,7 +69,7 @@ class LettingTypeDetailsController @Inject() (
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[LettingOtherPartOfPropertyInformationDetails](
+    continueOrSaveAsDraft[OperatorDetails](
       lettingOtherPartOfPropertyForm,
       formWithErrors =>
         BadRequest(
