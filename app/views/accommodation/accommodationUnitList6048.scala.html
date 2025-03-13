@@ -29,6 +29,9 @@
 
 @(form: Form[AnswersYesNo], accommodationUnits: List[AccommodationUnit], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@accommodationName = @{ request.sessionData.accommodationDetails.map(_.accommodationUnits.map(_.unitName))
+
+}
 @pageTitle = @{
     accommodationUnits.size match {
         case 0 => messages("accommodation.unitList.heading.removedAll")
@@ -61,11 +64,17 @@
                     items = Seq(
                         ActionItem(
                             href = s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index",
-                            content = Text(messages("label.change"))
+                            content = Text(messages("label.change")),
+                            attributes = Map(
+                                "aria-label" -> (messages("label.change") + " " + accommodationUnit.unitName)
+                            )
                         ),
                         ActionItem(
                             href = s"${controllers.accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index",
-                            content = Text(messages("label.remove"))
+                            content = Text(messages("label.remove")),
+                            attributes = Map(
+                                "aria-label" -> (messages("label.remove") + " " + accommodationUnit.unitName)
+                            )
                         )
                     ),
                     classes = "hmrc-summary-list__actions"
