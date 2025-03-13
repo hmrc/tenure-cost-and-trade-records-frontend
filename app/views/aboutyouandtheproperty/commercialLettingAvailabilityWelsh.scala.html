@@ -20,13 +20,15 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
 @import actions.SessionRequest
+@import util.AccessibilityUtil
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,
         govukTable: GovukTable,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -89,7 +91,7 @@
            classes = "govuk-input--width-2",
            attributes = Map(
             "maxlength" -> "3",
-            "aria-label" -> messages("commercialLettingAvailability.label.welsh.nights")
+            "aria-label" -> accessibilityUtil.ariaBuilder("commercialLettingAvailability.label.welsh.nights", finYearEnd)
            ),
            suffix = Some(PrefixOrSuffix(
             content = Text(messages("commercialLettingAvailability.label.nights"))
