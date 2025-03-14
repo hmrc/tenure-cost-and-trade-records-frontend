@@ -30,6 +30,9 @@ case class LocalPeriod(
     case _                             => false
   }
 
+  def overlapsWith(that: LocalPeriod): Boolean =
+    this.fromDate.isBefore(that.toDate) && this.toDate.isAfter(that.fromDate)
+
 object LocalPeriod:
   def unapply(obj: LocalPeriod): Option[(LocalDate, LocalDate)] = Some((obj.fromDate, obj.toDate))
   given Format[LocalPeriod]                                     = Json.format
