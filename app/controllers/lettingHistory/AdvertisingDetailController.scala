@@ -68,20 +68,20 @@ class AdvertisingDetailController @Inject() (
     continueOrSaveAsDraft[AdvertisingDetail](
       theForm,
       theFormWithErrors => badRequestWith(theView, theFormWithErrors, maybeIndex),
-      occupier =>
+      advertising =>
         given Session = request.sessionData
-        if hasBeenAlreadyEntered(occupier, at = maybeIndex)
+        if hasBeenAlreadyEntered(advertising, at = maybeIndex)
         then
           badRequestWith(
             theView,
             theForm
-              .fill(occupier)
+              .fill(advertising)
               .withError("duplicate", request.messages()("lettingHistory.advertisingDetail.duplicate")),
             maybeIndex
           )
         else
           for
-            newSession   <- successful(byAddingOrUpdatingOnlineAdvertising(maybeIndex, occupier))
+            newSession   <- successful(byAddingOrUpdatingOnlineAdvertising(maybeIndex, advertising))
             savedSession <- repository.saveOrUpdateSession(newSession)
           yield navigator.redirect(currentPage = AdvertisingDetailPageId, savedSession)
     )
