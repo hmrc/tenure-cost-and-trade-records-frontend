@@ -17,11 +17,12 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import controllers.connectiontoproperty.routes
+import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, LettingPartOfPropertyRentDetails, TenantDetails}
 
 import scala.concurrent.ExecutionContext
 
@@ -127,7 +128,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
 
   }
 
-  "return a function that goes from the vacant property page to Vacent property Start Date page if answer yes" in {
+  "return a function that goes from the vacant property page to vacant property Start Date page if answer yes" in {
     navigator
       .nextPage(VacantPropertiesPageId, stillConnectedDetailsYesToAllSession)
       .apply(
@@ -135,7 +136,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       ) shouldBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
   }
 
-  "return a function that goes from the vacant property page to Vacent property Start Date page if answer no" in {
+  "return a function that goes from the vacant property page to vacant property Start Date page if answer no" in {
     navigator
       .nextPage(VacantPropertiesPageId, stillConnectedDetailsNoToAllSession)
       .apply(
@@ -151,12 +152,25 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       ) shouldBe controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0)
   }
 
-  "123return a function that goes from Letting Income page to vacant properties start date page if there is an income" in {
+  "return a function that goes from Letting Income page to provide contact details page" in {
     navigator
       .nextPage(LettingIncomePageId, stillConnectedDetailsNoToAllSession)
       .apply(
         stillConnectedDetailsNoToAllSession
       ) shouldBe controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
+  }
+
+  "return a function that goes from letting income  page to Letting Details page, when no details" in {
+    val sessionWithEmptyLettingPartOfPropertyDetails = stillConnectedDetailsYesToAllSession.copy(
+      stillConnectedDetails =
+        Option(prefilledStillConnectedDetailsYesToAll.copy(lettingPartOfPropertyDetails = IndexedSeq()))
+    )
+
+    navigator
+      .nextPage(LettingIncomePageId, sessionWithEmptyLettingPartOfPropertyDetails)
+      .apply(
+        sessionWithEmptyLettingPartOfPropertyDetails
+      ) shouldBe controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
   }
 
   "return a function that goes from trading name page to trading name own the property page" in {
@@ -221,6 +235,39 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .apply(
         stillConnectedDetailsYesSession
       ) shouldBe controllers.routes.LoginController.show
+  }
+
+  "getIncompleteSectionCall" should {
+
+    def createLettingDetails(
+      tenantDetails: TenantDetails = testTenantDetails,
+      rentDetails: Option[LettingPartOfPropertyRentDetails] = testLettingDetails,
+      itemsIncluded: List[String] = List("item1", "item2")
+    ): LettingPartOfPropertyDetails =
+      LettingPartOfPropertyDetails(tenantDetails, rentDetails, itemsIncluded)
+    "return the correct Call when tenantDetails is null" in {
+      val detail = createLettingDetails(tenantDetails = null)
+      val result = navigator.getIncompleteSectionCall(detail, 0)
+      result shouldBe routes.LettingPartOfPropertyDetailsController.show(Some(0))
+    }
+
+    "return the correct Call when lettingPartOfPropertyRentDetails is None" in {
+      val detail = createLettingDetails(rentDetails = None)
+      val result = navigator.getIncompleteSectionCall(detail, 1)
+      result shouldBe routes.LettingPartOfPropertyDetailsRentController.show(1)
+    }
+
+    "return the correct Call when itemsIncludedInRent is empty" in {
+      val detail = createLettingDetails(itemsIncluded = List.empty)
+      val result = navigator.getIncompleteSectionCall(detail, 2)
+      result shouldBe routes.LettingPartOfPropertyItemsIncludedInRentController.show(2)
+    }
+
+    "return the correct Call when all fields are populated" in {
+      val detail = createLettingDetails()
+      val result = navigator.getIncompleteSectionCall(detail, 3)
+      result shouldBe routes.LettingPartOfPropertyDetailsController.show(Some(3))
+    }
   }
 // 6076
 
