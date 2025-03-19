@@ -67,7 +67,9 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
       assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.requestReference")))
       assert(
         doc.toString.contains(
-          controllers.requestReferenceNumber.routes.RequestReferenceNumberController.startWithSession().url
+          controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController
+            .startWithSession()
+            .url
         )
       )
     }

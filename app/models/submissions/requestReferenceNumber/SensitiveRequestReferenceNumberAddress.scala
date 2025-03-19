@@ -22,13 +22,19 @@ import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveRequestReferenceNumberAddress(
-  noReferenceNumberBusinessTradingName: SensitiveString,
-  noReferenceNumberAddress: SensitiveRequestAddress
-) extends Sensitive[RequestReferenceNumber] {
+  buildingNameNumber: SensitiveString,
+  street1: Option[SensitiveString],
+  town: SensitiveString,
+  county: Option[SensitiveString],
+  postcode: SensitiveString
+) extends Sensitive[RequestReferenceNumberAddress] {
 
-  override def decryptedValue: RequestReferenceNumber = RequestReferenceNumber(
-    noReferenceNumberBusinessTradingName.decryptedValue,
-    noReferenceNumberAddress.decryptedValue
+  override def decryptedValue: RequestReferenceNumberAddress = RequestReferenceNumberAddress(
+    buildingNameNumber.decryptedValue,
+    street1.map(_.decryptedValue),
+    town.decryptedValue,
+    county.map(_.decryptedValue),
+    postcode.decryptedValue
   )
 }
 
@@ -37,9 +43,12 @@ object SensitiveRequestReferenceNumberAddress {
 
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumberAddress] = Json.format
 
-  def apply(noReferenceNumber: RequestReferenceNumber): SensitiveRequestReferenceNumberAddress =
+  def apply(requestAddress: RequestReferenceNumberAddress): SensitiveRequestReferenceNumberAddress =
     SensitiveRequestReferenceNumberAddress(
-      SensitiveString(noReferenceNumber.requestReferenceNumberBusinessTradingName),
-      SensitiveRequestAddress(noReferenceNumber.requestReferenceNumberAddress)
+      SensitiveString(requestAddress.buildingNameNumber),
+      requestAddress.street1.map(SensitiveString(_)),
+      SensitiveString(requestAddress.town),
+      requestAddress.county.map(SensitiveString(_)),
+      SensitiveString(requestAddress.postcode)
     )
 }

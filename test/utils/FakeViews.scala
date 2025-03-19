@@ -29,7 +29,10 @@ import views.html.downloadFORTypeForm.downloadPDF
 import views.html.error.{JsonParseError, error}
 import views.html.feedback.{feedback, feedbackThx}
 import views.html.notconnected._
-import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber, requestReferenceNumber, requestReferenceNumberContactDetails}
+import views.html.requestReferenceNumber.requestReferenceNumberPropertyDetails
+import views.html.requestReferenceNumber.requestReferenceNumberContactDetails
+import views.html.requestReferenceNumber.requestReferenceNumberCheckYourAnswers
+import views.html.requestReferenceNumber.requestReferenceNumberConfirmation
 import views.html._
 
 trait FakeViews { this: Injecting =>
@@ -40,27 +43,25 @@ trait FakeViews { this: Injecting =>
   lazy val loginView: login       = inject[login]
 
   // Error pages
-  lazy val jsonErrorView: JsonParseError                                                      = inject[JsonParseError]
-  lazy val errorView: error                                                                   = inject[error]
+  lazy val jsonErrorView: JsonParseError = inject[JsonParseError]
+  lazy val errorView: error              = inject[error]
+
   // Request reference number
-  lazy val checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber =
-    inject[checkYourAnswersRequestReferenceNumber]
-  lazy val confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber         =
-    inject[confirmationRequestReferenceNumber]
+  lazy val requestReferenceNumberPropertyDetailsView  = inject[requestReferenceNumberPropertyDetails]
+  lazy val requestReferenceNumberContactDetailsView   = inject[requestReferenceNumberContactDetails]
+  lazy val requestReferenceNumberCheckYourAnswersView = inject[requestReferenceNumberCheckYourAnswers]
+  lazy val requestReferenceNumberConfirmationView     = inject[requestReferenceNumberConfirmation]
 
   // generic confirmation page
   lazy val genericRemoveConfirmationView = inject[genericRemoveConfirmation]
-  // Connection to the property
 
+  // Connection to the property
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = inject[areYouThirdParty]
   lazy val areYouStillConnectedView: areYouStillConnected                                         = inject[areYouStillConnected]
   lazy val connectionToThePropertyView: connectionToTheProperty                                   = inject[connectionToTheProperty]
   lazy val editAddressView: editAddress                                                           = inject[editAddress]
-  lazy val requestReferenceAddressView: requestReferenceNumber                                    = inject[requestReferenceNumber]
   lazy val referenceNumberView: referenceNumber                                                   = inject[referenceNumber]
   lazy val downloadPDFView: downloadPDF                                                           = inject[downloadPDF]
-  lazy val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails         =
-    inject[requestReferenceNumberContactDetails]
   lazy val checkYourAnswersConnectionToProperty: checkYourAnswersConnectionToProperty             =
     inject[checkYourAnswersConnectionToProperty]
   lazy val checkYourAnswersConnectionToVacantProperty: checkYourAnswersConnectionToVacantProperty =
@@ -68,8 +69,6 @@ trait FakeViews { this: Injecting =>
 //  lazy val confirmationConnectionToProperty: confirmationConnectionToProperty                     = inject[confirmationConnectionToProperty]
 //  lazy val confirmationVacantProperty: confirmationVacantProperty                                 = inject[confirmationVacantProperty]
   lazy val confirmation: confirmation                                                             = inject[confirmation]
-  lazy val confirmationRequestReferenceNumber: confirmationRequestReferenceNumber                 =
-    inject[confirmationRequestReferenceNumber]
   lazy val tradingNameOperatingFromProperty: tradingNameOperatingFromProperty                     = inject[tradingNameOperatingFromProperty]
   lazy val tradingNameOwnThePropertyView: tradingNameOwnTheProperty                               = inject[tradingNameOwnTheProperty]
   lazy val tradingNamePayRentView: tradingNamePayingRent                                          = inject[tradingNamePayingRent]

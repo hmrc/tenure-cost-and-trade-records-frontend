@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package util
+package controllers.aboutYourLeaseOrTenure
 
 import models.submissions.aboutYourLeaseOrTenure.LandlordAddress
-import models.{Address, AddressLookup}
+import connectors.addressLookup.*
+import connectors.addressLookup.AddressLookupUtil.getLandLordAddress
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import util.AddressLookupUtil.getLandLordAddress
 
 class AddressLookupUtilSpec extends AnyWordSpec with Matchers {
 
   "getLandLordAddress" should {
 
     "correctly transform with id present and at least two lines" in {
-      val lookup = AddressLookup(
-        Some(Address(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None)),
-        Some("auditRef"),
+      val lookup = AddressLookupConfirmedAddress(
+        AddressLookupAddress(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None),
+        "auditRef",
         Some("id")
       )
 
@@ -45,9 +45,9 @@ class AddressLookupUtilSpec extends AnyWordSpec with Matchers {
     }
 
     "correctly transform without id and four lines" in {
-      val lookup = AddressLookup(
-        Some(Address(Some(Seq("Building 1", "Street 2", "Town 3", "County 4")), Some("Postcode"), None)),
-        None,
+      val lookup = AddressLookupConfirmedAddress(
+        AddressLookupAddress(Some(Seq("Building 1", "Street 2", "Town 3", "County 4")), Some("Postcode"), None),
+        "auditRef",
         None
       )
 
@@ -63,9 +63,9 @@ class AddressLookupUtilSpec extends AnyWordSpec with Matchers {
     }
 
     "correctly transform without id and three lines" in {
-      val lookup = AddressLookup(
-        Some(Address(Some(Seq("Building 1", "Street 2", "Town 3")), Some("Postcode"), None)),
-        None,
+      val lookup = AddressLookupConfirmedAddress(
+        AddressLookupAddress(Some(Seq("Building 1", "Street 2", "Town 3")), Some("Postcode"), None),
+        "auditRef",
         None
       )
 
@@ -81,9 +81,9 @@ class AddressLookupUtilSpec extends AnyWordSpec with Matchers {
     }
 
     "correctly transform without id and two lines" in {
-      val lookup = AddressLookup(
-        Some(Address(Some(Seq("Building 1", "Town 2")), Some("Postcode"), None)),
-        None,
+      val lookup = AddressLookupConfirmedAddress(
+        AddressLookupAddress(Some(Seq("Building 1", "Town 2")), Some("Postcode"), None),
+        "auditRef",
         None
       )
 
@@ -99,28 +99,14 @@ class AddressLookupUtilSpec extends AnyWordSpec with Matchers {
     }
 
     "correctly transform without id and one line" in {
-      val lookup = AddressLookup(
-        Some(Address(Some(Seq("Building 1")), None, None)),
-        None,
+      val lookup = AddressLookupConfirmedAddress(
+        AddressLookupAddress(Some(Seq("Building 1")), None, None),
+        "auditRef",
         None
       )
 
       val expected = LandlordAddress(
         "Building 1",
-        None,
-        "",
-        None,
-        "Empty Postcode"
-      )
-
-      getLandLordAddress(lookup) shouldBe expected
-    }
-
-    "return default values for missing address information" in {
-      val lookup = AddressLookup(None, None, None)
-
-      val expected = LandlordAddress(
-        "",
         None,
         "",
         None,

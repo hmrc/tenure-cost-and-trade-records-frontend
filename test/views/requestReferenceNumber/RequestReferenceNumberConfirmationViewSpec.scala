@@ -24,13 +24,13 @@ import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
 
-class confirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
+class RequestReferenceNumberConfirmationViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix                                       = "label.connectionToProperty.confirm"
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val form: Form[Feedback]   = FeedbackFormMapper.feedbackForm
-  def createView: () => Html = () => confirmationRequestReferenceNumberView(form)(sessionRequest, messages)
+  def createView: () => Html = () => requestReferenceNumberConfirmationView(form)(sessionRequest, messages)
 
   "confirmation request reference number view" must {
 

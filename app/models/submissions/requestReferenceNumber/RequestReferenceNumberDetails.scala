@@ -21,9 +21,9 @@ import models.Session
 import play.api.libs.json.{Json, OFormat}
 
 case class RequestReferenceNumberDetails(
-  requestReferenceNumberAddress: Option[RequestReferenceNumber] = None,
-  requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None,
-  checkYourAnswersRequestReferenceNumber: Option[CheckYourAnswersRequestReferenceNumber] = None
+  propertyDetails: Option[RequestReferenceNumberPropertyDetails] = None,
+  contactDetails: Option[RequestReferenceNumberContactDetails] = None,
+  checkYourAnswers: Option[RequestReferenceNumberCheckYourAnswers] = None
 )
 
 object RequestReferenceNumberDetails {

@@ -17,9 +17,43 @@
 package actions
 
 import models.Session
-import play.api.mvc.{Request, WrappedRequest}
+import play.api.mvc.{AnyContent, Request, WrappedRequest}
 
 case class SessionRequest[A](
   sessionData: Session,
   request: Request[A]
 ) extends WrappedRequest[A](request) {}
+
+object SessionRequest:
+  extension (request: SessionRequest[AnyContent])
+    def isFromCheckYourAnswer: Boolean = isFrom("CYA")
+
+    def isFromTaskList: Boolean = isFrom("TL")
+
+    def eventualFromFragment: Option[String] =
+      hasFrom(ifEmpty = None) { fromValue =>
+        if fromValue.nonEmpty
+        then
+          val splitted = fromValue.split(";")
+          if splitted.size > 1 then Some(splitted(1)) else None
+        else None
+      }
+
+    private def isFrom(pageId: String): Boolean =
+      hasFrom(ifEmpty = false)(_.contains(pageId))
+
+    private def hasFrom[T](ifEmpty: T)(fn: String => T) =
+      request
+        .getQueryString("from")
+        .map(fn)
+        .getOrElse {
+          request.body.asFormUrlEncoded
+            .map { submittedData =>
+              submittedData
+                .get("from")
+                .flatMap(_.headOption)
+                .map(fn)
+                .getOrElse(ifEmpty)
+            }
+            .getOrElse(ifEmpty)
+        }

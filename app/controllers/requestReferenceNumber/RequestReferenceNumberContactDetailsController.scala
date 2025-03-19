@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
-import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
+import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.theForm
 import navigation.RequestReferenceNumberNavigator
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
 import navigation.identifiers.NoReferenceNumberContactDetailsPageId
@@ -45,10 +45,10 @@ class RequestReferenceNumberContactDetailsController @Inject() (
     Future.successful(
       Ok(
         requestReferenceNumberContactDetailsView(
-          request.sessionData.requestReferenceNumberDetails.flatMap(_.requestReferenceContactDetails) match {
+          request.sessionData.requestReferenceNumberDetails.flatMap(_.contactDetails) match {
             case Some(requestReferenceContactDetails) =>
-              requestReferenceNumberContactDetailsForm.fill(requestReferenceContactDetails)
-            case _                                    => requestReferenceNumberContactDetailsForm
+              theForm.fill(requestReferenceContactDetails)
+            case _                                    => theForm
           }
         )
       )
@@ -56,12 +56,12 @@ class RequestReferenceNumberContactDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    requestReferenceNumberContactDetailsForm
+    theForm
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(requestReferenceNumberContactDetailsView(formWithErrors))),
         data => {
-          val updatedData = updateRequestReferenceNumber(_.copy(requestReferenceContactDetails = Some(data)))
+          val updatedData = updateRequestReferenceNumber(_.copy(contactDetails = Some(data)))
           session
             .saveOrUpdate(updatedData)
             .map(_ =>

@@ -14,28 +14,14 @@
  * limitations under the License.
  */
 
-package utils
+package connectors.addressLookup
 
-import com.github.tomakehurst.wiremock.WireMockServer
-import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Suite}
+import play.api.mvc.Call
 
-trait WireMockHelper extends BeforeAndAfterAll with BeforeAndAfterEach {
-  this: Suite =>
-
-  protected val server: WireMockServer = new WireMockServer(11111)
-
-  override def beforeAll(): Unit = {
-    server.start()
-    super.beforeAll()
-  }
-
-  override def beforeEach(): Unit = {
-    server.resetAll()
-    super.beforeEach()
-  }
-
-  override def afterAll(): Unit = {
-    super.afterAll()
-    server.stop()
-  }
-}
+case class AddressLookupConfig(
+  lookupPageHeadingKey: String,
+  selectPageHeadingKey: String,
+  confirmPageLabelKey: String,
+  offRampCall: Call,
+  feedbackCall: Call = controllers.routes.FeedbackController.feedback
+)

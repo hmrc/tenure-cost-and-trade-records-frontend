@@ -22,11 +22,11 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[RequestReferenceNumberContactDetails] {
+class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[RequestReferenceNumberContactDetails] {
 
   val messageKeyPrefix = "requestReferenceNumberContactDetails"
 
-  override val form = RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
+  override val form = RequestReferenceNumberContactDetailsForm.theForm
 
   def createView = () => requestReferenceNumberContactDetailsView(form)(fakeRequest, messages)
 
@@ -49,7 +49,9 @@ class NoReferenceNumberContactDetailsViewSpec extends QuestionViewBehaviours[Req
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberController.show().url
+      backlinkUrl shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController
+        .show()
+        .url
     }
 
     "contain an input for requestReferenceNumberContactDetailsFullName" in {

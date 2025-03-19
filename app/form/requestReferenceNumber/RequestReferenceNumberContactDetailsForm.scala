@@ -22,8 +22,8 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object RequestReferenceNumberContactDetailsForm {
-  val requestReferenceNumberContactDetailsForm: Form[RequestReferenceNumberContactDetails] = Form(
+object RequestReferenceNumberContactDetailsForm:
+  val theForm = Form[RequestReferenceNumberContactDetails](
     mapping(
       "requestReferenceNumberContactDetailsFullName"              -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.requestReferenceNumberContactDetailsFullName.required")
@@ -37,4 +37,3 @@ object RequestReferenceNumberContactDetailsForm {
         )
     )(RequestReferenceNumberContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

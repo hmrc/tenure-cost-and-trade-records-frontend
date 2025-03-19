@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import config.ErrorHandler
-import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
+import form.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersForm.theForm
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.RequestReferenceNumberSubmission
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
@@ -30,18 +30,18 @@ import utils.FormBindingTestAssertions.mustContainError
 import scala.language.reflectiveCalls
 import scala.concurrent.Future
 
-class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec {
+class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec {
 
   import TestData._
 
   trait ControllerWithInjectedSubmissionConnectorFixture(
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
   ):
-    val controller = new CheckYourAnswersRequestReferenceNumberController(
+    val controller = new RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       inject[SubmissionConnector],
-      checkYourAnswersRequestReferenceNumberView,
-      confirmationRequestReferenceNumberView,
+      requestReferenceNumberCheckYourAnswersView,
+      requestReferenceNumberConfirmationView,
       inject[ErrorHandler],
       inject[Audit],
       preEnrichedActionRefiner(requestReferenceNumberDetails = Some(requestReferenceNumberDetails)),
@@ -52,11 +52,11 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
   ):
     val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
-    val controller                                   = new CheckYourAnswersRequestReferenceNumberController(
+    val controller                                   = new RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       mockSubmissionConnector,
-      checkYourAnswersRequestReferenceNumberView,
-      confirmationRequestReferenceNumberView,
+      requestReferenceNumberCheckYourAnswersView,
+      requestReferenceNumberConfirmationView,
       inject[ErrorHandler],
       inject[Audit],
       preEnrichedActionRefiner(requestReferenceNumberDetails = Some(requestReferenceNumberDetails)),
@@ -108,7 +108,7 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
         header(
           "Location",
           result
-        ).value shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+        ).value shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
           .confirmation()
           .url
       }
@@ -144,7 +144,7 @@ class CheckYourAnswersRequestReferenceNumberControllerSpec extends TestBaseSpec 
   "Check Your Answers request reference number form" should {
     "error if checkYourAnswersRequestReferenceNumber is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersRequestReferenceNumber
-      val form     = checkYourAnswersRequestReferenceNumberForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.checkYourAnswersRequestReferenceNumber, "error.checkYourAnswersRadio.required", form)
     }

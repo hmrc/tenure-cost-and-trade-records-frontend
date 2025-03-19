@@ -35,39 +35,3 @@ extension (repository: SessionRepo)
 extension (sessionData: Session)
   def withChangedData(bool: Boolean) =
     SessionWrapper(sessionData, changed = bool)
-
-extension (request: SessionRequest[AnyContent])
-  def unchangedSession =
-    SessionWrapper(request.sessionData, changed = false)
-
-  private def isFrom(pageId: String): Boolean =
-    hasFrom(ifEmpty = false)(_.contains(pageId))
-
-  private def hasFrom[T](ifEmpty: T)(fn: String => T) =
-    request
-      .getQueryString("from")
-      .map(fn)
-      .getOrElse {
-        request.body.asFormUrlEncoded
-          .map { submittedData =>
-            submittedData
-              .get("from")
-              .flatMap(_.headOption)
-              .map(fn)
-              .getOrElse(ifEmpty)
-          }
-          .getOrElse(ifEmpty)
-      }
-
-  def eventualFromFragment: Option[String] =
-    hasFrom(ifEmpty = None) { fromValue =>
-      if fromValue.nonEmpty
-      then
-        val splitted = fromValue.split(";")
-        if splitted.size > 1 then Some(splitted(1)) else None
-      else None
-    }
-
-  def isFromCheckYourAnswer: Boolean = isFrom("CYA")
-
-  def isFromTaskList: Boolean = isFrom("TL")

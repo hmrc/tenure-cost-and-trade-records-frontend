@@ -28,7 +28,7 @@ import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
 import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.lettingHistory.SensitiveLettingHistory
 import models.submissions.notconnected.SensitiveRemoveConnectionDetails
-import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumber
+import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumberDetails
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
@@ -52,7 +52,7 @@ case class SensitiveSession(
   aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = None,
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
-  requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumber],
+  requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumberDetails],
   downloadPDFDetails: Option[DownloadPDFDetails] = None,
   lettingHistory: Option[SensitiveLettingHistory] = None,
   accommodationDetails: Option[AccommodationDetails] = None
@@ -111,7 +111,7 @@ object SensitiveSession {
     session.aboutLeaseOrAgreementPartFour,
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
-    session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumber(_)),
+    session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumberDetails(_)),
     session.downloadPDFDetails,
     session.lettingHistory.map(SensitiveLettingHistory(_)),
     session.accommodationDetails
