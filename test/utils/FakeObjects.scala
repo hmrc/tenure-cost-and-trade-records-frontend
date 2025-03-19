@@ -172,6 +172,17 @@ trait FakeObjects {
     Some(AnswerYes)
   )
 
+  val testTenantDetails: TenantDetails =
+    TenantDetails(
+      "name",
+      "billboard",
+      CorrespondenceAddress("building", Some("street"), "town", Some("county"), "BN12 4AX")
+    )
+
+  val testLettingDetails: Option[LettingPartOfPropertyRentDetails] = Some(
+    LettingPartOfPropertyRentDetails(2000, prefilledDateInput)
+  )
+
   val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
@@ -187,12 +198,8 @@ trait FakeObjects {
     lettingPartOfPropertyDetailsIndex = 0,
     lettingPartOfPropertyDetails = IndexedSeq(
       LettingPartOfPropertyDetails(
-        TenantDetails(
-          "name",
-          "billboard",
-          CorrespondenceAddress("building", Some("street"), "town", Some("county"), "BN12 4AX")
-        ),
-        Some(LettingPartOfPropertyRentDetails(2000, prefilledDateInput)),
+        testTenantDetails,
+        testLettingDetails,
         List("Other"),
         addAnotherLettingToProperty = Some(AnswerYes)
       )
