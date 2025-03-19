@@ -20,24 +20,24 @@ import crypto.MongoCrypto
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
-case class SensitiveRequestReferenceNumber(
-  requestReferenceNumberAddress: Option[SensitiveRequestReferenceNumberAddress] = None,
+case class SensitiveRequestReferenceNumberDetails(
+  requestReferenceNumberPropertyDetails: Option[SensitiveRequestReferenceNumberPropertyDetails] = None,
   requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None
 ) extends Sensitive[RequestReferenceNumberDetails] {
 
   override def decryptedValue: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
-    requestReferenceNumberAddress.map(_.decryptedValue),
+    requestReferenceNumberPropertyDetails.map(_.decryptedValue),
     requestReferenceContactDetails
   )
 }
 
-object SensitiveRequestReferenceNumber {
+object SensitiveRequestReferenceNumberDetails {
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumber] = Json.format
+  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumberDetails] = Json.format
 
-  def apply(requestReferenceNumber: RequestReferenceNumberDetails): SensitiveRequestReferenceNumber =
-    SensitiveRequestReferenceNumber(
-      requestReferenceNumber.requestReferenceNumberAddress.map(SensitiveRequestReferenceNumberAddress(_)),
-      requestReferenceNumber.requestReferenceContactDetails
+  def apply(requestReferenceNumber: RequestReferenceNumberDetails): SensitiveRequestReferenceNumberDetails =
+    SensitiveRequestReferenceNumberDetails(
+      requestReferenceNumber.propertyDetails.map(SensitiveRequestReferenceNumberPropertyDetails(_)),
+      requestReferenceNumber.contactDetails
     )
 }

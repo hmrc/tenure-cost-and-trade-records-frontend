@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
+@import models.submissions.requestReferenceNumber.RequestReferenceNumberCheckYourAnswers
 @import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
@@ -25,42 +25,42 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersRequestReferenceNumber], session: models.Session)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[RequestReferenceNumberCheckYourAnswers], session: models.Session)(implicit request: Request[?], messages: Messages)
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(session.requestReferenceNumberDetails)
 }
 
 @layout(
-    pageHeading = messages("checkYourAnswersRequestReferenceNumber.heading"),
+    pageHeading = messages("requestReferenceNumber.checkYourAnswers.heading"),
     fullWidth = true,
     backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show().url
 ) {
 
-    @formWithCSRF(action = controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.submit()) {
+    @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.submit()) {
 
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersRequestReferenceNumber.subheading1")</h2>
+        <h2 class="govuk-heading-m">@messages("requestReferenceNumber.checkYourAnswers.subheading1")</h2>
 
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("key.requestReferenceNumberAddress",
-                _.requestReferenceNumberAddress.map(r =>
-                    """<p class="govuk-body">""" + Text(r.requestReferenceNumberBusinessTradingName).asHtml + "</p>" +
-                            r.requestReferenceNumberAddress.escapedHtml
+                _.propertyDetails.map(r =>
+                    """<p class="govuk-body">""" + Text(r.businessTradingName).asHtml + "</p>" +
+                            r.address.map(_.escapedHtml).getOrElse("")
                 ),
-                controllers.requestReferenceNumber.routes.RequestReferenceNumberController.show(), "",
+                controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController.show(), "",
                 ("valueAsHtml", _ => None))
         ))
 
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersRequestReferenceNumber.subheading2")</h2>
+        <h2 class="govuk-heading-m">@messages("requestReferenceNumber.checkYourAnswers.subheading2")</h2>
 
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("key.nameContactRequestReferenceNumber",
-                _.requestReferenceContactDetails.map(details =>
+                _.contactDetails.map(details =>
                     (Seq(
-                        details.requestReferenceNumberContactDetailsFullName.capitalize,
-                        details.requestReferenceNumberContactDetails.phone,
-                        details.requestReferenceNumberContactDetails.email
-                    ) ++ details.requestReferenceNumberContactDetailsAdditionalInformation.toSeq).map(Text(_).asHtml)
+                        details.noReferenceNumberFullName.capitalize,
+                        details.noReferenceNumberContactDetails.phone,
+                        details.noReferenceNumberContactDetails.email
+                    ) ++ details.noReferenceNumberAdditionalInfo.toSeq).map(Text(_).asHtml)
                 ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                 controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show(), "",
                 ("valueAsHtml", _ => None))

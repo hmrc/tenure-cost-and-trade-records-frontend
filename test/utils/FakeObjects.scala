@@ -118,7 +118,7 @@ trait FakeObjects {
 
   // Request reference number
   val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
-    Some(RequestReferenceNumber(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
+    Some(RequestReferenceNumberPropertyDetails(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
     Some(
       RequestReferenceNumberContactDetails(
         prefilledFakeName,
@@ -126,7 +126,7 @@ trait FakeObjects {
         Some("Additional Information")
       )
     ),
-    Some(CheckYourAnswersRequestReferenceNumber("CYARequestRefNum"))
+    Some(RequestReferenceNumberCheckYourAnswers("CYARequestRefNum"))
   )
   val prefilledRequestRefNumBlank = RequestReferenceNumberDetails()
 
@@ -1403,7 +1403,7 @@ trait FakeObjects {
     )
 
   val prefilledNoRefAddress =
-    RequestReferenceNumber(
+    RequestReferenceNumberPropertyDetails(
       "Business Name",
       prefilledNoReferenceContactAddress
     )
@@ -1852,9 +1852,9 @@ trait FakeObjects {
   )
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
-    Some(RequestReferenceNumber(prefilledFakeName, prefilledNoReferenceContactAddress)),
+    Some(RequestReferenceNumberPropertyDetails(prefilledFakeName, prefilledNoReferenceContactAddress)),
     Some(RequestReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
-    Some(CheckYourAnswersRequestReferenceNumber("CYA"))
+    Some(RequestReferenceNumberCheckYourAnswers("CYA"))
   )
 
   val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(

@@ -51,12 +51,12 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to CheckYourAnswersRequestReferenceNumberController from NoReferenceNumberContactDetailsPageId" in {
+    "return a function that goes to RequestReferenceNumberCheckYourAnswersController from NoReferenceNumberContactDetailsPageId" in {
       navigator
         .nextPage(NoReferenceNumberContactDetailsPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+        ) shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
         .show()
     }
 
@@ -65,14 +65,14 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersRequestReferenceNumberPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+        ) shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
         .confirmation()
     }
 
     "return the CYA url" in {
       val result = navigator.cyaPage
       result.map(
-        _.url shouldBe controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController
+        _.url shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
           .show()
           .url
       )

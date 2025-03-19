@@ -17,26 +17,26 @@
 package views.requestReferenceNumber
 
 import actions.SessionRequest
-import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm
-import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
+import form.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersForm
+import models.submissions.requestReferenceNumber.RequestReferenceNumberCheckYourAnswers
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersRequestReferenceNumberViewSpec
-    extends QuestionViewBehaviours[CheckYourAnswersRequestReferenceNumber] {
+class RequestReferenceNumberCheckYourAnswersViewSpec
+    extends QuestionViewBehaviours[RequestReferenceNumberCheckYourAnswers] {
 
-  val messageKeyPrefix = "checkYourAnswersRequestReferenceNumber"
+  val messageKeyPrefix = "requestReferenceNumber.checkYourAnswers"
 
-  override val form = CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
+  override val form = RequestReferenceNumberCheckYourAnswersForm.theForm
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   def createView = () =>
-    checkYourAnswersRequestReferenceNumberView(form, notConnected6010NoSession)(sessionRequest, messages)
+    requestReferenceNumberCheckYourAnswersView(form, notConnected6010NoSession)(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[CheckYourAnswersRequestReferenceNumber]) =>
-    checkYourAnswersRequestReferenceNumberView(form, notConnected6010NoSession)(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[RequestReferenceNumberCheckYourAnswers]) =>
+    requestReferenceNumberCheckYourAnswersView(form, notConnected6010NoSession)(sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 

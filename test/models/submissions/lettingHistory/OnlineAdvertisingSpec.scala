@@ -18,8 +18,8 @@ package models.submissions.lettingHistory
 
 import models.ForType.FOR6048
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.common.Address as CommonAddress
+import models.submissions.lettingHistory.LettingHistory.*
 import org.scalatest.OptionValues
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
