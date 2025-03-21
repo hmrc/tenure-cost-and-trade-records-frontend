@@ -32,154 +32,129 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
   val audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AdditionalInformationNavigator(audit)
+  val navigator = new AboutYouAndThePropertyNavigator(audit)
 
-  "About you and the property navigator" when {
+  "About you and the property navigator for 6048" when {
 
-    "return a function that goes to commercial letting, when alternative correspondence question have been completed with no" in {
+    "handling no answers" should {
 
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndTheProperty =
-          Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(ContactDetailsQuestionId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
+      "navigate to CommercialLettingQuestionController after completing ContactDetailsQuestion with no" in {
+        val answers = baseFilled6048Session.copy(
+          aboutYouAndTheProperty =
+            Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
+        )
+        navigator
+          .nextPage(ContactDetailsQuestionId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
+      }
+
+      "navigate to CheckYourAnswersAboutThePropertyController after completing PartsUnavailable with no" in {
+        val answers = baseFilled6048Session.copy(
+          aboutYouAndThePropertyPartTwo = Some(AboutYouAndThePropertyPartTwo(partsUnavailable = Some(AnswerNo)))
+        )
+        navigator
+          .nextPage(PartsUnavailableId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      }
     }
 
-    "return a function that goes to Availability for commercial letting for England when alternative contact details filled" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(AlternativeContactDetailsId, baseFilled6048Session)
-        .apply(
-          baseFilled6048Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
-    }
+    "handling yes answers" should {
 
-    "return a function that goes to Availability for commercial letting for England when commercial letting question completed for english property" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(CommercialLettingQuestionId, baseFilled6048Session)
-        .apply(
-          baseFilled6048Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController
-        .show()
-    }
+      "navigate to CommercialLettingQuestionController after completing AlternativeContactDetails" in {
+        navigator
+          .nextPage(AlternativeContactDetailsId, baseFilled6048Session)
+          .apply(baseFilled6048Session) shouldBe
+          controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
+      }
 
-    "return a function that goes to Availability for commercial letting for Wales when commercial letting question completed for welsh property" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(CommercialLettingQuestionId, baseFilled6048WelshSession)
-        .apply(
-          baseFilled6048WelshSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController
-        .show()
-    }
-    "return a function that goes to completed commercial letting for England" in {
+      "navigate to CommercialLettingAvailabilityController after completing CommercialLettingQuestion for English property" in {
+        navigator
+          .nextPage(CommercialLettingQuestionId, baseFilled6048Session)
+          .apply(baseFilled6048Session) shouldBe
+          controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show()
+      }
 
-      aboutYouAndThePropertyNavigator
-        .nextPage(CommercialLettingAvailabilityId, baseFilled6048Session)
-        .apply(
-          baseFilled6048Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController
-        .show()
-    }
+      "navigate to CommercialLettingAvailabilityWelshController after completing CommercialLettingQuestion for Welsh property" in {
+        navigator
+          .nextPage(CommercialLettingQuestionId, baseFilled6048WelshSession)
+          .apply(baseFilled6048WelshSession) shouldBe
+          controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show()
+      }
 
-    "return a function that goes to completed commercial letting for Wales" in {
+      "navigate to CompletedCommercialLettingsController after completing CommercialLettingAvailability for English property" in {
+        navigator
+          .nextPage(CommercialLettingAvailabilityId, baseFilled6048Session)
+          .apply(baseFilled6048Session) shouldBe
+          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()
+      }
 
-      aboutYouAndThePropertyNavigator
-        .nextPage(CommercialLettingAvailabilityWelshId, baseFilled6048WelshSession)
-        .apply(
-          baseFilled6048WelshSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController
-        .show()
-    }
+      "navigate to CompletedCommercialLettingsWelshController after completing CommercialLettingAvailabilityWelsh for Welsh property" in {
+        navigator
+          .nextPage(CommercialLettingAvailabilityWelshId, baseFilled6048WelshSession)
+          .apply(baseFilled6048WelshSession) shouldBe
+          controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
+      }
 
-    "return a function that goes to unavailable parts  page  for England " in {
-
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndThePropertyPartTwo = Option(
-          AboutYouAndThePropertyPartTwo(
-            commercialLetAvailability = Option(200),
-            completedCommercialLettings = Option(200)
+      "navigate to PartsUnavailableController after completing CompletedCommercialLettings for English property" in {
+        val answers = baseFilled6048Session.copy(
+          aboutYouAndThePropertyPartTwo = Some(
+            AboutYouAndThePropertyPartTwo(
+              commercialLetAvailability = Some(200),
+              completedCommercialLettings = Some(200)
+            )
           )
         )
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(CompletedCommercialLettingsId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
-    }
+        navigator
+          .nextPage(CompletedCommercialLettingsId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
+      }
 
-    "return a function that goes to unavailable parts  page  for Wales " in {
-
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndThePropertyPartTwo = Option(
-          AboutYouAndThePropertyPartTwo(
-            commercialLetAvailabilityWelsh = Option(
-              Seq(
-                LettingAvailability(LocalDate.of(2024, 3, 31), 100),
-                LettingAvailability(LocalDate.of(2023, 3, 31), 200),
-                LettingAvailability(LocalDate.of(2022, 3, 31), 150)
-              )
-            ),
-            completedCommercialLettingsWelsh = Option(
-              Seq(
-                CompletedLettings(LocalDate.of(2024, 3, 31), 100),
-                CompletedLettings(LocalDate.of(2023, 3, 31), 200),
-                CompletedLettings(LocalDate.of(2022, 3, 31), 150)
+      "navigate to PartsUnavailableController after completing CompletedCommercialLettingsWelsh for Welsh property" in {
+        val answers = baseFilled6048Session.copy(
+          aboutYouAndThePropertyPartTwo = Some(
+            AboutYouAndThePropertyPartTwo(
+              commercialLetAvailabilityWelsh = Some(
+                Seq(
+                  LettingAvailability(LocalDate.of(2024, 3, 31), 100),
+                  LettingAvailability(LocalDate.of(2023, 3, 31), 200),
+                  LettingAvailability(LocalDate.of(2022, 3, 31), 150)
+                )
+              ),
+              completedCommercialLettingsWelsh = Some(
+                Seq(
+                  CompletedLettings(LocalDate.of(2024, 3, 31), 100),
+                  CompletedLettings(LocalDate.of(2023, 3, 31), 200),
+                  CompletedLettings(LocalDate.of(2022, 3, 31), 150)
+                )
               )
             )
           )
         )
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(CompletedCommercialLettingsWelshId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
-    }
+        navigator
+          .nextPage(CompletedCommercialLettingsWelshId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
+      }
 
-    "return a function that goes to CYA when parts unavailable completed with no" in {
+      "navigate to OccupiersDetailsController after completing PartsUnavailable with yes" in {
+        val answers = baseFilled6048Session.copy(
+          aboutYouAndThePropertyPartTwo = Some(AboutYouAndThePropertyPartTwo(partsUnavailable = Some(AnswerYes)))
+        )
+        navigator
+          .nextPage(PartsUnavailableId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
+      }
 
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndThePropertyPartTwo = Option(AboutYouAndThePropertyPartTwo(partsUnavailable = Option(AnswerNo)))
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(PartsUnavailableId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    }
-
-    "return a function that goes to occupiers details when parts unavailable completed with yes" in {
-
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndThePropertyPartTwo = Option(AboutYouAndThePropertyPartTwo(partsUnavailable = Option(AnswerYes)))
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(PartsUnavailableId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
-    }
-
-    "return a function that goes to occupiers details list when parts occupiers details completed " in {
-
-      aboutYouAndThePropertyNavigator
-        .nextPage(OccupiersDetailsId, baseFilled6048Session)
-        .apply(
-          baseFilled6048Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0)
-    }
-
-    "return a function that goes to when parts occupiers details list completed " in {
-
-      aboutYouAndThePropertyNavigator
-        .nextPage(OccupiersDetailsId, baseFilled6048Session)
-        .apply(
-          baseFilled6048Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0)
+      "navigate to OccupiersDetailsListController after completing OccupiersDetails" in {
+        navigator
+          .nextPage(OccupiersDetailsId, baseFilled6048Session)
+          .apply(baseFilled6048Session) shouldBe
+          controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0)
+      }
     }
   }
 }

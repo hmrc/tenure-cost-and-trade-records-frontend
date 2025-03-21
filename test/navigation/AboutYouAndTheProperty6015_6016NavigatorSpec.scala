@@ -21,136 +21,50 @@ import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
 
-  "About you and the property navigator for no answers for 6015" when {
+  val navigator = aboutYouAndThePropertyNavigator
 
-    // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
+  "About you and the property navigator for 6015" should {
 
-    "return a function that goes to about the property contact details page when no is answered for contact details and has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6015NoSession)
-        .apply(
-          aboutYouAndTheProperty6010NoSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
-        .show()
-    }
-
-    "return a function that goes to licence granted page when about the property website page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6015NoSession)
-        .apply(
-          aboutYouAndTheProperty6015NoSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
-        .show()
-    }
-
-    "return a function that goes to CYA page when licence granted page has been completed no" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6015NoSession)
-        .apply(
-          aboutYouAndTheProperty6015NoSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
-        .show()
-    }
-  }
-
-  "About you and the property navigator for yes answers for 6015" when {
-
-    "return a function that goes to alternative contact page when about the contact details page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6015YesSession)
-        .apply(
-          aboutYouAndTheProperty6015YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
-        .show()
-    }
-
-    "123return a function that goes to alternative contact page when about the contact details page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6015YesSession)
-        .apply(
-          aboutYouAndTheProperty6015YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyController
-        .show()
-    }
-
-    "return a function that goes to licence granted page when about the property website page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6015YesSession)
-        .apply(
-          aboutYouAndTheProperty6015YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
-        .show()
-    }
-
-    "return a function that goes to licence granted details page when licence granted page has been completed yes" in {
-      aboutYouAndThePropertyNavigator
+    "navigate to PremisesLicenseGrantedDetailsController after completing PremisesLicenseGranted with yes" in {
+      navigator
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6015YesSession)
-        .apply(
-          aboutYouAndTheProperty6015YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
-        .show()
+        .apply(aboutYouAndTheProperty6015YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
     }
 
-    "return a function that goes to CYA page when licence granted details page has been completed" in {
-      aboutYouAndThePropertyNavigator
+    "navigate to CheckYourAnswersAboutThePropertyController after completing PremisesLicenseGrantedDetails with yes" in {
+      navigator
         .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6015YesSession)
-        .apply(
-          aboutYouAndTheProperty6015YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
-        .show()
+        .apply(aboutYouAndTheProperty6015YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
-  }
 
-  "About you and the property navigator for no answers for 6016" when {
-
-    // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
-
-    "return a function that goes to licence granted page when about the property website page has been completed" in {
-      aboutYouAndThePropertyNavigator
+    "navigate to PremisesLicenseGrantedController after completing WebsiteForProperty with no" in {
+      navigator
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016NoSession)
-        .apply(
-          aboutYouAndTheProperty6016NoSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
-        .show()
+        .apply(aboutYouAndTheProperty6016NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
     }
 
-    "return a function that goes to CYA page when licence granted page has been completed no" in {
-      aboutYouAndThePropertyNavigator
+    "navigate to CheckYourAnswersAboutThePropertyController after completing PremisesLicenseGranted with no" in {
+      navigator
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016NoSession)
-        .apply(
-          aboutYouAndTheProperty6016NoSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
-        .show()
-    }
-  }
-
-  "About you and the property navigator for yes answers for 6016" when {
-
-    "return a function that goes to licence granted page when about the property website page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016NoSession)
-        .apply(
-          aboutYouAndTheProperty6016YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController
-        .show()
+        .apply(aboutYouAndTheProperty6016NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
 
-    "return a function that goes to licence granted details page when licence granted page has been completed yes" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016NoSession)
-        .apply(
-          aboutYouAndTheProperty6016YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController
-        .show()
+    "navigate to PremisesLicenseGrantedController after completing WebsiteForProperty" in {
+      navigator
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016YesSession)
+        .apply(aboutYouAndTheProperty6016YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
     }
 
-    "return a function that goes to CYA page when licence granted details page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6016NoSession)
-        .apply(
-          aboutYouAndTheProperty6016YesSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
-        .show()
+    "navigate to PremisesLicenseGrantedDetailsController after completing PremisesLicenseGranted" in {
+      navigator
+        .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016YesSession)
+        .apply(aboutYouAndTheProperty6016YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
     }
   }
 }
