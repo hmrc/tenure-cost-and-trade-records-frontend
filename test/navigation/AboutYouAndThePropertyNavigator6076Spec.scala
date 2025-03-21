@@ -31,109 +31,90 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
   val audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AdditionalInformationNavigator(audit)
+  val navigator = new AboutYouAndThePropertyNavigator(audit)
 
-  "About you and the property navigator for generic path" when {
+  "About you and the property navigator for form 6076" when {
 
-    "return a function that goes to renewable plant page when contact details question have been completed with no" in {
-
+    "navigate to RenewablesPlantController after completing ContactDetailsQuestion with no" in {
       val answers = baseFilled6076Session.copy(
         aboutYouAndTheProperty =
           Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
       )
-      aboutYouAndThePropertyNavigator
+      navigator
         .nextPage(ContactDetailsQuestionId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+        .apply(answers) shouldBe
+        controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
     }
 
-    "return a function that goes to property currently used when alternative contact details filled" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(AlternativeContactDetailsId, baseFilled6076Session)
-        .apply(
-          baseFilled6076Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
-    }
-
-    "return a function that goes to 3 years constructed page when renewables plants have been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(RenewablesPlantPageId, baseFilled6076Session)
-        .apply(
-          baseFilled6076Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController
-        .show()
-    }
-
-    "return a function that goes to costs breakdown page when 3 years constructed page completed with Yes" in {
-
-      val answers = baseFilled6076Session.copy(
-        aboutYouAndTheProperty = Some(AboutYouAndTheProperty(threeYearsConstructed = Some(AnswerYes)))
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(ThreeYearsConstructedPageId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
-    }
-    "return a function that goes to plant and technology page when 3 years constructed page completed with No" in {
-
+    "navigate to PlantAndTechnologyController after completing ThreeYearsConstructed with no" in {
       val answers = baseFilled6076Session.copy(
         aboutYouAndTheProperty = Some(AboutYouAndTheProperty(threeYearsConstructed = Some(AnswerNo)))
       )
-      aboutYouAndThePropertyNavigator
+      navigator
         .nextPage(ThreeYearsConstructedPageId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
+        .apply(answers) shouldBe
+        controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
+    }
+    "navigate to RenewablesPlantController after completing AlternativeContactDetails" in {
+      navigator
+        .nextPage(AlternativeContactDetailsId, baseFilled6076Session)
+        .apply(baseFilled6076Session) shouldBe
+        controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
     }
 
-    "return a function that goes to plant and technology page when costs breakdown have been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(CostsBreakdownId, aboutYouAndTheProperty6076Session)
-        .apply(
-          aboutYouAndTheProperty6076Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController
-        .show()
+    "navigate to ThreeYearsConstructedController after completing RenewablesPlant" in {
+      navigator
+        .nextPage(RenewablesPlantPageId, baseFilled6076Session)
+        .apply(baseFilled6076Session) shouldBe
+        controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show()
     }
 
-    "return a function that goes to about the generator capacity page when plant and technology have been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(PlantAndTechnologyId, aboutYouAndTheProperty6076Session)
-        .apply(
-          aboutYouAndTheProperty6076Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.GeneratorCapacityController
-        .show()
+    "navigate to CostsBreakdownController after completing ThreeYearsConstructed with yes" in {
+      val answers = baseFilled6076Session.copy(
+        aboutYouAndTheProperty = Some(AboutYouAndTheProperty(threeYearsConstructed = Some(AnswerYes)))
+      )
+      navigator
+        .nextPage(ThreeYearsConstructedPageId, answers)
+        .apply(answers) shouldBe
+        controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
     }
 
-    "return a function that goes to batteries capacity page when generator capacity page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(GeneratorCapacityId, aboutYouAndTheProperty6076Session)
-        .apply(
-          aboutYouAndTheProperty6076Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.BatteriesCapacityController
-        .show()
+    "navigate to PlantAndTechnologyController after completing CostsBreakdown" in {
+      navigator
+        .nextPage(CostsBreakdownId, baseFilled6076Session)
+        .apply(baseFilled6076Session) shouldBe
+        controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
     }
 
-    "return a function that goes to CYA  page when battery capacity page has been completed" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(BatteriesCapacityId, aboutYouAndTheProperty6076Session)
-        .apply(
-          aboutYouAndTheProperty6076Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
-        .show()
+    "navigate to GeneratorCapacityController after completing PlantAndTechnology" in {
+      navigator
+        .nextPage(PlantAndTechnologyId, baseFilled6076Session)
+        .apply(baseFilled6076Session) shouldBe
+        controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show()
     }
 
-    "return a function that goes to occupier details page when occupier details list have been completed with yes" in {
+    "navigate to BatteriesCapacityController after completing GeneratorCapacity" in {
+      navigator
+        .nextPage(GeneratorCapacityId, baseFilled6076Session)
+        .apply(baseFilled6076Session) shouldBe
+        controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show()
+    }
 
+    "navigate to CheckYourAnswersAboutThePropertyController after completing BatteriesCapacity" in {
+      navigator
+        .nextPage(BatteriesCapacityId, baseFilled6076Session)
+        .apply(baseFilled6076Session) shouldBe
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    }
+
+    "navigate to OccupiersDetailsController after completing OccupiersDetailsList with yes" in {
       val answers = baseFilled6076Session.copy(
         aboutYouAndThePropertyPartTwo = Some(AboutYouAndThePropertyPartTwo(addAnotherPaidService = Some(AnswerYes)))
       )
-      aboutYouAndThePropertyNavigator
+      navigator
         .nextPage(OccupiersDetailsListId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
+        .apply(answers) shouldBe
+        controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
     }
   }
 }

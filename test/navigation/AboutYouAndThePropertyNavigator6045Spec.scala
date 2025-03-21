@@ -19,10 +19,10 @@ package navigation
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty._
 import models.submissions.common.AnswerNo
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import utils.{FakeObjects, TestBaseSpec}
 
 import scala.concurrent.ExecutionContext
 
@@ -31,72 +31,60 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
   val audit = mock[Audit]
   doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AdditionalInformationNavigator(audit)
+  val navigator = new AboutYouAndThePropertyNavigator(audit)
 
-  "About you and the property navigator for generic path" when {
+  "About you and the property navigator for form 6045" when {
 
-    "return a function that goes to property currently used when contact details question have been completed with no" in {
+    "handling no answers" should {
 
-      val answers = baseFilled6045Session.copy(
-        aboutYouAndTheProperty =
-          Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(ContactDetailsQuestionId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
-    }
-
-    "return a function that goes to property currently used when alternative contact details filled" in {
-      aboutYouAndThePropertyNavigator
-        .nextPage(AlternativeContactDetailsId, baseFilled6045Session)
-        .apply(
-          baseFilled6045Session
-        ) shouldBe controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
-    }
-
-    "return a function that goes to property currently used when contact details question have been completed with no 6048" in {
-
-      val answers = baseFilled6048Session.copy(
-        aboutYouAndTheProperty =
-          Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(ContactDetailsQuestionId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
-    }
-
-    "return a function that goes to website when property currently used has been completed" in {
-
-      val answers = baseFilled6045Session.copy(
-        aboutYouAndThePropertyPartTwo = Some(
-          AboutYouAndThePropertyPartTwo(propertyCurrentlyUsed = Some(PropertyCurrentlyUsed(List("test"), Some("test"))))
+      "navigate to PropertyCurrentlyUsedController after completing ContactDetailsQuestion with no" in {
+        val answers = baseFilled6045Session.copy(
+          aboutYouAndTheProperty =
+            Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
         )
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(PropertyCurrentlyUsedPageId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
+        navigator
+          .nextPage(ContactDetailsQuestionId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+      }
+
+      "navigate to PropertyCurrentlyUsedController after completing AlternativeContactDetails" in {
+        navigator
+          .nextPage(AlternativeContactDetailsId, baseFilled6045Session)
+          .apply(baseFilled6045Session) shouldBe
+          controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+      }
     }
 
-    "return a function that goes to CYA when website question have been completed" in {
+    "handling yes answers" should {
 
-      val answers = baseFilled6045Session.copy(
-        aboutYouAndTheProperty = Some(
-          AboutYouAndTheProperty(websiteForPropertyDetails =
-            Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteNo, Some("test")))
+      "navigate to WebsiteForPropertyController after completing PropertyCurrentlyUsed" in {
+        val answers = baseFilled6045Session.copy(
+          aboutYouAndThePropertyPartTwo = Some(
+            AboutYouAndThePropertyPartTwo(propertyCurrentlyUsed =
+              Some(PropertyCurrentlyUsed(List("test"), Some("test")))
+            )
           )
         )
-      )
-      aboutYouAndThePropertyNavigator
-        .nextPage(WebsiteForPropertyPageId, answers)
-        .apply(
-          answers
-        ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+        navigator
+          .nextPage(PropertyCurrentlyUsedPageId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
+      }
+
+      "navigate to CheckYourAnswersAboutThePropertyController after completing WebsiteForProperty" in {
+        val answers = baseFilled6045Session.copy(
+          aboutYouAndTheProperty = Some(
+            AboutYouAndTheProperty(websiteForPropertyDetails =
+              Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteNo, Some("test")))
+            )
+          )
+        )
+        navigator
+          .nextPage(WebsiteForPropertyPageId, answers)
+          .apply(answers) shouldBe
+          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      }
     }
   }
 }

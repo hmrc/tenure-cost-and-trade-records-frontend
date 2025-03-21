@@ -23,84 +23,70 @@ import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6030NavigatorSpec extends TestBaseSpec {
 
-  "About you and the property navigator for no answers for 6030" when {
+  val navigator = aboutYouAndThePropertyNavigator
 
-    // See AboutYouAndThePropertyNavigatorSpec for generic parts of the journey
+  "About you and the property navigator for 6030" when {
 
-    "return a function that goes to how is the property used page when no is answered for contact details and has been completed" in {
-      aboutYouAndThePropertyNavigator
+    "navigate to AboutThePropertyStringController after completing ContactDetailsQuestion with no" in {
+      navigator
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030NoSession)
-        .apply(
-          aboutYouAndTheProperty6030NoSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
-        .show()
+        .apply(aboutYouAndTheProperty6030NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
     }
 
-    "return a function that goes to website page when no is answered for about the property and has been completed" in {
-      aboutYouAndThePropertyNavigator
+    "navigate to WebsiteForPropertyController after completing AboutTheProperty with no" in {
+      navigator
         .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6030NoSession)
-        .apply(
-          aboutYouAndTheProperty6030NoSession
-        ) shouldBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
-        .show()
+        .apply(aboutYouAndTheProperty6030NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
     }
-  }
 
-  "return a function that goes to charity page when about the property website page has been completed" in {
-    aboutYouAndThePropertyNavigator
-      .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6030NoSession)
-      .apply(
-        aboutYouAndTheProperty6030NoSession
-      ) shouldBe controllers.aboutyouandtheproperty.routes.CharityQuestionController
-      .show()
-  }
+    "navigate to CharityQuestionController after completing WebsiteForProperty with no" in {
+      navigator
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6030NoSession)
+        .apply(aboutYouAndTheProperty6030NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.CharityQuestionController.show()
+    }
 
-  "return a function that goes to about the property alternative contact details page when yes is answered for contact details and has been completed" in {
-    aboutYouAndThePropertyNavigator
-      .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030YesSession)
-      .apply(
-        aboutYouAndTheProperty6030YesSession
-      ) shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController
-      .show()
-  }
+    "navigate to AlternativeContactDetailsController after completing ContactDetailsQuestion with yes" in {
+      navigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030YesSession)
+        .apply(aboutYouAndTheProperty6030YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
+    }
 
-  "return a function that goes to about the property contact details page when yes is answered for alternative contact details and has been completed" in {
-    aboutYouAndThePropertyNavigator
-      .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6030YesSession)
-      .apply(
-        aboutYouAndTheProperty6030YesSession
-      ) shouldBe controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController
-      .show()
-  }
+    "navigate to AboutThePropertyStringController after completing AlternativeContactDetails with yes" in {
+      navigator
+        .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6030YesSession)
+        .apply(aboutYouAndTheProperty6030YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
+    }
 
-  "return a function that goes to about the property contact details page when data is input for how the property is used and has been completed" in {
-    aboutYouAndThePropertyNavigator
-      .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6030YesSession)
-      .apply(
-        aboutYouAndTheProperty6030YesSession
-      ) shouldBe controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController
-      .show()
-  }
-  "return a function that goes to trading activity page when charity question is  completed with Yes" in {
+    "navigate to WebsiteForPropertyController after completing AboutTheProperty with yes" in {
+      navigator
+        .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6030YesSession)
+        .apply(aboutYouAndTheProperty6030YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
+    }
 
-    val answers = aboutYouAndTheProperty6030YesSession.copy(
-      aboutYouAndTheProperty = Some(AboutYouAndTheProperty(charityQuestion = Some(AnswerYes)))
-    )
-    aboutYouAndThePropertyNavigator
-      .nextPage(CharityQuestionPageId, answers)
-      .apply(
-        answers
-      ) shouldBe controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
-  }
-  "return a function that goes to CYA page when charity question is  completed with No" in {
+    "navigate to TradingActivityController after completing CharityQuestion with yes" in {
+      val answers = aboutYouAndTheProperty6030YesSession.copy(
+        aboutYouAndTheProperty = Some(AboutYouAndTheProperty(charityQuestion = Some(AnswerYes)))
+      )
+      navigator
+        .nextPage(CharityQuestionPageId, answers)
+        .apply(answers) shouldBe
+        controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
+    }
 
-    val answers = aboutYouAndTheProperty6030YesSession.copy(
-      aboutYouAndTheProperty = Some(AboutYouAndTheProperty(charityQuestion = Some(AnswerNo)))
-    )
-    aboutYouAndThePropertyNavigator
-      .nextPage(CharityQuestionPageId, answers)
-      .apply(
-        answers
-      ) shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    "navigate to CheckYourAnswersAboutThePropertyController after completing CharityQuestion with no" in {
+      val answers = aboutYouAndTheProperty6030YesSession.copy(
+        aboutYouAndTheProperty = Some(AboutYouAndTheProperty(charityQuestion = Some(AnswerNo)))
+      )
+      navigator
+        .nextPage(CharityQuestionPageId, answers)
+        .apply(answers) shouldBe
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    }
   }
 }
