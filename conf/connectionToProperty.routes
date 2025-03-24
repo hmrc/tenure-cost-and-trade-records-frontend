@@ -35,6 +35,7 @@ POST        /your-contact-details                                    controllers
 
 GET         /letting-part-of-property-details                        controllers.connectiontoproperty.LettingPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
 POST        /letting-part-of-property-details                        controllers.connectiontoproperty.LettingPartOfPropertyDetailsController.submit(idx: Option[Int])
+GET         /letting-part-of-property-details-callback               controllers.connectiontoproperty.LettingPartOfPropertyDetailsController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET         /letting-part-of-property-rent                           controllers.connectiontoproperty.LettingPartOfPropertyDetailsRentController.show(idx: Int)
 POST        /letting-part-of-property-rent                           controllers.connectiontoproperty.LettingPartOfPropertyDetailsRentController.submit(idx: Int)

@@ -111,11 +111,12 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
     "redirect to the next page if a valid form is submitted" in {
-      when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any[SessionRequest[AnyContent]])).thenReturn(successful(Some("/on-ramp")))
+      when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any[SessionRequest[AnyContent]]))
+        .thenReturn(successful(Some("/on-ramp")))
       val res = aboutYourLandlordController().submit(
         FakeRequest("POST", "/").withFormUrlEncodedBody(baseFormData.toSeq: _*)
       )
-      status(res) shouldBe SEE_OTHER
+      status(res)                 shouldBe SEE_OTHER
       redirectLocation(res).value shouldBe "/on-ramp"
     }
   }

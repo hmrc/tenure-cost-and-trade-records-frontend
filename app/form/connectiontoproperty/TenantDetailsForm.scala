@@ -26,15 +26,16 @@ object TenantDetailsForm {
 
   val tenantDetailsForm: Form[TenantDetails] = Form(
     mapping(
-      "tenantName"            -> default(text, "").verifying(
+      "tenantName"           -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tenantName.required"),
         maxLength(50, "error.tenantName.maxLength")
       ),
-      "descriptionOfLetting"  -> default(text, "").verifying(
+      "descriptionOfLetting" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.descriptionOfLetting.required"),
         maxLength(50, "error.descriptionOfLetting.maxLength")
-      ),
-      "correspondenceAddress" -> correspondenceAddressMapping
-    )(TenantDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+      )
+    )((name, descriptionOfLetting) => TenantDetails(name, descriptionOfLetting, None)) { detail =>
+      Some((detail.name, detail.descriptionOfLetting))
+    }
   )
 }

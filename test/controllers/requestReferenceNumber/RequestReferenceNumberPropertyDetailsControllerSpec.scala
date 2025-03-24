@@ -93,7 +93,8 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         page.error("businessTradingName") shouldBe "error.requestReferenceNumber.businessTradingName.required"
       }
       "throw exception if the address lookup service did not provide the /on-ramp location" in new ControllerFixture {
-        when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any[SessionRequest[AnyContent]])).thenReturn(successful(None))
+        when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any[SessionRequest[AnyContent]]))
+          .thenReturn(successful(None))
         recoverToExceptionIf[Exception] {
           controller.submit(
             fakePostRequest.withFormUrlEncodedBody(

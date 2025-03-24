@@ -40,17 +40,6 @@
 
             @includes.textInput(govukInput, theForm, "tenantName", "govuk-input--width-20", "tenantName", "tenantName", labelClasses = "govuk-!-font-weight-bold")
             @includes.textInput(govukInput, theForm, "descriptionOfLetting", "govuk-input--width-20", "descriptionOfLetting", "descriptionOfLetting", labelClasses = "govuk-!-font-weight-bold", hintMsg = "descriptionOfLetting")
-
-            <p class="govuk-body">
-                <b>@messages("label.correspondenceAddress")</b>
-            </p>
-
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.buildingNameNumber", "govuk-input--width-20", "addressLineOne", formGroupClasses = "address-field-one address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.street1", "govuk-input--width-20", "addressLineTwo", optional = true, formGroupClasses = "address-field-two address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
-
             @includes.continueSaveAsDraftButtons(govukButton)
 
         }

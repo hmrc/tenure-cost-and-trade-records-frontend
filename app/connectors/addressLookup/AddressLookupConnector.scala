@@ -43,10 +43,17 @@ class AddressLookupConnector @Inject() (
     with Logging:
 
   def initJourney(config: AddressLookupConfig)(implicit request: SessionRequest[AnyContent]): Future[Option[String]] =
-    val queryString =
-      if request.isFromCheckYourAnswer then "?from=CYA"
-      else if request.isFromTaskList then "?from=TL"
+    val additionalParameter =
+      if request.isFromCheckYourAnswer then "from=CYA"
+      else if request.isFromTaskList then "from=TL"
       else ""
+
+    val separator =
+      if additionalParameter.isEmpty
+      then ""
+      else if config.offRampCall.url.contains("?")
+      then "&"
+      else "?"
 
     val messages = mcc.messagesApi
     given Lang   = messages.preferred(request).lang
@@ -55,7 +62,7 @@ class AddressLookupConnector @Inject() (
     val journeyConfig = Json.parse(s"""{
         |  "version": 2,
         |  "options": {
-        |    "continueUrl": "${hostUrl + config.offRampCall.url + queryString}",
+        |    "continueUrl": "${hostUrl + config.offRampCall.url + separator + additionalParameter}",
         |    "phaseFeedbackLink": "/help/alpha",
         |    "showPhaseBanner": false,
         |    "alphaPhase": false,

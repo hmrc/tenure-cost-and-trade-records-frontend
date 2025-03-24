@@ -17,11 +17,13 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
 @import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Value
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -31,6 +33,8 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.pages.Summary
+@import models.submissions.connectiontoproperty.TenantDetails
+@import models.submissions.connectiontoproperty.CorrespondenceAddress
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -47,21 +51,21 @@
   controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.submit(index)
 }
 
-@operatorNames = @{
+@tenantDetails = @{
  session.stillConnectedDetails.fold(Seq.empty[String]){
-   fr => fr.lettingPartOfPropertyDetails.map(_.tenantDetails.name)
+   fr => fr.lettingPartOfPropertyDetails.map(_.tenantDetails)
  }
 }
 
-@pluralSuffix = @{ if (operatorNames.size > 1) "s" else "" }
+@pluralSuffix = @{ if (tenantDetails.size > 1) "s" else "" }
 
-@headingMessage = @{ operatorNames match {
+@headingMessage = @{ tenantDetails match {
  case Nil         => "addAnotherLettingPartOfProperty.heading.removed"
  case _           => "addAnotherLettingPartOfProperty.heading"
 }}
 
 @layout(
- pageHeading = messages(headingMessage, operatorNames.size) + pluralSuffix,
+ pageHeading = messages(headingMessage, tenantDetails.size) + pluralSuffix,
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.connectionToTheProperty"),
@@ -73,23 +77,25 @@
 
   @govukSummaryList(
    SummaryList(
-    rows = operatorNames.zipWithIndex.map { case (operatorName, idx) =>
+    rows = tenantDetails.zipWithIndex.map { case (TenantDetails(name, _, address), idx) =>
      SummaryListRow(
-      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+      key = Key(Text(name), classes = "govuk-!-font-weight-regular"),
+      value = Value(HtmlContent(address.get.multiLine)),
       actions = Actions(
        items = Seq(
         ActionItem(
           controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(idx).url,
-         content = Text(messages("label.change"))),
+          content = Text(messages("label.change"))
+        ),
         ActionItem(
-         controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url,
-         content = Text(messages("label.remove")))
-       ),
-       classes = "hmrc-summary-list__actions"
+          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url,
+          content = Text(messages("label.remove")))
+        ),
+        classes = "hmrc-summary-list__actions"
       )
      )
     },
-    classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+    classes = "hmrc-list-with-actions"
    )
   )
 

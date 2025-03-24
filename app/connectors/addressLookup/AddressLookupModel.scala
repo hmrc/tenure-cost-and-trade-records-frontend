@@ -22,7 +22,14 @@ case class AddressLookupConfirmedAddress(
   address: AddressLookupAddress,
   auditRef: String,
   id: Option[String]
-)
+) {
+
+  val buildingNameNumber = address.lines.fold("")(_.headOption.getOrElse(""))
+  val street1            = address.lines.flatMap(lines => if lines.size > 2 then Some(lines(1)) else None)
+  val town               = address.lines.fold("")(_.lastOption.getOrElse(""))
+  val county             = None
+  val postcode           = address.postcode.getOrElse("")
+}
 
 object AddressLookupConfirmedAddress:
   given Format[AddressLookupConfirmedAddress] = Json.format

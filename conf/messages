@@ -478,6 +478,9 @@ error.isRentReceivedFromLetting.missing = Select yes if any rent is received fro
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
 tenantDetails.heading = Provide the tenant’s details
+tenantDetails.address.lookupPageHeading = What is the tenant''s correspondence address?
+tenantDetails.address.selectPageHeading = Choose the tenant''s correspondence address
+tenantDetails.address.confirmPageHeading = Check the tenant''s correspondence address
 label.tenantName = Tenant’s name
 label.descriptionOfLetting = Description of letting
 hint.descriptionOfLetting = For example, a billboard, residential accommodation.

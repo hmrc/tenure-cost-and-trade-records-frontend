@@ -24,17 +24,17 @@ trait PrintableTenantDetails {
 
   def descriptionOfLetting: String
 
-  def correspondenceAddress: CorrespondenceAddress
+  def correspondenceAddress: Option[CorrespondenceAddress]
 
   def tenantDetails: List[String] =
     List(
       Some(name),
       Some(descriptionOfLetting),
-      Some(correspondenceAddress.buildingNameNumber),
-      correspondenceAddress.street1,
-      Some(correspondenceAddress.town),
-      correspondenceAddress.county,
-      Some(correspondenceAddress.postcode)
+      correspondenceAddress.map(_.buildingNameNumber),
+      correspondenceAddress.map(_.street1).flatten,
+      correspondenceAddress.map(_.town),
+      correspondenceAddress.map(_.county).flatten,
+      correspondenceAddress.map(_.postcode)
     ).flatten
 }
 

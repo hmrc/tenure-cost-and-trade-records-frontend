@@ -132,20 +132,24 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
   private def sessionWithAddress(address: RequestReferenceNumberAddress)(using session: Session) =
     assert(session.requestReferenceNumberDetails.isDefined)
     assert(session.requestReferenceNumberDetails.get.propertyDetails.isDefined)
-    session.copy(requestReferenceNumberDetails = session.requestReferenceNumberDetails.map { d =>
-      d.copy(propertyDetails = d.propertyDetails.map { a =>
-        a.copy(
-          businessTradingName = a.businessTradingName,
-          address = Some(address)
+    session.copy(
+      requestReferenceNumberDetails = session.requestReferenceNumberDetails.map { d =>
+        d.copy(
+          propertyDetails = d.propertyDetails.map { a =>
+            a.copy(
+              businessTradingName = a.businessTradingName,
+              address = Some(address)
+            )
+          }
         )
-      })
-    })
+      }
+    )
 
   extension (confirmed: AddressLookupConfirmedAddress)
     def asRequestReferenceNumberAddress = RequestReferenceNumberAddress(
-      buildingNameNumber = confirmed.address.lines.fold("")(_.headOption.getOrElse("")),
-      street1 = confirmed.address.lines.map(_.lift(1).getOrElse("")),
-      town = confirmed.address.lines.fold("")(_.lastOption.getOrElse("")),
-      county = None,
-      postcode = confirmed.address.postcode.getOrElse("")
+      confirmed.buildingNameNumber,
+      confirmed.street1,
+      confirmed.town,
+      confirmed.county,
+      confirmed.postcode
     )
