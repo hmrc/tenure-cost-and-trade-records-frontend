@@ -1531,7 +1531,7 @@ capitalPaidSum6045.heading = A dalwyd swm cyfalaf neu bremiwm gan y meddiannydd 
 
 # CAPITAL SUM DESCRIPTION 6045
 #########################
-capitalSumDescription6045.heading = Give details of any amount paid by or to the tenant
+capitalSumDescription6045.heading = Rhowch fanylion unrhyw swm a dalwyd gan y tenant neu iddo
 
 # LEGAL PLANNING RESTRICTIONS
 #############################
@@ -3833,7 +3833,7 @@ checkYourAnswersAboutTheTradingHistory.BSuoS = BSuoS
 checkYourAnswersAboutTheTradingHistory.extraCost = Costau eraill
 checkYourAnswersAboutTheTradingHistory.totalCosts = Cyfanswm y costau
 checkYourAnswersAboutTheTradingHistory.rent = Rhent
-checkYourAnswersAboutTheTradingHistory.advertising = Advertising, marketing
+checkYourAnswersAboutTheTradingHistory.advertising = Hysbysebu, marchnata a hyrwyddo
 checkYourAnswersAboutTheTradingHistory.otherExpenses = Treuliau eraill
 # CYA TRADING HISTORY 6048
 checkYourAnswersAboutTheTradingHistory.income.serviceProvision = Income from services

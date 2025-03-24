@@ -52,7 +52,7 @@
 
     @rentOrLandlordSfx = @{
         session.forType match {
-            case FOR6020 =>
+            case FOR6020 | FOR6030 =>
             numberOfServices.size > 1 match {
                 case true => messages("addTradeService.heading.rentPlural")
                 case _ => messages("addTradeService.heading.rent")
