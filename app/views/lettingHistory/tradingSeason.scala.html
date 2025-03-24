@@ -37,13 +37,15 @@
             govukDate = govukDateInput,
             form = theForm,
             field = "fromDate",
-            showDays = true,
+            hideYear = true,
+            helpText = messages("hint.tradingSeason.day.month.example")
         )
         @includes.dateFields(
             govukDate = govukDateInput,
             form = theForm,
             field = "toDate",
-            showDays = true,
+            hideYear = true,
+            helpText = messages("hint.tradingSeason.day.month.example")
         )
         @includes.continueSaveAsDraftButtons(govukButton)
     }

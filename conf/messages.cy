@@ -108,6 +108,7 @@ hint.select.all = Dewiswch bob un sy''n berthnasol.
 hint.date.example = Er enghraifft, 27 9 2017.
 hint.month.year.example = Er enghraifft, 9 2017.
 hint.day.month.example = Er enghraifft, 04 05.
+hint.tradingSeason.day.month.example = Er enghraifft, 27 9.
 hint.select.applicable = Select any that apply – leave blank if not applicable.
 hint.all.apply = Dewiswch bob un sy''n berthnasol.
 
@@ -1784,6 +1785,7 @@ lettingHistory.checkYourAnswers.intendedLettings.hasStopped = Stopped letting co
 lettingHistory.checkYourAnswers.intendedLettings.whenWasLastLet = Final commercial letting
 lettingHistory.checkYourAnswers.intendedLettings.isYearlyAvailable = Available for letting all year?
 lettingHistory.checkYourAnswers.intendedLettings.tradingPeriod = Season details
+lettingHistory.CYA.tradingSeason.text = From {0} to {1}
 
 lettingHistory.checkYourAnswers.onlineAdvertising.heading = Advertising the property
 lettingHistory.checkYourAnswers.onlineAdvertising.question = Do you advertise online?
