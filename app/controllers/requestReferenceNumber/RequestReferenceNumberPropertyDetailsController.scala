@@ -109,8 +109,8 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
   }
 
   private def sessionWithBusinessTradingName(businessTradingName: String)(using session: Session) =
-    session.copy(requestReferenceNumberDetails =
-      Some(
+    session.copy(
+      requestReferenceNumberDetails = Some(
         session.requestReferenceNumberDetails.fold(
           RequestReferenceNumberDetails(propertyDetails =
             Some(
@@ -118,9 +118,11 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
             )
           )
         ) { details =>
-          details.copy(propertyDetails =
-            Some(
-              details.propertyDetails.fold(RequestReferenceNumberPropertyDetails(businessTradingName)) { address =>
+          details.copy(
+            propertyDetails = Some(
+              details.propertyDetails.fold(
+                RequestReferenceNumberPropertyDetails(businessTradingName)
+              ) { address =>
                 address.copy(businessTradingName = businessTradingName)
               }
             )
@@ -146,7 +148,7 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
     )
 
   extension (confirmed: AddressLookupConfirmedAddress)
-    def asRequestReferenceNumberAddress = RequestReferenceNumberAddress(
+    private def asRequestReferenceNumberAddress = RequestReferenceNumberAddress(
       confirmed.buildingNameNumber,
       confirmed.street1,
       confirmed.town,

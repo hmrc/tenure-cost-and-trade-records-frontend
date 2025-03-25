@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import connectors.addressLookup.*
 import controllers.{AddressLookupSupport, FORDataCaptureController}
-import form.connectiontoproperty.TenantDetailsForm.tenantDetailsForm
+import form.connectiontoproperty.TenantDetailsForm.theForm
 import models.Session
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{CorrespondenceAddress, LettingPartOfPropertyDetails, StillConnectedDetails, TenantDetails}
@@ -51,18 +51,17 @@ class LettingPartOfPropertyDetailsController @Inject() (
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyDetails")
-
-    val existingDetails: Option[TenantDetails] = for {
-      requestedIndex                        <- index
-      existingLettingPartOfPropertyDetails  <-
-        request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails)
-      // lift turns exception-throwing access by index into an option-returning safe operation
-      requestedLettingPartOfPropertyDetails <- existingLettingPartOfPropertyDetails.lift(requestedIndex)
-    } yield requestedLettingPartOfPropertyDetails.tenantDetails
+    val freshForm  = theForm
+    val filledForm =
+      for
+        requestedIndex              <- index
+        stillConnectedDetails       <- request.sessionData.stillConnectedDetails
+        lettingPartOfPropertyDetail <- stillConnectedDetails.lettingPartOfPropertyDetails.lift(requestedIndex)
+      yield theForm.fill(lettingPartOfPropertyDetail.tenantDetails)
 
     Ok(
       tenantDetailsView(
-        existingDetails.fold(tenantDetailsForm)(tenantDetailsForm.fill),
+        filledForm.getOrElse(freshForm),
         index,
         getBackLink(index),
         request.sessionData.toSummary
@@ -72,7 +71,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenantDetails](
-      tenantDetailsForm,
+      theForm,
       formWithErrors =>
         BadRequest(
           tenantDetailsView(
@@ -86,9 +85,8 @@ class LettingPartOfPropertyDetailsController @Inject() (
         val ifLettingPartOfPropertyDetailsEmpty = StillConnectedDetails(lettingPartOfPropertyDetails =
           IndexedSeq(LettingPartOfPropertyDetails(tenantDetails = data))
         )
-
-        var updatedSectionIndex          = 0
-        val updatedStillConnectedDetails =
+        var updatedSectionIndex                 = 0
+        val updatedStillConnectedDetails        =
           request.sessionData.stillConnectedDetails.fold(ifLettingPartOfPropertyDetailsEmpty) { stillConnectedDetails =>
             val existingSections         = stillConnectedDetails.lettingPartOfPropertyDetails
             val requestedSection         = index.flatMap(existingSections.lift)

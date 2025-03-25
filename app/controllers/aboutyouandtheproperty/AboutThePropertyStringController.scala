@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertyStringForm
+import models.ForType.FOR6030
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetailsString
@@ -94,7 +95,9 @@ class AboutThePropertyStringController @Inject() (
           _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
         ) match {
           case Some("yes") =>
-            controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+            if answers.forType == FOR6030
+            then controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+            else controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
           case Some("no")  => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
           case _           =>
             logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")

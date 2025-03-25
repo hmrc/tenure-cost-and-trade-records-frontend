@@ -16,15 +16,13 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.SessionRequest
-import connectors.Audit
 import connectors.addressLookup.*
+import connectors.{Audit, MockAddressLookup}
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
-import play.api.mvc.AnyContent
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
@@ -34,14 +32,13 @@ import scala.concurrent.Future
 import scala.concurrent.Future.successful
 import scala.language.reflectiveCalls
 
-class AboutYourLandlordControllerSpec extends TestBaseSpec {
+class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLookup:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val audit                  = mock[Audit]
-  val addressLookupConnector = mock[AddressLookupConnector]
-  given HeaderCarrier        = any[HeaderCarrier]
+  val audit           = mock[Audit]
+  given HeaderCarrier = any[HeaderCarrier]
 
   def aboutYourLandlordController(
     forType: ForType = FOR6010,
@@ -111,7 +108,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
     "redirect to the next page if a valid form is submitted" in {
-      when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any[SessionRequest[AnyContent]]))
+      when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any))
         .thenReturn(successful(Some("/on-ramp")))
       val res = aboutYourLandlordController().submit(
         FakeRequest("POST", "/").withFormUrlEncodedBody(baseFormData.toSeq: _*)
@@ -169,4 +166,3 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       "landlordFullName" -> "Orinoco"
     )
   }
-}

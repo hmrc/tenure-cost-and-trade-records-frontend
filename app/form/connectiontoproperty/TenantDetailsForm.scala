@@ -16,7 +16,6 @@
 
 package form.connectiontoproperty
 
-import form.MappingSupport.correspondenceAddressMapping
 import models.submissions.connectiontoproperty.TenantDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -24,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TenantDetailsForm {
 
-  val tenantDetailsForm: Form[TenantDetails] = Form(
+  val theForm = Form[TenantDetails](
     mapping(
       "tenantName"           -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tenantName.required"),

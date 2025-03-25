@@ -16,104 +16,143 @@
 
 package controllers.aboutyouandtheproperty
 
-import connectors.Audit
-import form.aboutyouandtheproperty.ContactDetailsQuestionForm.contactDetailsQuestionForm
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import connectors.{Audit, MockAddressLookup}
+import models.Session
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, AlternativeContactDetails, ContactDetailsQuestion}
+import models.submissions.common.AnswerYes
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
-import utils.TestBaseSpec
+import repositories.SessionRepo
+import utils.{JsoupHelpers, TestBaseSpec}
 
-import scala.language.reflectiveCalls
+import scala.concurrent.Future.successful
 
-class ContactDetailsQuestionControllerSpec extends TestBaseSpec {
+class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelpers:
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
-
-  val mockAudit: Audit = mock[Audit]
-
-  def contactDetailsQuestionController(
+  trait ControllerFixture(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) =
-    new ContactDetailsQuestionController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      aboutYouAndThePropertyNavigator,
-      contactDetailsQuestionView,
-      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
-    )
+  ) extends MockAddressLookup:
+    val repository = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
 
-  def contactDetailsQuestionControllerNone() = new ContactDetailsQuestionController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    contactDetailsQuestionView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+    val controller =
+      new ContactDetailsQuestionController(
+        stubMessagesControllerComponents(),
+        mock[Audit],
+        aboutYouAndThePropertyNavigator,
+        contactDetailsQuestionView,
+        preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+        addressLookupConnector,
+        repository
+      )
 
-  "ContactDetailsQuestion controller" should {
-    "GET / return 200 contact details in the session" in {
-      val result = contactDetailsQuestionController().show(fakeRequest)
-      status(result) shouldBe OK
-    }
+  "the ContactDetailsQuestion controller" when {
+    "handling GET /"                   should {
+      "reply 200 with an empty form" in new ControllerFixture {
+        val result = controller.show(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.heading                        shouldBe "contactDetailsQuestion.heading"
+        page.backLink                       shouldBe routes.AboutYouController.show().url
+        page.radios("contactDetailsQuestion") should haveNoneChecked
+      }
+      "reply 200 with a pre-filled form" in new ControllerFixture(
+        aboutYouAndTheProperty =
+          Some(prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerYes))))
+      ) {
+        val result = controller.show(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.heading                        shouldBe "contactDetailsQuestion.heading"
+        page.backLink                       shouldBe routes.AboutYouController.show().url
+        page.radios("contactDetailsQuestion") should haveChecked("yes")
+      }
 
-    "GET / return HTML" in {
-      val result = contactDetailsQuestionController().show(fakeRequest)
-      contentType(result)     shouldBe Some("text/html")
-      Helpers.charset(result) shouldBe Some("utf-8")
-    }
+      "GET / return HTML" in new ControllerFixture {
+        val result = controller.show(fakeRequest)
+        contentType(result)     shouldBe Some("text/html")
+        Helpers.charset(result) shouldBe Some("utf-8")
+      }
 
-    "GET / return 200 no contact details in the session" in {
-      val result = contactDetailsQuestionControllerNone().show(fakeRequest)
-      status(result)          shouldBe OK
-      contentType(result)     shouldBe Some("text/html")
-      Helpers.charset(result) shouldBe Some("utf-8")
-    }
+      "GET / return 200 no contact details in the session" in new ControllerFixture(aboutYouAndTheProperty = None) {
+        val result = controller.show(fakeRequest)
+        status(result)          shouldBe OK
+        contentType(result)     shouldBe Some("text/html")
+        Helpers.charset(result) shouldBe Some("utf-8")
+      }
 
-    "return correct backLink when 'from=TL' query param is present" in {
-      val result = contactDetailsQuestionController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
-    }
+      "return correct backLink when 'from=TL' query param is present" in new ControllerFixture {
+        val result = controller.show()(FakeRequest(GET, "/path?from=TL"))
+        contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = contactDetailsQuestionController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      "SUBMIT /" should {
+        "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
+          val res = controller.submit(
+            FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+          )
+          status(res) shouldBe BAD_REQUEST
+        }
+      }
+
+      "Redirect when form data submitted" in new ControllerFixture {
+        val res = controller.submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "contactDetailsQuestion" -> "yes"
+          )
         )
-        status(res) shouldBe BAD_REQUEST
+        status(res) shouldBe SEE_OTHER
       }
     }
-
-    "Redirect when form data submitted" in {
-      val res = contactDetailsQuestionController().submit(
-        FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "contactDetailsQuestion" -> "yes"
+    "handling POST /"                  should {
+      "reply 404 if the submitted data is invalid" in new ControllerFixture {
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "contactDetailsQuestion" -> "" // missing
+          )
         )
-      )
-      status(res) shouldBe SEE_OTHER
+        status(result) shouldBe BAD_REQUEST
+        val page   = contentAsJsoup(result)
+        page.error("contactDetailsQuestion") shouldBe "error.contactDetailsQuestion.missing"
+      }
+      "reply 303 redirect to the address lookup page" in new ControllerFixture {
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "contactDetailsQuestion" -> "yes"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value.contactDetailsQuestion shouldBe AnswerYes
+      }
+    }
+    "retrieving the confirmed address" should {
+      "reply 303 redirect to the next page" in new ControllerFixture {
+        val result = controller.addressLookupCallback("123")(fakeRequest)
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.AlternativeContactDetailsController.show().url
+
+        val id = captor[String]
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        id.getValue shouldBe "123"
+
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session)(any, any)
+        session.getValue.aboutYouAndTheProperty.value.altContactInformation.value.alternativeContactAddress shouldBe AlternativeAddress(
+          buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+          street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+          town = addressLookupConfirmedAddress.address.lines.get.last,
+          county = None,
+          postcode = addressLookupConfirmedAddress.address.postcode.get
+        )
+      }
     }
   }
-
-  "Contact details question form" should {
-    "error if contact details question is missing" in {
-      val formData = baseFormData - errorKey.contactDetailsQuestion
-      val form     = contactDetailsQuestionForm.bind(formData)
-
-      mustContainError(errorKey.contactDetailsQuestion, "error.contactDetailsQuestion.missing", form)
-    }
-  }
-
-  object TestData {
-    val errorKey: ErrorKey = new ErrorKey
-
-    class ErrorKey {
-      val contactDetailsQuestion: String = "contactDetailsQuestion"
-    }
-
-    val baseFormData: Map[String, String] = Map("contactDetailsQuestion" -> "yes")
-  }
-
-}

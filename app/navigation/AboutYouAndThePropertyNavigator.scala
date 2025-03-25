@@ -125,7 +125,10 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
 
   private def contactDetailsQuestionRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion)) match {
-      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
+      case Some(AnswerYes) =>
+        if answers.forType == FOR6030
+        then controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
+        else controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
       case _               =>
         answers.forType match {
           case FOR6020 | FOR6030 =>

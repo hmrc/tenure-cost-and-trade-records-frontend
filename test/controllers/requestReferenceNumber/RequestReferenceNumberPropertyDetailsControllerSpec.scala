@@ -16,19 +16,15 @@
 
 package controllers.requestReferenceNumber
 
-import actions.SessionRequest
+import connectors.MockAddressLookup
 import connectors.addressLookup.*
 import models.Session
 import models.submissions.requestReferenceNumber.{RequestReferenceNumberAddress, RequestReferenceNumberDetails, RequestReferenceNumberPropertyDetails}
 import navigation.RequestReferenceNumberNavigator
 import org.scalatest.RecoverMethods.recoverToExceptionIf
-import play.api.http.Status
-import play.api.libs.json.Writes
-import play.api.mvc.AnyContent
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.requestReferenceNumber.requestReferenceNumberPropertyDetails as RequestReferenceNumberPropertyDetailsView
 
@@ -40,13 +36,13 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
     "starting with a session"          should {
       "reply 303 redirect to the show page" in new ControllerFixture {
         val result = controller.startWithSession(fakeRequest)
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
         redirectLocation(
           result
         ).value        shouldBe routes.RequestReferenceNumberPropertyDetailsController.show().url
       }
     }
-    "showing the form"                 should {
+    "handling GET /"                   should {
       "reply 200 with an empty form" in new ControllerFixture {
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
@@ -81,19 +77,19 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         page.input("businessTradingName") should haveValue("Wombles Inc")
       }
     }
-    "submitting the form"              should {
+    "handling POST /"                  should {
       "reply 404 if the submitted data is invalid" in new ControllerFixture {
         val result = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "businessTradingName" -> "" // missing
           )
         )
-        status(result) shouldBe Status.BAD_REQUEST
+        status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
         page.error("businessTradingName") shouldBe "error.requestReferenceNumber.businessTradingName.required"
       }
       "throw exception if the address lookup service did not provide the /on-ramp location" in new ControllerFixture {
-        when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any[SessionRequest[AnyContent]]))
+        when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any))
           .thenReturn(successful(None))
         recoverToExceptionIf[Exception] {
           controller.submit(
@@ -111,11 +107,36 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
             "businessTradingName" -> "Wombles Inc"
           )
         )
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Wombles Inc"
+      }
+      "reply 303 redirect to the address lookup page if updating the trading name" in new ControllerFixture(
+        requestReferenceNumberDetails = Some(
+          RequestReferenceNumberDetails(
+            propertyDetails = Some(
+              RequestReferenceNumberPropertyDetails(
+                businessTradingName = "Wombles Inc",
+                address = None
+              )
+            ),
+            contactDetails = None,
+            checkYourAnswers = None
+          )
+        )
+      ) {
+        val result = controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(
+            "businessTradingName" -> "Round Wombles Limited"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Round Wombles Limited"
       }
     }
     "retrieving the confirmed address" should {
@@ -134,21 +155,21 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         )
       ) {
         val result = controller.addressLookupCallback("123")(fakeRequest)
-        status(result)                 shouldBe Status.SEE_OTHER
+        status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RequestReferenceNumberContactDetailsController.show().url
 
         val id = captor[String]
-        verify(addressLookupConnector, once).getConfirmedAddress(id)(any[HeaderCarrier])
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
         id.getValue shouldBe "123"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(session)(any, any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.address.value shouldBe RequestReferenceNumberAddress(
-          buildingNameNumber = confirmedAddress.address.lines.get.head,
-          street1 = Some(confirmedAddress.address.lines.get.apply(1)),
-          town = confirmedAddress.address.lines.get.last,
+          buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+          street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+          town = addressLookupConfirmedAddress.address.lines.get.last,
           county = None,
-          postcode = confirmedAddress.address.postcode.get
+          postcode = addressLookupConfirmedAddress.address.postcode.get
         )
       }
     }
@@ -156,26 +177,10 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
 
   trait ControllerFixture(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
-  ):
+  ) extends MockAddressLookup:
+
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
-      .thenReturn(successful(()))
-
-    val addressLookupConnector = mock[AddressLookupConnector]
-    when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any[SessionRequest[AnyContent]]))
-      .thenReturn(successful(Some("/on-ramp")))
-
-    val confirmedAddress = AddressLookupConfirmedAddress(
-      address = AddressLookupAddress(
-        lines = Some(Seq("line1", "line2", "line3")),
-        postcode = Some("postcode"),
-        country = None
-      ),
-      auditRef = "auditRef",
-      id = Some("id")
-    )
-    when(addressLookupConnector.getConfirmedAddress(anyString)(any[HeaderCarrier]))
-      .thenReturn(successful(confirmedAddress))
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
 
     val controller = new RequestReferenceNumberPropertyDetailsController(
       mcc = stubMessagesControllerComponents(),

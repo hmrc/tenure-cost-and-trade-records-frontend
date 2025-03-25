@@ -23,7 +23,7 @@ import play.api.data.Forms.mapping
 
 object ContactDetailsQuestionForm {
 
-  val contactDetailsQuestionForm = Form(
+  val theForm = Form(
     mapping(
       "contactDetailsQuestion" -> createYesNoType("error.contactDetailsQuestion.missing")
     )(ContactDetailsQuestion.apply)(o => Some(o.contactDetailsQuestion))
