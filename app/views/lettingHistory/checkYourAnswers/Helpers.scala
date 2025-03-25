@@ -18,14 +18,14 @@ package views.lettingHistory.checkYourAnswers
 
 import actions.SessionRequest
 import controllers.lettingHistory.routes
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory, LocalPeriod}
+import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
 import play.api.i18n.Messages
 import play.api.mvc.{AnyContent, Call}
 import util.DateUtilLocalised
 import views.includes.cards.*
 import views.includes.summary.*
 
-import java.time.LocalDate
+import java.time.{LocalDate, MonthDay}
 import scala.collection.mutable
 
 object Helpers:
@@ -139,7 +139,13 @@ object Helpers:
           ),
           SummaryEntry(
             key = messages("lettingHistory.checkYourAnswers.intendedLettings.tradingPeriod"),
-            maybeValue = mapPeriod2String(LettingHistory.intendedLettingsTradingPeriod(request.sessionData), dateUtil),
+            maybeValue = LettingHistory.intendedLettingsTradingPeriod(request.sessionData).map { t =>
+              messages(
+                "lettingHistory.CYA.tradingSeason.text",
+                dateUtil.formatMonthDay(MonthDay.from(t.fromDate)),
+                dateUtil.formatMonthDay(MonthDay.from(t.toDate))
+              )
+            },
             changeAction = routes.TradingSeasonController.show.withFromCheckYourAnswer(fragment)
           )
         )
@@ -156,13 +162,6 @@ object Helpers:
   def mapInt2String(int: Option[Int])(using messages: Messages): Option[String] =
     int
       .map(i => i.toString)
-      .orElse(Some(""))
-
-  def mapPeriod2String(period: Option[LocalPeriod], dateUtil: DateUtilLocalised)(using
-    messages: Messages
-  ): Option[String] =
-    period
-      .map(p => s"""From ${dateUtil.formatDate(p.fromDate)} to ${dateUtil.formatDate(p.toDate)}""")
       .orElse(Some(""))
 
   def mapDate2String(date: Option[LocalDate], dateUtil: DateUtilLocalised)(using messages: Messages): Option[String] =

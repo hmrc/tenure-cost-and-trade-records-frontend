@@ -26,7 +26,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
 import views.html.lettingHistory.tradingSeason as TradingSeasonView
-import java.time.LocalDate
+
+import java.time.{LocalDate, Year}
 
 class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
 
@@ -42,32 +43,28 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
         page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should beEmpty
         page.input("fromDate.month") should beEmpty
-        page.input("fromDate.year")  should beEmpty
         page.input("toDate.day")     should beEmpty
         page.input("toDate.month")   should beEmpty
-        page.input("toDate.year")    should beEmpty
 
       }
       "be handling POST index=0 by replying 303 redirect to 'Occupier List' page" in new ControllerFixture {
         val request = fakePostRequest.withFormUrlEncodedBody(
           "fromDate.day"   -> "1",
           "fromDate.month" -> "4",
-          "fromDate.year"  -> (previousFiscalYearEnd - 1).toString,
           "toDate.day"     -> "31",
-          "toDate.month"   -> "3",
-          "toDate.year"    -> previousFiscalYearEnd.toString
+          "toDate.month"   -> "3"
         )
         val result  = controller.submit(request)
         status(result)                                            shouldBe SEE_OTHER
         redirectLocation(result).value                            shouldBe routes.HasOnlineAdvertisingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.tradingSeason.value.fromDate shouldBe LocalDate.of(
-          previousFiscalYearEnd - 1,
+          Year.now.getValue,
           4,
           1
         )
         intendedLettings(data).value.tradingSeason.value.toDate   shouldBe LocalDate.of(
-          previousFiscalYearEnd,
+          Year.now.getValue,
           3,
           31
         )
@@ -77,8 +74,8 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
       "be handling GET by replying 200 with the pre-filled form showing date values" in new ControllerFixture(
         period = Some(
           LocalPeriod(
-            fromDate = LocalDate.of(previousFiscalYearEnd, 9, 10),
-            toDate = LocalDate.of(previousFiscalYearEnd - 1, 2, 9)
+            fromDate = LocalDate.of(Year.now.getValue, 9, 10),
+            toDate = LocalDate.of(Year.now.getValue, 2, 9)
           )
         )
       ) {
@@ -90,10 +87,8 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
         page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should haveValue("10")
         page.input("fromDate.month") should haveValue("9")
-        page.input("fromDate.year")  should haveValue("2024")
         page.input("toDate.day")     should haveValue("9")
         page.input("toDate.month")   should haveValue("2")
-        page.input("toDate.year")    should haveValue("2023")
       }
     }
     "regardless users having entered period or not" should {
@@ -102,10 +97,8 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
           fakePostRequest.withFormUrlEncodedBody(
             "fromDate.day"   -> "",
             "fromDate.month" -> "",
-            "fromDate.year"  -> "",
             "toDate.day"     -> "",
-            "toDate.month"   -> "",
-            "toDate.year"    -> ""
+            "toDate.month"   -> ""
           )
         )
         status(result) shouldBe BAD_REQUEST

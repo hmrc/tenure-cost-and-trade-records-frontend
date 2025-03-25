@@ -16,34 +16,28 @@
 
 package form.lettingHistory
 
-import actions.SessionRequest
 import controllers.lettingHistory.RentalPeriodSupport
-import form.lettingHistory.FieldMappings.constrainedLocalDate
+import form.DateMappings.dayMonthMapping
+import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.i18n.Messages
-import play.api.mvc.AnyContent
-import util.DateUtilLocalised
+
+import java.time.{LocalDate, Year}
 
 object TradingSeasonForm extends Object with RentalPeriodSupport:
 
-  def theForm(using request: SessionRequest[AnyContent], messages: Messages, dateUtil: DateUtilLocalised) =
+  private def toLocalDate(dm: DayMonthsDuration): LocalDate =
+    LocalDate.of(Year.now.getValue, dm.months, dm.days)
+
+  private def fromLocalDate(date: LocalDate): DayMonthsDuration =
+    DayMonthsDuration(date.getDayOfMonth, date.getMonthValue)
+
+  def theForm(using messages: Messages): Form[LocalPeriod] =
     Form[LocalPeriod](
       mapping(
-        "fromDate" -> constrainedLocalDate(
-          "lettingHistory.intendedLettings.tradingSeason",
-          "fromDate",
-          previousRentalPeriod
-        ),
-        "toDate"   -> constrainedLocalDate(
-          "lettingHistory.intendedLettings.tradingSeason",
-          "toDate",
-          previousRentalPeriod
-        )
+        "fromDate" -> dayMonthMapping("fromDate").transform[LocalDate](toLocalDate, fromLocalDate),
+        "toDate"   -> dayMonthMapping("toDate").transform[LocalDate](toLocalDate, fromLocalDate)
       )(LocalPeriod.apply)(LocalPeriod.unapply)
-        .verifying(
-          error = messages("lettingHistory.intendedLettings.tradingSeason.error"),
-          constraint = period => period.fromDate.isBefore(period.toDate) || period.fromDate.isEqual(period.toDate)
-        )
     )
