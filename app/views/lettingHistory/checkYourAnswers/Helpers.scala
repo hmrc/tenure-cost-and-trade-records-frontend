@@ -18,7 +18,7 @@ package views.lettingHistory.checkYourAnswers
 
 import actions.SessionRequest
 import controllers.lettingHistory.routes
-import models.submissions.lettingHistory.{IntendedLettings, LettingHistory, LocalPeriod}
+import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
 import play.api.i18n.Messages
 import play.api.mvc.{AnyContent, Call}
 import util.DateUtilLocalised
