@@ -19,11 +19,17 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 @import util.NumberUtil._
+@import views.html.answers.{answersAboutTheProperty6030, answersAboutTheProperty6076, answersAboutTheProperty6048}
 @import models.ForType.*
 @import models.submissions.common.AnswerYes
 
-@this(govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
-
+@this(
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised,
+        answers6030: answersAboutTheProperty6030,
+        answers6048: answersAboutTheProperty6048,
+        answers6076: answersAboutTheProperty6076
+)
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
@@ -35,51 +41,53 @@
     SectionAnswersRowBuilder(request.sessionData.aboutYouAndThePropertyPartTwo)
 }
 
-@occupiersListSize = @{
-    request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersList).fold(0)(_.length)
-}
+@forType = @{request.sessionData.forType}
 
-@occupiersCountMessage = @{
-    if (occupiersListSize <= 1) messages("checkYourAnswersAboutTheProperty.occupierCount", occupiersListSize) else messages("checkYourAnswersAboutTheProperty.occupiersCount", occupiersListSize)
-}
-@forType = @{
-    request.sessionData.forType
-}
-
-    @checkboxOther = @{
+@checkboxOther = @{
         request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed).flatMap(_.propertyCurrentlyUsed.contains("other"))
     }
 
-@tableRow(values: Seq[String]) = {
-@values.map { value =>
-    <div class="hmrc-turnover-table-column">
-        @value
-    </div>
-}
+@websiteComponent = @{
+    sectionAnswers.optionalRow(
+        "checkYourAnswersAboutTheProperty.hasWebsite",
+        _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
+            """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
+                    + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
+                _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
+        "buildingOperatingHaveAWebsite",
+        ("valueAsHtml", _ => None))
 }
 
-@yearEndingRow(url: Call, heading: String, financialYears: Seq[String]) = @{
-    SummaryListRow(
-        key = Key(Text(messages("checkYourAnswersAboutTheProperty.yearEndingWelsh.label"))),
-        value = Value(HtmlContent(tableRow(financialYears).body)),
-        actions = Some(
-            Actions(items =
-                Seq(
-                    ActionItem(
-                        href = s"$url?from=CYA",
-                        content = Text(messages("label.change")),
-                        visuallyHiddenText = Some(heading),
-                        attributes = Map(
-                            "aria-label" -> s"${messages("label.change")} $heading"
-                        )
-                    )
-                )
-            )
-        ),
-        classes = "no-border-bottom"
+@answers6020 = {
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
+@govukSummaryList(SummaryList(rows =
+
+    sectionAnswers.row(
+        "checkYourAnswersAboutTheProperty.propertyUsage",
+        _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+        "propertyCurrentlyUsedString",
+        ("valueAsHtml", _ => None)
     )
+)
+)
 }
 
+@answers6045 = {
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
+@govukSummaryList(SummaryList(rows =
+    sectionAnswersPartTwo.optionalRow(
+        "checkYourAnswersAboutTheProperty.propertyUsage",
+        _.propertyCurrentlyUsed.map(r =>
+            r.propertyCurrentlyUsed.map(item => messages(s"label.propertyCurrentlyUsed.$item"))
+            ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>"
+            + sectionAnswersPartTwo.answers.filter(_ => checkboxOther.get).flatMap(
+        _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>"))),
+        controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
+        ("valueAsHtml", _ => None)) ++
+    websiteComponent))
+}
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutYou.heading")</h2>
 
@@ -90,289 +98,43 @@
         controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
         ("valueAsHtml", _ => None)) ++
-            sectionAnswers.row(
-                "checkYourAnswersAboutTheProperty.alternative.address",
-                _.altDetailsQuestion.map(_.contactDetailsQuestion.name).map(v => if(v.contains(AnswerYes)) messages(s"label.yes.hoffwn") else messages(s"label.no.na.hoffwn")),
-                controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
-                "contactDetailsQuestion"
+    sectionAnswers.row(
+        "checkYourAnswersAboutTheProperty.alternative.address",
+        _.altDetailsQuestion.map(_.contactDetailsQuestion).map(v => if(v.contains(AnswerYes)) messages(s"label.yes.hoffwn") else messages(s"label.no.na.hoffwn")),
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
+        "contactDetailsQuestion"
             ) ++
-            sectionAnswers.conditionRow(
-                _.altDetailsQuestion.map(_.contactDetailsQuestion.name).contains("yes"),
-                "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
-                _.altContactInformation.map { x =>
-                    val contactDetails = x.alternativeContactAddress.escapedHtml
-                    contactDetails
-                },
-                controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
-                "",
-                ("valueAsHtml", _ => None)
-            )
+    sectionAnswers.conditionRow(
+        _.altDetailsQuestion.map(_.contactDetailsQuestion).contains(AnswerYes),
+        "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
+        _.altContactInformation.map { x =>x.alternativeContactAddress.escapedHtml},
+        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
+        "",
+        ("valueAsHtml", _ => None)
+        )
 ))
 
-@if(forType == FOR6048) {
-    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.lettingAvailability.heading")</h2>
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswersPartTwo.row(
-            "checkYourAnswersAboutTheProperty.firstAvailable",
-            _.commercialLetDate.fold("")(x => dateUtil.formatYearMonth(x.toYearMonth)),
-            controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
-            "commercialLettingQuestion",
-            ("valueAsHtml", _ => None))
-    ))
-    @if(request.sessionData.isWelsh) {
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-3">@messages("checkYourAnswersAboutTheProperty.availabilityCommercial")</h2>
-        @govukSummaryList(SummaryList(rows =
-            Seq(
-                yearEndingRow(
-                    controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show(),
-                    messages("checkYourAnswersAboutTheProperty.availabilityCommercial"),
-                    sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
-                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
-                ),
-                SummaryListRow(
-                    value = Value(HtmlContent(
-                        tableRow(sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
-                        .fold(Seq.empty[String])(_.map(_.numberOfNights.toString + " " + messages("commercialLettingAvailability.label.nights"))))
-                        .body
-                    ))),
-            )))
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-3">@messages("checkYourAnswersAboutTheProperty.completedCommercial")</h2>
-        @govukSummaryList(SummaryList(rows =
-            Seq(
-                yearEndingRow(
-                    controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show(),
-                    messages("checkYourAnswersAboutTheProperty.completedCommercial"),
-                    sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
-                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
-                ),
-                SummaryListRow(
-                    value = Value(HtmlContent(
-                        tableRow(sectionAnswersPartTwo.answers.flatMap(_.completedCommercialLettingsWelsh)
-                        .fold(Seq.empty[String])(_.map(_.numberOfNights.toString + " " + messages("commercialLettingAvailability.label.nights"))))
-                        .body
-                    ))))))
-    } else {
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswersPartTwo.row(
-                "checkYourAnswersAboutTheProperty.availabilityCommercial",
-                _.commercialLetAvailability.map(x => s"${x.getOrElse(0)} ${messages("commercialLettingAvailability.label.nights")}"),
-                controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show(),
-                "commercialLettingAvailability",
-                ("valueAsHtml", _ => None)) ++
-                    sectionAnswersPartTwo.row(
-                        "checkYourAnswersAboutTheProperty.completedCommercial",
-                        _.completedCommercialLettings.map(x => s"${x.getOrElse(0)} ${messages("commercialLettingAvailability.label.nights")}"),
-                        controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show(),
-                        "completedCommercialLettings",
-                        ("valueAsHtml", _ => None)
-                    )))
+@forType match {
+    case FOR6020           => {@answers6020}
+    case FOR6030           => {@answers6030()}
+    case FOR6045 | FOR6046 => {@answers6045}
+    case FOR6048           => {@answers6048()}
+    case FOR6076 =>           {@answers6076()}
+    case _ =>                 {
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row(
+       "checkYourAnswersAboutTheProperty.propertyUsage",
+       _.propertyDetails.map(usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
+           + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField.map(_.escapedHtml))).fold("")(v => s"<p class=\"govuk-body\">$v")
+           ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
+       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+       ("valueAsHtml", _ => None)) ++
+    websiteComponent
+        ))
     }
-     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.familyUse.heading")</h2>
-
-     @govukSummaryList(SummaryList(rows =
-         sectionAnswersPartTwo.row(
-             "checkYourAnswersAboutTheProperty.mainResidence",
-             _.partsUnavailable.map(x => if(x.contains(AnswerYes)) messages(s"label.yes.oes") else messages(s"label.no.nac.oes")),
-             controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
-             "partsUnavailable",
-             ("valueAsHtml", _ => None))
-     ))
-
-     @if(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable).contains(AnswerYes)) {
-
-         @for((occupier, idx) <- sectionAnswersPartTwo.answers.flatMap(_.occupiersList).getOrElse(IndexedSeq.empty).zipWithIndex) {
-
-             <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.occupiersLabel", idx + 1)</h2>
-
-             @govukSummaryList(SummaryList(rows =
-                 sectionAnswers.row("checkYourAnswersAboutTheProperty.occupiersDetails",
-                     _ => occupier.name + s"<p class=\"govuk-body\"> ${occupier.address} </p>",
-                     controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(
-                         idx),
-                     "",
-                     ("valueAsHtml", _ => None))
-             ))
-         }
-         @govukSummaryList(SummaryList(rows =
-             List(
-                 SummaryListRow(
-                     key = Key(Text(messages(occupiersCountMessage)), classes = "govuk-heading-m govuk-!-width-one-half"),
-                     actions = Option(Actions(
-                         items =
-                             List(
-                                 ActionItem(
-                                     s"${controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(occupiersListSize - 1).url}&from=CYA",
-                                     Text(messages("checkYourAnswersAboutTheProperty.occupiersAdd")))),
-                         classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
-                 )
-             )
-         ))
-     }
-} else {
-
-    @if(forType == FOR6076) {
-
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType")</h2>
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers.row(
-                "checkYourAnswersAboutTheProperty.aboutProperty.renewable",
-                _.renewablesPlant.map(x => x.renewablesPlant.name.capitalize),
-                controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
-                "renewablesPlant",
-                ("valueAsHtml", _ => None))
-        )
-        )
-
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls")</h2>
-
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers.row(
-                "checkYourAnswersAboutTheProperty.aboutProperty.3yrs",
-                _.threeYearsConstructed.map(x => x.name.capitalize),
-                controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
-                "threeYearsConstructed",
-                ("valueAsHtml", _ => None)) ++
-                    sectionAnswers.conditionRow(
-                        _.threeYearsConstructed.contains(AnswerYes),
-                        "checkYourAnswersAboutTheProperty.aboutProperty.3yrsDetails",
-                        _.costsBreakdown.map(_.escapedHtml),
-                        controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show(),
-                        "costsBreakdown",
-                        ("valueAsHtml", _ => None)
-                    )
-        )
-        )
-
-    }
-
-    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
-
-    @if(forType == FOR6020) {
-        @govukSummaryList(SummaryList(rows =
-
-            sectionAnswers.row(
-                "checkYourAnswersAboutTheProperty.propertyUsage",
-                _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
-                controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
-                "propertyCurrentlyUsedString",
-                ("valueAsHtml", _ => None)
-            )
-        )
-        )
-
-    } else if(forType == FOR6030) {
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row(
-            "checkYourAnswersAboutTheProperty.propertyUsage",
-            _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
-            controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
-            "propertyCurrentlyUsedString",
-            ("valueAsHtml", _ => None)
-        ) ++
-                sectionAnswers.optionalRow(
-                    "checkYourAnswersAboutTheProperty.hasWebsite",
-                    _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
-                        """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
-                                + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
-                            _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                    controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
-                    "buildingOperatingHaveAWebsite",
-                    ("valueAsHtml", _ => None)
-                ) ++
-                sectionAnswers.row(
-                    "checkYourAnswersAboutTheProperty.charity",
-                    _.charityQuestion.map(x => s"<p class=\"govuk-body\">${x.name.capitalize} </p>"),
-                    controllers.aboutyouandtheproperty.routes.CharityQuestionController.show(),
-                    "propertyCurrentlyUsedString",
-                    ("valueAsHtml", _ => None)
-                ) ++
-                sectionAnswers.conditionalOptionalRow(
-                    _.charityQuestion.map(_.name).contains("yes"),
-                    "checkYourAnswersAboutTheProperty.trading",
-                    _.tradingActivity.map(_.tradingActivityQuestion).map(x =>
-                        """<p class="govuk-body">""" + x.name.capitalize + "</p>"
-                                + sectionAnswers.answers.filter(_ => AnswerYes.name).flatMap(
-                            _.tradingActivity.flatMap(_.tradingActivityDetails.map(_.escapedHtml))).fold("")(details => s"<p class=\"govuk-body\">$details</p>")),
-                    controllers.aboutyouandtheproperty.routes.TradingActivityController.show(),
-                    "buildingOperatingHaveAWebsite",
-                    ("valueAsHtml", _ => None)
-                )
-    )
-
-    )
-
-    } else if (forType == FOR6076) {
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswersPartTwo.row(
-            "checkYourAnswersAboutTheProperty.plantDescription",
-            _.plantAndTechnology.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
-            controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
-            "plantAndTechnology",
-            ("valueAsHtml", _ => None)
-        ) ++
-                sectionAnswersPartTwo.row(
-                    "checkYourAnswersAboutTheProperty.generator",
-                    _.generatorCapacity.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
-                    controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show(),
-                    "generatorCapacity",
-                    ("valueAsHtml", _ => None)
-                ) ++
-                sectionAnswersPartTwo.row(
-                    "checkYourAnswersAboutTheProperty.battery",
-                    _.batteriesCapacity.map(dsc => s"<p class=\"govuk-body\">${dsc.escapedHtml}</p>"),
-                    controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show(),
-                    "batteriesCapacity",
-                    ("valueAsHtml", _ => None)
-                )))
-
-    } else if (forType == FOR6045 || forType == FOR6046) {
-
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswersPartTwo.optionalRow(
-            "checkYourAnswersAboutTheProperty.propertyUsage",
-            _.propertyCurrentlyUsed.map(r =>
-                r.propertyCurrentlyUsed.map(item => messages(s"label.propertyCurrentlyUsed.$item"))
-            ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>"
-                    +
-
-                    sectionAnswersPartTwo.answers.filter(_ => checkboxOther.get).flatMap(
-                        _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>"))),
-
-            controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
-            ("valueAsHtml", _ => None)) ++
-                sectionAnswers.optionalRow(
-                    "checkYourAnswersAboutTheProperty.hasWebsite",
-                    _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
-                        """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
-                                + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
-                            _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                    controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
-                    "buildingOperatingHaveAWebsite",
-                    ("valueAsHtml", _ => None)
-                )))
-    } else {
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersAboutTheProperty.propertyUsage",
-            _.propertyDetails.map(
-                usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
-                        + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField.map(_.escapedHtml))).fold("")(v => s"<p class=\"govuk-body\">$v")
-            ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
-            controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
-            ("valueAsHtml", _ => None)) ++
-                sectionAnswers.optionalRow(
-                    "checkYourAnswersAboutTheProperty.hasWebsite",
-                    _.websiteForPropertyDetails
-                    .map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
-                        """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
-                                + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
-                            _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
-                    controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
-                    "buildingOperatingHaveAWebsite",
-                    ("valueAsHtml", _ => None)
-                )
-    ))
-    }
-
+}
     @if(sectionAnswers.answers.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>
 
@@ -410,6 +172,4 @@
                     _.tiedForGoodsDetails.map(_.tiedGoodsDetails).map(details => s"${details.key}.${details.name}"),
                     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
                     ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
-        ))
-    }
-}
+        ))}

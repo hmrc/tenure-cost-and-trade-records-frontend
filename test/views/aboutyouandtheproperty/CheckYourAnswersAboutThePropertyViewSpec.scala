@@ -20,7 +20,7 @@ import actions.SessionRequest
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
-import org.scalatest.matchers.must.Matchers._
+import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -36,6 +36,36 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
   def createView = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+
+  def createView6020 = () =>
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996020001"))(
+      SessionRequest(baseFilled6020Session, fakeRequest),
+      messages
+    )
+
+  def createView6030 = () =>
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996030001"))(
+      SessionRequest(baseFilled6030Session, fakeRequest),
+      messages
+    )
+
+  def createView6048 = () =>
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048002"))(
+      SessionRequest(baseFilled6048Session, fakeRequest),
+      messages
+    )
+
+  def createView6048Welsh = () =>
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048001"))(
+      SessionRequest(baseFilled6048Session, fakeRequest),
+      messages
+    )
+
+  def createView6076 = () =>
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996076001"))(
+      SessionRequest(baseFilled6076Session, fakeRequest),
+      messages
+    )
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourProperty]) =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
@@ -63,14 +93,43 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }
+    "Answers About The Property component for 6020 type" must {
+
+      "render the view correctly" in {
+        val doc = asDocument(createView6020())
+        doc.text()    should include(messages("checkYourAnswersAboutTheProperty.propertyUsage"))
+        doc.text() shouldNot include(messages("checkYourAnswersAboutTheProperty.hasWebsite"))
+      }
+    }
+    "Answers About The Property component for 6030 type" must {
+
+      "render the view correctly" in {
+        val doc = asDocument(createView6030())
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.charity"))
+      }
+    }
+
+    "Answers About The Property component for 6048 type" must {
+
+      "render the view correctly" in {
+        val doc = asDocument(createView6048())
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.firstAvailable"))
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.availabilityCommercial"))
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.completedCommercial"))
+      }
+    }
+
+    "Answers About The Property component for 6048 type Welsh" must {
+
+      "render the view correctly" in {
+        val doc = asDocument(createView6048Welsh())
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.firstAvailable"))
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.availabilityCommercial"))
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.completedCommercial"))
+      }
+    }
 
     "Answers About The Property component for 6076 type" must {
-
-      def createView6076 = () =>
-        checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996076001"))(
-          SessionRequest(baseFilled6076Session, fakeRequest),
-          messages
-        )
 
       "render the h2 headers in component correctly" in {
         val doc = asDocument(createView6076())
@@ -100,6 +159,7 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
         )
 
       }
+
     }
   }
 }

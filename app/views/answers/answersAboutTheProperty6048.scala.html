@@ -1,0 +1,172 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import models.submissions.common.AnswerYes
+@import util.{DateUtilLocalised, SectionAnswersRowBuilder}
+
+@this(
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised
+)
+
+
+@()(implicit request: SessionRequest[?], messages: Messages)
+
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutYouAndTheProperty)
+}
+@occupiersListSize = @{
+    request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersList).fold(0)(_.length)
+}
+
+@occupiersCountMessage = @{
+    if (occupiersListSize <= 1) messages("checkYourAnswersAboutTheProperty.occupierCount", occupiersListSize) else messages("checkYourAnswersAboutTheProperty.occupiersCount", occupiersListSize)
+}
+
+@sectionAnswersPartTwo = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutYouAndThePropertyPartTwo)
+}
+
+@tableRow(values: Seq[String]) = {
+@values.map { value =>
+    <div class="hmrc-turnover-table-column">
+        @value
+    </div>
+}
+}
+
+@yearEndingRow(url: Call, heading: String, financialYears: Seq[String]) = @{
+    SummaryListRow(
+        key = Key(Text(messages("checkYourAnswersAboutTheProperty.yearEndingWelsh.label"))),
+        value = Value(HtmlContent(tableRow(financialYears).body)),
+        actions = Some(
+            Actions(items =
+                Seq(
+                    ActionItem(
+                        href = s"$url?from=CYA",
+                        content = Text(messages("label.change")),
+                        visuallyHiddenText = Some(heading),
+                        attributes = Map(
+                            "aria-label" -> s"${messages("label.change")} $heading"
+                        )
+                    )
+                )
+            )
+        ),
+        classes = "no-border-bottom"
+    )
+}
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.lettingAvailability.heading")</h2>
+@govukSummaryList(SummaryList(rows =
+    sectionAnswersPartTwo.row(
+        "checkYourAnswersAboutTheProperty.firstAvailable",
+        _.commercialLetDate.fold("")(x => dateUtil.formatYearMonth(x.toYearMonth)),
+        controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
+        "commercialLettingQuestion",
+        ("valueAsHtml", _ => None))
+))
+@if(request.sessionData.isWelsh) {
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-3">@messages("checkYourAnswersAboutTheProperty.availabilityCommercial")</h2>
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            yearEndingRow(
+                controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show(),
+                messages("checkYourAnswersAboutTheProperty.availabilityCommercial"),
+                sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
+                .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
+            ),
+            SummaryListRow(
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
+                    .fold(Seq.empty[String])(_.map(_.numberOfNights.toString + " " + messages("commercialLettingAvailability.label.nights"))))
+                    .body
+                ))),
+        )))
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-3">@messages("checkYourAnswersAboutTheProperty.completedCommercial")</h2>
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            yearEndingRow(
+                controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show(),
+                messages("checkYourAnswersAboutTheProperty.completedCommercial"),
+                sectionAnswersPartTwo.answers.flatMap(_.commercialLetAvailabilityWelsh)
+                .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
+            ),
+            SummaryListRow(
+                value = Value(HtmlContent(
+                    tableRow(sectionAnswersPartTwo.answers.flatMap(_.completedCommercialLettingsWelsh)
+                    .fold(Seq.empty[String])(_.map(_.numberOfNights.toString + " " + messages("commercialLettingAvailability.label.nights"))))
+                    .body
+                ))))))
+} else {
+    @govukSummaryList(SummaryList(rows =
+        sectionAnswersPartTwo.row(
+            "checkYourAnswersAboutTheProperty.availabilityCommercial",
+            _.commercialLetAvailability.map(x => s"${x.getOrElse(0)} ${messages("commercialLettingAvailability.label.nights")}"),
+            controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show(),
+            "commercialLettingAvailability",
+            ("valueAsHtml", _ => None)) ++
+                sectionAnswersPartTwo.row(
+                    "checkYourAnswersAboutTheProperty.completedCommercial",
+                    _.completedCommercialLettings.map(x => s"${x.getOrElse(0)} ${messages("commercialLettingAvailability.label.nights")}"),
+                    controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show(),
+                    "completedCommercialLettings",
+                    ("valueAsHtml", _ => None)
+                )))
+}
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.familyUse.heading")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    sectionAnswersPartTwo.row(
+        "checkYourAnswersAboutTheProperty.mainResidence",
+        _.partsUnavailable.map(x => if(x.contains(AnswerYes)) messages(s"label.yes.oes") else messages(s"label.no.nac.oes")),
+        controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
+        "partsUnavailable",
+        ("valueAsHtml", _ => None))
+))
+
+@if(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable).contains(AnswerYes)) {
+
+    @for((occupier, idx) <- sectionAnswersPartTwo.answers.flatMap(_.occupiersList).getOrElse(IndexedSeq.empty).zipWithIndex) {
+
+        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.occupiersLabel", idx + 1)</h2>
+
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.row("checkYourAnswersAboutTheProperty.occupiersDetails",
+                _ => occupier.name + s"<p class=\"govuk-body\"> ${occupier.address} </p>",
+                controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(
+                    idx),
+                "",
+                ("valueAsHtml", _ => None))
+        ))
+    }
+    @govukSummaryList(SummaryList(rows =
+        List(
+            SummaryListRow(
+                key = Key(Text(messages(occupiersCountMessage)), classes = "govuk-heading-m govuk-!-width-one-half"),
+                actions = Option(Actions(
+                    items =
+                        List(
+                            ActionItem(
+                                s"${controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(occupiersListSize - 1).url}&from=CYA",
+                                Text(messages("checkYourAnswersAboutTheProperty.occupiersAdd")))),
+                    classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
+            )
+        )
+    ))
+}
