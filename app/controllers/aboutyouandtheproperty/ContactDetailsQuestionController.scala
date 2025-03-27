@@ -84,9 +84,9 @@ class ContactDetailsQuestionController @Inject() (
             then
               redirectToAddressLookupFrontend(
                 config = AddressLookupConfig(
-                  lookupPageHeadingKey = "requestReferenceNumber.address.lookupPageHeading",
-                  selectPageHeadingKey = "requestReferenceNumber.address.selectPageHeading",
-                  confirmPageLabelKey = "requestReferenceNumber.address.confirmPageHeading",
+                  lookupPageHeadingKey = "contactDetailsQuestion.address.lookupPageHeading",
+                  selectPageHeadingKey = "contactDetailsQuestion.address.selectPageHeading",
+                  confirmPageLabelKey = "contactDetailsQuestion.address.confirmPageHeading",
                   offRampCall = routes.ContactDetailsQuestionController.addressLookupCallback()
                 )
               )

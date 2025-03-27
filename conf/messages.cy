@@ -3376,6 +3376,9 @@ error.furtherInformationOrRemarks.maxLength = Mae''n rhaid i''r wybodaeth bellac
 # ALTERNATIVE DETAILS QUESTION
 ################################
 contactDetailsQuestion.heading = Would you like us to use an alternative correspondence address if we need to contact you?
+contactDetailsQuestion.address.lookupPageHeading = What is the alternative correspondence address?
+contactDetailsQuestion.address.selectPageHeading = Choose the alternative correspondence address
+contactDetailsQuestion.address.confirmPageHeading = Check the alternative correspondence address
 hint.contactDetailsQuestion = You can either provide alternative contact details, or nominate someone else we should contact if we have any queries about this declaration.
 error.contactDetailsQuestion.missing= Dewiswch ‘hoffwn'' os ydych am ddefnyddio manylion cyswllt eraill
 
