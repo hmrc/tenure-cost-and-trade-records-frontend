@@ -16,7 +16,6 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.lettingOtherPartAddressMapping
 import models.submissions.aboutfranchisesorlettings.OperatorDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -24,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object LettingOtherPartOfPropertyForm {
 
-  val lettingOtherPartOfPropertyForm = Form(
+  val theForm = Form[OperatorDetails](
     mapping(
       "lettingOperatorName"   -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName.required"),
@@ -33,8 +32,9 @@ object LettingOtherPartOfPropertyForm {
       "lettingTypeOfBusiness" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.lettingTypeOfBusiness.required"),
         maxLength(50, "error.lettingTypeOfBusiness.maxLength")
-      ),
-      "lettingAddress"        -> lettingOtherPartAddressMapping
-    )(OperatorDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+      )
+    )((operatorName, typeOfBusiness) => OperatorDetails(operatorName, typeOfBusiness, None)) { obj =>
+      Some(obj.operatorName, obj.typeOfBusiness)
+    }
   )
 }

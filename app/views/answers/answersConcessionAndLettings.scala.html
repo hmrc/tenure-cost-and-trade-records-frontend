@@ -217,7 +217,7 @@
             .mkString("""<p class="govuk-body">""", "", "</p>") +
             letting.operatorDetails.flatMap(_.typeOfBusiness).getOrElse("")
             .mkString("""<p class="govuk-body">""", "", "</p>") +
-            letting.operatorDetails.flatMap(_.lettingAddress.escapedHtml).getOrElse("")
+            letting.operatorDetails.flatMap(_.lettingAddress.map(_.escapedHtml)).getOrElse("")
             .mkString("""<p class="govuk-body">""", "", "</p>"),
         controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index),
         "lettingOperatorName",

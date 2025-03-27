@@ -16,138 +16,156 @@
 
 package controllers.aboutfranchisesorlettings
 
-import connectors.Audit
+import connectors.{Audit, MockAddressLookup}
 import models.Session
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.libs.json.Writes
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress}
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import uk.gov.hmrc.http.HeaderCarrier
 import utils.JsoupHelpers.*
-import utils.TestBaseSpec
+import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
 
-class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
+class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   "the LettingOtherPartOfPropertyDetails controller" when {
-    "handling GET / requests"  should {
+    "handling GET / requests"          should {
       "reply 200 with a fresh HTML form if not given any index" in new ControllerFixture {
-        val result = controller.show(None)(fakeRequest)
+        val result = controller.show(index = None)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val html = contentAsJsoup(result)
-        html.getElementById("lettingOperatorName").value               shouldBe ""
-        html.getElementById("lettingTypeOfBusiness").value             shouldBe ""
-        html.getElementById("lettingAddress.buildingNameNumber").value shouldBe ""
-        html.getElementById("lettingAddress.street1").value            shouldBe ""
-        html.getElementById("lettingAddress.town").value               shouldBe ""
-        html.getElementById("lettingAddress.county").value             shouldBe ""
-        html.getElementById("lettingAddress.postcode").value           shouldBe ""
-        html.backLink                                                    should endWith(routes.LettingOtherPartOfPropertyController.show().url)
+        val page = contentAsJsoup(result)
+        page.heading                      shouldBe "lettingOtherPartOfPropertyDetails.heading"
+        page.input("lettingOperatorName")   should beEmpty
+        page.input("lettingTypeOfBusiness") should beEmpty
+        page.backLink                       should endWith(routes.LettingOtherPartOfPropertyController.show().url)
       }
       "reply 200 with a fresh HTML form if given an unknown index" in new ControllerFixture {
-        val result = controller.show(Some(2))(fakeRequest)
+        val result = controller.show(index = Some(2))(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val html = contentAsJsoup(result)
-        html.getElementById("lettingOperatorName").value               shouldBe ""
-        html.getElementById("lettingTypeOfBusiness").value             shouldBe ""
-        html.getElementById("lettingAddress.buildingNameNumber").value shouldBe ""
-        html.getElementById("lettingAddress.street1").value            shouldBe ""
-        html.getElementById("lettingAddress.town").value               shouldBe ""
-        html.getElementById("lettingAddress.county").value             shouldBe ""
-        html.getElementById("lettingAddress.postcode").value           shouldBe ""
-        html.backLink                                                    should endWith(routes.AddAnotherLettingOtherPartOfPropertyController.show(1).url)
+        val page = contentAsJsoup(result)
+        page.heading                      shouldBe "lettingOtherPartOfPropertyDetails.heading"
+        page.input("lettingOperatorName")   should beEmpty
+        page.input("lettingTypeOfBusiness") should beEmpty
+        page.backLink                       should endWith(routes.AddAnotherLettingOtherPartOfPropertyController.show(1).url)
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture(
         Some(prefilledAboutFranchiseOrLettings)
       ) {
-        val result = controller.show(Some(0))(fakeRequest)
+        val result = controller.show(index = Some(0))(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val html = contentAsJsoup(result)
-        html.getElementById("lettingOperatorName").value               shouldBe "Operator Name"
-        html.getElementById("lettingTypeOfBusiness").value             shouldBe "Type of Business"
-        html.getElementById("lettingAddress.buildingNameNumber").value shouldBe "004"
-        html.getElementById("lettingAddress.street1").value            shouldBe "GORING ROAD"
-        html.getElementById("lettingAddress.town").value               shouldBe "GORING-BY-SEA, WORTHING"
-        html.getElementById("lettingAddress.county").value             shouldBe "West sussex"
-        html.getElementById("lettingAddress.postcode").value           shouldBe "BN12 4AX"
+        val page = contentAsJsoup(result)
+        page.input("lettingOperatorName")   should haveValue("Operator Name")
+        page.input("lettingTypeOfBusiness") should haveValue("Type of Business")
       }
     }
-    "handling POST / requests" should {
+    "handling POST / requests"         should {
       "reply 400 and error messages if the form is submitted with invalid data" in new ControllerFixture {
-        val result  = controller.submit(index = None)(fakePostRequest)
-        val content = contentAsString(result)
+        val result = controller.submit(index = None)(
+          fakePostRequest.withFormUrlEncodedBody(
+            "lettingOperatorName"   -> "", // missing
+            "lettingTypeOfBusiness" -> "0123456789" * 6 // too long
+          )
+        )
         status(result) shouldBe BAD_REQUEST
-        content          should include("error.operatorName.required")
-        content          should include("error.lettingTypeOfBusiness.required")
-        content          should include("error.required")
-        content          should include("error.required")
-        content          should include("error.postcode.required")
-        reset(repository)
+        val page   = contentAsJsoup(result)
+        page.error("lettingOperatorName")   shouldBe "error.operatorName.required"
+        page.error("lettingTypeOfBusiness") shouldBe "error.lettingTypeOfBusiness.maxLength"
       }
-      "reply 303 when the form is submitted good, with index=1 but no pre-existing data" in new ControllerFixture(
+      "reply 303 to the address lookup page when the form is submitted good, with index=1 but no pre-existing data" in new ControllerFixture(
         Some(prefilledAboutFranchiseOrLettings)
       ) {
         val result = controller.submit(index = Some(1))(
           fakePostRequest.withFormUrlEncodedBody(
-            "lettingOperatorName"               -> "Some operator",
-            "lettingTypeOfBusiness"             -> "Nice type of business",
-            "lettingAddress.buildingNameNumber" -> "5",
-            "lettingAddress.street1"            -> "My Street",
-            "lettingAddress.town"               -> "Fuzzy Town",
-            "lettingAddress.county"             -> "Neverland",
-            "lettingAddress.postcode"           -> "BN124AX"
+            "lettingOperatorName"   -> "Some operator",
+            "lettingTypeOfBusiness" -> "Nice type of business"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsRentController.show(1).url
+        redirectLocation(result).value shouldBe "/on-ramp"
+
+        val session  = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        val captured = session.getValue
+
+        captured.aboutFranchisesOrLettings.value.lettingSections.size shouldBe 2
+        val section = captured.aboutFranchisesOrLettings.value.lettingSections.last
+        section.lettingOtherPartOfPropertyInformationDetails.operatorName   shouldBe "Some operator"
+        section.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness shouldBe "Nice type of business"
+        section.lettingOtherPartOfPropertyInformationDetails.lettingAddress shouldBe None
       }
       "reply 303 when the form is submitted good, with index=0 and pre-existing data" in new ControllerFixture(
         Some(prefilledAboutFranchiseOrLettings)
       ) {
         val result = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
-            "lettingOperatorName"               -> "Some operator",
-            "lettingTypeOfBusiness"             -> "Nice type of business",
-            "lettingAddress.buildingNameNumber" -> "5",
-            "lettingAddress.street1"            -> "My Street",
-            "lettingAddress.town"               -> "Fuzzy Town",
-            "lettingAddress.county"             -> "Neverland",
-            "lettingAddress.postcode"           -> "BN124AX"
+            "lettingOperatorName"   -> "Yet another operator",
+            "lettingTypeOfBusiness" -> "Residential accommodation"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                                                                                               shouldBe routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
-        data.getValue.aboutFranchisesOrLettings.value.lettingSections.head.lettingOtherPartOfPropertyInformationDetails.operatorName shouldBe "Some operator"
-        reset(repository)
+        redirectLocation(result).value shouldBe "/on-ramp"
+
+        val session  = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        val captured = session.getValue
+
+        captured.aboutFranchisesOrLettings.value.lettingSections.size shouldBe 1
+        val section = captured.aboutFranchisesOrLettings.value.lettingSections.last
+        section.lettingOtherPartOfPropertyInformationDetails.operatorName   shouldBe "Yet another operator"
+        section.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness shouldBe "Residential accommodation"
+        section.lettingOtherPartOfPropertyInformationDetails.lettingAddress shouldBe None
+      }
+    }
+    "retrieving the confirmed address" should {
+      "reply 303 redirect to the next page" in new ControllerFixture(
+        Some(prefilledAboutFranchiseOrLettings)
+      ) {
+        val result = controller.addressLookupCallback(0, "123")(fakeRequest)
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
+
+        val session  = captor[Session]
+        verify(repository, once).saveOrUpdate(session)(any, any)
+        val captured = session.getValue
+
+        captured.aboutFranchisesOrLettings.value.lettingSections.size shouldBe 1
+        val section = captured.aboutFranchisesOrLettings.value.lettingSections.head
+        section.lettingOtherPartOfPropertyInformationDetails.operatorName         shouldBe "Operator Name"
+        section.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness       shouldBe "Type of Business"
+        section.lettingOtherPartOfPropertyInformationDetails.lettingAddress.value shouldBe LettingAddress(
+          buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+          street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+          town = addressLookupConfirmedAddress.address.lines.get.last,
+          county = None,
+          postcode = addressLookupConfirmedAddress.address.postcode.get
+        )
       }
     }
   }
 
-  val mockAudit: Audit = mock[Audit]
-
-  trait ControllerFixture(aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None):
+  trait ControllerFixture(
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None
+  ) extends MockAddressLookup:
+    val audit      = mock[Audit]
     val repository = mock[SessionRepo]
-    val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
 
     val controller =
       new LettingOtherPartOfPropertyDetailsController(
         stubMessagesControllerComponents(),
-        mockAudit,
+        audit,
         aboutFranchisesOrLettingsNavigator,
         lettingOtherPartOfPropertyDetailsView,
         preEnrichedActionRefiner(
           aboutFranchisesOrLettings = aboutFranchisesOrLettings
         ),
+        addressLookupConnector,
         repository
       )
-}

@@ -22,14 +22,14 @@ import connectors.addressLookup.*
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.connectiontoproperty.TenantDetailsForm.theForm
 import models.Session
+import models.submissions.connectiontoproperty.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.{CorrespondenceAddress, LettingPartOfPropertyDetails, StillConnectedDetails, TenantDetails}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.LettingPartOfPropertyDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.tenantDetails
+import views.html.connectiontoproperty.tenantDetails as TenantDetailsView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -40,7 +40,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  tenantDetailsView: tenantDetails,
+  theView: TenantDetailsView,
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
@@ -60,7 +60,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
       yield theForm.fill(lettingPartOfPropertyDetail.tenantDetails)
 
     Ok(
-      tenantDetailsView(
+      theView(
         filledForm.getOrElse(freshForm),
         index,
         getBackLink(index),
@@ -73,17 +73,19 @@ class LettingPartOfPropertyDetailsController @Inject() (
     continueOrSaveAsDraft[TenantDetails](
       theForm,
       formWithErrors =>
-        BadRequest(
-          tenantDetailsView(
-            formWithErrors,
-            index,
-            getBackLink(index),
-            request.sessionData.toSummary
+        successful(
+          BadRequest(
+            theView(
+              formWithErrors,
+              index,
+              getBackLink(index),
+              request.sessionData.toSummary
+            )
           )
         ),
-      data => {
+      formData => {
         val ifLettingPartOfPropertyDetailsEmpty = StillConnectedDetails(lettingPartOfPropertyDetails =
-          IndexedSeq(LettingPartOfPropertyDetails(tenantDetails = data))
+          IndexedSeq(LettingPartOfPropertyDetails(tenantDetails = formData))
         )
         var updatedSectionIndex                 = 0
         val updatedStillConnectedDetails        =
@@ -92,13 +94,13 @@ class LettingPartOfPropertyDetailsController @Inject() (
             val requestedSection         = index.flatMap(existingSections.lift)
             val (idx, updatedSectionObj) =
               requestedSection.fold {
-                val defaultSection   = LettingPartOfPropertyDetails(data)
+                val defaultSection   = LettingPartOfPropertyDetails(formData)
                 val appendedSections = existingSections.appended(defaultSection)
                 appendedSections.indexOf(defaultSection) -> appendedSections
               } { sectionToUpdate =>
                 val indexToUpdate = existingSections.indexOf(sectionToUpdate)
                 indexToUpdate -> existingSections
-                  .updated(indexToUpdate, sectionToUpdate.copy(tenantDetails = data))
+                  .updated(indexToUpdate, sectionToUpdate.copy(tenantDetails = formData))
               }
             updatedSectionIndex = idx
             stillConnectedDetails
@@ -156,7 +158,6 @@ class LettingPartOfPropertyDetailsController @Inject() (
   private def sessionWithAddress(idx: Int, address: CorrespondenceAddress)(using session: Session) =
     assert(session.stillConnectedDetails.isDefined)
     assert(session.stillConnectedDetails.get.lettingPartOfPropertyDetails.lift(idx).isDefined)
-    // assert(session.stillConnectedDetails.get.lettingPartOfPropertyDetails(idx).tenantDetails.correspondenceAddress)
     session.copy(
       stillConnectedDetails = session.stillConnectedDetails.map { d =>
         d.copy(
@@ -164,8 +165,13 @@ class LettingPartOfPropertyDetailsController @Inject() (
             idx,
             Seq(
               d.lettingPartOfPropertyDetails(idx)
-                .copy(tenantDetails =
-                  d.lettingPartOfPropertyDetails(idx).tenantDetails.copy(correspondenceAddress = Some(address))
+                .copy(
+                  tenantDetails = d
+                    .lettingPartOfPropertyDetails(idx)
+                    .tenantDetails
+                    .copy(
+                      correspondenceAddress = Some(address)
+                    )
                 )
             ),
             1

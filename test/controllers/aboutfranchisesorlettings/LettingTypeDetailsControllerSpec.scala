@@ -77,11 +77,6 @@ class LettingTypeDetailsControllerSpec extends TestBaseSpec {
 
           Option(html.getElementById("lettingOperatorName").`val`()).value               shouldBe "Letting Operator"
           Option(html.getElementById("lettingTypeOfBusiness").`val`()).value             shouldBe "Property Letting"
-          Option(html.getElementById("lettingAddress.buildingNameNumber").`val`()).value shouldBe "123"
-          Option(html.getElementById("lettingAddress.street1").`val`()).value            shouldBe "Main Street"
-          Option(html.getElementById("lettingAddress.town").`val`()).value               shouldBe "Bristol"
-          Option(html.getElementById("lettingAddress.county").`val`()).value             shouldBe "Bristol"
-          Option(html.getElementById("lettingAddress.postcode").`val`()).value           shouldBe "AN12 3YZ"
         }
       }
     }

@@ -61,11 +61,6 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[B
       createViewUsingForm,
       "lettingOperatorName",
       "lettingTypeOfBusiness",
-      "lettingAddress.buildingNameNumber",
-      "lettingAddress.street1",
-      "lettingAddress.town",
-      "lettingAddress.county",
-      "lettingAddress.postcode"
     )
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
