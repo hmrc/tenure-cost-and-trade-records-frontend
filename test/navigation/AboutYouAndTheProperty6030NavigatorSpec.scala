@@ -52,7 +52,7 @@ class AboutYouAndTheProperty6030NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030YesSession)
         .apply(aboutYouAndTheProperty6030YesSession) shouldBe
-        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
     }
 
     "navigate to AboutThePropertyStringController after completing AlternativeContactDetails with yes" in {

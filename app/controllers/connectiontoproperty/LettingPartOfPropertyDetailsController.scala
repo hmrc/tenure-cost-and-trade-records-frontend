@@ -18,10 +18,12 @@ package controllers.connectiontoproperty
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import controllers.FORDataCaptureController
-import form.connectiontoproperty.TenantDetailsForm.tenantDetailsForm
-import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails, TenantDetails}
+import connectors.addressLookup.*
+import controllers.{AddressLookupSupport, FORDataCaptureController}
+import form.connectiontoproperty.TenantDetailsForm.theForm
+import models.Session
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import models.submissions.connectiontoproperty.{CorrespondenceAddress, LettingPartOfPropertyDetails, StillConnectedDetails, TenantDetails}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.LettingPartOfPropertyDetailsPageId
 import play.api.i18n.I18nSupport
@@ -31,6 +33,7 @@ import views.html.connectiontoproperty.tenantDetails
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future.successful
 
 @Singleton
 class LettingPartOfPropertyDetailsController @Inject() (
@@ -39,25 +42,26 @@ class LettingPartOfPropertyDetailsController @Inject() (
   navigator: ConnectionToPropertyNavigator,
   tenantDetailsView: tenantDetails,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  addressLookupConnector: AddressLookupConnector,
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with AddressLookupSupport(addressLookupConnector)
+    with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyDetails")
-
-    val existingDetails: Option[TenantDetails] = for {
-      requestedIndex                        <- index
-      existingLettingPartOfPropertyDetails  <-
-        request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails)
-      // lift turns exception-throwing access by index into an option-returning safe operation
-      requestedLettingPartOfPropertyDetails <- existingLettingPartOfPropertyDetails.lift(requestedIndex)
-    } yield requestedLettingPartOfPropertyDetails.tenantDetails
+    val freshForm  = theForm
+    val filledForm =
+      for
+        requestedIndex              <- index
+        stillConnectedDetails       <- request.sessionData.stillConnectedDetails
+        lettingPartOfPropertyDetail <- stillConnectedDetails.lettingPartOfPropertyDetails.lift(requestedIndex)
+      yield theForm.fill(lettingPartOfPropertyDetail.tenantDetails)
 
     Ok(
       tenantDetailsView(
-        existingDetails.fold(tenantDetailsForm)(tenantDetailsForm.fill),
+        filledForm.getOrElse(freshForm),
         index,
         getBackLink(index),
         request.sessionData.toSummary
@@ -67,7 +71,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenantDetails](
-      tenantDetailsForm,
+      theForm,
       formWithErrors =>
         BadRequest(
           tenantDetailsView(
@@ -81,35 +85,60 @@ class LettingPartOfPropertyDetailsController @Inject() (
         val ifLettingPartOfPropertyDetailsEmpty = StillConnectedDetails(lettingPartOfPropertyDetails =
           IndexedSeq(LettingPartOfPropertyDetails(tenantDetails = data))
         )
+        var updatedSectionIndex                 = 0
         val updatedStillConnectedDetails        =
           request.sessionData.stillConnectedDetails.fold(ifLettingPartOfPropertyDetailsEmpty) { stillConnectedDetails =>
-            val existingSections                                                 = stillConnectedDetails.lettingPartOfPropertyDetails
-            val requestedSection                                                 = index.flatMap(existingSections.lift)
-            val updatedSections: (Int, IndexedSeq[LettingPartOfPropertyDetails]) = requestedSection.fold {
-              val defaultSection   = LettingPartOfPropertyDetails(data)
-              val appendedSections = existingSections.appended(defaultSection)
-              appendedSections.indexOf(defaultSection) -> appendedSections
-            } { sectionToUpdate =>
-              val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-              indexToUpdate -> existingSections
-                .updated(indexToUpdate, sectionToUpdate.copy(tenantDetails = data))
-            }
+            val existingSections         = stillConnectedDetails.lettingPartOfPropertyDetails
+            val requestedSection         = index.flatMap(existingSections.lift)
+            val (idx, updatedSectionObj) =
+              requestedSection.fold {
+                val defaultSection   = LettingPartOfPropertyDetails(data)
+                val appendedSections = existingSections.appended(defaultSection)
+                appendedSections.indexOf(defaultSection) -> appendedSections
+              } { sectionToUpdate =>
+                val indexToUpdate = existingSections.indexOf(sectionToUpdate)
+                indexToUpdate -> existingSections
+                  .updated(indexToUpdate, sectionToUpdate.copy(tenantDetails = data))
+              }
+            updatedSectionIndex = idx
             stillConnectedDetails
               .copy(
-                lettingPartOfPropertyDetailsIndex = updatedSections._1,
-                lettingPartOfPropertyDetails = updatedSections._2
+                lettingPartOfPropertyDetailsIndex = updatedSectionIndex,
+                lettingPartOfPropertyDetails = updatedSectionObj
               )
           }
-        val updatedData                         = updateStillConnectedDetails(_ => updatedStillConnectedDetails)
-        session.saveOrUpdate(updatedData).map { _ =>
-          val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
-          val nextPage      =
-            redirectToCYA
-              .getOrElse(navigator.nextPage(LettingPartOfPropertyDetailsPageId, updatedData).apply(updatedData))
-          Redirect(nextPage)
-        }
+
+        val updatedData = updateStillConnectedDetails(_ => updatedStillConnectedDetails)
+        for
+          _              <- repository.saveOrUpdate(updatedData)
+          redirectResult <- redirectToAddressLookupFrontend(
+                              config = AddressLookupConfig(
+                                lookupPageHeadingKey = "tenantDetails.address.lookupPageHeading",
+                                selectPageHeadingKey = "tenantDetails.address.selectPageHeading",
+                                confirmPageLabelKey = "tenantDetails.address.confirmPageHeading",
+                                offRampCall = routes.LettingPartOfPropertyDetailsController.addressLookupCallback(
+                                  updatedSectionIndex
+                                )
+                              )
+                            )
+        yield redirectResult
       }
     )
+  }
+
+  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress <- getConfirmedAddress(id)
+      convertedAddress  = confirmedAddress.asCorrespondenceAddress
+      newSession       <- successful(sessionWithAddress(idx, convertedAddress))
+      _                <- repository.saveOrUpdate(newSession)
+    yield {
+      val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
+      val nextPage      =
+        redirectToCYA.getOrElse(navigator.nextPage(LettingPartOfPropertyDetailsPageId, newSession).apply(newSession))
+      Redirect(nextPage)
+    }
   }
 
   private def getBackLink(mayBeIndex: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
@@ -123,4 +152,33 @@ class LettingPartOfPropertyDetailsController @Inject() (
           case _                        => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
         }
     }
-}
+
+  private def sessionWithAddress(idx: Int, address: CorrespondenceAddress)(using session: Session) =
+    assert(session.stillConnectedDetails.isDefined)
+    assert(session.stillConnectedDetails.get.lettingPartOfPropertyDetails.lift(idx).isDefined)
+    // assert(session.stillConnectedDetails.get.lettingPartOfPropertyDetails(idx).tenantDetails.correspondenceAddress)
+    session.copy(
+      stillConnectedDetails = session.stillConnectedDetails.map { d =>
+        d.copy(
+          lettingPartOfPropertyDetails = d.lettingPartOfPropertyDetails.patch(
+            idx,
+            Seq(
+              d.lettingPartOfPropertyDetails(idx)
+                .copy(tenantDetails =
+                  d.lettingPartOfPropertyDetails(idx).tenantDetails.copy(correspondenceAddress = Some(address))
+                )
+            ),
+            1
+          )
+        )
+      }
+    )
+
+  extension (confirmed: AddressLookupConfirmedAddress)
+    def asCorrespondenceAddress = CorrespondenceAddress(
+      confirmed.buildingNameNumber,
+      confirmed.street1,
+      confirmed.town,
+      confirmed.county,
+      confirmed.postcode
+    )

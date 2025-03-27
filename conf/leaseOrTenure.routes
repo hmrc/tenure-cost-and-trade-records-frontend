@@ -1,7 +1,7 @@
 # About your lease or tenure
 GET         /about-your-landlord                                        controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.show()
 POST        /about-your-landlord                                        controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.submit()
-GET         /landlord-address-callback                                  controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.addressLookupCallback(id: String ?= "")
+GET         /about-your-landlord-callback                               controllers.aboutYourLeaseOrTenure.AboutYourLandlordController.addressLookupCallback(id: String ?= "")
 
 # Form 6076 only
 GET         /provide-details-of-your-lease                              controllers.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseController.show()

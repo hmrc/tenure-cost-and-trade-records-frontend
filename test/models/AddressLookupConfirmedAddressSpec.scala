@@ -16,10 +16,11 @@
 
 package models
 
+import connectors.addressLookup.*
 import utils.TestBaseSpec
 import play.api.libs.json.Json
 
-class AddressLookupSpec extends TestBaseSpec {
+class AddressLookupConfirmedAddressSpec extends TestBaseSpec {
 
   val testAddress =
     Json.parse(input = """{
@@ -36,8 +37,8 @@ class AddressLookupSpec extends TestBaseSpec {
 
   "AddressLookup" must {
     "return correct string format when passed asString from Json" in {
-      val address: AddressLookup = testAddress.as[AddressLookup]
-      address.auditRef.map(_ shouldBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
+      val address = testAddress.as[AddressLookupConfirmedAddress]
+      address.auditRef shouldBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2"
     }
   }
 }

@@ -18,10 +18,11 @@ object AppDependencies {
   val jsoupVersion                   = "1.19.1"
 
   private val compile = Seq(
-    "uk.gov.hmrc"       %% "bootstrap-frontend-play-30" % bootstrapVersion,
-    "uk.gov.hmrc"       %% "play-frontend-hmrc-play-30" % playFrontendVersion,
-    "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-30"         % mongoVersion,
-    "uk.gov.hmrc"       %% "crypto-json-play-30"        % cryptoJsonVersion
+    "uk.gov.hmrc"       %% "bootstrap-frontend-play-30"            % bootstrapVersion,
+    "uk.gov.hmrc"       %% "play-frontend-hmrc-play-30"            % playFrontendVersion,
+    "uk.gov.hmrc"       %% "play-conditional-form-mapping-play-30" % "3.2.0",
+    "uk.gov.hmrc.mongo" %% "hmrc-mongo-play-30"                    % mongoVersion,
+    "uk.gov.hmrc"       %% "crypto-json-play-30"                   % cryptoJsonVersion
   )
 
   private val test = Seq(

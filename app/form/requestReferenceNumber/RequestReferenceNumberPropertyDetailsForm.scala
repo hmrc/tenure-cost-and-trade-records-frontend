@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package form.requestReferenceNumber
 
-import models.submissions.requestReferenceNumber.CheckYourAnswersRequestReferenceNumber
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.{default, single, text}
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object CheckYourAnswersRequestReferenceNumberForm {
-
-  val checkYourAnswersRequestReferenceNumberForm = Form(
-    mapping(
-      "checkYourAnswersRequestReferenceNumber" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+object RequestReferenceNumberPropertyDetailsForm:
+  val theForm = Form[String](
+    single(
+      "businessTradingName" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.requestReferenceNumber.businessTradingName.required"),
+        maxLength(50, "error.requestReferenceNumber.businessTradingName.maxLength")
       )
-    )(CheckYourAnswersRequestReferenceNumber.apply)(o => Some(o.checkYourAnswersRequestReferenceNumber))
+    )
   )
-}

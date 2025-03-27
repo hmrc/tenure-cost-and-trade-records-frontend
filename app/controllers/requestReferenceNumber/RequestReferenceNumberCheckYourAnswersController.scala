@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import controllers.FORDataCaptureController
-import form.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberForm.checkYourAnswersRequestReferenceNumberForm
+import form.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersForm.theForm
 import models.Session
 import models.submissions.RequestReferenceNumberSubmission
 import play.api.Logging
@@ -30,7 +30,8 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import views.html.requestReferenceNumber.{checkYourAnswersRequestReferenceNumber, confirmationRequestReferenceNumber}
+import views.html.requestReferenceNumber.requestReferenceNumberCheckYourAnswers as RequestReferenceNumberCheckYourAnswersView
+import views.html.requestReferenceNumber.requestReferenceNumberConfirmation as RequestReferenceNumberConfirmationView
 
 import java.time.Instant
 import java.util.UUID
@@ -38,11 +39,11 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CheckYourAnswersRequestReferenceNumberController @Inject() (
+class RequestReferenceNumberCheckYourAnswersController @Inject() (
   mcc: MessagesControllerComponents,
   submissionConnector: SubmissionConnector,
-  checkYourAnswersRequestReferenceNumberView: checkYourAnswersRequestReferenceNumber,
-  confirmationRequestReferenceNumberView: confirmationRequestReferenceNumber,
+  checkYourAnswersView: RequestReferenceNumberCheckYourAnswersView,
+  confirmationView: RequestReferenceNumberConfirmationView,
   errorHandler: ErrorHandler,
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
@@ -55,16 +56,15 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   import controllers.FeedbackFormMapper.feedbackForm
 
   lazy val confirmationUrl: String =
-    controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.confirmation().url
+    controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation().url
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        checkYourAnswersRequestReferenceNumberView(
-          request.sessionData.requestReferenceNumberDetails.flatMap(_.checkYourAnswersRequestReferenceNumber) match {
-            case Some(checkYourAnswersRequestReferenceNumber) =>
-              checkYourAnswersRequestReferenceNumberForm.fill(checkYourAnswersRequestReferenceNumber)
-            case _                                            => checkYourAnswersRequestReferenceNumberForm
+        checkYourAnswersView(
+          request.sessionData.requestReferenceNumberDetails.flatMap(_.checkYourAnswers) match {
+            case Some(cya) => theForm.fill(cya)
+            case _         => theForm
           },
           request.sessionData
         )
@@ -103,23 +103,23 @@ class CheckYourAnswersRequestReferenceNumberController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationRequestReferenceNumberView(feedbackForm)))
+    Future(Ok(confirmationView(feedbackForm)))
   }
 
   private def submitRequestRefNumToBackend(
     session: Session
   )(implicit hc: HeaderCarrier, messages: Messages): Future[Unit] = {
     val sessionRequestRefNum        = session.requestReferenceNumberDetails
-    val sessionRequestRefNumAddress = sessionRequestRefNum.flatMap(_.requestReferenceNumberAddress)
-    val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.requestReferenceContactDetails)
+    val sessionRequestRefNumAddress = sessionRequestRefNum.flatMap(_.propertyDetails)
+    val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.contactDetails)
 
     val submission = RequestReferenceNumberSubmission(
       UUID.randomUUID.toString,
-      sessionRequestRefNumAddress.map(_.requestReferenceNumberBusinessTradingName).getOrElse(""),
-      sessionRequestRefNumAddress.map(_.requestReferenceNumberAddress).get,
-      sessionRequestRefNumDetails.map(_.requestReferenceNumberContactDetailsFullName).getOrElse(""),
-      sessionRequestRefNumDetails.map(_.requestReferenceNumberContactDetails).get,
-      sessionRequestRefNumDetails.map(_.requestReferenceNumberContactDetailsAdditionalInformation).get,
+      sessionRequestRefNumAddress.map(_.businessTradingName).getOrElse(""),
+      sessionRequestRefNumAddress.map(_.address).get.get,
+      sessionRequestRefNumDetails.map(_.noReferenceNumberFullName).getOrElse(""),
+      sessionRequestRefNumDetails.map(_.noReferenceNumberContactDetails).get,
+      sessionRequestRefNumDetails.map(_.noReferenceNumberAdditionalInfo).get,
       Instant.now(),
       Some(messages.lang.language)
     )

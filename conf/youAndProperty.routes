@@ -104,6 +104,7 @@ POST        /premises-license-granted-details             controllers.aboutyouan
 
 GET         /contact-details-question                     controllers.aboutyouandtheproperty.ContactDetailsQuestionController.show()
 POST        /contact-details-question                     controllers.aboutyouandtheproperty.ContactDetailsQuestionController.submit()
+GET         /contact-details-question-callback            controllers.aboutyouandtheproperty.ContactDetailsQuestionController.addressLookupCallback(id: String ?= "")
 
 GET         /alternate-contact-details                    controllers.aboutyouandtheproperty.AlternativeContactDetailsController.show()
 POST        /alternate-contact-details                    controllers.aboutyouandtheproperty.AlternativeContactDetailsController.submit()

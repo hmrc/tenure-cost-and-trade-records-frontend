@@ -218,11 +218,14 @@ requestReferenceNumber.subheading2 = If you need a replacement letter
 requestReferenceNumber.p2 = If you no longer have access to your letter from the VOA, or you have not received one but think you should have, the VOA can issue a replacement. Complete the following form and the VOA will issue a replacement.
 requestReferenceNumber.p3 = We can only reissue letters to the address where they were originally sent. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Contact the VOA (opens in new tab)</a> if your business has changed address.
 requestReferenceNumber.subheading3 = What are the details of the property related to the missing reference number?
+requestReferenceNumber.address.lookupPageHeading = What is the address of the property?
+requestReferenceNumber.address.selectPageHeading = Choose the address of the property
+requestReferenceNumber.address.confirmPageHeading = Check the address of the property
 label.requestReferenceNumberBusinessTradingName = Business or trading name
-error.requestReferenceNumberBusinessTradingName.required = Enter the business or trading name
+error.requestReferenceNumber.businessTradingName.required = Enter the business or trading name
 key.requestReferenceNumberAddress = Address
 key.nameContactRequestReferenceNumber = Name and contact details
-error.requestReferenceNumberBusinessTradingName.maxLength = Business or trading name must be 50 characters or fewer
+error.requestReferenceNumber.businessTradingName.maxLength = Business or trading name must be 50 characters or fewer
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
@@ -475,6 +478,9 @@ error.isRentReceivedFromLetting.missing = Select yes if any rent is received fro
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
 tenantDetails.heading = Provide the tenant’s details
+tenantDetails.address.lookupPageHeading = What is the tenant''s correspondence address?
+tenantDetails.address.selectPageHeading = Choose the tenant''s correspondence address
+tenantDetails.address.confirmPageHeading = Check the tenant''s correspondence address
 label.tenantName = Tenant’s name
 label.descriptionOfLetting = Description of letting
 hint.descriptionOfLetting = For example, a billboard, residential accommodation.
@@ -864,7 +870,9 @@ error.franchiseOrLettings.missing = Select yes if you receive any rental income 
 #####################
 aboutYourLandlord.heading = Your landlord
 label.landlordFullName = Landlord''s name
-label.landlordAddress.address = Landlord''s address
+aboutYourLandlord.address.lookupPageHeading = What is your landlord''s address?
+aboutYourLandlord.address.selectPageHeading = Choose your landlord''s address
+aboutYourLandlord.address.confirmPageHeading = Check your landlord''s address
 error.landlordFullName.required = If you do not know the landlord''s name, enter unknown
 error.landlordFullName.maxLength = Landlord''s name must be 50 characters or fewer
 
@@ -3875,9 +3883,9 @@ checkYourAnswersAboutTheTradingHistory.totalGrossProfits = Total gross profits
 checkYourAnswersAboutTheTradingHistory.totalNetProfits = Total net profits
 checkYourAnswersAboutTheTradingHistory.netProfitPercentage = Total net profit as percentage of total sales revenue
 checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = I confirm that these figures are correct
-checkYourAnswersRequestReferenceNumber.heading = Check your answers – if you do not have a reference number
-checkYourAnswersRequestReferenceNumber.subheading1 = Property details
-checkYourAnswersRequestReferenceNumber.subheading2 = Your details
+requestReferenceNumber.checkYourAnswers.heading = Check your answers – if you do not have a reference number
+requestReferenceNumber.checkYourAnswers.subheading1 = Property details
+requestReferenceNumber.checkYourAnswers.subheading2 = Your details
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstances affecting the turnover
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Factors influencing receipts
 checkYourAnswersAboutTheTradingHistory.grossReceipts = Gross receipts

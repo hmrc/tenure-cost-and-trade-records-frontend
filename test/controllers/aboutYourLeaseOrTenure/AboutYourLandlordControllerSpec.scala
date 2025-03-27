@@ -16,44 +16,43 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import config.ErrorHandler
-import connectors.{AddressLookupConnector, Audit}
+import connectors.addressLookup.*
+import connectors.{Audit, MockAddressLookup}
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import models.{Address, AddressLookup, ForType}
+import models.ForType
 import models.ForType.*
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 
-import scala.language.reflectiveCalls
 import scala.concurrent.Future
+import scala.concurrent.Future.successful
+import scala.language.reflectiveCalls
 
-class AboutYourLandlordControllerSpec extends TestBaseSpec {
+class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLookup:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val mockAudit: Audit                                   = mock[Audit]
-  val mockAddressLookupConnector: AddressLookupConnector = mock[AddressLookupConnector]
-  val errorHandler: ErrorHandler                         = inject[ErrorHandler]
+  val audit           = mock[Audit]
+  given HeaderCarrier = any[HeaderCarrier]
 
   def aboutYourLandlordController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new AboutYourLandlordController(
     stubMessagesControllerComponents(),
-    mockAudit,
+    audit,
     aboutYourLeaseOrTenureNavigator,
     aboutYourLandlordView,
-    mockAddressLookupConnector,
+    addressLookupConnector,
     preEnrichedActionRefiner(
       forType = forType,
       aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne
     ),
-    errorHandler,
     mockSessionRepo
   )
 
@@ -108,28 +107,38 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
+    "redirect to the next page if a valid form is submitted" in {
+      when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any))
+        .thenReturn(successful(Some("/on-ramp")))
+      val res = aboutYourLandlordController().submit(
+        FakeRequest("POST", "/").withFormUrlEncodedBody(baseFormData.toSeq: _*)
+      )
+      status(res)                 shouldBe SEE_OTHER
+      redirectLocation(res).value shouldBe "/on-ramp"
+    }
   }
 
   "AddressLookup callback" should {
     "REDIRECT to next page" in {
-      val lookup = AddressLookup(
-        Some(Address(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None)),
-        Some("auditRef"),
+      val lookup = AddressLookupConfirmedAddress(
+        AddressLookupAddress(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None),
+        "auditRef",
         Some("id")
       )
-      when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
+      when(addressLookupConnector.getConfirmedAddress(any[String])).thenReturn(successful(lookup))
       val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
       status(res) shouldBe SEE_OTHER
     }
 
     "REDIRECT to CYA if come from CYA" in {
-      val lookup = AddressLookup(
-        Some(Address(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None)),
-        Some("auditRef"),
+      val confirmedAddress = AddressLookupConfirmedAddress(
+        AddressLookupAddress(Some(Seq("1 Main Street", "Metropolis", "Gotham City")), Some("12345"), None),
+        "auditRef",
         Some("id")
       )
-      when(mockAddressLookupConnector.getAddress(any[String])(any[HeaderCarrier])).thenReturn(Future.successful(lookup))
-      val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequestFromCYA)
+      given HeaderCarrier  = any[HeaderCarrier]
+      when(addressLookupConnector.getConfirmedAddress(any[String])).thenReturn(successful(confirmedAddress))
+      val res              = aboutYourLandlordController().addressLookupCallback("123")(fakeRequestFromCYA)
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
@@ -157,4 +166,3 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec {
       "landlordFullName" -> "Orinoco"
     )
   }
-}

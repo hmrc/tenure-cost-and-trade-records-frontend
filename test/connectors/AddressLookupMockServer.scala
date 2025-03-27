@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
-package form.aboutyouandtheproperty
+package connectors
 
-import form.MappingSupport.createYesNoType
-import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
-import play.api.data.Form
-import play.api.data.Forms.mapping
+import com.github.tomakehurst.wiremock.WireMockServer
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Suite}
 
-object ContactDetailsQuestionForm {
+trait AddressLookupMockServer(port: Int) extends BeforeAndAfterAll with BeforeAndAfterEach {
+  this: Suite =>
 
-  val theForm = Form(
-    mapping(
-      "contactDetailsQuestion" -> createYesNoType("error.contactDetailsQuestion.missing")
-    )(ContactDetailsQuestion.apply)(o => Some(o.contactDetailsQuestion))
-  )
+  protected val service = new WireMockServer(port)
 
+  override def beforeAll(): Unit = {
+    service.start()
+    super.beforeAll()
+  }
+
+  override def beforeEach(): Unit = {
+    service.resetAll()
+    super.beforeEach()
+  }
+
+  override def afterAll(): Unit = {
+    super.afterAll()
+    service.stop()
+  }
 }

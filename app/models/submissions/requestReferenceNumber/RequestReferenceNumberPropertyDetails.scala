@@ -16,12 +16,12 @@
 
 package models.submissions.requestReferenceNumber
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Format, Json}
 
-case class CheckYourAnswersRequestReferenceNumber(
-  checkYourAnswersRequestReferenceNumber: String
+case class RequestReferenceNumberPropertyDetails(
+  businessTradingName: String,
+  address: Option[RequestReferenceNumberAddress] = None
 )
 
-object CheckYourAnswersRequestReferenceNumber {
-  implicit val format: OFormat[CheckYourAnswersRequestReferenceNumber] = Json.format
-}
+object RequestReferenceNumberPropertyDetails:
+  given Format[RequestReferenceNumberPropertyDetails] = Json.format

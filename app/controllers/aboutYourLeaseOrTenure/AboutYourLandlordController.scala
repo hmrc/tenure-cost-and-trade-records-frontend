@@ -17,21 +17,20 @@
 package controllers.aboutYourLeaseOrTenure
 
 import actions.{SessionRequest, WithSessionRefiner}
-import config.ErrorHandler
-import connectors.{AddressLookupConnector, Audit}
-import controllers.FORDataCaptureController
+import connectors.Audit
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector, AddressLookupUtil}
+import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
 import models.ForType.*
 import models.Session
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
+import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
 import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.i18n.{I18nSupport, Lang}
+import play.api.Logging
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
-import play.api.Logging
-import util.AddressLookupUtil
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -44,12 +43,12 @@ class AboutYourLandlordController @Inject() (
   aboutYourLandlordView: aboutYourLandlord,
   addressLookupConnector: AddressLookupConnector,
   withSessionRefiner: WithSessionRefiner,
-  errorHandler: ErrorHandler,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with AddressLookupSupport(addressLookupConnector)
     with I18nSupport
-    with Logging {
+    with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutYourLandlord")
@@ -72,33 +71,34 @@ class AboutYourLandlordController @Inject() (
   }
 
   def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    val mayBeAddressLookup = addressLookupConnector.getAddress(id)
+    getConfirmedAddress(id)
+      .flatMap { addressLookup =>
+        val landlordAddress = AddressLookupUtil.getLandLordAddress(addressLookup)
 
-    mayBeAddressLookup.flatMap { addressLookup =>
-      val landlordAddress = AddressLookupUtil.getLandLordAddress(addressLookup)
+        val existingFullName = request.sessionData.aboutLeaseOrAgreementPartOne
+          .flatMap(_.aboutTheLandlord.map(_.landlordFullName))
+          .getOrElse("")
 
-      val existingFullName = request.sessionData.aboutLeaseOrAgreementPartOne
-        .flatMap(_.aboutTheLandlord.map(_.landlordFullName))
-        .getOrElse("")
-
-      val updatedAboutTheLandlord = AboutTheLandlord(
-        landlordFullName = existingFullName,
-        landlordAddress = Some(landlordAddress)
-      )
-
-      val updatedSessionData = request.sessionData.copy(
-        aboutLeaseOrAgreementPartOne = request.sessionData.aboutLeaseOrAgreementPartOne.map(
-          _.copy(aboutTheLandlord = Some(updatedAboutTheLandlord))
+        val updatedAboutTheLandlord = AboutTheLandlord(
+          landlordFullName = existingFullName,
+          landlordAddress = Some(landlordAddress)
         )
-      )
-      session.saveOrUpdate(updatedSessionData).map { _ =>
-        navigator.from match {
-          case "CYA" =>
-            Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
-          case _     => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
+
+        val updatedSessionData = request.sessionData.copy(
+          aboutLeaseOrAgreementPartOne = request.sessionData.aboutLeaseOrAgreementPartOne.map(
+            _.copy(aboutTheLandlord = Some(updatedAboutTheLandlord))
+          )
+        )
+        repository.saveOrUpdate(updatedSessionData).map { _ =>
+          navigator.from match {
+            case "CYA" =>
+              Redirect(
+                controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+              )
+            case _     => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
+          }
         }
       }
-    }
   }
 
   private def saveAndForwardToAddressLookup()(implicit request: SessionRequest[AnyContent]) =
@@ -109,26 +109,21 @@ class AboutYourLandlordController @Inject() (
           aboutYourLandlordView(formWithErrors, request.sessionData.toSummary, getBackLink(request.sessionData))
         ),
       data => {
-        val existingData: Option[AboutTheLandlord] =
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord)
-        val newData                                = existingData match {
+        val existingData = request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord)
+        val newData      = existingData match {
           case Some(landlord) => landlord.copy(landlordFullName = data.landlordFullName)
           case _              => data
         }
-        implicit val language: Lang                = mcc.messagesApi.preferred(request).lang
-        val from                                   = navigator.from
-        val updatedData                            = updateAboutLeaseOrAgreementPartOne(_.copy(aboutTheLandlord = Some(newData)))
-        session.saveOrUpdate(updatedData)
-        addressLookupConnector
-          .initialise(routes.AboutYourLandlordController.addressLookupCallback(), from)
-          .flatMap {
-            case Some(url) => SeeOther(url)
-            case None      =>
-              val failureReason =
-                s"AddressLookup initialisation failed for ${request.sessionData.referenceNumber} - ${hc.sessionId.getOrElse("")}"
-              logger.error(failureReason)
-              errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
-          }
+        val updatedData  = updateAboutLeaseOrAgreementPartOne(_.copy(aboutTheLandlord = Some(newData)))
+        repository.saveOrUpdate(updatedData)
+        redirectToAddressLookupFrontend(
+          config = AddressLookupConfig(
+            lookupPageHeadingKey = "aboutYourLandlord.address.lookupPageHeading",
+            selectPageHeadingKey = "aboutYourLandlord.address.selectPageHeading",
+            confirmPageLabelKey = "aboutYourLandlord.address.confirmPageHeading",
+            offRampCall = routes.AboutYourLandlordController.addressLookupCallback("")
+          )
+        )
       }
     )
 
@@ -140,4 +135,3 @@ class AboutYourLandlordController @Inject() (
         case "TL" => controllers.routes.TaskListController.show().url + "#about-your-landlord"
         case _    => controllers.routes.TaskListController.show().url
       }
-}

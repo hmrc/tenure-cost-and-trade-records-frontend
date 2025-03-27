@@ -16,17 +16,26 @@
 
 package connectors
 
+import actions.SessionRequest
+import com.github.tomakehurst.wiremock.client.WireMock.*
+import connectors.addressLookup.*
+import models.ForType.FOR6048
+import models.Session
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AsyncWordSpec
+import org.scalatest.{OptionValues, Suite, TestSuite}
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
-import play.api.i18n.Lang
 import play.api.inject.guice.GuiceApplicationBuilder
-import utils.{TestBaseSpec, WireMockHelper}
-import com.github.tomakehurst.wiremock.client.WireMock._
-import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.{AnyContent, Call}
+import play.api.test.{FakeRequest, Injecting}
+import uk.gov.hmrc.http.HeaderCarrier
 
-import scala.concurrent.duration.DurationInt
-import scala.concurrent.{Await, Future}
-import play.api.mvc.Call
-class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
+import scala.collection.immutable
+
+class AddressLookupConnectorSpec extends TestSuite with GuiceOneAppPerSuite with Injecting:
+
+  val tctrFrontendBaseUrl = "https://frontend.gov.net:9999/tctr"
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -34,107 +43,115 @@ class AddressLookupConnectorSpec extends TestBaseSpec with WireMockHelper {
         "metrics.jvm"                                        -> false,
         "metrics.enabled"                                    -> false,
         "create-internal-auth-token-on-start"                -> false,
-        "urls.tctrFrontend"                                  -> "someUrl",
+        "urls.tctrFrontend"                                  -> tctrFrontendBaseUrl,
+        "microservice.services.address-lookup-frontend.host" -> "localhost",
         "microservice.services.address-lookup-frontend.port" -> 11111
       )
       .build()
 
-  private lazy val connector: AddressLookupConnector = inject[AddressLookupConnector]
-  private implicit val language: Lang                = Lang("en")
-  val call: Call                                     = Call("GET", "/callback-url")
-  val testResponseAddress: JsValue                   =
-    Json.parse(input =
-      "{\n\"auditRef\":\"e9e2fb3f-268f-4c4c-b928-3dc0b17259f2\",\n\"address\":{\n\"lines\":[\n\"Line1\",\n\"Line2\",\n\"Line3\",\n\"Line4\"\n],\n \"postcode\":\"NE1 1LX\",\n\"country\":{\n\"code\":\"GB\",\n\"name\":\"United Kingdom\"\n}\n}\n}"
+  // WARNING
+  // The following nestedSuite is just a workaround for an open issue:
+  // https://github.com/playframework/scalatestplus-play/issues/112
+  //
+  val nestedSuite = new AsyncWordSpec with Matchers with OptionValues with AddressLookupMockServer(port = 11111) {
+
+    given SessionRequest[AnyContent] = SessionRequest(
+      Session(
+        referenceNumber = "99996010004",
+        forType = FOR6048,
+        address = models.submissions.common
+          .Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
+        token = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+        isWelsh = false
+      ),
+      FakeRequest("GET", "/path/to/controller")
     )
 
-  "AddressLookupConnector" should {
+    given HeaderCarrier = HeaderCarrier()
 
-    "return a location when addressLookup.initialise" in {
-      server.stubFor(
-        post(urlEqualTo("/api/v2/init"))
-          .willReturn(
-            aResponse()
-              .withStatus(202)
-              .withHeader("Location", "/api/v2/location")
+    val config = AddressLookupConfig(
+      "lookupPageHeadingKey",
+      "selectPageHeadingKey",
+      "lookupPageKey",
+      offRampCall = Call("GET", s"$tctrFrontendBaseUrl/off-ramp")
+    )
+
+    "the AddressLookupConnector" when {
+      "initializing the lookup journey"  should {
+        "succeed with the on-ramp location if the service provides it" in {
+          service.stubFor(
+            post(urlEqualTo("/api/v2/init"))
+              .willReturn(
+                aResponse()
+                  .withStatus(202)
+                  .withHeader("Location", "/on-ramp")
+              )
           )
-      )
-
-      val result: Option[String] = Await.result(connector.initialise(call), 500.millisecond)
-      result shouldBe Some("/api/v2/location")
-    }
-
-    "return error when there is no Location" in {
-      server.stubFor(
-        post(urlEqualTo("/api/v2/init"))
-          .willReturn(
-            aResponse()
-              .withStatus(202)
-              .withBody("")
-              .withHeader("notLocation", "")
+          val connector = inject[AddressLookupConnector]
+          for result <- connector.initJourney(config) yield result.value mustBe "/on-ramp"
+        }
+        "succeed with none if the service does not provide the on-ramp location" in {
+          service.stubFor(
+            post(urlEqualTo("/api/v2/init"))
+              .willReturn(
+                aResponse()
+                  .withStatus(202)
+                  // DO NOT .withHeader("Location", "/on-ramp")
+              )
           )
-      )
-
-      val result: Option[String] = Await.result(connector.initialise(call), 500.millisecond)
-      result shouldBe Some(
-        s"[AddressLookupConnector][initialise] - Failed to obtain location from http://localhost:${server.port}/api/v2/init"
-      )
-    }
-
-    "return error when status is other than 202" in {
-      server.stubFor(
-        post(urlEqualTo("/api/v2/init"))
-          .willReturn(
-            aResponse()
-              .withStatus(204)
+          val connector = inject[AddressLookupConnector]
+          for result <- connector.initJourney(config) yield result mustBe None
+        }
+        "succeed with none if the service replies with HTTP status code different than 202" in {
+          service.stubFor(
+            post(urlEqualTo("/api/v2/init"))
+              .willReturn(
+                aResponse()
+                  .withStatus(505)
+              )
           )
-      )
-
-      val result: Option[String] = Await.result(connector.initialise(call), 500.millisecond)
-      result shouldBe None
-    }
-
-    "get None when there is an error" in {
-      server.stubFor(
-        post(urlEqualTo("/api/v2/init"))
-          .willReturn(
-            aResponse()
-          )
-      )
-
-      val result: Future[Option[String]] = connector.initialise(call)
-      whenReady(result) { res =>
-        res shouldBe None
+          val connector = inject[AddressLookupConnector]
+          for result <- connector.initJourney(config) yield result mustBe None
+        }
       }
-
-    }
-
-    "return None when HTTP call fails" in {
-      server.stubFor(
-        post(urlEqualTo("/api/v2/init"))
-          .willReturn(
-            aResponse()
-              .withStatus(400)
+      "retrieving the confirmed address" should {
+        "succeed with the confirmed address" in {
+          service.stubFor(
+            get(urlEqualTo("/api/confirmed?id=123456789"))
+              .willReturn(
+                aResponse()
+                  .withStatus(200)
+                  .withBody("""
+                      |{
+                      |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
+                      |    "id" : "GB990091234524",
+                      |    "address" : {
+                      |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
+                      |        "postcode" : "ZZ1 1ZZ",
+                      |        "country" : {
+                      |            "code" : "GB",
+                      |            "name" : "United Kingdom"
+                      |        }
+                      |    }
+                      |}
+                      |""".stripMargin)
+              )
           )
-      )
 
-      val result: Future[Option[String]] = connector.initialise(call)
-      whenReady(result) { res =>
-        res shouldBe None
+          val connector = inject[AddressLookupConnector]
+          for result <- connector.getConfirmedAddress(id = "123456789")
+          yield {
+            result.auditRef mustBe "bed4bd24-72da-42a7-9338-f43431b7ed72"
+            result.id.value mustBe "GB990091234524"
+            result.address mustBe AddressLookupAddress(
+              Some(List("10 Other Place", "Some District", "Anytown")),
+              Some("ZZ1 1ZZ"),
+              Some(AddressLookupCountry(Some("United Kingdom"), Some("GB")))
+            )
+          }
+        }
       }
-    }
-
-    "return cacheMap when called with ID" in {
-      server.stubFor(
-        get(urlEqualTo("/api/confirmed?id=123456789"))
-          .willReturn(
-            aResponse()
-              .withStatus(200)
-              .withBody(testResponseAddress.toString)
-          )
-      )
-
-      val result = Await.result(connector.getAddress(id = "123456789"), 5.second)
-      result.auditRef.map(_ shouldBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2")
     }
   }
-}
+
+  override def nestedSuites: immutable.IndexedSeq[Suite] = Vector(nestedSuite)

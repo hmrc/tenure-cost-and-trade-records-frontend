@@ -16,7 +16,6 @@
 
 package navigation.lettingHistory
 
-import controllers.lettingHistory.{eventualFromFragment, isFromCheckYourAnswer, isFromTaskList, unchangedSession}
 import actions.SessionRequest
 import app.RoutesPrefix
 import connectors.Audit
@@ -47,7 +46,7 @@ abstract class Navigator(audit: Audit):
       else
         backwardNavigationMap
           .get(ofPage)
-          .flatMap(_.apply(request.unchangedSession, navigation))
+          .flatMap(_.apply(SessionWrapper(request.sessionData, changed = false), navigation))
     ) .map(c => toDecorated(c).toString)
 
   val forwardNavigationMap: NavigationMap

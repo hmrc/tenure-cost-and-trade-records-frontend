@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import form.Errors
-import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.requestReferenceNumberContactDetailsForm
+import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.theForm
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -91,7 +91,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
       )
       status(result) shouldBe Status.SEE_OTHER
       redirectLocation(result) shouldBe Some(
-        controllers.requestReferenceNumber.routes.CheckYourAnswersRequestReferenceNumberController.show().url
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show().url
       )
     }
   }
@@ -99,41 +99,41 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
   "no Reference Number Contact Details form" should {
     "error if fullName is missing " in {
       val formData = baseFormData - errorKey.fullName
-      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.fullName, "error.requestReferenceNumberContactDetailsFullName.required", form)
     }
 
     "error if phone is missing" in {
       val formData = baseFormData + (errorKey.phone -> "")
-      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
     }
     "error if phone number is too short" in {
       val formData = baseFormData + (errorKey.phone -> "12345")
-      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.contactPhoneLength, form)
     }
 
     "error if phone number is invalid format" in {
       val formData = baseFormData + (errorKey.phone -> "invalid_phone_number")
-      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.invalidPhone, form)
     }
 
     "error if email is missing" in {
       val formData = baseFormData + (errorKey.email -> "")
-      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.contactEmailRequired, form)
     }
 
     "error if email is invalid format" in {
       val formData = baseFormData + (errorKey.email -> "invalid_email_address")
-      val form     = requestReferenceNumberContactDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.emailFormat, form)
     }

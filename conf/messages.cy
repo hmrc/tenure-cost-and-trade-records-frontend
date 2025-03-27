@@ -215,11 +215,14 @@ requestReferenceNumber.subheading2 = Os oes angen llythyr arall arnoch
 requestReferenceNumber.p2 = Os nad oes gennych chi fynediad at eich llythyr gan y VOA, neu os nad ydych wedi cael un ond yn meddwl y dylech fod wedi, gall y VOA anfon un arall. Cwblhewch y ffurflen ganlynol a bydd y VOA yn ailanfon un arall.
 requestReferenceNumber.p3 = Dim ond i''r cyfeiriad lle cawsant eu hanfon yn wreiddiol y gallwn ailanfon llythyrau. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Cysylltwch â''r VOA (opens in new tab)</a> os yw eich busnes wedi newid cyfeiriad yn ddiweddar.
 requestReferenceNumber.subheading3 = Beth yw manylion yr eiddo sy''n gysylltiedig â''r cyfeirnod coll?
+requestReferenceNumber.address.lookupPageHeading = Beth yw cyfeiriad yr eiddo?
+requestReferenceNumber.address.selectPageHeading = Dewiswch gyfeiriad yr eiddo
+requestReferenceNumber.address.confirmPageHeading = Gwiriwch gyfeiriad yr eiddo
 label.requestReferenceNumberBusinessTradingName = Enw masnachu neu enw''r busnes
-error.requestReferenceNumberBusinessTradingName.required = Enter the business or trading name
+error.requestReferenceNumber.businessTradingName.required = Enter the business or trading name
 key.requestReferenceNumberAddress = Cyfeiriad
 key.nameContactRequestReferenceNumber = Enw a''r manylion cyswllt
-error.requestReferenceNumberBusinessTradingName.maxLength = Business or trading name must be 50 characters or fewer
+error.requestReferenceNumber.businessTradingName.maxLength = Business or trading name must be 50 characters or fewer
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
@@ -471,6 +474,9 @@ error.isRentReceivedFromLetting.missing = Dewiswch ‘oes'' os oes unrhyw rent y
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
 tenantDetails.heading = Rhowch fanylion y tenant
+tenantDetails.address.lookupPageHeading = What is the tenant''s correspondence address?
+tenantDetails.address.selectPageHeading = Choose the tenant''s correspondence address
+tenantDetails.address.confirmPageHeading = Check the tenant''s correspondence address
 label.tenantName = Enw''r tenant
 label.descriptionOfLetting = Disgrifiad o''r hyn sydd ar osod
 hint.descriptionOfLetting = Er enghraifft, bwrdd poster, llety preswyl
@@ -856,7 +862,9 @@ error.franchiseOrLettings.missing = Select yes if you receive income from lettin
 #####################
 aboutYourLandlord.heading = Eich landlord
 label.landlordFullName = Enw''r landlord
-label.landlordAddress.address = Landlord''s address
+aboutYourLandlord.address.lookupPageHeading = What is your landlord''s address?
+aboutYourLandlord.address.selectPageHeading = Choose your landlord''s address
+aboutYourLandlord.address.confirmPageHeading = Check your landlord''s address
 error.landlordFullName.required = Os nad ydych yn gwybod enw''r landlord, nodwch ‘Anhysbys''
 error.landlordFullName.maxLength = Mae''n rhaid i enw''r landlord fod yn 50 o gymeriadau neu lai
 
@@ -3793,9 +3801,9 @@ checkYourAnswersAboutTheTradingHistory.totalGrossProfits = Cyfanswm yr elw gros
 checkYourAnswersAboutTheTradingHistory.totalNetProfits = Cyfanswm yr elw net
 checkYourAnswersAboutTheTradingHistory.netProfitPercentage = Cyfanswm yr elw net fel canran o gyfanswm refeniw y gwerthiannau
 checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = Rwy''n cadarnhau bod y ffigyrau hyn yn gywir
-checkYourAnswersRequestReferenceNumber.heading = Gwirio eich atebion - os nad oes gennych rif cyfeirnod
-checkYourAnswersRequestReferenceNumber.subheading1 = Manylion yr eiddo
-checkYourAnswersRequestReferenceNumber.subheading2 = Eich manylion
+requestReferenceNumber.checkYourAnswers.heading = Gwirio eich atebion - os nad oes gennych rif cyfeirnod
+requestReferenceNumber.checkYourAnswers.subheading1 = Manylion yr eiddo
+requestReferenceNumber.checkYourAnswers.subheading2 = Eich manylion
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Amgylchiadau anarferol sy''n effeithio ar y trisiant
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Ffactorau sy''n dylanwadu ar dderbyniadau
 checkYourAnswersAboutTheTradingHistory.grossReceipts = Derbyniadau gros

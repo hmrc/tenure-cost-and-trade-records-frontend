@@ -28,7 +28,7 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetai
 
   val messageKeyPrefix = "contactDetailsQuestion"
 
-  override val form: Form[ContactDetailsQuestion] = ContactDetailsQuestionForm.contactDetailsQuestionForm
+  override val form: Form[ContactDetailsQuestion] = ContactDetailsQuestionForm.theForm
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
 

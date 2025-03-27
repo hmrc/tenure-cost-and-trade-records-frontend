@@ -16,7 +16,6 @@
 
 package form.connectiontoproperty
 
-import form.MappingSupport.correspondenceAddressMapping
 import models.submissions.connectiontoproperty.TenantDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -24,17 +23,18 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TenantDetailsForm {
 
-  val tenantDetailsForm: Form[TenantDetails] = Form(
+  val theForm = Form[TenantDetails](
     mapping(
-      "tenantName"            -> default(text, "").verifying(
+      "tenantName"           -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tenantName.required"),
         maxLength(50, "error.tenantName.maxLength")
       ),
-      "descriptionOfLetting"  -> default(text, "").verifying(
+      "descriptionOfLetting" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.descriptionOfLetting.required"),
         maxLength(50, "error.descriptionOfLetting.maxLength")
-      ),
-      "correspondenceAddress" -> correspondenceAddressMapping
-    )(TenantDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+      )
+    )((name, descriptionOfLetting) => TenantDetails(name, descriptionOfLetting, None)) { detail =>
+      Some((detail.name, detail.descriptionOfLetting))
+    }
   )
 }

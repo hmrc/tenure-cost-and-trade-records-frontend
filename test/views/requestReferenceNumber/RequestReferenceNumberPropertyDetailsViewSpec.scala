@@ -16,22 +16,21 @@
 
 package views.requestReferenceNumber
 
-import form.requestReferenceNumber.RequestReferenceNumberForm
-import models.submissions.requestReferenceNumber.RequestReferenceNumber
-import org.scalatest.matchers.must.Matchers._
+import form.requestReferenceNumber.RequestReferenceNumberPropertyDetailsForm
+import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class NoReferenceNumberViewSpec extends QuestionViewBehaviours[RequestReferenceNumber] {
+class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "requestReferenceNumber"
 
-  override val form = RequestReferenceNumberForm.requestReferenceNumberForm
+  override val form: Form[String] = RequestReferenceNumberPropertyDetailsForm.theForm
 
-  def createView = () => requestReferenceAddressView(form)(fakeRequest, messages)
+  def createView = () => requestReferenceNumberPropertyDetailsView(form)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RequestReferenceNumber]) =>
-    requestReferenceAddressView(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[String]) =>
+    requestReferenceNumberPropertyDetailsView(form)(fakeRequest, messages)
 
   "No reference number view" must {
 
@@ -39,11 +38,7 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[RequestReferenceN
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "requestReferenceNumberAddress.buildingNameNumber",
-      "requestReferenceNumberAddress.street1",
-      "requestReferenceNumberAddress.town",
-      "requestReferenceNumberAddress.county",
-      "requestReferenceNumberAddress.postcode"
+      "businessTradingName"
     )
 
     "has a link marked with back.link.label leading to the Login Page" in {
@@ -84,34 +79,9 @@ class NoReferenceNumberViewSpec extends QuestionViewBehaviours[RequestReferenceN
       assert(doc.toString.contains(messages("requestReferenceNumber.subheading3")))
     }
 
-    "contain an input for requestReferenceNumberBusinessTradingName" in {
+    "contain an input for businessTradingName" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "requestReferenceNumberBusinessTradingName")
-    }
-
-    "contain an input for requestReferenceNumberAddress.buildingNameNumber" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "requestReferenceNumberAddress.buildingNameNumber")
-    }
-
-    "contain an input for requestReferenceNumberAddress.street1" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "requestReferenceNumberAddress.street1")
-    }
-
-    "contain an input for requestReferenceNumberAddress.town" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "requestReferenceNumberAddress.town")
-    }
-
-    "contain an input for requestReferenceNumberAddress.county" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "requestReferenceNumberAddress.county")
-    }
-
-    "contain an input for requestReferenceNumberAddress.postcode" in {
-      val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "requestReferenceNumberAddress.postcode")
+      assertRenderedById(doc, "businessTradingName")
     }
 
     "contain continue button with the value Continue" in {

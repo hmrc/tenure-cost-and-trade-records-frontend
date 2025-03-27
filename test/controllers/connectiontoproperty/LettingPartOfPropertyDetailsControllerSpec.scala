@@ -16,198 +16,187 @@
 
 package controllers.connectiontoproperty
 
-import connectors.Audit
-import models.submissions.connectiontoproperty.StillConnectedDetails
-import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import utils.TestBaseSpec
+import connectors.{Audit, MockAddressLookup}
+import models.Session
+import models.submissions.connectiontoproperty.*
+import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.test.Helpers.*
+import repositories.SessionRepo
+import utils.{JsoupHelpers, TestBaseSpec}
 
-class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec {
+import scala.concurrent.Future.successful
 
-  val mockAudit: Audit = mock[Audit]
-  def lettingPartOfPropertyDetailsController(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
-    new LettingPartOfPropertyDetailsController(
+class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
+
+  "the LettingPartOfPropertyDetails controller" when {
+    "handling GET /"                   should {
+      "reply 200 with an empty form" in new ControllerFixture {
+        val result = controller.show(None)(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.heading                     shouldBe "tenantDetails.heading"
+        page.backLink                    shouldBe routes.IsRentReceivedFromLettingController.show().url
+        page.input("tenantName")           should beEmpty
+        page.input("descriptionOfLetting") should beEmpty
+      }
+      "reply 200 with a pre-filled form" in new ControllerFixture(
+        lettingPartOfPropertyDetails = IndexedSeq(
+          LettingPartOfPropertyDetails(
+            tenantDetails = TenantDetails(
+              name = "John Doe",
+              descriptionOfLetting = "Short term rental",
+              correspondenceAddress = None
+            )
+          )
+        )
+      ) {
+        val result = controller.show(Some(0))(fakeRequest)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.heading                     shouldBe "tenantDetails.heading"
+        page.backLink                    shouldBe routes.IsRentReceivedFromLettingController.show().url
+        page.input("tenantName")           should haveValue("John Doe")
+        page.input("descriptionOfLetting") should haveValue("Short term rental")
+      }
+      "generate back Link" should {
+        "to CYA page if query param present" in new ControllerFixture {
+          val result = controller.show(Some(0))(fakeRequestFromCYA)
+          val page   = contentAsJsoup(result)
+          page.backLink shouldBe routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+        }
+        "to previous letting page" in new ControllerFixture {
+          val result = controller.show(Some(1))(fakeRequest)
+          val page   = contentAsJsoup(result)
+          page.backLink shouldBe routes.AddAnotherLettingPartOfPropertyController.show(0).url
+        }
+        "to Is Rent Received From page if there is only 1 letting" in new ControllerFixture {
+          val result = controller.show(Some(0))(fakeRequest)
+          val page   = contentAsJsoup(result)
+          page.backLink shouldBe routes.IsRentReceivedFromLettingController.show().url
+        }
+      }
+    }
+    "handling POST /"                  should {
+      "reply 404 if the submitted data is invalid" in new ControllerFixture {
+        val result = controller.submit(None)(
+          fakePostRequest.withFormUrlEncodedBody(
+            "tenantName"           -> "", // missing,
+            "descriptionOfLetting" -> "1234567890" * 6 // too long
+          )
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page   = contentAsJsoup(result)
+        page.error("tenantName")           shouldBe "error.tenantName.required"
+        page.error("descriptionOfLetting") shouldBe "error.descriptionOfLetting.maxLength"
+      }
+      "reply 303 redirect to the address lookup page when given new details" in new ControllerFixture {
+        val result = controller.submit(None)(
+          fakePostRequest.withFormUrlEncodedBody(
+            "tenantName"           -> "New tenant",
+            "descriptionOfLetting" -> "This has never been given before"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session  = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        val captured = session.getValue
+        captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
+        val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
+        details                                          should have size 1
+        details(0).tenantDetails.name                  shouldBe "New tenant"
+        details(0).tenantDetails.descriptionOfLetting  shouldBe "This has never been given before"
+        details(0).tenantDetails.correspondenceAddress shouldBe None
+      }
+      "reply 303 redirect to the address lookup page when updating existing details" in new ControllerFixture(
+        lettingPartOfPropertyDetails = oneLettingPartOfPropertyDetails
+      ) {
+        val result = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "tenantName"           -> "Mario Rossi",
+            "descriptionOfLetting" -> "This is updating the existing one"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+
+        val session  = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        val captured = session.getValue
+
+        captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
+        val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
+        details                                          should have size 1
+        details(0).tenantDetails.name                  shouldBe "Mario Rossi"
+        details(0).tenantDetails.descriptionOfLetting  shouldBe "This is updating the existing one"
+        details(0).tenantDetails.correspondenceAddress shouldBe None
+      }
+    }
+    "retrieving the confirmed address" should {
+      "reply 303 redirect to the next page" in new ControllerFixture(
+        lettingPartOfPropertyDetails = oneLettingPartOfPropertyDetails
+      ) {
+        val result = controller.addressLookupCallback(0, "123")(fakeRequest)
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.LettingPartOfPropertyDetailsRentController.show(0).url
+
+        val id = captor[String]
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        id.getValue shouldBe "123"
+
+        val session  = captor[Session]
+        verify(repository, once).saveOrUpdate(session)(any, any)
+        val captured = session.getValue
+
+        captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
+        val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
+        details                                                should have size 1
+        details(0).tenantDetails.name                        shouldBe "John Doe"
+        details(0).tenantDetails.descriptionOfLetting        shouldBe "Short term rental"
+        details(0).tenantDetails.correspondenceAddress.value shouldBe CorrespondenceAddress(
+          buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+          street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+          town = addressLookupConfirmedAddress.address.lines.get.last,
+          county = None,
+          postcode = addressLookupConfirmedAddress.address.postcode.get
+        )
+      }
+    }
+  }
+
+  val oneLettingPartOfPropertyDetails = IndexedSeq(
+    LettingPartOfPropertyDetails(
+      tenantDetails = TenantDetails(
+        name = "John Doe",
+        descriptionOfLetting = "Short term rental",
+        correspondenceAddress = None
+      )
+    )
+  )
+
+  trait ControllerFixture(
+    lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty
+  ) extends MockAddressLookup:
+    val mockAudit  = mock[Audit]
+    val repository = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+
+    val controller = new LettingPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,
       tenantDetailsView,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      preEnrichedActionRefiner(stillConnectedDetails =
+        Some(
+          prefilledStillConnectedDetailsYesToAll.copy(
+            lettingPartOfPropertyDetails = lettingPartOfPropertyDetails
+          )
+        )
+      ),
+      addressLookupConnector,
+      repository
     )
-
-  "LettingPartOfPropertyDetailsController GET /" should {
-    "return 200 and HTML with Letting Part of Property Details in session" in {
-      val result = lettingPartOfPropertyDetailsController().show(Some(0))(fakeRequest)
-      status(result)        shouldBe Status.OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
-      )
-    }
-
-    "return 200 and HTML Letting Part of Property Details with none in session" in {
-      val controller = lettingPartOfPropertyDetailsController(stillConnectedDetails = None)
-      val result     = controller.show(Some(0))(fakeRequest)
-      status(result)        shouldBe Status.OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
-      )
-    }
-
-    "render a page with an empty form" when {
-      "not given an index" in {
-        val result = lettingPartOfPropertyDetailsController().show(None)(fakeRequest)
-        val html   = Jsoup.parse(contentAsString(result))
-
-        Option(html.getElementById("tenantName").`val`()).value                               shouldBe ""
-        Option(html.getElementById("descriptionOfLetting").`val`()).value                     shouldBe ""
-        Option(html.getElementById("correspondenceAddress.buildingNameNumber").`val`()).value shouldBe ""
-        Option(html.getElementById("correspondenceAddress.street1").`val`()).value            shouldBe ""
-        Option(html.getElementById("correspondenceAddress.town").`val`()).value               shouldBe ""
-        Option(html.getElementById("correspondenceAddress.county").`val`()).value             shouldBe ""
-        Option(html.getElementById("correspondenceAddress.postcode").`val`()).value           shouldBe ""
-      }
-
-      "given an index" which {
-        "doesn't already exist in the session" in {
-          val result = lettingPartOfPropertyDetailsController().show(Some(2))(fakeRequest)
-          val html   = Jsoup.parse(contentAsString(result))
-
-          Option(html.getElementById("tenantName").`val`()).value                               shouldBe ""
-          Option(html.getElementById("descriptionOfLetting").`val`()).value                     shouldBe ""
-          Option(html.getElementById("correspondenceAddress.buildingNameNumber").`val`()).value shouldBe ""
-          Option(html.getElementById("correspondenceAddress.street1").`val`()).value            shouldBe ""
-          Option(html.getElementById("correspondenceAddress.town").`val`()).value               shouldBe ""
-          Option(html.getElementById("correspondenceAddress.county").`val`()).value             shouldBe ""
-          Option(html.getElementById("correspondenceAddress.postcode").`val`()).value           shouldBe ""
-        }
-      }
-    }
-    "calculateBackLink" should {
-      "return back link to CYA page if query param present" in {
-        val result = lettingPartOfPropertyDetailsController().show(Some(0))(fakeRequestFromCYA)
-        contentAsString(result) should include(
-          controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
-        )
-      }
-      "return back link to previous letting page" in {
-        val result = lettingPartOfPropertyDetailsController().show(Some(1))(fakeRequest)
-        contentAsString(result) should include(
-          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
-        )
-      }
-      "return back link to Is Rent Received From page if there is only 1 letting" in {
-        val result = lettingPartOfPropertyDetailsController().show(Some(0))(fakeRequest)
-        contentAsString(result) should include(
-          controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
-        )
-      }
-
-    }
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = lettingPartOfPropertyDetailsController().submit(None)(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
-    }
-
-    "Redirect when form data submitted without CYA param" in {
-      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
-        FakeRequest(POST, "").withFormUrlEncodedBody(
-          "tenantName"                               -> "Tenants name",
-          "descriptionOfLetting"                     -> "Description of letting",
-          "correspondenceAddress.buildingNameNumber" -> "Building name number",
-          "correspondenceAddress.street1"            -> "Street",
-          "correspondenceAddress.town"               -> "Town",
-          "correspondenceAddress.county"             -> "County",
-          "correspondenceAddress.postcode"           -> "SW1A 1AA"
-        )
-      )
-      status(res) shouldBe SEE_OTHER
-    }
-
-    "Redirect when form data submitted with CYA param" in {
-      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
-        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
-          "tenantName"                               -> "Tenants name",
-          "descriptionOfLetting"                     -> "Description of letting",
-          "correspondenceAddress.buildingNameNumber" -> "Building name number",
-          "correspondenceAddress.street1"            -> "Street",
-          "correspondenceAddress.town"               -> "Town",
-          "correspondenceAddress.county"             -> "County",
-          "correspondenceAddress.postcode"           -> "SW1A 1AA"
-        )
-      )
-      status(res) shouldBe SEE_OTHER
-    }
-
-    "Bad request when tenantName exceeds 50 char" in {
-      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
-        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
-          "tenantName"                               -> "X" * 51,
-          "descriptionOfLetting"                     -> "Description of letting",
-          "correspondenceAddress.buildingNameNumber" -> "Building name number",
-          "correspondenceAddress.street1"            -> "Street",
-          "correspondenceAddress.town"               -> "Town",
-          "correspondenceAddress.county"             -> "County",
-          "correspondenceAddress.postcode"           -> "SW1A 1AA"
-        )
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-
-    "Bad request when descriptionOfLetting exceeds 50 char" in {
-      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
-        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
-          "tenantName"                               -> "Tenants name",
-          "descriptionOfLetting"                     -> "X" * 51,
-          "correspondenceAddress.buildingNameNumber" -> "Building name number",
-          "correspondenceAddress.street1"            -> "Street",
-          "correspondenceAddress.town"               -> "Town",
-          "correspondenceAddress.county"             -> "County",
-          "correspondenceAddress.postcode"           -> "SW1A 1AA"
-        )
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-
-    "Bad request when buildingNameNumber exceeds 50 char" in {
-      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
-        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
-          "tenantName"                               -> "Tenants name",
-          "descriptionOfLetting"                     -> "Description of letting",
-          "correspondenceAddress.buildingNameNumber" -> "X" * 51,
-          "correspondenceAddress.street1"            -> "Street",
-          "correspondenceAddress.town"               -> "X" * 51,
-          "correspondenceAddress.buildingNameNumber" -> "County",
-          "correspondenceAddress.postcode"           -> "SW1A 1AA"
-        )
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-
-    "Bad request when town exceeds 50 char" in {
-      val res = lettingPartOfPropertyDetailsController().submit(Some(0))(
-        FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
-          "tenantName"                               -> "Tenants name",
-          "descriptionOfLetting"                     -> "Description of letting",
-          "correspondenceAddress.buildingNameNumber" -> "Building name number",
-          "correspondenceAddress.street1"            -> "Street",
-          "correspondenceAddress.town"               -> "X" * 51,
-          "correspondenceAddress.county"             -> "County",
-          "correspondenceAddress.postcode"           -> "SW1A 1AA"
-        )
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
-}

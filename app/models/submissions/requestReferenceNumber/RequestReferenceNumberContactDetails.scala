@@ -17,14 +17,13 @@
 package models.submissions.requestReferenceNumber
 
 import models.submissions.common.ContactDetails
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Format, Json}
 
 case class RequestReferenceNumberContactDetails(
-  requestReferenceNumberContactDetailsFullName: String,
-  requestReferenceNumberContactDetails: ContactDetails,
-  requestReferenceNumberContactDetailsAdditionalInformation: Option[String]
+  noReferenceNumberFullName: String,
+  noReferenceNumberContactDetails: ContactDetails,
+  noReferenceNumberAdditionalInfo: Option[String]
 )
 
-object RequestReferenceNumberContactDetails {
-  implicit val format1: OFormat[RequestReferenceNumberContactDetails] = Json.format
-}
+object RequestReferenceNumberContactDetails:
+  given Format[RequestReferenceNumberContactDetails] = Json.format

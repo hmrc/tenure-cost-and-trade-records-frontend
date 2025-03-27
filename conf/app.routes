@@ -44,16 +44,17 @@ GET         /max-lettings                                       controllers.MaxO
 POST        /max-lettings                                       controllers.MaxOfLettingsReachedController.submit(src: Option[String] ?=None)
 
 # No reference number
-GET         /request-reference-number-with-session              controllers.requestReferenceNumber.RequestReferenceNumberController.startWithSession()
-GET         /request-reference-number                           controllers.requestReferenceNumber.RequestReferenceNumberController.show()
-POST        /request-reference-number                           controllers.requestReferenceNumber.RequestReferenceNumberController.submit()
+GET         /request-reference-number-with-session              controllers.requestReferenceNumber.RequestReferenceNumberPropertyDetailsController.startWithSession()
+GET         /request-reference-number-property-details          controllers.requestReferenceNumber.RequestReferenceNumberPropertyDetailsController.show()
+POST        /request-reference-number-property-details          controllers.requestReferenceNumber.RequestReferenceNumberPropertyDetailsController.submit()
+GET         /request-reference-number-property-details-callback controllers.requestReferenceNumber.RequestReferenceNumberPropertyDetailsController.addressLookupCallback(id: String ?= "")
 
 GET         /request-reference-number-contact-details           controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.show()
 POST        /request-reference-number-contact-details           controllers.requestReferenceNumber.RequestReferenceNumberContactDetailsController.submit()
 
-GET         /check-your-answers-request-reference-number        controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.show()
-POST        /check-your-answers-request-reference-number        controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.submit()
-GET         /confirmation-request-reference-number              controllers.requestReferenceNumber.CheckYourAnswersRequestReferenceNumberController.confirmation()
+GET         /check-your-answers-request-reference-number        controllers.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersController.show()
+POST        /check-your-answers-request-reference-number        controllers.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersController.submit()
+GET         /confirmation-request-reference-number              controllers.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersController.confirmation()
 
 # PDF download
 GET         /download-pdf-reference-number                      controllers.downloadFORTypeForm.DownloadPDFReferenceNumberController.show()

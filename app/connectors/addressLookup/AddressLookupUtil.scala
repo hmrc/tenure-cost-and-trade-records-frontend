@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package util
+package connectors.addressLookup
 
-import models.{Address, AddressLookup}
 import models.submissions.aboutYourLeaseOrTenure.LandlordAddress
 
 object AddressLookupUtil {
-  def getLandLordAddress(addressLookup: AddressLookup): LandlordAddress =
+  def getLandLordAddress(addressLookup: AddressLookupConfirmedAddress): LandlordAddress =
     addressLookup match {
-      case AddressLookup(Some(Address(Some(lines), postcode, _)), _, Some(_)) if lines.nonEmpty =>
+      case AddressLookupConfirmedAddress(AddressLookupAddress(Some(lines), postcode, _), _, Some(_))
+          if lines.nonEmpty =>
         // With ID present, at least two lines are guaranteed
         LandlordAddress(
           buildingNameNumber = lines.head,
@@ -32,7 +32,7 @@ object AddressLookupUtil {
           postcode = postcode.getOrElse("Empty Postcode")
         )
 
-      case AddressLookup(Some(Address(Some(lines), postcode, _)), _, None) =>
+      case AddressLookupConfirmedAddress(AddressLookupAddress(Some(lines), postcode, _), _, None) =>
         lines.length match {
           case 1 =>
             LandlordAddress(
@@ -67,7 +67,7 @@ object AddressLookupUtil {
               postcode = postcode.getOrElse("Empty Postcode")
             )
         }
-      case _                                                               =>
+      case _                                                                                      =>
         LandlordAddress(
           buildingNameNumber = "",
           street1 = None,

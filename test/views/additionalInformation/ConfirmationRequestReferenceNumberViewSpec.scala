@@ -20,13 +20,13 @@ import actions.SessionRequest
 import controllers.FeedbackFormMapper
 import views.behaviours.ViewBehaviours
 
-class confirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
+class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "label.connectionToProperty.confirm"
   val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val form       = FeedbackFormMapper.feedbackForm
-  def createView = () => confirmationRequestReferenceNumber(form)(sessionRequest, messages)
+  def createView = () => requestReferenceNumberConfirmationView(form)(sessionRequest, messages)
 
   "confirmation request reference number view" must {
 

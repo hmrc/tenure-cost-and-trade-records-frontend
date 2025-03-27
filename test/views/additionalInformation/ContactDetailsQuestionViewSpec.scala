@@ -27,7 +27,7 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetai
 
   val messageKeyPrefix = "contactDetailsQuestion"
 
-  override val form = ContactDetailsQuestionForm.contactDetailsQuestionForm
+  override val form = ContactDetailsQuestionForm.theForm
 
   def createView = () => contactDetailsQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
 

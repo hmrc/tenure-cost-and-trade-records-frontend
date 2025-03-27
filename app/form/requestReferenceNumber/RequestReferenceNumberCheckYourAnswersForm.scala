@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package models
+package form.requestReferenceNumber
 
-import play.api.libs.json.{Format, Json}
+import models.submissions.requestReferenceNumber.RequestReferenceNumberCheckYourAnswers
+import play.api.data.Form
+import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.nonEmpty
 
-case class Country(name: Option[String], code: Option[String])
+object RequestReferenceNumberCheckYourAnswersForm {
 
-object Country {
-  implicit val format: Format[Country] = Json.format
-}
-
-case class Address(lines: Option[Seq[String]], postcode: Option[String], country: Option[Country])
-
-object Address {
-  implicit val format: Format[Address] = Json.format
-}
-
-final case class AddressLookup(address: Option[Address], auditRef: Option[String], id: Option[String])
-
-object AddressLookup {
-  implicit val format: Format[AddressLookup] = Json.format
+  val theForm = Form(
+    mapping(
+      "checkYourAnswersRequestReferenceNumber" -> default(text, "").verifying(
+        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+      )
+    )(RequestReferenceNumberCheckYourAnswers.apply)(o => Some(o.value))
+  )
 }
