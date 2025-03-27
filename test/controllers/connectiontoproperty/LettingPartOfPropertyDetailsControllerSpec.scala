@@ -29,9 +29,9 @@ import scala.concurrent.Future.successful
 class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   "the LettingPartOfPropertyDetails controller" when {
-    "handling GET /"                   should {
+    "handling GET / requests"          should {
       "reply 200 with an empty form" in new ControllerFixture {
-        val result = controller.show(None)(fakeRequest)
+        val result = controller.show(index = None)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
@@ -52,7 +52,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
           )
         )
       ) {
-        val result = controller.show(Some(0))(fakeRequest)
+        val result = controller.show(index = Some(0))(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
@@ -64,25 +64,25 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
       }
       "generate back Link" should {
         "to CYA page if query param present" in new ControllerFixture {
-          val result = controller.show(Some(0))(fakeRequestFromCYA)
+          val result = controller.show(index = Some(0))(fakeRequestFromCYA)
           val page   = contentAsJsoup(result)
           page.backLink shouldBe routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
         }
         "to previous letting page" in new ControllerFixture {
-          val result = controller.show(Some(1))(fakeRequest)
+          val result = controller.show(index = Some(1))(fakeRequest)
           val page   = contentAsJsoup(result)
           page.backLink shouldBe routes.AddAnotherLettingPartOfPropertyController.show(0).url
         }
         "to Is Rent Received From page if there is only 1 letting" in new ControllerFixture {
-          val result = controller.show(Some(0))(fakeRequest)
+          val result = controller.show(index = Some(0))(fakeRequest)
           val page   = contentAsJsoup(result)
           page.backLink shouldBe routes.IsRentReceivedFromLettingController.show().url
         }
       }
     }
     "handling POST /"                  should {
-      "reply 404 if the submitted data is invalid" in new ControllerFixture {
-        val result = controller.submit(None)(
+      "reply 400 and error message if the submitted data is invalid" in new ControllerFixture {
+        val result = controller.submit(index = None)(
           fakePostRequest.withFormUrlEncodedBody(
             "tenantName"           -> "", // missing,
             "descriptionOfLetting" -> "1234567890" * 6 // too long
@@ -94,7 +94,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         page.error("descriptionOfLetting") shouldBe "error.descriptionOfLetting.maxLength"
       }
       "reply 303 redirect to the address lookup page when given new details" in new ControllerFixture {
-        val result = controller.submit(None)(
+        val result = controller.submit(index = None)(
           fakePostRequest.withFormUrlEncodedBody(
             "tenantName"           -> "New tenant",
             "descriptionOfLetting" -> "This has never been given before"
@@ -102,9 +102,11 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
+
         val session  = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(any, any)
         val captured = session.getValue
+
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
         val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
         details                                          should have size 1
@@ -181,13 +183,13 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
   trait ControllerFixture(
     lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty
   ) extends MockAddressLookup:
-    val mockAudit  = mock[Audit]
+    val audit      = mock[Audit]
     val repository = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
 
     val controller = new LettingPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),
-      mockAudit,
+      audit,
       connectedToPropertyNavigator,
       tenantDetailsView,
       preEnrichedActionRefiner(stillConnectedDetails =

@@ -65,6 +65,7 @@ POST         /remove-catering-operation                             controllers.
 
 GET          /letting-other-part-of-property-details                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.show(idx: Option[Int] ?= None)
 POST         /letting-other-part-of-property-details                controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.submit(idx: Option[Int])
+GET          /letting-other-part-of-property-details-callback       controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET          /letting-other-part-of-property-rent                   controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.show(idx: Int)
 POST         /letting-other-part-of-property-rent                   controllers.aboutfranchisesorlettings.LettingOtherPartOfPropertyDetailsRentController.submit(idx: Int)

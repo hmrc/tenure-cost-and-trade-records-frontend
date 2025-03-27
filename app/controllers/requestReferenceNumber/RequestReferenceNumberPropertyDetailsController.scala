@@ -98,30 +98,20 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
       )
   }
 
-  def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      convertedAddress  = confirmedAddress.asRequestReferenceNumberAddress
-      newSession       <- successful(sessionWithAddress(convertedAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield Redirect(navigator.nextPage(NoReferenceNumberPageId, newSession).apply(newSession))
-  }
-
   private def sessionWithBusinessTradingName(businessTradingName: String)(using session: Session) =
     session.copy(
       requestReferenceNumberDetails = Some(
         session.requestReferenceNumberDetails.fold(
-          RequestReferenceNumberDetails(propertyDetails =
-            Some(
-              RequestReferenceNumberPropertyDetails(businessTradingName = businessTradingName)
+          RequestReferenceNumberDetails(
+            propertyDetails = Some(
+              RequestReferenceNumberPropertyDetails(businessTradingName, address = None)
             )
           )
         ) { details =>
           details.copy(
             propertyDetails = Some(
               details.propertyDetails.fold(
-                RequestReferenceNumberPropertyDetails(businessTradingName)
+                RequestReferenceNumberPropertyDetails(businessTradingName, address = None)
               ) { address =>
                 address.copy(businessTradingName = businessTradingName)
               }
@@ -131,15 +121,24 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
       )
     )
 
-  private def sessionWithAddress(address: RequestReferenceNumberAddress)(using session: Session) =
+  def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress <- getConfirmedAddress(id)
+      convertedAddress  = confirmedAddress.asRequestReferenceNumberAddress
+      newSession       <- successful(sessionWithConfirmedAddress(convertedAddress))
+      _                <- repository.saveOrUpdate(newSession)
+    yield Redirect(navigator.nextPage(NoReferenceNumberPageId, newSession).apply(newSession))
+  }
+
+  private def sessionWithConfirmedAddress(address: RequestReferenceNumberAddress)(using session: Session) =
     assert(session.requestReferenceNumberDetails.isDefined)
     assert(session.requestReferenceNumberDetails.get.propertyDetails.isDefined)
     session.copy(
-      requestReferenceNumberDetails = session.requestReferenceNumberDetails.map { d =>
-        d.copy(
-          propertyDetails = d.propertyDetails.map { a =>
-            a.copy(
-              businessTradingName = a.businessTradingName,
+      requestReferenceNumberDetails = session.requestReferenceNumberDetails.map { detail =>
+        detail.copy(
+          propertyDetails = detail.propertyDetails.map { property =>
+            property.copy(
               address = Some(address)
             )
           }

@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.addressLookup.*
 import connectors.{Audit, MockAddressLookup}
-import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.aboutTheLandlordForm
+import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.theForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
@@ -149,7 +149,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
   "Landlord name form" should {
     "error if landlord name is missing" in {
       val formDataWithEmptyLandlordFullName = baseFormData.updated(TestData.errorKey.landlordFullName, "")
-      val form                              = aboutTheLandlordForm.bind(formDataWithEmptyLandlordFullName)
+      val form                              = theForm.bind(formDataWithEmptyLandlordFullName)
 
       mustContainError(errorKey.landlordFullName, "error.landlordFullName.required", form)
     }

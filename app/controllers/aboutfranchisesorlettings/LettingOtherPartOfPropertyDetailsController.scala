@@ -18,44 +18,50 @@ package controllers.aboutfranchisesorlettings
 
 import actions.WithSessionRefiner
 import connectors.Audit
-import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
+import connectors.addressLookup.*
+import controllers.{AddressLookupSupport, FORDataCaptureController}
+import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
+import models.Session
+import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection, OperatorDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingAccommodationDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails as CateringOperationOrLettingAccommodationDetailsView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future.successful
 
 @Singleton
 class LettingOtherPartOfPropertyDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  cateringOperationOrLettingAccommodationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  theView: CateringOperationOrLettingAccommodationDetailsView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  addressLookupConnector: AddressLookupConnector,
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with AddressLookupSupport(addressLookupConnector)
+    with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[OperatorDetails] = for {
-      requestedIndex          <- index
-      existingLettingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections)
-      // lift turns exception-throwing access by index into an option-returning safe operation
-      requestedLettingSection <- existingLettingSections.lift(requestedIndex)
-    } yield requestedLettingSection.lettingOtherPartOfPropertyInformationDetails
     audit.sendChangeLink("LettingOtherPartOfPropertyDetails")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        requestedIndex            <- index
+        aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
+        lettingSection            <- aboutFranchisesOrLettings.lettingSections.lift(requestedIndex)
+      yield theForm.fill(lettingSection.lettingOtherPartOfPropertyInformationDetails)
 
     Ok(
-      cateringOperationOrLettingAccommodationDetailsView(
-        existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
+      theView(
+        filledForm.getOrElse(freshForm),
         index,
         "lettingDetails",
         "lettingOtherPartOfPropertyDetails",
@@ -68,46 +74,100 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OperatorDetails](
-      lettingOtherPartOfPropertyForm,
+      theForm,
       formWithErrors =>
-        BadRequest(
-          cateringOperationOrLettingAccommodationDetailsView(
-            formWithErrors,
-            index,
-            "lettingDetails",
-            "lettingOtherPartOfPropertyDetails",
-            getBackLink(index),
-            request.sessionData.toSummary,
-            request.sessionData.forType
+        successful(
+          BadRequest(
+            theView(
+              formWithErrors,
+              index,
+              "lettingDetails",
+              "lettingOtherPartOfPropertyDetails",
+              getBackLink(index),
+              request.sessionData.toSummary,
+              request.sessionData.forType
+            )
           )
         ),
-      data => {
+      formData => {
         val ifFranchisesOrLettingsEmpty      = AboutFranchisesOrLettings(lettingSections =
-          IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = data))
+          IndexedSeq(LettingSection(lettingOtherPartOfPropertyInformationDetails = formData))
         )
+        var updatedSectionIndex              = 0
         val updatedAboutFranchisesOrLettings =
           request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
-            val existingSections                                   = franchiseOrLettings.lettingSections
-            val requestedSection                                   = index.flatMap(existingSections.lift)
-            val updatedSections: (Int, IndexedSeq[LettingSection]) = requestedSection.fold {
-              val defaultSection   = LettingSection(data)
-              val appendedSections = existingSections.appended(defaultSection)
-              appendedSections.indexOf(defaultSection) -> appendedSections
-            } { sectionToUpdate =>
-              val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-              indexToUpdate -> existingSections
-                .updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = data))
-            }
+            val existingSections         = franchiseOrLettings.lettingSections
+            val requestedSection         = index.flatMap(existingSections.lift)
+            val (idx, updatedSectionObj) =
+              requestedSection.fold {
+                val defaultSection   = LettingSection(formData)
+                val appendedSections = existingSections.appended(defaultSection)
+                appendedSections.indexOf(defaultSection) -> appendedSections
+              } { sectionToUpdate =>
+                val indexToUpdate = existingSections.indexOf(sectionToUpdate)
+                indexToUpdate -> existingSections
+                  .updated(indexToUpdate, sectionToUpdate.copy(lettingOtherPartOfPropertyInformationDetails = formData))
+              }
+            updatedSectionIndex = idx
             franchiseOrLettings
-              .copy(lettingCurrentIndex = updatedSections._1, lettingSections = updatedSections._2)
+              .copy(
+                lettingCurrentIndex = updatedSectionIndex,
+                lettingSections = updatedSectionObj
+              )
           }
-        val updatedData                      = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
-        session.saveOrUpdate(updatedData).map { _ =>
-          Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, updatedData).apply(updatedData))
-        }
+
+        val updatedData = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
+        for
+          _              <- repository.saveOrUpdate(updatedData)
+          redirectResult <- redirectToAddressLookupFrontend(
+                              config = AddressLookupConfig(
+                                lookupPageHeadingKey = "lettingOtherPartOfPropertyDetails.address.lookupPageHeading",
+                                selectPageHeadingKey = "lettingOtherPartOfPropertyDetails.address.selectPageHeading",
+                                confirmPageLabelKey = "lettingOtherPartOfPropertyDetails.address.confirmPageHeading",
+                                offRampCall = routes.LettingOtherPartOfPropertyDetailsController.addressLookupCallback(
+                                  updatedSectionIndex
+                                )
+                              )
+                            )
+        yield redirectResult
       }
     )
   }
+
+  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress <- getConfirmedAddress(id)
+      lettingAddress    = confirmedAddress.asLettingAddress
+      newSession       <- successful(sessionWithLettingAddress(idx, lettingAddress))
+      _                <- repository.saveOrUpdate(newSession)
+    yield Redirect(navigator.nextPage(LettingAccommodationDetailsPageId, newSession).apply(newSession))
+  }
+
+  private def sessionWithLettingAddress(idx: Int, address: LettingAddress)(using session: Session) =
+    assert(session.aboutFranchisesOrLettings.isDefined)
+    assert(session.aboutFranchisesOrLettings.get.lettingSections.lift(idx).isDefined)
+    session.copy(
+      aboutFranchisesOrLettings = session.aboutFranchisesOrLettings.map { d =>
+        d.copy(
+          lettingSections = d.lettingSections.patch(
+            idx,
+            Seq(
+              d.lettingSections(idx)
+                .copy(
+                  lettingOtherPartOfPropertyInformationDetails = d
+                    .lettingSections(idx)
+                    .lettingOtherPartOfPropertyInformationDetails
+                    .copy(
+                      lettingAddress = Some(address)
+                    )
+                )
+            ),
+            1
+          )
+        )
+      }
+    )
 
   def getBackLink(maybeIndex: Option[Int]) =
     maybeIndex match {
@@ -116,4 +176,11 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
       case _                        => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
     }
 
-}
+  extension (confirmed: AddressLookupConfirmedAddress)
+    def asLettingAddress = LettingAddress(
+      confirmed.buildingNameNumber,
+      confirmed.street1,
+      confirmed.town,
+      confirmed.county,
+      confirmed.postcode
+    )

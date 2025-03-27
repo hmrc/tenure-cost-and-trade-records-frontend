@@ -225,11 +225,13 @@
             @for((letting, idx) <- sectionAnswers.answers.map(_.lettingSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
                 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",idx+1)</h2>
                     @govukSummaryList(SummaryList(rows =
-                        sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
+                        sectionAnswers.row(
+                            "checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
                             _ => Option(letting.lettingOtherPartOfPropertyInformationDetails.operatorName).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
-                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness.escapedHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
-                                    Option(letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.escapedHtml).getOrElse(""),
-                            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)), "lettingOperatorName",
+                                 Option(letting.lettingOtherPartOfPropertyInformationDetails.typeOfBusiness.escapedHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
+                                 letting.lettingOtherPartOfPropertyInformationDetails.lettingAddress.map(_.escapedHtml).getOrElse(""),
+                            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(idx)),
+                            "lettingOperatorName",
                             ("valueAsHtml", _ => None)) ++
                                 sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
                                     _ => letting.lettingOtherPartOfPropertyRentDetails.map(_.annualRent.asMoney).mkString("""<p class="govuk-body">""", "", "</p>") +

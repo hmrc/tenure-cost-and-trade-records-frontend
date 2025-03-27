@@ -19,19 +19,16 @@ package form.aboutYourLeaseOrTenure
 import form.MappingSupport.landlordAddressMapping
 import models.submissions.aboutYourLeaseOrTenure.AboutTheLandlord
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.Forms.{default, optional, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object AboutTheLandlordForm {
+object AboutTheLandlordForm:
 
-  val aboutTheLandlordForm: Form[AboutTheLandlord] = Form(
-    mapping(
+  val theForm = Form[String](
+    single(
       "landlordFullName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.landlordFullName.required"),
         maxLength(50, "error.landlordFullName.maxLength")
-      ),
-      "landlordAddress"  -> optional(landlordAddressMapping)
-    )(AboutTheLandlord.apply)(o => Some(Tuple.fromProductTyped(o)))
+      )
+    )
   )
-
-}

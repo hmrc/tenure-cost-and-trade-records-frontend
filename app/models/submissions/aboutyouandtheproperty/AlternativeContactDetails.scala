@@ -16,12 +16,12 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Format, Json}
 
+@deprecated("This looks like useless nesting of data model structures")
 case class AlternativeContactDetails(
   alternativeContactAddress: AlternativeAddress
 )
 
-object AlternativeContactDetails {
-  implicit val format: OFormat[AlternativeContactDetails] = Json.format
-}
+object AlternativeContactDetails:
+  given Format[AlternativeContactDetails] = Json.format

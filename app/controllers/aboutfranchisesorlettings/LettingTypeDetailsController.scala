@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.lettingOtherPartOfPropertyForm
+import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord, OperatorDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
@@ -59,7 +59,7 @@ class LettingTypeDetailsController @Inject() (
 
     Ok(
       view(
-        existingDetails.fold(lettingOtherPartOfPropertyForm)(lettingOtherPartOfPropertyForm.fill),
+        existingDetails.fold(theForm)(theForm.fill),
         index,
         calculateBackLink(index),
         request.sessionData.toSummary,
@@ -70,7 +70,7 @@ class LettingTypeDetailsController @Inject() (
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OperatorDetails](
-      lettingOtherPartOfPropertyForm,
+      theForm,
       formWithErrors =>
         BadRequest(
           view(
