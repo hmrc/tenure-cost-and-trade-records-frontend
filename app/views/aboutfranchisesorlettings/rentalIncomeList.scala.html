@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Value
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -68,16 +69,16 @@
     records.zipWithIndex.map { case (record, index) =>
         record match {
             case franchise: FranchiseIncomeRecord =>
-                (franchise.businessDetails.fold("")(_.operatorName),
+                (franchise.businessDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession6015: Concession6015IncomeRecord =>
-                (concession6015.businessDetails.fold("")(_.operatorName),
+                (concession6015.businessDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession: ConcessionIncomeRecord =>
-                (concession.businessDetails.fold("")(_.operatorName),
+                (concession.businessDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
                  controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url)
             case letting: LettingIncomeRecord =>
-                (letting.operatorDetails.fold("")(_.operatorName),
+                (letting.operatorDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
                  controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
         }
     }
@@ -114,7 +115,7 @@
             SummaryList(
                 rows = incomeRecords.zipWithIndex.map { case ((operatorName,changeUrl), idx) =>
                     SummaryListRow(
-                        key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+                        key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular govuk-!-width-two-thirds"),
                         actions = Actions(
                             items = Seq(
                                 ActionItem(
@@ -123,7 +124,7 @@
                                 ActionItem(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.remove(idx).url,
                                     content = Text("Remove"))
                             ),
-                            classes = "hmrc-summary-list__actions"
+                            classes = "hmrc-summary-list__actions govuk-!-width-one-third"
                         )
                     )
                 },

@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@
    SummaryList(
     rows = lettingDetails.zipWithIndex.map { case ((operatorName,changeUrl), idx) =>
      SummaryListRow(
-      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular govuk-!-width-two-thirds"),
       actions = Actions(
        items = Seq(
         ActionItem(
@@ -99,7 +99,7 @@
         ActionItem(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.remove(idx).url,
          content = Text("Remove"))
        ),
-       classes = "hmrc-summary-list__actions"
+       classes = "hmrc-summary-list__actions govuk-!-width-one-third"
       )
      )
     },

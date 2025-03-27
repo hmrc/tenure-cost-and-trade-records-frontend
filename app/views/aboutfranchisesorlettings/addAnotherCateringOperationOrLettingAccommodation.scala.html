@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,15 +81,15 @@
    forType match {
     case FOR6030 =>
      if(isLettingOtherPartOfProperty) {
-      fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
+      fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails).map(d => s"${d.operatorName}, ${d.typeOfBusiness}")
      } else {
-      fr.cateringOperationBusinessSections.fold(IndexedSeq.empty[String])(_.map(_.cateringOperationBusinessDetails.operatorName))
+      fr.cateringOperationBusinessSections.fold(IndexedSeq.empty[String])(_.map(_.cateringOperationBusinessDetails).map(d => s"${d.operatorName}, ${d.typeOfBusiness}"))
      }
     case _ =>
      if(isLettingOtherPartOfProperty) {
-      fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails.operatorName)
+      fr.lettingSections.map(_.lettingOtherPartOfPropertyInformationDetails).map(d => s"${d.operatorName}, ${d.typeOfBusiness}")
      } else {
-      fr.cateringOperationSections.map(_.cateringOperationDetails.operatorName)
+      fr.cateringOperationSections.map(_.cateringOperationDetails).map(d => s"${d.operatorName}, ${d.typeOfBusiness}")
      }
    }
  }
@@ -112,7 +112,7 @@
    SummaryList(
     rows = operatorNames.zipWithIndex.map { case (operatorName, idx) =>
      SummaryListRow(
-      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular govuk-!-width-two-thirds"),
       actions = Actions(
        items = Seq(
         ActionItem(
@@ -139,7 +139,7 @@
          },
          content = Text("Remove"))
        ),
-       classes = "hmrc-summary-list__actions"
+       classes = "hmrc-summary-list__actions govuk-!-width-one-third"
       )
      )
     },
