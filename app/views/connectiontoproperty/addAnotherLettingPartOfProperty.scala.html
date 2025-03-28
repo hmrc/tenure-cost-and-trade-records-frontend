@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.pages.Summary
 @import models.submissions.connectiontoproperty.TenantDetails
-@import models.submissions.connectiontoproperty.CorrespondenceAddress
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -77,23 +76,25 @@
 
   @govukSummaryList(
    SummaryList(
-    rows = tenantDetails.zipWithIndex.map { case (TenantDetails(name, _, address), idx) =>
-     SummaryListRow(
-      key = Key(Text(name), classes = "govuk-!-font-weight-regular"),
-      value = Value(HtmlContent(address.get.multiLine)),
-      actions = Actions(
-       items = Seq(
-        ActionItem(
-          controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(idx).url,
-          content = Text(messages("label.change"))
-        ),
-        ActionItem(
-          controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url,
-          content = Text(messages("label.remove")))
-        ),
-        classes = "hmrc-summary-list__actions"
-      )
-     )
+    rows = tenantDetails.zipWithIndex.map {
+     case (TenantDetails(name, descriptionOfLetting, address), idx) =>
+         SummaryListRow(
+          key = Key(Text(s"$name, $descriptionOfLetting"), classes = "govuk-!-font-weight-regular"),
+          value = Value(HtmlContent(address.get.multiLine)),
+          actions = Actions(
+           items = Seq(
+            ActionItem(
+              controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(idx).url,
+              content = Text(messages("label.change"))
+            ),
+            ActionItem(
+              controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url,
+              content = Text(messages("label.remove")))
+            ),
+            classes = "hmrc-summary-list__actions"
+          )
+         )
+     case _ => SummaryListRow()
     },
     classes = "hmrc-list-with-actions"
    )

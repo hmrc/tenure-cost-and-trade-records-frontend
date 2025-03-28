@@ -16,11 +16,9 @@
 
 package controllers.lettingHistory
 
-import actions.SessionRequest
 import models.Session
 import models.submissions.lettingHistory.SessionWrapper
 import play.api.libs.json.Writes
-import play.api.mvc.AnyContent
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 

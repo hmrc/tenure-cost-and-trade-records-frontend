@@ -18,11 +18,10 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
 @import models.submissions.common.AnswerYes
-@import util.{DateUtilLocalised, SectionAnswersRowBuilder}
+@import util.SectionAnswersRowBuilder
 
 @this(
         govukSummaryList: GovukSummaryList,
-        dateUtil: DateUtilLocalised
 )
 
 @()(implicit request: SessionRequest[?], messages: Messages)
