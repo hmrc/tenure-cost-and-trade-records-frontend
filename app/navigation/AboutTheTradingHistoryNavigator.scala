@@ -88,9 +88,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     s.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
       case Some(true) =>
         s.forType match {
-          case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
+          case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-          case _                                                                                       => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+          case _                                                                                                 => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
         }
 
       case _ =>

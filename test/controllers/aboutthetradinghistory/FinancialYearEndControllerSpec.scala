@@ -153,7 +153,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
       // Assert
       status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates")
+      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates-summary")
     }
 
     "redirect to the next page when valid 6020 data is submitted" in {
