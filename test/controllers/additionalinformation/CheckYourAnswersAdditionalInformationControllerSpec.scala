@@ -78,6 +78,13 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
       )
       status(result) shouldBe BAD_REQUEST
     }
+
+    "Redirect when form data submitted" in {
+      val res = checkYourAdditionalInformationController().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody("checkYourAnswersAdditionalInformation" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "Check Your Answers additional information form" should {
