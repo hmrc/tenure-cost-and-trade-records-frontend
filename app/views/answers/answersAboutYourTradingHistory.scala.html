@@ -541,7 +541,7 @@
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                     _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),
                     forType match {
-                        case FOR6020 | FOR6076 =>
+                        case FOR6020 | FOR6030 |FOR6076 =>
                             controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
                         case _ => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
                     },
