@@ -173,7 +173,7 @@
                     CheckboxItem(
                         id = "isFinancialYearsCorrect",
                         name = "isFinancialYearsCorrect",
-                        content = Text(messages("financialYears.isFinancialYearsCorrect")),
+                        content = if(forType == FOR6048) Text(messages("financialYears.isFinancialYearsCorrect6048")) else Text(messages("financialYears.isFinancialYearsCorrect")),
                         value = "true",
                         checked = theForm("isFinancialYearsCorrect").value.contains("true")
                     )
