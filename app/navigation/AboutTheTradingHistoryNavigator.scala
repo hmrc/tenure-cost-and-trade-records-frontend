@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
         s.forType match {
           case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
             aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-          case _                                                                                                 => aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
         }
 
       case _ =>
