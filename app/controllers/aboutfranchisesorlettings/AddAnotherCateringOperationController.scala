@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
+import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.ForType
 import models.ForType.*
@@ -31,8 +31,8 @@ import navigation.identifiers.AddAnotherCateringOperationPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.addAnotherCateringOperationOrLettingAccommodation
-import views.html.genericRemoveConfirmation
+import views.html.aboutfranchisesorlettings.addAnotherCateringOperationOrLettingAccommodation as AddAnotherCateringOperationOrLettingAccommodationView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -42,10 +42,10 @@ class AddAnotherCateringOperationController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: AddAnotherCateringOperationOrLettingAccommodationView,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -84,14 +84,12 @@ class AddAnotherCateringOperationController @Inject() (
 
     Future.successful(
       Ok(
-        addAnotherCateringOperationOrLettingAccommodationView(
-          addAnother.fold(addAnotherCateringOperationForm)(addAnotherCateringOperationForm.fill),
+        theListView(
+          addAnother.fold(theForm)(theForm.fill),
           index,
           "addAnotherConcessionOrFranchise",
           "addAnotherConcession",
-          "addAnotherCateringOperation",
-          getBackLink(index),
-          request.sessionData.toSummary
+          "addAnotherCateringOperation"
         )
       )
     )
@@ -107,25 +105,23 @@ class AddAnotherCateringOperationController @Inject() (
       val fromCYA =
         franchisesOrLettingsData.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
       continueOrSaveAsDraft[AnswersYesNo](
-        addAnotherCateringOperationForm,
+        theForm,
         formWithErrors =>
           BadRequest(
-            addAnotherCateringOperationOrLettingAccommodationView(
+            theListView(
               formWithErrors,
               index,
               "addAnotherConcessionOrFranchise",
               "addAnotherConcession",
-              "addAnotherCateringOperation",
-              getBackLink(index),
-              request.sessionData.toSummary
+              "addAnotherCateringOperation"
             )
           ),
-        data =>
+        formData =>
           if (forType == FOR6030) {
             Redirect(
-              if (data == AnswerNo && navigator.from == "CYA") {
+              if (formData == AnswerNo && navigator.from == "CYA") {
                 controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-              } else if (data == AnswerYes) {
+              } else if (formData == AnswerYes) {
                 controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
               } else {
                 controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
@@ -138,10 +134,10 @@ class AddAnotherCateringOperationController @Inject() (
               .fold(
                 Future.successful(
                   Redirect(
-                    if (data == AnswerNo && fromCYA == true) {
+                    if (formData == AnswerNo && fromCYA == true) {
                       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
                         .show()
-                    } else if (data == AnswerYes) {
+                    } else if (formData == AnswerYes) {
                       controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
                     } else {
                       controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
@@ -151,7 +147,7 @@ class AddAnotherCateringOperationController @Inject() (
               ) { existingSections =>
                 val updatedSections = existingSections.updated(
                   index,
-                  existingSections(index).copy(addAnotherOperationToProperty = Some(data))
+                  existingSections(index).copy(addAnotherOperationToProperty = Some(formData))
                 )
                 val updatedData     = updateAboutFranchisesOrLettings(
                   _.copy(
@@ -159,7 +155,7 @@ class AddAnotherCateringOperationController @Inject() (
                     fromCYA = Some(fromCYA)
                   )
                 )
-                session.saveOrUpdate(updatedData).flatMap { _ =>
+                repository.saveOrUpdate(updatedData).flatMap { _ =>
                   Redirect(navigator.nextPage(AddAnotherCateringOperationPageId, updatedData).apply(updatedData))
                 }
               }
@@ -173,7 +169,7 @@ class AddAnotherCateringOperationController @Inject() (
       .map { operatorName =>
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               operatorName,
               "label.section.aboutTheFranchiseConcessions",
@@ -196,7 +192,7 @@ class AddAnotherCateringOperationController @Inject() (
           .map { operatorName =>
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   operatorName,
                   "label.section.aboutTheFranchiseConcessions",
@@ -217,7 +213,7 @@ class AddAnotherCateringOperationController @Inject() (
             case FOR6030 =>
               franchisesOrLettingsData.flatMap(_.cateringOperationBusinessSections).map { businessSections =>
                 val updatedSections = businessSections.patch(idx, Nil, 1)
-                session.saveOrUpdate(
+                repository.saveOrUpdate(
                   updateAboutFranchisesOrLettings(
                     _.copy(cateringOperationCurrentIndex = 0, cateringOperationBusinessSections = Some(updatedSections))
                   )
@@ -226,7 +222,7 @@ class AddAnotherCateringOperationController @Inject() (
             case _       =>
               franchisesOrLettingsData.map(_.cateringOperationSections).map { cateringOperationSections =>
                 val updatedSections = cateringOperationSections.patch(idx, Nil, 1)
-                session.saveOrUpdate(
+                repository.saveOrUpdate(
                   updateAboutFranchisesOrLettings(
                     _.copy(cateringOperationCurrentIndex = 0, cateringOperationSections = updatedSections)
                   )
@@ -239,14 +235,5 @@ class AddAnotherCateringOperationController @Inject() (
       }
     )
   }
-
-  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
-    if (navigator.from == "CYA") {
-      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else if (forType == FOR6030) {
-      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx).url
-    } else {
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx).url
-    }
 
 }

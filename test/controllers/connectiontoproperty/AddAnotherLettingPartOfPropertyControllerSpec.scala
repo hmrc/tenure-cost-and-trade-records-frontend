@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
+import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -50,12 +50,9 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
   "GET /" should {
     "return 200 and HTML with Add another letting part of property in session" in {
       val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequest)
-      status(result)        shouldBe Status.OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(0).url
-      )
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
   }
 
@@ -112,28 +109,12 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
   "Letting part of property form" should {
     "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
       val formData = baseFormData - errorKey.addAnotherLettingPartOfProperty
-      val form     = addAnotherLettingForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(
         errorKey.addAnotherLettingPartOfProperty,
         "error.addAnotherLetting.required",
         form
-      )
-    }
-
-    "calculateBackLink" should {
-
-      "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
-        val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequestFromCYA)
-        contentAsString(result) should include(
-          controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
-        )
-      }
-    }
-    "return correct back link with corresponding index" in {
-      val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequest)
-      contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(0).url
       )
     }
   }

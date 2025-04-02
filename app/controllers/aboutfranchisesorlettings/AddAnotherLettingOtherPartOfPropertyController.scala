@@ -29,7 +29,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings._
-import views.html.genericRemoveConfirmation
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,10 +39,10 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  addAnotherCateringOperationOrLettingAccommodationView: addAnotherCateringOperationOrLettingAccommodation,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: addAnotherCateringOperationOrLettingAccommodation,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -56,7 +56,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
 
     Future.successful(
       Ok(
-        addAnotherCateringOperationOrLettingAccommodationView(
+        theListView(
           Option.when(navigator.from == "CYA")(AnswerNo).orElse(addAnother) match {
             case Some(addAnotherLettings) => addAnotherLettingForm.fill(addAnotherLettings)
             case _                        => addAnotherLettingForm
@@ -64,9 +64,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
           index,
           "addAnotherLettingConcessionOrFranchise",
           "addAnotherLetting",
-          "addAnotherLettingOtherPartOfProperty",
-          getBackLink(index),
-          request.sessionData.toSummary
+          "addAnotherLettingOtherPartOfProperty"
         )
       )
     )
@@ -82,24 +80,22 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
         addAnotherLettingForm,
         formWithErrors =>
           BadRequest(
-            addAnotherCateringOperationOrLettingAccommodationView(
+            theListView(
               formWithErrors,
               index,
               "addAnotherLettingConcessionOrFranchise",
               "addAnotherLetting",
-              "addAnotherLettingOtherPartOfProperty",
-              getBackLink(index),
-              request.sessionData.toSummary
+              "addAnotherLettingOtherPartOfProperty"
             )
           ),
-        data =>
+        formData =>
           request.sessionData.aboutFranchisesOrLettings
             .map(_.lettingSections)
             .filter(_.nonEmpty)
             .fold(
               Future.successful(
                 Redirect(
-                  if (data.name == "yes") {
+                  if (formData.name == "yes") {
                     routes.LettingOtherPartOfPropertyDetailsController.show()
                   } else {
                     routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
@@ -109,10 +105,10 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             ) { existingSections =>
               val updatedSections = existingSections.updated(
                 index,
-                existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+                existingSections(index).copy(addAnotherLettingToProperty = Some(formData))
               )
               val updatedData     = updateAboutFranchisesOrLettings(_.copy(lettingSections = updatedSections))
-              session.saveOrUpdate(updatedData).map { _ =>
+              repository.saveOrUpdate(updatedData).map { _ =>
                 Redirect(
                   navigator
                     .nextWithoutRedirectToCYA(AddAnotherLettingAccommodationPageId, updatedData)
@@ -131,7 +127,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
         val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               name,
               "label.section.aboutTheFranchiseConcessions",
@@ -159,7 +155,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             val name = lettingSection.lettingOtherPartOfPropertyInformationDetails.operatorName
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   name,
                   "label.section.aboutTheFranchiseConcessions",
@@ -181,7 +177,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
         case AnswerYes =>
           request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections).map { lettingSection =>
             val updatedSections = lettingSection.patch(idx, Nil, 1)
-            session.saveOrUpdate(
+            repository.saveOrUpdate(
               updateAboutFranchisesOrLettings(
                 _.copy(lettingCurrentIndex = 0, lettingSections = updatedSections)
               )
@@ -195,12 +191,4 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
       }
     )
   }
-
-  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
-    if (navigator.from == "CYA") {
-      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else {
-      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(idx).url
-    }
-
 }

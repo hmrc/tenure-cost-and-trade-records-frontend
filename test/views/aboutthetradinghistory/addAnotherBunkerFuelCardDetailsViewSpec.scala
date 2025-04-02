@@ -18,7 +18,7 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import models.submissions.common.AnswersYesNo
-import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
+import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
 import models.pages.Summary
 import play.api.data.Form
 import play.twirl.api.Html
@@ -27,14 +27,12 @@ import views.behaviours.QuestionViewBehaviours
 class addAnotherBunkerFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   val messageKeyPrefix                  = "addAnotherBunkerFuelCardDetails"
   val sessionRequest                    = SessionRequest(baseFilled6010Session, fakeRequest)
-  override val form: Form[AnswersYesNo] = addAnotherBunkerFuelCardsDetailsForm
+  override val form: Form[AnswersYesNo] = theForm
 
   def createView: () => Html = () =>
     addAnotherBunkerFuelCardsDetailsView(
       form,
-      0,
-      controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show().url,
-      Summary("99996010001")
+      0
     )(sessionRequest, messages)
 
   "Catering add another bunker fuel cards details view" must {
