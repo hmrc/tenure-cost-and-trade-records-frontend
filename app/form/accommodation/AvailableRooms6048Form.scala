@@ -31,8 +31,8 @@ import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 object AvailableRooms6048Form:
 
   private val singleDoubleZero: Constraint[AvailableRooms] =
-    Constraint("constraint.anotherUseDetailsRequired") { abc =>
-      if (abc.singleBedrooms == 0 && abc.doubleBedrooms == 0) {
+    Constraint("constraint.anotherUseDetailsRequired") { x =>
+      if (x.singleBedrooms == 0 && x.doubleBedrooms == 0) {
         Invalid(Seq(ValidationError("error.accommodation.singleBedrooms.zero")))
       } else {
         Valid
