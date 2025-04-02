@@ -1860,6 +1860,7 @@ hint.otherAccommodationDescription = For example, games rooms.
 error.accommodation.singleBedrooms.required = Enter 0 if there are no single bedrooms in this unit
 error.accommodation.singleBedrooms.nonNumeric = Single bedrooms must be a number
 error.accommodation.singleBedrooms.negative = The amount of single bedrooms cannot be a negative number
+error.accommodation.singleBedrooms.zero = Single bedrooms cannot be 0 if double bedrooms is 0
 error.accommodation.doubleBedrooms.required = Enter 0 if there are no double bedrooms in this unit
 error.accommodation.doubleBedrooms.nonNumeric = Double bedrooms must be a number
 error.accommodation.doubleBedrooms.negative = The amount of double bedrooms cannot be a negative number

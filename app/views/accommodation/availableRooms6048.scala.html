@@ -18,6 +18,13 @@
 @import models.submissions.accommodation.AvailableRooms
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -43,6 +50,28 @@
     )
 }
 
+@numberInputZeros(formField: String, labelKey: String) = @{
+    govukInput(
+        Input(
+            label = Label(
+                content = Text(messages(labelKey))
+            ),
+            classes = "govuk-input--width-4",
+            attributes = Map(
+                "maxlength" -> "6",
+                "aria-label" -> messages(labelKey)
+            ),
+            errorMessage = {
+                if (form.errors.exists(_.message == "error.accommodation.singleBedrooms.zero")) {
+                    ErrorMessage(content = Text(messages("error.accommodation.singleBedrooms.zero")))
+                } else {
+                    form.errors.asTextErrorMessageForField(formField)
+                }
+            }
+        ).withFormField(form(formField))
+    )
+}
+
 @layout(
     pageHeading = messages("accommodation.availableRooms.heading", unitName),
     showSection = true,
@@ -56,7 +85,7 @@
 
     @formWithCSRF(action = controllers.accommodation.routes.AvailableRooms6048Controller.submit) {
 
-        @numberInput("singleBedrooms", "accommodation.singleBedrooms")
+        @numberInputZeros("singleBedrooms", "accommodation.singleBedrooms")
         @numberInput("doubleBedrooms", "accommodation.doubleBedrooms")
         @numberInput("bathrooms", "accommodation.bathrooms")
         @includes.textInput(govukInput, form, "otherAccommodationDescription", "govuk-!-width-two-thirds", "otherAccommodationDescription", hintMsg = "otherAccommodationDescription")

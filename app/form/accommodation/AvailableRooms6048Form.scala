@@ -19,23 +19,37 @@ package form.accommodation
 import form.MappingSupport.nonNegativeNumber
 import models.submissions.accommodation.AvailableRooms
 import play.api.data.Form
+import play.api.data._
+import play.api.data.Forms._
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.data.validation.Constraints.maxLength
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 /**
   * @author Yuriy Tumakha
   */
 object AvailableRooms6048Form:
 
-  val availableRooms6048Form: Form[AvailableRooms] =
-    Form {
-      mapping(
-        "singleBedrooms"                -> nonNegativeNumber("accommodation.singleBedrooms"),
-        "doubleBedrooms"                -> nonNegativeNumber("accommodation.doubleBedrooms"),
-        "bathrooms"                     -> nonNegativeNumber("accommodation.bathrooms"),
-        "otherAccommodationDescription" -> optional(
-          text.verifying(maxLength(200, "error.accommodation.otherAccommodationDescription.maxLength"))
-        ),
-        "maxGuestsNumber"               -> nonNegativeNumber("accommodation.maxGuestsNumber")
-      )(AvailableRooms.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private val singleDoubleZero: Constraint[AvailableRooms] =
+    Constraint("constraint.anotherUseDetailsRequired") { abc =>
+      if (abc.singleBedrooms == 0 && abc.doubleBedrooms == 0) {
+        Invalid(Seq(ValidationError("error.accommodation.singleBedrooms.zero")))
+      } else {
+        Valid
+      }
     }
+
+  private val availableRooms6048Mapping: Mapping[AvailableRooms] =
+    mapping(
+      "singleBedrooms"                -> nonNegativeNumber("accommodation.singleBedrooms"),
+      "doubleBedrooms"                -> nonNegativeNumber("accommodation.doubleBedrooms"),
+      "bathrooms"                     -> nonNegativeNumber("accommodation.bathrooms"),
+      "otherAccommodationDescription" -> optional(
+        text.verifying(maxLength(200, "error.accommodation.otherAccommodationDescription.maxLength"))
+      ),
+      "maxGuestsNumber"               -> nonNegativeNumber("accommodation.maxGuestsNumber")
+    )(AvailableRooms.apply)(o => Some(Tuple.fromProductTyped(o)))
+
+  val availableRooms6048Form: Form[AvailableRooms] = Form(
+    availableRooms6048Mapping.verifying(singleDoubleZero)
+  )
