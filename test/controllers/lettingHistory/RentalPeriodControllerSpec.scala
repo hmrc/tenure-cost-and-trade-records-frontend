@@ -83,10 +83,10 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         page.backLink              shouldBe routes.OccupierDetailController.show(index = Some(0)).url
         page.input("fromDate.day")   should haveValue("10")
         page.input("fromDate.month") should haveValue("9")
-        page.input("fromDate.year")  should haveValue("2025")
+        page.input("fromDate.year")  should haveValue(previousFiscalYearEnd.toString)
         page.input("toDate.day")     should haveValue("9")
         page.input("toDate.month")   should haveValue("2")
-        page.input("toDate.year")    should haveValue("2024")
+        page.input("toDate.year")    should haveValue((previousFiscalYearEnd - 1).toString)
       }
     }
     "regardless users having entered period or not" should {
