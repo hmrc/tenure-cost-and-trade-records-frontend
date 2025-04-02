@@ -23,18 +23,14 @@ import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherCateringOperationOrLettingAccommodationForm {
 
-  lazy val baseAddAnotherCateringOperationForm: Form[AnswersYesNo] = Form(
-    baseAddAnotherCateringOperationMapping
+  val theForm = Form(
+    mapping(
+      "addAnotherCateringOperation" -> optional(
+        createYesNoType("error.addAnotherSeparateBusinessOrFranchise.required")
+      )
+        .verifying("error.addAnotherSeparateBusinessOrFranchise.required", _.nonEmpty)
+        .transform[AnswersYesNo](_.get, Some(_))
+    )(x => x)(b => Some(b))
   )
-
-  val baseAddAnotherCateringOperationMapping = mapping(
-    "addAnotherCateringOperation" -> optional(
-      createYesNoType("error.addAnotherSeparateBusinessOrFranchise.required")
-    )
-      .verifying("error.addAnotherSeparateBusinessOrFranchise.required", _.nonEmpty)
-      .transform[AnswersYesNo](_.get, Some(_))
-  )(x => x)(b => Some(b))
-
-  val addAnotherCateringOperationForm = Form(baseAddAnotherCateringOperationMapping)
 
 }

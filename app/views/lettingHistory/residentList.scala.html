@@ -25,7 +25,7 @@
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton)
 
-@(theForm: Form[AnswersYesNo], permanentResidents: List[ResidentDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], permanentResidents: List[ResidentDetail])(implicit request: SessionRequest[?], messages: Messages)
 
 @fromPage = @{ request.session.get("from").map(_.asPageIdentifier).flatten }
 
@@ -41,8 +41,7 @@
     theForm = theForm,
     summary = Some(request.sessionData.toSummary),
     pageHeading = messages(pageHeadingMessageKey, residentsCount),
-    // TODO we may prefer to remove the backLink link for this particular page
-    backLinkUrl = backLink,
+    backLinkUrl = None,
     showSection = true,
     sectionName = messages("label.section.lettingHistory"),
 ) {

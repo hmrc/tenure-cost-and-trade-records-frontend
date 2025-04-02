@@ -98,7 +98,7 @@ GET          /rent-details                                          controllers.
 POST         /rent-details                                          controllers.aboutfranchisesorlettings.RentDetailsController.submit(idx: Int)
 
 GET          /add-another-letting                                   controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.show(idx: Int)
-POST         /add-another-letting                                   controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.submitLetting(idx: Int)
+POST         /add-another-letting                                   controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.submit(idx: Int)
 GET          /remove-letting                                        controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.remove(idx: Int)
 POST         /remove-letting                                        controllers.aboutfranchisesorlettings.AddOrRemoveLettingController.performRemove(idx: Int)
 

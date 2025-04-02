@@ -41,7 +41,7 @@
 )
 
 
-@(theForm: Form[?], index: Int, backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
 
@@ -54,7 +54,7 @@
  else "aboutTheLettings.heading" , lettingDetails.size) + pluralSuffix}
 
 
-@formAction = @{controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.submitLetting(index)}
+@formAction = @{controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.submit(index)}
 
 @lettingDetails = @{
   val lettings = session.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty)
@@ -78,9 +78,9 @@
 @layout(
  pageHeading = pageHeading,
  showSection = true,
- summary = Some(summary),
+ summary = Some(session.toSummary),
  sectionName = label,
- backLinkUrl = backLink,
+ backLinkUrl = None,
  theForm = theForm
 ) {
 

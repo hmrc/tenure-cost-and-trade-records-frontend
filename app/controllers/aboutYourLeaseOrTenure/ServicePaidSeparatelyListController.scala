@@ -31,7 +31,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.servicePaidSeparatelyList
-import views.html.genericRemoveConfirmation
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future
@@ -41,10 +41,10 @@ class ServicePaidSeparatelyListController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
-  view: servicePaidSeparatelyList,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: servicePaidSeparatelyList,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 ) extends FORDataCaptureController(mcc)
     with I18nSupport {
 
@@ -56,14 +56,12 @@ class ServicePaidSeparatelyListController @Inject() (
 
     Future.successful(
       Ok(
-        view(
+        theListView(
           existingSection.flatMap(_.addAnotherPaidService) match {
             case Some(answer) => addServicePaidSeparatelyForm.fill(answer)
             case _            => addServicePaidSeparatelyForm
           },
-          index,
-          backLink(index),
-          request.sessionData.toSummary
+          index
         )
       )
     )
@@ -74,19 +72,17 @@ class ServicePaidSeparatelyListController @Inject() (
       addServicePaidSeparatelyForm,
       formWithErrors =>
         BadRequest(
-          view(
+          theListView(
             formWithErrors,
-            index,
-            backLink(index),
-            request.sessionData.toSummary
+            index
           )
         ),
-      data =>
+      formData =>
         request.sessionData.aboutLeaseOrAgreementPartThree
           .map(_.servicesPaid)
           .filter(_.nonEmpty)
           .fold {
-            data match {
+            formData match {
               case AnswerYes =>
                 Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show())
               case AnswerNo  =>
@@ -100,14 +96,14 @@ class ServicePaidSeparatelyListController @Inject() (
           } { existingServices =>
             val updatedServices = existingServices.updated(
               index,
-              existingServices(index).copy(addAnotherPaidService = Some(data))
+              existingServices(index).copy(addAnotherPaidService = Some(formData))
             )
             val updatedData     = updateAboutLeaseOrAgreementPartThree(
               _.copy(
                 servicesPaid = updatedServices
               )
             )
-            session.saveOrUpdate(updatedData)
+            repository.saveOrUpdate(updatedData)
             Redirect(navigator.nextPage(ServicePaidSeparatelyListId, updatedData).apply(updatedData))
           }
     )
@@ -120,7 +116,7 @@ class ServicePaidSeparatelyListController @Inject() (
         val service = servicesPaid.details.description
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               service,
               "label.section.aboutYourLeaseOrTenure",
@@ -145,7 +141,7 @@ class ServicePaidSeparatelyListController @Inject() (
             val description = services.details.description
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   description,
                   "label.section.connectionToTheProperty",
@@ -162,7 +158,7 @@ class ServicePaidSeparatelyListController @Inject() (
         case AnswerYes =>
           request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid).map { servicesPaid =>
             val updatedServices = servicesPaid.patch(index, Nil, 1)
-            session.saveOrUpdate(
+            repository.saveOrUpdate(
               updateAboutLeaseOrAgreementPartThree(
                 _.copy(servicesPaidIndex = 0, servicesPaid = updatedServices)
               )
@@ -177,7 +173,4 @@ class ServicePaidSeparatelyListController @Inject() (
 
   private def toServicePaidSeparatelyList(index: Int): Call =
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index)
-
-  private def backLink(index: Int): String =
-    controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(index).url
 }

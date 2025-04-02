@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.RentalIncomeListForm.rentalIncomeListForm
+import form.aboutfranchisesorlettings.RentalIncomeListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -27,8 +27,8 @@ import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.rentalIncomeList
-import views.html.genericRemoveConfirmation
+import views.html.aboutfranchisesorlettings.rentalIncomeList as RentalIncomeListView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,10 +38,10 @@ class RentalIncomeListController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  view: rentalIncomeList,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: RentalIncomeListView,
+  theConfirmationVie: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with FranchiseAndLettingSupport
@@ -59,10 +59,9 @@ class RentalIncomeListController @Inject() (
 
     Future.successful(
       Ok(
-        view(
-          addAnother.fold(rentalIncomeListForm)(rentalIncomeListForm.fill),
+        theListView(
+          addAnother.fold(theForm)(theForm.fill),
           index,
-          getBackLink(index),
           request.sessionData.forType
         )
       )
@@ -74,36 +73,35 @@ class RentalIncomeListController @Inject() (
     val numberOfRentalIncomes: Int =
       request.sessionData.aboutFranchisesOrLettings.map(_.rentalIncome.getOrElse(IndexedSeq.empty).size).getOrElse(0)
     continueOrSaveAsDraft[AnswersYesNo](
-      rentalIncomeListForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          view(
+          theListView(
             formWithErrors,
             index,
-            getBackLink(index),
             request.sessionData.forType
           )
         ),
-      answer =>
-        if (answer == AnswerYes && numberOfRentalIncomes >= 5 && navigator.from != "CYA") {
+      formData =>
+        if (formData == AnswerYes && numberOfRentalIncomes >= 5 && navigator.from != "CYA") {
           Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("rentalIncome"))))
         } else {
           rentalIncomeData match {
             case Some(entries) if entries.isDefinedAt(index) =>
               val updatedRentalIncome: IndexedSeq[IncomeRecord] =
-                entries.updated(index, update(entries(index), Some(answer)))
+                entries.updated(index, update(entries(index), Some(formData)))
               val updatesSession                                = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings(about =>
                 about.copy(rentalIncome = Some(updatedRentalIncome))
               )
-              session.saveOrUpdate(updatesSession).map { _ =>
-                if (answer == AnswerYes) {
+              repository.saveOrUpdate(updatesSession).map { _ =>
+                if (formData == AnswerYes) {
                   Redirect(routes.TypeOfIncomeController.show(Some(index + 1)))
                 } else {
                   Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
                 }
               }
             case Some(entries) if entries.isEmpty            =>
-              if (answer == AnswerYes) {
+              if (formData == AnswerYes) {
                 Redirect(routes.TypeOfIncomeController.show())
               } else {
                 Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
@@ -134,7 +132,7 @@ class RentalIncomeListController @Inject() (
       .map { operatorName =>
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationVie(
               confirmableActionForm,
               operatorName,
               "label.section.aboutTheLettings",
@@ -158,7 +156,7 @@ class RentalIncomeListController @Inject() (
           .map { operatorName =>
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationVie(
                   formWithErrors,
                   operatorName,
                   "label.section.aboutTheLettings",
@@ -182,7 +180,7 @@ class RentalIncomeListController @Inject() (
           if (idx >= 0 && idx < incomeRecords.length) {
             val updatedRecords = incomeRecords.patch(idx, Nil, 1)
             val updatedAbout   = aboutFranchisesOrLettings.copy(rentalIncome = Some(updatedRecords))
-            session.saveOrUpdate(request.sessionData.copy(aboutFranchisesOrLettings = Some(updatedAbout))).map { _ =>
+            repository.saveOrUpdate(request.sessionData.copy(aboutFranchisesOrLettings = Some(updatedAbout))).map { _ =>
               Redirect(
                 controllers.aboutfranchisesorlettings.routes.RentalIncomeListController
                   .show(if (updatedRecords.isEmpty) 0 else updatedRecords.length - 1)
@@ -198,24 +196,4 @@ class RentalIncomeListController @Inject() (
       }
     )
   }
-
-  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-      case _     =>
-        request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).flatMap(_.lift(idx)) match {
-          case Some(incomeRecord: FranchiseIncomeRecord)      =>
-            controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
-          case Some(incomeRecord: Concession6015IncomeRecord) =>
-            controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
-          case Some(incomeRecord: ConcessionIncomeRecord)     =>
-            controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(idx).url
-          case Some(incomeRecord: LettingIncomeRecord)        =>
-            controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(idx).url
-          case _                                              =>
-            controllers.routes.TaskListController.show().url
-        }
-
-    }
 }

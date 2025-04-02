@@ -39,7 +39,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], index: Int, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @pluralSuffix = @{ if (occupiersDetails.sizeIs > 1) "s" else "" }
@@ -55,7 +55,7 @@
     showSection = true,
     summary = Option(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutTheProperty"),
-    backLinkUrl = backLink,
+    backLinkUrl = None,
     theForm = theForm
 ) {
 

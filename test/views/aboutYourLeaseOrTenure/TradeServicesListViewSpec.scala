@@ -27,26 +27,17 @@ class TradeServicesListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "addTradeService"
 
-  override val form = TradeServicesListForm.addAnotherServiceForm
+  override val form = TradeServicesListForm.theForm
 
   val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, fakeRequest)
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show().url
 
-  def createView = () => tradeServicesListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
+  def createView = () => tradeServicesListView(form, 0)(sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    tradeServicesListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[AnswersYesNo]) => tradeServicesListView(form, 0)(sessionRequest, messages)
 
   "Trade services list view" should {
-
-    "has a link marked with back.link.label leading to the list of Describe the trade service provided by the landlord Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe backLink
-    }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))

@@ -41,7 +41,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AdvertisingListController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
-  theView: AdvertisingListView,
+  theListView: AdvertisingListView,
   theConfirmationView: RemoveConfirmationView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
@@ -50,7 +50,7 @@ class AdvertisingListController @Inject() (
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    Ok(theView(theForm, backLinkUrl))
+    Ok(theListView(theForm))
   }
 
   def remove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
@@ -87,7 +87,7 @@ class AdvertisingListController @Inject() (
       theFormWithErrors =>
         successful(
           BadRequest(
-            theView(theFormWithErrors, backLinkUrl)
+            theListView(theFormWithErrors)
           )
         ),
       answer =>
@@ -123,6 +123,3 @@ class AdvertisingListController @Inject() (
       confirmAction = routes.AdvertisingListController.performRemove(index),
       cancelAction = routes.AdvertisingListController.show
     )
-
-  private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = AdvertisingListPageId)

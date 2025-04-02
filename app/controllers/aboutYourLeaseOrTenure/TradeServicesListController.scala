@@ -19,7 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.TradeServicesListForm.addAnotherServiceForm
+import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -28,8 +28,8 @@ import navigation.identifiers.TradeServicesListId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutYourLeaseOrTenure.tradeServicesList
-import views.html.genericRemoveConfirmation
+import views.html.aboutYourLeaseOrTenure.tradeServicesList as TradeServicesListView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,10 +39,10 @@ class TradeServicesListController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutYourLeaseOrTenureNavigator,
-  tradeServicesListView: tradeServicesList,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: TradeServicesListView,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit val ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -55,14 +55,12 @@ class TradeServicesListController @Inject() (
 
     Future.successful(
       Ok(
-        tradeServicesListView(
+        theListView(
           existingSection.flatMap(_.addAnotherService) match {
-            case Some(answer) => addAnotherServiceForm.fill(answer)
-            case _            => addAnotherServiceForm
+            case Some(answer) => theForm.fill(answer)
+            case _            => theForm
           },
-          index,
-          controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(index)).url,
-          request.sessionData.toSummary
+          index
         )
       )
     )
@@ -70,24 +68,22 @@ class TradeServicesListController @Inject() (
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      addAnotherServiceForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          tradeServicesListView(
+          theListView(
             formWithErrors,
-            index,
-            controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(index)).url,
-            request.sessionData.toSummary
+            index
           )
         ),
-      data =>
+      formData =>
         request.sessionData.aboutLeaseOrAgreementPartThree
           .map(_.tradeServices)
           .filter(_.nonEmpty)
           .fold(
             Future.successful(
               Redirect(
-                if (data == AnswerYes) {
+                if (formData == AnswerYes) {
                   routes.TradeServicesDescriptionController.show(Some(index))
                 } else {
                   navigator.nextPage(TradeServicesListId, request.sessionData).apply(request.sessionData)
@@ -97,14 +93,14 @@ class TradeServicesListController @Inject() (
           ) { existingSections =>
             val updatedSections = existingSections.updated(
               index,
-              existingSections(index).copy(addAnotherService = Some(data))
+              existingSections(index).copy(addAnotherService = Some(formData))
             )
             val updatedData     = updateAboutLeaseOrAgreementPartThree(
               _.copy(
                 tradeServices = updatedSections
               )
             )
-            session
+            repository
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(TradeServicesListId, updatedData).apply(updatedData)))
 
@@ -119,7 +115,7 @@ class TradeServicesListController @Inject() (
         val service = services.details.description
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               service,
               "label.section.aboutYourLeaseOrTenure",
@@ -144,7 +140,7 @@ class TradeServicesListController @Inject() (
             val description = services.details.description
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   description,
                   "label.section.connectionToTheProperty",
@@ -161,7 +157,7 @@ class TradeServicesListController @Inject() (
         case AnswerYes =>
           request.sessionData.aboutLeaseOrAgreementPartThree.map(_.tradeServices).map { services =>
             val updatedSections = services.patch(index, Nil, 1)
-            session.saveOrUpdate(
+            repository.saveOrUpdate(
               updateAboutLeaseOrAgreementPartThree(
                 _.copy(tradeServicesIndex = 0, tradeServices = updatedSections)
               )

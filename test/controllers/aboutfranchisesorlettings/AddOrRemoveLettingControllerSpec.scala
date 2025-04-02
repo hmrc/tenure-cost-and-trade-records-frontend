@@ -58,21 +58,14 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return correct backLink when 'from=CYA' query param is present" in {
-      val result = addOrRemoveLettingController().show(0)(FakeRequest(GET, "/path?from=CYA"))
-      contentAsString(result) should include(
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-      )
-    }
-
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = addOrRemoveLettingController().submitLetting(1)(fakeRequest)
+        val result = addOrRemoveLettingController().submit(1)(fakeRequest)
         status(result) shouldBe BAD_REQUEST
       }
       "throw a BAD_REQUEST if an empty form is submitted via CYA" in {
         val result =
-          addOrRemoveLettingController().submitLetting(1)(FakeRequest().withFormUrlEncodedBody("from" -> "CYA"))
+          addOrRemoveLettingController().submit(1)(FakeRequest().withFormUrlEncodedBody("from" -> "CYA"))
         status(result) shouldBe BAD_REQUEST
       }
     }
@@ -90,7 +83,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
-    val result = controller.submitLetting(1)(request)
+    val result = controller.submit(1)(request)
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/type-of-letting?idx=2"
@@ -102,7 +95,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
-    val result = controller.submitLetting(0)(request)
+    val result = controller.submit(0)(request)
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/type-of-letting?idx=1"
@@ -114,7 +107,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
-    val result = controller.submitLetting(2)(request)
+    val result = controller.submit(2)(request)
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/type-of-letting?idx=3"
@@ -126,7 +119,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
 
-    val result = controller.submitLetting(3)(request)
+    val result = controller.submit(3)(request)
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/type-of-letting?idx=4"
@@ -137,7 +130,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     val validFormData = Map("addAnotherLetting" -> "no")
     val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController()
-    val result        = controller.submitLetting(1)(request)
+    val result        = controller.submit(1)(request)
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/check-your-answers-about-franchise-or-lettings"
@@ -148,7 +141,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     val validFormData = Map("addAnotherLetting" -> "yes")
     val request       = FakeRequest(POST, "/add-remove-letting-submit/1").withFormUrlEncodedBody(validFormData.toSeq*)
     val controller    = addOrRemoveLettingController(Some(prefilledAboutFranchiseOrLettingsWith6020MaxLettings))
-    val result        = controller.submitLetting(10)(request)
+    val result        = controller.submit(10)(request)
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/max-lettings?src=lettings")
   }

@@ -23,17 +23,13 @@ import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherLowMarginFuelCardsDetailsForm {
 
-  lazy val baseAddAnotherLowMarginFuelCardsDetailsForm: Form[AnswersYesNo] = Form(
-    baseAddAnotherLowMarginFuelCardsDetailsMapping
+  val theForm = Form(
+    mapping(
+      "addAnotherLowMarginFuelCardsDetails" -> optional(
+        createYesNoType("error.addAnotherLowMarginFuelCardsDetails.required")
+      )
+        .verifying("error.addAnotherLowMarginFuelCardsDetails.required", _.nonEmpty)
+        .transform[AnswersYesNo](_.get, Some(_))
+    )(x => x)(b => Some(b))
   )
-
-  private val baseAddAnotherLowMarginFuelCardsDetailsMapping = mapping(
-    "addAnotherLowMarginFuelCardsDetails" -> optional(
-      createYesNoType("error.addAnotherLowMarginFuelCardsDetails.required")
-    )
-      .verifying("error.addAnotherLowMarginFuelCardsDetails.required", _.nonEmpty)
-      .transform[AnswersYesNo](_.get, Some(_))
-  )(x => x)(b => Some(b))
-
-  val addAnotherLowMarginFuelCardsDetailsForm = Form(baseAddAnotherLowMarginFuelCardsDetailsMapping)
 }

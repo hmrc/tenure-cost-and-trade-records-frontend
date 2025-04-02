@@ -53,23 +53,17 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
   "ServicePaidSeparatelyListController" should {
     "return 200 and HTML with Services Paid Separately List in the session 0" in {
       val result = servicePaidSeparatelyListController().show(0)(fakeRequest)
-      status(result)        shouldBe OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(0).url
-      )
+      status(result)      shouldBe OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 and HTML with Services Paid Separately List with none in the session 0" in {
       val controller = servicePaidSeparatelyListController(aboutLeaseOrAgreementPartThree = None)
       val result     = controller.show(0)(fakeRequest)
-      status(result)        shouldBe OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(0).url
-      )
+      status(result)      shouldBe OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {

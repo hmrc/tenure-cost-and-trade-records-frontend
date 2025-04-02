@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
 import connectors.Audit
-import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAnotherLowMarginFuelCardsDetailsForm
+import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -55,22 +55,6 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
-
-    "return correct backLink when 'from=TL' query param is present" in {
-      val result = createAddAnotherLowMarginFuelCardsDetailsController().show(0)(FakeRequest(GET, "/path?from=TL"))
-      val html   = contentAsString(result)
-
-      html should include(controllers.routes.TaskListController.show().url + "#")
-    }
-
-    "return correct backLink when 'from=CYA' query param is present" in {
-      val result = createAddAnotherLowMarginFuelCardsDetailsController().show(0)(FakeRequest(GET, "/path?from=CYA"))
-      val html   = contentAsString(result)
-
-      html should include(
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      )
-    }
   }
 
   "AddAnotherLowMarginFuelCardsDetailsController SUBMIT /" should {
@@ -92,7 +76,7 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
   "Add another card details form" should {
     "error if addAnotherLowMarginFuelCardsDetails is missing" in {
       val formData = baseFormData - errorKey.addAnotherLowMarginFuelCardsDetails
-      val form     = addAnotherLowMarginFuelCardsDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(
         errorKey.addAnotherLowMarginFuelCardsDetails,

@@ -23,15 +23,11 @@ import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherLettingPartOfPropertyForm {
 
-  lazy val baseAddAnotherLettingForm: Form[AnswersYesNo] = Form(
-    baseAddAnotherLettingMapping
+  val theForm = Form(
+    mapping(
+      "addAnotherLettingPartOfProperty" -> optional(createYesNoType("error.addAnotherLetting.required"))
+        .verifying("error.addAnotherLetting.required", _.nonEmpty)
+        .transform[AnswersYesNo](_.get, Some(_))
+    )(x => x)(b => Some(b))
   )
-
-  val baseAddAnotherLettingMapping = mapping(
-    "addAnotherLettingPartOfProperty" -> optional(createYesNoType("error.addAnotherLetting.required"))
-      .verifying("error.addAnotherLetting.required", _.nonEmpty)
-      .transform[AnswersYesNo](_.get, Some(_))
-  )(x => x)(b => Some(b))
-
-  val addAnotherLettingForm = Form(baseAddAnotherLettingMapping)
 }

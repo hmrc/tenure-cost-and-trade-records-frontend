@@ -27,8 +27,8 @@ import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.addOrRemoveLetting
-import views.html.genericRemoveConfirmation
+import views.html.aboutfranchisesorlettings.addOrRemoveLetting as AddOrRemoveLettingView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,10 +38,10 @@ class AddOrRemoveLettingController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  addOrRemoveLettingView: addOrRemoveLetting,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: AddOrRemoveLettingView,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -72,17 +72,15 @@ class AddOrRemoveLettingController @Inject() (
 
     Future.successful(
       Ok(
-        addOrRemoveLettingView(
+        theListView(
           addAnother.fold(addAnotherLettingForm)(addAnotherLettingForm.fill),
-          index,
-          getBackLink(index),
-          request.sessionData.toSummary
+          index
         )
       )
     )
   }
 
-  def submitLetting(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     val lettingsData          = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings)
     val numberOfLettings: Int =
       request.sessionData.aboutFranchisesOrLettings.map(_.lettings.getOrElse(IndexedSeq.empty).size).getOrElse(0)
@@ -90,33 +88,31 @@ class AddOrRemoveLettingController @Inject() (
       addAnotherLettingForm,
       formWithErrors =>
         BadRequest(
-          addOrRemoveLettingView(
+          theListView(
             formWithErrors,
-            index,
-            getBackLink(index),
-            request.sessionData.toSummary
+            index
           )
         ),
-      answer =>
-        if (answer == AnswerYes && numberOfLettings >= 5 && navigator.from != "CYA") {
+      formData =>
+        if (formData == AnswerYes && numberOfLettings >= 5 && navigator.from != "CYA") {
           Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings"))))
         } else {
           lettingsData match {
             case Some(lettings) if lettings.isDefinedAt(index) =>
               val updatedLettings: IndexedSeq[LettingPartOfProperty] =
-                lettings.updated(index, updateLettingWithNewAnswer(lettings(index), Some(answer)))
+                lettings.updated(index, updateLettingWithNewAnswer(lettings(index), Some(formData)))
               val updatesSession                                     = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings(about =>
                 about.copy(lettings = Some(updatedLettings))
               )
-              session.saveOrUpdate(updatesSession).map { _ =>
-                if (answer == AnswerYes) {
+              repository.saveOrUpdate(updatesSession).map { _ =>
+                if (formData == AnswerYes) {
                   Redirect(routes.TypeOfLettingController.show(Some(index + 1)))
                 } else {
                   Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
                 }
               }
             case Some(lettings) if lettings.isEmpty            =>
-              if (answer == AnswerYes) {
+              if (formData == AnswerYes) {
                 Redirect(routes.TypeOfLettingController.show())
               } else {
                 Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
@@ -148,7 +144,7 @@ class AddOrRemoveLettingController @Inject() (
       .map { operatorName =>
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               operatorName,
               "label.section.aboutTheLettings",
@@ -171,7 +167,7 @@ class AddOrRemoveLettingController @Inject() (
           .map { operatorName =>
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   operatorName,
                   "label.section.aboutTheLettings",
@@ -194,7 +190,7 @@ class AddOrRemoveLettingController @Inject() (
           if (idx >= 0 && idx < lettings.length) {
             val updatedLettings = lettings.patch(idx, Nil, 1)
             val updatedAbout    = aboutFranchisesOrLettings.copy(lettings = Some(updatedLettings))
-            session.saveOrUpdate(request.sessionData.copy(aboutFranchisesOrLettings = Some(updatedAbout))).map { _ =>
+            repository.saveOrUpdate(request.sessionData.copy(aboutFranchisesOrLettings = Some(updatedAbout))).map { _ =>
               Redirect(
                 controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController
                   .show(if (updatedLettings.isEmpty) 0 else updatedLettings.length - 1)
@@ -210,11 +206,4 @@ class AddOrRemoveLettingController @Inject() (
       }
     )
   }
-
-  private def getBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
-    if (navigator.from == "CYA") {
-      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else {
-      controllers.aboutfranchisesorlettings.routes.RentDetailsController.show(idx).url
-    }
 }

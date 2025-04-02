@@ -41,9 +41,7 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
       0,
       messageKeyPrefix6030,
       messageKeyPrefix6015,
-      messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      messageKeyPrefix
     )(sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
@@ -52,24 +50,12 @@ class AddAnotherLettingOtherPartOfPropertySpec extends QuestionViewBehaviours[An
       0,
       messageKeyPrefix6030,
       messageKeyPrefix6015,
-      messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      messageKeyPrefix
     )(sessionRequest, messages)
 
   "Add another letting part of property view" must {
 
     behave like normalPageWithZeroBusinessOrLettings(createView, messageKeyPrefix, "0")
-
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
-        .show(0)
-        .url
-    }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))

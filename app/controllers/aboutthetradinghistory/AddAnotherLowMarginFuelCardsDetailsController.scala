@@ -19,7 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.addAnotherLowMarginFuelCardsDetailsForm
+import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -29,8 +29,8 @@ import navigation.identifiers.AddAnotherLowMarginFuelCardsDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.addAnotherLowMarginFuelCardDetails
-import views.html.genericRemoveConfirmation
+import views.html.aboutthetradinghistory.addAnotherLowMarginFuelCardDetails as AddAnotherLowMarginFuelCardDetailsView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -40,10 +40,10 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
-  addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: AddAnotherLowMarginFuelCardDetailsView,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -69,11 +69,9 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
 
     Future.successful(
       Ok(
-        addAnotherLowMarginFuelCardsDetailsView(
-          addAnother.fold(addAnotherLowMarginFuelCardsDetailsForm)(addAnotherLowMarginFuelCardsDetailsForm.fill),
-          index,
-          calculateBackLink(request, index),
-          request.sessionData.toSummary
+        theListView(
+          addAnother.fold(theForm)(theForm.fill),
+          index
         )
       )
     )
@@ -81,30 +79,29 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      addAnotherLowMarginFuelCardsDetailsForm,
+      theForm,
       formWithErrors =>
         Future.successful(
           BadRequest(
-            addAnotherLowMarginFuelCardsDetailsView(
+            theListView(
               formWithErrors,
-              index,
-              calculateBackLink(request, index),
-              request.sessionData.toSummary
+              index
             )
           )
         ),
-      data =>
+      formData =>
         aboutTheTradingHistoryData
           .flatMap(_.lowMarginFuelCardsDetails)
           .filter(_.isDefinedAt(index))
           .fold(Future.unit) { existingCards =>
             val updatedCards =
-              existingCards.updated(index, existingCards(index).copy(addAnotherLowMarginFuelCardDetails = Some(data)))
+              existingCards
+                .updated(index, existingCards(index).copy(addAnotherLowMarginFuelCardDetails = Some(formData)))
             val updatedData  = updateAboutTheTradingHistory(_.copy(lowMarginFuelCardsDetails = Some(updatedCards)))
-            session.saveOrUpdate(updatedData)
+            repository.saveOrUpdate(updatedData)
           }
           .map(_ =>
-            if (data == AnswerYes) Redirect(routes.LowMarginFuelCardDetailsController.show())
+            if (formData == AnswerYes) Redirect(routes.LowMarginFuelCardDetailsController.show())
             else
               Redirect(
                 navigator
@@ -120,7 +117,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       .map { cardName =>
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               cardName,
               "label.section.aboutYourTradingHistory",
@@ -146,7 +143,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
           .map { cardName =>
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   cardName,
                   "label.section.aboutYourTradingHistory",
@@ -166,7 +163,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
         case AnswerYes =>
           aboutTheTradingHistoryData.flatMap(_.lowMarginFuelCardsDetails).map { businessSections =>
             val updatedSections = businessSections.patch(idx, Nil, 1)
-            session.saveOrUpdate(
+            repository.saveOrUpdate(
               updateAboutTheTradingHistory(_.copy(lowMarginFuelCardsDetails = Some(updatedSections)))
             )
           }
@@ -176,13 +173,5 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       }
     )
   }
-
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent], index: Int) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#"
-      case _     => controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.show(Some(index)).url
-    }
 
 }

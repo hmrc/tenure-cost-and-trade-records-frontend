@@ -27,7 +27,7 @@ class AddAnotherBunkerFuelCardsDetailsFormSpec extends PlaySpec {
 
     "bind a 'yes' value correctly" in {
       val data = Map("addAnotherBunkerFuelCardsDetails" -> "yes")
-      val form = baseAddAnotherBunkerFuelCardsDetailsForm.bind(data)
+      val form = theForm.bind(data)
 
       form.errors mustBe empty
       form.value mustBe Some(AnswerYes)
@@ -35,14 +35,14 @@ class AddAnotherBunkerFuelCardsDetailsFormSpec extends PlaySpec {
 
     "bind a 'no' value correctly" in {
       val data = Map("addAnotherBunkerFuelCardsDetails" -> "no")
-      val form = baseAddAnotherBunkerFuelCardsDetailsForm.bind(data)
+      val form = theForm.bind(data)
 
       form.errors mustBe empty
       form.value mustBe Some(AnswerNo)
     }
 
     "not bind an empty map" in {
-      val form = baseAddAnotherBunkerFuelCardsDetailsForm.bind(Map.empty[String, String])
+      val form = theForm.bind(Map.empty[String, String])
 
       form.errors mustNot be(empty)
       form.errors must contain(

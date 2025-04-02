@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.confirmableActionForm.confirmableActionForm
-import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
+import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
@@ -30,8 +30,8 @@ import navigation.identifiers.AddAnotherBunkerFuelCardsDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.addAnotherBunkerFuelCardDetails
-import views.html.genericRemoveConfirmation
+import views.html.aboutthetradinghistory.addAnotherBunkerFuelCardDetails as AddAnotherBunkerFuelCardDetailsView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -41,10 +41,10 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
-  addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: AddAnotherBunkerFuelCardDetailsView,
+  theRemoveView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -75,11 +75,9 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
 
     Future.successful(
       Ok(
-        addAnotherBunkerFuelCardsDetailsView(
-          addAnother.fold(addAnotherBunkerFuelCardsDetailsForm)(addAnotherBunkerFuelCardsDetailsForm.fill),
-          index,
-          calculateBackLink(request, index),
-          request.sessionData.toSummary
+        theListView(
+          addAnother.fold(theForm)(theForm.fill),
+          index
         )
       )
     )
@@ -90,25 +88,23 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
       aboutTheTradingHistoryDataPartOne.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
 
     continueOrSaveAsDraft[AnswersYesNo](
-      addAnotherBunkerFuelCardsDetailsForm,
+      theForm,
       formWithErrors =>
         Future.successful(
           BadRequest(
-            addAnotherBunkerFuelCardsDetailsView(
+            theListView(
               formWithErrors,
-              index,
-              calculateBackLink(request, index),
-              request.sessionData.toSummary
+              index
             )
           )
         ),
-      data =>
+      formData =>
         aboutTheTradingHistoryData
           .flatMap(_.bunkerFuelCardsDetails)
           .filter(_.isDefinedAt(index))
           .fold(Future.unit) { existingCards =>
             val updatedCards   =
-              existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(data)))
+              existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(formData)))
             val updatedData    = updateAboutTheTradingHistory(
               _.copy(
                 bunkerFuelCardsDetails = Some(updatedCards)
@@ -119,15 +115,15 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
                 fromCYA = Some(fromCYA)
               )
             )
-            session.saveOrUpdate(updatedData)
-            session.saveOrUpdate(updatedDataCYA)
+            repository.saveOrUpdate(updatedData)
+            repository.saveOrUpdate(updatedDataCYA)
           }
           .map(_ =>
-            if (data == AnswerNo && fromCYA) {
+            if (formData == AnswerNo && fromCYA) {
               Redirect(
                 routes.CheckYourAnswersAboutTheTradingHistoryController.show()
               )
-            } else if (data == AnswerYes) {
+            } else if (formData == AnswerYes) {
               Redirect(
                 routes.BunkerFuelCardDetailsController.show()
               )
@@ -146,7 +142,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
       .map { cardName =>
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theRemoveView(
               confirmableActionForm,
               cardName,
               "label.section.aboutYourTradingHistory",
@@ -169,7 +165,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
           .map { cardName =>
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theRemoveView(
                   formWithErrors,
                   cardName,
                   "label.section.aboutYourTradingHistory",
@@ -189,7 +185,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
         case AnswerYes =>
           aboutTheTradingHistoryData.flatMap(_.bunkerFuelCardsDetails).map { businessSections =>
             val updatedSections = businessSections.patch(idx, Nil, 1)
-            session.saveOrUpdate(
+            repository.saveOrUpdate(
               updateAboutTheTradingHistory(_.copy(bunkerFuelCardsDetails = Some(updatedSections)))
             )
           }
@@ -199,12 +195,4 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
       }
     )
   }
-
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent], index: Int) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case _     => controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(Some(index)).url
-    }
-
 }
