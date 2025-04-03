@@ -1831,6 +1831,7 @@ error.accommodation.singleBedrooms.negative = The amount of single bedrooms cann
 error.accommodation.doubleBedrooms.required = Enter 0 if there are no double bedrooms in this unit
 error.accommodation.doubleBedrooms.nonNumeric = Double bedrooms must be a number
 error.accommodation.doubleBedrooms.negative = The amount of double bedrooms cannot be a negative number
+error.accommodation.singleBedrooms.zero = Single bedrooms cannot be 0 if double bedrooms is 0
 error.accommodation.bathrooms.required = Enter 0 if there are no bathrooms in this unit
 error.accommodation.bathrooms.nonNumeric = Bathrooms must be a number
 error.accommodation.bathrooms.negative = The amount of bathrooms cannot be a negative number
