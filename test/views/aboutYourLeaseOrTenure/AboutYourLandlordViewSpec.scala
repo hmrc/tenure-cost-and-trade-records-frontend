@@ -23,18 +23,18 @@ import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AboutYourLandlordViewSpec extends QuestionViewBehaviours[AboutTheLandlord] {
+class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String] {
 
   def aboutYourLandordView = inject[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
 
   val messageKeyPrefix = "aboutYourLandlord"
   val backLink         = controllers.routes.TaskListController.show().url
 
-  override val form = AboutTheLandlordForm.aboutTheLandlordForm
+  override val form = AboutTheLandlordForm.theForm
 
   def createView = () => aboutYourLandordView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AboutTheLandlord]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     aboutYourLandordView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
 
   "About the landlord view" must {

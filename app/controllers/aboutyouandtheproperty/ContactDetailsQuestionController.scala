@@ -84,9 +84,9 @@ class ContactDetailsQuestionController @Inject() (
             then
               redirectToAddressLookupFrontend(
                 config = AddressLookupConfig(
-                  lookupPageHeadingKey = "requestReferenceNumber.address.lookupPageHeading",
-                  selectPageHeadingKey = "requestReferenceNumber.address.selectPageHeading",
-                  confirmPageLabelKey = "requestReferenceNumber.address.confirmPageHeading",
+                  lookupPageHeadingKey = "contactDetailsQuestion.address.lookupPageHeading",
+                  selectPageHeadingKey = "contactDetailsQuestion.address.selectPageHeading",
+                  confirmPageLabelKey = "contactDetailsQuestion.address.confirmPageHeading",
                   offRampCall = routes.ContactDetailsQuestionController.addressLookupCallback()
                 )
               )
@@ -100,10 +100,10 @@ class ContactDetailsQuestionController @Inject() (
   def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
-      confirmedAddress <- getConfirmedAddress(id)
-      convertedAddress  = confirmedAddress.asAlternativeContactDetails
-      newSession       <- successful(sessionWithAddress(convertedAddress))
-      _                <- repository.saveOrUpdate(newSession)
+      confirmedAddress  <- getConfirmedAddress(id)
+      alternativeAddress = confirmedAddress.asAlternativeAddress
+      newSession        <- successful(sessionWithAlternativeAddress(alternativeAddress))
+      _                 <- repository.saveOrUpdate(newSession)
     yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
   }
 
@@ -126,7 +126,7 @@ class ContactDetailsQuestionController @Inject() (
       )
     )
 
-  private def sessionWithAddress(address: AlternativeContactDetails)(using session: Session) =
+  private def sessionWithAlternativeAddress(address: AlternativeContactDetails)(using session: Session) =
     assert(session.aboutYouAndTheProperty.isDefined)
     session.copy(aboutYouAndTheProperty =
       session.aboutYouAndTheProperty.map(
@@ -137,7 +137,7 @@ class ContactDetailsQuestionController @Inject() (
     )
 
   extension (confirmed: AddressLookupConfirmedAddress)
-    private def asAlternativeContactDetails = AlternativeContactDetails(
+    private def asAlternativeAddress = AlternativeContactDetails(
       alternativeContactAddress = AlternativeAddress(
         confirmed.buildingNameNumber,
         confirmed.street1,

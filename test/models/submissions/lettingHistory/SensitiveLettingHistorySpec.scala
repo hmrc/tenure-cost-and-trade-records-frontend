@@ -16,50 +16,48 @@
 
 package models.submissions.lettingHistory
 
-import com.typesafe.config.ConfigFactory
-import crypto.MongoCrypto
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.must.Matchers
+import models.submissions.MongoCryptoSupport
 import org.scalatest.OptionValues
-import play.api.Configuration
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.{JsSuccess, Json}
+
 import java.time.LocalDate
 
-class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionValues:
-
-  given MongoCrypto = new MongoCrypto(Configuration(ConfigFactory.load()))
+class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
 
   it should "encrypt and decrypt sensitive fields correctly" in {
     val encryptedLettingHistory = SensitiveLettingHistory(clearLettingHistory)
-    encryptedLettingHistory.decryptedValue mustBe clearLettingHistory
+    encryptedLettingHistory.decryptedValue shouldBe clearLettingHistory
   }
 
   it should "serialize to encrypted JSON" in {
     val encryptedValue = SensitiveLettingHistory(clearLettingHistory)
-    val jsonValue      = Json.toJson(encryptedValue)
+    val jsValue        = Json.toJson(encryptedValue)
 
-    (jsonValue \ "hasPermanentResidents").as[Boolean] mustBe true
-    val encryptedResidentDetail = (jsonValue \ "permanentResidents").head.as[SensitiveResidentDetail]
-    encryptedResidentDetail.name    must not be clearLettingHistory.permanentResidents.head.name
-    encryptedResidentDetail.address must not be clearLettingHistory.permanentResidents.head.address
+    (jsValue \ "hasPermanentResidents").as[Boolean] shouldBe true
+    val encryptedResidentDetail = (jsValue \ "permanentResidents").head.as[SensitiveResidentDetail]
+    encryptedResidentDetail.name    should not be clearLettingHistory.permanentResidents.head.name
+    encryptedResidentDetail.address should not be clearLettingHistory.permanentResidents.head.address
 
-    (jsonValue \ "hasCompletedLettings").as[Boolean] mustBe true
-    val encryptedOccupierDetails = (jsonValue \ "completedLettings").head.as[SensitiveOccupierDetail]
-    encryptedOccupierDetails.name                 must not be clearLettingHistory.completedLettings.head.name
-    encryptedOccupierDetails.address.line1        must not be clearLettingHistory.completedLettings.head.address.line1
-    encryptedOccupierDetails.address.line2.value  must not be clearLettingHistory.completedLettings.head.address.line2.value
-    encryptedOccupierDetails.address.town         must not be clearLettingHistory.completedLettings.head.address.town
-    encryptedOccupierDetails.address.county.value must not be clearLettingHistory.completedLettings.head.address.county.value
-    encryptedOccupierDetails.address.postcode     must not be clearLettingHistory.completedLettings.head.address.postcode
-    encryptedOccupierDetails.rental.isDefined mustBe true
-    encryptedOccupierDetails.rental.value.fromDate mustBe clearLettingHistory.completedLettings.head.rentalPeriod.value.fromDate
-    encryptedOccupierDetails.rental.value.toDate mustBe clearLettingHistory.completedLettings.head.rentalPeriod.value.toDate
+    (jsValue \ "hasCompletedLettings").as[Boolean] shouldBe true
+    val encryptedOccupierDetails = (jsValue \ "completedLettings").head.as[SensitiveOccupierDetail]
+    encryptedOccupierDetails.name                    should not be clearLettingHistory.completedLettings.head.name
+    encryptedOccupierDetails.address.line1           should not be clearLettingHistory.completedLettings.head.address.line1
+    encryptedOccupierDetails.address.line2.value     should not be clearLettingHistory.completedLettings.head.address.line2.value
+    encryptedOccupierDetails.address.town            should not be clearLettingHistory.completedLettings.head.address.town
+    encryptedOccupierDetails.address.county.value    should not be clearLettingHistory.completedLettings.head.address.county.value
+    encryptedOccupierDetails.address.postcode        should not be clearLettingHistory.completedLettings.head.address.postcode
+    encryptedOccupierDetails.rental.isDefined      shouldBe true
+    encryptedOccupierDetails.rental.value.fromDate shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.fromDate
+    encryptedOccupierDetails.rental.value.toDate   shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.toDate
   }
 
   it should "deserialize from encrypted JSON" in {
     val encryptedLettingHistory = SensitiveLettingHistory(clearLettingHistory)
-    val jsonValue               = Json.toJson(encryptedLettingHistory)
-    Json.fromJson[SensitiveLettingHistory](jsonValue) mustBe JsSuccess(encryptedLettingHistory)
+    val jsValue                 = Json.toJson(encryptedLettingHistory)
+    val deserialized            = Json.fromJson[SensitiveLettingHistory](jsValue)
+    deserialized shouldBe JsSuccess(encryptedLettingHistory)
   }
 
   val clearLettingHistory = LettingHistory(

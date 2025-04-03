@@ -22,8 +22,6 @@ import uk.gov.voa.play.form.Condition
 import uk.gov.voa.play.form.ConditionalMappings._
 
 object ConditionalMapping {
-  def ifTrueElse[T](fieldName: String, trueMapping: Mapping[T], falseMapping: Mapping[T]): Mapping[T] =
-    IfElseMapping(isTrue(fieldName), trueMapping, falseMapping)
 
   def nonEmptyTextOr(
     fieldName: String,

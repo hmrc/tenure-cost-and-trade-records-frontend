@@ -1390,6 +1390,9 @@ cateringOperationOrLettingAccommodationDetails.heading = Provide the business''s
 concessionDetails.heading = Provide the concession''s details
 lettingDetails.heading = Provide the tenant or operator''s details
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant''s details
+lettingOtherPartOfPropertyDetails.address.lookupPageHeading = What is the tenant''s address?
+lettingOtherPartOfPropertyDetails.address.selectPageHeading = Choose the tenant''s address
+lettingOtherPartOfPropertyDetails.address.confirmPageHeading = Check the tenant''s address
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Operator''s name
 label.lettingOperatorName = Tenant''s name
@@ -3376,6 +3379,9 @@ error.furtherInformationOrRemarks.maxLength = Mae''n rhaid i''r wybodaeth bellac
 # ALTERNATIVE DETAILS QUESTION
 ################################
 contactDetailsQuestion.heading = Would you like us to use an alternative correspondence address if we need to contact you?
+contactDetailsQuestion.address.lookupPageHeading = What is the alternative correspondence address?
+contactDetailsQuestion.address.selectPageHeading = Choose the alternative correspondence address
+contactDetailsQuestion.address.confirmPageHeading = Check the alternative correspondence address
 hint.contactDetailsQuestion = You can either provide alternative contact details, or nominate someone else we should contact if we have any queries about this declaration.
 error.contactDetailsQuestion.missing= Dewiswch ‘hoffwn'' os ydych am ddefnyddio manylion cyswllt eraill
 

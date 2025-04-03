@@ -18,6 +18,7 @@ package connectors.addressLookup
 
 import models.submissions.aboutYourLeaseOrTenure.LandlordAddress
 
+@deprecated("Remove this utility class as it's not longer useful")
 object AddressLookupUtil {
   def getLandLordAddress(addressLookup: AddressLookupConfirmedAddress): LandlordAddress =
     addressLookup match {
