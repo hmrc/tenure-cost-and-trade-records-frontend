@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,26 @@
 
 package form.aboutyouandtheproperty
 
+import actions.SessionRequest
+import controllers.lettingHistory.RentalPeriodSupport
+import form.MappingSupport.between
 import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
+import play.api.mvc.AnyContent
+import util.AccountingInformationUtil
 
-object CommercialLettingAvailabilityForm {
+object CommercialLettingAvailabilityForm extends RentalPeriodSupport:
 
-  val commercialLettingAvailabilityForm: Form[Int] = Form(
-    single(
-      "commercialLettingAvailability" -> default(text, "")
-        .verifying("error.commercialLettingAvailability.required", _.nonEmpty)
-        .verifying("error.commercialLettingAvailability.range", s => s.isEmpty || s.matches("""\d+"""))
-        .transform[Int](_.toInt, _.toString)
-        .verifying("error.commercialLettingAvailability.range", n => n >= 0 && n <= 365)
+  def commercialLettingAvailabilityForm(using request: SessionRequest[AnyContent]): Form[Int] =
+    val finYearEnd = effectiveRentalPeriod.toDate
+    val maxNights  = AccountingInformationUtil.maxNightsInFinYear6048(finYearEnd.getYear)
+
+    Form(
+      single(
+        "commercialLettingAvailability" -> default(text, "")
+          .verifying("error.commercialLettingAvailability.required", _.nonEmpty)
+          .verifying("error.commercialLettingAvailability.number", s => s.isEmpty || s.matches("""\d+"""))
+          .transform[Int](_.toInt, _.toString)
+          .verifying(between(0, maxNights, "error.commercialLettingAvailability.range"))
+      )
     )
-  )
-}

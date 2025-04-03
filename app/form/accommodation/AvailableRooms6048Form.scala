@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import models.submissions.accommodation.AvailableRooms
 import play.api.data.Form
 import play.api.data._
 import play.api.data.Forms._
-import play.api.data.Forms.{mapping, optional, text}
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 

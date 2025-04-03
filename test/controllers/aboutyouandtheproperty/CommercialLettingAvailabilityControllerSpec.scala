@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@
 
 package controllers.aboutyouandtheproperty
 
+import actions.SessionRequest
 import connectors.Audit
 import form.aboutyouandtheproperty.CommercialLettingAvailabilityForm.commercialLettingAvailabilityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
-import play.api.http.Status._
+import play.api.http.Status.*
+import play.api.mvc.AnyContent
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
@@ -43,6 +45,8 @@ class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
     mockSessionRepo
   )
+
+  given SessionRequest[AnyContent] = SessionRequest(stillConnectedDetails6048YesSession, fakeRequest)
 
   "Commercial letting availability controller" should {
     "return 200" in {
@@ -98,13 +102,13 @@ class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec {
     "error if non-numeric value is submitted" in {
       val formData = baseFormData.updated(errorKey.numberOfDays, "abc")
       val form     = commercialLettingAvailabilityForm.bind(formData)
-      mustContainError(errorKey.numberOfDays, "error.commercialLettingAvailability.range", form)
+      mustContainError(errorKey.numberOfDays, "error.commercialLettingAvailability.number", form)
     }
 
     "error if number of days is below the minimum range" in {
       val formData = baseFormData.updated(errorKey.numberOfDays, "-1")
       val form     = commercialLettingAvailabilityForm.bind(formData)
-      mustContainError(errorKey.numberOfDays, "error.commercialLettingAvailability.range", form)
+      mustContainError(errorKey.numberOfDays, "error.commercialLettingAvailability.number", form)
     }
 
     "error if number of days is above the maximum range" in {
