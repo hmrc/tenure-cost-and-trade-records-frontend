@@ -3268,7 +3268,7 @@ completedCommercialLettings.welsh.formLabel = How many nights was your property 
 error.completedCommercialLettings.required = State how many nights was the property let, between 1 April 2023 and 31 March 2024
 error.completedCommercialLettings.range = The number of nights must be a figure between 0 and 365
 error.completedCommercialLettings.welsh.required = State how many nights was the property let in the year ending {0}
-error.completedCommercialLettings.welsh.range = The number of nights in the year ending {0} must be a figure between 0 and 365
+error.completedCommercialLettings.welsh.range = The number of nights in the year ending {0} must be a figure between 0 and {1}
 
 
 #COMMERCIAL LETTING QUESTION
@@ -3296,7 +3296,7 @@ commercialLettingAvailability.label.welsh.nights = Number of nights let
 error.commercialLettingAvailability.required = State how many nights was the property available in year between 1 April 2023 and 31 March 2024
 error.commercialLettingAvailability.range = The number of nights must be a figure between 0 and 365
 error.commercialLettingAvailability.welsh.required = State how many nights was the property available in the year ending {0}
-error.commercialLettingAvailability.welsh.range = Number of nights in the year ending {0} must be a number between 0 and 365
+error.commercialLettingAvailability.welsh.range = Number of nights in the year ending {0} must be a number between 0 and {1}
 
 #PARTS OF THE PROPERTY UNAVAILABLE TO RENT
 

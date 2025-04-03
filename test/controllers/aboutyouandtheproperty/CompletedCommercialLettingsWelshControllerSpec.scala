@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,12 @@
 
 package controllers.aboutyouandtheproperty
 
+import actions.SessionRequest
 import connectors.Audit
 import form.aboutyouandtheproperty.CompletedCommercialLettingsWelshForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, CompletedLettings}
 import play.api.libs.json.Json
+import play.api.mvc.AnyContent
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
@@ -56,6 +58,9 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
     mockSessionRepo
   )
+
+  val sessionRequest: SessionRequest[AnyContent] =
+    SessionRequest[AnyContent](stillConnectedDetails6048YesSession, fakeRequest)
 
   "Completed commercial lettings welsh controller GET" should {
     "return 200" in {
@@ -101,10 +106,12 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
       val formData = Map("completedLettings-0" -> "xxx")
 
       val form =
-        CompletedCommercialLettingsWelshForm.completedCommercialLettingsWelshForm(years)(messages).bind(formData)
+        CompletedCommercialLettingsWelshForm
+          .completedCommercialLettingsWelshForm(years)(sessionRequest, messages)
+          .bind(formData)
       mustContainError(
         "completedLettings-0",
-        messages("error.completedCommercialLettings.welsh.range", 2024.toString),
+        messages("error.completedCommercialLettings.welsh.range", 2024.toString, 365),
         form
       )
     }
@@ -114,7 +121,9 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
       val formData = Map("completedLettings-1" -> "")
 
       val form =
-        CompletedCommercialLettingsWelshForm.completedCommercialLettingsWelshForm(years)(messages).bind(formData)
+        CompletedCommercialLettingsWelshForm
+          .completedCommercialLettingsWelshForm(years)(sessionRequest, messages)
+          .bind(formData)
       mustContainError(
         "completedLettings-1",
         messages("error.completedCommercialLettings.welsh.required", 2023.toString),
@@ -127,10 +136,12 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
       val formData = Map("completedLettings-2" -> "366")
 
       val form =
-        CompletedCommercialLettingsWelshForm.completedCommercialLettingsWelshForm(years)(messages).bind(formData)
+        CompletedCommercialLettingsWelshForm
+          .completedCommercialLettingsWelshForm(years)(sessionRequest, messages)
+          .bind(formData)
       mustContainError(
         "completedLettings-2",
-        messages("error.completedCommercialLettings.welsh.range", 2022.toString),
+        messages("error.completedCommercialLettings.welsh.range", 2022.toString, 365),
         form
       )
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,7 +111,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any))
         .thenReturn(successful(Some("/on-ramp")))
       val res = aboutYourLandlordController().submit(
-        FakeRequest("POST", "/").withFormUrlEncodedBody(baseFormData.toSeq: _*)
+        FakeRequest("POST", "/").withFormUrlEncodedBody(baseFormData.toSeq*)
       )
       status(res)                 shouldBe SEE_OTHER
       redirectLocation(res).value shouldBe "/on-ramp"

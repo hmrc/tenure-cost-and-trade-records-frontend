@@ -86,7 +86,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         page.input("fromDate.year")  should haveValue(previousFiscalYearEnd.toString)
         page.input("toDate.day")     should haveValue("9")
         page.input("toDate.month")   should haveValue("2")
-        page.input("toDate.year")    should haveValue((previousFiscalYearEnd - 1).toString)
+        page.input("toDate.year")    should haveValue(s"${previousFiscalYearEnd - 1}")
       }
     }
     "regardless users having entered period or not" should {

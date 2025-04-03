@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,14 @@
 
 package form.accommodation
 
+import actions.SessionRequest
 import form.MappingSupport.*
 import models.submissions.accommodation.AccommodationLettingHistory
 import play.api.data.Forms.{ignored, mapping}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
+import play.api.mvc.AnyContent
+import util.AccountingInformationUtil
 
 import java.time.LocalDate
 
@@ -29,25 +32,30 @@ import java.time.LocalDate
   */
 object AccommodationLettingHistory6048Form {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[AccommodationLettingHistory] =
+  private def columnMapping(
+    year: String
+  )(using request: SessionRequest[AnyContent], messages: Messages): Mapping[AccommodationLettingHistory] =
+    val maxNights = AccountingInformationUtil.maxNightsInFinYear6048(year.toInt)
+    val maxWeeks  = AccountingInformationUtil.maxWeeksInFinYear6048(year.toInt)
+
     mapping(
       "financialYearEnd"             -> ignored(LocalDate.EPOCH),
       "nightsAvailableToLet"         -> nonNegativeNumberWithYear(
         "accommodation.lettingHistory.nightsAvailableToLet",
         year,
-        366
+        maxNights
       ),
-      "nightsLet"                    -> nonNegativeNumberWithYear("accommodation.lettingHistory.nightsLet", year, 366),
+      "nightsLet"                    -> nonNegativeNumberWithYear("accommodation.lettingHistory.nightsLet", year, maxNights),
       "weeksAvailableForPersonalUse" -> nonNegativeNumberWithYear(
         "accommodation.lettingHistory.weeksAvailableForPersonalUse",
         year,
-        52
+        maxWeeks
       )
     )(AccommodationLettingHistory.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def accommodationLettingHistory6048Form(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[AccommodationLettingHistory]] =
+  )(using request: SessionRequest[AnyContent], messages: Messages): Form[Seq[AccommodationLettingHistory]] =
     Form {
       mappingPerYear(years, (year, idx) => s"lettingHistory[$idx]" -> columnMapping(year))
     }

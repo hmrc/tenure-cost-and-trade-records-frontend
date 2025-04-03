@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,29 @@
 
 package form.accommodation
 
+import actions.SessionRequest
+import controllers.lettingHistory.RentalPeriodSupport
 import form.DateMappings.{betweenDates, requiredDateMapping}
+import form.lettingHistory.RentalPeriodForm.effectiveRentalPeriod
 import models.submissions.accommodation.HighSeasonTariff
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.i18n.Messages
-import util.{AccountingInformationUtil, DateUtilLocalised}
+import play.api.mvc.AnyContent
+import util.DateUtilLocalised
 
 /**
   * @author Yuriy Tumakha
   */
-object HighSeasonTariff6048Form:
+object HighSeasonTariff6048Form extends RentalPeriodSupport:
 
-  def highSeasonTariff6048Form(using messages: Messages, dateUtil: DateUtilLocalised): Form[HighSeasonTariff] =
-    val Seq(finYearStart, finYearEnd) = AccountingInformationUtil.previousFinancialYearFromTo6048
+  def highSeasonTariff6048Form(using
+    request: SessionRequest[AnyContent],
+    messages: Messages,
+    dateUtil: DateUtilLocalised
+  ): Form[HighSeasonTariff] =
+    val finYearStart = effectiveRentalPeriod.fromDate
+    val finYearEnd   = effectiveRentalPeriod.toDate
 
     Form {
       mapping(

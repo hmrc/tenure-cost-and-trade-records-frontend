@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,13 @@ import actions.SessionRequest
 import controllers.aboutthetradinghistory
 import models.Session
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.*
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.AnyContent
 
 import java.time.Month.{APRIL, MARCH}
+import java.time.temporal.ChronoUnit
 import java.time.{LocalDate, YearMonth}
 
 /**
@@ -79,6 +80,24 @@ object AccountingInformationUtil {
       }
     }
   }
+
+  def maxNightsInFinYear6048(year: Int)(implicit request: SessionRequest[AnyContent]): Int =
+    val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
+      .flatMap(_.commercialLetDate)
+      .fold(LocalDate.EPOCH)(_.toYearMonth.atDay(1))
+
+    val daysSinceStart =
+      ChronoUnit.DAYS.between(commercialLetFirstAvailableDate, LocalDate.of(year, MARCH, 31)).toInt + 1
+    if daysSinceStart > 0 && daysSinceStart < 365 then daysSinceStart else 365
+
+  def maxWeeksInFinYear6048(year: Int)(implicit request: SessionRequest[AnyContent]): Int =
+    val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
+      .flatMap(_.commercialLetDate)
+      .fold(LocalDate.EPOCH)(_.toYearMonth.atDay(1))
+
+    val weeksSinceStart =
+      ChronoUnit.WEEKS.between(commercialLetFirstAvailableDate, LocalDate.of(year, MARCH, 31)).toInt + 1
+    if weeksSinceStart > 0 && weeksSinceStart < 52 then weeksSinceStart else 52
 
   def previousFinancialYears(implicit request: SessionRequest[AnyContent]): Seq[Int] =
     request.sessionData.aboutTheTradingHistory

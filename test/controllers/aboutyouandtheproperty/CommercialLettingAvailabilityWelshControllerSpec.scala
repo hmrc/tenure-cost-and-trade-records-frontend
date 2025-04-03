@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@
 
 package controllers.aboutyouandtheproperty
 
+import actions.SessionRequest
 import connectors.Audit
 import form.aboutyouandtheproperty.CommercialLettingAvailabilityWelshForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, LettingAvailability}
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Json
+import play.api.mvc.AnyContent
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
@@ -57,6 +59,9 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
     mockSessionRepo
   )
+
+  val sessionRequest: SessionRequest[AnyContent] =
+    SessionRequest[AnyContent](stillConnectedDetails6048YesSession, fakeRequest)
 
   "Commercial letting availability welsh controller GET" should {
     "return 200" in {
@@ -105,10 +110,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
       val formData = Map("lettingAvailability-0" -> "xxx")
 
       val form =
-        CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
+        CommercialLettingAvailabilityWelshForm
+          .commercialLettingAvailabilityWelshForm(years)(sessionRequest, messages)
+          .bind(formData)
       mustContainError(
         "lettingAvailability-0",
-        messages("error.commercialLettingAvailability.welsh.range", 2024.toString),
+        messages("error.commercialLettingAvailability.welsh.range", 2024.toString, 365),
         form
       )
     }
@@ -118,7 +125,9 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
       val formData = Map("lettingAvailability-1" -> "")
 
       val form =
-        CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
+        CommercialLettingAvailabilityWelshForm
+          .commercialLettingAvailabilityWelshForm(years)(sessionRequest, messages)
+          .bind(formData)
       mustContainError(
         "lettingAvailability-1",
         messages("error.commercialLettingAvailability.welsh.required", 2023.toString),
@@ -131,10 +140,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
       val formData = Map("lettingAvailability-2" -> "366")
 
       val form =
-        CommercialLettingAvailabilityWelshForm.commercialLettingAvailabilityWelshForm(years)(messages).bind(formData)
+        CommercialLettingAvailabilityWelshForm
+          .commercialLettingAvailabilityWelshForm(years)(sessionRequest, messages)
+          .bind(formData)
       mustContainError(
         "lettingAvailability-2",
-        messages("error.commercialLettingAvailability.welsh.range", 2022.toString),
+        messages("error.commercialLettingAvailability.welsh.range", 2022.toString, 365),
         form
       )
     }
