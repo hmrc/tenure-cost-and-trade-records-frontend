@@ -97,6 +97,7 @@
 
     @govukSummaryList(SummaryList(rows =
         Seq(
+          if(forType == FOR6048) {
             SummaryListRow(
                 key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"))),
                 value = Value(
@@ -116,7 +117,29 @@
                         )
                     )
                 )
-            ),
+            )
+          } else {
+              SummaryListRow(
+                  key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.occupationDate"))),
+                  value = Value(
+                      Text(sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth).getOrElse(""))
+                  ),
+                  actions = Some(
+                      Actions(items =
+                          Seq(
+                              ActionItem(
+                                  href = controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url,
+                                  content = Text(messages("label.change")),
+                                  visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.occupationDate")),
+                                  attributes = Map(
+                                      "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.occupationDate")}"
+                                  )
+                              )
+                          )
+                      )
+                  )
+              )
+          },
             SummaryListRow(
                 key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"))),
                 value = Value(
