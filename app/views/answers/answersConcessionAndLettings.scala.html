@@ -65,7 +65,7 @@
                 _ => Option(
                     franchise.businessDetails.fold("")(_.operatorName)).mkString("""<p class="govuk-body">""", "", "</p>") +
                     franchise.businessDetails.fold("")(_.typeOfBusiness).mkString("""<p class="govuk-body">""", "", "</p>") +
-                    franchise.businessDetails.fold("")(_.cateringAddress.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
+                    franchise.businessDetails.fold("")(_.cateringAddress.map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>")),
                 controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
                 "franchiseOperatorName",
                 ("valueAsHtml", _ => None)) ++
@@ -106,7 +106,7 @@
                 _ => Option(
                     concession.businessDetails.fold("")(_.operatorName)).mkString("""<p class="govuk-body">""", "", "</p>") +
                         concession.businessDetails.fold("")(_.typeOfBusiness).mkString("""<p class="govuk-body">""", "", "</p>") +
-                        concession.businessDetails.fold("")(_.cateringAddress.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
+                        concession.businessDetails.fold("")(_.cateringAddress.map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>")),
                 controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
                 "franchiseOperatorName",
                 ("valueAsHtml", _ => None)) ++

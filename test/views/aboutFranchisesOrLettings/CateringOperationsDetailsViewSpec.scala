@@ -29,7 +29,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[BusinessD
   val messageKeyPrefix     = "cateringOperationOrLettingAccommodationDetails"
   val messageKeyPrefix6015 = "concessionDetails"
 
-  override val form = FranchiseTypeDetailsForm.franchiseTypeDetailsForm
+  override val form = FranchiseTypeDetailsForm.theForm
 
   def createView = () =>
     cateringOperationDetailsView(

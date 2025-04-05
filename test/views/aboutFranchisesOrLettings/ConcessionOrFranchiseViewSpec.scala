@@ -31,7 +31,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[BusinessDetai
   val messageKeyPrefix = "concessionOrFranchise"
 
   override val form: Form[BusinessDetails] =
-    FranchiseTypeDetailsForm.franchiseTypeDetailsForm
+    FranchiseTypeDetailsForm.theForm
 
   def createView: () => Html = () =>
     concessionOrFranchiseView(

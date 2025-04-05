@@ -29,7 +29,7 @@ class LettingOtherPartOfPropertyDetailsViewSpec extends QuestionViewBehaviours[B
   val messageKeyPrefix     = "lettingOtherPartOfPropertyDetails"
   val messageKeyPrefix6015 = "concessionDetails"
 
-  override val form = FranchiseTypeDetailsForm.franchiseTypeDetailsForm
+  override val form = FranchiseTypeDetailsForm.theForm
 
   def createView = () =>
     cateringOperationDetailsView(

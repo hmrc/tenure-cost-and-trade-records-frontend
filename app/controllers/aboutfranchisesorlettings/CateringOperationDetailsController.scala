@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm.franchiseTypeDetailsForm
+import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm.theForm
 import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -29,7 +29,7 @@ import navigation.identifiers.CateringOperationDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails
+import views.html.aboutfranchisesorlettings.cateringOperationOrLettingAccommodationDetails as CateringOperationOrLettingAccommodationDetailsView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -39,12 +39,12 @@ class CateringOperationDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails,
+  theView: CateringOperationOrLettingAccommodationDetailsView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[BusinessDetails] = for {
@@ -56,14 +56,14 @@ class CateringOperationDetailsController @Inject() (
     } yield requestedAccommodationSection.cateringOperationDetails
     audit.sendChangeLink("BusinessDetails")
     Ok(
-      cateringOperationDetailsView(
-        existingDetails.fold(franchiseTypeDetailsForm)(
-          franchiseTypeDetailsForm.fill
+      theView(
+        existingDetails.fold(theForm)(
+          theForm.fill
         ),
         index,
         "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
-        getBackLink(request.sessionData, index),
+        backLink(request.sessionData, index),
         request.sessionData.toSummary,
         request.sessionData.forType
       )
@@ -72,22 +72,22 @@ class CateringOperationDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[BusinessDetails](
-      franchiseTypeDetailsForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          cateringOperationDetailsView(
+          theView(
             formWithErrors,
             index,
             "concessionDetails",
             "cateringOperationOrLettingAccommodationDetails",
-            getBackLink(request.sessionData, index),
+            backLink(request.sessionData, index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
         ),
-      data => {
+      formData => {
         val ifFranchisesOrLettingsEmpty      = AboutFranchisesOrLettings(cateringOperationSections =
-          IndexedSeq(CateringOperationSection(cateringOperationDetails = data))
+          IndexedSeq(CateringOperationSection(cateringOperationDetails = formData))
         )
         val updatedAboutFranchisesOrLettings =
           request.sessionData.aboutFranchisesOrLettings.fold(
@@ -97,14 +97,14 @@ class CateringOperationDetailsController @Inject() (
             val requestedSection                                             = index.flatMap(existingSections.lift)
             val updatedSections: (Int, IndexedSeq[CateringOperationSection]) =
               requestedSection.fold {
-                val defaultSection   = CateringOperationSection(data)
+                val defaultSection   = CateringOperationSection(formData)
                 val appendedSections = existingSections.appended(defaultSection)
                 appendedSections.indexOf(defaultSection) -> appendedSections
               } { sectionToUpdate =>
                 val indexToUpdate = existingSections.indexOf(sectionToUpdate)
                 indexToUpdate -> existingSections.updated(
                   indexToUpdate,
-                  sectionToUpdate.copy(cateringOperationDetails = data)
+                  sectionToUpdate.copy(cateringOperationDetails = formData)
                 )
               }
             franchiseOrLettings
@@ -112,23 +112,20 @@ class CateringOperationDetailsController @Inject() (
           }
 
         val updatedData = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
-        session.saveOrUpdate(updatedData).map { _ =>
+        repository.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CateringOperationDetailsPageId, updatedData).apply(updatedData))
         }
       }
     )
   }
 
-  private def getBackLink(answers: Session, maybeIndex: Option[Int]): String =
-    answers.forType match {
+  private def backLink(answers: Session, maybeIndex: Option[Int]): String =
+    answers.forType match
       case FOR6015 | FOR6016 =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
+        routes.ConcessionOrFranchiseController.show().url
       case _                 =>
-        maybeIndex match {
+        maybeIndex match
           case Some(index) if index > 0 =>
-            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
+            routes.AddAnotherCateringOperationController.show(index - 1).url
           case _                        =>
-            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
-        }
-    }
-}
+            routes.CateringOperationController.show().url

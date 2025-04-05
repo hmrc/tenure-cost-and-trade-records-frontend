@@ -71,7 +71,7 @@
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operatorName",
         _ => Option(cateringOperation.cateringOperationDetails.operatorName).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
                 Option(cateringOperation.cateringOperationDetails.typeOfBusiness.escapedHtml).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>") +
-                Option(cateringOperation.cateringOperationDetails.cateringAddress.escapedHtml).getOrElse(""),
+                Option(cateringOperation.cateringOperationDetails.cateringAddress.map(_.escapedHtml)).getOrElse(""),
         controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx)), "operatorName",
         ("valueAsHtml", _ => None))
 
