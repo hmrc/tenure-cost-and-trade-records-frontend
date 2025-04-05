@@ -54,5 +54,5 @@ GET         /letting-history-advertising-remove                 controllers.lett
 POST        /letting-history-advertising-remove                 controllers.lettingHistory.AdvertisingListController.performRemove(index: Int)
 POST        /letting-history-advertising-list                   controllers.lettingHistory.AdvertisingListController.submit
 
-GET         /letting-history-check-your-answers                 controllers.lettingHistory.CheckYourAnswersController.show
-POST        /letting-history-check-your-answers                 controllers.lettingHistory.CheckYourAnswersController.submit
+GET         /letting-history-check-your-answers                 controllers.lettingHistory.CheckYourAnswersLettingHistoryController.show
+POST        /letting-history-check-your-answers                 controllers.lettingHistory.CheckYourAnswersLettingHistoryController.submit

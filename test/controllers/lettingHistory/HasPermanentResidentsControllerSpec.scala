@@ -132,7 +132,9 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.backLink        shouldBe routes.CheckYourAnswersController.show.withFragment("some-fragment").toString
+        page.backLink        shouldBe routes.CheckYourAnswersLettingHistoryController.show
+          .withFragment("some-fragment")
+          .toString
         page.error("answer") shouldBe "lettingHistory.hasPermanentResidents.required"
       }
     }

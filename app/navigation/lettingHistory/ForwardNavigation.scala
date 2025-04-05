@@ -65,7 +65,7 @@ trait ForwardNavigation:
       yield kind match
         case "permanentResidents" => routes.HasCompletedLettingsController.show
         case "completedLettings"  => routes.HowManyNightsController.show
-        case "onlineAdvertising"  => routes.CheckYourAnswersController.show
+        case "onlineAdvertising"  => routes.CheckYourAnswersLettingHistoryController.show
         case _                    => taskListCall
     },
     HasCompletedLettingsPageId  -> { (session, _) =>
@@ -139,7 +139,7 @@ trait ForwardNavigation:
           if onlineAdvertising(session.data).isEmpty
           then routes.AdvertisingDetailController.show(index = None)
           else routes.AdvertisingListController.show
-        else routes.CheckYourAnswersController.show
+        else routes.CheckYourAnswersLettingHistoryController.show
     },
     AdvertisingDetailPageId     -> { (_, _) => Some(routes.AdvertisingListController.show) },
     AdvertisingRemovePageId     -> { (_, _) => Some(routes.AdvertisingListController.show) },
@@ -151,7 +151,7 @@ trait ForwardNavigation:
           if onlineAdvertising(session.data).sizeIs < MaxNumberOfOnlineAdvertising
           then routes.AdvertisingDetailController.show(index = None)
           else routes.MaxNumberReachedController.show(kind = "onlineAdvertising")
-        else routes.CheckYourAnswersController.show
+        else routes.CheckYourAnswersLettingHistoryController.show
     },
     CheckYourAnswersPageId      -> { (_, _) =>
       Some(taskListCall)

@@ -1388,7 +1388,13 @@ error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei 
 #######################################
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business''s details
 concessionDetails.heading = Provide the concession''s details
+concessionDetails.address.lookupPageHeading = What is the concession''s property address?
+concessionDetails.address.selectPageHeading = Choose the concession''s property address
+concessionDetails.address.confirmPageHeading = Check the concession''s property address
 lettingDetails.heading = Provide the tenant or operator''s details
+lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
+lettingDetails.address.selectPageHeading = Choose the tenant or operator address
+lettingDetails.address.confirmPageHeading = Check the tenant or operator address
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant''s details
 lettingOtherPartOfPropertyDetails.address.lookupPageHeading = What is the tenant''s address?
 lettingOtherPartOfPropertyDetails.address.selectPageHeading = Choose the tenant''s address

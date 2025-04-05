@@ -94,7 +94,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value                                   shouldBe routes.CheckYourAnswersController.show.url
+          redirectLocation(result).value                                   shouldBe routes.CheckYourAnswersLettingHistoryController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
           hasOnlineAdvertising(data).value                                 shouldBe false
           onlineAdvertising(data)                                          shouldBe Nil

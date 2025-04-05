@@ -24,11 +24,11 @@ import play.api.libs.json.Writes
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.lettingHistory.checkYourAnswers.template as CheckYourAnswerView
+import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswerLettingHistoryView
 
-class CheckYourAnswersControllerSpec extends LettingHistoryControllerSpec:
+class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControllerSpec:
 
-  "the CheckYourAnswers controller" when {
+  "the CheckYourAnswersLettingHistory controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET by replying 200 with the empty form" in new ControllerFixture(
         lettingHistory = Some(
@@ -96,10 +96,10 @@ class CheckYourAnswersControllerSpec extends LettingHistoryControllerSpec:
       extends MockRepositoryFixture
       with SessionCapturingFixture:
 
-    val controller = new CheckYourAnswersController(
+    val controller = new CheckYourAnswersLettingHistoryController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
-      theView = inject[CheckYourAnswerView],
+      theView = inject[CheckYourAnswerLettingHistoryView],
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = lettingHistory
       ),

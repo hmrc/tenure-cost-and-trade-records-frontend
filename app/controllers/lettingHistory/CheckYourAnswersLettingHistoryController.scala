@@ -29,14 +29,14 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.lettingHistory.checkYourAnswers.template as CheckYourAnswersView
+import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswersView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class CheckYourAnswersController @Inject() (
+class CheckYourAnswersLettingHistoryController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: LettingHistoryNavigator,
   theView: CheckYourAnswersView,
