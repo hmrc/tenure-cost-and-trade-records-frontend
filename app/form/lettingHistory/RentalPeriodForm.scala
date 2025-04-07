@@ -27,6 +27,7 @@ import play.api.mvc.AnyContent
 import util.DateUtilLocalised
 
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 object RentalPeriodForm extends RentalPeriodSupport:
 
@@ -39,8 +40,14 @@ object RentalPeriodForm extends RentalPeriodSupport:
       mapping(
         "fromDate" -> constrainedLocalDate("lettingHistory.rentalPeriod", "fromDate", effectiveRentalPeriod),
         "toDate"   -> constrainedLocalDate("lettingHistory.rentalPeriod", "toDate", effectiveRentalPeriod)
-      )(LocalPeriod.apply)(LocalPeriod.unapply).verifying(
-        error = messages("lettingHistory.rentalPeriod.error"),
-        constraint = period => period.fromDate.isBefore(period.toDate) || period.fromDate.isEqual(period.toDate)
-      )
+      )(LocalPeriod.apply)(LocalPeriod.unapply)
+        .verifying(
+          "lettingHistory.rentalPeriod.error",
+          period => period.fromDate.isBefore(period.toDate)
+        )
+        .transform[LocalPeriod](identity, identity) // Check the next constraint only after passing previous
+        .verifying(
+          "error.lettingHistory.rentalPeriod.less29nights",
+          period => ChronoUnit.DAYS.between(period.fromDate, period.toDate) >= 29
+        )
     )
