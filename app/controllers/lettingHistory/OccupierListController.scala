@@ -96,8 +96,8 @@ class OccupierListController @Inject() (
             theListView(theFormWithErrors, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl)
           )
         ),
-      answer =>
-        val answerBool = answer.toBoolean
+      formData =>
+        val answerBool = formData.toBoolean
         given Session  = request.sessionData
         for
           savedSession  <- eventuallySaveOrUpdateSessionWith(hadMoreOccupier = answerBool)

@@ -42,7 +42,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], index: Int, backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
 
@@ -66,9 +66,9 @@
 @layout(
  pageHeading = messages(headingMessage, tenantDetails.size) + pluralSuffix,
  showSection = true,
- summary = Some(summary),
+ summary = Some(session.toSummary),
  sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = backLink,
+ backLinkUrl = None,
  theForm = theForm
 ) {
 

@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 import actions.SessionRequest
 import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.addAnotherBunkerFuelCardsDetailsForm
+import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
@@ -60,13 +60,6 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
     Helpers.charset(result) shouldBe Some("utf-8")
   }
 
-  "render back link to CYA if come from CYA" in {
-    val result  = createAddAnotherBunkerFuelCardsDetailsController().show(0)(fakeRequestFromCYA)
-    val content = contentAsString(result)
-    content should include("/check-your-answers-about-the-trading-history")
-    content should not include "/financial-year-end"
-  }
-
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = createAddAnotherBunkerFuelCardsDetailsController().submit(1)(fakeRequest)
@@ -87,7 +80,7 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
   "Add another card details form" should {
     "error if addAnotherBunkerFuelCardsDetails is missing" in {
       val formData = baseFormData - errorKey.addAnotherBunkerFuelCardsDetails
-      val form     = addAnotherBunkerFuelCardsDetailsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(
         errorKey.addAnotherBunkerFuelCardsDetails,

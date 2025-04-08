@@ -23,7 +23,7 @@ import play.api.data.Forms.mapping
 
 object OccupiersDetailsListForm {
 
-  val occupiersDetailsListForm: Form[AnswersYesNo] = Form(
+  val theForm: Form[AnswersYesNo] = Form(
     mapping(
       "occupiersDetailsList" -> createYesNoType("error.occupiersDetailsList.required")
     )(x => x)(b => Option(b))

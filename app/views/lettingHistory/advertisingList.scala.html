@@ -25,7 +25,7 @@
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton)
 
-@(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @advertisingList = @{onlineAdvertising(request.sessionData)}
 
@@ -47,7 +47,7 @@
     theForm = theForm,
     summary = Some(request.sessionData.toSummary),
     pageHeading = messages(pageHeadingMessageKey, advertisingCount),
-    backLinkUrl = backLink,
+    backLinkUrl = None,
     showSection = true,
     sectionName = messages("label.section.lettingHistory"),
 ) {

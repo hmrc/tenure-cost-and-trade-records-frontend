@@ -43,7 +43,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], index: Int, backLink: String, forType: ForType)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], index: Int, forType: ForType)(implicit request: SessionRequest[?], messages: Messages)
 
 @sectionName = @{
     forType match {
@@ -104,7 +104,7 @@
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = sectionName,
-    backLinkUrl = backLink,
+    backLinkUrl = None,
     theForm = theForm
 ) {
 

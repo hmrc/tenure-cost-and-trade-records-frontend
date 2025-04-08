@@ -41,7 +41,7 @@
 )
 
 
-@(theForm: Form[?], index: Int, concessionOrFranchise: String, concessionOrLetting: String, cateringOrLetting: String, backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], index: Int, concessionOrFranchise: String, concessionOrLetting: String, cateringOrLetting: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
 
@@ -100,9 +100,8 @@
 @layout(
  pageHeading = pageHeading,
  showSection = true,
- summary = Some(summary),
+ summary = Some(session.toSummary),
  sectionName = label,
- backLinkUrl = backLink,
  theForm = theForm
 ) {
 

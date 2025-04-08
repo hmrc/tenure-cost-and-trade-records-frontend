@@ -21,12 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object RentalIncomeListForm {
+object RentalIncomeListForm:
 
-  val rentalIncomeListForm: Form[AnswersYesNo] =
-    Form(
-      single(
-        "rentalIncomeList" -> createYesNoType("error.rentalIncomeList.required")
-      )
+  val theForm = Form[AnswersYesNo](
+    single(
+      "rentalIncomeList" -> createYesNoType("error.rentalIncomeList.required")
     )
-}
+  )

@@ -52,7 +52,7 @@ class ResidentListController @Inject() (
     with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
-    Ok(theListView(theListForm, permanentResidents(request.sessionData), backLinkUrl))
+    Ok(theListView(theListForm, permanentResidents(request.sessionData)))
   }
 
   def remove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
@@ -92,7 +92,7 @@ class ResidentListController @Inject() (
       theFormWithErrors =>
         successful(
           BadRequest(
-            theListView(theFormWithErrors, permanentResidents(request.sessionData), backLinkUrl)
+            theListView(theFormWithErrors, permanentResidents(request.sessionData))
           )
         ),
       answer =>
@@ -134,8 +134,5 @@ class ResidentListController @Inject() (
       summary = request.sessionData.toSummary,
       idx = index,
       confirmAction = routes.ResidentListController.performRemove(index),
-      cancelAction = routes.ResidentListController.show // backLinkUrl
+      cancelAction = routes.ResidentListController.show
     )
-
-  private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
-    navigator.backLinkUrl(ofPage = ResidentListPageId)
