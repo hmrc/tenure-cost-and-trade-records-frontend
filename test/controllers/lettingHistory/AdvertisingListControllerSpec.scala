@@ -175,7 +175,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
     val controller = new AdvertisingListController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
-      theView = inject[AdvertisingList],
+      theListView = inject[AdvertisingList],
       theConfirmationView = inject[RemoveConfirmationView],
       sessionRefiner = preEnrichedActionRefiner(
         lettingHistory = Some(

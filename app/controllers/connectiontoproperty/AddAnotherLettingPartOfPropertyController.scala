@@ -18,7 +18,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.addAnotherLettingForm
+import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -27,8 +27,8 @@ import navigation.identifiers.AddAnotherLettingPartOfPropertyPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.addAnotherLettingPartOfProperty
-import views.html.genericRemoveConfirmation
+import views.html.connectiontoproperty.addAnotherLettingPartOfProperty as AddAnotherLettingPartOfPropertyView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,10 +38,10 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: AddAnotherLettingPartOfPropertyView,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -53,13 +53,11 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
 
     Future.successful(
       Ok(
-        addAnotherLettingPartOfPropertyView(
+        theListView(
           existingSection
             .flatMap(_.addAnotherLettingToProperty)
-            .fold(addAnotherLettingForm)(addAnotherLettingForm.fill),
-          index,
-          calculateBackLink(index),
-          request.sessionData.toSummary
+            .fold(theForm)(theForm.fill),
+          index
         )
       )
     )
@@ -72,29 +70,27 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       Future.successful(Redirect(redirectUrl))
     } else {
       continueOrSaveAsDraft[AnswersYesNo](
-        addAnotherLettingForm,
+        theForm,
         formWithErrors =>
           BadRequest(
-            addAnotherLettingPartOfPropertyView(
+            theListView(
               formWithErrors,
-              index,
-              calculateBackLink(index),
-              request.sessionData.toSummary
+              index
             )
           ),
-        data =>
+        formData =>
           request.sessionData.stillConnectedDetails
             .map(_.lettingPartOfPropertyDetails)
             .filter(_.nonEmpty)
             .fold(
               Future.successful(
                 Redirect(
-                  if (data == AnswerYes) {
+                  if (formData == AnswerYes) {
                     routes.LettingPartOfPropertyDetailsController.show()
                   } else {
                     navigator
                       .cyaPageDependsOnSession(request.sessionData)
-                      .filter(_ => navigator.from == "CYA" && data == AnswerNo)
+                      .filter(_ => navigator.from == "CYA" && formData == AnswerNo)
                       .getOrElse(
                         navigator
                           .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, request.sessionData)
@@ -106,15 +102,15 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             ) { existingSections =>
               val updatedSections = existingSections.updated(
                 index,
-                existingSections(index).copy(addAnotherLettingToProperty = Some(data))
+                existingSections(index).copy(addAnotherLettingToProperty = Some(formData))
               )
               val updatedData     = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
-              session
+              repository
                 .saveOrUpdate(updatedData)
                 .map { _ =>
                   navigator
                     .cyaPageDependsOnSession(updatedData)
-                    .filter(_ => navigator.from == "CYA" && data == AnswerNo)
+                    .filter(_ => navigator.from == "CYA" && formData == AnswerNo)
                     .getOrElse(
                       navigator
                         .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, updatedData)
@@ -134,7 +130,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
         val name = lettingSections.tenantDetails.name
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               name,
               "label.section.connectionToTheProperty",
@@ -159,7 +155,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             val name = lettingSections.tenantDetails.name
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   name,
                   "label.section.connectionToTheProperty",
@@ -178,7 +174,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             val updatedSections     = lettingSections.patch(idx, Nil, 1)
             val isRentReceivedYesNo = AnswersYesNo(updatedSections.nonEmpty)
 
-            session.saveOrUpdate(
+            repository.saveOrUpdate(
               updateStillConnectedDetails(
                 _.copy(
                   lettingPartOfPropertyDetailsIndex = 0,
@@ -194,12 +190,4 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       }
     )
   }
-
-  private def calculateBackLink(index: Int)(implicit request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
-      case _     =>
-        controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(index).url
-    }
-
 }

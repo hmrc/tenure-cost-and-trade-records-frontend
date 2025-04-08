@@ -33,21 +33,12 @@ class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYe
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show().url
 
-  def createView = () =>
-    servicePaidSeparatelyListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
+  def createView = () => servicePaidSeparatelyListView(form, 0)(sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    servicePaidSeparatelyListView(form, 0, backLink, Summary("99996010001"))(sessionRequest, messages)
+    servicePaidSeparatelyListView(form, 0)(sessionRequest, messages)
 
   "Services paid separately list view" should {
-
-    "has a link marked with back.link.label leading to the list of Describe the trade service which is paid for separately page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe backLink
-    }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))

@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import connectors.Audit
-import form.aboutYourLeaseOrTenure.TradeServicesListForm.addAnotherServiceForm
+import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status
@@ -75,12 +75,9 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     "return 200 and HTML when no Trade Services List in the session" in {
       val controller = tradeServicesListController(aboutLeaseOrAgreementPartThree = None)
       val result     = controller.show(0)(fakeRequest)
-      status(result)        shouldBe Status.OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(0)).url
-      )
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
@@ -138,7 +135,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
   "Trade services list form" should {
     "error if answer is missing" in {
       val formData = baseFormData - errorKey.addTradeService
-      val form     = addAnotherServiceForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(
         errorKey.addTradeService,

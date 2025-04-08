@@ -32,7 +32,7 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
   val messageKeyPrefix6030 = "addAnotherConcessionOrFranchise"
 
   override val form: Form[AnswersYesNo] =
-    AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
+    AddAnotherCateringOperationOrLettingAccommodationForm.theForm
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
@@ -42,9 +42,7 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
       0,
       messageKeyPrefix6030,
       messageKeyPrefix6015,
-      messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      messageKeyPrefix
     )(sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
@@ -53,24 +51,12 @@ class AddAnotherCateringOperationsSpec extends QuestionViewBehaviours[AnswersYes
       0,
       messageKeyPrefix6030,
       messageKeyPrefix6015,
-      messageKeyPrefix,
-      controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0).url,
-      Summary("99996010001")
+      messageKeyPrefix
     )(sessionRequest, messages)
 
   "Add another catering operation view" must {
 
     behave like normalPageWithZeroBusinessOrLettings(createView, messageKeyPrefix, "0")
-
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
-        .show(0)
-        .url
-    }
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
