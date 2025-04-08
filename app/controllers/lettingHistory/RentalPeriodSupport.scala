@@ -37,6 +37,12 @@ trait RentalPeriodSupport extends FiscalYearSupport:
       toDate = LocalDate.of(currentFiscalYearEnd, MARCH, 31)
     )
 
+  def currentRentalPeriodHowManyNights(using request: SessionRequest[AnyContent]) =
+    LocalPeriod(
+      fromDate = LocalDate.of(currentFiscalYearEnd - 1, APRIL, 1),
+      toDate = LocalDate.of(currentFiscalYearEnd, MARCH, 31)
+    )
+
   def effectiveRentalPeriod(using request: SessionRequest[AnyContent]): LocalPeriod =
     val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
       .flatMap(_.commercialLetDate)
