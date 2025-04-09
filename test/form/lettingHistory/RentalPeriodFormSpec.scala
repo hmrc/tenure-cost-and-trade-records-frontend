@@ -160,7 +160,7 @@ class RentalPeriodFormSpec extends FormSpec:
     )
     bound.hasErrors mustBe true
     bound.errors must have size 1
-    bound.errors.head.message mustBe """The "from date" must be less than or equal to the "to date""""
+    bound.errors.head.message mustBe "lettingHistory.rentalPeriod.error"
   }
 
   trait SessionFixture(isWelsh: Boolean) extends FiscalYearSupport:
