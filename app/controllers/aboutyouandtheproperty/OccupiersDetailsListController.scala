@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.OccupiersDetailsListForm.occupiersDetailsListForm
+import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
@@ -28,8 +28,8 @@ import navigation.identifiers.OccupiersDetailsListId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.occupiersDetailsList
-import views.html.genericRemoveConfirmation
+import views.html.aboutyouandtheproperty.occupiersDetailsList as OccupiersDetailsListView
+import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
@@ -40,10 +40,10 @@ class OccupiersDetailsListController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
-  view: occupiersDetailsList,
-  genericRemoveConfirmationView: genericRemoveConfirmation,
+  theListView: OccupiersDetailsListView,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
@@ -52,10 +52,9 @@ class OccupiersDetailsListController @Inject() (
     audit.sendChangeLink("OccupiersDetailsList")
     Future.successful(
       Ok(
-        view(
-          occupiersDetailsListForm,
-          index,
-          getBackLink
+        theListView(
+          theForm,
+          index
         )
       )
     )
@@ -63,21 +62,20 @@ class OccupiersDetailsListController @Inject() (
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      occupiersDetailsListForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          view(
+          theListView(
             formWithErrors,
-            index,
-            getBackLink
+            index
           )
         ),
-      data =>
+      formData =>
         request.sessionData.aboutYouAndThePropertyPartTwo
           .map(_.occupiersList)
           .fold {
             Future.successful(
-              if (data == AnswerYes) {
+              if (formData == AnswerYes) {
                 Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
               } else {
                 Redirect(
@@ -98,11 +96,11 @@ class OccupiersDetailsListController @Inject() (
               val updatedData     = updateAboutYouAndThePropertyPartTwo(
                 _.copy(
                   occupiersList = updatedServices,
-                  addAnotherPaidService = data
+                  addAnotherPaidService = formData
                 )
               )
-              session.saveOrUpdate(updatedData).map { _ =>
-                if (data == AnswerYes) {
+              repository.saveOrUpdate(updatedData).map { _ =>
+                if (formData == AnswerYes) {
                   Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
                 } else {
                   Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
@@ -119,7 +117,7 @@ class OccupiersDetailsListController @Inject() (
       .map { occupier =>
         Future.successful(
           Ok(
-            genericRemoveConfirmationView(
+            theConfirmationView(
               confirmableActionForm,
               occupier.name,
               "label.section.aboutTheProperty",
@@ -143,7 +141,7 @@ class OccupiersDetailsListController @Inject() (
           .map { occupier =>
             Future.successful(
               BadRequest(
-                genericRemoveConfirmationView(
+                theConfirmationView(
                   formWithErrors,
                   occupier.name,
                   "label.section.aboutTheProperty",
@@ -160,7 +158,7 @@ class OccupiersDetailsListController @Inject() (
         case AnswerYes =>
           request.sessionData.aboutYouAndThePropertyPartTwo.map(_.occupiersList).map { list =>
             val updatedServices = list.patch(index, Nil, 1)
-            session.saveOrUpdate(
+            repository.saveOrUpdate(
               updateAboutYouAndThePropertyPartTwo(
                 _.copy(occupiersList = updatedServices)
               )
@@ -172,14 +170,4 @@ class OccupiersDetailsListController @Inject() (
       }
     )
   }
-
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case _     =>
-        controllers.aboutyouandtheproperty.routes.OccupiersDetailsController
-          .show(Option(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersListIndex).getOrElse(0)))
-          .url
-    }
 }

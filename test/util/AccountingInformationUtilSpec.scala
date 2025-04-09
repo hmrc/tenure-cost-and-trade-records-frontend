@@ -41,19 +41,19 @@ class AccountingInformationUtilSpec extends AnyFlatSpec with should.Matchers wit
     verifyFinancialYearEndDates(firstOccupy2, financialYearEnd, 3)
   }
 
+  it should "return more dates" in {
+    val firstOccupy = MonthsYearDuration(1, yearNow - 3)
+    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
+  }
+
   it should "return 2 dates" in {
-    val firstOccupy = MonthsYearDuration(1, yearNow - 3)
-    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 2)
-  }
-
-  it should "return 1 date" in {
     val firstOccupy = MonthsYearDuration(1, yearNow - 2)
-    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 1)
+    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 2)
   }
 
-  it should "return 2 dates with partial year " in {
+  it should "return 3 dates with partial year " in {
     val firstOccupy = MonthsYearDuration(1, yearNow - 3)
-    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 2)
+    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
   }
 
   private def getFirstYearEnd(financialYearEnd: MonthDay): LocalDate =

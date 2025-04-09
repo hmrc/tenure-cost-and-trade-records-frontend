@@ -23,15 +23,11 @@ import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherBunkerFuelCardsDetailsForm {
 
-  lazy val baseAddAnotherBunkerFuelCardsDetailsForm: Form[AnswersYesNo] = Form(
-    baseAddAnotherBunkerFuelCardsDetailsMapping
+  val theForm = Form(
+    mapping(
+      "addAnotherBunkerFuelCardsDetails" -> optional(createYesNoType("error.addAnotherBunkerFuelCardsDetails.required"))
+        .verifying("error.addAnotherBunkerFuelCardsDetails.required", _.nonEmpty)
+        .transform[AnswersYesNo](_.get, Some(_))
+    )(x => x)(b => Some(b))
   )
-
-  private val baseAddAnotherBunkerFuelCardsDetailsMapping = mapping(
-    "addAnotherBunkerFuelCardsDetails" -> optional(createYesNoType("error.addAnotherBunkerFuelCardsDetails.required"))
-      .verifying("error.addAnotherBunkerFuelCardsDetails.required", _.nonEmpty)
-      .transform[AnswersYesNo](_.get, Some(_))
-  )(x => x)(b => Some(b))
-
-  val addAnotherBunkerFuelCardsDetailsForm = Form(baseAddAnotherBunkerFuelCardsDetailsMapping)
 }

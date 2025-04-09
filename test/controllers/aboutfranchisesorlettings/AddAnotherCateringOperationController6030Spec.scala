@@ -18,7 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import connectors.Audit
-import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.addAnotherCateringOperationForm
+import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm.theForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
@@ -78,7 +78,7 @@ class AddAnotherCateringOperationController6030Spec extends TestBaseSpec {
   "Catering operation form" should {
     "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
       val formData = baseFormData - errorKey.addAnotherCateringOperationOrLettingAccommodation
-      val form     = addAnotherCateringOperationForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(
         errorKey.addAnotherCateringOperationOrLettingAccommodation,

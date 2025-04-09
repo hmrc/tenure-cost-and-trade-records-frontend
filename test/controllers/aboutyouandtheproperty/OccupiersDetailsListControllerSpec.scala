@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.SessionRequest
 import connectors.Audit
-import form.aboutyouandtheproperty.OccupiersDetailsListForm.occupiersDetailsListForm
+import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, OccupiersDetails}
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -51,12 +51,9 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
   "Occupiers details List  GET /" should {
     "return 200 and HTML with Trade Services List in the session" in {
       val result = controller().show(0)(fakeRequest)
-      status(result)        shouldBe Status.OK
-      contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
-      contentAsString(result) should include(
-        controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(Option(0)).url
-      )
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 and HTML when no Occupiers details List in the session" in {
@@ -139,7 +136,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
   "Occupiers details list form" should {
     "error if answer is missing" in {
       val formData = baseFormData - errorKey.addOccupiersDetails
-      val form     = occupiersDetailsListForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(
         errorKey.addOccupiersDetails,

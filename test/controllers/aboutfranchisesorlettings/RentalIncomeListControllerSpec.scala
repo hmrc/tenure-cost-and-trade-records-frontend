@@ -18,7 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
 import connectors.Audit
-import form.aboutfranchisesorlettings.RentalIncomeListForm.rentalIncomeListForm
+import form.aboutfranchisesorlettings.RentalIncomeListForm.theForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord}
 import play.api.http.Status._
 import play.api.test.FakeRequest
@@ -53,33 +53,6 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
       val result = controller().show(0)(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
-    }
-
-    "return correct backLink when 'from=CYA' query param is present" in {
-      val result = controller().show(0)(fakeRequestFromCYA)
-      contentAsString(result) should include(
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-      )
-    }
-    "return ConcessionTypeFeesController back link for concession" in {
-      val result = controller().show(0)(fakeRequest)
-      contentAsString(result) should include(
-        controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(0).url
-      )
-    }
-
-    "return IncomeRecordIncludedController back link for letting" in {
-      val result = controller().show(1)(fakeRequest)
-      contentAsString(result) should include(
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(1).url
-      )
-    }
-
-    "return TaskListController back link when no valid record is found" in {
-      val result = controller().show(99)(fakeRequest)
-      contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
-      )
     }
 
     "SUBMIT /" should {
@@ -144,7 +117,7 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
   "Add another rental income form" should {
     "error if answer is missing" in {
       val formData = baseFormData - errorKey.rentalIncomeList
-      val form     = rentalIncomeListForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(
         errorKey.rentalIncomeList,

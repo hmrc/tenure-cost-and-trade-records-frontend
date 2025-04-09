@@ -31,9 +31,6 @@ trait BackwardNavigation:
     ResidentDetailPageId        -> { (_, _) =>
       Some(routes.HasPermanentResidentsController.show)
     },
-    ResidentListPageId          -> { (_, _) =>
-      None
-    },
     MaxNumberReachedPageId      -> { (_, navigation) =>
       for kind <- navigation.get("kind")
       yield kind match
@@ -57,9 +54,6 @@ trait BackwardNavigation:
     RentalPeriodPageId          -> { (_, navigation) =>
       for case index: Int <- navigation.get("index")
       yield routes.OccupierDetailController.show(index = Some(index))
-    },
-    OccupierListPageId          -> { (_, _) =>
-      None
     },
     HowManyNightsPageId         -> { (session, _) =>
       for doesHaveCompletedLettings <- hasCompletedLettings(session.data)
@@ -105,9 +99,6 @@ trait BackwardNavigation:
     },
     AdvertisingDetailPageId     -> { (_, _) =>
       Some(routes.HasOnlineAdvertisingController.show)
-    },
-    AdvertisingListPageId       -> { (_, _) =>
-      None
     },
     CheckYourAnswersPageId      -> { (session, _) =>
       for doesHaveOnlineAdvertising <- hasOnlineAdvertising(session.data)
