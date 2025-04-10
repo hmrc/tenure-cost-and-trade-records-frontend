@@ -501,6 +501,13 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to does rent include fixture and fittings  when is parking rent paid separately has been completed123" in {
+      navigator
+        .nextPage(IsGivenRentFreePeriodId, session6010No)
+        .apply(session6010No) shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController
+        .show()
+    }
+
     "return a function that goes to lease surrendered early page when disregarded addition details has been completed123123 " in {
       navigator
         .nextPage(IncentivesPaymentsConditionsId, session6010)

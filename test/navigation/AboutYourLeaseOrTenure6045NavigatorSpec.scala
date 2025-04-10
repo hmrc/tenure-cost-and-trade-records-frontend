@@ -20,7 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
-import models.submissions.common.AnswerNo
+import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -184,6 +184,13 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to tenants additional disregarded page when incentive payments conditions has been completed 123" in {
+      navigator
+        .nextPage(WorkCarriedOutConditionId, session6045)
+        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController
+        .show()
+    }
+    
     "return a function that goes to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
       navigator
         .nextPage(TenantsAdditionsDisregardedId, session6045)
