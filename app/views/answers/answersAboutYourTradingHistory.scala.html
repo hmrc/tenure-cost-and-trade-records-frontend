@@ -534,7 +534,7 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.occupationDate",
             _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
-            controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show(), "firstOccupy.month") ++
+            controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show(), "firstOccupy.month") ++
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
                     _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
                     controllers.aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++

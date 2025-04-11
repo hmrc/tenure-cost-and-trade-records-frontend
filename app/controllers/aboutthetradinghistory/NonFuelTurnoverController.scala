@@ -104,7 +104,7 @@ class NonFuelTurnoverController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections6020.exists(_.nonEmpty))
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)

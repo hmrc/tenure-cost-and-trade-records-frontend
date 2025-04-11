@@ -52,7 +52,7 @@ class EditFinancialYearEndDateController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+      .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val financialYearEnd: Seq[LocalDate] =
           request.sessionData.forType match {
             case FOR6020           =>
@@ -123,7 +123,7 @@ class EditFinancialYearEndDateController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[LocalDate](
           prefilledForm,
           formWithErrors =>

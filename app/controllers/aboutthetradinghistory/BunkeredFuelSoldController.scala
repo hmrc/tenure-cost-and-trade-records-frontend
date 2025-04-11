@@ -49,7 +49,7 @@ class BunkeredFuelSoldController @Inject() (
 
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+      .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         Ok(
           view(
             bunkeredFuelSoldForm(years(aboutTheTradingHistory))
@@ -65,7 +65,7 @@ class BunkeredFuelSoldController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[Seq[BunkeredFuelSold]](
           bunkeredFuelSoldForm(years(aboutTheTradingHistory)),
           formWithErrors =>

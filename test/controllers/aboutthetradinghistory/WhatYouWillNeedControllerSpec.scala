@@ -128,7 +128,7 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec {
         whatYouWillNeedController().submit(fakePostRequest.withFormUrlEncodedBody("whatYouWillNeed" -> "confirmed"))
       status(res) shouldBe Status.SEE_OTHER
 
-      redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url)
+      redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show().url)
 
     }
   }

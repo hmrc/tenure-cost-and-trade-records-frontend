@@ -32,8 +32,8 @@ case object FinancialYearEndDatesPageId extends Identifier {
   override def toString: String = "financialYearEndDatesPage"
 }
 
-case object FinancialYearsPageId extends Identifier {
-  override def toString: String = "financialYearsPage"
+case object CheckYourAnswersAccountingInfoPageId extends Identifier {
+  override def toString: String = "checkYourAnswersAccountingInfoPage"
 }
 
 case object TurnoverPageId extends Identifier {

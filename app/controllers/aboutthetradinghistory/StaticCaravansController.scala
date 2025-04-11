@@ -93,7 +93,7 @@ class StaticCaravansController @Inject() (
         navigator.cyaPage
           .getOrElse(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
           .url
-      case _     => aboutthetradinghistory.routes.FinancialYearsController.show.url
+      case _     => aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
     }
 
 }

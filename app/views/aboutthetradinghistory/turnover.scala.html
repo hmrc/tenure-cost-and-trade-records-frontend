@@ -345,7 +345,7 @@
     backLinkUrl = fromLocation match {
         case "TL" => s"${controllers.routes.TaskListController.show().url}#turnover"
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-        case _ => controllers.aboutthetradinghistory.routes.FinancialYearsController.show.url
+        case _ => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
     },
     fullWidth = true,
     theForm = form

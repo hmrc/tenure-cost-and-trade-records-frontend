@@ -52,7 +52,7 @@ class CustomerCreditAccountsController @Inject() (
 
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+      .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         Ok(
           view(
             customerCreditAccountsForm(years(aboutTheTradingHistory))
@@ -68,7 +68,7 @@ class CustomerCreditAccountsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[Seq[CustomerCreditAccounts]](
           customerCreditAccountsForm(years(aboutTheTradingHistory)),
           formWithErrors =>

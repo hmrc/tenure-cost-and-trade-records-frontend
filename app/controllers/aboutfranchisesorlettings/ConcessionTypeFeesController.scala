@@ -114,7 +114,7 @@ class ConcessionTypeFeesController @Inject() (
         .filter(_ => request.sessionData.aboutTheTradingHistoryPartOne.exists(_.turnoverSections6045.nonEmpty))
         .fold(Future.successful(Redirect(backLink(idx))))(action)
     } else {
-      Redirect(controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show())
+      Redirect(controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show())
     }
   private def initialFeeReceived(implicit request: SessionRequest[AnyContent]): FeeReceived =
     FeeReceived(

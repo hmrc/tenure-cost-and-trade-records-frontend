@@ -28,7 +28,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  private val previousPage = aboutthetradinghistory.routes.FinancialYearsController.show.url
+  private val previousPage = aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
 
   private val nextPageOnYes = aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
 

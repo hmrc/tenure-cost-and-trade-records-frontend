@@ -101,13 +101,13 @@ class Income6048Controller @Inject() (
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6048)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case _     => aboutthetradinghistory.routes.FinancialYearsController.show.url
+      case _     => aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
     }
 
 }

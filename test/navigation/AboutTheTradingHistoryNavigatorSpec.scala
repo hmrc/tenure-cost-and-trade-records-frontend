@@ -116,14 +116,14 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes financial-year-end page when what you will need has been completed" in {
       navigator
         .nextPage(WhatYouWillNeedPageId, sessionAboutYou6076)
-        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController
         .show()
     }
 
     "return a function that goes financial-year-end page when what you will need has been completed 6010" in {
       navigator
         .nextPage(WhatYouWillNeedPageId, sessionAboutYou6010)
-        .apply(sessionAboutYou6010) shouldBe controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController
+        .apply(sessionAboutYou6010) shouldBe controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController
         .show()
     }
 
@@ -144,7 +144,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the turnover page when financial-year-end has been completed" in {
       navigator
         .nextPage(FinancialYearEndPageId, sessionAboutYou)
-        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.FinancialYearsController.show
+        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
     }
 
     "return a function that goes the turnover page when financial-year-end has been completed 6020" in {
@@ -162,7 +162,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the turnover page when financial-year-end has been completed 6045" in {
       navigator
         .nextPage(FinancialYearEndPageId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe controllers.aboutthetradinghistory.routes.FinancialYearsController.show
+        .apply(sessionAboutYou6045) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
     }
 
     "return a function that goes the turnover page when financial-year-end has been completed 6076" in {
@@ -284,7 +284,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the correct turnover page when financial end year has been completed" in {
       navigator
         .nextPage(FinancialYearEndDatesPageId, sessionAboutYou)
-        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.FinancialYearsController.show
+        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
     }
 
     "return a function that goes the total fuel sold page if the form is 6020 when financial end year has been completed" in {
@@ -640,26 +640,26 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to total fuel page when financial years 6020 completed" in {
       navigator
-        .nextPage(FinancialYearsPageId, sessionAboutYou6020)
+        .nextPage(CheckYourAnswersAccountingInfoPageId, sessionAboutYou6020)
         .apply(sessionAboutYou6020) shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show()
     }
 
     "return a function that goes to total fuel page when financial years 6030 completed" in {
       navigator
-        .nextPage(FinancialYearsPageId, sessionAboutYou6030)
+        .nextPage(CheckYourAnswersAccountingInfoPageId, sessionAboutYou6030)
         .apply(sessionAboutYou6030) shouldBe controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
     }
 
     "return a function that goes to total fuel page when financial years 6076 completed" in {
       navigator
-        .nextPage(FinancialYearsPageId, sessionAboutYou6076)
+        .nextPage(CheckYourAnswersAccountingInfoPageId, sessionAboutYou6076)
         .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.ElectricityGeneratedController
         .show()
     }
 
     "return a function that goes to total fuel page when financial years 6010 completed" in {
       navigator
-        .nextPage(FinancialYearsPageId, sessionAboutYou)
+        .nextPage(CheckYourAnswersAccountingInfoPageId, sessionAboutYou)
         .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.TurnoverController.show()
     }
 

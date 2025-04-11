@@ -27,7 +27,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class FinancialYearsControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
@@ -35,7 +35,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6045,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ) = new FinancialYearsController(
+  ) = new CheckYourAnswersAccountingInfoController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
@@ -48,7 +48,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "FinancialYearsController" should {
+  "CheckYourAnswersAccountingInfoController" should {
     "return 200" in {
       val result = financialYearsController().show()(FakeRequest())
       status(result) shouldBe Status.OK

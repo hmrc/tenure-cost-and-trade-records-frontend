@@ -1,6 +1,6 @@
 # About the trading history
-GET         /about-your-trading-history                            controllers.aboutthetradinghistory.AboutYourTradingHistoryController.show()
-POST        /about-your-trading-history                            controllers.aboutthetradinghistory.AboutYourTradingHistoryController.submit()
+GET         /when-did-you-first-occupy                            controllers.aboutthetradinghistory.WhenDidYouFirstOccupyController.show()
+POST        /when-did-you-first-occupy                            controllers.aboutthetradinghistory.WhenDidYouFirstOccupyController.submit()
 
 GET         /what-you-will-need                                    controllers.aboutthetradinghistory.WhatYouWillNeedController.show()
 POST        /what-you-will-need                                    controllers.aboutthetradinghistory.WhatYouWillNeedController.submit()
@@ -14,11 +14,13 @@ POST        /financial-year-end-dates                              controllers.a
 GET         /financial-year-end-dates-summary                      controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.show()
 POST        /financial-year-end-dates-summary                      controllers.aboutthetradinghistory.FinancialYearEndDatesSummaryController.submit()
 
-GET         /financial-years                                       controllers.aboutthetradinghistory.FinancialYearsController.show
-POST        /financial-years                                       controllers.aboutthetradinghistory.FinancialYearsController.submit
+GET         /check-your-answers-accounting-info                    controllers.aboutthetradinghistory.CheckYourAnswersAccountingInfoController.show
+POST        /check-your-answers-accounting-info                    controllers.aboutthetradinghistory.CheckYourAnswersAccountingInfoController.submit
 
 GET         /financial-year-end-date                               controllers.aboutthetradinghistory.EditFinancialYearEndDateController.show(index: Int)
 POST        /financial-year-end-date                               controllers.aboutthetradinghistory.EditFinancialYearEndDateController.submit(index: Int)
+
+GET         /check-your-answers-financial-year-end                 controllers.aboutthetradinghistory.CheckYourAnswersFinancialYearEndController.show()
 
 GET         /turnover                                              controllers.aboutthetradinghistory.TurnoverController.show()
 POST        /turnover                                              controllers.aboutthetradinghistory.TurnoverController.submit()

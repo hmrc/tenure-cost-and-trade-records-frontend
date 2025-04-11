@@ -48,7 +48,7 @@
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = if (forType == FOR6048) controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url
-                  else controllers.aboutthetradinghistory.routes.AboutYourTradingHistoryController.show().url,
+                  else controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show().url,
     theForm = theForm
 ) {
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndController.submit()) {

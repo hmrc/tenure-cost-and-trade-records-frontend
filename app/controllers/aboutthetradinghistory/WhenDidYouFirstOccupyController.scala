@@ -32,17 +32,17 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import util.AccountingInformationUtil.*
-import views.html.aboutthetradinghistory.aboutYourTradingHistory
+import views.html.aboutthetradinghistory.whenDidYouFirstOccupy as WhenDidYouFirstOccupyView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class AboutYourTradingHistoryController @Inject() (
+class WhenDidYouFirstOccupyController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
-  aboutYourTradingHistoryView: aboutYourTradingHistory,
+  theView: WhenDidYouFirstOccupyView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 )(implicit val ec: ExecutionContext)
@@ -53,7 +53,7 @@ class AboutYourTradingHistoryController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("AboutYourTradingHistory")
     Ok(
-      aboutYourTradingHistoryView(
+      theView(
         request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation) match {
           case Some(occupationAccounting) =>
             occupationalInformationForm.fill(occupationAccounting.firstOccupy)
@@ -67,7 +67,7 @@ class AboutYourTradingHistoryController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[MonthsYearDuration](
       occupationalInformationForm,
-      formWithErrors => BadRequest(aboutYourTradingHistoryView(formWithErrors, getBackLink(request.sessionData))),
+      formWithErrors => BadRequest(theView(formWithErrors, getBackLink(request.sessionData))),
       data => {
         val occupationAndAccounting = request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)
