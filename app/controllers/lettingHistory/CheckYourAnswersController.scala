@@ -21,6 +21,7 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.CheckYourAnswerForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersPageId

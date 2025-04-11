@@ -22,7 +22,8 @@ import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmation
 import form.lettingHistory.AdvertisingListForm.theForm
 import models.Session
 import models.submissions.common.{AnswerYes, AnswersYesNo}
-import models.submissions.lettingHistory.LettingHistory.{byRemovingOnlineAdvertisingAt, toBoolean}
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.lettingHistory.LettingHistory.byRemovingOnlineAdvertisingAt
 import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{AdvertisingListPageId, AdvertisingRemovePageId}

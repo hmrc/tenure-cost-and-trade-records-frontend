@@ -19,15 +19,12 @@ package form.aboutthetradinghistory
 import play.api.data.Form
 import play.api.data.Forms.{optional, single, text}
 
-object FinancialYearsForm {
+object CheckYourAnswersAccountingInfoForm:
 
-  val financialYearsForm: Form[Boolean] =
-    Form(
-      single(
-        "isFinancialYearsCorrect" -> optional(text)
-          .transform[Boolean](_.contains("true"), b => Some(b.toString))
-          .verifying("error.financialYears.incorrect", _ == true)
-      )
+  val theForm = Form[Boolean](
+    single(
+      "isFinancialYearsCorrect" -> optional(text)
+        .transform[Boolean](_.contains("true"), b => Some(b.toString))
+        .verifying("error.checkYourAnswers.givenInformation.isCorrect", _ == true)
     )
-
-}
+  )

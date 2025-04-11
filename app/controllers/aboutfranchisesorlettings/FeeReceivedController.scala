@@ -114,7 +114,7 @@ class FeeReceivedController @Inject() (
         .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(idx)))
         .fold(Future.successful(Redirect(backLink(idx))))(action)
     } else {
-      Redirect(routes.AboutYourTradingHistoryController.show())
+      Redirect(routes.WhenDidYouFirstOccupyController.show())
     }
 
   private def initialFeeReceived(implicit request: SessionRequest[AnyContent]): FeeReceived =

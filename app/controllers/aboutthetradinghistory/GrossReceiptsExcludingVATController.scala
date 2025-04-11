@@ -96,7 +96,7 @@ class GrossReceiptsExcludingVATController @Inject() (
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
 
   private def years(turnoverSections6076: Seq[TurnoverSection6076]): Seq[String] =
     turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)

@@ -1591,12 +1591,14 @@ financialYearEndDatesSummary.isFinancialYearEndDatesCorrect = These financial ye
 error.financialYearEndDates.incorrect = Select if these financial year end dates are correct
 
 # FINANCIAL YEARS CYA
-financialYears.heading = Check your answers - accounting information
-financialYears.p1 = You must check this date before you complete the rest of this section.
-financialYears.warning = If you change your financial year end at any point after this page, you will have to enter all your trading history information again.
-financialYears.isFinancialYearsCorrect = The occupation and accounting information is correct
-financialYears.isFinancialYearsCorrect6048 = The accounting information is correct
-error.financialYears.incorrect = Select if the occupation and accounting information is correct
+##############################
+checkYourAnswers.occupationAndAccountingInfo.heading = Check your answers - occupation and accounting information
+checkYourAnswers.occupationAndAccountingInfo.p1 = You must check this date before you complete the rest of this section.
+checkYourAnswers.occupationAndAccountingInfo.warning = If you change your financial year end at any point after this page, you will have to enter all your trading history information again.
+checkYourAnswers.noFinancialYears.warning = It appears you first occupied the property within your last financial year. If this is not the case, check your financial year end.
+checkYourAnswers.occupationAndAccountingInfo.isCorrect = The occupation and accounting information is correct
+checkYourAnswers.occupationAndAccountingInfo.isCorrect6048 = The accounting information is correct
+error.checkYourAnswers.givenInformation.isCorrect = Select if the given information is correct
 
 # CURRENT RENT FIRST PAID
 #########################
@@ -3793,7 +3795,7 @@ checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total = Cy
 checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Yn cael ei defnyddio at ddibenion elusennol
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Yn cael ei defnyddio at ddibenion elusennol
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other = Other
-checkYourAnswersAboutTheTradingHistory.occupationDate = Dyddiad meddiannu
+checkYourAnswersAboutTheTradingHistory.occupationDate  = Dyddiad meddiannu
 checkYourAnswersAboutTheTradingHistory.areYouVATRegistered = Are you VAT registered?
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Diwedd y flwyddyn ariannol
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Cyfnod masnachu

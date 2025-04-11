@@ -50,7 +50,7 @@ class TotalPayrollCostsController @Inject() (
 
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+      .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
         val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
           (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
@@ -71,7 +71,7 @@ class TotalPayrollCostsController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
         val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
           (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd

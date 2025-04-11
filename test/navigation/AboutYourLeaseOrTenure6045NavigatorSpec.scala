@@ -190,7 +190,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController
         .show()
     }
-    
+
     "return a function that goes to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
       navigator
         .nextPage(TenantsAdditionsDisregardedId, session6045)

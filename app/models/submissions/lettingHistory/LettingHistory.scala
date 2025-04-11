@@ -150,6 +150,4 @@ object LettingHistory
       sectionCompleted <- lettingHistory.sectionCompleted
     yield sectionCompleted
 
-  given Format[LettingHistory]                   = Json.format
-  extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes
-  extension (bool: Boolean) def toAnswer         = if bool then AnswerYes else AnswerNo
+  given Format[LettingHistory] = Json.format

@@ -93,7 +93,7 @@ class StaffCostsController @Inject() (
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { turnoverSections6076 =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { turnoverSections6076 =>
         val years = turnoverSections6076.map(_.financialYearEnd.getYear.toString)
         action(turnoverSections6076, years)
       }
