@@ -31,7 +31,7 @@ import utils.FormBindingTestAssertions.mustContainError
 
 import scala.language.reflectiveCalls
 
-class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
+class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
 
@@ -39,11 +39,11 @@ class AboutYourTradingHistoryControllerSpec extends TestBaseSpec {
   def aboutYourTradingHistoryController(
     forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new AboutYourTradingHistoryController(
+  ) = new WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
-    aboutYourTradingHistoryView,
+    whenDidYouFistOccupyView,
     preEnrichedActionRefiner(
       forType = forType,
       aboutTheTradingHistory = aboutTheTradingHistory

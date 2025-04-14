@@ -4,7 +4,7 @@ site.service_name = Declare your business trade and cost information
 service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
 phase.beta = BETA
-phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback (opens in new tab)</a> to help improve it.
+phase.text = This is a new service - <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback (opens in new tab)</a> to help improve it.
 label.continue=Continue
 button.label.continue = Continue
 button.label.sendYourFeedback = Send your feedback
@@ -111,7 +111,7 @@ hint.date.example = For example, 27 9 2017.
 hint.month.year.example = For example, 9 2017.
 hint.day.month.example = For example, 04 05.
 hint.tradingSeason.day.month.example = For example, 27 9.
-hint.select.applicable = Select any that apply – leave blank if not applicable.
+hint.select.applicable = Select any that apply - leave blank if not applicable.
 hint.all.apply = Select all that apply.
 
 # SECTION NAMES
@@ -448,7 +448,7 @@ error.vacantProperties.required = Select yes if the property is currently vacant
 
 # CHECK YOUR ANSWERS CONNECTION TO PROPERTY
 ###########################################
-checkYourAnswersConnectionToProperty.heading= Check your answers – connection to the property
+checkYourAnswersConnectionToProperty.heading= Check your answers - connection to the property
 checkYourAnswersConnectionToProperty.connectionStatus.heading = Connection status
 label.connectedToTheProperty = Connected to the property?
 label.yes-change-address = Yes, and I want to edit the address
@@ -545,7 +545,7 @@ error.fullName.maxLength = Your name must be 50 characters or fewer
 
 # CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
-checkYourAnswersConnectionToVacantProperty.heading = Check your answers – vacant properties
+checkYourAnswersConnectionToVacantProperty.heading = Check your answers - vacant properties
 checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Connection status
 checkYourAnswersConnectionToVacantProperty.proposedAddress = Proposed address
 label.checkYourAnswersConnectionToVacantProperty = Connected to the property?
@@ -1445,7 +1445,7 @@ rent.received.from.confirm.error = Please confirm this payment was included in t
 
 # CALCULATING THE RENT (6015/6016 0NLY)
 calculating.the.rent.for.heading = Calculating the rent for {0}
-calculating.the.rent.for.explain = Explain how the income received figure was calculated – for example, 10% of the total takings
+calculating.the.rent.for.explain = Explain how the income received figure was calculated - for example, 10% of the total takings
 calculating.the.rent.for.explain.error = Please explain how the income received figure was calculated
 calculating.the.rent.for.label = When was the rent fixed at its current rate?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
@@ -1622,12 +1622,14 @@ financialYearEndDatesSummary.isFinancialYearEndDatesCorrect = These financial ye
 error.financialYearEndDates.incorrect = Select if these financial year end dates are correct
 
 # FINANCIAL YEARS CYA
-financialYears.heading = Check your answers - accounting information
-financialYears.p1 = You must check this date before you complete the rest of this section.
-financialYears.warning = If you change your financial year end at any point after this page, you will have to enter all your trading history information again.
-financialYears.isFinancialYearsCorrect = The occupation and accounting information is correct
-financialYears.isFinancialYearsCorrect6048 = The accounting information is correct
-error.financialYears.incorrect = Select if the occupation and accounting information is correct
+##############################
+checkYourAnswers.occupationAndAccountingInfo.heading = Check your answers - occupation and accounting information
+checkYourAnswers.occupationAndAccountingInfo.p1 = You must check this date before you complete the rest of this section.
+checkYourAnswers.occupationAndAccountingInfo.warning = If you change your financial year end at any point after this page, you will have to enter all your trading history information again.
+checkYourAnswers.noFinancialYears.warning = It appears you first occupied the property within your last financial year. If this is not the case, check your financial year end.
+checkYourAnswers.occupationAndAccountingInfo.isCorrect = The occupation and accounting information is correct
+checkYourAnswers.occupationAndAccountingInfo.isCorrect6048 = The accounting information is correct
+error.checkYourAnswers.givenInformation.isCorrect = Select if the given information is correct
 
 # CURRENT RENT FIRST PAID
 #########################
@@ -1955,7 +1957,7 @@ hint.aboutYou = If you''re renting or leasing the property, even as a charity or
 
 # TASK LIST
 ###########
-taskList.heading = Declaration summary – check your progress
+taskList.heading = Declaration summary - check your progress
 taskList.subHeading = You can save your declaration and come back later. You have 90 days from the first time you save to complete this declaration or your information will be deleted.
 taskList.status.completed = Completed
 taskList.status.inProgress = In progress
@@ -2789,7 +2791,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 ###################################
 unusualCircumstances.heading = Describe any unusual circumstances that may have affected the turnover figures on the previous page
 unusualCircumstancesReceipts.heading = Describe any unusual circumstances that may have affected the receipts or visitor numbers on the previous page
-unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts – leave blank if not applicable.
+unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts - leave blank if not applicable.
 
 # NET PROFITS (FORM 6015)
 #########
@@ -3076,7 +3078,7 @@ error.rallyAreas.areaInHectares.range = Areas in hectares in the year ending {0}
 #TENTING PITCHES TOTAL
 #####################
 
-tentingPitchesTotal.heading = Total site capacity – touring and tenting pitches
+tentingPitchesTotal.heading = Total site capacity - touring and tenting pitches
 tentingPitchesTotal.declare = You must declare how many touring and tenting pitches you have. This must be the pitches that are on site today, or will be on site when you submit this declaration.
 tentingPitchesTotal.must.include = You must include:
 tentingPitchesTotal.list.one = pitches for caravans, motor homes, or tents
@@ -3313,7 +3315,7 @@ error.buildingOperatingHaveAWebsite.required = Select yes if the business has a 
 
 # ADDITIONAL INFORMATION
 ########################
-checkYourAnswersAdditionalInformation.heading = Check your answers – additional information
+checkYourAnswersAdditionalInformation.heading = Check your answers - additional information
 label.furtherInformation = Further information or remarks
 key.additionalInformation = Additional information
 label.altDetails = Alternative correspondence address
@@ -3633,7 +3635,7 @@ error.areYouVATRegistered.required = Select yes if you are VAT registered
 
 # NOT CONNECTED
 ###############
-checkYourAnswersNotConnected.heading = Check your answers – no connection to the property
+checkYourAnswersNotConnected.heading = Check your answers - no connection to the property
 key.still.connected = Connected to the property?
 key.ever.connected = Ever been connected to the property?
 key.contact.details = Contacts and additional information
@@ -3661,9 +3663,9 @@ maxOf5Lettings.error = Please confirm that you understand the VOA will contact y
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
-checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franchises or lettings
-checkYourAnswersAboutConcessionsOrLettings.heading = Check your answers – concessions or lettings
-checkYourAnswersAboutConcessionsOrLettings6045.heading = Check your answers – concessions franchises or lettings
+checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers - franchises or lettings
+checkYourAnswersAboutConcessionsOrLettings.heading = Check your answers - concessions or lettings
+checkYourAnswersAboutConcessionsOrLettings6045.heading = Check your answers - concessions franchises or lettings
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
 checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
 checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings = Franchises or lettings?
@@ -3702,7 +3704,7 @@ cya.rentalIncomeList.plural.heading = You have added {0} sources of rental incom
 cya.concessionOrFranchise.operatorNumber = Concession or franchise {0}
 cya.concessionOrFranchise.operatorDetails = Operator’s details
 
-checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers – your lease or agreement
+checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers - your lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord''s details
@@ -3808,7 +3810,7 @@ checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails = Details of benefit
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020 = Capital sum paid by or to the occupier?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid = Capital sum paid
 label.typeOfTenure.longLeasehold = Long leasehold at ground rent
-checkYourAnswersAboutTheProperty.heading = Check your answers – about you and the property
+checkYourAnswersAboutTheProperty.heading = Check your answers - about you and the property
 checkYourAnswersAboutTheProperty.aboutYou.heading = Contact information
 checkYourAnswersAboutTheProperty.contact.details = Contact details
 checkYourAnswersAboutTheProperty.aboutProperty.technologyType = Technology type
@@ -3853,8 +3855,8 @@ checkYourAnswersAboutTheProperty.occupiersCount = You have added {0} occupiers
 checkYourAnswersAboutTheProperty.occupiersAdd = Add or remove an occupier
 checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
 
-checkYourAnswersAboutTheTradingHistory.heading = Check your answers – trading history
-checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers – static caravans
+checkYourAnswersAboutTheTradingHistory.heading = Check your answers - trading history
+checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers - static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Static caravans on site?
 checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear = Static caravans open all year?
@@ -3875,7 +3877,7 @@ checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total = To
 checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Services provided to static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Standard pitch fee and included services
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.other = Other
-checkYourAnswersAboutTheTradingHistory.occupationDate = Occupation date
+checkYourAnswersAboutTheTradingHistory.occupationDate  = Occupation date
 checkYourAnswersAboutTheTradingHistory.areYouVATRegistered = Are you VAT registered?
 checkYourAnswersAboutTheTradingHistory.financialYearEnd = Financial year end
 checkYourAnswersAboutTheTradingHistory.tradingPeriod = Trading period
@@ -3894,7 +3896,7 @@ checkYourAnswersAboutTheTradingHistory.totalGrossProfits = Total gross profits
 checkYourAnswersAboutTheTradingHistory.totalNetProfits = Total net profits
 checkYourAnswersAboutTheTradingHistory.netProfitPercentage = Total net profit as percentage of total sales revenue
 checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = I confirm that these figures are correct
-requestReferenceNumber.checkYourAnswers.heading = Check your answers – if you do not have a reference number
+requestReferenceNumber.checkYourAnswers.heading = Check your answers - if you do not have a reference number
 requestReferenceNumber.checkYourAnswers.subheading1 = Property details
 requestReferenceNumber.checkYourAnswers.subheading2 = Your details
 checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Unusual circumstances affecting the turnover

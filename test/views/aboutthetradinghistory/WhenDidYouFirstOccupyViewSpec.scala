@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearDuration] {
+class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDuration] {
 
   val messageKeyPrefix = "firstOccupy"
 
@@ -35,10 +35,10 @@ class AboutYourTradingHistoryViewSpec extends QuestionViewBehaviours[MonthsYearD
   override val form: Form[MonthsYearDuration] =
     OccupationalInformationForm.occupationalInformationForm(messages)
 
-  def createView: () => Html = () => aboutYourTradingHistoryView(form, backLink)(sessionRequest, messages)
+  def createView: () => Html = () => whenDidYouFistOccupyView(form, backLink)(sessionRequest, messages)
 
   def createViewUsingForm: Form[MonthsYearDuration] => Html =
-    (form: Form[MonthsYearDuration]) => aboutYourTradingHistoryView(form, backLink)(sessionRequest, messages)
+    (form: Form[MonthsYearDuration]) => whenDidYouFistOccupyView(form, backLink)(sessionRequest, messages)
 
   "About the trading history view" must {
 

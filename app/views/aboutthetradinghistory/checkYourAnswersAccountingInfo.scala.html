@@ -1,0 +1,190 @@
+@*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import actions.SessionRequest
+@import models.ForType.*
+@import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+@import util.SectionAnswersRowBuilder
+@import util.DateUtilLocalised
+
+@import java.time.LocalDate
+
+@this(layout: Layout,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukSummaryList: GovukSummaryList,
+        govukCheckboxes: GovukCheckboxes,
+        govukWarningText: GovukWarningText,
+        dateUtil: DateUtilLocalised
+)
+
+
+@(theForm: Form[?], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
+}
+
+@sectionAnswersPartOne = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+}
+
+@forType = @{
+    request.sessionData.forType
+}
+
+@table(valuesGrid: Seq[Seq[String]]) = {
+@valuesGrid.map { values =>
+    <div class="hmrc-turnover-table-column">
+        @values.map { value =>
+            <p class="govuk-body">@Html(value)</p>
+        }
+    </div>
+}
+}
+
+@financialYearEndDatesTable(financialYearEndDates: Seq[LocalDate]) = @{
+    table(
+        financialYearEndDates.map(financialYearEnd => Seq(
+            dateUtil.formatDayMonthAbbrYear(financialYearEnd)
+        ))
+    ).body
+}
+
+@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
+    forType match {
+        case FOR6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
+        case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
+        case FOR6045 | FOR6046 => request.sessionData.financialYearEndDates6045.map(_._1)
+        case FOR6048 => request.sessionData.financialYearEndDates6048.map(_._1)
+        case FOR6076 => request.sessionData.financialYearEndDates6076.map(_._1)
+        case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
+    }
+}
+
+@yearEndChanged = @{
+    (for {
+        aboutTheTradingHistory <- request.sessionData.aboutTheTradingHistory
+        occupationAndAccountingInformation <- aboutTheTradingHistory.occupationAndAccountingInformation
+        yearEndChanged <- occupationAndAccountingInformation.yearEndChanged
+    } yield {
+        yearEndChanged
+    }).contains(true)
+}
+
+@layout(
+    pageHeading = messages("checkYourAnswers.occupationAndAccountingInfo.heading"),
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = Some(backLink),
+    theForm = theForm,
+    fullWidth = true,
+    showH1 = true
+) {
+
+    <p class="govuk-body">@messages("checkYourAnswers.occupationAndAccountingInfo.p1")</p>
+
+    @govukWarningText(WarningText(
+        content = Text(messages("checkYourAnswers.occupationAndAccountingInfo.warning"))
+    ))
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            if(forType == FOR6048) {
+                summaryListRow(
+                    keyText = messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"),
+                    valueContent = Text(sectionAnswersPartOne.answers.flatMap(_.areYouVATRegistered.flatMap(_.name.capitalize).getOrElse("")).getOrElse("")),
+                    changeCall = controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
+                    noBorder = true
+                )
+            }
+            else {
+                summaryListRow(
+                    keyText = messages("checkYourAnswersAboutTheTradingHistory.occupationDate"),
+                    valueContent = Text(sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth).getOrElse("")),
+                    changeCall = controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show(),
+                    noBorder = true
+                )
+            },
+            summaryListRow(
+                keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+                valueContent = Text(sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay).getOrElse("")),
+                changeCall = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show(),
+                noBorder = yearEndChanged
+            )
+        ) ++
+        (if(yearEndChanged) Seq(
+            summaryListRow(
+                keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"),
+                valueContent = HtmlContent(sectionAnswers.answers.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t)))),
+                changeCall = {
+                    forType match {
+                        case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
+                            controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
+                        case _ =>
+                            controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+                    }
+                }
+            )
+        ) else Seq.empty)
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.submit) {
+        @govukCheckboxes(
+            Checkboxes(
+                items = Seq(
+                    CheckboxItem(
+                        id = "isFinancialYearsCorrect",
+                        name = "isFinancialYearsCorrect",
+                        content = if(forType == FOR6048) Text(messages("checkYourAnswers.occupationAndAccountingInfo.isCorrect6048")) else Text(messages("checkYourAnswers.occupationAndAccountingInfo.isCorrect")),
+                        value = "true",
+                        checked = theForm("isFinancialYearsCorrect").value.contains("true")
+                    )
+                )
+            ).withFormField(theForm("isFinancialYearsCorrect"))
+        )
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}
+
+
+
+@summaryListRow(keyText: String, valueContent: Content, changeCall: Call, noBorder: Boolean = false) = @{
+    SummaryListRow(
+        key = Key(
+            Text(keyText)
+        ),
+        value = Value(
+            valueContent
+        ),
+        actions = Some(Actions(
+            items = Seq(
+                ActionItem(
+                    href = changeCall.url,
+                    content = Text(messages("label.change")),
+                    attributes = Map(
+                        "aria-label" -> s"${messages("label.change")} $keyText"
+                    )
+                )
+            )
+        )),
+        classes = if (noBorder) "govuk-summary-list__row--no-border" else ""
+    )
+}

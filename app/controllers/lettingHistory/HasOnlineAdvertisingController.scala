@@ -21,7 +21,8 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.HasOnlineAdvertisingForm.theForm
 import models.Session
 import models.submissions.common.AnswersYesNo
-import models.submissions.lettingHistory.LettingHistory.{toAnswer, toBoolean, withHasOnlineAdvertising}
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.lettingHistory.LettingHistory.withHasOnlineAdvertising
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.HasOnlineAdvertisingPageId
 import play.api.i18n.I18nSupport

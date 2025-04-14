@@ -1,0 +1,130 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import controllers.aboutthetradinghistory.routes
+@import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichFormErrors
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import util.DateUtilLocalised
+
+@this(layout: Layout, govukSummaryList: GovukSummaryList, govukWarningText: GovukWarningText, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+
+@(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLinkUrl: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
+
+@aboutTheTradingHistory = @{
+    assert(request.sessionData.aboutTheTradingHistory.isDefined)
+    request.sessionData.aboutTheTradingHistory.get
+}
+
+@occupationAndAccountingInformation = @{
+    assert(aboutTheTradingHistory.occupationAndAccountingInformation.isDefined)
+    aboutTheTradingHistory.occupationAndAccountingInformation.get
+}
+
+@layout(
+  pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
+  showSection = true,
+  summary = Some(request.sessionData.toSummary),
+  sectionName = messages("label.section.aboutYourTradingHistory"),
+  fullWidth = true,
+  backLinkUrl = backLinkUrl
+) {
+
+    <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
+
+    @summaryList(
+        summaryListRow(
+            keyText = messages("checkYourAnswersAboutTheTradingHistory.occupationDate"),
+            valueText = dateUtil.formatYearMonth(occupationAndAccountingInformation.firstOccupy.toYearMonth),
+            changeCall = routes.WhenDidYouFirstOccupyController.show(),
+            noBorder = true
+        ),
+        summaryListRow(
+            keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+            valueText = occupationAndAccountingInformation.financialYear.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse(""),
+            changeCall = routes.FinancialYearEndController.show()
+        )
+    )
+
+    @govukWarningText(WarningText(
+        content = Text(messages("checkYourAnswers.noFinancialYears.warning"))
+    ))
+
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController.submit()) {
+        @singleCheckBox(
+            theForm,
+            name = "correct",
+            label = messages("checkYourAnswers.occupationAndAccountingInfo.isCorrect")
+        )
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            name = "completed"
+        )
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+}
+
+
+@* ----------------------------------------------------------------------------- *@
+
+@summaryList(rows: SummaryListRow*) = @{
+    govukSummaryList(SummaryList(rows))
+}
+
+
+@summaryListRow(keyText: String, valueText: String, changeCall: Call, noBorder: Boolean = false) = @{
+    SummaryListRow(
+        key = Key(
+            Text(keyText)
+        ),
+        value = Value(
+            Text(valueText)
+        ),
+        actions = Some(Actions(
+            items = Seq(
+                ActionItem(
+                    href = changeCall.url,
+                    content = Text(messages("label.change")),
+                    attributes = Map(
+                        "aria-label" -> s"${messages("label.change")} $keyText"
+                    )
+                )
+            )
+        )),
+        classes = if (noBorder) "govuk-summary-list__row--no-border" else ""
+    )
+}
+
+@singleCheckBox(theForm: Form[?], name: String, label: String) = @{
+    govukCheckboxes(
+        Checkboxes(
+            name = name,
+            items = Seq(
+                CheckboxItem(
+                    id = Some(name),
+                    name = Some(name),
+                    value = "true",
+                    content = Text(label),
+                    checked = theForm(name).value.contains("true"),
+                )
+            ),
+            errorMessage =  theForm.errors.asTextErrorMessageForField(name)
+        )
+    )
+}

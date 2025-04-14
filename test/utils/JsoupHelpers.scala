@@ -30,16 +30,17 @@ import scala.jdk.CollectionConverters.*
 trait JsoupHelpers:
   extension (el: Element) def value = Option(el.`val`()).get
   extension (d: Document)
-    def heading             = d.select("h1").first().text().trim
-    def backLink            = d.select("a.govuk-back-link").first().attribute("href").getValue
-    // def error(id: String)     = d.select(s"""p.govuk-error-message[id="$id-error"]""").textNodes().asScala.last.text().trim
-    def error(id: String)   = d.select(s"""a[href="#$id"]""").textNodes().asScala.last.text().trim
-    def checkbox(n: String) = d.select(s"""input.govuk-checkboxes__input[name="$n"]""").first()
-    def radios(n: String)   = d.select(s"""input.govuk-radios__input[name="$n"]""").asScala.toList
-    def input(n: String)    = d.select(s"""input.govuk-input[name="$n"]""").first()
-    def textarea(n: String) = d.select(s"""textarea.govuk-textarea[name="$n"]""").first()
-    def submitAction        = d.select("form").first().attr("action")
-    def summaryList         =
+    def heading                  = d.select("h1").first().text().trim
+    def backLink                 = d.select("a.govuk-back-link").first().attribute("href").getValue
+    def errorMessage(id: String) =
+      d.select(s"""p.govuk-error-message[id="$id-error"]""").textNodes().asScala.last.text().trim
+    def error(id: String)        = d.select(s"""a[href="#$id"]""").textNodes().asScala.last.text().trim
+    def checkbox(n: String)      = d.select(s"""input.govuk-checkboxes__input[name="$n"]""").first()
+    def radios(n: String)        = d.select(s"""input.govuk-radios__input[name="$n"]""").asScala.toList
+    def input(n: String)         = d.select(s"""input.govuk-input[name="$n"]""").first()
+    def textarea(n: String)      = d.select(s"""textarea.govuk-textarea[name="$n"]""").first()
+    def submitAction             = d.select("form").first().attr("action")
+    def summaryList              =
       d.select(s"""dl.govuk-summary-list""")
         .first()
         .children()
