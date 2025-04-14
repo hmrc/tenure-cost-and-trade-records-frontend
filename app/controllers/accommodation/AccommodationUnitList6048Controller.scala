@@ -55,8 +55,7 @@ class AccommodationUnitList6048Controller @Inject() (
     Ok(
       accommodationUnitListView(
         accommodationUnitList6048Form,
-        accommodationUnits,
-        backLink
+        accommodationUnits
       )
     )
   }
@@ -64,7 +63,7 @@ class AccommodationUnitList6048Controller @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       accommodationUnitList6048Form,
-      formWithErrors => BadRequest(accommodationUnitListView(formWithErrors, accommodationUnits, backLink)),
+      formWithErrors => BadRequest(accommodationUnitListView(formWithErrors, accommodationUnits)),
       data =>
         (data == AnswerYes, accommodationUnits.size) match {
           case (true, size) if size >= AccommodationDetails.maxAccommodationUnits =>
@@ -76,8 +75,7 @@ class AccommodationUnitList6048Controller @Inject() (
               accommodationUnitListView(
                 accommodationUnitList6048Form
                   .withError("addMoreAccommodationUnits", "error.accommodationUnits.isEmpty"),
-                accommodationUnits,
-                backLink
+                accommodationUnits
               )
             )
           case (false, _)                                                         =>
@@ -144,12 +142,5 @@ class AccommodationUnitList6048Controller @Inject() (
     request: SessionRequest[AnyContent]
   ): String =
     selectedUnit.fold("")(_.unitName)
-
-  private def backLink(implicit
-    request: SessionRequest[AnyContent]
-  ): String =
-    if request.getQueryString("idx").isEmpty then
-      navigator.nextPage(AccommodationUnitListPageId, request.sessionData).apply(request.sessionData).url
-    else s"${controllers.accommodation.routes.IncludedTariffItems6048Controller.show.url}?idx=${navigator.idx}"
 
 }
