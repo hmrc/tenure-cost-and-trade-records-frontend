@@ -27,7 +27,7 @@
 )
 
 
-@(form: Form[AnswersYesNo], accommodationUnits: List[AccommodationUnit], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[AnswersYesNo], accommodationUnits: List[AccommodationUnit])(implicit request: SessionRequest[?], messages: Messages)
 
 @pageTitle = @{
     accommodationUnits.size match {
@@ -42,7 +42,7 @@
     showSection = true,
     summary = request.sessionData.toSummary,
     sectionName = messages("label.section.accommodation"),
-    backLinkUrl = backLink,
+    backLinkUrl = None,
     theForm = form,
     showH1 = false,
     fullWidth = true
