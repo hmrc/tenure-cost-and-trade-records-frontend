@@ -21,7 +21,6 @@ import views.html.aboutYourLeaseOrTenure._
 import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutthetradinghistory.{whatYouWillNeed, _}
-import views.html.aboutthetradinghistory._
 import views.html.aboutyouandtheproperty._
 import views.html.accommodation._
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}

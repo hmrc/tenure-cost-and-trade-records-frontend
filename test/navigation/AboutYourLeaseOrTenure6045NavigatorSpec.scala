@@ -20,7 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswerNo
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier

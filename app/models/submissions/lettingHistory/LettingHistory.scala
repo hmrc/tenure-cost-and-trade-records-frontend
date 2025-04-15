@@ -17,7 +17,6 @@
 package models.submissions.lettingHistory
 
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
 import play.api.libs.json.{Format, Json}
 

@@ -19,7 +19,6 @@ package controllers.aboutthetradinghistory
 import actions.SessionRequest
 import connectors.Audit
 import controllers.aboutthetradinghistory
-import controllers.aboutthetradinghistory.CheckYourAnswersAccountingInfoController
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}

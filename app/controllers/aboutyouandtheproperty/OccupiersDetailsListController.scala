@@ -16,7 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm

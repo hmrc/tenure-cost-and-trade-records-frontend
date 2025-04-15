@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.TradeServicesListForm
-import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
