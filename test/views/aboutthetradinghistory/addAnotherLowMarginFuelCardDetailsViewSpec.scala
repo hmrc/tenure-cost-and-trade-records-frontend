@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theForm
-import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.twirl.api.Html

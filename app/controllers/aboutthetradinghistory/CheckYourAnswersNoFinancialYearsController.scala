@@ -18,7 +18,6 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import controllers.aboutthetradinghistory.routes
 import form.aboutthetradinghistory.CheckYourAnswersNoFinancialYearsForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
@@ -27,7 +26,6 @@ import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import util.AccountingInformationUtil.backLinkToFinancialYearEndDates
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
