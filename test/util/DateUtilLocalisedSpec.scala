@@ -33,6 +33,7 @@ class DateUtilLocalisedSpec extends TestBaseSpec:
   val en: Locale                  = Locale.UK
   val cy: Locale                  = new Locale("cy") // TODO: use Locale.of since Java 19+
   val uk: Locale                  = new Locale("uk") // TODO: use Locale.of since Java 19+
+  val unavailableLocale: Locale   = new Locale("xy") // TODO: use Locale.of since Java 19+
   private val testDate: LocalDate =
     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-04-17 12:34:56").toInstant.atZone(ukTimezone).toLocalDate
   private val dateEN              = "17 April 2025"
@@ -49,10 +50,11 @@ class DateUtilLocalisedSpec extends TestBaseSpec:
 
   "DateUtilLocalised" should {
     "format LocalDate" in {
-      dateUtilLocalised.formatDate(testDate)                        shouldBe dateEN
-      dateUtilLocalised.formatDate(testDate)(messagesForLocale(en)) shouldBe dateEN
-      dateUtilLocalised.formatDate(testDate)(messagesForLocale(cy)) shouldBe dateCY
-      dateUtilLocalised.formatDate(testDate)(messagesForLocale(uk)) shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)                                       shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)(messagesForLocale(en))                shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)(messagesForLocale(cy))                shouldBe dateCY
+      dateUtilLocalised.formatDate(testDate)(messagesForLocale(uk))                shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)(messagesForLocale(unavailableLocale)) shouldBe dateEN
     }
 
     "format LocalDate using month abbreviation by .formatDayMonthAbbrYear" in {
