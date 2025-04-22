@@ -119,7 +119,7 @@
 
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.rentReceived",
-                _.franchisesOrLettingsTiedToProperty.map(yesNo => messages(s"label.${yesNo.name}")),
+                _.franchisesOrLettingsTiedToProperty.map(x => if(x.contains(AnswerYes)) messages("label.yes.ydw") else messages("label.no.nac.ydw")),
                 controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(), "rentReceived")
         ))
         @for((letting, idx) <- sectionAnswers.answers.flatMap(_.lettings).getOrElse(IndexedSeq.empty).zipWithIndex) {

@@ -119,10 +119,10 @@ label.section.aboutTheProperty = Amdanoch chi a''r eiddo
 label.section.lettingHistory = Letting history
 label.section.accommodation = Accommodation details
 label.section.aboutYourTradingHistory = Hanes masnachu
-label.section.aboutTheFranchiseLettings = Franchises or lettings
-label.section.aboutTheFranchiseConcessions = Concessions and lettings
-label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises or lettings
-label.section.aboutTheLettings = Lettings
+label.section.aboutTheFranchiseLettings = Masnachfreintiau neu osodiadau
+label.section.aboutTheFranchiseConcessions = Consesiynau neu osodiadau
+label.section.aboutTheConcessionsFranchisesLettings = Gonsesiynau, masnachfreintiau neu osodiadau
+label.section.aboutTheLettings = Gosodiadau
 label.section.aboutYourLeaseOrTenure = Eich prydles neu eich cytundeb
 label.section.additionalInformation = Gwybodaeth ychwanegol
 
@@ -364,7 +364,7 @@ downloadPdf.continueJourneyButton = Parhau â''r datganiad ar-lein
 
 #GENERIC CONFIRMATION
 #####################
-genericRemoveConfirmation.heading = Are you sure you want to remove {0}?
+genericRemoveConfirmation.heading = A ydych yn siŵr eich bod am dynnu {0}?
 
 # ARE YOU STILL CONNECTED SECTION
 #################################
@@ -793,22 +793,23 @@ error.tiedForGoodsDetails.required = Select which type of tie you have
 
 # TYPE OF INCOME
 #################
-typeOfIncome.heading = Select a source of rental income
-typeOfIncome.p = You will have the option to add multiple sources of rental income if required.
-typeOfIncome.concession.label = Concession or franchise
-typeOfIncome.6010.concession.label = Separate business operate from the property
-typeOfIncome.6015.concession.label = Concession or franchise fees
-typeOfIncome.concession.hint = For example, accommodation or catering businesses.
-typeOfIncome.letting.label = Letting other parts of the property
-typeOfIncome.letting.hint = For example, advertising billboards, telephone masts or car parking.
+typeOfIncome.heading = Dewiswch ffynhonnell incwm rhent
+typeOfIncome.p = Bydd gennych yr opsiwn i ychwanegu mwy nag un ffynhonnell incwm rhent os oes angen.
+typeOfIncome.concession.label = Ffi y consesiwn neu’r fasnachfraint
+typeOfIncome.6010.concession.label = Ffi y consesiwn neu’r fasnachfraint
+typeOfIncome.6015.concession.label = Ffi y consesiwn neu’r fasnachfraint
+typeOfIncome.concession.hint = Er enghraifft, busnesau llety neu arlwyo.
+typeOfIncome.concession.6015.hint = O unrhyw fusnesau ar wahân sy’n gweithredu o’r eiddo, megis bwytai neu giosgau llogi ceir.
+typeOfIncome.letting.label = Rhoi rhannau eraill o’r eiddo ar osod
+typeOfIncome.letting.hint = Er enghraifft byrddau posteri, maes parcio neu fastiau ffôn.
 error.typeOfIncome.required = Select a source of rental income
 
 # CONCESSION TYPE DETAILS
 ###########################
-concessionTypeDetails.heading = Provide the operator''s details
+concessionTypeDetails.heading = Rhowch fanylion y gweithredwr
 concessionTypeDetails.operator = Operator''s name
 concessionTypeDetails.describeType = Describe the type of business
-hint.concessionTypeDetails.describeType = For example, bar, club, restaurant
+hint.concessionTypeDetails.describeType = Er enghraifft, bar, clwb, neu fwyty.
 concessionTypeDetails.describeUse = Describe how the property is used
 
 error.concessionTypeDetails.operator.required = Enter the name of the operator
@@ -827,35 +828,35 @@ hint.lettingTypeDetails6015 = For example restaurants or car hire kiosks
 
 # RENTAL INCOME LIST
 ####################
-rentalIncomeList.heading = You have added 1 source of rental income
-rentalIncomeList.plural.heading = You have added {0} sources of rental income
+rentalIncomeList.heading = Rydych wedi ychwanegu 1 ffynhonnell incwm rhent
+rentalIncomeList.plural.heading = Rydych wedi ychwanegu {0} ffynhonnell incwm rhent
 label.rentalIncomeList.letting = Do you need to add another letting?
 label.rentalIncomeList.concession = Do you need to add another separate concession or franchise?
-label.rentalIncomeList.income = Do you need to add another source of rental income?
-rentalIncomeList.zeroLetting.heading = You have removed all your sources of rental income
+label.rentalIncomeList.income = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
+rentalIncomeList.zeroLetting.heading = Rydych wedi tynnu’ch holl ffynonellau incwm rhent
 error.rentalIncomeList.required = Select yes if you would lke to add another source of income
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY
 #######################################
-franchiseLettings.heading = Rental income
-franchiseLettings.p1 = You must declare any income received by letting out parts of your property.
-franchiseLettings.p2 = You must include:
-franchiseLettings.list1 = any payments received instead of trading receipts from third-party businesses operating from the property under a concession or franchise agreement
-franchiseLettings.list2 = rental income from letting other parts of the property including advertising billboards, car parking or phone masts
-franchiseLettings.subheading = Do you receive income from letting out parts of your property?
-franchiseLettings.6020.heading = Is any rent received from letting any parts of the property?
-franchiseLettings.6020.p1 = For example, advertising rights, telecom mats, charging points, and ATMs. You will have the opportunity to add multiple lettings if required.
-franchiseLettings.6030.heading = Do you receive rental income from any franchises or lettings?
-franchiseLettings.6045.heading =  Do you receive rental income from any concessions, franchises or lettings?
+franchiseLettings.heading = Incwm rhent
+franchiseLettings.p1 = Mae’n rhaid i chi ddatgan unrhyw incwm a gafwyd drwy roi rhannau o’ch eiddo ar osod.
+franchiseLettings.p2 = Mae’n rhaid i chi gynnwys:
+franchiseLettings.list1 = unrhyw daliadau a gafwyd yn hytrach na derbyniadau masnachu gan fusnesau trydydd parti sy’n gweithredu o’r eiddo o dan gytundeb consesiwn neu fasnachfraint
+franchiseLettings.list2 = incwm rhent o roi rhannau eraill o’r eiddo ar osod, gan gynnwys byrddau posteri, maes parcio neu fastiau ffôn
+franchiseLettings.subheading = Ydych chi’n cael incwm rhent o roi rhannau o’ch eiddo ar osod?
+franchiseLettings.6020.heading = A oes unrhyw rent yn dod i law o osod rhannau eraill o’r eiddo?
+franchiseLettings.6020.p1 = Er enghraifft, hawliau hysbysebu, mastiau telathrebu, man gwefru, gweithdai a pheiriannau arian. Cewch gyfle i ychwanegu sawl gosodiad os oes angen.
+franchiseLettings.6030.heading = A ydych yn cael incwm rhent o unrhyw masnachfreintiau neu osodiadau?
+franchiseLettings.6045.heading =  A ydych yn cael incwm rhent o unrhyw gonsesiynau, masnachfreintiau neu osodiadau?
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY (6030)
 #######################################
-franchiseLettingsIncome.heading = Do you receive rental income from any franchise or lettings?
-franchiseLettingsIncome.p1 = You must declare:
-franchiseLettingsIncome.list1 = any payments received instead of trading income from concessions or franchise agreements - for example, tearooms, vehicle charging points or car washes
-franchiseLettingsIncome.list2 = rent received from letting other parts of the property including advertising billboards, telephone masts or car parking
-franchiseLettingsIncome6045.list1 = any payments received instead of trading income from concessions or franchise agreements
+franchiseLettingsIncome.heading = A ydych yn cael incwm rhent o unrhyw masnachfreintiau neu osodiadau?
+franchiseLettingsIncome.p1 = Mae’n rhaid i chi ddatgan:
+franchiseLettingsIncome.list1 = unrhyw daliadau a gafwyd yn lle incwm masnachu o unrhyw gytundebau consesiynau neu fasnachfreintiau – er enghraifft, ystafelloedd te, pwyntiau gwefru ceir, neu olchfeydd ceir
+franchiseLettingsIncome.list2 = rhent a gafwyd o roi rhannau eraill o’r eiddo ar osod, gan gynnwys byrddau posteri, mastiau ffôn neu faes parcio
+franchiseLettingsIncome6045.list1 = unrhyw daliadau a gafwyd yn lle incwm masnachu ar ffurf cytundebau consesiynau neu fasnachfreintiau
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # ABOUT YOUR LANDLORD
@@ -926,10 +927,10 @@ concessionOrFranchiseFee.heading = Concession or franchise fees
 concessionOrFranchiseFee.label = Do you receive any fees from separate businesses operating from part of the property?
 concessionOrFranchiseFee.p1 = You must declare any fees you charge for allowing separate businesses to operate from the property, for example tea rooms or car washes. You will have the opportunity to add more than one business if required.
 error.concessionOrFranchiseFee.missing = Select yes if you receive any fees from separate businesses operating from part of the property
-feeReceived.heading = Fee received from {0}
-feeReceived.p1 = If the fee received does not relate to a whole year, or the business was not trading continuously, state the relevant number of weeks.
-feeReceived.concessionOrFranchiseFee = Concession or franchise fee
-feeReceived.feeCalculationDetails = Explain how the fee was calculated - for example, 10% of the total takings
+feeReceived.heading = Ffi a gafwyd gan {0}
+feeReceived.p1 = Mae dyddiadau diwedd y flwyddyn ariannol wedi’u rhag-lenwi gan y system. Gallwch ddiweddaru’r rhain os oes angen. Os nad yw’r ffi a gafwyd yn ymwneud â blwyddyn gyfan, neu os nad oedd y busnes yn masnachu’n barhaus, nodwch y nifer berthnasol o wythnosau.
+feeReceived.concessionOrFranchiseFee = Ffi y consesiwn neu’r fasnachfraint
+feeReceived.feeCalculationDetails = Eglurwch sut y cyfrifwyd ffigur yr incwm a gafwyd – er enghraifft, 10% o gyfanswm y derbyniadau
 error.feeReceived.concessionOrFranchiseFee.required = Enter 0 if you received no fees in the year ending {0}
 error.feeReceived.concessionOrFranchiseFee.range = Fee received in the year ending {0} must be a number like 100 or 100.00 and and be greater than 0
 error.feeReceived.concessionOrFranchiseFee.negative = Fee received in the year ending {0} cannot be a negative number
@@ -944,17 +945,17 @@ fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual ren
 
 #LETTINGS 6020
 ##############################
-lettings.typeOfLetting.heading = Select the type of letting
-lettings.typeOfLetting.automatedTellerMachine = Automated teller machine (ATM)
-lettings.typeOfLetting.telecomMast = Telecom mast
-lettings.typeOfLetting.advertisingRight = Advertising right
-lettings.typeOfLetting.other = Other (charging point, for example)
+lettings.typeOfLetting.heading = Dewiswch y math o osodiad
+lettings.typeOfLetting.automatedTellerMachine = Peiriannau Rhifo Awtomatig (ATM)
+lettings.typeOfLetting.telecomMast = Mast telathrebu
+lettings.typeOfLetting.advertisingRight = Hawliau hysbysebu
+lettings.typeOfLetting.other = Arall (man gwefru, er enghraifft)
 error.typeOfLetting.required = Please select the type of letting
 
 #LETTINGS ATM 6020
 ##############################
-label.atmLetting.heading = Provide the ATM operator’s details
-label.bankOrCompany = Name of bank or company operating the machine
+label.atmLetting.heading = Rhowch fanylion gweithredwr yr ATM
+label.bankOrCompany = Enw’r banc neu’r cwmni sy’n gweithredu’r peiriant
 error.bankOrCompany.required = Enter name of bank or company operating the machine
 error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer
 error.correspondenceAddress.required = Enter correspondence address
@@ -996,18 +997,18 @@ lettings.typeOfLetting.other.label = Other
 aboutTheLettings.zeroLetting.heading = You have removed all your lettings
 #CHECK YOUR ANSWERS LETTING 6020 CYA
 ##############################
-checkYourAnswersLettings.heading = Check your answers - lettings
+checkYourAnswersLettings.heading = Gwiriwch eich atebion – gosodiadau
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = Rydych wedi ychwanegu {0} gosodiad
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPruel = You have added {0} lettings
-checkYourAnswersAboutFranchiseOrLettings.rentReceived = Rent received from lettings?
-checkYourAnswersAboutFranchiseOrLettings.typeOfLetting = Type of letting
-checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails = ATM operator’s details
-checkYourAnswersAboutFranchiseOrLettings.rentDetails = Annual rent
+checkYourAnswersAboutFranchiseOrLettings.rentReceived = Rhent a gafwyd o osodiadau?
+checkYourAnswersAboutFranchiseOrLettings.typeOfLetting = Math o osodiad
+checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails = Manylion gweithredwr yr ATM
+checkYourAnswersAboutFranchiseOrLettings.rentDetails = Rhent blynyddol
 checkYourAnswersAboutFranchiseOrLettings.addedLettings = Rydych wedi ychwanegu {0} gosodiad
-checkYourAnswersAboutFranchiseOrLettings.addedLettingsPlural = You have added {0} lettings
-checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails = Operation company’s details
-checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails = Advertising company’s details
-checkYourAnswersAboutFranchiseOrLettings.otherDetails = Other letting operator’s details
+checkYourAnswersAboutFranchiseOrLettings.addedLettingsPlural = Rydych wedi ychwanegu {0} o osodiadau
+checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails = Manylion gweithredwr y mast telathrebu
+checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails = Manylion y cwmni hysbysebu
+checkYourAnswersAboutFranchiseOrLettings.otherDetails = Manylion gweithredwr y gosodiad arall
 
 #ADD OR REMOVE LETTING 6020
 aboutTheLettings.heading = Rydych wedi ychwanegu {0} gosodiad
@@ -1386,6 +1387,10 @@ error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei 
 
 # CATERING OPERATION OR LETTING DETAILS
 #######################################
+cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busnes
+concessionDetails.heading = Rhowch fanylion y consesiwn
+lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
+lettingOtherPartOfPropertyDetails.heading = Rhowch fanylion y tenant
 cateringOperationOrLettingAccommodationDetails.heading = Provide the business''s details
 concessionDetails.heading = Provide the concession''s details
 concessionDetails.address.lookupPageHeading = What is the concession''s property address?
@@ -1400,13 +1405,13 @@ lettingOtherPartOfPropertyDetails.address.lookupPageHeading = What is the tenant
 lettingOtherPartOfPropertyDetails.address.selectPageHeading = Choose the tenant''s address
 lettingOtherPartOfPropertyDetails.address.confirmPageHeading = Check the tenant''s address
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
-label.operatorName = Operator''s name
-label.lettingOperatorName = Tenant''s name
-label.tradingName = Trading name
-label.typeOfBusiness = Describe the type of business
-label.lettingTypeOfBusiness = Description of letting
-hint.typeOfBusiness = For example, bed and breakfast, hotel, restaurant.
-hint.concessionTypeOfBusiness = For example, a restaurant, or leisure facilities.
+label.operatorName = Enw’r gweithredwr
+label.lettingOperatorName = Enw''r tenant
+label.tradingName = Enw masnachu
+label.typeOfBusiness = Disgrifiwch y math o fusnes
+label.lettingTypeOfBusiness = Disgrifiad o’r hyn sydd ar osod
+hint.typeOfBusiness = Er enghraifft, gwely a brecwast, gwesty, bwyty
+hint.concessionTypeOfBusiness = Er enghraifft, bwyty neu gyfleusterau hamdden
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
 hint.lettingTypeOfBusiness6015 = For example, a billboard or a telephone mast.
 label.correspondenceAddress = Cyfeiriad gohebu
@@ -1420,16 +1425,16 @@ error.lettingTypeOfBusiness.maxLength = Mae''n rhaid i''r disgrifiad o''r gosodi
 
 #BELOW IS FOR FORM 6030
 error.operatorName6030.required = Enter the name of the person or company operating the business
-label.howBusinessPropertyIsUsed = Describe how the property is used
-hint.describeBusiness = For example, a tea room or car wash.
+label.howBusinessPropertyIsUsed = Disgrifiwch sut mae’r eiddo’n cael ei ddefnyddio
+hint.describeBusiness = Er enghraifft, ystafell de neu le golchi ceir.
 error.howBusinessPropertyIsUsed.required = Enter a description of the property use
 error.howBusinessPropertyIsUsed.maxLength = Property use description must be 50 characters or fewer
 
 # CATERING OPERATION OR LETTING ACCOMMODATION RENT DETAILS
 ##########################################################
-cateringOperationOrLettingAccommodationRentDetails.heading = Annual rent for {0}
+cateringOperationOrLettingAccommodationRentDetails.heading = Rhent blynyddol ar gyfer {0}
 cateringOperationOrLettingAccommodationRentDetails.title = Annual rent for separate business
-lettingOtherPartOfPropertyRentDetails.heading = Annual rent for {0}
+lettingOtherPartOfPropertyRentDetails.heading = Rhent blynyddol ar gyfer {0}
 lettingOtherPartOfPropertyRentDetails.title = Annual rent for tenant
 label.annualRent = Taliad rhent blynyddol ac eithrio TAW
 label.dateInput = Pa bryd y penodwyd y swm hwn?
@@ -1444,15 +1449,15 @@ error.sharedResponsibilities.required = Tell us how the responsibilities are sha
 rent.received.from.heading = Rent received from {0}
 rent.received.from.excluding.VAT = Taliad rhent blynyddol ac eithrio TAW
 rent.received.from.error = Enter the rent received
-rent.received.from.confirm = I confirm this payment was included in the turnover figures
+rent.received.from.confirm = Rwy’n cadarnhau yr oedd y taliad hwn wedi’i gynnwys yn y ffigurau trosiant
 rent.received.from.confirm.error = Please confirm this payment was included in the turnover figures
 
 
 # CALCULATING THE RENT (6015/6016 0NLY)
-calculating.the.rent.for.heading = Calculating the rent for {0}
-calculating.the.rent.for.explain = Explain how the income received figure was calculated – for example, 10% of the total takings
+calculating.the.rent.for.heading = Cyfrifo’r rhent ar gyfer {0}
+calculating.the.rent.for.explain = Eglurwch sut y cyfrifwyd ffigur yr incwm a gafwyd – er enghraifft, 10% o gyfanswm y derbyniadau
 calculating.the.rent.for.explain.error = Please explain how the income received figure was calculated
-calculating.the.rent.for.label = When was the rent fixed at its current rate?
+calculating.the.rent.for.label = Pryd cafodd y rhent ei benodi ar ei gyfradd bresennol?
 calculating.the.rent.for.error = Enter the date when the annual rent was fixed
 
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
@@ -1895,7 +1900,7 @@ accommodation.addedMaximumAccommodationUnits.link1 = Check or update the {0} acc
 accommodation.exceededMaxUnits.label = I confirm that the VOA will contact me about the details I was unable to declare.
 error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
 error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
-accommodation.removeLastUnit.heading = Are you sure you want to remove ''{0}''?
+accommodation.removeLastUnit.heading = A ydych yn siŵr eich bod am dynnu ''{0}''?
 accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ''{0}'' you will be returned to the start of this section.
 error.accommodation.removeLastUnit.required = Select yes if you would like to remove the only accommodation unit
 accommodation.CYA.heading = Check your answers - accommodation details
@@ -3615,28 +3620,28 @@ maxOf5Lettings.error = Please confirm that you understand the VOA will contact y
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
-checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers – franchises or lettings
-checkYourAnswersAboutConcessionsOrLettings.heading = Check your answers – concessions or lettings
-checkYourAnswersAboutConcessionsOrLettings6045.heading = Check your answers – concessions franchises or lettings
-checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
-checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
-checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings = Franchises or lettings?
+checkYourAnswersAboutFranchiseOrLettings.heading = Gwiriwch eich atebion – masnachfreintiau neu osodiadau
+checkYourAnswersAboutConcessionsOrLettings.heading = Gwiriwch eich atebion – consesiynau neu osodiadau
+checkYourAnswersAboutConcessionsOrLettings6045.heading = Gwiriwch eich atebion – gonsesiynau, masnachfreintiau neu osodiadau
+checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Incwm rhent
+checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Incwm rhent?
+checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings = Masnachfreintiau neu osodiadau?
 checkYourAnswersAboutFranchiseOrLettings.6045.lettings = Income from concessions, franchise or lettings?
 checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
 checkYourAnswersAboutFranchiseOrLettings.separateBusiness = Separate business run from the property?
-checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading = Lettings
+checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading = Gosodiadau
 checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Letting other parts of the property?
-checkYourAnswersAboutFranchiseOrLettings.operatorCount = Business {0}
+checkYourAnswersAboutFranchiseOrLettings.operatorCount = Busnes {0}
 checkYourAnswersAboutFranchiseOrLettings.operatorName = Name and address
-checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Letting {0}
-checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant''s details
-checkYourAnswersAboutFranchiseOrLettings.businessOperatorName = Business details
-checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
+checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Gosodiad {0}
+checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Manylion y tenant
+checkYourAnswersAboutFranchiseOrLettings.businessOperatorName = Fanylion y busnes
+checkYourAnswersAboutFranchiseOrLettings.annualRent = Rhent blynyddol
 checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover = Included in turnover
 checkYourAnswersAboutFranchiseOrLettings.rentNotIncluded = Not included in turnover
-checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated = How rent was calculated
-checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Fixed on {0}
-checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Included in rent
+checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated = Sut y cyfrifwyd y rhent
+checkYourAnswersAboutFranchiseOrLettings.dateSumFixed = Yn sefydlog ar {0}
+checkYourAnswersAboutFranchiseOrLettings.itemsInRent = Wedi’i gynnwys yn y rhent
 checkYourAnswersAboutFranchiseOrLettings.addBusiness = Add or remove business
 checkYourAnswersAboutFranchiseOrLettings.addedBusiness = You have added {0} business
 checkYourAnswersAboutFranchiseOrLettings.addedBusinessPlural = You have added {0} businesses
@@ -3647,12 +3652,12 @@ checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenan
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
 checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = Rydych wedi ychwanegu {0} gosodiad
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
-checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Concession or franchise fee
+checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Ffi y consesiwn neu’r fasnachfraint
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
-cya.rentalIncomeList.heading = You have added 1 source of rental income
-cya.rentalIncomeList.plural.heading = You have added {0} sources of rental income
-cya.concessionOrFranchise.operatorNumber = Concession or franchise {0}
-cya.concessionOrFranchise.operatorDetails = Operator’s details
+cya.rentalIncomeList.heading = Rydych wedi ychwanegu 1 ffynhonnell incwm rhent
+cya.rentalIncomeList.plural.heading = Rydych wedi ychwanegu {0} ffynhonnell incwm rhent
+cya.concessionOrFranchise.operatorNumber = Consesiwn neu fasnachfraint {0}
+cya.concessionOrFranchise.operatorDetails = Manylion y gweithredwr
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Gwiriwch eich atebion – eich prydles neu eich cytundeb
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
