@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.cateringAddressMapping
 import models.submissions.aboutfranchisesorlettings.BusinessDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
