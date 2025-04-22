@@ -21,7 +21,7 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import stub.StubSessionRepo
 import utils.TestBaseSpec
-import views.html.taskList
+import views.html.taskList.taskList
 
 class TaskListSpec extends TestBaseSpec {
 

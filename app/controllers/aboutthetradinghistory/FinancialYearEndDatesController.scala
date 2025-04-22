@@ -54,7 +54,7 @@ class FinancialYearEndDatesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+      .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val occupationAndAccounting          = aboutTheTradingHistory.occupationAndAccountingInformation.get
         val financialYearEnd: Seq[LocalDate] =
           request.sessionData.forType match {
@@ -82,7 +82,7 @@ class FinancialYearEndDatesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
       .filter(isTurnOverNonEmpty(_))
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         continueOrSaveAsDraft[Seq[LocalDate]](
           financialYearEndDatesForm(Some(newFinancialYears(occupationAndAccounting))),

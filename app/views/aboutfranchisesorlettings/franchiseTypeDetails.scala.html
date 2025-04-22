@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -27,7 +28,9 @@
 )
 
 
-@(theForm: Form[?], index: Int, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], index: Int, backLink: String)(implicit request: SessionRequest[AnyContent], messages: Messages)
+
+@forType = @{ request.sessionData.forType }
 
 @T6015 = @{forType == FOR6015 || forType == FOR6016}
 
@@ -49,7 +52,7 @@
 @layout(
     pageHeading = pageHeading,
     showSection = true,
-    summary = Some(summary),
+    summary = Some(request.sessionData.toSummary),
     sectionName = sectionName,
     backLinkUrl = backLink,
     theForm = theForm,
@@ -60,12 +63,6 @@
 
         @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", if(T6015) "tradingName"  else "operatorName", labelClasses = "govuk-!-font-weight-bold")
         @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = if(T6015) "concessionTypeOfBusiness" else "typeOfBusiness")
-        <p class="govuk-body"><b>@messages("label.correspondenceAddress")</b></p>
-        @includes.textInput(govukInput, theForm, "cateringAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
-        @includes.textInput(govukInput, theForm, "cateringAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
-        @includes.textInput(govukInput, theForm, "cateringAddress.town", "govuk-input--width-10", "town", formGroupClasses = "address-field-three address-fields")
-        @includes.textInput(govukInput, theForm, "cateringAddress.county", "govuk-input--width-10", "county", optional = true, formGroupClasses = "address-field-four address-fields")
-        @includes.textInput(govukInput, theForm, "cateringAddress.postcode", "govuk-input--width-5", "postcode", formGroupClasses = "address-field-postcode")
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 }

@@ -42,4 +42,7 @@ object AnswersYesNo extends NamedEnumSupport[AnswersYesNo] {
   def apply(answerYes: Boolean): AnswersYesNo =
     if (answerYes) AnswerYes else AnswerNo
 
+  extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes
+
+  extension (bool: Boolean) def toAnswer = if bool then AnswerYes else AnswerNo
 }

@@ -19,66 +19,62 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutthetradinghistory.FinancialYearsForm.financialYearsForm
+import form.aboutthetradinghistory.CheckYourAnswersAccountingInfoForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import navigation.AboutTheTradingHistoryNavigator
-import navigation.identifiers.FinancialYearsPageId
+import navigation.identifiers.CheckYourAnswersAccountingInfoPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.financialYears
 import util.AccountingInformationUtil.backLinkToFinancialYearEndDates
+import views.html.aboutthetradinghistory.checkYourAnswersAccountingInfo as CheckYourAnswersAccountingInfoView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class FinancialYearsController @Inject() (
+class CheckYourAnswersAccountingInfoController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutTheTradingHistoryNavigator,
-  financialYearsView: financialYears,
+  theView: CheckYourAnswersAccountingInfoView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repository: SessionRepo
 )(implicit val ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("FinancialYears")
-
     Ok(
-      financialYearsView(
+      theView(
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.isFinancialYearsCorrect)
-          .fold(financialYearsForm)(financialYearsForm.fill),
-        getBackLink
+          .fold(theForm)(theForm.fill),
+        backLinkUrl
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[Boolean](
-      financialYearsForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          financialYearsView(
+          theView(
             formWithErrors,
-            getBackLink
+            backLinkUrl
           )
         ),
       data =>
         val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(isFinancialYearsCorrect = Some(data)))
-
-        session
+        repository
           .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(FinancialYearsPageId, updatedData).apply(updatedData)))
+          .map(_ => Redirect(navigator.nextPage(CheckYourAnswersAccountingInfoPageId, updatedData).apply(updatedData)))
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def backLinkUrl(implicit request: SessionRequest[AnyContent]): String =
     backLinkToFinancialYearEndDates(navigator)
-
-}

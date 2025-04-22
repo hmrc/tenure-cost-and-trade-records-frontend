@@ -57,6 +57,9 @@ object TurnoverForm {
 
     Form {
       expectedNumberOfFinancialYears match {
+        case 0 =>
+          mapping("" -> optional(text))(_ => Seq.empty[TurnoverSection])(_ => Some(None))
+
         case 1 =>
           mapping(
             "0" -> yearMappings.head

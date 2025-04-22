@@ -24,17 +24,18 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object FranchiseTypeDetailsForm {
 
-  val franchiseTypeDetailsForm: Form[BusinessDetails] = Form(
+  val theForm = Form[BusinessDetails](
     mapping(
-      "operatorName"    -> default(text, "").verifying(
+      "operatorName"   -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName.required"),
         maxLength(50, "error.operatorName.maxLength")
       ),
-      "typeOfBusiness"  -> default(text, "").verifying(
+      "typeOfBusiness" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.typeOfBusiness.required"),
         maxLength(50, "error.typeOfBusiness.maxLength")
-      ),
-      "cateringAddress" -> cateringAddressMapping
-    )(BusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+      )
+    )((operatorName, typeOfBusiness) => BusinessDetails(operatorName, typeOfBusiness, None)) { obj =>
+      Some((obj.operatorName, obj.typeOfBusiness))
+    }
   )
 }

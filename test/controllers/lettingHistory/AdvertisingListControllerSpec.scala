@@ -164,7 +164,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.CheckYourAnswersController.show.url
+        redirectLocation(result).value shouldBe routes.CheckYourAnswersLettingHistoryController.show.url
       }
     }
   }

@@ -27,7 +27,7 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.libs.json.Writes
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
@@ -132,8 +132,8 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val result = financialYearEndController().submit(request)
 
       // Assert
-      status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(routes.FinancialYearEndDatesSummaryController.show().url)
+      status(result)                 shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
     "redirect to the next page when valid 6030 data is submitted" in {
       // Arrange
@@ -152,8 +152,8 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         financialYearEndController(FOR6030, Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
 
       // Assert
-      status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates-summary")
+      status(result)                 shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
     }
 
     "redirect to the next page when valid 6020 data is submitted" in {
@@ -173,8 +173,8 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         financialYearEndController(FOR6020, Some(prefilledAboutYourTradingHistory6020)).submit(sessionRequest)
 
       // Assert
-      status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/financial-year-end-dates-summary")
+      status(result)                 shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
     }
 
     "redirect to the next page when valid 6045 data is submitted" in {
@@ -193,10 +193,8 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val result =
         financialYearEndController(session6045.forType, session6045.aboutTheTradingHistory).submit(sessionRequest)
 
-      status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(
-        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-      )
+      status(result)                 shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
     }
 
     "redirect to the next page when valid 6048 data is submitted" in {
@@ -215,10 +213,8 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val result =
         financialYearEndController(session6048.forType, session6048.aboutTheTradingHistory).submit(sessionRequest)
 
-      status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(
-        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-      )
+      status(result)                 shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
     }
 
     "redirect to the next page when valid 6076 data is submitted" in {
@@ -237,10 +233,8 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val result =
         financialYearEndController(session6076.forType, session6076.aboutTheTradingHistory).submit(sessionRequest)
 
-      status(result)           shouldBe SEE_OTHER
-      redirectLocation(result) shouldBe Some(
-        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-      )
+      status(result)                 shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
     }
   }
 

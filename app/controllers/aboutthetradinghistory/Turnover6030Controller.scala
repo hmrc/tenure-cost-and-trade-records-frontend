@@ -48,7 +48,7 @@ class Turnover6030Controller @Inject() (
     audit.sendChangeLink("Turnover6030")
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+      .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val numberOfColumns = aboutTheTradingHistory.turnoverSections6030.size
 
         Ok(
@@ -64,7 +64,7 @@ class Turnover6030Controller @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         val numberOfColumns = aboutTheTradingHistory.turnoverSections6030.size
         continueOrSaveAsDraft[Seq[TurnoverSection6030]](
           turnoverForm6030(numberOfColumns, financialYearEndDates(aboutTheTradingHistory)),

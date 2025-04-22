@@ -142,13 +142,13 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
       "reply 303 redirect to the next page" in new ControllerFixture(
         lettingPartOfPropertyDetails = oneLettingPartOfPropertyDetails
       ) {
-        val result = controller.addressLookupCallback(0, "123")(fakeRequest)
+        val result = controller.addressLookupCallback(0, "confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.LettingPartOfPropertyDetailsRentController.show(0).url
 
         val id = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
-        id.getValue shouldBe "123"
+        id.getValue shouldBe "confirmedAddress"
 
         val session  = captor[Session]
         verify(repository, once).saveOrUpdate(session)(any, any)

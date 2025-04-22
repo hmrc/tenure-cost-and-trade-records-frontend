@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import models.submissions.common.AnswersYesNo
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
-import models.pages.Summary
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours

@@ -49,7 +49,7 @@ class TurnoverController @Inject() (
 
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Redirect(routes.AboutYourTradingHistoryController.show())) { aboutTheTradingHistory =>
+      .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
         Ok(
           turnoverView(
@@ -64,7 +64,7 @@ class TurnoverController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show()))) { aboutTheTradingHistory =>
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         val numberOfColumns = aboutTheTradingHistory.turnoverSections.size
         continueOrSaveAsDraft[Seq[TurnoverSection]](
           turnoverForm(numberOfColumns, financialYearEndDates(aboutTheTradingHistory)),

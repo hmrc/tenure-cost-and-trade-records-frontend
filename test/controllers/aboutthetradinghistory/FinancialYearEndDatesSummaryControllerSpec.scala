@@ -92,7 +92,9 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
           ) // aboutYourTradingHistory6010YesSession
         val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.FinancialYearsController.show.url)
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+        )
       }
 
       "return to CYA " in {
@@ -198,7 +200,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
 
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearsController.show.url
+          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
         )
       }
 
@@ -237,7 +239,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
 
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearsController.show.url
+          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
         )
       }
 

@@ -16,7 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentalIncomeListForm.theForm

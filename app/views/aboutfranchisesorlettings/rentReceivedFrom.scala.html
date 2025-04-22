@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -36,20 +37,20 @@
 )
 
 
-@(theForm: Form[?], index: Int, operatorName: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], index: Int, operatorName: String, backLinkUrl: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 @layout(
     pageHeading = messages("rent.received.from.heading", operatorName) ,
     showSection = true,
     showH1 = false,
-    summary = Some(summary),
+    summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutTheFranchiseConcessions"),
-    backLinkUrl = controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(index)).url,
+    backLinkUrl = backLinkUrl,
     theForm = theForm
 ) {
     @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.submit(index)) {
 
-            <h1 class="govuk-heading-l">@messages("rent.received.from.heading", operatorName)</h1>
+        <h1 class="govuk-heading-l">@messages("rent.received.from.heading", operatorName)</h1>
 
         @govukInput(Input(
             id = "annualRent",

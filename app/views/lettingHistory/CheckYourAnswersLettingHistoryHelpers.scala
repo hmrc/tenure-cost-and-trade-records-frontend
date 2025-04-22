@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views.lettingHistory.checkYourAnswers
+package views.lettingHistory
 
 import actions.SessionRequest
 import controllers.lettingHistory.routes
@@ -22,13 +22,13 @@ import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
 import play.api.i18n.Messages
 import play.api.mvc.{AnyContent, Call}
 import util.DateUtilLocalised
-import views.includes.cards.*
-import views.includes.summary.*
+import views.includes.cards.{CardData, CardEntry}
+import views.includes.summary.SummaryEntry
 
 import java.time.{LocalDate, MonthDay}
 import scala.collection.mutable
 
-object Helpers:
+object CheckYourAnswersLettingHistoryHelpers:
 
   def permanentResidentsCardsData(
     fragment: String

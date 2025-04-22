@@ -17,7 +17,6 @@
 package models.submissions.lettingHistory
 
 import models.Session
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
 import play.api.libs.json.{Format, Json}
 
@@ -150,6 +149,4 @@ object LettingHistory
       sectionCompleted <- lettingHistory.sectionCompleted
     yield sectionCompleted
 
-  given Format[LettingHistory]                   = Json.format
-  extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes
-  extension (bool: Boolean) def toAnswer         = if bool then AnswerYes else AnswerNo
+  given Format[LettingHistory] = Json.format

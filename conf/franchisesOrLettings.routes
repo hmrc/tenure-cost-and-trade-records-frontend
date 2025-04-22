@@ -9,6 +9,7 @@ POST         /type-of-income                                        controllers.
 
 GET          /franchise-type-details                                controllers.aboutfranchisesorlettings.FranchiseTypeDetailsController.show(idx: Int)
 POST         /franchise-type-details                                controllers.aboutfranchisesorlettings.FranchiseTypeDetailsController.submit(idx: Int)
+GET          /franchise-type-details-callback                       controllers.aboutfranchisesorlettings.FranchiseTypeDetailsController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET          /concession-type-details                               controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.show(idx: Int)
 POST         /concession-type-details                               controllers.aboutfranchisesorlettings.ConcessionTypeDetailsController.submit(idx: Int)
@@ -18,6 +19,7 @@ POST         /concession-type-fees                                  controllers.
 
 GET          /letting-type-details                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.show(idx: Int)
 POST         /letting-type-details                                  controllers.aboutfranchisesorlettings.LettingTypeDetailsController.submit(idx: Int)
+GET          /letting-type-details-callback                         controllers.aboutfranchisesorlettings.LettingTypeDetailsController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET         /rental-income-rent                                     controllers.aboutfranchisesorlettings.RentalIncomeRentController.show(idx: Int)
 POST        /rental-income-rent                                     controllers.aboutfranchisesorlettings.RentalIncomeRentController.submit(idx: Int)

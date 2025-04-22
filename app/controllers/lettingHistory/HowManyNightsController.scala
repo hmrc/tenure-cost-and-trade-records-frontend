@@ -53,7 +53,7 @@ class HowManyNightsController @Inject (
         nights           <- intendedLettings.nights
       yield freshForm.fill(nights)
 
-    Ok(theView(filledForm.getOrElse(freshForm), currentRentalPeriod, backLinkUrl))
+    Ok(theView(filledForm.getOrElse(freshForm), currentRentalPeriodHowManyNights, backLinkUrl))
   }
 
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>

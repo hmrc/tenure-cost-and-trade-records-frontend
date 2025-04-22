@@ -18,7 +18,6 @@ package views.aboutFranchisesOrLettings
 
 import actions.SessionRequest
 import form.aboutfranchisesorlettings.AddAnotherCateringOperationOrLettingAccommodationForm
-import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form

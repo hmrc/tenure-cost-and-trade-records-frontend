@@ -18,7 +18,7 @@
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.LettingHistory
 @import models.submissions.common.AnswersYesNo
-@import views.lettingHistory.checkYourAnswers.Helpers._
+@import views.lettingHistory.CheckYourAnswersLettingHistoryHelpers._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
 
@@ -129,7 +129,7 @@
 
     <div class="govuk-heading-m govuk-!-static-margin-bottom-9"></div>
 
-    @formWithCSRF(action = routes.CheckYourAnswersController.submit) {
+    @formWithCSRF(action = routes.CheckYourAnswersLettingHistoryController.submit) {
         @includes.checkYourAnswersRadioButtons(
             govukRadios,
             theForm,

@@ -127,7 +127,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with 
       "reply 303 redirect to the next page" in new ControllerFixture(
         Some(prefilledAboutFranchiseOrLettings)
       ) {
-        val result = controller.addressLookupCallback(0, "123")(fakeRequest)
+        val result = controller.addressLookupCallback(0, "confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
 

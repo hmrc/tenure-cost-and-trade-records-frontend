@@ -20,9 +20,9 @@ import utils.TestBaseSpec
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentIncludeTradeServicesInformationDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, PropertyUpdates, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentIncludeTradeServicesInformationDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
 import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, OutsideRepairsLandlord}
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -299,6 +299,42 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .apply(
           session
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
+        .show()
+    }
+
+    "return a function that goes to rented equipment details page when rent includes fixtures and fitting answer is Yes" in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          session6020.aboutLeaseOrAgreementPartOne.getOrElse(
+            AboutLeaseOrAgreementPartOne(rentIncludeFixturesAndFittingsDetails =
+              Some(RentIncludeFixturesAndFittingsDetails(AnswerYes))
+            )
+          )
+        )
+      )
+      navigator
+        .nextPage(RentFixtureAndFittingsPageId, session)
+        .apply(
+          session
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController
+        .show()
+    }
+
+    "return a function that goes to work carried out condition page when property updates answer is no" in {
+
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartThree = Some(
+          session6020.aboutLeaseOrAgreementPartThree.getOrElse(
+            AboutLeaseOrAgreementPartThree(propertyUpdates = Some(PropertyUpdates(AnswerNo)))
+          )
+        )
+      )
+      navigator
+        .nextPage(PropertyUpdatesId, session)
+        .apply(
+          session
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController
         .show()
     }
 

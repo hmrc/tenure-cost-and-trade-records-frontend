@@ -23,21 +23,21 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.aboutthetradinghistory.aboutYourTradingHistory
+import views.html.aboutthetradinghistory.whenDidYouFirstOccupy as WhenDidYouFirstOccupyView
 
 class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  val mockAboutYouNavigator: AboutTheTradingHistoryNavigator   = mock[AboutTheTradingHistoryNavigator]
-  val mockAboutYourTradingHistoryView: aboutYourTradingHistory = mock[aboutYourTradingHistory]
-  when(mockAboutYourTradingHistoryView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  val mockAboutYouNavigator: AboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
+  val mockWhenDidYouFirstOccupyView                          = mock[WhenDidYouFirstOccupyView]
+  when(mockWhenDidYouFirstOccupyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
 
-  val aboutYourTradingHistoryController = new AboutYourTradingHistoryController(
+  val aboutYourTradingHistoryController = new WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     mockAboutYouNavigator,
-    mockAboutYourTradingHistoryView,
+    mockWhenDidYouFirstOccupyView,
     preFilledSession,
     mockSessionRepo
   )

@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.taskList
+import views.html.taskList.taskList
 
 class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec {
 
@@ -31,7 +31,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
   val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
 
   val mockTaskListView = mock[taskList]
-  when(mockTaskListView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTaskListView()(any, any)).thenReturn(HtmlFormat.empty)
 
   val checkYourAnswersAboutTradingHistoryController = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),

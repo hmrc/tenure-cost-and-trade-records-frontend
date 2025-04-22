@@ -19,7 +19,7 @@ package controllers
 import actions.WithSessionRefiner
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import views.html.taskList
+import views.html.taskList.taskList
 
 import javax.inject.{Inject, Singleton}
 
@@ -32,7 +32,7 @@ class TaskListController @Inject() (
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(taskListView(request.sessionData.forType))
+    Ok(taskListView())
   }
 
 }
