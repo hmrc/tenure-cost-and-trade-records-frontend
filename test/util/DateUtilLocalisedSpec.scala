@@ -31,9 +31,9 @@ class DateUtilLocalisedSpec extends TestBaseSpec:
 
   private val ukTimezone          = ZoneId.of("Europe/London")
   val en: Locale                  = Locale.UK
-  val cy: Locale                  = new Locale("cy") // TODO: use Locale.of since Java 19+
-  val uk: Locale                  = new Locale("uk") // TODO: use Locale.of since Java 19+
-  val unavailableLocale: Locale   = new Locale("xy") // TODO: use Locale.of since Java 19+
+  val cy: Locale                  = new Locale("cy") // TODO: use Locale.of since Java 19
+  val uk: Locale                  = new Locale("uk") // TODO: use Locale.of since Java 19
+  val unavailableLocale: Locale   = new Locale("xy") // TODO: use Locale.of since Java 19
   private val testDate: LocalDate =
     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-04-17 12:34:56").toInstant.atZone(ukTimezone).toLocalDate
   private val dateEN              = "17 April 2025"
