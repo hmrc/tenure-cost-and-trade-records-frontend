@@ -131,21 +131,6 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
     yield Redirect(navigator.nextPage(NoReferenceNumberPageId, newSession).apply(newSession))
   }
 
-  private def sessionWithConfirmedAddress(address: RequestReferenceNumberAddress)(using session: Session) =
-    assert(session.requestReferenceNumberDetails.isDefined)
-    assert(session.requestReferenceNumberDetails.get.propertyDetails.isDefined)
-    session.copy(
-      requestReferenceNumberDetails = session.requestReferenceNumberDetails.map { detail =>
-        detail.copy(
-          propertyDetails = detail.propertyDetails.map { property =>
-            property.copy(
-              address = Some(address)
-            )
-          }
-        )
-      }
-    )
-
   extension (confirmed: AddressLookupConfirmedAddress)
     private def asRequestReferenceNumberAddress = RequestReferenceNumberAddress(
       confirmed.buildingNameNumber,
@@ -153,4 +138,19 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
       confirmed.town,
       confirmed.county,
       confirmed.postcode
+    )
+
+  private def sessionWithConfirmedAddress(addr: RequestReferenceNumberAddress)(using session: Session) =
+    assert(session.requestReferenceNumberDetails.isDefined)
+    assert(session.requestReferenceNumberDetails.get.propertyDetails.isDefined)
+    session.copy(
+      requestReferenceNumberDetails = session.requestReferenceNumberDetails.map { detail =>
+        detail.copy(
+          propertyDetails = detail.propertyDetails.map { property =>
+            property.copy(
+              address = Some(addr)
+            )
+          }
+        )
+      }
     )

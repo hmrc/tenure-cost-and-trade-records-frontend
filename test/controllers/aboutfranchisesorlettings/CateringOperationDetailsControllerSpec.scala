@@ -60,15 +60,10 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val html = contentAsJsoup(result)
-        html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
-        html.getElementById("operatorName").value                       shouldBe "Operator Name"
-        html.getElementById("typeOfBusiness").value                     shouldBe "Type of Business"
-        html.getElementById("cateringAddress.buildingNameNumber").value shouldBe "004"
-        html.getElementById("cateringAddress.street1").value            shouldBe "GORING ROAD"
-        html.getElementById("cateringAddress.town").value               shouldBe "GORING-BY-SEA, WORTHING"
-        html.getElementById("cateringAddress.county").value             shouldBe "West sussex"
-        html.getElementById("cateringAddress.postcode").value           shouldBe "BN12 4AX"
-        html.backLink                                                     should endWith("/catering-operation-or-letting-accommodation")
+        html.getElementsByTag("h1").first().text()  shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
+        html.getElementById("operatorName").value   shouldBe "Operator Name"
+        html.getElementById("typeOfBusiness").value shouldBe "Type of Business"
+        html.backLink                                 should endWith("/catering-operation-or-letting-accommodation")
       }
       "reply 200 with the HTML form 6015 and backLink to /concession-or-franchise" in new ControllerFixture(FOR6015) {
         val result = controller.show(index = Some(2))(fakeGetRequest)

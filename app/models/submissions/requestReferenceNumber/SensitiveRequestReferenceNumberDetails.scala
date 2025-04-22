@@ -22,12 +22,14 @@ import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveRequestReferenceNumberDetails(
   requestReferenceNumberPropertyDetails: Option[SensitiveRequestReferenceNumberPropertyDetails] = None,
-  requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None
+  requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None,
+  requestReferenceNumberCheckYourAnswers: Option[RequestReferenceNumberCheckYourAnswers] = None
 ) extends Sensitive[RequestReferenceNumberDetails] {
 
   override def decryptedValue: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     requestReferenceNumberPropertyDetails.map(_.decryptedValue),
-    requestReferenceContactDetails
+    requestReferenceContactDetails,
+    requestReferenceNumberCheckYourAnswers
   )
 }
 
@@ -38,6 +40,7 @@ object SensitiveRequestReferenceNumberDetails {
   def apply(requestReferenceNumber: RequestReferenceNumberDetails): SensitiveRequestReferenceNumberDetails =
     SensitiveRequestReferenceNumberDetails(
       requestReferenceNumber.propertyDetails.map(SensitiveRequestReferenceNumberPropertyDetails(_)),
-      requestReferenceNumber.contactDetails
+      requestReferenceNumber.contactDetails,
+      requestReferenceNumber.checkYourAnswers
     )
 }

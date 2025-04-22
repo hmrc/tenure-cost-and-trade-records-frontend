@@ -65,7 +65,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
         index,
         "lettingDetails",
         "lettingOtherPartOfPropertyDetails",
-        getBackLink(index),
+        backLink(index),
         request.sessionData.toSummary,
         request.sessionData.forType
       )
@@ -83,7 +83,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
               index,
               "lettingDetails",
               "lettingOtherPartOfPropertyDetails",
-              getBackLink(index),
+              backLink(index),
               request.sessionData.toSummary,
               request.sessionData.forType
             )
@@ -123,7 +123,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
                               config = AddressLookupConfig(
                                 lookupPageHeadingKey = "lettingOtherPartOfPropertyDetails.address.lookupPageHeading",
                                 selectPageHeadingKey = "lettingOtherPartOfPropertyDetails.address.selectPageHeading",
-                                confirmPageLabelKey = "lettingOtherPartOfPropertyDetails.address.confirmPageHeading",
+                                confirmPageLabelKey = "lettingOtherPartOfPropertyDetails.address.selectPageHeading",
                                 offRampCall = routes.LettingOtherPartOfPropertyDetailsController.addressLookupCallback(
                                   updatedSectionIndex
                                 )
@@ -147,33 +147,29 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   private def sessionWithLettingAddress(idx: Int, address: LettingAddress)(using session: Session) =
     assert(session.aboutFranchisesOrLettings.isDefined)
     assert(session.aboutFranchisesOrLettings.get.lettingSections.lift(idx).isDefined)
+    def patchOne(a: AboutFranchisesOrLettings): LettingSection =
+      a.lettingSections(idx)
+        .copy(
+          lettingOtherPartOfPropertyInformationDetails = a
+            .lettingSections(idx)
+            .lettingOtherPartOfPropertyInformationDetails
+            .copy(
+              lettingAddress = Some(address)
+            )
+        )
+
     session.copy(
-      aboutFranchisesOrLettings = session.aboutFranchisesOrLettings.map { d =>
-        d.copy(
-          lettingSections = d.lettingSections.patch(
-            idx,
-            Seq(
-              d.lettingSections(idx)
-                .copy(
-                  lettingOtherPartOfPropertyInformationDetails = d
-                    .lettingSections(idx)
-                    .lettingOtherPartOfPropertyInformationDetails
-                    .copy(
-                      lettingAddress = Some(address)
-                    )
-                )
-            ),
-            1
-          )
+      aboutFranchisesOrLettings = session.aboutFranchisesOrLettings.map { a =>
+        a.copy(
+          lettingSections = a.lettingSections.patch(idx, Seq(patchOne(a)), 1)
         )
       }
     )
 
-  def getBackLink(maybeIndex: Option[Int]) =
+  private def backLink(maybeIndex: Option[Int]) =
     maybeIndex match {
-      case Some(index) if index > 0 =>
-        controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(index - 1).url
-      case _                        => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show().url
+      case Some(index) if index > 0 => routes.AddAnotherLettingOtherPartOfPropertyController.show(index - 1).url
+      case _                        => routes.LettingOtherPartOfPropertyController.show().url
     }
 
   extension (confirmed: AddressLookupConfirmedAddress)

@@ -29,5 +29,5 @@ class LettingHistoryNavigator @Inject() (audit: Audit)
     with ForwardNavigation
     with RentalPeriodSupport:
 
-  val checkYourAnswerCall = routes.CheckYourAnswersController.show
+  val checkYourAnswerCall = routes.CheckYourAnswersLettingHistoryController.show
   val taskListCall        = controllers.routes.TaskListController.show().withFragment("letting-history")
