@@ -154,14 +154,6 @@ object MappingSupport {
     "postcode"           -> postcode
   )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def requestReferenceNumberAddressMapping: Mapping[RequestReferenceNumberAddress] = mapping(
-    "buildingNameNumber" -> validateBuildingNameNumber,
-    "street1"            -> optional(validateAddressLineTwo),
-    "town"               -> validateTown,
-    "county"             -> optional(validateCounty),
-    "postcode"           -> nonEmptyTextOr("requestReferenceNumberAddress.postcode", postcode, "error.postcode.required")
-  )(RequestReferenceNumberAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
-
   def landlordAddressMapping: Mapping[LandlordAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
@@ -185,14 +177,6 @@ object MappingSupport {
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
   )(BusinessAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-  def lettingOtherPartAddressMapping: Mapping[LettingAddress] = mapping(
-    "buildingNameNumber" -> validateBuildingNameNumber,
-    "street1"            -> optional(validateAddressLineTwo),
-    "town"               -> validateTown,
-    "county"             -> optional(validateCounty),
-    "postcode"           -> nonEmptyTextOr("lettingAddress.postcode", postcode, "error.postcode.required")
-  )(LettingAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def lettingPartOfPropertyAddressMapping: Mapping[LettingAddress] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,

@@ -20,6 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.Session
+import models.submissions.common.AnswerYes
 import navigation.identifiers.{UltimatelyResponsibleBusinessInsurancePageId, *}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -72,6 +73,30 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+        .show()
+    }
+
+    "return a function that goes to work carried out condition page when property updates answer is no123" in {
+
+      val session = session6048.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          session6048.aboutLeaseOrAgreementPartTwo.getOrElse(
+            AboutLeaseOrAgreementPartTwo(payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes)))
+          )
+        )
+      )
+      navigator
+        .nextPage(PayCapitalSumId, session)
+        .apply(
+          session
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController
+        .show()
+    }
+
+    "return a function that goes to does rent include fixture and fittings  when is parking rent paid separately has been completed123" in {
+      navigator
+        .nextPage(PayCapitalSumDetailsId, session6048)
+        .apply(session6048) shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
         .show()
     }
 

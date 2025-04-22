@@ -18,52 +18,58 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import controllers.FORDataCaptureController
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord, OperatorDetails}
+import models.Session
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, IncomeRecord, LettingAddress, LettingIncomeRecord, OperatorDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.lettingTypeDetails
+import views.html.aboutfranchisesorlettings.lettingTypeDetails as LettingTypeDetailsView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future.successful
 
 @Singleton
 class LettingTypeDetailsController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  view: lettingTypeDetails,
+  theView: LettingTypeDetailsView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  addressLookupConnector: AddressLookupConnector,
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with AddressLookupSupport(addressLookupConnector)
+    with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[OperatorDetails] = for {
-      requestedIndex <- Some(index)
-      allRecords     <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-      existingRecord <- allRecords.lift(requestedIndex)
-      lettingRecord  <- existingRecord match {
-                          case letting: LettingIncomeRecord => letting.operatorDetails
-                          case _                            => None
-                        }
-    } yield lettingRecord
     audit.sendChangeLink("LettingTypeDetails")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
+        rentalIncome              <- aboutFranchisesOrLettings.rentalIncome
+        incomeRecord              <- rentalIncome.lift(index)
+        operatorDetails           <- incomeRecord match {
+                                       case letting: LettingIncomeRecord => letting.operatorDetails
+                                       case _                            => None
+                                     }
+      yield theForm.fill(operatorDetails)
 
     Ok(
-      view(
-        existingDetails.fold(theForm)(theForm.fill),
+      theView(
+        filledForm.getOrElse(freshForm),
         index,
-        calculateBackLink(index),
-        request.sessionData.toSummary,
-        request.sessionData.forType
+        backLink(index)
       )
     )
   }
@@ -73,40 +79,104 @@ class LettingTypeDetailsController @Inject() (
       theForm,
       formWithErrors =>
         BadRequest(
-          view(
+          theView(
             formWithErrors,
             idx,
-            calculateBackLink(idx),
-            request.sessionData.toSummary,
-            request.sessionData.forType
+            backLink(idx)
           )
         ),
-      data => {
-        val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
-          if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
-            val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
-              records.updated(idx, records(idx).asInstanceOf[LettingIncomeRecord].copy(operatorDetails = Some(data)))
-            }
-            aboutFranchisesOrLettings.copy(
-              rentalIncome = updatedRentalIncome,
-              rentalIncomeIndex = idx
-            )
-          } else {
-            aboutFranchisesOrLettings
-          }
-        }(request)
-
-        session.saveOrUpdate(updatedSession).map { _ =>
-          Redirect(navigator.nextPage(LettingTypeDetailsId, updatedSession).apply(updatedSession))
-        }
-      }
+      formData =>
+        given Session = request.sessionData
+        for
+          (newSession, updatedIndex) <- successful(sessionWithOperatorDetails(formData, idx))
+          _                          <- repository.saveOrUpdate(newSession)
+          redirectResult             <- redirectToAddressLookupFrontend(
+                                          config = AddressLookupConfig(
+                                            lookupPageHeadingKey = "lettingDetails.address.lookupPageHeading",
+                                            selectPageHeadingKey = "lettingDetails.address.selectPageHeading",
+                                            confirmPageLabelKey = "lettingDetails.address.confirmPageHeading",
+                                            offRampCall = routes.LettingTypeDetailsController.addressLookupCallback(
+                                              updatedIndex
+                                            )
+                                          )
+                                        )
+        yield redirectResult
     )
   }
 
-  private def calculateBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+  private def sessionWithOperatorDetails(formData: OperatorDetails, idx: Int)(using
+    request: SessionRequest[AnyContent]
+  ): (Session, Int) =
+    var updatedIndex   = 0
+    val updatedSession = updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
+      if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
+        val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
+          records.updated(
+            idx,
+            records(idx) match {
+              case r: LettingIncomeRecord => r.copy(operatorDetails = Some(formData))
+              case _                      => throw new IllegalStateException("Unknown income record type")
+            }
+          )
+        }
+        updatedIndex = idx
+        aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
+      } else {
+        aboutFranchisesOrLettings
+      }
+    }(request)
+    (updatedSession, updatedIndex)
+
+  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress <- getConfirmedAddress(id)
+      businessAddress   = confirmedAddress.asLettingAddress
+      newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
+      _                <- repository.saveOrUpdate(newSession)
+    yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
+  }
+
+  private def backLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
     request.getQueryString("from") match {
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _           => controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(Some(idx)).url
     }
-}
+
+  extension (confirmed: AddressLookupConfirmedAddress)
+    def asLettingAddress = LettingAddress(
+      confirmed.buildingNameNumber,
+      confirmed.street1,
+      confirmed.town,
+      confirmed.county,
+      confirmed.postcode
+    )
+
+  private def newSessionWithLettingAddress(idx: Int, addr: LettingAddress)(using session: Session) =
+    assert(session.aboutFranchisesOrLettings.isDefined)
+    assert(session.aboutFranchisesOrLettings.get.rentalIncome.isDefined)
+    assert(session.aboutFranchisesOrLettings.get.rentalIncome.get.lift(idx).isDefined)
+
+    def patchOne(record: IncomeRecord): IncomeRecord =
+      record match
+        case r: LettingIncomeRecord =>
+          assert(r.operatorDetails.isDefined)
+          r.copy(
+            operatorDetails = r.operatorDetails.map(d =>
+              d.copy(
+                lettingAddress = Some(addr)
+              )
+            )
+          )
+        case _                      => record
+
+    session.copy(
+      aboutFranchisesOrLettings = session.aboutFranchisesOrLettings.map { a =>
+        a.copy(
+          rentalIncome = a.rentalIncome.map { records =>
+            records.patch(idx, Seq(patchOne(records(idx))), 1)
+          }
+        )
+      }
+    )

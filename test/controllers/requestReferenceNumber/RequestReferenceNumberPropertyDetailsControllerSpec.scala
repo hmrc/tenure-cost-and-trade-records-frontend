@@ -154,13 +154,13 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           )
         )
       ) {
-        val result = controller.addressLookupCallback("123")(fakeRequest)
+        val result = controller.addressLookupCallback("confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RequestReferenceNumberContactDetailsController.show().url
 
         val id = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
-        id.getValue shouldBe "123"
+        id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session)(any, any)

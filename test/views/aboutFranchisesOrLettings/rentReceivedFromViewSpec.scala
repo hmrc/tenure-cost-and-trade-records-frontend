@@ -16,10 +16,13 @@
 
 package views.aboutFranchisesOrLettings
 
+import actions.SessionRequest
 import form.aboutfranchisesorlettings.RentReceivedFromForm
-import models.pages.Summary
+import models.ForType.FOR6010
+import models.Session
 import models.submissions.aboutfranchisesorlettings.RentReceivedFrom
 import play.api.data.Form
+import play.api.mvc.AnyContent
 import views.behaviours.QuestionViewBehaviours
 
 class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] {
@@ -27,21 +30,37 @@ class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] 
   override val form =
     RentReceivedFromForm.rentReceivedFromForm(messages)
 
+  val fakeSessionRequest = SessionRequest[AnyContent](
+    sessionData = Session(
+      referenceNumber,
+      FOR6010,
+      prefilledAddress,
+      "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+      isWelsh = false
+    ),
+    /*
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo)
+     */
+    request = fakeGetRequest
+  )
+
   def createView = () =>
     rentReceivedFromView(
       form,
       0,
       "separate business",
-      Summary("99996010001")
-    )(fakeRequest, messages)
+      Some("/backLinkUrl")
+    )(fakeSessionRequest, messages)
 
   def createViewUsingForm = (form: Form[RentReceivedFrom]) =>
     rentReceivedFromView(
       form,
       0,
       "separate business",
-      Summary("99996010001")
-    )(fakeRequest, messages)
+      Some("/backLinkUrl")
+    )(fakeSessionRequest, messages)
 
   "Catering operation rent details view" should {
 
@@ -54,9 +73,7 @@ class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] 
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
-        .show(idx = Some(0))
-        .url
+      backlinkUrl shouldBe "/backLinkUrl"
     }
 
     "Section caption is visible" in {

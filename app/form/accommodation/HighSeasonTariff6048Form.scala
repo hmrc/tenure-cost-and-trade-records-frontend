@@ -19,7 +19,6 @@ package form.accommodation
 import actions.SessionRequest
 import controllers.lettingHistory.RentalPeriodSupport
 import form.DateMappings.{betweenDates, requiredDateMapping}
-import form.lettingHistory.RentalPeriodForm.effectiveRentalPeriod
 import models.submissions.accommodation.HighSeasonTariff
 import play.api.data.Form
 import play.api.data.Forms.mapping

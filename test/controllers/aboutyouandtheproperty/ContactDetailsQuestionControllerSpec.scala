@@ -136,13 +136,13 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
     }
     "retrieving the confirmed address" should {
       "reply 303 redirect to the next page" in new ControllerFixture {
-        val result = controller.addressLookupCallback("123")(fakeRequest)
+        val result = controller.addressLookupCallback("confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AlternativeContactDetailsController.show().url
 
         val id = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
-        id.getValue shouldBe "123"
+        id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session)(any, any)

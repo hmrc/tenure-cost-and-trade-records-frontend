@@ -126,7 +126,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
         Some("id")
       )
       when(addressLookupConnector.getConfirmedAddress(any[String])).thenReturn(successful(lookup))
-      val res    = aboutYourLandlordController().addressLookupCallback("123")(fakeRequest)
+      val res    = aboutYourLandlordController().addressLookupCallback("confirmedAddress")(fakeRequest)
       status(res) shouldBe SEE_OTHER
     }
 
@@ -138,7 +138,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       )
       given HeaderCarrier  = any[HeaderCarrier]
       when(addressLookupConnector.getConfirmedAddress(any[String])).thenReturn(successful(confirmedAddress))
-      val res              = aboutYourLandlordController().addressLookupCallback("123")(fakeRequestFromCYA)
+      val res              = aboutYourLandlordController().addressLookupCallback("confirmedAddress")(fakeRequestFromCYA)
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url

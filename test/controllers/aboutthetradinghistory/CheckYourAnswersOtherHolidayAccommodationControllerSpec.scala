@@ -25,7 +25,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.taskList
+import views.html.taskList.taskList
 
 class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSpec {
 
@@ -33,7 +33,7 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
   val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockTaskListView                    = mock[taskList]
   val sessionRequest                      = SessionRequest(aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes, fakeRequest)
-  when(mockTaskListView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTaskListView()(any, any)).thenReturn(HtmlFormat.empty)
 
   def checkYourAnswersOtherHolidayAccommodationController(
     aboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045

@@ -24,13 +24,13 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
-import views.html.taskList
+import views.html.taskList.taskList
 
 class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
 
   val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockTaskListView                    = mock[taskList]
-  when(mockTaskListView.apply(any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTaskListView()(any, any)).thenReturn(HtmlFormat.empty)
 
   val checkYourAnswersTentingPitchesController = new CheckYourAnswersTentingPitchesController(
     stubMessagesControllerComponents(),

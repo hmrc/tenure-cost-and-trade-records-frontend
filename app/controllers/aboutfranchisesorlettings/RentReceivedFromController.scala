@@ -16,17 +16,18 @@
 
 package controllers.aboutfranchisesorlettings
 
+import actions.SessionRequest
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentReceivedFromForm.rentReceivedFromForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, IncomeRecord, RentReceivedFrom}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, FranchiseIncomeRecord, IncomeRecord, RentReceivedFrom}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentReceivedFromPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.rentReceivedFrom
+import views.html.aboutfranchisesorlettings.rentReceivedFrom as RentReceivedFromView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -36,13 +37,13 @@ class RentReceivedFromController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  rentReceivedFromView: rentReceivedFrom,
+  theView: RentReceivedFromView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with FranchiseAndLettingSupport
-    with I18nSupport {
+    with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {
@@ -53,11 +54,11 @@ class RentReceivedFromController @Inject() (
     audit.sendChangeLink("RentReceivedFrom")
 
     Ok(
-      rentReceivedFromView(
+      theView(
         existingDetails.fold(theForm)(theForm.fill),
         index,
         getOperatorName(index),
-        request.sessionData.toSummary
+        backLinkUrl(index)
       )
     )
   }
@@ -67,21 +68,21 @@ class RentReceivedFromController @Inject() (
       theForm,
       formWithErrors =>
         BadRequest(
-          rentReceivedFromView(
+          theView(
             formWithErrors,
             index,
             getOperatorName(index),
-            request.sessionData.toSummary
+            backLinkUrl(index)
           )
         ),
-      data => {
+      formData => {
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
           if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(index))) {
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(
                 index,
                 records(index) match {
-                  case concession: Concession6015IncomeRecord => concession.copy(rent = Some(data))
+                  case concession: Concession6015IncomeRecord => concession.copy(rent = Some(formData))
                   case _                                      => throw new IllegalStateException("Unknown income record type")
                 }
               )
@@ -90,11 +91,20 @@ class RentReceivedFromController @Inject() (
           } else aboutFranchisesOrLettings
         }(request)
 
-        session.saveOrUpdate(updatedSession).map { _ =>
+        repository.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentReceivedFromPageId, updatedSession).apply(updatedSession))
 
         }
       }
     )
   }
-}
+
+  private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
+    for
+      aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
+      rentalIncome              <- aboutFranchisesOrLettings.rentalIncome
+      incomeRecord              <- rentalIncome.lift(index)
+    yield incomeRecord match
+      case r: FranchiseIncomeRecord      => routes.FranchiseTypeDetailsController.show(index).url
+      case r: Concession6015IncomeRecord => routes.FranchiseTypeDetailsController.show(index).url
+      case _                             => routes.CateringOperationDetailsController.show(Some(index)).url

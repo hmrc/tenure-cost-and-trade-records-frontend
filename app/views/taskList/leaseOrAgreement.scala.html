@@ -1,0 +1,129 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import models.ForType.*
+
+
+@(forType: ForType, isLeaseHolder: Boolean, leaseOrAgreementNumber: Int, section3Completed: Option[String], section4Completed: Option[String], section5Completed: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+
+@session = @{ request.sessionData }
+
+  @if(isLeaseHolder) {
+   <li>
+    <h2 id="leaseOrAgreement" class="app-task-list__section">
+      <span class="app-task-list__section-number">@leaseOrAgreementNumber. </span>
+      @messages("label.section.aboutYourLeaseOrTenure")
+    </h2>
+    <ul class="app-task-list__items">
+     @if(forType == FOR6020) {
+      @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading ",
+       controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+       section4Completed.isEmpty
+      )
+     }
+     @if(forType == FOR6076) {
+      @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+       controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+       section3Completed.isEmpty
+      )
+     } else {
+      @if(forType == FOR6020) {
+       @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+        section5Completed,
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+        session.aboutLeaseOrAgreementPartThree.flatMap(_.typeOfTenure).isEmpty
+       )
+      } else {
+       @includes.taskListItem("about-your-landlord", "checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading",
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(),
+        section5Completed,
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
+        if(forType == FOR6048) section3Completed.isEmpty else section4Completed.isEmpty
+       )
+      }
+     }
+
+
+     @if(forType == FOR6010 || forType == FOR6015 || forType == FOR6016 || forType == FOR6030) {
+      @includes.taskListItem("lease-or-agreement-details", "checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading",
+       controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+      )
+     }
+
+     @if(forType == FOR6010 || forType == FOR6015 || forType == FOR6016 || forType == FOR6030 || forType == FOR6045 || forType == FOR6046 || forType == FOR6048  || forType == FOR6076) {
+      @includes.taskListItem(
+       "leaseback-arrangement", if(forType == FOR6076){"checkYourAnswersAboutYourLeaseOrTenure.yourLease.heading"} else {"checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading"},
+       controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(),
+       section5Completed,
+       if(forType == FOR6076) {
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) } else {session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent)},
+       if(forType == FOR6076) {
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord).isEmpty } else {session.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails).isEmpty}
+      )
+     } else {
+      @if(!(Seq(FOR6020, FOR6048) contains forType)) {
+       @includes.taskListItem("current-annual-rent", "checkYourAnswersAboutYourLeaseOrTenure.yourRent.heading",
+        controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(),
+        section5Completed,
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent),
+        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+       )
+      }
+     }
+     @if(forType == FOR6020){
+      @includes.taskListItem("lease-start-date-and-rent-paid", "taskList.aboutLeaseOrAgreement.leaseStartDateAndRentPaid",
+       controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord).isEmpty
+      )
+     }
+
+     @if(forType == FOR6010 || forType == FOR6015 || forType == FOR6016 || forType == FOR6020 || forType == FOR6030 || forType == FOR6045 || forType == FOR6046 || forType == FOR6048) {
+      @includes.taskListItem("included-in-your-rent", "checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading",
+       controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent).isEmpty
+      )
+
+      @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
+       if(forType == FOR6048){controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()} else {controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()},
+       section5Completed,
+       if(forType == FOR6048){session.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed)} else {session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails)},
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
+      )
+
+      @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
+       controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
+       section5Completed,
+       session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
+      )
+     }
+
+    </ul>
+   </li>
+  }

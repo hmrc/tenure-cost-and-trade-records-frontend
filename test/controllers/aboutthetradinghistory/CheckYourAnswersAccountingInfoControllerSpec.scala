@@ -27,19 +27,19 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class FinancialYearsControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  def financialYearsController(
+  def controller(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6045,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ) = new FinancialYearsController(
+  ) = new CheckYourAnswersAccountingInfoController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
-    financialYearsView,
+    checkYourAnswersAccountingInfoView,
     preEnrichedActionRefiner(
       aboutTheTradingHistory = aboutTheTradingHistory,
       aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
@@ -48,9 +48,9 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  "FinancialYearsController" should {
+  "CheckYourAnswersAccountingInfoController" should {
     "return 200" in {
-      val result = financialYearsController().show()(FakeRequest())
+      val result = controller().show()(FakeRequest())
       status(result) shouldBe Status.OK
     }
 
@@ -58,20 +58,20 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
       val session6048    = aboutYourTradingHistory6048YesSession
       val sessionRequest = SessionRequest(session6048, FakeRequest())
 
-      val result = financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).show()(
+      val result = controller(session6048.aboutTheTradingHistory, session6048.forType).show()(
         sessionRequest
       )
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
-      val result = financialYearsController().show()(FakeRequest())
+      val result = controller().show()(FakeRequest())
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = financialYearsController().show()(FakeRequest(GET, "/path?from=CYA"))
+      val result = controller().show()(FakeRequest(GET, "/path?from=CYA"))
       contentAsString(result) should include(
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       )
@@ -79,7 +79,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
 
     "SUBMIT /" should {
       "return redirect 400 for empty request" in {
-        val res = financialYearsController().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+        val res = controller().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -95,7 +95,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
             aboutYourTradingHistory6045YesSession,
             requestWithForm
           ) // aboutYourTradingHistory6010YesSession
-        val result          = financialYearsController().submit()(sessionRequest)
+        val result          = controller().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.StaticCaravansController.show().url)
       }
@@ -111,7 +111,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
             aboutYourTradingHistory6045YesSession,
             requestWithForm
           )
-        val result          = financialYearsController().submit()(sessionRequest)
+        val result          = controller().submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
           aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
@@ -127,7 +127,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
         val sessionRequest  = SessionRequest(session6045, requestWithForm)
 
         val result =
-          financialYearsController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+          controller(session6045.aboutTheTradingHistory, session6045.forType).submit()(
             sessionRequest
           )
 
@@ -147,7 +147,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
         val sessionRequest  = SessionRequest(session6045, requestWithForm)
 
         val result =
-          financialYearsController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+          controller(session6045.aboutTheTradingHistory, session6045.forType).submit()(
             sessionRequest
           )
 
@@ -166,7 +166,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
         val sessionRequest  = SessionRequest(session6048, requestWithForm)
 
         val result =
-          financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+          controller(session6048.aboutTheTradingHistory, session6048.forType).submit()(
             sessionRequest
           )
 
@@ -186,7 +186,7 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
         val sessionRequest  = SessionRequest(session6048, requestWithForm)
 
         val result =
-          financialYearsController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+          controller(session6048.aboutTheTradingHistory, session6048.forType).submit()(
             sessionRequest
           )
 
@@ -199,5 +199,3 @@ class FinancialYearsControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

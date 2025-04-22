@@ -117,7 +117,7 @@ abstract class CaravansTrading6045Controller(
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.AboutYourTradingHistoryController.show())))(action)
+      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
 
   private def getSavedAnswers(turnoverSections6045: Seq[TurnoverSection6045]): Seq[CaravansTrading6045] =
     turnoverSections6045.map(section => getSavedAnswer(section).getOrElse(CaravansTrading6045()))

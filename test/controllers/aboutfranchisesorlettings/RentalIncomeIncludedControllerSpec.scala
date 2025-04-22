@@ -79,7 +79,7 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec {
       checkboxes.get(3).text                         shouldBe messages(
         "checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs"
       )
-      html.select(".govuk-checkboxes__divider").text shouldBe messages("label.or")
+      html.select(".govuk-checkboxes__divider").text shouldBe messages("checkbox.divider")
       checkboxes.get(4).text                         shouldBe messages(
         "checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese"
       )
