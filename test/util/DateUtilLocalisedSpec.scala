@@ -19,7 +19,7 @@ package util
 import play.api.i18n.{Lang, Messages, MessagesApi}
 import utils.TestBaseSpec
 
-import java.time.{LocalDate, ZoneId}
+import java.time.LocalDate
 import java.util.Locale
 
 /**
@@ -27,7 +27,6 @@ import java.util.Locale
   */
 class DateUtilLocalisedSpec extends TestBaseSpec:
 
-  private val ukTimezone          = ZoneId.of("Europe/London")
   val en: Locale                  = Locale.UK
   val cy: Locale                  = Locale.of("cy")
   val uk: Locale                  = Locale.of("uk")
