@@ -34,7 +34,6 @@ import models.submissions.aboutyouandtheproperty.*
 import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
 import models.submissions.notconnected.PastConnectionType
-import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
 import models.AnnualRent
 import play.api.data.Forms.{boolean, default, mapping, optional, seq, text}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
