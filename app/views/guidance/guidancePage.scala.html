@@ -31,6 +31,28 @@
                 sections = Seq.empty,
                 startCall = controllers.routes.LoginController.show
             )
+        case FOR6020 =>
+            GuidancePage(
+                contentsItems = Seq(
+                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
+                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
+                    ("#lettings"                   , "label.section.lettings"),
+                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information"     , "label.section.additionalInformation"),
+                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                ),
+                sections = Seq(
+                    () =>  sections.FOR6048.connectionToTheProperty(),
+                    () =>  sections.FOR6020.aboutYouAndTheProperty(),
+                    () =>  sections.FOR6020.tradingHistory(),
+                    () =>  sections.FOR6020.lettings(),
+                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
+                    () =>  sections.shared.additionalInformation()
+                ),
+                startCall = controllers.lettingHistory.routes.HasPermanentResidentsController.show
+            )
         case FOR6048 =>
             GuidancePage(
                 contentsItems = Seq(
