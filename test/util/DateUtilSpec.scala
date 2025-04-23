@@ -19,19 +19,21 @@ package util
 import org.scalatestplus.play.PlaySpec
 import util.DateUtil.localDateHelpers
 
-import java.text.SimpleDateFormat
-import java.time.{LocalDate, Year, ZoneId}
-import java.util.Date
+import java.time.format.DateTimeFormatter
+import java.time.{LocalDate, ZoneId, ZonedDateTime}
+import java.util.Locale
 
 /**
   * @author Yuriy Tumakha
   */
 class DateUtilSpec extends PlaySpec:
 
-  private val ukTimezone               = ZoneId.of("Europe/London")
-  private val testDate: Date           = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-02-12 12:34:56")
-  private val testLocalDate: LocalDate = testDate.toInstant.atZone(ukTimezone).toLocalDate
-  private val testMinusYears           = Year.now.getValue - 2025
+  private val ukTimezone                   = ZoneId.of("Europe/London")
+  private val nowInUK                      = ZonedDateTime.now(ukTimezone)
+  private val testLocalDate: LocalDate     = LocalDate.of(2024, 2, 12)
+  private val dayMonthYearExampleFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
+  private val monthYearExampleFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
+  private val dayMonthExampleFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)
 
   "localDateHelpers" should {
     "convert LocalDate to Epoch Milliseconds using ukTimezone" in {
@@ -49,14 +51,14 @@ class DateUtilSpec extends PlaySpec:
 
   "DateUtil" should {
     "return example DayMonthYear" in {
-      DateUtil.exampleDayMonthYear(testMinusYears) mustBe "22 4 2025"
+      DateUtil.exampleDayMonthYear(0) mustBe nowInUK.format(dayMonthYearExampleFormatter)
     }
 
     "return example MonthYear" in {
-      DateUtil.exampleMonthYear(testMinusYears) mustBe "4 2025"
+      DateUtil.exampleMonthYear(0) mustBe nowInUK.format(monthYearExampleFormatter)
     }
 
     "return example DayMonth" in {
-      DateUtil.exampleDayMonth(testMinusYears) mustBe "22 4"
+      DateUtil.exampleDayMonth(0) mustBe nowInUK.format(dayMonthExampleFormatter)
     }
   }

@@ -19,9 +19,7 @@ package util
 import play.api.i18n.{Lang, Messages, MessagesApi}
 import utils.TestBaseSpec
 
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.ZoneId
 import java.util.Locale
 
 /**
@@ -29,13 +27,11 @@ import java.util.Locale
   */
 class DateUtilLocalisedSpec extends TestBaseSpec:
 
-  private val ukTimezone          = ZoneId.of("Europe/London")
   val en: Locale                  = Locale.UK
   val cy: Locale                  = Locale.of("cy")
   val uk: Locale                  = Locale.of("uk")
   val unavailableLocale: Locale   = Locale.of("xy")
-  private val testDate: LocalDate =
-    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-04-17 12:34:56").toInstant.atZone(ukTimezone).toLocalDate
+  private val testDate: LocalDate = LocalDate.of(2025, 4, 17)
   private val dateEN              = "17 April 2025"
   private val dateCY              = "17 Ebrill 2025"
   private val dateMonthAbbrEN     = "17 Apr 2025"
