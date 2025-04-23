@@ -19,7 +19,6 @@ package util
 import org.scalatestplus.play.PlaySpec
 import util.DateUtil.localDateHelpers
 
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import java.util.Locale
@@ -29,11 +28,9 @@ import java.util.Locale
   */
 class DateUtilSpec extends PlaySpec:
 
-  private val ukTimezone               = ZoneId.of("Europe/London")
-  private val nowInUK                  = ZonedDateTime.now(ukTimezone)
-  private val testLocalDate: LocalDate =
-    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-02-12 12:34:56").toInstant.atZone(ukTimezone).toLocalDate
-
+  private val ukTimezone                   = ZoneId.of("Europe/London")
+  private val nowInUK                      = ZonedDateTime.now(ukTimezone)
+  private val testLocalDate: LocalDate     = LocalDate.of(2024, 2, 12)
   private val dayMonthYearExampleFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
   private val monthYearExampleFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
   private val dayMonthExampleFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)
