@@ -37,6 +37,14 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       status(result)          shouldBe NOT_FOUND
       contentAsString(result) shouldBe "Invalid forType: invalid"
     }
+    "be handling GET /FOR6020 and reply 200 with the guidance page" in new ControllerFixture {
+      val result = controller.show("FOR6020")(fakeGetRequest)
+      status(result)            shouldBe OK
+      contentType(result).value shouldBe HTML
+      charset(result).value     shouldBe UTF_8.charset
+      val page = contentAsJsoup(result)
+      page.heading shouldBe "guidance.FOR6020.heading"
+    }
   }
 
   trait ControllerFixture:

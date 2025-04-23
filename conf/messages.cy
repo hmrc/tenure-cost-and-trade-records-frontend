@@ -275,6 +275,8 @@ guidance.sections.FOR6048.connectionToTheProperty.li4 = if the declaration is be
 guidance.sections.FOR6048.connectionToTheProperty.p1 = If the property is vacant, but you receive rental income from lettings such as phone masts, advertising billboards or car parking, you''ll need those tenancy agreements.
 guidance.sections.FOR6048.connectionToTheProperty.p2 = If the property is vacant, we need to know when it became vacant.
 
+guidance.sections.FOR6020.aboutYouAndTheProperty.li2 = how your property is used
+
 guidance.sections.FOR6048.aboutYouAndTheProperty.li1 = your contact details
 guidance.sections.FOR6048.aboutYouAndTheProperty.li2 = details of the property's availability and completed commercial lets of up to 28 nights
 guidance.sections.FOR6048.aboutYouAndTheProperty.li3 = if parts of the property are unavailable for rent because they are used by your family
@@ -282,6 +284,24 @@ guidance.sections.FOR6048.aboutYouAndTheProperty.p1 = Records containing details
 guidance.sections.FOR6048.aboutYouAndTheProperty.li4 = available for lets of up to 28 nights
 guidance.sections.FOR6048.aboutYouAndTheProperty.li5 = occupied for lets of up to 28 nights
 guidance.sections.FOR6048.aboutYouAndTheProperty.p2 = If you have stopped letting the property commercially, we need to know the date when you last hosted a paying guest.
+
+guidance.sections.FOR6020.lettings.li1 = if any parts of the property are used as a permanent residence by tenants or employees
+guidance.sections.FOR6020.lettings.li1 = automated teller machines (ATMs)
+guidance.sections.FOR6020.lettings.li2 = telecoms masts
+guidance.sections.FOR6020.lettings.li3 = advertising rights, such as billboards or hoardings
+guidance.sections.FOR6020.lettings.li4 = other commercial operations, such as electric vehicle charging points or a workshop
+guidance.sections.FOR6020.lettings.li5 = correspondence details of any tenants
+guidance.sections.FOR6020.lettings.li6 = how much rent you will receive
+guidance.sections.FOR6020.lettings.li7 = whether any rates, property insurance and inside or outside repairs are included in the rent
+
+guidance.sections.FOR6020.lettings.li1 = if any parts of the property are used as a permanent residence by tenants or employees
+guidance.sections.FOR6020.lettings.li1 = automated teller machines (ATMs)
+guidance.sections.FOR6020.lettings.li2 = telecoms masts
+guidance.sections.FOR6020.lettings.li3 = advertising rights, such as billboards or hoardings
+guidance.sections.FOR6020.lettings.li4 = other commercial operations, such as electric vehicle charging points or a workshop
+guidance.sections.FOR6020.lettings.li5 = correspondence details of any tenants
+guidance.sections.FOR6020.lettings.li6 = how much rent you will receive
+guidance.sections.FOR6020.lettings.li7 = whether any rates, property insurance and inside or outside repairs are included in the rent
 
 guidance.sections.FOR6048.lettingHistory.li1 = if any parts of the property are used as a permanent residence by tenants or employees
 guidance.sections.FOR6048.lettingHistory.li2 = if any parts of the property are used for commercial lets of 29 nights or longer
@@ -293,11 +313,27 @@ guidance.sections.FOR6048.lettingHistory.li7 = details of any commercial lets of
 guidance.sections.FOR6048.lettingHistory.li8 = URLs of the websites where you advertise, and any property reference number if known
 guidance.sections.FOR6048.lettingHistory.p1 = If you have stopped letting the property commercially, we need to know the date when you last hosted a paying guest.
 
+guidance.sections.FOR6048.lettingHistory.p1 = When the rental amount was fixed.
+guidance.sections.FOR6020.lettings.li6 = how much rent you will receive
+guidance.sections.FOR6020.lettings.li7 = whether any rates, property insurance and inside or outside repairs are included in the rent
+
 guidance.sections.FOR6048.accommodationDetails.li1 = the number and types of rooms you let out
 guidance.sections.FOR6048.accommodationDetails.li2 = when your high-season tariff is applied
 guidance.sections.FOR6048.accommodationDetails.li3 = what services are included with each letting
 guidance.sections.FOR6048.accommodationDetails.p1 = Details of your letting history, broken down into individual units if you have multiple units of self-catering holiday accommodation.
 guidance.sections.FOR6048.accommodationDetails.p2 = The start and end dates of your high-season tariff.
+
+guidance.sections.FOR6020.tradingHistory.li1 = You must declare details of the turnover of the business operating from the property.
+guidance.sections.FOR6020.tradingHistory.li3 = <b>Occupation and accounting information</b><br/>When you bought or took over the property, and your financial year end
+guidance.sections.FOR6020.tradingHistory.li4 = <b>Volume of retail fuel sold</b><br/>Volume of all retail fuel sold excluding bunkered fuel
+guidance.sections.FOR6020.tradingHistory.li5 = <b>Bunkered fuel</b><br/>Volume of any bunkered fuel sold, and the details of any accepted bunker fuel cards
+guidance.sections.FOR6020.tradingHistory.li6 = <b>Customer credit accounts</b><br/>Percentage of total fuel sales sold on customer credit accounts
+guidance.sections.FOR6020.tradingHistory.li7 = <b>Low-margin fuel cards</b><br/>Percentage of total fuel sales sold on low-margin fuel cards, and the details of any accepted low-margin fuel cards
+guidance.sections.FOR6020.tradingHistory.li8 = <b>Non-fuel turnover</b><br/>Turnover from any shop, car wash, jet wash, lottery sales, Paypoint or Payzone sales, and any other non-fuel turnover
+guidance.sections.FOR6020.tradingHistory.li9 = <b>Electric vehicle (EV) charging points</b><br/>The number of EV charging point spaces or bays operated by the business at the property
+guidance.sections.FOR6020.tradingHistory.p4 = When:
+guidance.sections.FOR6020.tradingHistory.li10 = you first occupied the property – we only need the month and year
+guidance.sections.FOR6020.tradingHistory.li11 = your financial year ends
 
 guidance.sections.FOR6048.tradingHistory.li1 = revenue your self-catering holiday accommodation business generates
 guidance.sections.FOR6048.tradingHistory.li2 = it costs to operate your business
@@ -1406,7 +1442,7 @@ lettingOtherPartOfPropertyDetails.address.selectPageHeading = Choose the tenant'
 lettingOtherPartOfPropertyDetails.address.confirmPageHeading = Check the tenant''s address
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Enw’r gweithredwr
-label.lettingOperatorName = Enw''r tenant
+label.lettingOperatorName = Enw’r tenant
 label.tradingName = Enw masnachu
 label.typeOfBusiness = Disgrifiwch y math o fusnes
 label.lettingTypeOfBusiness = Disgrifiad o’r hyn sydd ar osod
