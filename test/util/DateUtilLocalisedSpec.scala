@@ -27,10 +27,12 @@ import java.util.Locale
   */
 class DateUtilLocalisedSpec extends TestBaseSpec:
 
+  def localeOf(lang: String) = new Locale(lang) // TODO: use Locale.of when JDK21 become available in sm2 on Jenkins
+
   val en: Locale                  = Locale.UK
-  val cy: Locale                  = Locale.of("cy")
-  val uk: Locale                  = Locale.of("uk")
-  val unavailableLocale: Locale   = Locale.of("xy")
+  val cy: Locale                  = localeOf("cy")
+  val uk: Locale                  = localeOf("uk")
+  val unavailableLocale: Locale   = localeOf("xy")
   private val testDate: LocalDate = LocalDate.of(2025, 4, 17)
   private val dateEN              = "17 April 2025"
   private val dateCY              = "17 Ebrill 2025"

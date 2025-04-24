@@ -12,7 +12,6 @@ lazy val microservice = Project(appName, file("."))
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     maintainer := "voa.service.optimisation@digital.hmrc.gov.uk",
-    targetJvm := "jvm-21",
     libraryDependencies ++= AppDependencies.appDependencies,
     PlayKeys.playDefaultPort := defaultPort,
     scalacOptions += "-Wconf:src=routes/.*:s",
