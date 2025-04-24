@@ -20,7 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
-import models.submissions.common.AnswerNo
+import models.submissions.common.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -55,6 +55,15 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(UnknownIdentifier, session6045)
         .apply(session6045) shouldBe controllers.routes.LoginController.show
+    }
+
+    "return a function that goes to lease surrendered early page when disregarded addition has been completed no123" in {
+
+      navigator
+        .nextPage(IncentivesPaymentsConditionsId, session6045)
+        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController
+        .show()
+
     }
 
     "return a function that goes to connected to landlors page for 6045 when about your landlord has been completed" in {
@@ -174,13 +183,6 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(DoesRentPayablePageId, session6045)
         .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController
-        .show()
-    }
-
-    "return a function that goes to tenants additional disregarded page when incentive payments conditions has been completed " in {
-      navigator
-        .nextPage(IncentivesPaymentsConditionsId, session6045)
-        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController
         .show()
     }
 
