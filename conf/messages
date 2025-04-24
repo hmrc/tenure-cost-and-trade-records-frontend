@@ -247,6 +247,7 @@ hint.referenceNumber = For example, 1000001/101.
 # GUIDANCE
 ###############################
 guidance.section = Guidance
+guidance.FOR6010.heading = Completing VO 6010 request for rental information: public houses
 guidance.FOR6020.heading = Completing VO 6020 request for rental information: petrol filling stations (occupier)
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
 guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
@@ -260,8 +261,11 @@ guidance.sentence.recordsContaining = Records containing any:
 guidance.sentence.copyOfLeases = You should have a copy of any leases or franchise agreements which show:
 guidance.sentence.howMuch = How much:
 guidance.sentence.weNeedToKnow = We need to know:
+guidance.sentence.youMustDeclare = You must declare if you receive any rental income from:
 guidance.sentence.youShouldHave = You should have:
+guidance.sentence.youShouldHaveCopy = You should have a copy of any leases or franchise agreements which show:
 guidance.sentence.when = When:
+guidance.sentence.whenRental = When the rental amount was fixed.
 
 guidance.sections.shared.startingDeclaration.a2.shared.overview.h1 = Overview
 guidance.sections.shared.overview.p1 = The Valuation Office Agency (VOA) is responsible for valuing every non-domestic property in England and Wales. To do this, the VOA sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
@@ -282,7 +286,11 @@ guidance.sections.FOR6048.connectionToTheProperty.li4 = if the declaration is be
 guidance.sections.FOR6048.connectionToTheProperty.p1 = If the property is vacant, but you receive rental income from lettings such as phone masts, advertising billboards or car parking, you''ll need those tenancy agreements.
 guidance.sections.FOR6048.connectionToTheProperty.p2 = If the property is vacant, we need to know when it became vacant.
 
+guidance.sections.FOR6010.aboutYouAndTheProperty.li3 = details of your premises
+guidance.sections.FOR6010.aboutYouAndTheProperty.li4 = whether your licence requires you to sell any items supplied by a landlord
+
 guidance.sections.FOR6020.aboutYouAndTheProperty.li2 = how your property is used
+guidance.sections.FOR6010.aboutYouAndTheProperty.p1 = Your premises licence should contain all the information we’ll ask for.
 
 guidance.sections.FOR6048.aboutYouAndTheProperty.li1 = your contact details
 guidance.sections.FOR6048.aboutYouAndTheProperty.li2 = details of the property's availability and completed commercial lets of up to 28 nights
@@ -344,6 +352,33 @@ guidance.sections.FOR6020.tradingHistory.p4 = When:
 guidance.sections.FOR6020.tradingHistory.li10 = you first occupied the property – we only need the month and year
 guidance.sections.FOR6020.tradingHistory.li11 = your financial year ends
 
+guidance.sections.FOR6010.tradingHistory.li4 = <b>Drinks</b><br/>Any income from alcoholic and soft drinks, crisps and nuts
+guidance.sections.FOR6010.tradingHistory.li5 = <b>Food</b><br/>Any income from serving prepared snacks or meals
+guidance.sections.FOR6010.tradingHistory.li6 = <b>Other receipts</b><br/>Any other income such as admission charges, or the provision of camping pitches
+guidance.sections.FOR6010.tradingHistory.li7 = <b>Accommodation</b><br/>Income from letting rooms. If your business is listed as a lodge or hotel, you’ll also need to include the average occupancy rate
+
+guidance.sections.FOR6010.tradingHistory.p4 = When:
+guidance.sections.FOR6010.tradingHistory.li10 = you first occupied the property – we only need the month and year
+guidance.sections.FOR6010.tradingHistory.li11 = your financial year ends
+
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li1 = third party businesses operating from the property under a concession or franchise agreement
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li2 = letting other parts of the property, such as residential accommodation, car parking or phone masts
+guidance.sections.FOR6010.aboutFranchiseOrLettings.p1 = If you say you do not receive any rental income, you’ll be taken to the next section.
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li3 = correspondence details of any tenants
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li4 = how much rent you receive
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li5 = whether any rates, property insurance and inside or outside repairs are included in the rent
+
+guidance.sections.FOR6020.tradingHistory.li1 = You must declare details of the turnover of the business operating from the property.
+guidance.sections.FOR6020.tradingHistory.li3 = <b>Occupation and accounting information</b><br/>When you bought or took over the property, and your financial year end
+guidance.sections.FOR6020.tradingHistory.li4 = <b>Volume of retail fuel sold</b><br/>Volume of all retail fuel sold excluding bunkered fuel
+guidance.sections.FOR6020.tradingHistory.li5 = <b>Bunkered fuel</b><br/>Volume of any bunkered fuel sold, and the details of any accepted bunker fuel cards
+guidance.sections.FOR6020.tradingHistory.li6 = <b>Customer credit accounts</b><br/>Percentage of total fuel sales sold on customer credit accounts
+guidance.sections.FOR6020.tradingHistory.li7 = <b>Low-margin fuel cards</b><br/>Percentage of total fuel sales sold on low-margin fuel cards, and the details of any accepted low-margin fuel cards
+guidance.sections.FOR6020.tradingHistory.li8 = <b>Non-fuel turnover</b><br/>Turnover from any shop, car wash, jet wash, lottery sales, Paypoint or Payzone sales, and any other non-fuel turnover
+guidance.sections.FOR6020.tradingHistory.li9 = <b>Electric vehicle (EV) charging points</b><br/>The number of EV charging point spaces or bays operated by the business at the property
+guidance.sections.FOR6020.tradingHistory.p4 = When:
+guidance.sections.FOR6020.tradingHistory.li10 = you first occupied the property – we only need the month and year
+guidance.sections.FOR6020.tradingHistory.li11 = your financial year ends
 
 guidance.sections.FOR6048.tradingHistory.li1 = revenue your self-catering holiday accommodation business generates
 guidance.sections.FOR6048.tradingHistory.li2 = it costs to operate your business

@@ -275,7 +275,11 @@ guidance.sections.FOR6048.connectionToTheProperty.li4 = if the declaration is be
 guidance.sections.FOR6048.connectionToTheProperty.p1 = If the property is vacant, but you receive rental income from lettings such as phone masts, advertising billboards or car parking, you''ll need those tenancy agreements.
 guidance.sections.FOR6048.connectionToTheProperty.p2 = If the property is vacant, we need to know when it became vacant.
 
+guidance.sections.FOR6010.aboutYouAndTheProperty.li3 = details of your premises
+guidance.sections.FOR6010.aboutYouAndTheProperty.li4 = whether your licence requires you to sell any items supplied by a landlord
+
 guidance.sections.FOR6020.aboutYouAndTheProperty.li2 = how your property is used
+guidance.sections.FOR6010.aboutYouAndTheProperty.p1 = Your premises licence should contain all the information we’ll ask for.
 
 guidance.sections.FOR6048.aboutYouAndTheProperty.li1 = your contact details
 guidance.sections.FOR6048.aboutYouAndTheProperty.li2 = details of the property's availability and completed commercial lets of up to 28 nights
@@ -334,6 +338,22 @@ guidance.sections.FOR6020.tradingHistory.li9 = <b>Electric vehicle (EV) charging
 guidance.sections.FOR6020.tradingHistory.p4 = When:
 guidance.sections.FOR6020.tradingHistory.li10 = you first occupied the property – we only need the month and year
 guidance.sections.FOR6020.tradingHistory.li11 = your financial year ends
+
+guidance.sections.FOR6010.tradingHistory.li4 = <b>Drinks</b><br/>Any income from alcoholic and soft drinks, crisps and nuts
+guidance.sections.FOR6010.tradingHistory.li5 = <b>Food</b><br/>Any income from serving prepared snacks or meals
+guidance.sections.FOR6010.tradingHistory.li6 = <b>Other receipts</b><br/>Any other income such as admission charges, or the provision of camping pitches
+guidance.sections.FOR6010.tradingHistory.li7 = <b>Accommodation</b><br/>Income from letting rooms. If your business is listed as a lodge or hotel, you’ll also need to include the average occupancy rate
+
+guidance.sections.FOR6010.tradingHistory.p4 = When:
+guidance.sections.FOR6010.tradingHistory.li10 = you first occupied the property – we only need the month and year
+guidance.sections.FOR6010.tradingHistory.li11 = your financial year ends
+
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li1 = third party businesses operating from the property under a concession or franchise agreement
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li2 = letting other parts of the property, such as residential accommodation, car parking or phone masts
+guidance.sections.FOR6010.aboutFranchiseOrLettings.p1 = If you say you do not receive any rental income, you’ll be taken to the next section.
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li3 = correspondence details of any tenants
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li4 = how much rent you receive
+guidance.sections.FOR6010.aboutFranchiseOrLettings.li5 = whether any rates, property insurance and inside or outside repairs are included in the rent
 
 guidance.sections.FOR6048.tradingHistory.li1 = revenue your self-catering holiday accommodation business generates
 guidance.sections.FOR6048.tradingHistory.li2 = it costs to operate your business
