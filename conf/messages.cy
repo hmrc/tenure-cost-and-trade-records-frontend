@@ -275,7 +275,7 @@ guidance.sections.FOR6048.connectionToTheProperty.li4 = if the declaration is be
 guidance.sections.FOR6048.connectionToTheProperty.p1 = If the property is vacant, but you receive rental income from lettings such as phone masts, advertising billboards or car parking, you''ll need those tenancy agreements.
 guidance.sections.FOR6048.connectionToTheProperty.p2 = If the property is vacant, we need to know when it became vacant.
 
-guidance.sections.FOR6010.aboutYouAndTheProperty.li3 = details of your premises
+guidance.sections.FOR6010.aboutYouAndTheProperty.li3 = details of your premises licence
 guidance.sections.FOR6010.aboutYouAndTheProperty.li4 = whether your licence requires you to sell any items supplied by a landlord
 
 guidance.sections.FOR6020.aboutYouAndTheProperty.li2 = how your property is used
@@ -367,6 +367,11 @@ guidance.sections.FOR6048.tradingHistory.li6 = <b>Cost of sales</b><br/>Details 
 guidance.sections.FOR6048.tradingHistory.li7 = <b>Administrative costs</b><br/>Including subscriptions, telephone and broadband, booking agency fees, advertising and printing
 guidance.sections.FOR6048.tradingHistory.li8 = <b>Operational costs</b><br/>Including any utilities, laundry and cleaning, repairs and maintenance, TV licences, travelling expenses and other costs
 guidance.sections.FOR6048.tradingHistory.p4 = When your financial year ends.
+
+guidance.sections.FOR6011.yourLeaseOrAgreement.li2 = the current annual rent
+guidance.sections.FOR6011.yourLeaseOrAgreement.li3 = if the rent includes VAT
+guidance.sections.FOR6011.yourLeaseOrAgreement.li4 = when the rent was first paid
+guidance.sections.FOR6011.yourLeaseOrAgreement.li5 = when the lease will be reviewed. or when it expires, whichever is soonest
 
 guidance.sections.FOR6048.yourLeaseOrAgreement.p1 = If your business owns the property, or occupies the property on a permanent rent-free arrangement, you will not have to fill out this section.
 guidance.sections.FOR6048.yourLeaseOrAgreement.li1 = your landlord''s details
