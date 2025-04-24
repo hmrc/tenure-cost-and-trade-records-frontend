@@ -1,0 +1,41 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@()(implicit request: Request[AnyContent], messages: Messages)
+
+<h2 id="franchise-or-lettings" class="govuk-heading-m">@messages("label.section.aboutTheFranchiseConcessions")</h2>
+
+<h3 class="govuk-heading-s">@messages("guidance.sentence.whatYouWillBeAsked")</h3>
+<p class="govuk-body-s">@messages("guidance.sentence.youMustDeclare")</p>
+<ul class="govuk-body-s govuk-list govuk-list--bullet">
+    <li>@messages("guidance.sections.FOR6010.aboutFranchiseOrLettings.li1")</li>
+    <li>@messages("guidance.sections.FOR6010.aboutFranchiseOrLettings.li2")</li>
+</ul>
+<p class="govuk-body-s">@messages("guidance.sections.FOR6010.aboutFranchiseOrLettings.p1")</p>
+
+
+
+<h3 class="govuk-heading-s">@messages("guidance.sentence.whatYouWillNeed")</h3>
+<p class="govuk-body-s">@messages("guidance.sentence.youShouldHaveCopy")</p>
+<ul class="govuk-body-s govuk-list govuk-list--bullet">
+    <li>@messages("guidance.sections.FOR6010.aboutFranchiseOrLettings.li3")</li>
+    <li>@messages("guidance.sections.FOR6010.aboutFranchiseOrLettings.li4")</li>
+    <li>@messages("guidance.sections.FOR6010.aboutFranchiseOrLettings.li5")</li>
+</ul>
+
+
+<h3 class="govuk-heading-s">@messages("guidance.sentence.importantDates")</h3>
+<p class="govuk-body-s">@messages("guidance.sentence.whenRental")</p>
