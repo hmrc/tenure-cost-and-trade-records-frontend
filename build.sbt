@@ -1,5 +1,5 @@
 import org.irundaia.sass.Minified
-import uk.gov.hmrc.DefaultBuildSettings.{itSettings, targetJvm}
+import uk.gov.hmrc.DefaultBuildSettings.itSettings
 
 val defaultPort = 9526
 val appName     = "tenure-cost-and-trade-records-frontend"
