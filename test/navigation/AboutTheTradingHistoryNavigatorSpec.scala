@@ -711,6 +711,14 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show()
     }
 
+    "return a function that goes to CYA Other Holiday page when total site capacity page completed" in {
+      navigator
+        .nextPage(TotalSiteCapacityId, sessionAboutYou6048)
+        .apply(
+          sessionAboutYou6048
+        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
+    }
+
     "return a function that goes to TaskList trading history, when CYA for tenting pitches ready " in {
       navigator
         .nextPage(CheckYourAnswersTentingPitchesId, sessionAboutYou6045)
