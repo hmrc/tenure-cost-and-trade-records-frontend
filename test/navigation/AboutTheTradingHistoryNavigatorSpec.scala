@@ -687,6 +687,30 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()
     }
 
+    "return a function that goes to twin unit caravans owned by operator page when single caravans age page completed123" in {
+      navigator
+        .nextPage(IncomeExpenditureSummary6076Id, sessionAboutYou6076)
+        .apply(
+          sessionAboutYou6076
+        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    }
+
+    "return a function that goes to financial year end page when are you vat registered page completed" in {
+      navigator
+        .nextPage(AreYouVATRegisteredId, sessionAboutYou6048)
+        .apply(
+          sessionAboutYou6048
+        ) shouldBe controllers.aboutthetradinghistory.routes.FinancialYearEndController.show()
+    }
+
+    "return a function that goes to twin unit caravans owned by operator page when single caravans age page completed" in {
+      navigator
+        .nextPage(SingleCaravansAgeCategoriesId, sessionAboutYou6048)
+        .apply(
+          sessionAboutYou6048
+        ) shouldBe controllers.aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show()
+    }
+
     "return a function that goes to TaskList trading history, when CYA for tenting pitches ready " in {
       navigator
         .nextPage(CheckYourAnswersTentingPitchesId, sessionAboutYou6045)
