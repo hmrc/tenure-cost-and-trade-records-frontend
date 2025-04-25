@@ -243,6 +243,10 @@ hint.referenceNumber = Er enghraifft, 10000001/101.
 # GUIDANCE
 ###############################
 guidance.section = Guidance
+guidance.FOR6010.heading = Completing VO 6010 request for rental information: public houses
+guidance.FOR6011.heading = Completing VO 6011 request for rental information: pubs, licensed restaurants and wine bars (receipts only)
+guidance.FOR6015.heading = Completing VO 6015 request for rental information: hotels
+guidance.FOR6020.heading = Completing VO 6020 request for rental information: petrol filling stations (occupier)
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
 guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
 
@@ -354,6 +358,13 @@ guidance.sections.FOR6010.aboutFranchiseOrLettings.p1 = If you say you do not re
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li3 = correspondence details of any tenants
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li4 = how much rent you receive
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li5 = whether any rates, property insurance and inside or outside repairs are included in the rent
+
+guidance.sections.FOR6015.tradingHistory.li4 = <b>Turnover</b><br/>Any income from providing accommodation, food, drinks, and other services such as function room hire and leisure activities. Also include any income from any concession or franchise such as restaurants, or any lettings such as phone masts.
+guidance.sections.FOR6015.tradingHistory.li5 = <b>Cost of Sales</b><br/>Expenses incurred from providing accommodation, food, drinks, and other services such as function room hire and leisure activities.
+guidance.sections.FOR6015.tradingHistory.li6 = <b>Payroll costs</b><br/>Including any director’s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
+guidance.sections.FOR6015.tradingHistory.li7 = <b>Variable operating expenses</b><br/>Including: energy and utilities; cleaning and laundry; building maintenance and repairs; repairs and renewals of fixtures and equipment; advertising and marketing; administration and sundries; entertainment; and any other variable operating expenses.
+guidance.sections.FOR6015.tradingHistory.li8 = <b>Fixed operating expenses</b><br/>Including rent, business rates, insurance, loan interest, and depreciation.
+guidance.sections.FOR6015.tradingHistory.li9 = <b>Other costs</b><br/>Including any contributions to head office and any other costs not listed here.
 
 guidance.sections.FOR6048.tradingHistory.li1 = revenue your self-catering holiday accommodation business generates
 guidance.sections.FOR6048.tradingHistory.li2 = it costs to operate your business
