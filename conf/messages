@@ -252,6 +252,7 @@ guidance.FOR6011.heading = Completing VO 6011 request for rental information: pu
 guidance.FOR6015.heading = Completing VO 6015 request for rental information: hotels
 guidance.FOR6016.heading = Completing VO 6016 request for rental information: hotels and guesthouses
 guidance.FOR6020.heading = Completing VO 6020 request for rental information: petrol filling stations (occupier)
+guidance.FOR6030.heading = Completing VO 6030 request for rental information: receipts (general basic)
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
 guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
 
@@ -265,6 +266,7 @@ guidance.sentence.copyOfLeases = You should have a copy of any leases or franchi
 guidance.sentence.howMuch = How much:
 guidance.sentence.weNeedToKnow = We need to know:
 guidance.sentence.youMustDeclare = You must declare if you receive any rental income from:
+guidance.sentence.youMustDeclareRentalBusiness = You must declare if you receive any rental income from businesses operating:
 guidance.sentence.youShouldHave = You should have:
 guidance.sentence.youShouldHaveCopy = You should have a copy of any leases or franchise agreements which show:
 guidance.sentence.when = When:
@@ -294,6 +296,16 @@ guidance.sections.FOR6010.aboutYouAndTheProperty.li4 = whether your licence requ
 
 guidance.sections.FOR6020.aboutYouAndTheProperty.li2 = how your property is used
 guidance.sections.FOR6010.aboutYouAndTheProperty.p1 = Your premises licence should contain all the information we’ll ask for.
+
+guidance.sections.FOR6030.aboutYouAndTheProperty.li4 = if the organisation operating from the property is a charity
+guidance.sections.FOR6030.aboutYouAndTheProperty.li5 = if any separate companies carry out trading activities on the property, if the organisation operating from the property is a charity
+guidance.sections.FOR6030.aboutYouAndTheProperty.p1 = If the organisation operating from the property is a charity, and any separate companies carry out trading activities on the property, we need to know:
+guidance.sections.FOR6030.aboutYouAndTheProperty.li6 = the name of the company or companies involved
+guidance.sections.FOR6030.aboutYouAndTheProperty.li7 = details of any trading activity, for example selling goods in a gift shop, or refreshments in a café
+
+guidance.sections.FOR6030.tradingHistory.li4 = <b>Gross income</b><br/>All your income, excluding any payments received from concessions or franchises such as tearooms or carwashes, or from lettings such as car parks or phone masts.
+guidance.sections.FOR6030.tradingHistory.li5 = <b>Total visitor numbers</b><br/>Also include concessions and free entries. If the property is a car park, enter 0 in this section.
+
 
 guidance.sections.FOR6048.aboutYouAndTheProperty.li1 = your contact details
 guidance.sections.FOR6048.aboutYouAndTheProperty.li2 = details of the property's availability and completed commercial lets of up to 28 nights
