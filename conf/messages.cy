@@ -400,7 +400,7 @@ guidance.sections.FOR6048.yourLeaseOrAgreement.li8 = if applicable, details of a
 guidance.sections.FOR6048.yourLeaseOrAgreement.li9  = the current rent was first paid under the terms of the lease or agreement
 guidance.sections.FOR6048.yourLeaseOrAgreement.li10 = the current lease began
 guidance.sections.FOR6048.yourLeaseOrAgreement.li11 = the current lease was agreed or set
-guidance.sections.FOR6048.yourLeaseOrAgreement.li12 = the next rent revue is due, if applicable
+guidance.sections.FOR6048.yourLeaseOrAgreement.li12 = the next rent review is due, if applicable
 
 guidance.sections.shared.startingDeclaration.h1 = Starting your declaration
 guidance.sections.shared.startingDeclaration.p1 = It will be easier to complete your declaration if you have all the information listed on this page to hand. You must complete your declaration within 56 days of the date on your invitation letter.

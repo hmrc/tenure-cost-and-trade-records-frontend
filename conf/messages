@@ -252,6 +252,7 @@ guidance.FOR6011.heading = Completing VO 6011 request for rental information: pu
 guidance.FOR6015.heading = Completing VO 6015 request for rental information: hotels
 guidance.FOR6016.heading = Completing VO 6016 request for rental information: hotels and guesthouses
 guidance.FOR6020.heading = Completing VO 6020 request for rental information: petrol filling stations (occupier)
+guidance.FOR6030.heading = Completing VO 6030 request for rental information: receipts (general basic)
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
 guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
 
@@ -423,7 +424,7 @@ guidance.sections.FOR6048.yourLeaseOrAgreement.li8 = if applicable, details of a
 guidance.sections.FOR6048.yourLeaseOrAgreement.li9  = the current rent was first paid under the terms of the lease or agreement
 guidance.sections.FOR6048.yourLeaseOrAgreement.li10 = the current lease began
 guidance.sections.FOR6048.yourLeaseOrAgreement.li11 = the current lease was agreed or set
-guidance.sections.FOR6048.yourLeaseOrAgreement.li12 = the next rent revue is due, if applicable
+guidance.sections.FOR6048.yourLeaseOrAgreement.li12 = the next rent review is due, if applicable
 
 guidance.sections.shared.startingDeclaration.h1 = Starting your declaration
 guidance.sections.shared.startingDeclaration.p1 = It will be easier to complete your declaration if you have all the information listed on this page to hand. You must complete your declaration within 56 days of the date on your invitation letter.
