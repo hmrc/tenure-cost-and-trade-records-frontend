@@ -64,6 +64,14 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6020.heading"
     }
+    "be handling GET /FOR6030 and reply 200 with the guidance page" in new ControllerFixture {
+      val result = controller.show("FOR6030")(fakeGetRequest)
+      status(result)            shouldBe OK
+      contentType(result).value shouldBe HTML
+      charset(result).value     shouldBe UTF_8.charset
+      val page = contentAsJsoup(result)
+      page.heading shouldBe "guidance.FOR6030.heading"
+    }
     "be handling GET /FOR6048 and reply 200 with the guidance page" in new ControllerFixture {
       val result = controller.show("FOR6048")(fakeGetRequest)
       status(result)            shouldBe OK

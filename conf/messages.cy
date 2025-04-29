@@ -258,8 +258,12 @@ guidance.sentence.youMustTellUs = You must tell us:
 guidance.sentence.recordsContaining = Records containing any:
 guidance.sentence.howMuch = How much:
 guidance.sentence.weNeedToKnow = We need to know:
+guidance.sentence.youMustDeclare = You must declare if you receive any rental income from:
+guidance.sentence.youMustDeclareRentalBusiness = You must declare if you receive any rental income from businesses operating:
 guidance.sentence.youShouldHave = You should have:
+guidance.sentence.youShouldHaveCopy = You should have a copy of any leases or franchise agreements which show:
 guidance.sentence.when = When:
+guidance.sentence.whenRental = When the rental amount was fixed.
 
 guidance.sections.shared.startingDeclaration.a2.shared.overview.h1 = Overview
 guidance.sections.shared.overview.p1 = The Valuation Office Agency (VOA) is responsible for valuing every non-domestic property in England and Wales. To do this, the VOA sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
