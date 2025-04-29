@@ -253,6 +253,7 @@ guidance.FOR6015.heading = Completing VO 6015 request for rental information: ho
 guidance.FOR6016.heading = Completing VO 6016 request for rental information: hotels and guesthouses
 guidance.FOR6020.heading = Completing VO 6020 request for rental information: petrol filling stations (occupier)
 guidance.FOR6030.heading = Completing VO 6030 request for rental information: receipts (general basic)
+guidance.FOR6045.heading = Completing VO 6045 request for rental information: caravan sites - receipts
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
 guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
 
@@ -305,7 +306,6 @@ guidance.sections.FOR6030.aboutYouAndTheProperty.li7 = details of any trading ac
 
 guidance.sections.FOR6030.tradingHistory.li4 = <b>Gross income</b><br/>All your income, excluding any payments received from concessions or franchises such as tearooms or carwashes, or from lettings such as car parks or phone masts.
 guidance.sections.FOR6030.tradingHistory.li5 = <b>Total visitor numbers</b><br/>Also include concessions and free entries. If the property is a car park, enter 0 in this section.
-
 
 guidance.sections.FOR6048.aboutYouAndTheProperty.li1 = your contact details
 guidance.sections.FOR6048.aboutYouAndTheProperty.li2 = details of the property's availability and completed commercial lets of up to 28 nights
@@ -404,6 +404,11 @@ guidance.sections.FOR6020.tradingHistory.li9 = <b>Electric vehicle (EV) charging
 guidance.sections.FOR6020.tradingHistory.p4 = When:
 guidance.sections.FOR6020.tradingHistory.li10 = you first occupied the property – we only need the month and year
 guidance.sections.FOR6020.tradingHistory.li11 = your financial year ends
+
+guidance.sections.FOR6045.tradingHistory.li4 = <b>Static caravans</b><br/>Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You'll also be asked about the age of your vans and services you provide.
+guidance.sections.FOR6045.tradingHistory.li5 = <b>Income from other holiday accommodation</b><br/>Including chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units.
+guidance.sections.FOR6045.tradingHistory.li6 = <b>Income from touring and tenting pitches</b><br/>Including pitches for caravans, motorhomes, tents, rally areas, or glamping pitches for pre-erected or mobile structures like yurts, tipis or shepherd's huts.
+guidance.sections.FOR6045.tradingHistory.li7 = <b>Trading figures from other activities</b><br/>Including shops, catering, bars and clubs, and amusements.
 
 guidance.sections.FOR6048.tradingHistory.li1 = revenue your self-catering holiday accommodation business generates
 guidance.sections.FOR6048.tradingHistory.li2 = it costs to operate your business

@@ -157,6 +157,28 @@
                 ),
                 startCall = controllers.lettingHistory.routes.HasPermanentResidentsController.show
             )
+        case FOR6045 | FOR6046 =>
+            GuidancePage(
+                contentsItems = Seq(
+                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
+                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
+                    ("#franchise-or-lettings"      , "label.section.aboutTheConcessionsFranchisesLettings"),
+                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information"     , "label.section.additionalInformation"),
+                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                ),
+                sections = Seq(
+                    () =>  sections.FOR6048.connectionToTheProperty(),
+                    () =>  sections.FOR6020.aboutYouAndTheProperty(),
+                    () =>  sections.FOR6045.tradingHistory(),
+                    () =>  sections.FOR6045.aboutTheFranchiseConcessions(),
+                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
+                    () =>  sections.shared.additionalInformation()
+                ),
+                startCall = controllers.lettingHistory.routes.HasPermanentResidentsController.show
+            )
         case FOR6048 =>
             GuidancePage(
                 contentsItems = Seq(
