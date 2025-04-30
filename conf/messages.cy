@@ -248,14 +248,19 @@ guidance.FOR6011.heading = Completing VO 6011 request for rental information: pu
 guidance.FOR6015.heading = Completing VO 6015 request for rental information: hotels
 guidance.FOR6016.heading = Completing VO 6016 request for rental information: hotels and guesthouses
 guidance.FOR6020.heading = Completing VO 6020 request for rental information: petrol filling stations (occupier)
+guidance.FOR6030.heading = Completing VO 6030 request for rental information: receipts (general basic)
+guidance.FOR6045.heading = Completing VO 6045 request for rental information: caravan sites - receipts
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
+guidance.FOR6076.heading = Completing VO 6076 request for rental information: what information you''ll need to provide
 guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
 
 guidance.sentence.whatYouWillBeAsked = What you''ll be asked
 guidance.sentence.whatYouWillNeed = What you''ll need
 guidance.sentence.importantDates = Important dates
 guidance.sentence.youMustTellUs = You must tell us:
+guidance.sentence.youMustDeclare = You must declare  if you receive any rental income from businesses operating:
 guidance.sentence.recordsContaining = Records containing any:
+guidance.sentence.copyOfLeases = You should have a copy of any leases or franchise agreements which show:
 guidance.sentence.howMuch = How much:
 guidance.sentence.weNeedToKnow = We need to know:
 guidance.sentence.youMustDeclare = You must declare if you receive any rental income from:
@@ -297,6 +302,12 @@ guidance.sections.FOR6048.aboutYouAndTheProperty.p1 = Records containing details
 guidance.sections.FOR6048.aboutYouAndTheProperty.li4 = available for lets of up to 28 nights
 guidance.sections.FOR6048.aboutYouAndTheProperty.li5 = occupied for lets of up to 28 nights
 guidance.sections.FOR6048.aboutYouAndTheProperty.p2 = If you have stopped letting the property commercially, we need to know the date when you last hosted a paying guest.
+
+guidance.sections.FOR6076.aboutYouAndTheProperty.li2 = the type of renewables plant you operate
+guidance.sections.FOR6076.aboutYouAndTheProperty.li3 = how much it cost to construct the plant if it was built in the last 3 years
+guidance.sections.FOR6076.aboutYouAndTheProperty.li4 = the peak capacity of your generator
+guidance.sections.FOR6076.aboutYouAndTheProperty.li5 = the capacity of any batteries you have on the site
+guidance.sections.FOR6076.aboutYouAndTheProperty.p1 = If your site was built in the last 3 years, you will be asked to provide a breakdown of the capital costs of the site construction. You may need to contact your accountant or a site surveyor to obtain this information. If this is unavailable, you must provide a total cost.
 
 guidance.sections.FOR6020.lettings.li1 = if any parts of the property are used as a permanent residence by tenants or employees
 guidance.sections.FOR6020.lettings.li1 = automated teller machines (ATMs)
@@ -356,6 +367,16 @@ guidance.sections.FOR6010.tradingHistory.li7 = <b>Accommodation</b><br/>Income f
 guidance.sections.FOR6010.tradingHistory.p4 = When:
 guidance.sections.FOR6010.tradingHistory.li10 = you first occupied the property – we only need the month and year
 guidance.sections.FOR6010.tradingHistory.li11 = your financial year ends
+
+guidance.sections.FOR6076.tradingHistory.p1 = You must declare details of the turnover of the business operating from the property.
+guidance.sections.FOR6076.tradingHistory.li4 = <b>How much power you generated</b><br/>in kilowatt hours (kWh) or megawatt hours (MWh)
+guidance.sections.FOR6076.tradingHistory.li5 = <b>Gross receipts</b><br/>Including all sales, tariffs, benefits and incentives
+guidance.sections.FOR6076.tradingHistory.li6 = <b>Other income</b><br/>Any other income not listed in your gross receipts
+guidance.sections.FOR6076.tradingHistory.li7 = <b>Cost of sales</b><br/>Details of any costs occurred
+guidance.sections.FOR6076.tradingHistory.li8 = <b>Staff costs</b><br/>Wages, National Insurance, pension contributions and director''s remuneration
+guidance.sections.FOR6076.tradingHistory.li9 = <b>Premises costs</b><br/>Including utilities, repairs, rates and insurance
+guidance.sections.FOR6076.tradingHistory.li10 = <b>Operational and administrative expenses</b><br/>Including marketing expenses, office sundries and legal fees
+guidance.sections.FOR6076.tradingHistory.li11 = <b>Head office expenses</b><br/>If applicable
 
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li1 = third party businesses operating from the property under a concession or franchise agreement
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li2 = letting other parts of the property, such as residential accommodation, car parking or phone masts
