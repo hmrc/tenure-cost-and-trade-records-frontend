@@ -22,6 +22,13 @@
 
 @(forType: ForType, referenceNumber: Option[String])(implicit request: Request[AnyContent], messages: Messages)
 
+@overview6076 = @{
+  if(forType == FOR6076) {
+      sections.FOR6076.overview(govukInsetText)
+  } else {
+      sections.shared.overview(govukInsetText)
+  }
+}
 
 @guidancePage = @{
     forType match {
@@ -203,8 +210,26 @@
                 ),
                 startCall = controllers.lettingHistory.routes.HasPermanentResidentsController.show
             )
-        // add more cases here ...
-        case _ => ???
+        case FOR6076 =>
+            GuidancePage(
+                contentsItems = Seq(
+                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
+                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
+                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information"     , "label.section.additionalInformation"),
+                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                ),
+                sections = Seq(
+                    () =>  sections.FOR6076.connectionToTheProperty(),
+                    () =>  sections.FOR6076.aboutYouAndTheProperty(),
+                    () =>  sections.FOR6076.tradingHistory(),
+                    () =>  sections.FOR6076.yourLeaseOrAgreement(),
+                    () =>  sections.shared.additionalInformation()
+                ),
+                startCall = controllers.lettingHistory.routes.HasPermanentResidentsController.show
+            )
     }
 }
 
@@ -219,7 +244,7 @@
 
     @sections.shared.contentsList(items = guidancePage.contentsItems)
 
-    @sections.shared.overview(govukInsetText)
+    @overview6076
 
     @for(section <- guidancePage.sections) { @section.apply() }
 
