@@ -87,7 +87,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     if s.financialYearEndDates.isEmpty
     then controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController.show()
     else
-      s.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation.flatMap(_.yearEndChanged)) match {
+      s.aboutTheTradingHistory.flatMap(
+        _.occupationAndAccountingInformation.flatMap(_.financialYearEndHasChanged)
+      ) match {
         case Some(true) =>
           s.forType match {
             case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>

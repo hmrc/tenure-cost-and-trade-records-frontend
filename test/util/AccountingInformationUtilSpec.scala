@@ -68,7 +68,7 @@ class AccountingInformationUtilSpec extends AnyFlatSpec with should.Matchers wit
     val firstYearEnd  = getFirstYearEnd(financialYearEnd.toMonthDay)
     val expectedDates = (1 to expectedColumns).map(y => firstYearEnd.minusYears(y - 1))
 
-    val endDates = AccountingInformationUtil.financialYearsRequired(firstOccupy, financialYearEnd)
+    val endDates = AccountingInformationUtil.deriveFinancialYearEndDatesFrom(firstOccupy, financialYearEnd)
     logger.info(s"FirstOccupy: ${firstOccupy.toYearMonth}, FinEnd: ${financialYearEnd.toMonthDay} - ${endDates.toList}")
 
     endDates shouldBe expectedDates

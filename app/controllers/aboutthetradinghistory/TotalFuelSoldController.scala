@@ -98,7 +98,7 @@ class TotalFuelSoldController @Inject() (
       case "TL"  => controllers.routes.TaskListController.show().url + "#fuel-sales"
       case _     =>
         request.sessionData.aboutTheTradingHistory.flatMap(
-          _.occupationAndAccountingInformation.flatMap(_.yearEndChanged)
+          _.occupationAndAccountingInformation.flatMap(_.financialYearEndHasChanged)
         ) match {
           case Some(true)  => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
           case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url

@@ -31,9 +31,10 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import util.AccountingInformationUtil._
+import util.AccountingInformationUtil.*
 import views.html.aboutthetradinghistory.financialYearEnd
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,11 +45,11 @@ class FinancialYearEndController @Inject() (
   navigator: AboutTheTradingHistoryNavigator,
   financialYearEndView: financialYearEnd,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     request.sessionData.aboutTheTradingHistory
@@ -58,10 +59,10 @@ class FinancialYearEndController @Inject() (
 
         Ok(
           financialYearEndView(
-            aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.financialYear) match {
+            aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.currentFinancialYearEnd) match {
               case Some(financialYear) =>
                 val yearEndChanged = aboutTheTradingHistory.occupationAndAccountingInformation
-                  .flatMap(_.yearEndChanged)
+                  .flatMap(_.financialYearEndHasChanged)
                   .getOrElse(false)
                 accountingInformationForm.fill((financialYear, yearEndChanged))
               case _                   => accountingInformationForm
@@ -78,68 +79,70 @@ class FinancialYearEndController @Inject() (
         continueOrSaveAsDraft[(DayMonthsDuration, Boolean)](
           accountingInformationForm,
           formWithErrors => BadRequest(financialYearEndView(formWithErrors)),
-          (newFinancialYear, newYearEndChanged) => {
-            val occupationAndAccounting        = aboutTheTradingHistory.occupationAndAccountingInformation.get
-            val firstOccupy                    = occupationAndAccounting.firstOccupy
-            val newOccupationAndAccounting     =
-              OccupationalAndAccountingInformation(firstOccupy, Some(newFinancialYear), Some(newYearEndChanged))
-            val isFinancialYearEndDayUnchanged = occupationAndAccounting.financialYear.contains(newFinancialYear)
-            val isFinancialYearsListUnchanged  = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears
+          (newCurrentFinancialYearEnd, newFinancialYearEndHasChanged) => {
+            assert(aboutTheTradingHistory.occupationAndAccountingInformation.isDefined)
+            val oldOccupationAndAccountingInfo = aboutTheTradingHistory.occupationAndAccountingInformation.get
+            val newOccupationAndAccountingInfo = OccupationalAndAccountingInformation(
+              oldOccupationAndAccountingInfo.firstOccupy,
+              Some(newCurrentFinancialYearEnd),
+              Some(newFinancialYearEndHasChanged)
+            )
+            val financialYearEndDates          =
+              deriveFinancialYearEndDatesFrom(oldOccupationAndAccountingInfo.firstOccupy, newCurrentFinancialYearEnd)
+            val newFinancialYearEndSameAsOld   =
+              oldOccupationAndAccountingInfo.currentFinancialYearEnd.contains(newCurrentFinancialYearEnd)
+            val financialYearsUnchanged        = financialYearEndDates.map(_.getYear) == previousFinancialYears
 
             val updatedData: Session = request.sessionData.forType match {
               case FOR6020           =>
                 buildUpdateData6020(
-                  firstOccupy,
-                  newFinancialYear,
                   aboutTheTradingHistory,
-                  newOccupationAndAccounting,
-                  isFinancialYearEndDayUnchanged,
-                  isFinancialYearsListUnchanged
+                  financialYearEndDates,
+                  newOccupationAndAccountingInfo,
+                  newFinancialYearEndSameAsOld
                 )
               case FOR6030           =>
                 buildUpdateData6030(
-                  firstOccupy,
-                  newFinancialYear,
                   aboutTheTradingHistory,
-                  newOccupationAndAccounting,
-                  isFinancialYearEndDayUnchanged,
-                  isFinancialYearsListUnchanged
+                  financialYearEndDates,
+                  newOccupationAndAccountingInfo,
+                  newFinancialYearEndSameAsOld
                 )
               case FOR6045 | FOR6046 =>
                 buildUpdatedData6045(
                   aboutTheTradingHistory,
-                  newOccupationAndAccounting,
-                  isFinancialYearEndDayUnchanged
+                  newOccupationAndAccountingInfo,
+                  newFinancialYearEndSameAsOld
                 )
               case FOR6048           =>
                 buildUpdatedData6048(
                   aboutTheTradingHistory,
-                  newOccupationAndAccounting,
-                  isFinancialYearEndDayUnchanged
+                  newOccupationAndAccountingInfo,
+                  newFinancialYearEndSameAsOld
                 )
               case FOR6076           =>
                 buildUpdatedData6076(
                   aboutTheTradingHistory,
-                  newOccupationAndAccounting,
-                  isFinancialYearEndDayUnchanged
+                  newOccupationAndAccountingInfo,
+                  newFinancialYearEndSameAsOld
                 )
               case _                 =>
                 buildUpdateData(
-                  firstOccupy,
-                  newFinancialYear,
+                  oldOccupationAndAccountingInfo.firstOccupy,
+                  newCurrentFinancialYearEnd,
                   aboutTheTradingHistory,
-                  newOccupationAndAccounting,
-                  isFinancialYearEndDayUnchanged,
-                  isFinancialYearsListUnchanged
+                  newOccupationAndAccountingInfo,
+                  newFinancialYearEndSameAsOld,
+                  financialYearsUnchanged
                 )
             }
-            session
+            repository
               .saveOrUpdate(updatedData)
               .map(_ =>
                 navigator.cyaPage
                   .filter(_ =>
-                    navigator.from == "CYA" && !newYearEndChanged &&
-                      (isFinancialYearsListUnchanged || (
+                    navigator.from == "CYA" && !newFinancialYearEndHasChanged &&
+                      (financialYearsUnchanged || (
                         request.sessionData.forType == FOR6076 && request.sessionData.aboutTheTradingHistoryPartOne
                           .flatMap(_.turnoverSections6076)
                           .flatMap(_.headOption)
@@ -167,10 +170,10 @@ class FinancialYearEndController @Inject() (
   }
 
   private def sectionCompleted(
-    isFinancialYearsListUnchanged: Boolean,
+    financialYearsUnchanged: Boolean,
     aboutTheTradingHistory: AboutTheTradingHistory
   ): Option[CheckYourAnswersAboutTheTradingHistory] =
-    if (isFinancialYearsListUnchanged) {
+    if (financialYearsUnchanged) {
       aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
     } else {
       None
@@ -186,19 +189,20 @@ class FinancialYearEndController @Inject() (
   )(implicit request: SessionRequest[AnyContent]) = {
     val turnoverSections =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        if (!newOccupationAndAccounting.yearEndChanged.get) {
-          (aboutTheTradingHistory.turnoverSections zip financialYearsRequired(firstOccupy, financialYear)).map {
-            case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
-          }
+        if (!newOccupationAndAccounting.financialYearEndHasChanged.get) {
+          (aboutTheTradingHistory.turnoverSections zip deriveFinancialYearEndDatesFrom(firstOccupy, financialYear))
+            .map { case (turnoverSection, finYearEnd) =>
+              turnoverSection.copy(financialYearEnd = finYearEnd)
+            }
         } else {
           aboutTheTradingHistory.turnoverSections
         }
       } else if (isFinancialYearsListUnchanged) {
-        (aboutTheTradingHistory.turnoverSections zip financialYearsRequired(firstOccupy, financialYear)).map {
+        (aboutTheTradingHistory.turnoverSections zip deriveFinancialYearEndDatesFrom(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
         }
       } else {
-        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
+        deriveFinancialYearEndDatesFrom(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection(
             financialYearEnd = finYearEnd,
             tradingPeriod = 52,
@@ -240,73 +244,70 @@ class FinancialYearEndController @Inject() (
   }
 
   private def buildUpdateData6020(
-    firstOccupy: MonthsYearDuration,
-    financialYear: DayMonthsDuration,
     aboutTheTradingHistory: AboutTheTradingHistory,
-    newOccupationAndAccounting: OccupationalAndAccountingInformation,
-    isFinancialYearEndDayUnchanged: Boolean,
-    isFinancialYearsListUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+    newFinancialYearEndDates: Seq[LocalDate],
+    newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
+    newFinancialYearEndSameAsOld: Boolean
+  )(using request: SessionRequest[AnyContent]): Session = {
 
-    val originalTurnoverSections6020 = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
+    val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
+    val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
+    val originalFinancialYearEndDates = originalTurnoverSections.map(_.financialYearEnd)
+    val financialYearsUnchanged       = newFinancialYearEndDates.map(_.getYear) == previousFinancialYears
 
-    def turnoverSections6020: Seq[TurnoverSection6020] =
-      if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        originalTurnoverSections6020
-      } else if (isFinancialYearsListUnchanged) {
-        (originalTurnoverSections6020 zip financialYearsRequired(firstOccupy, financialYear)).map {
-          case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
+    val turnoverSections =
+      if (newFinancialYearEndDates == originalFinancialYearEndDates) ||
+        (financialYearEndHasChanged && newFinancialYearEndDates.size == originalFinancialYearEndDates.size)
+      then originalTurnoverSections
+      else
+        newFinancialYearEndDates.map { fye =>
+          TurnoverSection6020(
+            financialYearEnd = fye
+          )
         }
-      } else {
-        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
-          TurnoverSection6020(financialYearEnd = finYearEnd)
-        }
-      }
 
-    val updatedData = updateAboutTheTradingHistory(
+    val updatedSession = updateAboutTheTradingHistory(
       _.copy(
-        occupationAndAccountingInformation = Some(newOccupationAndAccounting),
-        turnoverSections6020 = Some(turnoverSections6020),
-        checkYourAnswersAboutTheTradingHistory = sectionCompleted(isFinancialYearsListUnchanged, aboutTheTradingHistory)
+        occupationAndAccountingInformation = Some(newOccupationAndAccountingInfo),
+        turnoverSections6020 = Some(turnoverSections),
+        checkYourAnswersAboutTheTradingHistory = sectionCompleted(financialYearsUnchanged, aboutTheTradingHistory)
       )
     )
-    updatedData
+    updatedSession
   }
 
   private def buildUpdateData6030(
-    firstOccupy: MonthsYearDuration,
-    financialYear: DayMonthsDuration,
     aboutTheTradingHistory: AboutTheTradingHistory,
-    newOccupationAndAccounting: OccupationalAndAccountingInformation,
-    isFinancialYearEndDayUnchanged: Boolean,
-    isFinancialYearsListUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]) = {
-    def turnoverSections6030 =
-      if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        aboutTheTradingHistory.turnoverSections6030
-      } else if (isFinancialYearsListUnchanged) {
-        (aboutTheTradingHistory.turnoverSections6030 zip financialYearsRequired(firstOccupy, financialYear)).map {
-          case (turnoverSection6030, finYearEnd) => turnoverSection6030.copy(financialYearEnd = finYearEnd)
-        }
-      } else {
-        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
+    newFinancialYearEndDates: Seq[LocalDate],
+    newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
+    newFinancialYearEndSameAsOld: Boolean
+  )(using request: SessionRequest[AnyContent]): Session = {
+
+    val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
+    val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6030
+    val originalFinancialYearEndDates = originalTurnoverSections.map(_.financialYearEnd)
+    val financialYearsUnchanged       = newFinancialYearEndDates.map(_.getYear) == previousFinancialYears
+
+    val turnoverSections =
+      if (newFinancialYearEndDates == originalFinancialYearEndDates) ||
+        (financialYearEndHasChanged && newFinancialYearEndDates.size == originalFinancialYearEndDates.size)
+      then originalTurnoverSections
+      else
+        newFinancialYearEndDates.map { fye =>
           TurnoverSection6030(
-            financialYearEnd = finYearEnd,
+            financialYearEnd = fye,
             tradingPeriod = 52,
             grossIncome = None,
             totalVisitorNumbers = None
           )
         }
-      }
 
     val updatedData = updateAboutTheTradingHistory(
       _.copy(
-        occupationAndAccountingInformation = Some(newOccupationAndAccounting),
-        turnoverSections6030 = turnoverSections6030,
-        checkYourAnswersAboutTheTradingHistory = sectionCompleted(isFinancialYearsListUnchanged, aboutTheTradingHistory)
+        occupationAndAccountingInformation = Some(newOccupationAndAccountingInfo),
+        turnoverSections6030 = turnoverSections,
+        checkYourAnswersAboutTheTradingHistory = sectionCompleted(financialYearsUnchanged, aboutTheTradingHistory)
       )
     )
     updatedData
   }
-
-}

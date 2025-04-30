@@ -19,13 +19,17 @@ package models.submissions.aboutthetradinghistory
 import actions.SessionRequest
 import models.Session
 import models.submissions.common.AnswersYesNo
-import play.api.libs.functional.syntax._
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
+
+import java.time.LocalDate
 
 case class AboutTheTradingHistory(
   occupationAndAccountingInformation: Option[OccupationalAndAccountingInformation] = None,
+  // TODO turnoverSections: Option[Seq[TurnoverSection]] = None,
   turnoverSections: Seq[TurnoverSection] = Seq.empty,
   turnoverSections6020: Option[Seq[TurnoverSection6020]] = None,
+  // TODO turnoverSections6030: Option[Seq[TurnoverSection6030]] = None,
   turnoverSections6030: Seq[TurnoverSection6030] = Seq.empty,
   costOfSales: Seq[CostOfSales] = Seq.empty,
   fixedOperatingExpensesSections: Seq[FixedOperatingExpenses] = Seq.empty,
@@ -92,4 +96,17 @@ object AboutTheTradingHistory {
 
   }
 
+  type TurnoverSectionUnion =
+    TurnoverSection6020 | TurnoverSection6030 | TurnoverSection6045 | TurnoverSection6048 | TurnoverSection6076 |
+      TurnoverSection
+
+  class WrappedTurnoverSection(wrapped: TurnoverSectionUnion) {
+    def financialYearEnd: LocalDate = wrapped match
+      case TurnoverSection6020(financialYearEnd, _, _, _, _, _, _)                               => financialYearEnd
+      case TurnoverSection6030(financialYearEnd, _, _, _)                                        => financialYearEnd
+      case TurnoverSection6045(financialYearEnd, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _) => financialYearEnd
+      case TurnoverSection6048(financialYearEnd, _, _, _, _, _, _)                               => financialYearEnd
+      case TurnoverSection6076(financialYearEnd, _, _, _, _, _, _, _, _, _, _, _, _)             => financialYearEnd
+      case TurnoverSection(financialYearEnd, _, _, _, _, _, _)                                   => financialYearEnd
+  }
 }

@@ -501,7 +501,7 @@
 }
 
 @yearEndChanged = @{
-    sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.yearEndChanged).contains(true)
+    sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.financialYearEndHasChanged).contains(true)
 }
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
@@ -518,7 +518,7 @@
         )) ++
         answerOpt(
             valueLabelKey = "checkYourAnswersAboutTheTradingHistory.financialYearEnd",
-            valueOpt = sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
+            valueOpt = sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
             classes = if(!yearEndChanged) "" else "no-border-bottom"
         ) ++
         (if(yearEndChanged)
@@ -536,7 +536,7 @@
             _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
             controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show(), "firstOccupy.month") ++
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEnd",
-                    _.occupationAndAccountingInformation.flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
+                    _.occupationAndAccountingInformation.flatMap(_.currentFinancialYearEnd.map(_.toMonthDay)).map(dateUtil.formatMonthDay),
                     controllers.aboutthetradinghistory.routes.FinancialYearEndController.show(), "financialYear.day") ++
                 sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
                     _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t))),

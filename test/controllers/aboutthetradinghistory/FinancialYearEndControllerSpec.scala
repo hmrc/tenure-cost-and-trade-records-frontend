@@ -40,32 +40,33 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
   val mockAudit: Audit = mock[Audit]
 
-  def financialYearEndController(
-    forType: ForType = FOR6010,
-    aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new FinancialYearEndController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    financialYearEndView,
-    preEnrichedActionRefiner(forType = forType, aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  trait ControllerFixture:
+    def financialYearEndController(
+      forType: ForType = FOR6010,
+      aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
+    ) = new FinancialYearEndController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      financialYearEndView,
+      preEnrichedActionRefiner(forType = forType, aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "About your trading history controller" should {
-    "return 200" in {
+    "return 200" in new ControllerFixture {
       val result = financialYearEndController().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
-    "return HTML" in {
+    "return HTML" in new ControllerFixture {
       val result = financialYearEndController().show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
+      "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
         val res = financialYearEndController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
@@ -73,42 +74,42 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   }
 
   "Financial year end form" should {
-    "error if financial year end day and month are missing " in {
+    "error if financial year end day and month are missing " in new ControllerFixture {
       val formData = baseFormData - errorKey.financialYearDay - errorKey.financialYearMonth
       val form     = accountingInformationForm(messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.required", form)
     }
 
-    "error if financial year day is missing " in {
+    "error if financial year day is missing " in new ControllerFixture {
       val formData = baseFormData - errorKey.financialYearDay
       val form     = accountingInformationForm(messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.mustInclude", form)
     }
 
-    "error if financial year month is missing" in {
+    "error if financial year month is missing" in new ControllerFixture {
       val formData = baseFormData - errorKey.financialYearMonth
       val form     = accountingInformationForm(messages).bind(formData)
 
       mustContainError(errorKey.financialYearMonth, "error.date.mustInclude", form)
     }
 
-    "error if financial year date is incorrect" in {
+    "error if financial year date is incorrect" in new ControllerFixture {
       val formData = baseFormData.updated("financialYear.day", "31").updated("financialYear.month", "2")
       val form     = accountingInformationForm(messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.invalid", form)
     }
 
-    "error if financial year day is incorrect" in {
+    "error if financial year day is incorrect" in new ControllerFixture {
       val formData = baseFormData.updated("financialYear.day", "32")
       val form     = accountingInformationForm(messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.day.invalid", form)
     }
 
-    "error if financial year month is incorrect" in {
+    "error if financial year month is incorrect" in new ControllerFixture {
       val formData = baseFormData.updated("financialYear.month", "13")
       val form     = accountingInformationForm(messages).bind(formData)
 
@@ -117,7 +118,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   }
 
   "submit" should {
-    "redirect to the next page when valid data is submitted" in {
+    "redirect to the next page when valid data is submitted" in new ControllerFixture {
       // Arrange
       val validFormData = Map(
         "financialYear.day"   -> "1",
@@ -135,7 +136,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       status(result)                 shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
-    "redirect to the next page when valid 6030 data is submitted" in {
+    "redirect to the next page when valid 6030 data is submitted" in new ControllerFixture {
       // Arrange
       val validFormData  = Map(
         "financialYear.day"   -> "1",
@@ -153,10 +154,10 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
       // Assert
       status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
+      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
-    "redirect to the next page when valid 6020 data is submitted" in {
+    "redirect to the next page when valid 6020 data is submitted" in new ControllerFixture {
       // Arrange
       val validFormData  = Map(
         "financialYear.day"   -> "1",
@@ -174,10 +175,10 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
       // Assert
       status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
+      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
-    "redirect to the next page when valid 6045 data is submitted" in {
+    "redirect to the next page when valid 6045 data is submitted" in new ControllerFixture {
       val validFormData  = Map(
         "financialYear.day"   -> "25",
         "financialYear.month" -> "4",
@@ -194,10 +195,10 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         financialYearEndController(session6045.forType, session6045.aboutTheTradingHistory).submit(sessionRequest)
 
       status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
+      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
-    "redirect to the next page when valid 6048 data is submitted" in {
+    "redirect to the next page when valid 6048 data is submitted" in new ControllerFixture {
       val validFormData  = Map(
         "financialYear.day"   -> "25",
         "financialYear.month" -> "4",
@@ -214,10 +215,10 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         financialYearEndController(session6048.forType, session6048.aboutTheTradingHistory).submit(sessionRequest)
 
       status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
+      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
-    "redirect to the next page when valid 6076 data is submitted" in {
+    "redirect to the next page when valid 6076 data is submitted" in new ControllerFixture {
       val validFormData  = Map(
         "financialYear.day"   -> "6",
         "financialYear.month" -> "4",
@@ -234,7 +235,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         financialYearEndController(session6076.forType, session6076.aboutTheTradingHistory).submit(sessionRequest)
 
       status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.CheckYourAnswersNoFinancialYearsController.show().url
+      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
   }
 

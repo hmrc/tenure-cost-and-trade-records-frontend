@@ -56,7 +56,7 @@
         ),
         summaryListRow(
             keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-            valueText = occupationAndAccountingInformation.financialYear.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse(""),
+            valueText = occupationAndAccountingInformation.currentFinancialYearEnd.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse(""),
             changeCall = routes.FinancialYearEndController.show()
         )
     )
