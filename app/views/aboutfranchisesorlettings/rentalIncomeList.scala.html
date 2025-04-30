@@ -17,11 +17,13 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
 @import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Value
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -43,7 +45,11 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], index: Int, forType: ForType)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], index: Int)(implicit request: SessionRequest[AnyContent], messages: Messages)
+
+@forType = @{
+  request.sessionData.forType
+}
 
 @sectionName = @{
     forType match {
@@ -63,21 +69,21 @@
     }
 }
 
-@incomeRecords = @{
+@incomeRecords: Seq[((String, String), String)] = @{
     val records = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
     records.zipWithIndex.map { case (record, index) =>
         record match {
             case franchise: FranchiseIncomeRecord =>
-                (franchise.businessDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
+                (franchise.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", d.cateringAddress.map(_.multiLine).getOrElse(""))),
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession6015: Concession6015IncomeRecord =>
-                (concession6015.businessDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
+                (concession6015.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", d.cateringAddress.map(_.multiLine).getOrElse(""))),
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession: ConcessionIncomeRecord =>
-                (concession.businessDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
+                (concession.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
                  controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url)
             case letting: LettingIncomeRecord =>
-                (letting.operatorDetails.fold("")(d => s"${d.operatorName}, ${d.typeOfBusiness}"),
+                (letting.operatorDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", d.lettingAddress.map(_.multiLine).getOrElse(""))),
                  controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
         }
     }
@@ -112,9 +118,10 @@
 
         @govukSummaryList(
             SummaryList(
-                rows = incomeRecords.zipWithIndex.map { case ((operatorName,changeUrl), idx) =>
+                rows = incomeRecords.zipWithIndex.map { case (((operatorName, operatorAddress), changeUrl), idx) =>
                     SummaryListRow(
-                        key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular govuk-!-width-two-thirds"),
+                        key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+                        value = Value(HtmlContent(operatorAddress)),
                         actions = Actions(
                             items = Seq(
                                 ActionItem(

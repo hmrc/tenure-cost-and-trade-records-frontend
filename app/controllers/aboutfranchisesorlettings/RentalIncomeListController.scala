@@ -32,6 +32,7 @@ import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future.successful
 
 @Singleton
 class RentalIncomeListController @Inject() (
@@ -39,81 +40,75 @@ class RentalIncomeListController @Inject() (
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
   theListView: RentalIncomeListView,
-  theConfirmationVie: RemoveConfirmationView,
+  theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with FranchiseAndLettingSupport
-    with I18nSupport {
+    with I18nSupport:
 
-  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-
-    val addAnother: Option[AnswersYesNo] = for {
-      data      <- request.sessionData.aboutFranchisesOrLettings
-      income    <- data.rentalIncome
-      record    <- income.lift(index)
-      addRecord <- record.addAnotherRecord
-    } yield addRecord
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).apply { implicit request =>
     audit.sendChangeLink("RentalIncomeList")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
+        rentalIncome              <- aboutFranchisesOrLettings.rentalIncome
+        incomeRecord              <- rentalIncome.lift(index)
+        addAnotherRecord          <- incomeRecord.addAnotherRecord
+      yield freshForm.fill(addAnotherRecord)
 
-    Future.successful(
-      Ok(
-        theListView(
-          addAnother.fold(theForm)(theForm.fill),
-          index,
-          request.sessionData.forType
-        )
+    Ok(
+      theListView(
+        filledForm.getOrElse(freshForm),
+        index
       )
     )
   }
 
   def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    val rentalIncomeData           = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-    val numberOfRentalIncomes: Int =
-      request.sessionData.aboutFranchisesOrLettings.map(_.rentalIncome.getOrElse(IndexedSeq.empty).size).getOrElse(0)
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
-        BadRequest(
-          theListView(
-            formWithErrors,
-            index,
-            request.sessionData.forType
+        successful(
+          BadRequest(
+            theListView(
+              formWithErrors,
+              index
+            )
           )
         ),
       formData =>
-        if (formData == AnswerYes && numberOfRentalIncomes >= 5 && navigator.from != "CYA") {
-          Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("rentalIncome"))))
-        } else {
-          rentalIncomeData match {
+        val numberOfRentalIncomes = request.sessionData.aboutFranchisesOrLettings
+          .map(_.rentalIncome.getOrElse(IndexedSeq.empty).size)
+          .getOrElse(0)
+
+        if formData == AnswerYes && numberOfRentalIncomes >= 5 && navigator.from != "CYA"
+        then successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(src = Some("rentalIncome"))))
+        else
+          val rentalIncomeData = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
+          rentalIncomeData match
             case Some(entries) if entries.isDefinedAt(index) =>
-              val updatedRentalIncome: IndexedSeq[IncomeRecord] =
-                entries.updated(index, update(entries(index), Some(formData)))
-              val updatesSession                                = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings(about =>
+              val updatedRentalIncome = entries.updated(index, update(entries(index), Some(formData)))
+              val updatesSession      = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings(about =>
                 about.copy(rentalIncome = Some(updatedRentalIncome))
               )
               repository.saveOrUpdate(updatesSession).map { _ =>
-                if (formData == AnswerYes) {
-                  Redirect(routes.TypeOfIncomeController.show(Some(index + 1)))
-                } else {
-                  Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-                }
+                if formData == AnswerYes
+                then Redirect(routes.TypeOfIncomeController.show(Some(index + 1)))
+                else Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
               }
             case Some(entries) if entries.isEmpty            =>
-              if (formData == AnswerYes) {
-                Redirect(routes.TypeOfIncomeController.show())
-              } else {
-                Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-              }
+              if formData == AnswerYes
+              then Redirect(routes.TypeOfIncomeController.show())
+              else Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
             case _                                           =>
-              Future.successful(
+              successful(
                 Redirect(
                   routes.RentalIncomeListController.show(rentalIncomeData.map(_.size).getOrElse(0))
                 )
               )
-          }
-        }
     )
   }
 
@@ -130,9 +125,9 @@ class RentalIncomeListController @Inject() (
   def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
     Some(getOperatorName(idx))
       .map { operatorName =>
-        Future.successful(
+        successful(
           Ok(
-            theConfirmationVie(
+            theConfirmationView(
               confirmableActionForm,
               operatorName,
               "label.section.aboutTheLettings",
@@ -154,9 +149,9 @@ class RentalIncomeListController @Inject() (
       formWithErrors =>
         Some(getOperatorName(idx))
           .map { operatorName =>
-            Future.successful(
+            successful(
               BadRequest(
-                theConfirmationVie(
+                theConfirmationView(
                   formWithErrors,
                   operatorName,
                   "label.section.aboutTheLettings",
@@ -177,7 +172,8 @@ class RentalIncomeListController @Inject() (
           val aboutFranchisesOrLettings =
             request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
           val incomeRecords             = aboutFranchisesOrLettings.rentalIncome.getOrElse(IndexedSeq.empty)
-          if (idx >= 0 && idx < incomeRecords.length) {
+          if idx >= 0 && idx < incomeRecords.length
+          then
             val updatedRecords = incomeRecords.patch(idx, Nil, 1)
             val updatedAbout   = aboutFranchisesOrLettings.copy(rentalIncome = Some(updatedRecords))
             repository.saveOrUpdate(request.sessionData.copy(aboutFranchisesOrLettings = Some(updatedAbout))).map { _ =>
@@ -186,14 +182,13 @@ class RentalIncomeListController @Inject() (
                   .show(if (updatedRecords.isEmpty) 0 else updatedRecords.length - 1)
               )
             }
-          } else {
-            Future.successful(
+          else
+            successful(
               Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0))
             )
-          }
-        case AnswerNo  =>
+
+        case AnswerNo =>
           Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx))
       }
     )
   }
-}
