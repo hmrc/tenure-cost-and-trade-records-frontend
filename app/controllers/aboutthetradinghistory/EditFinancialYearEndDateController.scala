@@ -50,7 +50,7 @@ class EditFinancialYearEndDateController @Inject() (
     audit.sendChangeLink("EditFinancialYearEndDate")
 
     request.sessionData.aboutTheTradingHistory
-      .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
+      .filter(_.occupationAndAccountingInformation.map(_.currentFinancialYearEnd).isDefined)
       .filter(isTurnOverNonEmpty(_))
       .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val financialYearEnd: Seq[LocalDate] =
@@ -121,7 +121,7 @@ class EditFinancialYearEndDateController @Inject() (
       }
     val prefilledForm                    = financialYearEnd.lift(index).fold(financialYearEndDateForm)(financialYearEndDateForm.fill)
     request.sessionData.aboutTheTradingHistory
-      .filter(_.occupationAndAccountingInformation.map(_.financialYear).isDefined)
+      .filter(_.occupationAndAccountingInformation.map(_.currentFinancialYearEnd).isDefined)
       .filter(isTurnOverNonEmpty(_))
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[LocalDate](
@@ -135,13 +135,13 @@ class EditFinancialYearEndDateController @Inject() (
             ),
           data => {
             val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
-            val financialYearEnd        = occupationAndAccounting.financialYear.get.toMonthDay
+            val financialYearEnd        = occupationAndAccounting.currentFinancialYearEnd.get.toMonthDay
 
             val newOccupationAndAccounting =
               if (MonthDay.of(data.getMonthValue, data.getDayOfMonth) == financialYearEnd) {
                 occupationAndAccounting
               } else {
-                occupationAndAccounting.copy(yearEndChanged = Some(true))
+                occupationAndAccounting.copy(financialYearEndHasChanged = Some(true))
               }
 
             val updatedData: Session = request.sessionData.forType match {

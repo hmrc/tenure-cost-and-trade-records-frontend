@@ -54,12 +54,15 @@ object AccountingInformationUtil {
     isWales: Boolean
   ): Seq[LocalDate] =
     if isWales then
-      Some(financialYearsRequired(firstOccupy.getOrElse(defaultStart), financialYearEndOfMarch))
+      Some(deriveFinancialYearEndDatesFrom(firstOccupy.getOrElse(defaultStart), financialYearEndOfMarch))
         .filter(_.nonEmpty)
         .getOrElse(Seq(previousFinancialYearEnd6048))
     else Seq(previousFinancialYearEnd6048)
 
-  def financialYearsRequired(firstOccupy: MonthsYearDuration, financialYear: DayMonthsDuration): Seq[LocalDate] = {
+  def deriveFinancialYearEndDatesFrom(
+    firstOccupy: MonthsYearDuration,
+    financialYear: DayMonthsDuration
+  ): Seq[LocalDate] = {
     val now     = LocalDate.now
     val yearNow = now.getYear
 
@@ -118,9 +121,9 @@ object AccountingInformationUtil {
       .flatMap(_.turnoverSections6076)
       .fold(Seq.empty[Int])(_.map(_.financialYearEnd.getYear))
 
-  def newFinancialYears(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
-    occupationAndAccounting.financialYear
-      .fold(Seq.empty[Int])(financialYearsRequired(occupationAndAccounting.firstOccupy, _).map(_.getYear))
+  def financialYearsList(occupationAndAccounting: OccupationalAndAccountingInformation): Seq[Int] =
+    occupationAndAccounting.currentFinancialYearEnd
+      .fold(Seq.empty[Int])(deriveFinancialYearEndDatesFrom(occupationAndAccounting.firstOccupy, _).map(_.getYear))
 
   def buildUpdatedData6045(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -129,19 +132,19 @@ object AccountingInformationUtil {
   )(implicit request: SessionRequest[AnyContent]): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
-    val financialYear                 = newOccupationAndAccounting.financialYear.get
+    val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
     val originalTurnoverSections6045  =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).getOrElse(Seq.empty)
-    val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6045
+    val isFinancialYearsListUnchanged = financialYearsList(newOccupationAndAccounting) == previousFinancialYears6045
 
     val turnoverSections6045 =
       if isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged then originalTurnoverSections6045
       else if isFinancialYearsListUnchanged then
-        (originalTurnoverSections6045 zip financialYearsRequired(firstOccupy, financialYear)).map {
+        (originalTurnoverSections6045 zip deriveFinancialYearEndDatesFrom(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
         }
       else
-        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
+        deriveFinancialYearEndDatesFrom(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection6045(financialYearEnd = finYearEnd)
         }
 
@@ -169,19 +172,19 @@ object AccountingInformationUtil {
   )(implicit request: SessionRequest[AnyContent]): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
-    val financialYear                 = newOccupationAndAccounting.financialYear.get
+    val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
     val originalTurnoverSections6048  =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).getOrElse(Seq.empty)
-    val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6048
+    val isFinancialYearsListUnchanged = financialYearsList(newOccupationAndAccounting) == previousFinancialYears6048
 
     val turnoverSections6048 =
       if isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged then originalTurnoverSections6048
       else if isFinancialYearsListUnchanged then
-        (originalTurnoverSections6048 zip financialYearsRequired(firstOccupy, financialYear)).map {
+        (originalTurnoverSections6048 zip deriveFinancialYearEndDatesFrom(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
         }
       else
-        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
+        deriveFinancialYearEndDatesFrom(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection6048(financialYearEnd = finYearEnd)
         }
 
@@ -209,19 +212,19 @@ object AccountingInformationUtil {
   )(implicit request: SessionRequest[AnyContent]): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
-    val financialYear                 = newOccupationAndAccounting.financialYear.get
+    val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
     val originalTurnoverSections6076  =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
-    val isFinancialYearsListUnchanged = newFinancialYears(newOccupationAndAccounting) == previousFinancialYears6076
+    val isFinancialYearsListUnchanged = financialYearsList(newOccupationAndAccounting) == previousFinancialYears6076
 
     val turnoverSections6076 =
       if isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged then originalTurnoverSections6076
       else if isFinancialYearsListUnchanged then
-        (originalTurnoverSections6076 zip financialYearsRequired(firstOccupy, financialYear)).map {
+        (originalTurnoverSections6076 zip deriveFinancialYearEndDatesFrom(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
         }
       else
-        financialYearsRequired(firstOccupy, financialYear).map { finYearEnd =>
+        deriveFinancialYearEndDatesFrom(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection6076(financialYearEnd = finYearEnd)
         }
 
@@ -260,7 +263,7 @@ object AccountingInformationUtil {
       case _     =>
         request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)
-          .flatMap(_.yearEndChanged) match {
+          .flatMap(_.financialYearEndHasChanged) match {
           case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
           case _          => aboutthetradinghistory.routes.FinancialYearEndController.show().url
         }

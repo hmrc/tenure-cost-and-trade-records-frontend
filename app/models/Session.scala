@@ -16,10 +16,12 @@
 
 package models
 
+import models.ForType.*
 import models.audit.UserData
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.WrappedTurnoverSection
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.accommodation.AccommodationDetails
@@ -73,7 +75,28 @@ case class Session(
     )
 
   def financialYearEndDates: Seq[(LocalDate, Int)] =
-    aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(_.turnoverSections.map(_.financialYearEnd).zipWithIndex)
+    turnoverSections.map(ts => ts.financialYearEnd).zipWithIndex
+
+  def turnoverSections: Seq[WrappedTurnoverSection] =
+    forType match
+      case FOR6020           =>
+        aboutTheTradingHistory.fold(Seq.empty)(
+          _.turnoverSections6020.getOrElse(Seq.empty).map(WrappedTurnoverSection(_))
+        )
+      case FOR6030           => aboutTheTradingHistory.fold(Seq.empty)(_.turnoverSections6030.map(WrappedTurnoverSection(_)))
+      case FOR6045 | FOR6046 =>
+        aboutTheTradingHistoryPartOne.fold(Seq.empty)(
+          _.turnoverSections6045.getOrElse(Seq.empty).map(WrappedTurnoverSection(_))
+        )
+      case FOR6048           =>
+        aboutTheTradingHistoryPartOne.fold(Seq.empty)(
+          _.turnoverSections6048.getOrElse(Seq.empty).map(WrappedTurnoverSection(_))
+        )
+      case FOR6076           =>
+        aboutTheTradingHistoryPartOne.fold(Seq.empty)(
+          _.turnoverSections6076.getOrElse(Seq.empty).map(WrappedTurnoverSection(_))
+        )
+      case _                 => aboutTheTradingHistory.fold(Seq.empty)(_.turnoverSections.map(WrappedTurnoverSection(_)))
 
   def financialYearEndDates6020: Seq[(LocalDate, Int)] =
     aboutTheTradingHistory.fold(Seq.empty[(LocalDate, Int)])(

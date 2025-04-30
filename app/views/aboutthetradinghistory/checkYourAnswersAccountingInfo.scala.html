@@ -82,7 +82,7 @@
     (for {
         aboutTheTradingHistory <- request.sessionData.aboutTheTradingHistory
         occupationAndAccountingInformation <- aboutTheTradingHistory.occupationAndAccountingInformation
-        yearEndChanged <- occupationAndAccountingInformation.yearEndChanged
+        yearEndChanged <- occupationAndAccountingInformation.financialYearEndHasChanged
     } yield {
         yearEndChanged
     }).contains(true)
@@ -125,7 +125,7 @@
             },
             summaryListRow(
                 keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-                valueContent = Text(sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.financialYear.map(_.toMonthDay)).map(dateUtil.formatMonthDay).getOrElse("")),
+                valueContent = Text(sectionAnswers.answers.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd.map(_.toMonthDay)).map(dateUtil.formatMonthDay).getOrElse("")),
                 changeCall = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show(),
                 noBorder = yearEndChanged
             )

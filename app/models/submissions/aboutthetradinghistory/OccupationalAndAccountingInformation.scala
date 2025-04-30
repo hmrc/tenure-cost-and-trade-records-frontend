@@ -21,8 +21,8 @@ import play.api.libs.json.{Json, OFormat}
 
 case class OccupationalAndAccountingInformation(
   firstOccupy: MonthsYearDuration,
-  financialYear: Option[DayMonthsDuration] = None,
-  yearEndChanged: Option[Boolean] = None
+  currentFinancialYearEnd: Option[DayMonthsDuration] = None,
+  financialYearEndHasChanged: Option[Boolean] = None
 )
 object OccupationalAndAccountingInformation {
   implicit val format: OFormat[OccupationalAndAccountingInformation] = Json.format

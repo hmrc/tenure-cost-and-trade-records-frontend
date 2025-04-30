@@ -68,14 +68,14 @@ class WhenDidYouFirstOccupyController @Inject() (
     continueOrSaveAsDraft[MonthsYearDuration](
       occupationalInformationForm,
       formWithErrors => BadRequest(theView(formWithErrors, getBackLink(request.sessionData))),
-      data => {
-        val occupationAndAccounting = request.sessionData.aboutTheTradingHistory
+      formData => {
+        val occupationAndAccountingInfo = request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)
-          .fold(OccupationalAndAccountingInformation(data))(_.copy(firstOccupy = data))
+          .fold(OccupationalAndAccountingInformation(formData))(_.copy(firstOccupy = formData))
 
         val updatedData = updateAboutTheTradingHistory(
           _.copy(
-            occupationAndAccountingInformation = Some(occupationAndAccounting)
+            occupationAndAccountingInformation = Some(occupationAndAccountingInfo)
           )
         )
         session
@@ -83,12 +83,12 @@ class WhenDidYouFirstOccupyController @Inject() (
           .map(_ =>
             navigator.cyaPage
               .filter(_ =>
-                navigator.from == "CYA" && occupationAndAccounting.financialYear.isDefined
+                navigator.from == "CYA" && occupationAndAccountingInfo.currentFinancialYearEnd.isDefined
                   && (
-                    newFinancialYears(occupationAndAccounting) == previousFinancialYears ||
-                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6076 ||
-                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6045 ||
-                      newFinancialYears(occupationAndAccounting) == previousFinancialYears6048
+                    financialYearsList(occupationAndAccountingInfo) == previousFinancialYears ||
+                      financialYearsList(occupationAndAccountingInfo) == previousFinancialYears6076 ||
+                      financialYearsList(occupationAndAccountingInfo) == previousFinancialYears6045 ||
+                      financialYearsList(occupationAndAccountingInfo) == previousFinancialYears6048
                   )
               )
               .getOrElse(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData))
