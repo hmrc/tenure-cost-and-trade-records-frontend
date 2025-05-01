@@ -23,7 +23,7 @@ label.no = No
 label.or = or
 label.pound = £
 label.weeks = wythnos
-fieldsAreMandatory.label = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+fieldsAreMandatory.label = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 
 # OTHER FOOTER LINKS:
 ########
@@ -69,10 +69,10 @@ label.no.na.hoffwn = Na hoffwn
 
 #CYA RADIO BUTTONS
 ##############
-checkYourAnswersRadio.heading = A ydych wedi llenwi''r adran hon?
-checkYourAnswersRadio.yes = Ydw, rwyf wedi llenwi''r adran hon
+checkYourAnswersRadio.heading = A ydych wedi llenwi’r adran hon?
+checkYourAnswersRadio.yes = Ydw, rwyf wedi llenwi’r adran hon
 checkYourAnswersRadio.no = Nac ydw, byddaf yn dod yn ôl ati yn nes ymlaen
-error.checkYourAnswersRadio.required = Dewiswch ''ydw'' os ydych wedi llenwi''r adran hon
+error.checkYourAnswersRadio.required = Dewiswch ‘ydw’ os ydych wedi llenwi’r adran hon
 
 # COMMON LABELS
 ###############
@@ -104,18 +104,18 @@ label.toDate = To date
 
 # COMMON HINTS
 ##############
-hint.select.all = Dewiswch bob un sy''n berthnasol.
+hint.select.all = Dewiswch bob un sy’n berthnasol.
 hint.date.example = Er enghraifft, 27 9 2017.
 hint.month.year.example = Er enghraifft, 9 2017.
 hint.day.month.example = Er enghraifft, 04 05.
 hint.tradingSeason.day.month.example = Er enghraifft, 27 9.
 hint.select.applicable = Select any that apply – leave blank if not applicable.
-hint.all.apply = Dewiswch bob un sy''n berthnasol.
+hint.all.apply = Dewiswch bob un sy’n berthnasol.
 
 # SECTION NAMES
 ###############
-label.section.connectionToTheProperty = Cysylltiad â''r eiddo
-label.section.aboutTheProperty = Amdanoch chi a''r eiddo
+label.section.connectionToTheProperty = Cysylltiad â’r eiddo
+label.section.aboutTheProperty = Amdanoch chi a’r eiddo
 label.section.lettingHistory = Letting history
 label.section.accommodation = Accommodation details
 label.section.aboutYourTradingHistory = Hanes masnachu
@@ -130,10 +130,10 @@ label.section.additionalInformation = Gwybodaeth ychwanegol
 ##############################
 start.page.heading = Send your business trade and cost information to the Valuation Office Agency
 start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
-start.subheading = What you''ll need to begin
+start.subheading = What you’ll need to begin
 start.item1 = the reference number and postcode from the letter you were sent by the Valuation Office Agency (VOA)
 start.item2 = the postcode of the property as printed on the letter - if the postcode shown is incorrect, you can let us know during your declaration
-start.subheading2 = What you''ll be asked
+start.subheading2 = What you’ll be asked
 start.item3 = whether your business owns the property, or occupies it under a lease or agreement
 start.item4 = details of your trading history
 start.item5 = if any parts of the property are let out to businesses or individuals
@@ -151,7 +151,7 @@ start.subheading5 = Alternative formats
 start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href="{0}" class="govuk-link">download a PDF version</a> of this declaration which you can complete and return to the VOA.
 start.subheading6 = Explore the topic
 start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales.
-start.desc7 = If you''d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
+start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
 start.button = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
 start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
@@ -172,14 +172,14 @@ error.json.page.start = Start again
 
 #LOGIN
 ##############################
-login.heading = Beth yw''ch cyfeirnod a''ch cod post?
-label.letter = Gallwch ddod o hyd i''ch cyfeirnod a''ch cod post yn y llythyr a gawsoch gan y VOA.
+login.heading = Beth yw’ch cyfeirnod a’ch cod post?
+label.letter = Gallwch ddod o hyd i’ch cyfeirnod a’ch cod post yn y llythyr a gawsoch gan y VOA.
 label.referenceNumber = Cyfeirnod
 hint.referenceNumber = Er enghraifft, 10000001/101.
 label.postcode = Cod post
 hint.postcode = Er enghraifft, AB12 3CD.
-error.invalid_refnum = Nodwch eich cyfeirnod fel y mae''n ymddangos ar eich llythyr
-error.invalid_postcode_as_on_letter = Nodwch eich cod post fel y mae''n ymddangos ar eich llythyr
+error.invalid_refnum = Nodwch eich cyfeirnod fel y mae’n ymddangos ar eich llythyr
+error.invalid_postcode_as_on_letter = Nodwch eich cod post fel y mae’n ymddangos ar eich llythyr
 label.requestReference = Does dim cyfeirnod gennyf
 label.downloadPdfReferenceNumberLogin = Llawrlwytho fersiwn PDF
 
@@ -213,29 +213,29 @@ requestReferenceNumber.subheading = Os nad ydych wedi cael llythyr gan y VOA
 requestReferenceNumber.p1 = Dim ond pan fydd y VOA wedi gofyn i chi wneud hynny y bydd angen i chi ddatgan eich masnach busnes a gwybodaeth am gostau. Os credwch y dylech fod wedi cael llythyr, gallwch ofyn am un arall gan y VOA.
 requestReferenceNumber.subheading2 = Os oes angen llythyr arall arnoch
 requestReferenceNumber.p2 = Os nad oes gennych chi fynediad at eich llythyr gan y VOA, neu os nad ydych wedi cael un ond yn meddwl y dylech fod wedi, gall y VOA anfon un arall. Cwblhewch y ffurflen ganlynol a bydd y VOA yn ailanfon un arall.
-requestReferenceNumber.p3 = Dim ond i''r cyfeiriad lle cawsant eu hanfon yn wreiddiol y gallwn ailanfon llythyrau. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Cysylltwch â''r VOA (opens in new tab)</a> os yw eich busnes wedi newid cyfeiriad yn ddiweddar.
-requestReferenceNumber.subheading3 = Beth yw manylion yr eiddo sy''n gysylltiedig â''r cyfeirnod coll?
+requestReferenceNumber.p3 = Dim ond i’r cyfeiriad lle cawsant eu hanfon yn wreiddiol y gallwn ailanfon llythyrau. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Cysylltwch â’r VOA (opens in new tab)</a> os yw eich busnes wedi newid cyfeiriad yn ddiweddar.
+requestReferenceNumber.subheading3 = Beth yw manylion yr eiddo sy’n gysylltiedig â’r cyfeirnod coll?
 requestReferenceNumber.address.lookupPageHeading = Beth yw cyfeiriad yr eiddo?
 requestReferenceNumber.address.selectPageHeading = Dewiswch gyfeiriad yr eiddo
 requestReferenceNumber.address.confirmPageHeading = Gwiriwch gyfeiriad yr eiddo
-label.requestReferenceNumberBusinessTradingName = Enw masnachu neu enw''r busnes
+label.requestReferenceNumberBusinessTradingName = Enw masnachu neu enw’r busnes
 error.requestReferenceNumber.businessTradingName.required = Enter the business or trading name
 key.requestReferenceNumberAddress = Cyfeiriad
-key.nameContactRequestReferenceNumber = Enw a''r manylion cyswllt
+key.nameContactRequestReferenceNumber = Enw a’r manylion cyswllt
 error.requestReferenceNumber.businessTradingName.maxLength = Business or trading name must be 50 characters or fewer
 
 # NO REFERENCE NUMBER CONTACT DETAILS
 ##############################
 requestReferenceNumberContactDetails.heading = Rhowch eich manylion cyswllt
-requestReferenceNumberContactDetails.p1 = Dylai''r rhain fod manylion cyswllt y person sy''n llenwi''r ffurflen hon. Dim ond er mwyn rhoi''r wybodaeth ddiweddaraf i chi am eich datganiad y byddwn yn eu defnyddio.
+requestReferenceNumberContactDetails.p1 = Dylai’r rhain fod manylion cyswllt y person sy’n llenwi’r ffurflen hon. Dim ond er mwyn rhoi’r wybodaeth ddiweddaraf i chi am eich datganiad y byddwn yn eu defnyddio.
 label.requestReferenceNumberContactDetailsFullName = Enw llawn
 requestReferenceNumberContactDetailsAdditionalInformation.heading = Gwybodaeth ychwanegol (dewisol)
 error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 
 # REFERENCE NUMBER
 ###############################
-referenceNumber.heading = Beth yw''ch cyfeirnod?
-referenceNumber.paragraph = Bydd angen y rhif cyfeirnod arnoch o''r llythyr a gawsoch gan y VOA.
+referenceNumber.heading = Beth yw’ch cyfeirnod?
+referenceNumber.paragraph = Bydd angen y rhif cyfeirnod arnoch o’r llythyr a gawsoch gan y VOA.
 label.referenceNumber = Cyfeirnod
 error.referenceNumber.required = Enter your reference number
 hint.referenceNumber = Er enghraifft, 10000001/101.
@@ -251,11 +251,11 @@ guidance.FOR6020.heading = Completing VO 6020 request for rental information: pe
 guidance.FOR6030.heading = Completing VO 6030 request for rental information: receipts (general basic)
 guidance.FOR6045.heading = Completing VO 6045 request for rental information: caravan sites - receipts
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
-guidance.FOR6076.heading = Completing VO 6076 request for rental information: what information you''ll need to provide
-guidance.subheading = Find out which parts of the declaration apply to your business, and the information you''ll need to find to complete your declaration.
+guidance.FOR6076.heading = Completing VO 6076 request for rental information: what information you’ll need to provide
+guidance.subheading = Find out which parts of the declaration apply to your business, and the information you’ll need to find to complete your declaration.
 
-guidance.sentence.whatYouWillBeAsked = What you''ll be asked
-guidance.sentence.whatYouWillNeed = What you''ll need
+guidance.sentence.whatYouWillBeAsked = What you’ll be asked
+guidance.sentence.whatYouWillNeed = What you’ll need
 guidance.sentence.importantDates = Important dates
 guidance.sentence.youMustTellUs = You must tell us:
 guidance.sentence.youMustDeclare = You must declare  if you receive any rental income from businesses operating:
@@ -286,7 +286,7 @@ guidance.sections.FOR6048.connectionToTheProperty.li1 = if the property is vacan
 guidance.sections.FOR6048.connectionToTheProperty.li2 = the name of the business or organisation operating from the property
 guidance.sections.FOR6048.connectionToTheProperty.li3 = whether the business or organisation owns or rents the property
 guidance.sections.FOR6048.connectionToTheProperty.li4 = if the declaration is being completed by a third party
-guidance.sections.FOR6048.connectionToTheProperty.p1 = If the property is vacant, but you receive rental income from lettings such as phone masts, advertising billboards or car parking, you''ll need those tenancy agreements.
+guidance.sections.FOR6048.connectionToTheProperty.p1 = If the property is vacant, but you receive rental income from lettings such as phone masts, advertising billboards or car parking, you’ll need those tenancy agreements.
 guidance.sections.FOR6048.connectionToTheProperty.p2 = If the property is vacant, we need to know when it became vacant.
 
 guidance.sections.FOR6010.aboutYouAndTheProperty.li3 = details of your premises licence
@@ -373,7 +373,7 @@ guidance.sections.FOR6076.tradingHistory.li4 = <b>How much power you generated</
 guidance.sections.FOR6076.tradingHistory.li5 = <b>Gross receipts</b><br/>Including all sales, tariffs, benefits and incentives
 guidance.sections.FOR6076.tradingHistory.li6 = <b>Other income</b><br/>Any other income not listed in your gross receipts
 guidance.sections.FOR6076.tradingHistory.li7 = <b>Cost of sales</b><br/>Details of any costs occurred
-guidance.sections.FOR6076.tradingHistory.li8 = <b>Staff costs</b><br/>Wages, National Insurance, pension contributions and director''s remuneration
+guidance.sections.FOR6076.tradingHistory.li8 = <b>Staff costs</b><br/>Wages, National Insurance, pension contributions and director’s remuneration
 guidance.sections.FOR6076.tradingHistory.li9 = <b>Premises costs</b><br/>Including utilities, repairs, rates and insurance
 guidance.sections.FOR6076.tradingHistory.li10 = <b>Operational and administrative expenses</b><br/>Including marketing expenses, office sundries and legal fees
 guidance.sections.FOR6076.tradingHistory.li11 = <b>Head office expenses</b><br/>If applicable
@@ -398,8 +398,8 @@ guidance.sections.FOR6016.tradingHistory.li2 = <b>Other receipts</b><br/>Includi
 guidance.sections.FOR6048.tradingHistory.li1 = revenue your self-catering holiday accommodation business generates
 guidance.sections.FOR6048.tradingHistory.li2 = it costs to operate your business
 guidance.sections.FOR6048.tradingHistory.p1 = <b>If your business has occupied the property for longer than 3 years</b><br>You'll need trading figures from the 3 most recent financial years.
-guidance.sections.FOR6048.tradingHistory.p2 = <b>If your business has occupied the property for less than 3 years</b><br>You''ll be asked for figures from all completed financial years since you occupied the property.
-guidance.sections.FOR6048.tradingHistory.p3 = You''ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
+guidance.sections.FOR6048.tradingHistory.p2 = <b>If your business has occupied the property for less than 3 years</b><br>You’ll be asked for figures from all completed financial years since you occupied the property.
+guidance.sections.FOR6048.tradingHistory.p3 = You’ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
 guidance.sections.FOR6048.tradingHistory.li3 = <b>Accounting information</b><br/>When you bought or took over the property, and your financial year end
 guidance.sections.FOR6048.tradingHistory.li4 = <b>Income</b><br/>Including all letting income and income from providing services such as electricity, laundry or meals
 guidance.sections.FOR6048.tradingHistory.li5 = <b>Fixed costs</b><br/>Details of costs such as insurance, business rates or rent
@@ -414,7 +414,7 @@ guidance.sections.FOR6011.yourLeaseOrAgreement.li4 = when the rent was first pai
 guidance.sections.FOR6011.yourLeaseOrAgreement.li5 = when the lease will be reviewed. or when it expires, whichever is soonest
 
 guidance.sections.FOR6048.yourLeaseOrAgreement.p1 = If your business owns the property, or occupies the property on a permanent rent-free arrangement, you will not have to fill out this section.
-guidance.sections.FOR6048.yourLeaseOrAgreement.li1 = your landlord''s details
+guidance.sections.FOR6048.yourLeaseOrAgreement.li1 = your landlord’s details
 guidance.sections.FOR6048.yourLeaseOrAgreement.li2 = details of your lease
 guidance.sections.FOR6048.yourLeaseOrAgreement.li3 = if any items or services are included in your rent
 guidance.sections.FOR6048.yourLeaseOrAgreement.li4 = how the rent was calculated
@@ -436,7 +436,7 @@ guidance.sections.shared.startingDeclaration.a2 = Contents
 
 # DOWNLOAD PDF
 ##############
-downloadPdf.heading = Lawrlwytho''r datganiad hwn ar ffurf PDF
+downloadPdf.heading = Lawrlwytho’r datganiad hwn ar ffurf PDF
 downloadPdf.6010.url = https://www.gov.uk/government/publications/vo-6010-request-for-rental-information-public-houses
 downloadPdf.6010.label = VO6010 request for rental information: public houses (opens in a new tab)
 downloadPdf.6011.url = https://www.gov.uk/government/publications/request-for-rental-information-pubs-houses-licensed-restaurants-wine-bars-receipts-only
@@ -460,8 +460,8 @@ downloadPdf.6076.label = VO6076 request for rental information: Renewable Energy
 downloadPdf.subheading = The reference number you entered does not match our records
 downloadPdf.no.download = Enter the reference number as it appears on the letter you received from the VOA.
 downloadPdf.retry = If the system does not recognise your reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
-downloadPdf.englishWelsh = Mae''r datganiad hwn ar gael ar ffurf PDF yn Gymraeg ac yn Saesneg
-downloadPdf.continueJourneyButton = Parhau â''r datganiad ar-lein
+downloadPdf.englishWelsh = Mae’r datganiad hwn ar gael ar ffurf PDF yn Gymraeg ac yn Saesneg
+downloadPdf.continueJourneyButton = Parhau â’r datganiad ar-lein
 
 #GENERIC CONFIRMATION
 #####################
@@ -474,28 +474,28 @@ genericRemoveConfirmation.heading = A ydych yn siŵr eich bod am dynnu {0}?
 #########################
 areYouConnected.title = A ydych wedi cysylltu o hyd â: {0}?
 areYouConnected.heading = Are you still connected to the property?
-label.areYouConnected.addressUpdate = Iawn, ac mae angen i''r cyfeiriad gael ei ddiweddaru
-hint.noConnection = Dewiswch hwn os nad ydych chi bellach yn gysylltiedig â''r eiddo, neu os nad ydych erioed wedi cael cysylltiad â''r eiddo.
+label.areYouConnected.addressUpdate = Iawn, ac mae angen i’r cyfeiriad gael ei ddiweddaru
+hint.noConnection = Dewiswch hwn os nad ydych chi bellach yn gysylltiedig â’r eiddo, neu os nad ydych erioed wedi cael cysylltiad â’r eiddo.
 
 # EDIT ADDRESS
 ##############
-editAddress.heading = Sut ydych chi''n disgwyl i''r cyfeiriad sy''n gysylltiedig gael ei ddangos?
+editAddress.heading = Sut ydych chi’n disgwyl i’r cyfeiriad sy’n gysylltiedig gael ei ddangos?
 
 # CONNECTION TO THE PROPERTY
 ############################
 connectionToTheProperty.heading = What is your connection to the property?
 label.occupierTrustee = Occupier or trustee for occupier
 label.ownerTrustee = Owner or trustee for owner
-label.occupierAgent = Occupier''s agent
-label.ownerAgent = Owner''s agent
-hint.occupierTrustee = Select this if you''re renting or leasing the property, even through a leaseback arrangement.
-hint.ownerTrustee = Select this if you own and occupy the property - you''re considered an occupier if you own the property and lease it back to a business you operate from the property.
+label.occupierAgent = Occupier’s agent
+label.ownerAgent = Owner’s agent
+hint.occupierTrustee = Select this if you’re renting or leasing the property, even through a leaseback arrangement.
+hint.ownerTrustee = Select this if you own and occupy the property - you’re considered an occupier if you own the property and lease it back to a business you operate from the property.
 error.no.connection.selected = Select your connection to the property
 
 #NAME OF BUSINESS OPERATING FROM THE PROPERTY
-tradingNameFromProperty.heading = Beth yw enw masnachu''r busnes neu''r sefydliad sy''n gweithredu o''r eiddo?
-error.tradingNameFromProperty.required = Nodwch enw masnachu''r busnes neu''r sefydliad
-error.tradingNameFromProperty.maxLength = Mae''n rhaid i''r enw masnachu fod yn 50 o gymeriadau neu lai
+tradingNameFromProperty.heading = Beth yw enw masnachu’r busnes neu’r sefydliad sy’n gweithredu o’r eiddo?
+error.tradingNameFromProperty.required = Nodwch enw masnachu’r busnes neu’r sefydliad
+error.tradingNameFromProperty.maxLength = Mae’n rhaid i’r enw masnachu fod yn 50 o gymeriadau neu lai
 label.tradingNameFromPropertyHeadingLabel = Enw masnachu
 label.tradingNameFromPropertyHeadingLabel6048 = Enw llawn
 tradingNameFromProperty4068.heading = Beth yw enw’r person neu’r cwmni sy’n gweithredu’r gwasanaeth hunanddarpar o’r eiddo?
@@ -505,19 +505,19 @@ error.tradingNameFromProperty6048.maxLength = The name of the person or company 
 # DOES TRADING NAME OWN THE PROPERTY
 #####################################
 tradingNameOwnTheProperty.heading = Do you own the property?
-hint.tradingNameOwnTheProperty = Peidiwch â dewis ‘iawn'' oni bai eich bod yn berchen ar y safle neu''r tir a ddefnyddir gan y busnes.
+hint.tradingNameOwnTheProperty = Peidiwch â dewis ‘iawn’ oni bai eich bod yn berchen ar y safle neu’r tir a ddefnyddir gan y busnes.
 tradingNameOwnTheProperty.title = A yw  {0} yn berchen ar yr eiddo?
-hint.tradingNameOwnTheProperty = Peidiwch â dewis ‘iawn'' oni bai eich bod yn berchen ar y safle neu''r tir a ddefnyddir gan y busnes.
-error.tradingNameOwnTheProperty.missing = Dewiswch ‘iawn'' os yw''r sefydliad yn berchen ar yr kiddo
+hint.tradingNameOwnTheProperty = Peidiwch â dewis ‘iawn’ oni bai eich bod yn berchen ar y safle neu’r tir a ddefnyddir gan y busnes.
+error.tradingNameOwnTheProperty.missing = Dewiswch ‘iawn’ os yw’r sefydliad yn berchen ar yr kiddo
 
 # DOES TRADING NAME PAY RENT ON THE PROPERTY
 ############################################
 tradingNamePayingRent.heading = Talu rhent
 tradingNamePayingRent.title = A yw {0} yn talu rhent?
-tradingNamePayingRent.p1 = Mae''n rhaid i chi ddatgan a ydych yn talu rhent o dan delerau eich prydles neu gytundeb.
-tradingNamePayingRent.p2 = Dylech ddewis ‘iawn'' hyd yn oed os ydych yn talu rhent o dan gytundeb anffurfiol, neu os oes gennych gytundeb di-rent dros dro.
-tradingNamePayingRent.p3 = Dewiswch ‘na'' os yw perchennog yr eiddo yn caniatáu i chi ei feddiannu ar gytundeb di-rent parhaol.
-error.tradingNamePayingRent.missing = Dewiswch ‘iawn'' os yw''r sefydliad yn talu rhent ar yr eiddo
+tradingNamePayingRent.p1 = Mae’n rhaid i chi ddatgan a ydych yn talu rhent o dan delerau eich prydles neu gytundeb.
+tradingNamePayingRent.p2 = Dylech ddewis ‘iawn’ hyd yn oed os ydych yn talu rhent o dan gytundeb anffurfiol, neu os oes gennych gytundeb di-rent dros dro.
+tradingNamePayingRent.p3 = Dewiswch ‘na’ os yw perchennog yr eiddo yn caniatáu i chi ei feddiannu ar gytundeb di-rent parhaol.
+error.tradingNamePayingRent.missing = Dewiswch ‘iawn’ os yw’r sefydliad yn talu rhent ar yr eiddo
 
 # ARE YOU THIRD-PARTY WORKING ON BEHALF OF TRADING NAME
 #######################################################
@@ -534,62 +534,62 @@ areYouThirdParty6076.no = Choose <b>No</b> if you are an owner, director, or dir
 # VACANT PROPERTIES
 ############################
 vacantProperties.heading = Eiddo gwag
-vacantProperties.p1 = Mae''n rhaid i chi ddatgan os oes eiddo''n wag.
+vacantProperties.p1 = Mae’n rhaid i chi ddatgan os oes eiddo’n wag.
 vacantProperties.p2 = Dim ond os nad oes unrhyw fath o brydles, tenantiaeth neu gytundeb i feddiannu eiddo ar gael y gellir ei ddatgan yn wag.
 vacantProperties.p3 = Ni ddylid datgan eiddo yn wag os:
-vacantProperties.item1 = mae''r busnes sy''n gweithredu oddi yno ar gau dros dro, ar gyfer gwaith adnewyddu, neu ar gau yn dymhorol, er enghraifft
-vacantProperties.item2 = mae''r eiddo''n wag, ond mae prydles, tenantiaeth neu gytundeb bresennol i feddiannu yn ei le
-vacantProperties.item3 = mae''r eiddo''n cael ei ddefnyddio gan unigolyn, busnes neu sefydliad o dan drefniant anffurfiol
-label.vacantProperties = A yw''r eiddo''n wag ar hyn o bryd?
-error.vacantProperties.required = Dewiswch ‘ydy'' os yw''r eiddo yn wag ar hyn o bryd
+vacantProperties.item1 = mae’r busnes sy’n gweithredu oddi yno ar gau dros dro, ar gyfer gwaith adnewyddu, neu ar gau yn dymhorol, er enghraifft
+vacantProperties.item2 = mae’r eiddo’n wag, ond mae prydles, tenantiaeth neu gytundeb bresennol i feddiannu yn ei le
+vacantProperties.item3 = mae’r eiddo’n cael ei ddefnyddio gan unigolyn, busnes neu sefydliad o dan drefniant anffurfiol
+label.vacantProperties = A yw’r eiddo’n wag ar hyn o bryd?
+error.vacantProperties.required = Dewiswch ‘ydy’ os yw’r eiddo yn wag ar hyn o bryd
 
 # CHECK YOUR ANSWERS CONNECTION TO PROPERTY
 ###########################################
-checkYourAnswersConnectionToProperty.heading= Gwirio''ch atebion – cysylltiad â''r eiddo
+checkYourAnswersConnectionToProperty.heading= Gwirio’ch atebion – cysylltiad â’r eiddo
 checkYourAnswersConnectionToProperty.connectionStatus.heading = Statws o ran cysylltiad
-label.connectedToTheProperty = Cysylltiad â''r eiddo?
-label.yes-change-address = Iawn, ac mae angen i''r cyfeiriad gael ei ddiweddaru
+label.connectedToTheProperty = Cysylltiad â’r eiddo?
+label.yes-change-address = Iawn, ac mae angen i’r cyfeiriad gael ei ddiweddaru
 checkYourAnswersConnectionToProperty.proposedAddress = Cyfeiriad arfaethedig
 checkYourAnswersConnectionToProperty.vacancyStatus.heading = Statws eiddo gwag
-checkYourAnswersConnectionToProperty.isPropertyVacant = A yw''r eiddo yn wag ar hyn o bryd?
+checkYourAnswersConnectionToProperty.isPropertyVacant = A yw’r eiddo yn wag ar hyn o bryd?
 checkYourAnswersConnectionToProperty.occupierDetails.heading = Manylion y meddiannydd
-checkYourAnswersConnectionToProperty.nameOfOccupier = Enw''r preswyliwr
+checkYourAnswersConnectionToProperty.nameOfOccupier = Enw’r preswyliwr
 checkYourAnswersConnectionToProperty.ownsTheProperty = Yn berchen ar yr eiddo?
 checkYourAnswersConnectionToProperty.payRent = Yn talu rhent?
 checkYourAnswersConnectionToProperty.thirdParty = Trydydd parti?
 
 # VACANT PROPERTY START DATE
 ############################
-vacantPropertyStartDate.heading = Pryd daeth yr eiddo''n wag?
+vacantPropertyStartDate.heading = Pryd daeth yr eiddo’n wag?
 label.startDateOfVacantProperty =
 label.startDateOfVacantProperty.help = Er enghraifft, 27 9 2017.
-fieldName.startDateOfVacantProperty = Nodwch y dyddiad y daeth yr eiddo''n wag
+fieldName.startDateOfVacantProperty = Nodwch y dyddiad y daeth yr eiddo’n wag
 
 # LETTING INCOME - IS ANY RENT RECEIVED FROM LETTING
 ####################################################
 isRentReceivedFromLetting.heading = Incwm o osodiadau
-isRentReceivedFromLetting.label = A geir unrhyw rent yn dod i law o osod rhannau eraill o''r eiddo?
-isRentReceivedFromLetting.p1 = Mae''n rhaid i chi ddatgan unrhyw incwm a gafwyd o roi rhannau eraill o''r eiddo ar osod, er enghraifft byrddau postero, maes parcio neu fastiau ffôn. Cewch gyfle i ychwanegu mwy nag un gosodiad os oes angen.
-error.isRentReceivedFromLetting.missing = Dewiswch ‘oes'' os oes unrhyw rent yn dod i law o roi rhannau o''r eiddo ar osod
+isRentReceivedFromLetting.label = A geir unrhyw rent yn dod i law o osod rhannau eraill o’r eiddo?
+isRentReceivedFromLetting.p1 = Mae’n rhaid i chi ddatgan unrhyw incwm a gafwyd o roi rhannau eraill o’r eiddo ar osod, er enghraifft byrddau postero, maes parcio neu fastiau ffôn. Cewch gyfle i ychwanegu mwy nag un gosodiad os oes angen.
+error.isRentReceivedFromLetting.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
 tenantDetails.heading = Rhowch fanylion y tenant
-tenantDetails.address.lookupPageHeading = What is the tenant''s correspondence address?
-tenantDetails.address.selectPageHeading = Choose the tenant''s correspondence address
-tenantDetails.address.confirmPageHeading = Check the tenant''s correspondence address
-label.tenantName = Enw''r tenant
-label.descriptionOfLetting = Disgrifiad o''r hyn sydd ar osod
+tenantDetails.address.lookupPageHeading = What is the tenant’s correspondence address?
+tenantDetails.address.selectPageHeading = Choose the tenant’s correspondence address
+tenantDetails.address.confirmPageHeading = Check the tenant’s correspondence address
+label.tenantName = Enw’r tenant
+label.descriptionOfLetting = Disgrifiad o’r hyn sydd ar osod
 hint.descriptionOfLetting = Er enghraifft, bwrdd poster, llety preswyl
 label.addressLineOne = Llinell cyfeiriad 1
 label.addressLineTwo = Llinell cyfeiriad 2
-error.tenantName.required = Nodwch enw''r person neu''r busnes sy''n rhentu''r eiddo
-error.tenantName.maxLength = Mae''n rhaid i enw''r tenant fod yn 50 o gymeriadau neu lai
-error.descriptionOfLetting.required = Nodwch ddisgrifiad o''r gosodiad
-error.descriptionOfLetting.maxLength = Mae''n rhaid i''r disgrifiad o''r gosodiad fod yn 50 o gymeriadau neu lai
+error.tenantName.required = Nodwch enw’r person neu’r busnes sy’n rhentu’r eiddo
+error.tenantName.maxLength = Mae’n rhaid i enw’r tenant fod yn 50 o gymeriadau neu lai
+error.descriptionOfLetting.required = Nodwch ddisgrifiad o’r gosodiad
+error.descriptionOfLetting.maxLength = Mae’n rhaid i’r disgrifiad o’r gosodiad fod yn 50 o gymeriadau neu lai
 error.addressLineOne.required = Nodwch linell gyntaf y cyfeiriad
-error.addressLineOne.maxLength = Mae''n rhaid i linell 1 y cyfeiriad fod yn 50 o gymeriadau neu lai
-error.addressLineTwo.maxLength = Mae''n rhaid i linell 2 y cyfeiriad fod yn 50 o gymeriadau neu lai
+error.addressLineOne.maxLength = Mae’n rhaid i linell 1 y cyfeiriad fod yn 50 o gymeriadau neu lai
+error.addressLineTwo.maxLength = Mae’n rhaid i linell 2 y cyfeiriad fod yn 50 o gymeriadau neu lai
 
 # CONNECTION TO PROPERTY ANNUAL RENT
 ###########################################
@@ -600,28 +600,28 @@ fieldName.lettingPartOfPropertyFixedRentDate = the date when the annual rent was
 # CONNECTION TO PROPERTY ITEMS INCLUDED IN RENT
 ###############################################
 lettingPartOfPropertyCheckboxesDetails.heading = Items included in your rent
-lettingPartOfPropertyCheckboxesDetails.title = A oes unrhyw rai o''r canlynol wedi''u cynnwys yn y rhent ar gyfer {0}?
-hint.lettingPartOfPropertyCheckboxesDetails = Dewiswch bob un sy''n gymwys
-label.percentageOpenMarket = Canran o''r gwerth ar y farchnad agored
+lettingPartOfPropertyCheckboxesDetails.title = A oes unrhyw rai o’r canlynol wedi’u cynnwys yn y rhent ar gyfer {0}?
+hint.lettingPartOfPropertyCheckboxesDetails = Dewiswch bob un sy’n gymwys
+label.percentageOpenMarket = Canran o’r gwerth ar y farchnad agored
 label.fixed = Swm sefydlog
 label.percentageTurnover = Canran o drosiant busnes y meddiannydd
-label.indexed = Wedi''i fynegeio i''r mynegai prisiau manwerthu (RPI) neu fynegai arall
+label.indexed = Wedi’i fynegeio i’r mynegai prisiau manwerthu (RPI) neu fynegai arall
 label.stepped = Cytundeb rhent fesul cam
 label.other = Other (for example, combination of the above)
-label.currentRentBasedOn.percentageOpenMarket = Canran o''r gwerth ar y farchnad agored
+label.currentRentBasedOn.percentageOpenMarket = Canran o’r gwerth ar y farchnad agored
 label.currentRentBasedOn.fixed = Swm sefydlog
 label.currentRentBasedOn.percentageTurnover = Canran o drosiant busnes y meddiannydd
-label.currentRentBasedOn.indexed = Wedi''i fynegeio i''r mynegai prisiau manwerthu (RPI) neu fynegai arall
+label.currentRentBasedOn.indexed = Wedi’i fynegeio i’r mynegai prisiau manwerthu (RPI) neu fynegai arall
 label.currentRentBasedOn.stepped = Cytundeb rhent fesul cam
 label.currentRentBasedOn.other = Other
 checkbox.lettingPartOfPropertyCheckboxesDetails.rates = Ardrethi
 checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance = Yswiriant eiddo
 checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs = Atgyweirio y tu allan
 checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs = Atgyweirio y tu mewn
-checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent
+checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
 checkbox.lettingPartOfPropertyCheckboxesDetails.none = None
-error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ''No, none of these items are included in the rent''
-error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ''No, none of these items are included in the rent''
+error.lettingPartOfPropertyCheckboxesDetails.required = Select any items included in your rent or select ‘No, none of these items are included in the rent’
+error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther = Select any items included in your rent or select ‘No, none of these items are included in the rent’
 
 # CONNECTION TO PROPERTY - ADD ANOTHER LETTING DETAILS
 #################################################################
@@ -634,20 +634,20 @@ error.addAnotherLetting.required = Select yes if you would like to add another l
 ##############################
 provideContactDetails.heading = Rhowch eich manylion cyswllt
 provideContactDetails.title = Rhowch eich manylion cyswllt
-provideContactDetails.p1 = Dylai''r rhain fod manylion cyswllt y person sy''n llenwi''r ffurflen hon. Dim ond er mwyn rhoi''r wybodaeth ddiweddaraf i chi am eich datganiad y byddwn yn eu defnyddio.
+provideContactDetails.p1 = Dylai’r rhain fod manylion cyswllt y person sy’n llenwi’r ffurflen hon. Dim ond er mwyn rhoi’r wybodaeth ddiweddaraf i chi am eich datganiad y byddwn yn eu defnyddio.
 provideContactDetailsAdditionalInformation.heading = Gwybodaeth ychwanegol (dewisol)
-provideContactDetailsAdditionalInformation.hint = Er enghraifft, enw''r cyn-berchennog neu''r cyn-feddiannydd
-error.fullNameProvideDetails.maxLength = Mae''n rhaid i''ch enw chi fod yn 50 o gymeriadau neu lai
+provideContactDetailsAdditionalInformation.hint = Er enghraifft, enw’r cyn-berchennog neu’r cyn-feddiannydd
+error.fullNameProvideDetails.maxLength = Mae’n rhaid i’ch enw chi fod yn 50 o gymeriadau neu lai
 
 # CHECK YOUR ANSWERS VACANT PROPERTY SUBMISSION
 #############################################
-checkYourAnswersConnectionToVacantProperty.heading = Gwirio''ch atebion – eiddo gwag
+checkYourAnswersConnectionToVacantProperty.heading = Gwirio’ch atebion – eiddo gwag
 checkYourAnswersConnectionToVacantProperty.connectionStatus.heading = Statws o ran cysylltiad
 checkYourAnswersConnectionToVacantProperty.proposedAddress = Cyfeiriad arfaethedig
-label.checkYourAnswersConnectionToVacantProperty = Cysylltiad â''r eiddo?
+label.checkYourAnswersConnectionToVacantProperty = Cysylltiad â’r eiddo?
 checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading = Statws eiddo gwag
-checkYourAnswersConnectionToVacantProperty.isPropertyVacant = A yw''r eiddo yn wag ar hyn o bryd?
-checkYourAnswersConnectionToVacantProperty.vacantDate = Pa bryd daeth yr eiddo''n wag
+checkYourAnswersConnectionToVacantProperty.isPropertyVacant = A yw’r eiddo yn wag ar hyn o bryd?
+checkYourAnswersConnectionToVacantProperty.vacantDate = Pa bryd daeth yr eiddo’n wag
 checkYourAnswersConnectionToVacantProperty.lettings.heading = Gosodiadau
 checkYourAnswersConnectionToVacantProperty.isRentReceived = Rhent a gafwyd o osodiadau?
 checkYourAnswersConnectionToVacantProperty.yourContactDetails.heading = Eich manylion cyswllt
@@ -655,7 +655,7 @@ checkYourAnswersConnectionToVacantProperty.yourContactDetails.title = Manylion c
 checkYourAnswersConnectionToVacantProperty.tenantDetails = Manylion y tenant
 checkYourAnswersConnectionToVacantProperty.annualRent = Rhent blynyddol
 checkYourAnswersConnectionToVacantProperty.fixedOn = Fixed on
-checkYourAnswersConnectionToVacantProperty.itemsInRent = Wedi''i gynnwys yn y rhent
+checkYourAnswersConnectionToVacantProperty.itemsInRent = Wedi’i gynnwys yn y rhent
 checkYourAnswersConnectionToVacantProperty.addAnotherLetting = Add another letting?
 checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber = Gosodiad {0}
 checkYourAnswersConnectionToVacantProperty.addedLetting = Rydych wedi ychwanegu {0} gosodiad
@@ -664,12 +664,12 @@ checkYourAnswersConnectionToVacantProperty.addLetting = Add or remove a letting
 
 # Confirmation Page Connection to Property
 ##########################################
-label.connectionToProperty.confirm.heading = Cais wedi''i anfon yn llwyddiannus
-label.connectionToProperty.requestRefNum = Mae eich cais i gael cyfeirnod wedi''i anfon at y VOA.
-label.connectionToProperty.whatNext = Yr hyn sy''n digwydd nesaf
-label.connectionToProperty.reissued = Bydd llythyr cais am ddatganiad yn cael ei ailanfon os yw''r VOA wedi anfon un atoch yn ddiweddar.
-label.connectionToProperty.contact = Efallai y bydd angen i''r VOA gysylltu â chi os yw''r canlynol yn gywir:
-list.connectionToProperty.p1 = nid yw''r cyfeiriad a roddwyd gennych yn cyfateb i''w cofnodion
+label.connectionToProperty.confirm.heading = Cais wedi’i anfon yn llwyddiannus
+label.connectionToProperty.requestRefNum = Mae eich cais i gael cyfeirnod wedi’i anfon at y VOA.
+label.connectionToProperty.whatNext = Yr hyn sy’n digwydd nesaf
+label.connectionToProperty.reissued = Bydd llythyr cais am ddatganiad yn cael ei ailanfon os yw’r VOA wedi anfon un atoch yn ddiweddar.
+label.connectionToProperty.contact = Efallai y bydd angen i’r VOA gysylltu â chi os yw’r canlynol yn gywir:
+list.connectionToProperty.p1 = nid yw’r cyfeiriad a roddwyd gennych yn cyfateb i’w cofnodion
 list.connectionToProperty.p2 = nid oes ganddynt gofnod o anfon llythyr atoch
 list.connectionToProperty.p3 = mae angen rhagor o wybodaeth arnynt
 
@@ -692,15 +692,15 @@ list.vacantProperty.p3 = they require further information
 
 # ARE YOU STILL CONNECTED
 #########################
-pastConnectionType.heading = Ydych chi erioed wedi cael cysylltiad â''r eiddo?
-error.pastConnectionType = Dewiswch ‘iawn'' os ydych erioed wedi cael cysylltiad â''r eiddo
+pastConnectionType.heading = Ydych chi erioed wedi cael cysylltiad â’r eiddo?
+error.pastConnectionType = Dewiswch ‘iawn’ os ydych erioed wedi cael cysylltiad â’r eiddo
 
 # REMOVE CONNECTION
 ###################
 removeConnection.heading = Rhowch eich manylion cyswllt
-removeConnection.subheading = Dim ond os bydd angen i ni gysylltu â chi cyn dileu''ch cysylltiad â''r eiddo hwn y byddwn yn defnyddio''r manylion hyn.
+removeConnection.subheading = Dim ond os bydd angen i ni gysylltu â chi cyn dileu’ch cysylltiad â’r eiddo hwn y byddwn yn defnyddio’r manylion hyn.
 label.removeConnectionAdditionalInfo = Gwybodaeth ychwanegol
-hint.removeConnectionDetails.removeConnectionAdditionalInfo = Er enghraifft, y dyddiad y gwnaethoch feddiannu''r eiddo ddiwethaf.
+hint.removeConnectionDetails.removeConnectionAdditionalInfo = Er enghraifft, y dyddiad y gwnaethoch feddiannu’r eiddo ddiwethaf.
 error.fullName.required = Enter your name
 
 # ABOUT YOU AND PROPERTY SECTION
@@ -734,16 +734,16 @@ error.propertyCurrentlyUsed.maxLength = Your description must be 200 characters 
 # ABOUT THE PROPERTY STRING (6020/6030)
 ####################
 hint.propertyCurrentlyUsedString = For example, petrol station, petrol station with living accommodation.
-error.propertyCurrentlyUsedString.required = Enter the property''s current use
-error.propertyCurrentlyUsedString.maxLength = The property''s use must be described in 200 characters or fewer
+error.propertyCurrentlyUsedString.required = Enter the property’s current use
+error.propertyCurrentlyUsedString.maxLength = The property’s use must be described in 200 characters or fewer
 
 #ELECTRIC VEHICLE CHARGING POINTS (FORM 6020)
 ############################
 electricVehicleChargingPoints.heading = Pwyntiau gwefru cerbydau trydan (EV)
-electricVehicleChargingPoints.p1 = Os ydych yn gweithredu man gwefru cerbyd trydan nad yw''n cael ei logi i drydydd parti, mae''n rhaid ei gynnwys yn eich datganiad.
-electricVehicleChargingPoints.p2 = Mae''n rhaid i unrhyw fan gwefru cerbyd trydan a weithredir gan gwmnïau trydydd parti gael ei ddatgan yn yr adran ‘gosodiadau''.
+electricVehicleChargingPoints.p1 = Os ydych yn gweithredu man gwefru cerbyd trydan nad yw’n cael ei logi i drydydd parti, mae’n rhaid ei gynnwys yn eich datganiad.
+electricVehicleChargingPoints.p2 = Mae’n rhaid i unrhyw fan gwefru cerbyd trydan a weithredir gan gwmnïau trydydd parti gael ei ddatgan yn yr adran ‘gosodiadau’.
 label.electricVehicleChargingPoints = A ydych yn gweithredu unrhyw fan gwefru cerbyd trydan?
-spacesOrBays.textbox =  Sawl man gwefru ydych chi''n eu gweithredu?
+spacesOrBays.textbox =  Sawl man gwefru ydych chi’n eu gweithredu?
 error.spacesOrBays.required = Enter how many spaces or bays you operate
 error.electricVehicleChargingPoints.required = Select yes if you operate any EV charging point spaces or bays
 error.spacesOrBaysNumber.nonNumeric=The number of spaces or bays you operate must be a number between 1 and 999
@@ -756,7 +756,7 @@ buildingOperatingHaveAWebsite.heading = Does the business operating from the pro
 websiteAddressForProperty.textbox = Enter website address
 error.websiteAddressForProperty.required = Nodwch y cyfeiriad gwe
 error.webaddressFormat.required = Nodwch gyfeiriad gwe yn y fformat cywir, megis enwbusnes.cymru, neu www.cyfeiriad.co.uk
-error.buildingOperatingHaveAWebsite.required = Dewiswch ‘oes'' os oes gan y busnes wefan
+error.buildingOperatingHaveAWebsite.required = Dewiswch ‘oes’ os oes gan y busnes wefan
 
 #CHARITY QUESTION PAGE (6030)
 ########################
@@ -777,7 +777,7 @@ error.tradingActivity.maxLength = Your description of the trading activity must 
 ######################################
 premisesLicenseGranted.heading = Is there a current premises licence in place for the property?
 help.premisesLicenseGranted.title = Help with your premises licence
-help.premisesLicenseGranted.text = We''re interested to know if you''re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
+help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
 error.premisesLicenseGranted.missing = Select yes if a premises licence has been granted
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
@@ -787,7 +787,7 @@ help.premisesLicenseGrantedInformation.title = Help with your description
 help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
 help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
 help.premisesLicenseGrantedInformation.heading2 = Describing restrictions on the use of the property
-help.premisesLicenseGrantedInformation.p2 = You''re only required to write a short description of the conditions we''re concerned with. Examples of acceptable descriptions include:
+help.premisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseGrantedInformation.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseGrantedInformation.list.p2 = A maximum 200 people allowed in the function room at any time
 help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
@@ -803,9 +803,9 @@ help.licensableActivities.list1.p1 = the retail sale of alcohol
 help.licensableActivities.list1.p2 = the supply of alcohol in clubs
 help.licensableActivities.list1.p3 = the provision of late-night refreshment
 help.licensableActivities.list1.p4 = the provision of regulated entertainment
-help.licensableActivities.p2 = In this instance, ‘clubs'' is a cover-all term covering establishment categories covered by this form.
-help.licensableActivities.p3 = ‘Late-night refreshment'' is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
-help.licensableActivities.p4 = ‘Regulated entertainment'' is defined as:
+help.licensableActivities.p2 = In this instance, ‘clubs’ is a cover-all term covering establishment categories covered by this form.
+help.licensableActivities.p3 = ‘Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
+help.licensableActivities.p4 = ‘Regulated entertainment’ is defined as:
 help.licensableActivities.list2.p1 = a performance of a play
 help.licensableActivities.list2.p2 = showing a film
 help.licensableActivities.list2.p3 = an indoor sporting event
@@ -820,7 +820,7 @@ error.licensableActivities.missing = Select yes if licensable activities regular
 licensableActivitiesDetails.heading = Describe the licensable activities regularly occurring before 10am or after 11.30pm
 help.licensableActivitiesDetails.title = Help with describing your licensable activities
 help.licensableActivitiesDetails.heading = Describing your licensable activities
-help.licensableActivitiesDetails.p1 = You''re only required to write a short description of the licensable activities we''re concerned with. Examples of acceptable descriptions include:
+help.licensableActivitiesDetails.p1 = You’re only required to write a short description of the licensable activities we’re concerned with. Examples of acceptable descriptions include:
 help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Monday to Saturday
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
@@ -834,7 +834,7 @@ hint.premisesLicenseConditions = For example, no drinks outside after 10pm.
 help.premisesLicenseConditions.title = Help with conditions restricting the use of your property
 help.premisesLicenseConditions.heading = Conditions restricting the use of your property
 help.premisesLicenseConditions.p1 = Sometimes, a premises licence is only granted if the holder of the licence agrees to special conditions. These can include restrictions on the use of certain parts of the property.
-help.premisesLicenseConditions.p2 = Check your premises licence if you''re not sure. You'll find any special conditions stated clearly on there.
+help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. You'll find any special conditions stated clearly on there.
 error.premisesLicenseConditions.missing = Select yes if your premises licence has conditions restricting the use of your property
 
 # PREMISES LICENCE CONDITIONS DETAILS
@@ -842,7 +842,7 @@ error.premisesLicenseConditions.missing = Select yes if your premises licence ha
 premisesLicenseConditionsDetails.heading = Describe the conditions restricting the use of all or parts of the property
 help.premisesLicenseConditionsDetails.title = Help with describing restrictions on the use of the property
 help.premisesLicenseConditionsDetails.heading = Describing restrictions on the use of the property
-help.premisesLicenseConditionsDetails.p1 = You''re only required to write a short description of the conditions we''re concerned with. Examples of acceptable descriptions include:
+help.premisesLicenseConditionsDetails.p1 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
 help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace after 10pm
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
@@ -863,7 +863,7 @@ error.enforcementActionBeenTaken.missing = Select yes if any enforcement action 
 enforcementActionHasBeenTakenDetails.heading = Describe the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.title = Help with describing the enforcement action taken
 help.enforcementActionHasBeenTakenDetails.heading = Describing the enforcement action taken
-help.enforcementActionHasBeenTakenDetails.p1 = You''re only required to write a short description of the enforcement action taken against your premises. Examples of acceptable descriptions include:
+help.enforcementActionHasBeenTakenDetails.p1 = You’re only required to write a short description of the enforcement action taken against your premises. Examples of acceptable descriptions include:
 help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply of alcohol made under the premises licence must be made or authorised by a person who holds a personal licence
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
@@ -908,7 +908,7 @@ error.typeOfIncome.required = Select a source of rental income
 # CONCESSION TYPE DETAILS
 ###########################
 concessionTypeDetails.heading = Rhowch fanylion y gweithredwr
-concessionTypeDetails.operator = Operator''s name
+concessionTypeDetails.operator = Operator’s name
 concessionTypeDetails.describeType = Describe the type of business
 hint.concessionTypeDetails.describeType = Er enghraifft, bar, clwb, neu fwyty.
 concessionTypeDetails.describeUse = Describe how the property is used
@@ -963,12 +963,12 @@ error.franchiseOrLettings.missing = Select yes if you receive income from lettin
 # ABOUT YOUR LANDLORD
 #####################
 aboutYourLandlord.heading = Eich landlord
-label.landlordFullName = Enw''r landlord
-aboutYourLandlord.address.lookupPageHeading = What is your landlord''s address?
-aboutYourLandlord.address.selectPageHeading = Choose your landlord''s address
-aboutYourLandlord.address.confirmPageHeading = Check your landlord''s address
-error.landlordFullName.required = Os nad ydych yn gwybod enw''r landlord, nodwch ‘Anhysbys''
-error.landlordFullName.maxLength = Mae''n rhaid i enw''r landlord fod yn 50 o gymeriadau neu lai
+label.landlordFullName = Enw’r landlord
+aboutYourLandlord.address.lookupPageHeading = What is your landlord’s address?
+aboutYourLandlord.address.selectPageHeading = Choose your landlord’s address
+aboutYourLandlord.address.confirmPageHeading = Check your landlord’s address
+error.landlordFullName.required = Os nad ydych yn gwybod enw’r landlord, nodwch ‘Anhysbys’
+error.landlordFullName.maxLength = Mae’n rhaid i enw’r landlord fod yn 50 o gymeriadau neu lai
 
 # TYPE OF TENURE
 ################
@@ -977,42 +977,42 @@ label.typeOfTenure.leasehold = Prydles
 label.typeOfTenure.license = Trwydded
 label.typeOfTenure.tenancy = Tenantiaeth
 label.typeOfTenure.long.leasehold = Prydles hir am rent tir
-error.typeOfTenure.required = Dewiswch bob un sy''n berthnasol.
+error.typeOfTenure.required = Dewiswch bob un sy’n berthnasol.
 label.typeOfTenureDetails = Rhowch fanylion os oes cyfuniad o fathau o ddeiliadaeth
 error.typeOfTenureDetails.maxLength = Give details if there is a combination of tenure types must be 2000 characters or fewer
 error.typeOfTenureDetails.required = You must give details if there is a combination of tenure types
 
 # LEASE OR AGREEMENT DETAILS COMMENCE WITHIN 3 YEARS
 ###################################################
-leaseOrAgreement.heading = Manylion y brydles neu''r cytundeb
-label.commenceWithinThreeYears = A ddechreuodd y denantiaeth, y brydles neu''r cytundeb yn ystod y 3 blynedd diwethaf?
-label.agreedReviewedAlteredThreeYears  = A yw''r rhent wedi''i gytuno arno, ei adolygu neu ei newid yn ystod y 3 blynedd diwethaf?
-label.rentUnderReviewNegotiated  = A yw''r rhent yn cael ei adolygu ar hyn o bryd, neu a yw prydles neu gytundeb newydd yn destun trafodaeth?
-error.tenancy3Years.required = Dewiswch ‘do'' os dechreuodd y denantiaeth, y brydles neu''r cytundeb yn ystod y 3 blynedd diwethaf
-error.rent3Years.required = Dewiswch 'do'' os yw''r rhent wedi''i gytuno, ei adolygu neu ei newid yn ystod y 3 blynedd diwethaf
-error.underReview.required = Dewiswch ‘do'' os yw''r rhent yn cael ei adolygu ar hyn o bryd, neu os yw prydles neu gytundeb newydd yn destun trafodaeth
+leaseOrAgreement.heading = Manylion y brydles neu’r cytundeb
+label.commenceWithinThreeYears = A ddechreuodd y denantiaeth, y brydles neu’r cytundeb yn ystod y 3 blynedd diwethaf?
+label.agreedReviewedAlteredThreeYears  = A yw’r rhent wedi’i gytuno arno, ei adolygu neu ei newid yn ystod y 3 blynedd diwethaf?
+label.rentUnderReviewNegotiated  = A yw’r rhent yn cael ei adolygu ar hyn o bryd, neu a yw prydles neu gytundeb newydd yn destun trafodaeth?
+error.tenancy3Years.required = Dewiswch ‘do’ os dechreuodd y denantiaeth, y brydles neu’r cytundeb yn ystod y 3 blynedd diwethaf
+error.rent3Years.required = Dewiswch 'do’ os yw’r rhent wedi’i gytuno, ei adolygu neu ei newid yn ystod y 3 blynedd diwethaf
+error.underReview.required = Dewiswch ‘do’ os yw’r rhent yn cael ei adolygu ar hyn o bryd, neu os yw prydles neu gytundeb newydd yn destun trafodaeth
 
 # LEASE OR AGREEMENT DETAILS VAT
 ##############################
-includedInYourRent.heading = A oes unrhyw rai o''r canlynol wedi''u cynnwys yn eich rhent ar?
-includedInYourRentApply.subheading = Dewiswch bob un sy''n berthnasol.
-includedInYourRent.vatValue = Nodwch swm y TAW sydd wedi''i gynnwys yn y rhent
+includedInYourRent.heading = A oes unrhyw rai o’r canlynol wedi’u cynnwys yn eich rhent ar?
+includedInYourRentApply.subheading = Dewiswch bob un sy’n berthnasol.
+includedInYourRent.vatValue = Nodwch swm y TAW sydd wedi’i gynnwys yn y rhent
 label.vat = TAW
 label.nondomesticRates = Ardrethi annomestig
-label.waterCharges = A percentage of turnover of the occupier''s business
+label.waterCharges = A percentage of turnover of the occupier’s business
 label.indexed = Water charges
-label.none = Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent
+label.none = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
 label.includedInYourRent.vat = TAW
 label.includedInYourRent.nondomesticRates = Ardrethi annomestig
 label.includedInYourRent.waterCharges = Taliadau dŵr
-label.includedInYourRent.noneOfThese = Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent
+label.includedInYourRent.noneOfThese = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
 label.includedInYourRent.none = None
-hint.includedInYourRent = Dewiswch bob un sy''n berthnasol.
+hint.includedInYourRent = Dewiswch bob un sy’n berthnasol.
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
-error.includedInYourRent.required = Dewiswch yr eitemau sydd wedi''u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent''
-error.includedInYourRent.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi''u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent''
+error.includedInYourRent.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
+error.includedInYourRent.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 error.includedInYourRent.vatValue.required = State the amount of VAT included in the rent
 error.includedInYourRent.vatValue.range = VAT figure must be a number like 100 or 100.00 and be greater than 0
 
@@ -1041,7 +1041,7 @@ error.feeReceived.feeCalculationDetails.required = You must explain how the fee 
 ##############################
 lettingOtherPartOfProperty.heading = Do you receive any rent from letting other parts of the property?
 hint.lettingOtherPartOfProperty = For example, advertising billboards, phones masts or car parking. You will have the opportunity to add additional lettings if required.
-error.lettingOtherPartOfProperty.missing = Dewiswch ‘oes'' os oes unrhyw rent yn dod i law o roi rhannau o''r eiddo ar osod
+error.lettingOtherPartOfProperty.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 
 #LETTINGS 6020
@@ -1118,11 +1118,11 @@ lettings.typeOfLetting.other.label = Other
 
 # PROPERTY USE LEASEBACK ARRANGEMENT
 ##############################
-propertyUseLeasebackArrangement.heading = A yw {0} yn meddiannu''r eiddo gan ddefnyddio trefniant adlesu?
+propertyUseLeasebackArrangement.heading = A yw {0} yn meddiannu’r eiddo gan ddefnyddio trefniant adlesu?
 propertyUseLeasebackArrangement.title = Is there a leaseback arrangement?
 help.propertyUseLeasebackArrangement.title = Help gyda threfniadau adlesu
-help.propertyUseLeasebackArrangement.p1 = Mewn trefniant adlesu gall busnes werthu ei safleoedd i fuddsoddwr ac yna ei adlesu''n ôl am gyfnod penodol o amser. Mae''r cytundebau hyn yn caniatáu i fusnesau godi cyfalaf tra ei fod yn cynnal rheolaeth ar eu hen eiddo, ac yn aml maent yn cynnwys opsiynau prynu''n ôl.
-error.propertyUseLeasebackArrangement.missing = Dewiswch ‘ydy'' os ydych yn meddiannu''r eiddo gan ddefnyddio trefniant adlesu
+help.propertyUseLeasebackArrangement.p1 = Mewn trefniant adlesu gall busnes werthu ei safleoedd i fuddsoddwr ac yna ei adlesu’n ôl am gyfnod penodol o amser. Mae’r cytundebau hyn yn caniatáu i fusnesau godi cyfalaf tra ei fod yn cynnal rheolaeth ar eu hen eiddo, ac yn aml maent yn cynnwys opsiynau prynu’n ôl.
+error.propertyUseLeasebackArrangement.missing = Dewiswch ‘ydy’ os ydych yn meddiannu’r eiddo gan ddefnyddio trefniant adlesu
 
 # PROVIDE DETAILS OF YOUR LEASE (FORM 6076 ONLY)
 provideDetailsOfYourLease.heading = Provide details of your lease
@@ -1136,7 +1136,7 @@ error.provideDetailsOfYourLease.maxLength = The details of your lease must be 2,
 
 # CURRENT ANNUAL RENT
 ##############################
-currentAnnualRent.heading = Beth yw''r rhent blynyddol ar hyn o bryd?
+currentAnnualRent.heading = Beth yw’r rhent blynyddol ar hyn o bryd?
 hint.currentAnnualRent = Er enghraifft, 32000.
 error.currentAnnualRent.lessThanIncludedPartsSum = The annual rent cannot be less than the combined sum {0} included to cover equipment and trade services
 
@@ -1144,75 +1144,75 @@ error.currentAnnualRent.lessThanIncludedPartsSum = The annual rent cannot be les
 #######################
 rentOpenMarketValue.heading = Pan gytunwyd ar y rhent presennol, a oedd yn seiliedig ar y gwerth ar y farchnad agored ar y pryd?
 help.rentOpenMarketValue.title = Os nad ydych yn siŵr
-help.rentOpenMarketValue.p1 = Os nad yw eich rhent yn seiliedig ar y gwerth ar y farchnad agored, gall fod yn swm sefydlog y cytunwyd arno rhwng y ddau barti, neu''n gysylltiedig â ffactor arall. Os ydych yn ansicr, efallai y bydd wedi''i nodi yn eich prydles neu gytundeb.
-error.rentOpenMarketValue.missing = Dewiswch ‘oedd'' os cafodd y rhent ei bennu ar sail ei werth ar y farchnad agored
+help.rentOpenMarketValue.p1 = Os nad yw eich rhent yn seiliedig ar y gwerth ar y farchnad agored, gall fod yn swm sefydlog y cytunwyd arno rhwng y ddau barti, neu’n gysylltiedig â ffactor arall. Os ydych yn ansicr, efallai y bydd wedi’i nodi yn eich prydles neu gytundeb.
+error.rentOpenMarketValue.missing = Dewiswch ‘oedd’ os cafodd y rhent ei bennu ar sail ei werth ar y farchnad agored
 
 # DOES THE RENT PAYABLE
 ######################
-rentPayable.heading = A yw''r rhent sy''n daladwy yn cynnwys unrhyw un o''r opsiynau sydd wedi''u rhestru?
-rentPayable6045.heading = A yw''r rhent sy''n daladwy yn cynnwys neu''n ymwneud ag unrhyw un o''r canlynol?
-checkbox.rentPayable.proprietor = Llety byw i''r perchennog neu''r staff
+rentPayable.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw un o’r opsiynau sydd wedi’u rhestru?
+rentPayable6045.heading = A yw’r rhent sy’n daladwy yn cynnwys neu’n ymwneud ag unrhyw un o’r canlynol?
+checkbox.rentPayable.proprietor = Llety byw i’r perchennog neu’r staff
 checkbox.rentPayable.otherProperty = Eiddo arall
-checkbox.rentPayable.onlyPart = Dim ond rhan o''r eiddo
+checkbox.rentPayable.onlyPart = Dim ond rhan o’r eiddo
 checkbox.rentPayable.onlyLand = I dir yn unig (ac eithrio adeiladau)
-checkbox.rentPayable.shellUnit = Uned ‘gragen'' roedd yn rhaid i chi ei gosod eich hun
+checkbox.rentPayable.shellUnit = Uned ‘gragen’ roedd yn rhaid i chi ei gosod eich hun
 checkbox.rentPayable.parkingSpaceGarage = Mannau parcio neu garejys
-checkbox.rentPayable.noneOfThese = Na, nid yw''r rhent sy''n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o''r opsiynau hyn
-checkbox.rentPayable.noneOfThese6045 = Na, nid yw''r rhent sy''n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o''r opsiynau hyn
+checkbox.rentPayable.noneOfThese = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
+checkbox.rentPayable.noneOfThese6045 = Na, nid yw’r rhent sy’n daladwy yn cynnwys nac yn ymwneud ag unrhyw un o’r opsiynau hyn
 checkbox.rentPayable.none = None
 label.detailsToQuestions = Rhowch fanylion
-hint.detailsToQuestions = Mae enghreifftiau o ddisgrifiadau derbyniol yn cynnwys, “mae''r rhent yn cynnwys llety preswyl”, neu “hefyd yn cynnwys y safle drws nesaf”.
-error.doesTheRentPayable.required = Dewiswch yr eitemau sydd wedi''u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent''
-error.doesTheRentPayable.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi''u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent''
+hint.detailsToQuestions = Mae enghreifftiau o ddisgrifiadau derbyniol yn cynnwys, “mae’r rhent yn cynnwys llety preswyl”, neu “hefyd yn cynnwys y safle drws nesaf”.
+error.doesTheRentPayable.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
+error.doesTheRentPayable.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 error.detailsToQuestions.required = Please provide further information
-error.detailsToQuestions.maxLength = Mae''n rhaid i''r wybodaeth ychwanegol fod yn {0} o gymeriadau neu lai
+error.detailsToQuestions.maxLength = Mae’n rhaid i’r wybodaeth ychwanegol fod yn {0} o gymeriadau neu lai
 
 # RENT DEVELOPED LAND (FORM 6045/46)
 ######################
-rentDevelopedLand.heading = A yw''r rhent sy''n daladwy yn ymwneud â thir datblygedig?
+rentDevelopedLand.heading = A yw’r rhent sy’n daladwy yn ymwneud â thir datblygedig?
 hint.rentDevelopedLand = Er enghraifft, ffyrdd mynediad, lloriau caled, neu wasanaethau.
 error.rentDevelopedLand.missing = Select yes if the rent payable relates to developed land
 
 # RENT DEVELOPED LAND DETAILS (FORM 6045/46)
 ######################
-rentDevelopedLandDetails.heading = Disgrifiwch y dablygiadau sydd wedi''u cynnwys yn y rhent
+rentDevelopedLandDetails.heading = Disgrifiwch y dablygiadau sydd wedi’u cynnwys yn y rhent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
 error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
 
 # RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
 ######################
-rentIncludeStructuresBuildings.heading = A yw''r rhent sy''n daladwy yn cynnwys unrhyw strwythurau neu adeiladau?
+rentIncludeStructuresBuildings.heading = A yw’r rhent sy’n daladwy yn cynnwys unrhyw strwythurau neu adeiladau?
 error.rentIncludeStructuresBuildings.missing = Select yes if the rent payable include any structures or buildings
 
 # RENT INCLUDES STRUCTURES BUILDINGS DETAILS (FORM 6045/46)
 ######################
-rentIncludeStructuresBuildingsDetails.heading = Rhowch fanylion y strwythurau neu''r adeiladau sydd wedi''u cynnwys yn eich rhent
+rentIncludeStructuresBuildingsDetails.heading = Rhowch fanylion y strwythurau neu’r adeiladau sydd wedi’u cynnwys yn eich rhent
 error.rentIncludeStructuresBuildingsDetails.required = Enter details of the structures or buildings that are included in the rent
 error.rentIncludeStructuresBuildingsDetails.maxLength = Details of the structures or buildings that are included in the rent should be 2000 characters or fewer
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS
 #######################################
-rentPayableVaryOnQuantityOfBeers.heading = A yw''r rhent sy''n daladwy yn amrywio yn ôl faint o gwrw, gwinoedd neu wirodydd a gyflenwir i''r eiddo?
+rentPayableVaryOnQuantityOfBeers.heading = A yw’r rhent sy’n daladwy yn amrywio yn ôl faint o gwrw, gwinoedd neu wirodydd a gyflenwir i’r eiddo?
 error.rentPayableVaryOnQuantityOfBeers.missing = Select yes if the rent varies according to the quantity of alcohol you sell
 
 # RENT PAYABLE VARY ON QUANTITY OF BEERS DETAILS
 ###############################################
-rentPayableVaryOnQuantityOfBeersDetails.heading = Sut mae''r diodydd a gyflenwir i''r eiddo yn effeithio ar y rhent sy''n daladwy?
-hint.rentPayableVaryOnQuantityOfBeersDetails = Er enghraifft, dywedwch wrthym os bydd eich rhent yn newid os yw''r faint a gyflenwir yn fwy na swm penodol.
+rentPayableVaryOnQuantityOfBeersDetails.heading = Sut mae’r diodydd a gyflenwir i’r eiddo yn effeithio ar y rhent sy’n daladwy?
+hint.rentPayableVaryOnQuantityOfBeersDetails = Er enghraifft, dywedwch wrthym os bydd eich rhent yn newid os yw’r faint a gyflenwir yn fwy na swm penodol.
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Enter a description of how the drinks supplied to your property affect your rent
 error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of how the drinks supplied to your property affect your rent should be 500 characters or fewer
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
-rentPayableVaryAccordingToGrossOrNet.heading = A yw''r rhent sy''n daladwy yn amrywio yn ôl trosiant gros neu net y busnes?
-error.rentPayableVaryAccordingToGrossOrNet.missing = Dewiswch ‘ydy'' os yw''r rhent yn amrywio yn ôl eich trosiant
+rentPayableVaryAccordingToGrossOrNet.heading = A yw’r rhent sy’n daladwy yn amrywio yn ôl trosiant gros neu net y busnes?
+error.rentPayableVaryAccordingToGrossOrNet.missing = Dewiswch ‘ydy’ os yw’r rhent yn amrywio yn ôl eich trosiant
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET DETAILS
 ####################################################
-rentPayableVaryAccordingToGrossOrNetDetails.heading = Disgrifiwch sut mae''ch trosiant yn effeithio ar y rhent sy''n daladwy
+rentPayableVaryAccordingToGrossOrNetDetails.heading = Disgrifiwch sut mae’ch trosiant yn effeithio ar y rhent sy’n daladwy
 rentPayableVaryAccordingToGrossOrNetDetails.hint = Er enghraifft, rhowch fanylion unrhyw gyfradd sylfaenol y gallech ei thalu, ynghyd ag unrhyw gynyddrannau canrannol ychwanegol pan fydd eich trosiant yn fwy na throthwyon penodol.
-error.rentPayableVaryAccordingToGrossOrNetDetails.required = Nodwch ddisgrifiad o sut mae''ch trosiant yn effeithio ar eich rhent
-error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = Mae''n rhaid i''r disgrifiad o sut mae''ch trosiant yn effeithio ar eich rhent fod yn 500 o gymeriadau neu lai
+error.rentPayableVaryAccordingToGrossOrNetDetails.required = Nodwch ddisgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent
+error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = Mae’n rhaid i’r disgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent fod yn 500 o gymeriadau neu lai
 
 # ULTIMATELY RESPONSIBLE
 #######################
@@ -1226,62 +1226,62 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilities = Give details of any shared responsibilities
-hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally'', or ‘landlord covers 75% for outside repairs, tenant pays 25%''.
-error.sharedResponsibilities.maxLength = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
-error.sharedResponsibilities = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
-error.outsideRepairs.required = Dewiswch pwy sy''n gyfrifol am atgyweirio y tu allan
-error.insideRepairs.required = Dewiswch pwy sy''n gyfrifol am atgyweirio y tu mewn
-error.buildingInsurance.required = Dewiswch pwy sy''n gyfrifol am yr yswiriant adeiladau
+hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+error.sharedResponsibilities.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilities = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.outsideRepairs.required = Dewiswch pwy sy’n gyfrifol am atgyweirio y tu allan
+error.insideRepairs.required = Dewiswch pwy sy’n gyfrifol am atgyweirio y tu mewn
+error.buildingInsurance.required = Dewiswch pwy sy’n gyfrifol am yr yswiriant adeiladau
 
 # ULTIMATELY RESPONSIBLE INSIDE REPAIRS
 #######################
-ultimatelyResponsibleIR.heading = Pwy sy''n gyfrifol yn y pen draw am atgyweiriadau y tu mewn i ardaloedd cyhoeddus a busnes?
-ultimatelyResponsibleIR.subheading = Gallai hyn fod naill ai drwy daliad uniongyrchol, neu drwy ad-dalu''r person a dalodd am y gwasanaeth yn wreiddiol.
+ultimatelyResponsibleIR.heading = Pwy sy’n gyfrifol yn y pen draw am atgyweiriadau y tu mewn i ardaloedd cyhoeddus a busnes?
+ultimatelyResponsibleIR.subheading = Gallai hyn fod naill ai drwy daliad uniongyrchol, neu drwy ad-dalu’r person a dalodd am y gwasanaeth yn wreiddiol.
 label.insideRepairs = Inside repairs to public and business areas
 label.insideRepairsShort = Inside repairs
 label.landlord = Landlord
 label.tenant = Tenant
 label.both = Yddau
 label.sharedResponsibilitiesIR = Rhowch fanylion unrhyw gyfrifoldebau a rennir
-hint.sharedResponsibilitiesIR = Er enghraifft, “rhennir costau''n gyfartal” neu “landlord 75%, tenant 25%”.
-error.sharedResponsibilitiesIR.maxLength = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
-error.sharedResponsibilitiesIR = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+hint.sharedResponsibilitiesIR = Er enghraifft, “rhennir costau’n gyfartal” neu “landlord 75%, tenant 25%”.
+error.sharedResponsibilitiesIR.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesIR = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilitiesIR.required = Enter a description of the shared responsibilities
 
 # ULTIMATELY RESPONSIBLE OUTSIDE REPAIRS
 #######################
-ultimatelyResponsibleOR.heading = Pwy sy''n gyfrifol yn y pen draw am atgyweiriadau y tu allan?
-ultimatelyResponsibleOR.subheading = Gallai hyn fod naill ai drwy daliad uniongyrchol, neu drwy ad-dalu''r person a dalodd am y gwasanaeth yn wreiddiol.
+ultimatelyResponsibleOR.heading = Pwy sy’n gyfrifol yn y pen draw am atgyweiriadau y tu allan?
+ultimatelyResponsibleOR.subheading = Gallai hyn fod naill ai drwy daliad uniongyrchol, neu drwy ad-dalu’r person a dalodd am y gwasanaeth yn wreiddiol.
 label.outsideRepairs = Outside repairs
 label.landlord = Landlord
 label.tenant = Tenant
 label.both = Yddau
 label.sharedResponsibilitiesOR = Rhowch fanylion unrhyw gyfrifoldebau a rennir
-hint.sharedResponsibilitiesOR = Er enghraifft, “rhennir costau''n gyfartal” neu “landlord 75%, tenant 25%”.
-error.sharedResponsibilitiesOR.maxLength = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
-error.sharedResponsibilitiesOR = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+hint.sharedResponsibilitiesOR = Er enghraifft, “rhennir costau’n gyfartal” neu “landlord 75%, tenant 25%”.
+error.sharedResponsibilitiesOR.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesOR = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilitiesOR.required = Enter a description of the shared responsibilities
 
 # ULTIMATELY RESPONSIBLE BUILDING INSURANCE
 #######################
-ultimatelyResponsibleBI.heading = Pwy sy''n gyfrifol yn y pen draw am yswiriant adeiladu?
-ultimatelyResponsibleBI.subheading = Gallai hyn fod naill ai drwy daliad uniongyrchol, neu drwy ad-dalu''r person a dalodd am y gwasanaeth yn wreiddiol.
+ultimatelyResponsibleBI.heading = Pwy sy’n gyfrifol yn y pen draw am yswiriant adeiladu?
+ultimatelyResponsibleBI.subheading = Gallai hyn fod naill ai drwy daliad uniongyrchol, neu drwy ad-dalu’r person a dalodd am y gwasanaeth yn wreiddiol.
 label.buildingInsurance = Building insurance
 label.landlord = Landlord
 label.tenant = Tenant
 label.both = Yddau
 label.sharedResponsibilitiesBI = Rhowch fanylion unrhyw gyfrifoldebau a rennir
-hint.sharedResponsibilitiesBI = Er enghraifft, “rhennir costau''n gyfartal” neu “landlord 75%, tenant 25%”.
-error.sharedResponsibilitiesBI.maxLength = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
-error.sharedResponsibilitiesBI = Mae''n rhaid i''r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+hint.sharedResponsibilitiesBI = Er enghraifft, “rhennir costau’n gyfartal” neu “landlord 75%, tenant 25%”.
+error.sharedResponsibilitiesBI.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
+error.sharedResponsibilitiesBI = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilitiesBI.required = Enter a description of the shared responsibilities
 
 # RENT INCLUDE TRADE SERVICES
 ############################
-rentIncludeTradeServices.heading = A yw''r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord?
+rentIncludeTradeServices.heading = A yw’r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord?
 hint.rentIncludeTradeServices = Er enghraifft, cynnal a chadw gosodiadau a ffitiadau masnach, gwasanaethau seler, marchnata, hyfforddi staff.
 hint.rentIncludeTradeServices.for6030 = Er enghraifft, goleuo, gwresogi, glanhau rhannau a rennir.
-error.rentIncludeTradeServices.missing = Dewiswch ‘ydy'' os yw''r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord
+error.rentIncludeTradeServices.missing = Dewiswch ‘ydy’ os yw’r rhent yn cynnwys unrhyw wasanaethau masnach a ddarperir gan y landlord
 
 # TRADE SERVICES DESCRIPTION
 ############################
@@ -1289,16 +1289,16 @@ tradeServiceDescription.heading = Trade services included in your rent
 tradeServiceDescription.p1 = Provide a short description on any trade services you receive from your landlord as part of your lease or agreement. Where specifically itemised, include how much of your rent goes towards those services.
 tradeServiceDescription.p2 = If more than one service is provided by your landlord as part of your lease or agreement, describe each one individually. You will have the opportunity to add additional services on the next page.
 tradeServiceDescription.describe = Describe the trade service provided by the landlord which is included in your rent
-tradeServiceDescription.describe.error = Nodwch ddisgrifiad o''r gwasanaethau masnach a ddarperir gan y landlord
-error.tradeServiceDescription.maxLength = Mae''n rhaid i''r disgrifiad o''r gwasanaethau masnach fod yn 500 o gymeriadau neu lai
+tradeServiceDescription.describe.error = Nodwch ddisgrifiad o’r gwasanaethau masnach a ddarperir gan y landlord
+error.tradeServiceDescription.maxLength = Mae’n rhaid i’r disgrifiad o’r gwasanaethau masnach fod yn 500 o gymeriadau neu lai
 
 # TRADE SERVICES ADDED
 #####################################
 addTradeService.heading = Rydych wedi ychwanegu {0} gwasanaeth {2}
 addTradeServicePlural.heading = Rydych wedi ychwanegu {0} o wasanaethau {2}
 addTradeService.heading.landlord = provided by the landlord
-addTradeService.heading.rent = sydd wedi''i gynnwys yn eich rhent
-addTradeService.heading.rentPlural = sydd wedi''u cynnwys yn eich rhent
+addTradeService.heading.rent = sydd wedi’i gynnwys yn eich rhent
+addTradeService.heading.rentPlural = sydd wedi’u cynnwys yn eich rhent
 addTradeServiceZero.heading = You have removed all the services provided by your landlord
 addTradeService.label = A ydych am ychwanegu gwasanaeth arall y telir amdano ar wahân?
 addTradeService.label6020 = A ydych am ychwanegu gwasanaeth arall y telir amdano ar wahân?
@@ -1336,8 +1336,8 @@ error.servicePaidSeparatelyList.required = Select yes if you would like to add a
 
 #SURRENDERED LEASE AGREEMENT DETAILS
 #########################
-surrenderedLeaseAgreement.heading = Manylion y brydles neu''r cytundeb a ildiwyd
-surrenderedLeaseAgreement.title = Beth oedd y rhent blynyddol o dan y brydles neu''r cytundeb a ildiwyd heb gynnwys TAW?
+surrenderedLeaseAgreement.heading = Manylion y brydles neu’r cytundeb a ildiwyd
+surrenderedLeaseAgreement.title = Beth oedd y rhent blynyddol o dan y brydles neu’r cytundeb a ildiwyd heb gynnwys TAW?
 surrenderedLeaseAgreementMonths.heading = Faint o gyfnod a oedd yn weddill ar adeg yr ildio?
 error.required.annualRentExcludingVat.surrenderedLeaseAgreementAmount = Enter the annual rent under the surrendered lease or agreement excluding VAT
 error.surrenderedLeaseAgreementMonths.required = Enter how long the unexpired term was at the time of surrender
@@ -1346,9 +1346,9 @@ surrenderedLeaseAgreementMonths.months = misoedd
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Gwasanaethau masnach a ddarperir gan y landlord
-rentIncludeTradeServicesDetails.title = Pa swm sy''n cael ei gynnwys yn y rhent er mwyn talu am y gwasanaethau hyn, ac eithrio TAW?
+rentIncludeTradeServicesDetails.title = Pa swm sy’n cael ei gynnwys yn y rhent er mwyn talu am y gwasanaethau hyn, ac eithrio TAW?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
-rentIncludeTradeServicesDetails.hint = Gadewch hyn yn wag os nad yw''r rhain wedi''u rhestru''n benodol.
+rentIncludeTradeServicesDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
 rentIncludeTradeServicesDetails.hint2 = Er enghraifft, cynnal a chadw tanau, gwiriadau nwy blynyddol a gwasanaethau seler.
 label.describeServices = Disgrifiwch y gwasanaethau a ddarperir
 describeServicesTextArea.heading = Rhowch fanylion unrhyw swm a dalwyd gan y tenant neu iddo
@@ -1364,25 +1364,25 @@ error.rentIncludeTradeServicesDetails.title = Sum included to cover trade servic
 
 # RENT INCLUDE FIXTURES AND FITTINGS
 ###################################
-rentIncludeFixturesAndFittings.heading = A yw''r rhent yn cynnwys unrhyw offer sy''n perthyn i''r landlord?
+rentIncludeFixturesAndFittings.heading = A yw’r rhent yn cynnwys unrhyw offer sy’n perthyn i’r landlord?
 hint.rentIncludeFixturesAndFittings = Er enghraifft, unrhyw osodiadau a ffitiadau masnach, offer a pheiriannau, neu ddodrefn.
 error.required.rentIncludeFixturesAndFittings = Please provide a value
 error.invalid_currency.rentIncludeFixturesAndFittings = Please provide a number
-error.rentIncludeFixturesAndFittings.missing = Dewiswch ‘ydy'' os yw''r rhent yn cynnwys unrhyw offer a ddarperir gan y landlord
-rentedEquipmentDetails.heading = Rhowch fanylion y cyfarpar y gallwch ei ddefnyddio fel rhan o''ch rhent
-rentedEquipmentDetails.hint = Dylech hefyd gynnwys y swm sy''n daladwy, os yw''n hysbys
+error.rentIncludeFixturesAndFittings.missing = Dewiswch ‘ydy’ os yw’r rhent yn cynnwys unrhyw offer a ddarperir gan y landlord
+rentedEquipmentDetails.heading = Rhowch fanylion y cyfarpar y gallwch ei ddefnyddio fel rhan o’ch rhent
+rentedEquipmentDetails.hint = Dylech hefyd gynnwys y swm sy’n daladwy, os yw’n hysbys
 error.rentedEquipmentDetails.required = Enter rented equipment details
 error.rentedEquipmentDetails.maxLength = Rented equipment details must be {0} characters or fewer
 
 #RENT INCLUDES VAT
 #################
-rentIncludesVat.heading = A yw''r rhent presennol yn cynnwys TAW?
+rentIncludesVat.heading = A yw’r rhent presennol yn cynnwys TAW?
 rentIncludesVat.error = Select yes if the rent includes VAT
 
 # RENT INCLUDE FIXTURES AND FITTINGS DETAILS
 ###########################################
-rentIncludeFixturesAndFittingsDetails.heading = Os yw wedi''i restru''n benodol, pa swm sydd wedi''i gynnwys yn y rhent i dalu am offer a ddarperir gan y landlord, heb gynnwys TAW?
-rentIncludeFixturesAndFittingsDetails.hint = Gadewch hyn yn wag os nad yw''r rhain wedi''u rhestru''n benodol.
+rentIncludeFixturesAndFittingsDetails.heading = Os yw wedi’i restru’n benodol, pa swm sydd wedi’i gynnwys yn y rhent i dalu am offer a ddarperir gan y landlord, heb gynnwys TAW?
+rentIncludeFixturesAndFittingsDetails.hint = Gadewch hyn yn wag os nad yw’r rhain wedi’u rhestru’n benodol.
 describeFittingsTextArea.heading = Give details of the equipment you can use as part of your rent
 label.describeFittingsTextArea = Give details of the equipment you can use as part of your rent
 describeFittingsTextArea.hint = Where specifically itemised, also include the amount payable excluding VAT.
@@ -1392,47 +1392,47 @@ error.describeFittingsTextArea.maxLength = Description of of the equipment you c
 
 # INCENTIVES, PAYMENTS AND CONDITIONS
 ####################################
-formerLeaseSurrendered.heading = A ildiwyd prydles neu gytundeb blaenorol yn gynnar fel un o amodau caniatáu''r un presennol?
-error.formerLeaseSurrendered.missing = Dewiswch ‘do'' os ildiwyd prydles neu gytundeb blaenorol yn gynnar
+formerLeaseSurrendered.heading = A ildiwyd prydles neu gytundeb blaenorol yn gynnar fel un o amodau caniatáu’r un presennol?
+error.formerLeaseSurrendered.missing = Dewiswch ‘do’ os ildiwyd prydles neu gytundeb blaenorol yn gynnar
 
 # CAN RENT BE REDUCED ON REVIEW
 ##############################
-canRentBeReducedOnReview.heading = A oes modd gostwng y rhent ar adeg adolygiad o dan delerau''r brydles neu''r cytundeb?
-error.canRentBeReducedOnReview.missing = Dewiswch ‘oes'' os gall adolygiad arwain at ostyngiad yn eich rhent
+canRentBeReducedOnReview.heading = A oes modd gostwng y rhent ar adeg adolygiad o dan delerau’r brydles neu’r cytundeb?
+error.canRentBeReducedOnReview.missing = Dewiswch ‘oes’ os gall adolygiad arwain at ostyngiad yn eich rhent
 
 # PROPERTY UPDATES DURING THE CURRENT LEASE
 ##########################################
-propertyUpdates.heading = Diweddariadau i''r eiddo yn ystod y brydles bresennol
-propertyUpdates.declare = Mae''n rhaid i chi ddatgan unrhyw waith rydych wedi''i wneud ar yr eiddo yn ystod y brydles bresennol. Dim ond addasiadau, gwelliannau, adnewyddiadau, gosodiadau cychwynnol, neu atgyweiriadau cychwynnol a allai fod wedi effeithio ar werth yr eiddo y dylech eu cynnwys.
-propertyUpdates.assign  = Os neilltuwyd y brydles i chi gan barti arall, mae''n rhaid i chi ddatgan unrhyw waith a wnaeth y parti hwnnw o dan y brydles bresennol.
-propertyUpdates.label   = A yw''r eiddo wedi cael ei addasu, ei wella neu ei ddiweddaru mewn unrhyw ffordd yn ystod y brydles bresennol?
+propertyUpdates.heading = Diweddariadau i’r eiddo yn ystod y brydles bresennol
+propertyUpdates.declare = Mae’n rhaid i chi ddatgan unrhyw waith rydych wedi’i wneud ar yr eiddo yn ystod y brydles bresennol. Dim ond addasiadau, gwelliannau, adnewyddiadau, gosodiadau cychwynnol, neu atgyweiriadau cychwynnol a allai fod wedi effeithio ar werth yr eiddo y dylech eu cynnwys.
+propertyUpdates.assign  = Os neilltuwyd y brydles i chi gan barti arall, mae’n rhaid i chi ddatgan unrhyw waith a wnaeth y parti hwnnw o dan y brydles bresennol.
+propertyUpdates.label   = A yw’r eiddo wedi cael ei addasu, ei wella neu ei ddiweddaru mewn unrhyw ffordd yn ystod y brydles bresennol?
 error.propertyUpdates.missing   = Select yes if the property been altered, improved or updated in any way during the current lease
 
 # WORK CARRIED OUT DETAILS
 #########################
 workCarriedOutDetails.heading = Rhowch fanylion y gwaith a waned
-workCarriedOutDetails.hint = Rhowch ddisgrifiad byr o''r gwaith, faint a gostiodd, a''r dyddiad cwblhau.
+workCarriedOutDetails.hint = Rhowch ddisgrifiad byr o’r gwaith, faint a gostiodd, a’r dyddiad cwblhau.
 error.workCarriedOutDetails.required = Enter a description of the work carried out
 error.workCarriedOutDetails.maxLength = Description of the work carried out must be 2000 characters or fewer
 
 # WORK CARRIED OUT CONDITION
 #########################
-workCarriedOutCondition.heading = A oedd gofyn i chi wneud unrhyw waith fel un o amodau''r denantiaeth bresennol?
+workCarriedOutCondition.heading = A oedd gofyn i chi wneud unrhyw waith fel un o amodau’r denantiaeth bresennol?
 error.workCarriedOutCondition.required = Select yes if you were required to carry out any works as a condition of the present tenancy or agreement
 
 # RENT FREE PERIOD
 #########################
-rentFreePeriod.heading = A roddwyd cyfnod di-rent, unrhyw daliad, neu unrhyw fuddion eraill i chi pan ganiatawyd y brydles neu''r cytundeb?
+rentFreePeriod.heading = A roddwyd cyfnod di-rent, unrhyw daliad, neu unrhyw fuddion eraill i chi pan ganiatawyd y brydles neu’r cytundeb?
 error.rentFreePeriod.required = Select yes if you were given any rent-free period, payment or benefit
 rentFreePeriodDetails.heading = Rhowch fanylion unrhyw gyfnod, taliad neu fudd di-rent
-rentFreePeriodDetails.hint = Gadewch hyn yn wag os yw''r rhent wedi''i adolygu ers cael y budd.
+rentFreePeriodDetails.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers cael y budd.
 error.rentFreePeriodDetails.maxLength = Description of given rent-free period, payment or benefit must be {0} characters or fewer
 
 # PAY A CAPITAL SUM
 ##################
 payACapitalSum.heading = A wnaethoch chi dalu swm cyfalaf neu bremiwm ar gyfer eich prydles neu gytundeb, gan anwybyddu unrhyw stocrestr tenantiaid?
-hint.payACapitalSum = Gallai''r swm hwn gael ei dalu i''r landlord neu''r prydlesai blaenorol.
-error.payACapitalSum.missing = Dewiswch ‘do'' os gwnaethoch dalu swm cyfalaf neu bremiwm ar gyfer eich prydles
+hint.payACapitalSum = Gallai’r swm hwn gael ei dalu i’r landlord neu’r prydlesai blaenorol.
+error.payACapitalSum.missing = Dewiswch ‘do’ os gwnaethoch dalu swm cyfalaf neu bremiwm ar gyfer eich prydles
 
 # PAY A CAPITAL SUM DETAILS
 ##################
@@ -1449,17 +1449,17 @@ error.maxCurrencyAmountExceeded.capitalSumPaidDetails = Capital sum cannot be gr
 
 # PAYMENT WHEN LEASE IS GRANTED
 ##############################
-receivePaymentWhenLeaseGranted.heading = A gawsoch chi unrhyw daliad pan ganiatawyd y brydles, neu ar ôl neilltuo''r brydles neu''r cytundeb?
-hint.receivePaymentWhenLeaseGranted = Dewiswch ‘naddo'' os yw''ch rhent wedi''i adolygu ers i chi gael y taliad.
-error.receivePaymentWhenLeaseGranted.missing = Dewiswch ‘do'' os cawsoch unrhyw daliad pan roddwyd y brydles
+receivePaymentWhenLeaseGranted.heading = A gawsoch chi unrhyw daliad pan ganiatawyd y brydles, neu ar ôl neilltuo’r brydles neu’r cytundeb?
+hint.receivePaymentWhenLeaseGranted = Dewiswch ‘naddo’ os yw’ch rhent wedi’i adolygu ers i chi gael y taliad.
+error.receivePaymentWhenLeaseGranted.missing = Dewiswch ‘do’ os cawsoch unrhyw daliad pan roddwyd y brydles
 
 # RENT INCREASE ANNUALLY WITH RPI
 ################################
-rentIncreasedAnnuallyWithRPIs.heading = Rhent sy''n gysylltiedig â mynegeion
-rentIncreasedAnnuallyWithRPIs.p1 = Mae''n rhaid i chi ddweud wrthym os bydd eich rhent yn cynyddu yn unol ag unrhyw fynegeion fel y mynegai prisiau manwerthu (RPI) neu''r mynegai prisiau defnyddwyr (CPI).
-rentIncreasedAnnuallyWithRPIs.subheading = A yw''r rhent yn cynyddu''n flynyddol yn unol ag unrhyw fynegeion?
+rentIncreasedAnnuallyWithRPIs.heading = Rhent sy’n gysylltiedig â mynegeion
+rentIncreasedAnnuallyWithRPIs.p1 = Mae’n rhaid i chi ddweud wrthym os bydd eich rhent yn cynyddu yn unol ag unrhyw fynegeion fel y mynegai prisiau manwerthu (RPI) neu’r mynegai prisiau defnyddwyr (CPI).
+rentIncreasedAnnuallyWithRPIs.subheading = A yw’r rhent yn cynyddu’n flynyddol yn unol ag unrhyw fynegeion?
 label.rentIncreasedAnnuallyWithRPIs = Does the rent increase annually in line with the retail price index (RPI)?
-error.rentIncreasedAnnuallyWithRPIs.missing = Dewiswch ‘ydy'' os yw''ch rhent yn codi yn unol â mynegai
+error.rentIncreasedAnnuallyWithRPIs.missing = Dewiswch ‘ydy’ os yw’ch rhent yn codi yn unol â mynegai
 
 # METHOD USED TO FIX CURRENT RENT
 ################################
@@ -1480,9 +1480,9 @@ label.rentReview = Mewn adolygiad rhent
 label.renewalLeaseTenancy = Wrth adnewyddu prydles
 label.saleLeaseback = Fel rhan o drafodiad gwerthu ac adlesu
 label.rentActuallyAgreed = Pryd cafodd y rhent ei gytuno arno neu ei osod mewn gwirionedd?
-help.rentActuallyAgreed.title = If you''re not sure when the rent was agreed
+help.rentActuallyAgreed.title = If you’re not sure when the rent was agreed
 help.rentActuallyAgreed.p1 = The date when the rent was agreed or set is normally the date when any of the listed option happened. It may not be the date of occupation, or the date the rent was first paid.
-help.rentActuallyAgreed.p2 = If you''re still unsure, refer to your lease or agreement
+help.rentActuallyAgreed.p2 = If you’re still unsure, refer to your lease or agreement
 fieldName.rentActuallyAgreed = the date when the current rent was agreed or set
 error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei bennu
 
@@ -1492,19 +1492,19 @@ cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busne
 concessionDetails.heading = Rhowch fanylion y consesiwn
 lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
 lettingOtherPartOfPropertyDetails.heading = Rhowch fanylion y tenant
-cateringOperationOrLettingAccommodationDetails.heading = Provide the business''s details
-concessionDetails.heading = Provide the concession''s details
-concessionDetails.address.lookupPageHeading = What is the concession''s property address?
-concessionDetails.address.selectPageHeading = Choose the concession''s property address
-concessionDetails.address.confirmPageHeading = Check the concession''s property address
-lettingDetails.heading = Provide the tenant or operator''s details
+cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
+concessionDetails.heading = Provide the concession’s details
+concessionDetails.address.lookupPageHeading = What is the concession’s property address?
+concessionDetails.address.selectPageHeading = Choose the concession’s property address
+concessionDetails.address.confirmPageHeading = Check the concession’s property address
+lettingDetails.heading = Provide the tenant or operator’s details
 lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
 lettingDetails.address.selectPageHeading = Choose the tenant or operator address
 lettingDetails.address.confirmPageHeading = Check the tenant or operator address
-lettingOtherPartOfPropertyDetails.heading = Provide the tenant''s details
-lettingOtherPartOfPropertyDetails.address.lookupPageHeading = What is the tenant''s address?
-lettingOtherPartOfPropertyDetails.address.selectPageHeading = Choose the tenant''s address
-lettingOtherPartOfPropertyDetails.address.confirmPageHeading = Check the tenant''s address
+lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
+lettingOtherPartOfPropertyDetails.address.lookupPageHeading = What is the tenant’s address?
+lettingOtherPartOfPropertyDetails.address.selectPageHeading = Choose the tenant’s address
+lettingOtherPartOfPropertyDetails.address.confirmPageHeading = Check the tenant’s address
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Enw’r gweithredwr
 label.lettingOperatorName = Enw’r tenant
@@ -1516,13 +1516,13 @@ hint.concessionTypeOfBusiness = Er enghraifft, bwyty neu gyfleusterau hamdden
 hint.lettingTypeOfBusiness = For example, a billboard, residential accommodation.
 hint.lettingTypeOfBusiness6015 = For example, a billboard or a telephone mast.
 label.correspondenceAddress = Cyfeiriad gohebu
-error.operatorName.required = Nodwch enw''r person neu''r busnes sy''n rhentu''r eiddo
+error.operatorName.required = Nodwch enw’r person neu’r busnes sy’n rhentu’r eiddo
 error.operatorName.maxLength = Operator‘s name must be 50 characters or fewer
 error.typeOfBusiness.required = Enter a description of the separate business
 error.typeOfBusiness.maxLength = Type of business must be 50 characters or fewer
-error.lettingTypeOfBusiness.required = Nodwch ddisgrifiad o''r gosodiad
-error.lettingOperatorName.maxLength = Mae''n rhaid i enw''r tenant fod yn 50 o gymeriadau neu lai
-error.lettingTypeOfBusiness.maxLength = Mae''n rhaid i''r disgrifiad o''r gosodiad fod yn 50 o gymeriadau neu lai
+error.lettingTypeOfBusiness.required = Nodwch ddisgrifiad o’r gosodiad
+error.lettingOperatorName.maxLength = Mae’n rhaid i enw’r tenant fod yn 50 o gymeriadau neu lai
+error.lettingTypeOfBusiness.maxLength = Mae’n rhaid i’r disgrifiad o’r gosodiad fod yn 50 o gymeriadau neu lai
 
 #BELOW IS FOR FORM 6030
 error.operatorName6030.required = Enter the name of the person or company operating the business
@@ -1541,7 +1541,7 @@ label.annualRent = Taliad rhent blynyddol ac eithrio TAW
 label.dateInput = Pa bryd y penodwyd y swm hwn?
 fieldName.cateringOrLettingFixedRentDate = the date when the annual rent was fixed
 error.required.annualRentExcludingVat.annualRent = Nodwch swm y rhent blynyddol
-error.invalid_currency.annualRent.annualRent = Mae''n rhaid i''r rhent blynyddol fod yn rhif, megis 100 neu 100.00
+error.invalid_currency.annualRent.annualRent = Mae’n rhaid i’r rhent blynyddol fod yn rhif, megis 100 neu 100.00
 error.dateInput.month.required = The date the rent was fixed must include a month
 error.dateInput.year.required = The date the rent was fixed must include a year
 error.sharedResponsibilities.required = Tell us how the responsibilities are shared
@@ -1564,17 +1564,17 @@ calculating.the.rent.for.error = Enter the date when the annual rent was fixed
 # CATERING OPERATION OR LETTING ACCOMMODATION CHECKBOXES
 ########################################################
 cateringOperationOrLettingAccommodationCheckboxesDetails.heading = Items included in your rent
-cateringOperationOrLettingAccommodationCheckboxesDetails.title = A oes unrhyw rai o''r canlynol wedi''u cynnwys yn y rhent ar gyfer {0}
-hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Dewiswch unrhyw un sy''n gymwys
+cateringOperationOrLettingAccommodationCheckboxesDetails.title = A oes unrhyw rai o’r canlynol wedi’u cynnwys yn y rhent ar gyfer {0}
+hint.cateringOperationOrLettingAccommodationCheckboxesDetails = Dewiswch unrhyw un sy’n gymwys
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates = Ardrethi
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance = Yswiriant eiddo
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs = Atgyweirio y tu allan
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs = Atgyweirio y tu mewn
-checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent
+checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese = Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent
 checkbox.divider = neu
 checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.none = None
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Dewiswch yr eitemau sydd wedi''u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent''
-error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi''u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o''r rhain wedi''u cynnwys yn y rhent''
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.required = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
+error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther = Dewiswch yr eitemau sydd wedi’u cynnwys yn eich rhent, neu dewiswch ‘Na, nid oes yr un o’r rhain wedi’u cynnwys yn y rhent’
 
 # ADD ANOTHER CATERING OPERATION OR LETTING ACCOMMODATION DETAILS
 #################################################################
@@ -1601,25 +1601,25 @@ label.addAnotherCateringOperation = Do you need to add another separate business
 label.addAnotherConcessionOrLetting = Do you need to add another separate business or concession?
 label.addAnotherLettingOtherPartOfProperty = A oes angen i chi ychwanegu gosodiad arall?
 error.addAnotherSeparateBusinessOrFranchise.required = Select yes if you would like to add another business or franchise
-error.addAnotherLetting.required = Dewiswch ‘oes'' os ydych am ychwanegu gosodiad arall
+error.addAnotherLetting.required = Dewiswch ‘oes’ os ydych am ychwanegu gosodiad arall
 
 # TENANTS ADDITIONS DISREGARDED
 ###############################
 tenantsAdditionsDisregarded.heading = Ychwanegiadau neu welliannau a ddiystyrwyd
-tenantsAdditionsDisregarded.p1 = Os yw''r rhent yn seiliedig ar werth yr eiddo ar y farchnad cyn i''r tenant wneud unrhyw ychwanegiadau neu welliannau, rhaid i chi ddarparu manylion.
-tenantsAdditionsDisregarded.p2 = Gallai enghreifftiau o ychwanegiadau neu welliannau gynnwys, ond heb fod yn gyfyngedig i''r canlynol:
+tenantsAdditionsDisregarded.p1 = Os yw’r rhent yn seiliedig ar werth yr eiddo ar y farchnad cyn i’r tenant wneud unrhyw ychwanegiadau neu welliannau, rhaid i chi ddarparu manylion.
+tenantsAdditionsDisregarded.p2 = Gallai enghreifftiau o ychwanegiadau neu welliannau gynnwys, ond heb fod yn gyfyngedig i’r canlynol:
 tenantsAdditionsDisregarded.list1 = gosod cragen
 tenantsAdditionsDisregarded.list2 = ychwanegu mannau parcio
 tenantsAdditionsDisregarded.list3 = uwchraddio llety
 tenantsAdditionsDisregarded.subheading = A gafodd unrhyw ychwanegiadau neu welliannau gan denantiaid eu diystyru ar yr adeg y cytunwyd ar y rhent neu y penderfynwyd arno?
-error.tenantsAdditionsDisregarded.missing = Dewiswch ‘do'' os cafodd unrhyw ychwanegiadau neu welliannau eu diystyru
+error.tenantsAdditionsDisregarded.missing = Dewiswch ‘do’ os cafodd unrhyw ychwanegiadau neu welliannau eu diystyru
 
 # TENANTS ADDITIONS DISREGARDED DETAILS
 #######################################
 tenantsAdditionsDisregardedDetails.heading = Disgrifiwch yr ychwanegiadau neu'r gwelliannau a ddiystyrwyd
 hint.tenantsAdditionsDisregardedDetails = Rhowch ddisgrifiad byr o'r gwaith a wnaed a faint oedd y gost.
-error.tenantsAdditionsDisregardedDetails.required = Nodwch ddisgrifiad o''r ychwanegiadau neu welliannau a gafodd eu diystyru
-error.tenantsAdditionsDisregardedDetails.maxLength = Mae''n rhaid i''r disgrifiad o''r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 500 o gymeriadau neu lai
+error.tenantsAdditionsDisregardedDetails.required = Nodwch ddisgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru
+error.tenantsAdditionsDisregardedDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 500 o gymeriadau neu lai
 
 # LEASE SURRENDERED EARLY
 #########################
@@ -1628,29 +1628,29 @@ error.leaseSurrenderedEarly.required = Select yes if former lease or agreement w
 
 # BENEFITS GIVEN
 ###############
-benefitsGiven.heading = A roddwyd cyfnod di-rent, unrhyw daliad, neu unrhyw fuddion eraill i chi pan ganiatawyd y brydles neu''r cytundeb?
+benefitsGiven.heading = A roddwyd cyfnod di-rent, unrhyw daliad, neu unrhyw fuddion eraill i chi pan ganiatawyd y brydles neu’r cytundeb?
 error.benefitsGiven.required = Select yes if you were given a rent-free period, any payment or any other benefits when the lease or agreement was granted
 
 # BENEFITS GIVEN DETAILS
 #######################
 benefitsGivenDetails.heading = Rhowch fanylion unrhyw gyfnod, taliad neu fudd di-rent
-benefitsGivenDetails.hint = Gadewch hyn yn wag os yw''r rhent wedi''i adolygu ers cael y budd.
+benefitsGivenDetails.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers cael y budd.
 error.benefitsGivenDetails.maxLength = The description of the rent, payment or benefit should be 2000 characters or fewer.
 
 
 # CAPITAL PAID SUM 6020
-capitalPaidSum6020.heading = A dalwyd swm cyfalaf neu bremiwm gan y meddiannydd neu iddo mewn perthynas â''r brydles neu''r cytundeb?
+capitalPaidSum6020.heading = A dalwyd swm cyfalaf neu bremiwm gan y meddiannydd neu iddo mewn perthynas â’r brydles neu’r cytundeb?
 error.capitalPaidSum6020.required = Select yes if capital sum or premium was paid by or to the occupier in respect of the lease or agreement
 
 
 # CAPITAL SUM DESCRIPTION 6020
 #########################
 capitalSumDescription.heading = Rhowch fanylion unrhyw swm a dalwyd gan y tenant neu iddo
-capitalSumDescription.hint = Gadewch hyn yn wag os yw''r rhent wedi''i adolygu ers i''r swm gael ei dalu.
+capitalSumDescription.hint = Gadewch hyn yn wag os yw’r rhent wedi’i adolygu ers i’r swm gael ei dalu.
 error.capitalSumDescription.maxLength = The description of the capital sum or premium should be 2000 characters or fewer.
 
 # CAPITAL PAID SUM 6045
-capitalPaidSum6045.heading = A dalwyd swm cyfalaf neu bremiwm gan y meddiannydd neu iddo mewn perthynas â''r brydles neu''r cytundeb?
+capitalPaidSum6045.heading = A dalwyd swm cyfalaf neu bremiwm gan y meddiannydd neu iddo mewn perthynas â’r brydles neu’r cytundeb?
 
 # CAPITAL SUM DESCRIPTION 6045
 #########################
@@ -1658,34 +1658,34 @@ capitalSumDescription6045.heading = Rhowch fanylion unrhyw swm a dalwyd gan y te
 
 # LEGAL PLANNING RESTRICTIONS
 #############################
-legalOrPlanningRestrictions.heading = Ffactorau eraill sy''n effeithio ar y rhent
-legalOrPlanningRestrictions.p1 = Rhaid i chi ddisgrifio unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy''n daladwy gan y gall y rhain effeithio ar brisiad yr eiddo hefyd. Mae angen i ni wybod am ffactorau fel:
+legalOrPlanningRestrictions.heading = Ffactorau eraill sy’n effeithio ar y rhent
+legalOrPlanningRestrictions.p1 = Rhaid i chi ddisgrifio unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy gan y gall y rhain effeithio ar brisiad yr eiddo hefyd. Mae angen i ni wybod am ffactorau fel:
 legalOrPlanningRestrictions.list1 = cyfyngiadau cyfreithiol
 legalOrPlanningRestrictions.list2 = cyfyngiadau cynllunio
-legalOrPlanningRestrictions.list3 = telerau neu amodau anarferol yn y brydles neu''r cytundeb
-legalOrPlanningRestrictions.p2 = Enghreiffitiau nodweddiadol fyddai cymal torri yn y brydles neu gytundeb, neu gytundeb sy''n contractio allan o hawliau penodol sydd wedi''u cynnwys yn y Ddeddf Landlord a Thenant.
-legalOrPlanningRestrictions.subheading = A oes unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy''n daladwy?
+legalOrPlanningRestrictions.list3 = telerau neu amodau anarferol yn y brydles neu’r cytundeb
+legalOrPlanningRestrictions.p2 = Enghreiffitiau nodweddiadol fyddai cymal torri yn y brydles neu gytundeb, neu gytundeb sy’n contractio allan o hawliau penodol sydd wedi’u cynnwys yn y Ddeddf Landlord a Thenant.
+legalOrPlanningRestrictions.subheading = A oes unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy?
 hint.legalOrPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act.
-error.legalOrPlanningRestrictions.missing = Dewiswch ‘do'' os oes unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy''n daladwy
+error.legalOrPlanningRestrictions.missing = Dewiswch ‘do’ os oes unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
 
 # LEGAL PLANNING RESTRICTIONS DETAILS
 #####################################
-legalOrPlanningRestrictionsDetails.heading = Disgrifiwch y ffactorau eraill a allai fod wedi effeithio ar y rhent sy''n daladwy
-error.legalOrPlanningRestrictionsDetails.required = Nodwch ddisgrifiad o''r ffactorau eraill a allai fod wedi effeithio ar y rhent sy''n daladwy
-error.legalOrPlanningRestrictionsDetails.maxLength = Mae''n rhaid i''r disgrifiad o''r ffactorau eraill a allai fod wedi effeithio ar y rhent sy''n daladwy fod yn 500 o gymeriadau neu lai
+legalOrPlanningRestrictionsDetails.heading = Disgrifiwch y ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
+error.legalOrPlanningRestrictionsDetails.required = Nodwch ddisgrifiad o’r ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
+error.legalOrPlanningRestrictionsDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy fod yn 500 o gymeriadau neu lai
 
 # ABOUT YOUR TRADING HISTORY
 ##############################
 aboutYourTradingHistory.heading = Gwybodaeth am ddeiliadaeth a chyfrifyddu
 aboutYourTradingHistory.6048.heading = Accounting information
-firstOccupy.heading = Pryd y gwnaethoch feddiannu''r eiddo am y tro cyntaf?
+firstOccupy.heading = Pryd y gwnaethoch feddiannu’r eiddo am y tro cyntaf?
 fieldName.firstOccupy = the {0} when you first occupied the property
 
 # FINANCIAL YEAR-END
 ##############################
 financialYearEnd.heading = Diwedd eich blwyddyn ariannol
 label.financialYear = Pryd fydd eich blwyddyn ariannol bresennol yn dod i ben?
-financialYearEnd.yearEndChanged.legend = Os yw''ch blwyddyn ariannol wedi newid
+financialYearEnd.yearEndChanged.legend = Os yw’ch blwyddyn ariannol wedi newid
 financialYearEnd.yearEndChanged.hint = Defnyddiwch y blwch dewis os yw diwedd eich blwyddyn ariannol wedi newid yn y 3 blynedd diwethaf. Byddwch yn mynd i dudalen ar wahân i ddatgan y manylion diwedd blwyddyn blaenorol.
 financialYearEnd.yearEndChanged = Mae diwedd fy mlwyddyn ariannol wedi newid yn y 3 blynedd diwethaf.
 fieldName.financialYear = the {0} when your current financial year ends
@@ -1716,22 +1716,22 @@ error.checkYourAnswers.givenInformation.isCorrect = Select if the given informat
 #########################
 currentRentFirstPaid.heading = Pryd talwyd y rhent presennol am y tro cyntaf
 label.currentRentFirstPaid.p1 = Mae angen i chi ddatgan pryd y talwyd y rhent am y tro cyntaf, ar ei gyfradd bresennol.
-label.currentRentFirstPaid.p2 = Nid yw hyn o reidrwydd pan wnaethoch chi feddiannu''r eiddo am y tro cyntaf. Gallai hyn fod pan gafodd y rhent presennol ei dalu am y tro cyntaf gennych chi yn dilyn y canlynol:
+label.currentRentFirstPaid.p2 = Nid yw hyn o reidrwydd pan wnaethoch chi feddiannu’r eiddo am y tro cyntaf. Gallai hyn fod pan gafodd y rhent presennol ei dalu am y tro cyntaf gennych chi yn dilyn y canlynol:
 currentRentFirstPaid.list1 = adolygiad rhent
 currentRentFirstPaid.list2 = adnewyddu prydles
 currentRentFirstPaid.list3 = cyfnod di-rent cychwynnol
 label.currentRentFirstPaid.p3 = Os neilltuwyd y brydles bresennol i chi gan barti arall, dywedwch wrthym pryd y gwnaeth dalu rhent am y tro cyntaf ar y gyfradd hon.
-label.currentRentFirstPaid.p4 = Nid oes angen i chi roi gwybod i ni am unrhyw newidiadau yn y rhent sy''n rhan o''ch cytundeb presennol. Gallai''r rhain gynnwys, ond heb fod yn gyfyngedig i''r canlynol:
-currentRentFirstPaid.list4 = newidiadau i''ch trosiant
+label.currentRentFirstPaid.p4 = Nid oes angen i chi roi gwybod i ni am unrhyw newidiadau yn y rhent sy’n rhan o’ch cytundeb presennol. Gallai’r rhain gynnwys, ond heb fod yn gyfyngedig i’r canlynol:
+currentRentFirstPaid.list4 = newidiadau i’ch trosiant
 currentRentFirstPaid.list5 = amrywiadau mewn unrhyw fynegai y gall eich rhent fod yn gysylltiedig ag ef, er enghraifft y mynegai prisiau manwerthu (RPI)
-label.currentRentFirstPaid.p5 = Pryd talwyd y rhent presennol yn gyntaf o dan delerau''r brydles neu''r cytundeb?
+label.currentRentFirstPaid.p5 = Pryd talwyd y rhent presennol yn gyntaf o dan delerau’r brydles neu’r cytundeb?
 label.currentRentFirstPaid.help = Er enghraifft, 27 9 2017.
 fieldName.currentRentFirstPaid = the date when the current rent was first paid
 
 # CURRENT LEASE OR AGREEMENT BEGIN
 ##################################
-currentLeaseOrAgreementBegin.heading = Hyd y brydles a''r dyddiad dechrau
-currentLeaseOrAgreementBegin.subheading = Pryd dechreuodd y brydles bresennol neu''r cytundeb presennol?
+currentLeaseOrAgreementBegin.heading = Hyd y brydles a’r dyddiad dechrau
+currentLeaseOrAgreementBegin.subheading = Pryd dechreuodd y brydles bresennol neu’r cytundeb presennol?
 label.currentLeaseOrAgreementBegin = Os neilltuwyd y brydles bresennol i barti arall yn wreiddiol, dywedwch wrthym pryd gwnaeth hi ei chychwyn.
 label.grantedFor = Am ba hyd y cafodd y brydles ei chaniatáu?
 hint.currentLeaseOrAgreementBegin = Er enghraifft, 18 mis, 1.5 mlynedd, neu 1 flwyddyn a 6 mis.
@@ -1744,46 +1744,46 @@ label.currentLeaseOrAgreementBegin.help = Er enghraifft, 9 2017.
 intervalsOfRentReview.heading = Adolygiadau rhent
 intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
 intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue''.
+intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’.
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
 label.nextReview.help = For example, 27 9 2025
 fieldName.nextReview = the date when the next rent review is due
-error.intervalsOfRent.maxLength = Mae''n rhaid i''r amlder o ran eich adolygiad rhent fod yn 2000 o gymeriadau neu lai
+error.intervalsOfRent.maxLength = Mae’n rhaid i’r amlder o ran eich adolygiad rhent fod yn 2000 o gymeriadau neu lai
 error.currentLeaseOrAgreementBegin.required = Please provide at what intervals is the rent reviewed under the terms of the lease or agreement
 error.currentLeaseOrAgreementBegin.maxLength = This must be 1000 characters or fewer
 
 # CURRENT RENT PAYABLE WITHIN 12 MONTHS
 #######################################
 currentRentPayableWithin12Months.heading = Adolygiadau rhent yn y dyfodol
-currentRentPayableWithin12Months.p1 = Mae''n rhaid i chi ddatgan a oes disgwyl i''ch rhent presennol gael ei adolygu cyn pen y 12 mis nesaf. Gallai hyn fod o dan delerau''r brydles bresennol, neu wrth ganiatáu prydles newydd.
-currentRentPayableWithin12Months.p2 = Peidiwch â chynnwys unrhyw newidiadau i''ch rhent sy''n gysylltiedig â''ch trosiant, na mynegeion fel y mynegai prisiau manwerthu (RPI).
-currentRentPayableWithin12Months.subheading = A oes disgwyl i''r rhent sy''n daladwy ar hyn o bryd gael ei adolygu cyn pen y 12 mis nesaf?
+currentRentPayableWithin12Months.p1 = Mae’n rhaid i chi ddatgan a oes disgwyl i’ch rhent presennol gael ei adolygu cyn pen y 12 mis nesaf. Gallai hyn fod o dan delerau’r brydles bresennol, neu wrth ganiatáu prydles newydd.
+currentRentPayableWithin12Months.p2 = Peidiwch â chynnwys unrhyw newidiadau i’ch rhent sy’n gysylltiedig â’ch trosiant, na mynegeion fel y mynegai prisiau manwerthu (RPI).
+currentRentPayableWithin12Months.subheading = A oes disgwyl i’r rhent sy’n daladwy ar hyn o bryd gael ei adolygu cyn pen y 12 mis nesaf?
 currentRentPayableWithin12Months.hint = Do not include any rent increases linked to turnover or the retail price index (RPI).
 label.dateReview = Dyddiad yr adolygiad rhent nesaf, neu ddyddiad dod i ben y brydles bresennol
-error.currentRentPayableWithin12Months.required = Dewiswch ‘oes'' os bydd y rhent presennol yn cael ei adolygu yn ystod y 12 mis nesaf
+error.currentRentPayableWithin12Months.required = Dewiswch ‘oes’ os bydd y rhent presennol yn cael ei adolygu yn ystod y 12 mis nesaf
 fieldName.dateReview = the date when the rent will be reviewed, or the lease expires
 label.currentRentPayableWithin12Months.help = Er enghraifft, 27 9 2024 - gadewch hyn yn wag os nad oes adolygiadau rhent ar y gweill.
 
 # WHAT IS YOUR RENT BASED ON
 ############################
-currentRentBasedOn.heading = Ar beth mae''r rhent yn seiliedig?
+currentRentBasedOn.heading = Ar beth mae’r rhent yn seiliedig?
 hint.currentRentBasedOn = Select any that apply and give details.
-label.percentageOpenMarket = Canran o''r gwerth ar y farchnad agored
+label.percentageOpenMarket = Canran o’r gwerth ar y farchnad agored
 label.fixed = Swm sefydlog
 label.percentageTurnover = Canran o drosiant busnes y meddiannydd
-label.indexed = Wedi''i fynegeio i''r mynegai prisiau manwerthu (RPI) neu fynegai arall
+label.indexed = Wedi’i fynegeio i’r mynegai prisiau manwerthu (RPI) neu fynegai arall
 label.stepped = Cytundeb rhent fesul cam
-label.other = Mae''r rhent wedi''i seilio ar rywbeth arall
-label.currentRentBasedOn.percentageOpenMarket = Canran o''r gwerth ar y farchnad agored
+label.other = Mae’r rhent wedi’i seilio ar rywbeth arall
+label.currentRentBasedOn.percentageOpenMarket = Canran o’r gwerth ar y farchnad agored
 label.currentRentBasedOn.fixed = Swm sefydlog
 label.currentRentBasedOn.percentageTurnover = Canran o drosiant busnes y meddiannydd
-label.currentRentBasedOn.indexed = Wedi''i fynegeio i''r mynegai prisiau manwerthu (RPI) neu fynegai arall
+label.currentRentBasedOn.indexed = Wedi’i fynegeio i’r mynegai prisiau manwerthu (RPI) neu fynegai arall
 label.currentRentBasedOn.stepped = Cytundeb rhent fesul cam
 label.currentRentBasedOn.other = Other
 label.whatIsYourRentBasedOn.describe = Gwybodaeth ychwanegol
-hint.whatIsYourRentBasedOn.describe = Rhowch fanylion os ydych am roi gwybod i ni am unrhyw opsiynau a allai fod yn berthnasol. Er enghraifft, “rhent yw 75% o''r gwerth ar y farchnad agored”.
+hint.whatIsYourRentBasedOn.describe = Rhowch fanylion os ydych am roi gwybod i ni am unrhyw opsiynau a allai fod yn berthnasol. Er enghraifft, “rhent yw 75% o’r gwerth ar y farchnad agored”.
 error.whatIsYourRentBasedOn.required = Describe how your rent is calculated
 error.currentRentBasedOn.required = Select what your rent is based on
 error.currentRentBasedOn.maxLength = Additional information must be 500 characters or fewer
@@ -1989,8 +1989,8 @@ accommodation.includedTariffItems.value.gas = Gas
 accommodation.includedTariffItems.value.water = Water
 accommodation.includedTariffItems.value.roomHeating = Room heating
 accommodation.includedTariffItems.value.none = No, none of these are included in the tariff
-error.includedTariffItems.required = Select any items included in the tariff or select ''No, none of these are included in the tariff''
-error.includedTariffItems.noneSelectedWithOther = Select any items included in the tariff or select ''No, none of these are included in the tariff''
+error.includedTariffItems.required = Select any items included in the tariff or select ‘No, none of these are included in the tariff’
+error.includedTariffItems.noneSelectedWithOther = Select any items included in the tariff or select ‘No, none of these are included in the tariff’
 accommodation.unitList.heading.removedAll = You have removed all accommodation units
 accommodation.unitList.heading.singular = You have added 1 accommodation unit
 accommodation.unitList.heading.plural = You have added {0} accommodation units
@@ -2001,8 +2001,8 @@ accommodation.addedMaximumAccommodationUnits.link1 = Check or update the {0} acc
 accommodation.exceededMaxUnits.label = I confirm that the VOA will contact me about the details I was unable to declare.
 error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
 error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
-accommodation.removeLastUnit.heading = A ydych yn siŵr eich bod am dynnu ''{0}''?
-accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ''{0}'' you will be returned to the start of this section.
+accommodation.removeLastUnit.heading = A ydych yn siŵr eich bod am dynnu ‘{0}’?
+accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ‘{0}’ you will be returned to the start of this section.
 error.accommodation.removeLastUnit.required = Select yes if you would like to remove the only accommodation unit
 accommodation.CYA.heading = Check your answers - accommodation details
 accommodation.CYA.unit = Unit {0}
@@ -2029,11 +2029,11 @@ error.accommodationUnits.isEmpty = You must include details of at least one self
 userType.occupierTrustee = Occupier or trustee for occupier
 userType.lesseeTrustee = Lessee or trustee for lessee
 userType.ownerTrustee = Owner or trustee for owner
-userType.occupier = Occupier''s agent
-userType.lessee = Lessee''s agent
-userType.owner = Owner''s agent
+userType.occupier = Occupier’s agent
+userType.lessee = Lessee’s agent
+userType.owner = Owner’s agent
 label.userType = What is your relationship to the property?
-hint.aboutYou = If you''re renting or leasing the property, even as a charity or non-profit organisation, you''re considered the occupier. If you are both the owner and the occupier, select ‘Owner or trustee for owner''.
+hint.aboutYou = If you’re renting or leasing the property, even as a charity or non-profit organisation, you’re considered the occupier. If you are both the owner and the occupier, select ‘Owner or trustee for owner’.
 
 # TASK LIST
 ###########
@@ -2051,10 +2051,10 @@ taskList.fixedOperatingExpenses = Fixed operating expenses
 taskList.otherCosts = Other costs
 taskList.profitSummary = Profit summary
 declaration.heading = Nawr anfonwch eich datganiad
-declaration.information = Drwy gyflwyno''r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi''n eu darparu yn gywir.
+declaration.information = Drwy gyflwyno’r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi’n eu darparu yn gywir.
 request.heading = Anfonwch eich cais nawr
-request.information = Gwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i''r VOA gysylltu â chi ynglŷn â''ch cais.
-hint.declaration = Gellid mynd â chi i''r llys os ydych yn cyflwyno gwybodaeth anwir
+request.information = Gwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VOA gysylltu â chi ynglŷn â’ch cais.
+hint.declaration = Gellid mynd â chi i’r llys os ydych yn cyflwyno gwybodaeth anwir
 taskList.fuelSales = Fuel sales
 taskList.bunkerdFuel = Bunkered fuel
 taskList.customerCreditAccounts = Customer credit accounts
@@ -2076,7 +2076,7 @@ taskList.additionalActivities = Additional activities
 # COST OF SALES OR GROSS PROFIT
 #########
 costOfSalesOrGrossProfit.heading = Would you rather give details of your cost of sales, or your gross profits?
-hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you''d like to provide these figures for your cost of sales, or gross profits.
+hint.costOfSalesOrGrossProfit = We need to see details of your turnover broken down by specific department. You can decide whether you’d like to provide these figures for your cost of sales, or gross profits.
 label.costOfSales = Cost of sales
 label.grossProfit = Gross profits
 error.costOfSales.maxColumns = Number of columns must be between 1 and 3
@@ -2085,12 +2085,12 @@ error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 ##########
 turnover.heading = Trosiant
 turnover.6015.heading = Cyfanswm trosiant
-turnover.p1 = Rhowch fanylion eich trosiant i ni. Os nad yw''r cyfrifon yn ymwneud â blwyddyn gyfan, neu os nad oeddech yn masnachu''n barhaus, nodwch y nifer berthnasol o wythnosau.
-turnover.6015.p1 = Mae''n rhaid i chi roi manylion cyfanswm eich trosiant. Rhaid cynnwys pob math o incwm o lety, gwerthiannauu bwyd a diod, ac incwm o fasnachfreintiau fel ciosgau coffi. Rhaid i chi hefyd gynnwys incwm o unrhyw weithgareddau hamdden, ac unrhyw incwm rhent o gonsesiynau neu osodiadau.
-turnover.6015.p2 = Os nad yw''r cyfrifon yn ymwneud â blwyddyn gyfan, neu os nad oeddech yn masnachu''n barhaus, nodwch y nifer berthnasol o wythnosau.
+turnover.p1 = Rhowch fanylion eich trosiant i ni. Os nad yw’r cyfrifon yn ymwneud â blwyddyn gyfan, neu os nad oeddech yn masnachu’n barhaus, nodwch y nifer berthnasol o wythnosau.
+turnover.6015.p1 = Mae’n rhaid i chi roi manylion cyfanswm eich trosiant. Rhaid cynnwys pob math o incwm o lety, gwerthiannauu bwyd a diod, ac incwm o fasnachfreintiau fel ciosgau coffi. Rhaid i chi hefyd gynnwys incwm o unrhyw weithgareddau hamdden, ac unrhyw incwm rhent o gonsesiynau neu osodiadau.
+turnover.6015.p2 = Os nad yw’r cyfrifon yn ymwneud â blwyddyn gyfan, neu os nad oeddech yn masnachu’n barhaus, nodwch y nifer berthnasol o wythnosau.
 turnover.6015.p3 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this page. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
 turnover.p2 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
-turnover.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.financialYearEnd = Diwedd y flwyddyn ariannol
 turnover.tradingPeriod = Cyfnod masnachu
 turnover.alcoholicDrinks.aria = Drinks
@@ -2109,26 +2109,26 @@ turnover.totalSalesRevenue = <b>Cyfanswm refeniw y gwerthiannau</b>
 turnover.totalSalesRevenueCaption = (heb gynnwys TAW)
 turnover.accommodation = <b>Llety</b> (heb gynnwys TAW)
 turnover.accommodationCaption = Heb gynnwys prydau o fwyd.
-turnover.averageOccupancyRate = Cyfraddau''r feddiannaeth, ar gyfartaledd
+turnover.averageOccupancyRate = Cyfraddau’r feddiannaeth, ar gyfartaledd
 turnover.averageOccupancyRateCaption = Tai llety a gwestai yn unig.
-turnover.mustInclude.p1 = Mae''n rhaid i chi gynnwys unrhyw incwm rhent a gafwyd o gonsesiynau neu osodiadau, neu incwm a gynhyrchir gan unrhyw fasnachfreintiau a weithredwyd gan {0}.
+turnover.mustInclude.p1 = Mae’n rhaid i chi gynnwys unrhyw incwm rhent a gafwyd o gonsesiynau neu osodiadau, neu incwm a gynhyrchir gan unrhyw fasnachfreintiau a weithredwyd gan {0}.
 turnover.weeks = wythnos
 turnover.details = Help gyda chwblhau trosiant
 turnover.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.
-turnover.details.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda''i gilydd – megis bwyd a diod – gallwch eu datgan gyda''i gilydd mewn un maes.
-turnover.details.6015.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon. Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda''i gilydd – megis bwyd a diod – gallwch eu datgan gyda''i gilydd mewn un maes.
-turnover.details.6015.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda''i gilydd – megis bwyd a diod – gallwch eu datgan gyda''i gilydd mewn un maes.
+turnover.details.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
+turnover.details.6015.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon. Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
+turnover.details.6015.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
 turnover.details.6015.h1 = Arweiniad cyffredinol
 turnover.details.6015.h3 = Gweithgareddau hamdden
-turnover.details.6015.p4 = Mae''n rhaid i chi ddatgan unrhyw incwm sy''n deillio o weithgareddau hamdden, fel gweithgareddau golff, ffitrwydd neu sba. Rhaid i chi ddatgan y rhain yn y categori ‘arall''.
+turnover.details.6015.p4 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deillio o weithgareddau hamdden, fel gweithgareddau golff, ffitrwydd neu sba. Rhaid i chi ddatgan y rhain yn y categori ‘arall’.
 turnover.details.6015.h4 = Incwm o fasnachfreintiau, consesiynau a gosodiadau
-turnover.details.6015.p5 = Mae''n rhaid i chi ddatgan unrhyw incwm sy''n deillio o unrhyw fasnachfreintiau, consesiynau neu osodiadau sydd ynghlwm wrth yr eiddo. Dylid cofnodi hyn yn y categori incwm priodol.
-turnover.details.6015.p6 = Er enghraifft, dylid datgan incwm rhent o gonsesiwn bwyty o dan ''bwyd''.
+turnover.details.6015.p5 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deillio o unrhyw fasnachfreintiau, consesiynau neu osodiadau sydd ynghlwm wrth yr eiddo. Dylid cofnodi hyn yn y categori incwm priodol.
+turnover.details.6015.p6 = Er enghraifft, dylid datgan incwm rhent o gonsesiwn bwyty o dan ‘bwyd’.
 turnover.grossIncome = Incwm gros
 turnover.grossIncomeCaption.p1 = (heb gynnwys TAW)
 turnover.grossIncomeCaption.p2 = Gan eithrio unrhyw daliadau a gafwyd am gonsesiynau, masnachfreintiau, trwyddedau neu osodiadau.
 turnover.totalVisitorNumbers = Cyfanswm nifer yr ymwelwyr
-turnover.totalVisitorNumbersCaption = Gan gynnwys consesiynau a mynediadau am ddim – nodwch ‘0'' os yw''r eiddo yn faes parcio.
+turnover.totalVisitorNumbersCaption = Gan gynnwys consesiynau a mynediadau am ddim – nodwch ‘0’ os yw’r eiddo yn faes parcio.
 error.financialYearEnd.day.required = The financial year-end date must include a day
 error.financialYearEnd.month.required = The financial year-end date must include a month
 error.financialYearEnd.year.required = The financial year-end date must include a year
@@ -2160,7 +2160,7 @@ turnover.p1.6016 = Provide us with details of your turnover. If the accounts do 
 turnover.p2.6016 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this form. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
 turnover.details.6016 = Help with completing this page
 turnover.details.h1.6016 = Arweiniad cyffredinol
-turnover.details.p1.6016 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon. Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda''i gilydd – megis bwyd a diod – gallwch eu datgan gyda''i gilydd mewn un maes.
+turnover.details.p1.6016 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon. Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
 turnover.details.h2.6016 = Financial year end
 turnover.details.p2.6016 = Your financial year end dates are pre-populated by the system. If your financial year end has changed during the period shown, you can declare them together in a single field.
 turnover.details.h3.6016 = Franchises and concessions
@@ -2174,9 +2174,9 @@ turnover.totalSales.6016 = Cyfanswm refeniw y gwerthiannau
 turnover.totalSalesCaption.6016 = (heb gynnwys TAW)
 
 # TURNOVER 6020
-turnover.6020.heading = Trosiant nad yw''n danwydd
+turnover.6020.heading = Trosiant nad yw’n danwydd
 turnover.6020.p1 = Rhowch fanylion unrhyw incwm y gallech ei gael o werthiannau and ydynt yn danwydd, ac eithrio unrhyw incwm o osodiadau. Gofynnir i chi ynglŷn ag incwm o osodiadau nes ymlaen yn y datganiad hwn.
-turnover.6020.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6020.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6020.shop = Trosiant y siop
 turnover.6020.shop.hint = Heb gynnwys derbynebau tanwydd.
 turnover.6020.carWash = Trosiant golchi ceir
@@ -2207,35 +2207,35 @@ error.turnover.6020.otherIncome.negative = Other income in the year ending {0} c
 
 # TURNOVER 6045
 turnover.6045.anyStaticLeisureCaravansOnSite.heading = Carafannau statig
-turnover.6045.anyStaticLeisureCaravansOnSite.p1 = Mae''r cwestiynau yn yr adran hon yn berthnasol i garafannau statig a ddefnyddir at ddibenion hamdden neu wyliau. Gall y rhain cael eu rhoi ar osod i bobl sy''n mynd ar eu gwyliau, neu gall berchnogion preifat eu defnyddio fel cartref gwyliau neu ail gartref.
-turnover.6045.anyStaticLeisureCaravansOnSite.p2 = Ni ddylech gynnwys manylion unrhyw garafán breswyl sy''n cael ei meddiannu fel unig fan preswylio neu fel prif fan preswylio.
+turnover.6045.anyStaticLeisureCaravansOnSite.p1 = Mae’r cwestiynau yn yr adran hon yn berthnasol i garafannau statig a ddefnyddir at ddibenion hamdden neu wyliau. Gall y rhain cael eu rhoi ar osod i bobl sy’n mynd ar eu gwyliau, neu gall berchnogion preifat eu defnyddio fel cartref gwyliau neu ail gartref.
+turnover.6045.anyStaticLeisureCaravansOnSite.p2 = Ni ddylech gynnwys manylion unrhyw garafán breswyl sy’n cael ei meddiannu fel unig fan preswylio neu fel prif fan preswylio.
 turnover.6045.anyStaticLeisureCaravansOnSite.question = A oes gennych unrhyw garafannau gwyliau neu garafannau hamdden ar eich safle?
 error.turnover.6045.anyStaticLeisureCaravansOnSite.required = Select yes if you have any static holiday or leisure caravans located on your site
 
-turnover.6045.caravansOpenAllYear.heading = A yw''ch carafannau statig ar agor drwy gydol y flwyddyn?
-turnover.6045.weeksPerYear.label = Nodwch am sawl wythnos o''r flwyddyn y mae''r safle ar agor
+turnover.6045.caravansOpenAllYear.heading = A yw’ch carafannau statig ar agor drwy gydol y flwyddyn?
+turnover.6045.weeksPerYear.label = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
 error.caravans.openAllYear.required = Select yes if your static caravans are open all year
 error.caravans.weeksPerYear.required = Enter the number of weeks
 error.caravans.weeksPerYear.invalid = The number of weeks should be a number from 1 to 52
 
 turnover.6045.caravanFleetHire.grossReceipts.heading = Derbyniadau gros o logi carafannau statig fel fflyd
 turnover.6045.caravanFleetHire.p1 = Dylech gynnwys yr incwm a gafwyd o logi carafannau statig unigol a charafannau statig dwy-uned fel fflyd:
-turnover.6045.caravanFleetHire.list1.item1 = sy''n eiddo i''r gweithredwr
-turnover.6045.caravanFleetHire.list1.item2 = sy''n cael eu his-osod gan y gweithredwr i bobl ar eu gwyliau ar ran perchnogion preifat
-turnover.6045.caravanFleetHire.p2 = Dylai pob ffigur eithrio TAW, ond dylai gynnwys unrhyw daliadau a godir am nwy a thrydan. Nodwch bob cyfanswm cyn didynnu comisiwn gosod unrhyw asiantau. Lle nad yw cyfrifon yn ymwneud â''ch tymor i gyd, nodwch y nifer berthnasol o wythnosau.
+turnover.6045.caravanFleetHire.list1.item1 = sy’n eiddo i’r gweithredwr
+turnover.6045.caravanFleetHire.list1.item2 = sy’n cael eu his-osod gan y gweithredwr i bobl ar eu gwyliau ar ran perchnogion preifat
+turnover.6045.caravanFleetHire.p2 = Dylai pob ffigur eithrio TAW, ond dylai gynnwys unrhyw daliadau a godir am nwy a thrydan. Nodwch bob cyfanswm cyn didynnu comisiwn gosod unrhyw asiantau. Lle nad yw cyfrifon yn ymwneud â’ch tymor i gyd, nodwch y nifer berthnasol o wythnosau.
 turnover.6045.caravanFleetHire.grossReceipts = Derbyniadau gros
 turnover.6045.excludingVAT = (Heb gynnwys TAW)
 error.turnover.6045.caravanFleetHire.grossReceipts.required = Enter 0 if you did not have any gross receipts from static caravan fleet hire in the year ending {0}
 error.turnover.6045.caravanFleetHire.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravanFleetHire.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 
-turnover.6045.caravans.single.ownedByOperator.heading = Carafannau unigol, o dan berchnogaeth y gweithredwr, a defnyddir i''w llogi fel fflyd
-turnover.6045.caravans.single.ownedByOperator.p1 = Nodwch eich derbynebau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
-turnover.6045.caravans.single.ownedByOperator.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6045.caravans.single.ownedByOperator.heading = Carafannau unigol, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+turnover.6045.caravans.single.ownedByOperator.p1 = Nodwch eich derbynebau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+turnover.6045.caravans.single.ownedByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.caravans.single.ownedByOperator.help.link = Help gyda charafannau unigol
-turnover.6045.caravans.single.ownedByOperator.help.p1 = Mae carafán unigol yn cael ei chludo i''r safle mewn un darn, ac yn cael ei gosod ar faes.
+turnover.6045.caravans.single.ownedByOperator.help.p1 = Mae carafán unigol yn cael ei chludo i’r safle mewn un darn, ac yn cael ei gosod ar faes.
 turnover.6045.caravans.grossReceipts = Derbynebau gros
-turnover.6045.caravans.grossReceipts.hint = Gan gynnwys y trydan a''r nwy a gyflenwyd, os o gwbl.
+turnover.6045.caravans.grossReceipts.hint = Gan gynnwys y trydan a’r nwy a gyflenwyd, os o gwbl.
 turnover.6045.caravans.vans = Nifer y faniau
 turnover.6045.vans.suffix = fan
 turnover.6045.caravan.suffix = caravan
@@ -2246,30 +2246,30 @@ error.turnover.6045.caravans.single.ownedByOperator.grossReceipts.negative = Gro
 error.caravans.single.ownedByOperator.vans.required = Enter 0 if you do not have any single caravan vans owned by the operator in the year ending {0}
 error.caravans.single.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
-turnover.6045.caravans.single.subletByOperator.heading = Carafannau unigol sy''n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i''w llogi fel fflyd i bobl sy''n mynd ar eu gwyliau
-turnover.6045.caravans.single.subletByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
-turnover.6045.caravans.single.subletByOperator.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6045.caravans.single.subletByOperator.heading = Carafannau unigol sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd i bobl sy’n mynd ar eu gwyliau
+turnover.6045.caravans.single.subletByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+turnover.6045.caravans.single.subletByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from single caravans sub-let by the operator in the year ending {0}
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.single.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 error.caravans.single.subletByOperator.vans.required = Enter 0 if you do not have any single caravan vans sub-let by the operator in the year ending {0}
 error.caravans.single.subletByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.single.subletByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
-turnover.6045.caravans.twin.ownedByOperator.heading = Carafannau dwy-uned, o dan berchnogaeth y gweithredwr, a defnyddir i''w llogi fel fflyd
-turnover.6045.caravans.twin.ownedByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
-turnover.6045.caravans.twin.ownedByOperator.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6045.caravans.twin.ownedByOperator.heading = Carafannau dwy-uned, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+turnover.6045.caravans.twin.ownedByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+turnover.6045.caravans.twin.ownedByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.caravans.twin.ownedByOperator.help.link = Help gyda charafannau dwy-uned
-turnover.6045.caravans.twin.ownedByOperator.help.p1 = Mae carafán ddwy-uned yn cael ei chludo i''r safle mewn naill ai un neu ddau ddarn, ac yn cael ei chydosod gan ddefnyddio bolltau, clampiau, neu ddyfeisiau eraill.
-turnover.6045.caravans.twin.ownedByOperator.help.p2 = Ni ddylai garafán ddwy-uned fod yn hirach na 20m, yn lletach na 6.8m, na''n dalach na 3.05m. Dylai hefyd fod yn gallu cael ei chludo ar y ffyrdd.
+turnover.6045.caravans.twin.ownedByOperator.help.p1 = Mae carafán ddwy-uned yn cael ei chludo i’r safle mewn naill ai un neu ddau ddarn, ac yn cael ei chydosod gan ddefnyddio bolltau, clampiau, neu ddyfeisiau eraill.
+turnover.6045.caravans.twin.ownedByOperator.help.p2 = Ni ddylai garafán ddwy-uned fod yn hirach na 20m, yn lletach na 6.8m, na’n dalach na 3.05m. Dylai hefyd fod yn gallu cael ei chludo ar y ffyrdd.
 error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans owned by the operator in the year ending {0}
 error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.twin.ownedByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
 error.caravans.twin.ownedByOperator.vans.required = Enter 0 if you do not have any twin-unit caravan vans owned by the operator in the year ending {0}
 error.caravans.twin.ownedByOperator.vans.nonNumeric = The number of vans in the year ending {0} must be a number
 error.caravans.twin.ownedByOperator.vans.negative = The number of vans in the year ending {0} cannot be a negative number
-turnover.6045.caravans.twin.subletByOperator.heading = Carafannau dwy-uned sy''n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i''w llogi fel fflyd i bobl sy''n mynd ar eu gwyliau
-turnover.6045.caravans.twin.subletByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
-turnover.6045.caravans.twin.subletByOperator.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6045.caravans.twin.subletByOperator.heading = Carafannau dwy-uned sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd i bobl sy’n mynd ar eu gwyliau
+turnover.6045.caravans.twin.subletByOperator.p1 = Nodwch eich derbyniadau gros o logi carafannau fel fflyd, heb gynnwys TAW, ond cyn didynnu comisiwn yr asiantau. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+turnover.6045.caravans.twin.subletByOperator.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.required = Enter 0 if you did not have any gross receipts from twin-unit caravans sub-let in the year ending {0}
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.range = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.turnover.6045.caravans.twin.subletByOperator.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
@@ -2287,12 +2287,12 @@ turnover.6045.caravans.age.fleet = Fleet
 turnover.6045.caravans.age.fleetCaravans = Number of fleet <br/> caravans
 turnover.6045.caravans.age.private = Private
 turnover.6045.caravans.age.privateCaravans = Number of private <br/> caravans
-turnover.6045.caravans.age.fleet.item1 = O dan berchnogaeth y gweithredwr, a defnyddir i''w llogi fel fflyd
+turnover.6045.caravans.age.fleet.item1 = O dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
 turnover.6045.caravans.age.private.p1 = For the purposes of this declaration, private caravans fail into any of the following sub-categories:
 turnover.6045.caravans.age.private.item1 = privately owned and used only by owner and family
 turnover.6045.caravans.age.private.item2 = sub-let by operator to holidaymakers on behalf of private owners as fleet hire
 turnover.6045.caravans.age.private.item3 = sub-let by private owners to holidaymakers other than family and friends
-turnover.6045.caravans.age.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6045.caravans.age.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.caravans.age.years0_5 = 0-5 mlynedd
 turnover.6045.caravans.age.years6_10 = 6-10 mlynedd
 turnover.6045.caravans.age.years11_15 = 11-15 mlynedd
@@ -2377,17 +2377,17 @@ error.caravans.charitablePurposes.negative = The amount of caravans used for cha
 error.caravans.seasonalStaff.required = Enter 0 if you do not have on site any caravans used for seasonal staff
 error.caravans.seasonalStaff.nonNumeric = The amount of caravans used for seasonal staff must be a number
 error.caravans.seasonalStaff.negative = The amount of caravans used for seasonal staff cannot be a negative number
-turnover.6045.caravansPerService.heading = Pa wasanaethau sy''n cael eu darparu i''r carafanau statig o dan y categorïau canlynol?
+turnover.6045.caravansPerService.heading = Pa wasanaethau sy’n cael eu darparu i’r carafanau statig o dan y categorïau canlynol?
 turnover.6045.caravansPerService.services = Gwasanaethau
 turnover.6045.caravansPerService.numberOfCaravans = Nifer y carafannau
 turnover.6045.caravansPerService.fleet = Fflyd
-turnover.6045.caravansPerService.fleet.item1 = o dan berchnogaeth y gweithredwr, a defnyddir i''w llogi fel fflyd
+turnover.6045.caravansPerService.fleet.item1 = o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
 turnover.6045.caravansPerService.fleetWaterElectricityDrainage = Dŵr, trydan a systemau draenio
 turnover.6045.caravansPerService.fleetElectricityOnly = Trydan yn unig
 turnover.6045.caravansPerService.private = Preifat
-turnover.6045.caravansPerService.private.item1 = eiddo preifat, a defnyddir gan y perchennog a''i deulu yn unig
-turnover.6045.caravansPerService.private.item2 = yn cael eu his-osod gan y gweithredwyr, a hynny ar ran y perchnogion preifat, fel fflyd i''w llogi i bobl sy''n mynd ar eu gwyliau
-turnover.6045.caravansPerService.private.item3 = yn cael eu his-osod gan berchnogion preifat i bobl sy''n mynd ar eu gwyliau, ac nad ydynt yn deulu na''n ffrindiau
+turnover.6045.caravansPerService.private.item1 = eiddo preifat, a defnyddir gan y perchennog a’i deulu yn unig
+turnover.6045.caravansPerService.private.item2 = yn cael eu his-osod gan y gweithredwyr, a hynny ar ran y perchnogion preifat, fel fflyd i’w llogi i bobl sy’n mynd ar eu gwyliau
+turnover.6045.caravansPerService.private.item3 = yn cael eu his-osod gan berchnogion preifat i bobl sy’n mynd ar eu gwyliau, ac nad ydynt yn deulu na’n ffrindiau
 turnover.6045.caravansPerService.privateWaterElectricityDrainage = Dŵr, trydan a systemau draenio
 turnover.6045.caravansPerService.privateElectricityOnly = Trydan yn unig
 error.caravans.fleetWaterElectricityDrainage.required = Enter 0 if you do not have on site any fleet caravans provided with water, electricity and drainage
@@ -2402,12 +2402,12 @@ error.caravans.privateWaterElectricityDrainage.negative = The amount of private 
 error.caravans.privateElectricityOnly.required = Enter 0 if you do not have on site any private caravans provided with electricity only
 error.caravans.privateElectricityOnly.nonNumeric = The amount of private caravans provided with electricity only must be a number
 error.caravans.privateElectricityOnly.negative = The amount of private caravans provided with electricity only cannot be a negative number
-turnover.6045.caravansAnnualPitchFee.heading = Beth yw''r ffi flynyddol am lain ar gyfer carafán statig unigol ar hyn o bryd, heb gynnwys TAW?
+turnover.6045.caravansAnnualPitchFee.heading = Beth yw’r ffi flynyddol am lain ar gyfer carafán statig unigol ar hyn o bryd, heb gynnwys TAW?
 turnover.6045.caravansAnnualPitchFee.p1 =  Nodwch y ffi flynyddol am lain ar gyfer carafán statig unigol. Os taw carafannau dwy-uned sydd gennych yn unig, nodwch y ffi flynyddol safonol am lain ar gyfer carafán ddwy-uned.
 turnover.6045.caravans.annualPitchFee = Total annual pitch fee
 turnover.6045.perYear.suffix = y flwyddyn
-turnover.6045.caravans.servicesIncludedInPitchFee = Pa wasanaethau sy''n cael eu cynnwys yn y ffi ar gyfer y llain hon, a beth yw''r  ffioedd a godir?
-turnover.6045.caravans.servicesIncludedInPitchFee.hint = Dewiswch bob un sy''n berthnasol.
+turnover.6045.caravans.servicesIncludedInPitchFee = Pa wasanaethau sy’n cael eu cynnwys yn y ffi ar gyfer y llain hon, a beth yw’r  ffioedd a godir?
+turnover.6045.caravans.servicesIncludedInPitchFee.hint = Dewiswch bob un sy’n berthnasol.
 turnover.6045.caravans.fee.rates = Ardrethi
 turnover.6045.caravans.fee.rates.label = Nodwch y ffioedd a godir
 turnover.6045.caravans.fee.rates.ariaLabel = Rates charges made
@@ -2421,7 +2421,7 @@ turnover.6045.caravans.fee.electricity = Trydan
 turnover.6045.caravans.fee.electricity.label = Nodwch y ffioedd a godir
 turnover.6045.caravans.fee.electricity.ariaLabel = Electricity charges made
 turnover.6045.caravans.fee.other = Arall (rhowch fanylion)
-turnover.6045.caravans.fee.other.hint = Disgrifiwch y gwasanaethau eraill sy''n cael eu cynnwys yn y ffi am lain, gan gynnwys y ffioedd a godir.
+turnover.6045.caravans.fee.other.hint = Disgrifiwch y gwasanaethau eraill sy’n cael eu cynnwys yn y ffi am lain, gan gynnwys y ffioedd a godir.
 turnover.6045.caravans.fee.other.ariaLabel = Other included services description
 error.caravans.totalPitchFee.required = Enter the annual pitch fee
 error.caravans.totalPitchFee.nonNumeric = The annual pitch fee must be a number like 100 or 100.00
@@ -2446,7 +2446,7 @@ turnover.6045.lettingUnits.grossReceipts.heading = Letting units owned by site o
 turnover.6045.lettingUnits.p1.beginning = Enter your gross receipts from any of these units which are
 turnover.6045.lettingUnits.p1.bold = owned by the site operator.
 turnover.6045.lettingUnits.p1.end = Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-turnover.6045.lettingUnits.grossReceipts.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+turnover.6045.lettingUnits.grossReceipts.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 turnover.6045.lettingUnits.grossReceipts = Gross receipts
 turnover.6045.lettingUnits.grossReceipts.hint = Inclusive of electricity changes and gas supplied if any.
 turnover.6045.lettingUnits.numberOfUnits = Nifer yr unedau
@@ -2470,7 +2470,7 @@ error.subLetUnits.numberOfUnits.nonNumeric = The number of sub-let units must be
 
 # TURNOVER 6048
 turnover.6048.income.heading = Incwm
-turnover.6048.income.p1 = Rhowch fanylion eich incwm i ni. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, neu os and oeddech yn masnachu''n barhaus, nodwch y nifer berthnasol o wythnosau.
+turnover.6048.income.p1 = Rhowch fanylion eich incwm i ni. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, neu os and oeddech yn masnachu’n barhaus, nodwch y nifer berthnasol o wythnosau.
 turnover.6048.income.letting = Incwm o osodiadau
 turnover.6048.excludingVAT = (heb gynnwys TAW)
 turnover.6048.income.serviceProvision = Incwm o ddarparu gwasanaeth
@@ -2490,8 +2490,8 @@ error.turnover.6048.income.other.negative = Income from other charges in the yea
 turnover.6048.fixedCosts.heading = Costau penodol
 turnover.6048.fixedCosts.insurance = Yswiriant
 turnover.6048.fixedCosts.businessRatesOrCouncilTax = Business Rates or Council Tax paid
-turnover.6048.fixedCosts.rent = Rhent wedi''i dalu
-turnover.6048.fixedCosts.rent.hint = Lle bo''n berthnasol.
+turnover.6048.fixedCosts.rent = Rhent wedi’i dalu
+turnover.6048.fixedCosts.rent.hint = Lle bo’n berthnasol.
 turnover.6048.fixedCosts.total = Cyfanswm y costau penodol
 error.turnover.6048.fixedCosts.insurance.required = Enter 0 if you did not have any insurance costs in the year ending {0}
 error.turnover.6048.fixedCosts.insurance.range = Insurance costs in the year ending {0} must be a number, for example 100 or 100.00
@@ -2507,7 +2507,7 @@ turnover.6048.accountingCosts.wagesAndNationalInsurance = Yswiriant Gwladol a Ch
 turnover.6048.accountingCosts.depreciationBuildings = Dibrisiad
 turnover.6048.accountingCosts.depreciationBuildings.hint = Adeiladau.
 turnover.6048.accountingCosts.depreciationContents = Dibrisiad
-turnover.6048.accountingCosts.depreciationContents.hint = Gosodiadau, ffitiadau a''r cynnwys.
+turnover.6048.accountingCosts.depreciationContents.hint = Gosodiadau, ffitiadau a’r cynnwys.
 turnover.6048.accountingCosts.bookkeepingOrAccountancy = Ffioedd cyfrifyddiaeth a chadw cyfrifon
 turnover.6048.accountingCosts.bankCharges = Costau banc
 turnover.6048.accountingCosts.bankCharges.hint = Gan eithrio llog.
@@ -2531,8 +2531,8 @@ turnover.6048.administrativeCosts.heading = Costau gweinyddol
 turnover.6048.administrativeCosts.subscriptionsAndFees = Tanysgrifiadau a ffioedd
 turnover.6048.administrativeCosts.subscriptionsAndFees.hint = Cymdeithasau masnachu, sgôr bwrdd croeso.
 turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage = Teleffon, cysylltiad band eang, deunyddiau ysgrifennu a phostio
-turnover.6048.administrativeCosts.bookingAgency = Costau''r asiantaeth archebu
-turnover.6048.administrativeCosts.bookingAgency.hint = Ffioedd yr asiantaeth gosod eiddo neu''r ffi ar gyfer rhoi gosodiadau.
+turnover.6048.administrativeCosts.bookingAgency = Costau’r asiantaeth archebu
+turnover.6048.administrativeCosts.bookingAgency.hint = Ffioedd yr asiantaeth gosod eiddo neu’r ffi ar gyfer rhoi gosodiadau.
 turnover.6048.administrativeCosts.advertising = Costau hysbysebu
 turnover.6048.administrativeCosts.advertising.hint = Gan gynnwys y wefan.
 turnover.6048.administrativeCosts.printing = Costau argraffu
@@ -2563,7 +2563,7 @@ turnover.6048.operationalCosts.tvLicences.hint = Gan gynnwys teledu lloeren a th
 turnover.6048.operationalCosts.travellingAndMotorExpenses = Treuliau moduro a theithio
 turnover.6048.operationalCosts.other = Costau eraill
 turnover.6048.operationalCosts.other.hint = Include any other operational costs not listed previously.
-turnover.6048.operationalCosts.other.details = Rhowch fanylion yr eitemau sydd wedi''u cynnwys yn eich costau eraill.
+turnover.6048.operationalCosts.other.details = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich costau eraill.
 turnover.6048.operationalCosts.total = Cyfanswm y costau gweithredu
 error.turnover.6048.operationalCosts.energyBills.required = Enter 0 if you did not have any energy bills in the year ending {0}
 error.turnover.6048.operationalCosts.energyBills.range = Energy bills in the year ending {0} must be a number, for example 100 or 100.00
@@ -2588,7 +2588,7 @@ error.turnover.6048.otherExpensesDetails.maxLength = Description of other costs 
 
 # TURNOVER 6076
 turnover.6076.heading = Faint o drydan a gynhyrchoch?
-turnover.6076.p1 = Os yw diwedd eich blwyddyn ariannol wedi newid yn ystod y cyfnod a ddangosir, gallwch olygu''r dyddiadau yn unol â hynny. Os gwnaeth unrhyw un o''ch blynyddoedd ariannol gwmpasu cyfnod nad oedd yn 52 wythnos, nodwch y nifer berthnasol o wythnosau.
+turnover.6076.p1 = Os yw diwedd eich blwyddyn ariannol wedi newid yn ystod y cyfnod a ddangosir, gallwch olygu’r dyddiadau yn unol â hynny. Os gwnaeth unrhyw un o’ch blynyddoedd ariannol gwmpasu cyfnod nad oedd yn 52 wythnos, nodwch y nifer berthnasol o wythnosau.
 turnover.6076.weeks = Nifer yr wythnosau
 turnover.6076.electricityGenerated = Trydan a gynhyrchir
 turnover.6076.electricityGenerated.hint = (mewn kWh neu MWh)
@@ -2603,14 +2603,14 @@ turnover.6076.expenses.advertising = Hysbysebu, marchnata a hyrwyddo
 turnover.6076.expenses.administration = Gwaith gweinyddu ac eitemau amrywiol
 turnover.6076.expenses.insurance = Yswiriant arall
 turnover.6076.expenses.legalFees = Ffioedd cyfreithiol a phroffesiynol
-turnover.6076.expenses.interest = Llog wedi''i dalu
+turnover.6076.expenses.interest = Llog wedi’i dalu
 turnover.6076.expenses.other = Treuliau eraill
 turnover.6076.expenses.other.hint = Dylech gynnwys unrhyw dreuliadau sydd heb gael eu datgan eisoes
-turnover.6076.expenses.other.details = Rhowch fanylion yr eitemau sydd wedi''u cynnwys yn eich treuliau eraill.
+turnover.6076.expenses.other.details = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich treuliau eraill.
 turnover.6076.expenses.total = Cyfanswm y treuliau
-turnover.6076.headOfficeExpenses.heading = Treuliau''r brif swyddfa
+turnover.6076.headOfficeExpenses.heading = Treuliau’r brif swyddfa
 turnover.6076.headOfficeExpenses.p1 = Provide us with details of any head office expenses.
-turnover.6076.headOfficeExpenses = Cyfraniadau tuag at dreuliau''r brif swyddfa (os yw''n berthnasol)
+turnover.6076.headOfficeExpenses = Cyfraniadau tuag at dreuliau’r brif swyddfa (os yw’n berthnasol)
 turnover.6076.furtherInformationOrRemarks = Rhagor o wybodaeth neu sylwadau, os hoffech eu nodi
 turnover.6076.furtherInformationOrRemarks.hint = Dylech gynnwys unrhyw wybodaeth a allai fod yn berthnasol yn eich barn chi, ond sydd heb ei chynnwys hyd yma.
 error.turnover.6076.electricityGenerated.required = Enter 0 if you did not have any electricity generated in the year ending {0}
@@ -2646,15 +2646,15 @@ error.turnover.6076.furtherInformationOrRemarks.maxLength = Further information 
 
 # COST OF SALES
 costOfSales.heading = Cost y gwerthiannau
-costOfSales.p1 = Rhowch fanylion eich costau gwerthiannau adrannol, gan eithrio''r canlynol:
+costOfSales.p1 = Rhowch fanylion eich costau gwerthiannau adrannol, gan eithrio’r canlynol:
 costOfSales.excluding.item1 = costau y gyflogres
 costOfSales.excluding.item2 = treuliau gweithredu newidiol
 costOfSales.excluding.item3 = treuliau gweithredu penodol
 costOfSales.excluding.item4 = costau eraill
-costOfSales.details.link = Help gyda llenwi''r dudalen hon
+costOfSales.details.link = Help gyda llenwi’r dudalen hon
 costOfSales.details.h1 = Arweiniad cyffredinol
 costOfSales.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.
-costOfSales.details.p2 = Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda''i gilydd – megis bwyd a diod – gallwch eu datgan gyda''i gilydd mewn un maes.
+costOfSales.details.p2 = Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
 costOfSales.financialYearEnd = Diwedd y flwyddyn ariannol
 costOfSales.excludingVAT = (heb gynnwys TAW)
 costOfSales.accommodation = Llety
@@ -2668,15 +2668,15 @@ costOfSales.total = Cyfanswm cost y gwerthiannau
 
 costOfSales6076.heading = Cost y gwerthiannau
 costOfSales6076.p = Provide us with details of your cost of sales.
-costOfSales6076.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+costOfSales6076.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 costOfSales6076.financialYearEnd = Diwedd y flwyddyn ariannol
 costOfSales6076.fuelOrFeedstock = Tanwydd neu ddefnydd crai
-costOfSales6076.importedPower = Pŵer wedi''i fewnforio
-costOfSales6076.TNuoS = Defnydd o''r system rhwydwaith trawsyrru (TNuOS)
-costOfSales6076.BSuoS = Gwasanaethau cydbwyso yn defnyddio''r rhwydwaith (BSuoS)
+costOfSales6076.importedPower = Pŵer wedi’i fewnforio
+costOfSales6076.TNuoS = Defnydd o’r system rhwydwaith trawsyrru (TNuOS)
+costOfSales6076.BSuoS = Gwasanaethau cydbwyso yn defnyddio’r rhwydwaith (BSuoS)
 costOfSales6076.otherSales = Costau eraill
 costOfSales6076.otherSales.hint = Dylech gynnwys unrhyw gostau o werthiannau eraill na restrir hyd yn hyn.
-costOfSales6076.otherSales.label = Rhowch fanylion yr eitemau sydd wedi''u cynnwys yn eich costau eraill.
+costOfSales6076.otherSales.label = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich costau eraill.
 costOfSales6076.total = Cyfanswm y costau
 error.costOfSales6076.details.required = Please provide details of the sources of your other income
 error.costOfSales6076.details.maxlength = Details of the sources of your other income must be 2,000 characters or fewer
@@ -2707,7 +2707,7 @@ staffCosts.wages.hint = Gan eithrio cyfraniadau pensiwn ac Yswiriant Gwladol.
 staffCosts.NI = Yswiriant Gwladol
 staffCosts.pension = Cyfraniadau pensiwn
 staffCosts.remunerations = Tâl y cyfarwyddwr
-staffCosts.total = Cyfanswm costau''r staff
+staffCosts.total = Cyfanswm costau’r staff
 error.staffCosts.wages.required = Enter 0 if you did not have any wages or salaries in the year ending {0}
 error.staffCosts.wages.range = Wages and salaries in the year ending {0} must be a number, for example 100 or 100.00
 error.staffCosts.wages.negative = Wages and salaries in the year ending {0} cannot be a negative number
@@ -2717,23 +2717,23 @@ error.staffCosts.NI.negative = National Insurance costs in the year ending {0} c
 error.staffCosts.pension.required = Enter 0 if you did not have any pension contributions in the year ending {0}
 error.staffCosts.pension.range = Pension contributions in the year ending {0} must be a number, for example 100 or 100.00
 error.staffCosts.pension.negative = Pension contributions in the year ending {0} cannot be a negative number
-error.staffCosts.remunerations.required = Enter 0 if you did not have any director''s remunerations in the year ending {0}
-error.staffCosts.remunerations.range = Director''s remunerations in the year ending {0} must be a number, for example 100 or 100.00
-error.staffCosts.remunerations.negative = Director''s remunerations in the year ending {0} cannot be a negative number
+error.staffCosts.remunerations.required = Enter 0 if you did not have any director’s remunerations in the year ending {0}
+error.staffCosts.remunerations.range = Director’s remunerations in the year ending {0} must be a number, for example 100 or 100.00
+error.staffCosts.remunerations.negative = Director’s remunerations in the year ending {0} cannot be a negative number
 
 #INCOME EXPENDITURE SUMMARY 6076
 
 incomeExpenditureSummary6076.heading = Crynodeb incwm a gwariant
-incomeExpenditureSummary6076.label = Rwy''n cadarnhau bod y ffigyrau hyn yn gywir
+incomeExpenditureSummary6076.label = Rwy’n cadarnhau bod y ffigyrau hyn yn gywir
 incomeExpenditureSummary6076.financialYearEnd = Diwedd y flwyddyn ariannol
 incomeExpenditureSummary6076.totalGross = Cyfanswm y derbyniadau gros
 incomeExpenditureSummary6076.totalBaseload = Cyfanswm y derbyniadau gros o ran llwythi sylfaenol
 incomeExpenditureSummary6076.totalOther = Cyfanswm incwm arall
 incomeExpenditureSummary6076.totalCoS = Cyfanswm cost y gwerthiannau
-incomeExpenditureSummary6076.totalStaff = Cyfanswm costau''r staff
-incomeExpenditureSummary6076.totalPremises = Cyfanswm costau''r safle
+incomeExpenditureSummary6076.totalStaff = Cyfanswm costau’r staff
+incomeExpenditureSummary6076.totalPremises = Cyfanswm costau’r safle
 incomeExpenditureSummary6076.totalOperational = Cyfanswm y treuliau gweithredu
-incomeExpenditureSummary6076.headOffice = Treuliau''r brif swyddfa
+incomeExpenditureSummary6076.headOffice = Treuliau’r brif swyddfa
 incomeExpenditureSummary6076.profitOrLoss = Elw neu golled net
 error.incomeExpenditureSummary6076.required = Confirm that these figures are correct
 
@@ -2746,11 +2746,11 @@ grossProfit.totalGrossProfits = Total gross profits
 #########
 totalPayrollCosts.heading = Costau y gyflogres
 totalPayrollCosts.p1 = Rhowch fanylion eich cyflogau, Yswiriant Gwladol, a chyfraniadau pensiwn, gan eithrio costau staff y brif swyddfa.
-totalPayrollCosts.p2 = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+totalPayrollCosts.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 totalPayrollCosts.financialYearEnd = Diwedd y flwyddyn ariannol
 totalPayrollCosts.managersAndStaff = Rheolwyr a staff
 totalPayrollCosts.directorsRemuneration = Tâl y cyfarwyddwr
-totalPayrollCosts.directorsRemuneration.add = (Os yw''n berthnasol.)
+totalPayrollCosts.directorsRemuneration.add = (Os yw’n berthnasol.)
 totalPayrollCosts.total = Cyfanswm costau y gyflogres
 error.managers-and-staff.required = Enter 0 if you did not have any payroll costs for managers and staff in the year ending {0}
 error.managers-and-staff.range = The payroll costs for managers and staff in the year ending {0} must be a number, for example 100 or 100.00
@@ -2762,11 +2762,11 @@ error.directors-remuneration.negative = The directors remuneration in the year e
 # VARIABLE OPERATING EXPENSES (FORM 6015)
 #########
 variableOperatingExpenses.heading = Treuliau gweithredu newidiol
-variableOperatingExpenses.p1 = Rhowch fanylion eich treuliau, gan eithrio llog ar fenthyciadau neu forgeisi, rhent, yswiriant, neu unrhyw gyfraniadau tuag at dreuliau''r brif swyddfa.
-variableOperatingExpenses.p2 = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+variableOperatingExpenses.p1 = Rhowch fanylion eich treuliau, gan eithrio llog ar fenthyciadau neu forgeisi, rhent, yswiriant, neu unrhyw gyfraniadau tuag at dreuliau’r brif swyddfa.
+variableOperatingExpenses.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 variableOperatingExpenses.energyAndUtilities = Ynni a chyfleustodau
 variableOperatingExpenses.cleaningAndLaundry = Glanhau a golchi dillad
-variableOperatingExpenses.buildingMaintenanceAndRepairs = Cynnal a chadw''r adeilad a gwaith atgyweirio
+variableOperatingExpenses.buildingMaintenanceAndRepairs = Cynnal a chadw’r adeilad a gwaith atgyweirio
 variableOperatingExpenses.fixturesFittingsAndEquipment = Atgyweirio ac adnewyddu gosodiadau, ffitiadau, offer a pheiriannau
 variableOperatingExpenses.advertisingAndPromotions = Hysbysebu, marchnata a hyrwyddo
 variableOperatingExpenses.administrationAndSundries = Gwaith gweinyddu ac eitemau amrywiol
@@ -2774,7 +2774,7 @@ variableOperatingExpenses.entertainment = Adloniant
 variableOperatingExpenses.entertainment.p1 = Er enghraifft, ffioedd perfformwyr.
 variableOperatingExpenses.other = Treuliau eraill
 variableOperatingExpenses.other.p1 = Dylech gynnwys unrhyw dreuliad na restrir hyd yn hyn.
-variableOperatingExpenses.otherExpensesDetails = Rhowch fanylion yr eitemau sydd wedi''u cynnwys yn eich treuliau eraill.
+variableOperatingExpenses.otherExpensesDetails = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich treuliau eraill.
 variableOperatingExpenses.total = Cyfanswm y treuliau gweithredu newidiol
 error.variableExpenses.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities expenses in the year ending {0}
 error.variableExpenses.energyAndUtilities.range = The energy and utilities expenses in the year ending {0} must be a number, for example 100 or 100.00
@@ -2805,7 +2805,7 @@ error.variableExpenses.other.negative = The other expenses in the year ending {0
 #########
 fixedOperatingExpenses.heading = Treuliau gweithredu penodol
 fixedOperatingExpenses.p1 = Rhowch fanylion eich treuliau gweithredu penodol.
-fixedOperatingExpenses.p2 = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+fixedOperatingExpenses.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 fixedOperatingExpenses.rent = Rhent
 fixedOperatingExpenses.businessRates = Ardrethi busnes
 fixedOperatingExpenses.insurance = Yswiriant
@@ -2831,13 +2831,13 @@ error.fixedExpenses.depreciation.negative = The depreciation expenses in the yea
 # OTHER COSTS (FORM 6015)
 #########################
 otherCosts.heading = Costau eraill
-otherCosts.details.p1 = Rhowch fanylion yr holl gostau eraill a ddidynnwyd cyn cyfrifo''r elw net, ond sydd heb gael eu datgan hyd yn hyn.
-otherCosts.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+otherCosts.details.p1 = Rhowch fanylion yr holl gostau eraill a ddidynnwyd cyn cyfrifo’r elw net, ond sydd heb gael eu datgan hyd yn hyn.
+otherCosts.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 otherCosts.financialYearEnd = Diwedd y flwyddyn ariannol
-otherCosts.contributionToHeadOffice = Cyfraniadau i''r brif swyddfa
+otherCosts.contributionToHeadOffice = Cyfraniadau i’r brif swyddfa
 otherCosts.otherCosts = Costau eraill
 otherCosts.otherCosts.p1 = Dylech gynnwys unrhyw gostau na restrir hyd yn hyn.
-otherCostDetails.hint = Rhowch fanylion yr eitemau sydd wedi''u cynnwys yn eich costau eraill.
+otherCostDetails.hint = Rhowch fanylion yr eitemau sydd wedi’u cynnwys yn eich costau eraill.
 otherCosts.total = Cyfanswm y costau eraill
 error.otherCosts.contributionsToHeadOffice.required = Enter 0 if you had no contributions to head office in the year ending {0}
 error.otherCosts.contributionsToHeadOffice.range = The contributions to head office for the year ending {0} must be a number like 100 or 100.00 and cannot be less than 0
@@ -2860,14 +2860,14 @@ incomeExpenditureSummary.fixedExpensesLabel = Cyfanswm y treuliau gweithredu sef
 incomeExpenditureSummary.otherCostsLabel = Cyfanswm y costau eraill
 incomeExpenditureSummary.totalNetProfitLabel = Cyfanswm yr elw net yn seiliedig ar eich ffigurau
 incomeExpenditureSummary.profitMargin = Maint yr elw yn seiliedig ar eich ffigurau
-incomeExpenditureSummary.confirmation = Rwy''n cadarnhau bod y ffigyrau hyn yn gywir
+incomeExpenditureSummary.confirmation = Rwy’n cadarnhau bod y ffigyrau hyn yn gywir
 error.incomeExpenditureSummary.required = Select if these figures are correct
 
 # UNUSUAL CIRCUMSTANCES (FORM 6015)
 ###################################
 unusualCircumstances.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y ffigurau trosiant ar y dudalen flaenorol
 unusualCircumstancesReceipts.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y derbyniadau neu nifer yr ymwelwyr ar y dudalen flaenorol
-unusualCircumstances.explain = Esboniwch unrhyw ffigurau anarferol o uchel neu isel yn eich cyfrifon - gadewch hyn yn wag os nad yw''n berthnasol
+unusualCircumstances.explain = Esboniwch unrhyw ffigurau anarferol o uchel neu isel yn eich cyfrifon - gadewch hyn yn wag os nad yw’n berthnasol
 
 # NET PROFITS (FORM 6015)
 #########
@@ -2883,7 +2883,7 @@ common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sale
 ############################
 
 totalFuelSold.heading = Beth yw cyfanswm yr holl danwydd a werthwyd yn ystod y blynyddoedd ariannol a ddangosir?
-totalFuelSold.bunkered = Peidiwch â chynnwys tanwydd byncer yn y ffigurau hyn. Os ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno''n unig, gofynnir cwestiynau i chi ynghylch hyn ar wahân.
+totalFuelSold.bunkered = Peidiwch â chynnwys tanwydd byncer yn y ffigurau hyn. Os ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno’n unig, gofynnir cwestiynau i chi ynghylch hyn ar wahân.
 totalFuelSold.fuel.label = Cyfanswm gwerthiannau petrol, diesel, LPG a thanwyddau eraill
 error.totalFuelSold.required = Enter 0 if you did not sell any fuel in the year ending {0}
 error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0} must be a number, for example 100 or 100.00
@@ -2891,7 +2891,7 @@ error.totalFuelSold.range = Total volume of all fuel sold in the year ending {0}
 #BUNKERED FUEL QUESTION (FORM 6020)
 ###################################
 
-bunkeredFuelQuestion.heading = A ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno''n unig?
+bunkeredFuelQuestion.heading = A ydych yn gwerthu tanwydd byncer, lle rydych yn codi ffi trin arno’n unig?
 error.bunkeredFuelQuestion.required = Select yes if you sell bunkered fuel, where you only charge a handling fee
 
 #BUNKERED FUEL SOLD (FORM6020)
@@ -2905,7 +2905,7 @@ error.bunkeredFuelSold.range = Total volume of all bunkered fuel sold in the yea
 
 #BUNKER FUEL CARDS DETAILS (FORM 6020)
 bunkerFuelCardDetails.heading = Rhowch fanylion y cardiau tanwydd byncer rydych yn eu derbyn
-label.bunkerFuelCardName = Enw''r cerdyn tanwydd byncer
+label.bunkerFuelCardName = Enw’r cerdyn tanwydd byncer
 bunkerFuelCardDetails.handlingFee = Ffi trin
 bunkerFuelCardDetails.handlingFee.unit = ceiniogau/litr
 error.bunkerFuelCard.name.required = Please provide name of bunker fuel card
@@ -2921,9 +2921,9 @@ error.addAnotherBunkerFuelCardsDetails.required = Select yes if you would like t
 # CUSTOMER CREDIT ACCOUNTS (FROM 6020)
 ##########################
 customerCreditAcc.heading = Cyfrifon credyd cwsmeriaid
-customerCreditAcc.declare = Mae''n rhaid i chi ddatgan faint o danwydd rydych yn ei werthu drwy gyfrifon credyd cwsmeriaid. Cytundebau yw''r rhain lle nad yw cwsmeriaid yn talu am eu tanwydd ar yr un adeg â''i werthu. Yn lle hynny, maent yn talu am gyfanswm eu defnydd o danwydd fesul tipyn, fel arfer bob mis.
+customerCreditAcc.declare = Mae’n rhaid i chi ddatgan faint o danwydd rydych yn ei werthu drwy gyfrifon credyd cwsmeriaid. Cytundebau yw’r rhain lle nad yw cwsmeriaid yn talu am eu tanwydd ar yr un adeg â’i werthu. Yn lle hynny, maent yn talu am gyfanswm eu defnydd o danwydd fesul tipyn, fel arfer bob mis.
 customerCreditAcc.notInclude = Nid yw hyn yn cynnwys tanwydd byncer na gwerthiannau tanwydd a delir trwy gardiau credyd, debyd neu gardiau tanwydd lled isel.
-customerCreditAcc.percentage = Pa ganran o gyfanswm eich gwerthiannau sy''n dod o gyfrifon credyd cwsmeriaid?
+customerCreditAcc.percentage = Pa ganran o gyfanswm eich gwerthiannau sy’n dod o gyfrifon credyd cwsmeriaid?
 customerCreditAcc.label = Canran y gwerthiannau tanwydd ar gyfrifon credyd cwsmeriaid
 error.customerCreditAcc.required = Enter 0 if none of your total sales comes from customer credit account in the year ending {0}
 error.customerCreditAcc.range = The percentage of your total sales comes from customer credit account in the year ending {0} must be a number
@@ -2936,7 +2936,7 @@ error.acceptLowMarginFuelCard.required = Select yes if you accept low-margin fue
 #LOW MARGIN FUEL CARDS DETAILS (FORM 6020)
 lowMarginFuelCardDetails.heading = Rhowch fanylion y cardiau tanwydd lled isel rydych yn eu derbyn
 hint.lowMarginFuelCardDetails = You will have the opportunity to add more low-margin fuel cards if required.
-label.lowMarginFuelCardName = Enw''r cerdyn tanwydd lled isel
+label.lowMarginFuelCardName = Enw’r cerdyn tanwydd lled isel
 lowMarginFuelCardDetails.handlingFee = Ffi trin
 lowMarginFuelCardDetails.handlingFee.unit = ceiniogau/litr
 error.lowMarginFuelCardDetails.name.required = Please provide name of low-margin fuel card
@@ -2951,7 +2951,7 @@ error.addAnotherLowMarginFuelCardsDetails.required = Select yes if you would lik
 
 # PERCENTAGE FROM LOW MARGIN FUEL CARDS (FROM 6020)
 ###################################################
-percentageFromFuelCards.heading = Pa ganran o gyfanswm y gwerthiannau tanwydd sy''n deillio o gardiau tanwydd lled isel?
+percentageFromFuelCards.heading = Pa ganran o gyfanswm y gwerthiannau tanwydd sy’n deillio o gardiau tanwydd lled isel?
 percentageFromFuelCards.bunkered = Nid yw hyn yn cynnwys tanwydd byncer, neu werthiannau tanwydd a dalwyd amdanynt drwy gardiau debyd neu gredyd.
 percentageFromFuelCards.label = Canran y gwerthiannau tanwydd ar gardiau tanwydd lled isel
 error.percentageFromFuelCards.required = Enter 0 if none of your total fuel sales comes from low-margin credit cards in the year ending {0}
@@ -3000,11 +3000,11 @@ error.grossReceipts.embeddedBenefits.sales.negative = Turnover from embedded ben
 ###################################################
 grossReceiptsForBaseLoad.heading = Derbyniadau gros ar gyfer cynhyrchu llwythi sylfaenol, heb gynnwys TAW
 grossReceiptsForBaseLoad.p = Provide us with details of your gorss receipts for baseload electricity generation.
-grossReceiptsForBaseLoad.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+grossReceiptsForBaseLoad.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane = Cymhelliad gwres adnewyddadwy
 grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane.hint = Tariff bio-methan.
 grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass = Cymhelliad gwres adnewyddadwy
-grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.hint = Tariff biomas neu dariff ‘bio-gass''.
+grossReceiptsForBaseLoad.renewableHeatIncentiveBioMass.hint = Tariff biomas neu dariff ‘bio-gass’.
 grossReceiptsForBaseLoad.byProductSales = Gwerthiannau sgil-gynhyrchion
 grossReceiptsForBaseLoad.byProductSales.hint = Er enghraifft, compost neu ludw.
 grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales = Gwerthiannau dŵr poeth, gwres neu ager
@@ -3028,15 +3028,15 @@ error.grossReceiptsForBaseLoad.gateIncomeFromWaste.negative = Gate income from w
 
 # PREMISES COSTS (FROM 6076)
 ###################################################
-premisesCosts.heading = Costau''r safle
+premisesCosts.heading = Costau’r safle
 premisesCosts.energyAndUtilities = Ynni a chyfleustodau
 premisesCosts.energyAndUtilities.hint = Gwres, golau, pŵer, dŵr.
-premisesCosts.buildingRepairAndMaintenance = Cynnal a chadw''r adeilad a gwaith atgyweirio
+premisesCosts.buildingRepairAndMaintenance = Cynnal a chadw’r adeilad a gwaith atgyweirio
 premisesCosts.repairsAndRenewalsOfFixtures = Atgyweirio ac adnewyddu gosodiadau, ffitiadau, offer a pheiriannau
-premisesCosts.rent = Rhent (os yw''n berthnasol)
+premisesCosts.rent = Rhent (os yw’n berthnasol)
 premisesCosts.businessRates = Ardrethi busnes
 premisesCosts.buildingInsurance = Yswiriant adeiladu
-premisesCosts.total = Cyfanswm costau''r safle
+premisesCosts.total = Cyfanswm costau’r safle
 error.premisesCosts.energyAndUtilities.required = Enter 0 if you did not have any energy and utilities costs in the year ending {0}
 error.premisesCosts.energyAndUtilities.range = Energy and utilities costs in the year ending {0} must be a number, for example 100 or 100.00
 error.premisesCosts.energyAndUtilities.negative = Energy and utilities costs in the year ending {0} cannot be a negative number
@@ -3061,17 +3061,17 @@ error.premisesCosts.buildingInsurance.negative = Building insurance in the year 
 otherHolidayAccommodation.heading = Llety gwyliau arall
 otherHolidayAccommodation.question = A oes unrhyw gabanau gwyliau, cabanau pren, tai llety, byngalos, fflatiau, tai, neu unedau llety gwyliau tebyg ar eich safle?
 help.otherHolidayAccommodation.title = Help gyda diffinio llety gwyliau arall
-help.otherHolidayAccommodation.p1 = At ddibenion y datganiad hwn, diffinnir rhywbeth yn ‘llety gwyliau arall'' os yw''r canlynol yn wir:
+help.otherHolidayAccommodation.p1 = At ddibenion y datganiad hwn, diffinnir rhywbeth yn ‘llety gwyliau arall’ os yw’r canlynol yn wir:
 help.otherHolidayAccommodation.list1.p1 = mae ganddo strwythurau parhaol
-help.otherHolidayAccommodation.list1.p2 = mae''n dod i''r safle mewn mwy na dau ddarn
-help.otherHolidayAccommodation.list1.p3 = mae''n cael ei gydosod ar y safle
+help.otherHolidayAccommodation.list1.p2 = mae’n dod i’r safle mewn mwy na dau ddarn
+help.otherHolidayAccommodation.list1.p3 = mae’n cael ei gydosod ar y safle
 help.otherHolidayAccommodation.list1.p4 = nad oes modd ei gludo ar y ffyrdd unwaith iddo gael ei gydosod
 error.otherHolidayAccommodation.required =  Select yes if there are other holiday letting units located on your site.
 
 # OTHER HOLIDAY ACCOMMODATION DETAILS(FORM 6045/46)
 ####################################
-otherHolidayAccommodationDetails.heading = A yw''ch llety gwyliau arall ar agor drwy gydol y flwyddyn?
-otherHolidayAccommodationDetails.weeksOpen = Nodwch am sawl wythnos o''r flwyddyn y mae''r safle ar agor
+otherHolidayAccommodationDetails.heading = A yw’ch llety gwyliau arall ar agor drwy gydol y flwyddyn?
+otherHolidayAccommodationDetails.weeksOpen = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
 error.weeksInYearMapping.invalid = The number of weeks should be a number from 1 to 52
 error.weeksInYearMapping.blank =  Enter the number of weeks
 error.otherHolidayAccommodationOpenAllYear.required = Select yes if your other holiday accommodation open all year
@@ -3081,7 +3081,7 @@ error.otherHolidayAccommodationOpenAllYear.required = Select yes if your other h
 ####################################
 totalSiteCapacity.heading = Total site capacity - other holiday accommodation
 totalSiteCapacity.p1 = You must declare how many units of other holiday accommodation you have in each of the listed categories. This must be the units that are on site today, or will be on site when you submit this declaration.
-totalSiteCapacity.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+totalSiteCapacity.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 totalSiteCapacity.category = Category
 totalSiteCapacity.numberOfUnits = Nifer yr unedau
 totalSiteCapacity.availableForLetting = Owned by the site operator and available for letting
@@ -3106,7 +3106,7 @@ touringAndTentingPitches.heading = Lleiniau pebyll a lleiniau teithio
 touringAndTentingPitches.question.heading = A oes gennych unrhyw leiniau pebyll neu leiniau teithio ar eich safle?
 error.touringAndTentingPitches.missing = Select yes if you have any touring and tenting pitches on your site
 help.touringAndTentingPitches.title = Help gyda diffinio lleiniau pebyll a lleiniau teithio
-help.touringAndTentingPitches.p = At ddibenion y datganiad hwn, rydym yn diffinio ‘lleiniau pebyll a lleiniau teithio'' fel a ganlyn:
+help.touringAndTentingPitches.p = At ddibenion y datganiad hwn, rydym yn diffinio ‘lleiniau pebyll a lleiniau teithio’ fel a ganlyn:
 help.touringAndTentingPitches.pitches = lleiniau ar gyfer carafannau, cartrefi modur, neu bebyll
 help.touringAndTentingPitches.glamping = lleiniau glampio ar gyfer pebyll cloch, yurts, tipis, cabanau bugail, neu strwythurau symudol neu strwythur eraill a godir ymlaen llaw
 help.touringAndTentingPitches.rally = lleiniau rali
@@ -3114,9 +3114,9 @@ help.touringAndTentingPitches.rally = lleiniau rali
 
 # ARE YOUR TOURING AND TENTING PITCHES OPEN ALL YEAR
 
-areYourPitchesOpen.heading = A yw''ch lleiniau pebyll neu''ch lleiniau teithio ar agor drwy gydol y flwyddyn?
+areYourPitchesOpen.heading = A yw’ch lleiniau pebyll neu’ch lleiniau teithio ar agor drwy gydol y flwyddyn?
 error.areYourPitchesOpen.missing = Select yes if your touring and tenting pitches open all year
-areYourPitchesOpen.conditional.label = Nodwch am sawl wythnos o''r flwyddyn y mae''r safle ar agor
+areYourPitchesOpen.conditional.label = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
 error.areYourPitchesOpen.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
 error.areYourPitchesOpen.conditional.value.missing = Provide a number of weeks the site remains open in a year
 
@@ -3132,7 +3132,7 @@ cYa.pitchesForCaravans.heading = Lleiniau ar gyfer carafannau, cartrefi modur, n
 cya.pitchesForGlamping.heading = Lleiniau glampio ar gyfer pebyll cloch, yurts, tipis, cabanau bugail, neu strwythurau symudol neu strwythurau eraill a godir ymlaen llaw
 cya.rallyAreas.heading = Lleiniau rali sydd heb eu cynnwys hyd yn hyn
 cya.touringAndTentingPitches.total.label = Cyfanswm y lleiniau pebyll neu lleiniau teithio ar y safle
-cya.touringAndTentingPitches.certificated.label = Lleoliad wedi''i awdurdodi at ddibenion gweithredu fel safle carafannau?
+cya.touringAndTentingPitches.certificated.label = Lleoliad wedi’i awdurdodi at ddibenion gweithredu fel safle carafannau?
 
 #PITCHES FOR CARAVANS
 #####################
@@ -3167,15 +3167,15 @@ error.tentingPitchesTotal.range = Touring and tenting pitches figure must be a p
 #TENTING PITCHES CERTIFICATED
 ############################
 
-tentingPitchesCertificated.heading = A yw''r safle hwn yn leoliad sydd wedi''i awdurdodi at ddibenion gweithredu fel safle carafannau teithio, a hynny yn unol â Pharagraff 5 o Atodlen 1 i Ddeddf Safleoedd Carafannau a Rheoli Datblygu 1960?
+tentingPitchesCertificated.heading = A yw’r safle hwn yn leoliad sydd wedi’i awdurdodi at ddibenion gweithredu fel safle carafannau teithio, a hynny yn unol â Pharagraff 5 o Atodlen 1 i Ddeddf Safleoedd Carafannau a Rheoli Datblygu 1960?
 error.tentingPitchesCertificated.missing = Select yes, if the site is a certificated location for use as a touring caravan site under Paragraph 5 Schedule 1 of the Caravan Sites and Control of Development Act 1960
 
 #TENTING PITCHES TRADING COMMON LABELS
 ######################################
 
-tentingPitches.common.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
-tentingPitches.common.VAT = Nodwch eich derbyniadau o''r lleiniau hyn, heb gynnwys TAW na chostau trydan.
-tentingPitches.common.stateTheNumber = Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+tentingPitches.common.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
+tentingPitches.common.VAT = Nodwch eich derbyniadau o’r lleiniau hyn, heb gynnwys TAW na chostau trydan.
+tentingPitches.common.stateTheNumber = Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 tentingPitches.common.financialYearEnd = Diwedd y flwyddyn ariannol
 tentingPitches.common.tradingPeriod = Cyfnod masnachu
 tentingPitches.common.grossReceipts = Derbyniadau gros
@@ -3190,23 +3190,23 @@ error.tentingPitches.numberOfPitches.negative = Number of pitches in the year en
 #ADDITIONAL ACTIVITIES 6045
 ########################
 additionalActivitiesOnSite.heading = Gweithgareddau ychwanegol
-additionalActivitiesOnSite.subheading = A oes unrhyw weithgareddau ychwanegol sy''n cynhyrchu incwm ar y safle?
+additionalActivitiesOnSite.subheading = A oes unrhyw weithgareddau ychwanegol sy’n cynhyrchu incwm ar y safle?
 additionalActivitiesOnSite.hint = Gall hyn gynnwys, ond heb fod yn gyfyngedig i, siopau, bariau, gweithgareddau hamdden, neu storio carafannau
 error.additionalActivitiesOnSite.missing = Select yes if there are additional income-generating activities on the site
 
 #ADDITIONAL ACTIVITIES ALL YEAR 6045
 ###########################
 
-additionalActivitiesAllYear.heading = A yw''ch gweithgareddau ychwanegol ar gael drwy gydol y flwyddyn?
+additionalActivitiesAllYear.heading = A yw’ch gweithgareddau ychwanegol ar gael drwy gydol y flwyddyn?
 error.additionalActivitiesAllYear.missing = Select yes if your additional activities are available all year round
-additionalActivitiesAllYear.conditional.label = Nodwch am sawl wythnos o''r flwyddyn y mae''r safle ar agor
+additionalActivitiesAllYear.conditional.label = Nodwch am sawl wythnos o’r flwyddyn y mae’r safle ar agor
 error.additionalActivitiesAllYear.conditional.value.invalid = Number of weeks the site remains open in a year should be a number from 0 to 52
 error.additionalActivitiesAllYear.conditional.value.missing = Provide a number of weeks the site remains open in a year
 
 #SHOPS ADDITIONAL ACTIVITIES 6045
 #################################
 shops.additionalActivitiesOnSite.heading = Siopau
-shops.additionalActivitiesOnSite.p = Os ydych yn rhedeg unrhyw siop ar y safle, nodwch y derbyniadau a chostau''r pryniannau, heb gynnwys TAW. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+shops.additionalActivitiesOnSite.p = Os ydych yn rhedeg unrhyw siop ar y safle, nodwch y derbyniadau a chostau’r pryniannau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 error.additionalShops.grossReceipts.required = Enter 0 if you did not have any gross receipts from shops in the year ending {0}
 error.additionalShops.grossReceipts.range    = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalShops.grossReceipts.negative = Gross receipts in the year ending {0} cannot be a negative number
@@ -3217,8 +3217,8 @@ error.additionalShops.costOfPurchase.negative = Cost of purchase in the year end
 #CATERING ADDITIONAL ACTIVITIES 6045
 #################################
 catering.additionalActivitiesOnSite.heading = Arlwyo
-catering.additionalActivitiesOnSite.p1 = Os ydych yn rhedeg unrhyw gyfleusterau arlwyo ar y safle, nodwch y derbyniadau a chostau''r pryniannau, heb gynnwys TAW. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
-catering.additionalActivitiesOnSite.p2 = Peidiwch â chynnwys unrhyw dderbyniadau o fasnachfreintiau neu gonsesiynau arlwyo. Gofynnir i chi ynglŷn â''r rhain ar dudalen yn nes ymlaen.
+catering.additionalActivitiesOnSite.p1 = Os ydych yn rhedeg unrhyw gyfleusterau arlwyo ar y safle, nodwch y derbyniadau a chostau’r pryniannau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+catering.additionalActivitiesOnSite.p2 = Peidiwch â chynnwys unrhyw dderbyniadau o fasnachfreintiau neu gonsesiynau arlwyo. Gofynnir i chi ynglŷn â’r rhain ar dudalen yn nes ymlaen.
 
 error.additionalCatering.grossReceipts.required = Enter 0 if you did not have any gross receipts from catering in the year ending {0}
 error.additionalCatering.grossReceipts.range    = Gross receipts in the year ending {0} must be a number, for example 100 or 100.00
@@ -3230,12 +3230,12 @@ error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year 
 #BARS AND CLUBS ADDITIONAL ACTIVITIES 6045
 
 additionalBarsClubs.heading = Bariau a chlybiau
-additionalBarsClubs.p = Os ydych yn rhedeg unrhyw far neu glwb ar y safle, nodwch y derbyniadau a''r costau, heb gynnwys TAW. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
-additionalBarsClubs.grossBar.label = Derbyniadau gros o werthiannau''r bar
-additionalBarsClubs.costBar.label = Costau pryniannau''r bar
+additionalBarsClubs.p = Os ydych yn rhedeg unrhyw far neu glwb ar y safle, nodwch y derbyniadau a’r costau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalBarsClubs.grossBar.label = Derbyniadau gros o werthiannau’r bar
+additionalBarsClubs.costBar.label = Costau pryniannau’r bar
 additionalBarsClubs.grossClubMembership.label = Derbyniadau gros o ffioedd aelodaeth clwb
 additionalBarsClubs.grossFromSeparate.label = Derbyniadau gros o daliadau mynediad ar wahân
-additionalBarsClubs.costOfEntertainment.label = Costau''r adloniant
+additionalBarsClubs.costOfEntertainment.label = Costau’r adloniant
 additionalBarsClubs.costOfEntertainment.hint = Er enghraifft, hurio perfformwyr.
 
 error.additionalBarsClubs.grossBar.required = Enter 0 if you did not have any gross receipts from bar sale in the year ending {0}
@@ -3265,8 +3265,8 @@ additionalActivities.common.costOfPurchase = Cost of purchase
 #ADDITIONAL AMUSEMENTS
 
 additionalAmusements.heading = Difyrion
-additionalAmusements.p = Os ydych yn rhedeg unrhyw ddifyrion ar y safle, megis peiriannau hapchwarae, jiwcbocsys neu fyrddau pŵl, nodwch y derbyniadau ar ôl didynnu ffi''r drwydded ac unrhyw wobrwyon. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
-additionalAmusements.receipts.label = Derbyniadau (Ar ôl didynnu ffi''r drwydded a gwobrwyon)
+additionalAmusements.p = Os ydych yn rhedeg unrhyw ddifyrion ar y safle, megis peiriannau hapchwarae, jiwcbocsys neu fyrddau pŵl, nodwch y derbyniadau ar ôl didynnu ffi’r drwydded ac unrhyw wobrwyon. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalAmusements.receipts.label = Derbyniadau (Ar ôl didynnu ffi’r drwydded a gwobrwyon)
 
 error.additionalAmusements.receipts.required = Enter 0 if you did not have any receipts from on-site amusements in the year ending {0}
 error.additionalAmusements.receipts.range    = Receipts from on-site amusements in the year ending {0} must be a number, for example 100 or 100.00
@@ -3274,7 +3274,7 @@ error.additionalAmusements.receipts.negative = Receipts from on-site amusements 
 
 #ADDITIONAL MISC
 additionalMisc.heading = Gweithgareddau amrywiol
-additionalMisc.p = Os ydych yn rhedeg unrhyw weithgaredd arall lle codir ffioedd ar wahân, nodwch y derbyniadau, heb gynnwys TAW. Lle nad yw''r cyfrifon yn berthnasol i''ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalMisc.p = Os ydych yn rhedeg unrhyw weithgaredd arall lle codir ffioedd ar wahân, nodwch y derbyniadau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 additionalMisc.leisureReceipts.label = Derbyniadau gros o gyfleusterau hamdden eraill
 additionalMisc.leisureReceipts.hint = Er enghraifft, golff, tenis, angorau, storio cychod .
 additionalMisc.giveDetails = Rhowch fanylion
@@ -3284,9 +3284,9 @@ additionalMisc.numberOfVans.suffix = vans
 additionalMisc.otherActivitiesReceipts.label = Derbyniadau o unrhyw weithgareddau eraill sydd heb gael eu nodi hyd yn hyn
 additionalMisc.otherActivitiesReceipts.hint = Er enghraifft, atgyweirio carafannau oddi ar y safle.
 additionalMisc.otherServicesReceipts.label = Derbyniadau o werthiant gwasanaethau eraill
-additionalMisc.otherServicesReceipts.label.explain = (sy''n fwy na''r gost)
+additionalMisc.otherServicesReceipts.label.explain = (sy’n fwy na’r gost)
 additionalMisc.otherServicesReceipts.hint = Er enghraifft, golchi dillad.
-additionalMisc.bottledGasReceipts.label = Derbyniadau o werthiant nwy wedi''i botelu
+additionalMisc.bottledGasReceipts.label = Derbyniadau o werthiant nwy wedi’i botelu
 additionalMisc.bottledGasReceipts.explain = (heb gynnwys cost y pryniannau)
 
 error.additionalMisc.leisureReceipts.required = Enter 0 if you did not have any receipts from other leisure facilities in the year ending {0}
@@ -3320,11 +3320,11 @@ error.additionalMisc.bottledGasReceipts.range    = Receipts from sale of bottled
 error.additionalMisc.bottledGasReceipts.negative = Receipts from sale of bottled gas in the year ending {0} cannot be a negative number
 
 # COMMON ADDITIONAL ACTIVITIES 6045
-additionalActivities.common.inset = Mae''n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o''r categorïau yn berthnasol, nodwch y rhif 0.
+additionalActivities.common.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 additionalActivities.common.tradingPeriod = Cyfnod masnachu
 additionalActivities.common.financialYear = Diwedd y flwyddyn ariannol
 additionalActivities.common.grossReceipts = Derbyniadau gros
-additionalActivities.common.costOfPurchase = Costau''r pryniannau
+additionalActivities.common.costOfPurchase = Costau’r pryniannau
 
 # CYA ADDITIONAL ACTIVITIES 6045
 ################################
@@ -3339,19 +3339,19 @@ cYa.additionalActivities.miscellaneous.heading = Gweithgareddau amrywiol
 cYa.additionalActivities.activities.onSite.label = Gweithgareddau ychwanegol ar y safle?
 cYa.additionalActivities.activities.allYear.label = Gweithgareddau ychwanegol ar agor drwy gydol y flwyddyn?
 cYa.additionalActivities.gross = Derbyniadau gros
-cYa.additionalActivities.costOfPurchases = Costau''r pryniannau
-cYa.additionalActivities.grossFromBars = Derbyniadau gros o werthiannau''r bar
-cYa.additionalActivities.costOfBars = Costau pryniannau''r bar
+cYa.additionalActivities.costOfPurchases = Costau’r pryniannau
+cYa.additionalActivities.grossFromBars = Derbyniadau gros o werthiannau’r bar
+cYa.additionalActivities.costOfBars = Costau pryniannau’r bar
 cYa.additionalActivities.grossFromMembership = Derbyniadau gros o ffioedd aelodaeth clwb
 cYa.additionalActivities.grossFromSeparate = Derbyniadau gros o daliadau mynediad ar wahân
-cYa.additionalActivities.costOfEntertainment = Costau''r adloniant
+cYa.additionalActivities.costOfEntertainment = Costau’r adloniant
 cYa.additionalActivities.receipts = Derbyniadau
 cYa.additionalActivities.grossFromOther = Derbyniadau gros o gyfleusterau hamdden eraill
 cYa.additionalActivities.storageOfCaravans = Storio carafannau teithio dros y gaeaf
 cYa.additionalActivities.numberOfVans = Nifer y faniau
 cYa.additionalActivities.otherActivities = Unrhyw weithgareddau eraill sydd heb gael eu nodi hyd yn hyn
 cYa.additionalActivities.otherServices = Gwerthiant gwasanaethau eraill
-cYa.additionalActivities.gasBottled = Gwerthiant nwy wedi''i botelu
+cYa.additionalActivities.gasBottled = Gwerthiant nwy wedi’i botelu
 
 # CONCESSIONS OR FRANCHISE (FORM 6015)
 #########
@@ -3365,7 +3365,7 @@ error.concessionOrFranchise.missing = Select yes if you receive any rent from th
 lettingsIncome.heading = Letting income
 lettingsIncome.label = Is any rent received from letting other parts of the property?
 lettingsIncome.p1 = You must declare any income received from letting other parts of the property, for example advertising billboards, car parking or telephone masts. You will have the opportunity to add more than one letting if required.
-lettingsIncome.missing = Dewiswch ‘oes'' os oes unrhyw rent yn dod i law o roi rhannau o''r eiddo ar osod
+lettingsIncome.missing = Dewiswch ‘oes’ os oes unrhyw rent yn dod i law o roi rhannau o’r eiddo ar osod
 
 # ADDITIONAL INFORMATION
 ########################
@@ -3426,15 +3426,15 @@ partsUnavailable.label = A ydych chi neu’ch teulu’n meddiannu unrhyw ran o�
 error.partsUnavailable.required = Select yes  if you or your family occupy any part of the property
 
 #OCCUPIERS DETAILS
-aboutYou.occupiersDetails.heading = Occupier''s details
+aboutYou.occupiersDetails.heading = Occupier’s details
 aboutYou.occupiersDetails.paragraph = We need the contact details for the person for each part of the property used as main residence, or a second home. You will have the opportunity to add additional households if required.
-label.aboutYou.occupiersDetails.name= Occupier''s name
-aboutYou.occupiersDetails.address.label = Occupier''s address
+label.aboutYou.occupiersDetails.name= Occupier’s name
+aboutYou.occupiersDetails.address.label = Occupier’s address
 aboutYou.occupiersDetails.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy
-error.aboutYou.occupiersDetails.required = Enter the occupier''s  name
-error.aboutYou.occupiersDetails.maxLength = Occupier''s name should be 100 characters or fewer
-error.aboutYou.occupiersDetails.required = Enter the occupier''s address
-error.aboutYou.occupiersDetails.maxLength = Occupier''s address should be 1000 characters or fewer
+error.aboutYou.occupiersDetails.required = Enter the occupier’s  name
+error.aboutYou.occupiersDetails.maxLength = Occupier’s name should be 100 characters or fewer
+error.aboutYou.occupiersDetails.required = Enter the occupier’s address
+error.aboutYou.occupiersDetails.maxLength = Occupier’s address should be 1000 characters or fewer
 
 # OCCUPIERS DETAILS LIST
 occupiersDetailsList.heading = You have added {0} part{1} of your property for family use
@@ -3488,10 +3488,10 @@ error.batteriesCapacity.required = Explain what is the capacity of any installed
 # FURTHER INFORMATION OR REMARKS
 ################################
 furtherInformationOrRemarks.heading = Rhagor o wybodaeth neu sylwadau
-hint.furtherInformationOrRemarks = Rhowch fanylion pellach os nad oedd digon o le i chi gwblhau''ch atebion i unrhyw un o''r cwestiynau blaenorol, neu os oes angen esboniad neu eglurhad pellach ar unrhyw gwestiynau.
+hint.furtherInformationOrRemarks = Rhowch fanylion pellach os nad oedd digon o le i chi gwblhau’ch atebion i unrhyw un o’r cwestiynau blaenorol, neu os oes angen esboniad neu eglurhad pellach ar unrhyw gwestiynau.
 furtherInformationOrRemarksTasklist.heading = Additional relevant information
 furtherInformationOrRemarksTasklist.6048.heading = Additional information
-error.furtherInformationOrRemarks.maxLength = Mae''n rhaid i''r wybodaeth bellach fod yn 2,000 o gymeriadau neu lai
+error.furtherInformationOrRemarks.maxLength = Mae’n rhaid i’r wybodaeth bellach fod yn 2,000 o gymeriadau neu lai
 
 # ALTERNATIVE DETAILS QUESTION
 ################################
@@ -3500,7 +3500,7 @@ contactDetailsQuestion.address.lookupPageHeading = What is the alternative corre
 contactDetailsQuestion.address.selectPageHeading = Choose the alternative correspondence address
 contactDetailsQuestion.address.confirmPageHeading = Check the alternative correspondence address
 hint.contactDetailsQuestion = You can either provide alternative contact details, or nominate someone else we should contact if we have any queries about this declaration.
-error.contactDetailsQuestion.missing= Dewiswch ‘hoffwn'' os ydych am ddefnyddio manylion cyswllt eraill
+error.contactDetailsQuestion.missing= Dewiswch ‘hoffwn’ os ydych am ddefnyddio manylion cyswllt eraill
 
 # ALTERNATIVE CONTACT DETAILS
 #############################
@@ -3511,51 +3511,51 @@ label.alternativeContactDetails = Cyfeiriad gohebu
 # TENANCY LEASE AGREEMENT EXPIRE (FORM 6011)
 ###########################################
 tenancyLeaseAgreementExpire.heading = Dyddiad adolygu neu ddyddiad dod i ben y brydles
-tenancyLeaseAgreementExpire.title = Pryd bydd dyddiad adolygu neu ddyddiad dod i ben y denantiaeth, y brydles neu''r cytundeb presennol?
-tenancyLeaseAgreementExpire.p1 = Mae''n rhaid i chi ddatgan dyddiad yr adolygiad rhent nesaf o''ch tenantiaeth, prydles neu gytundeb.
+tenancyLeaseAgreementExpire.title = Pryd bydd dyddiad adolygu neu ddyddiad dod i ben y denantiaeth, y brydles neu’r cytundeb presennol?
+tenancyLeaseAgreementExpire.p1 = Mae’n rhaid i chi ddatgan dyddiad yr adolygiad rhent nesaf o’ch tenantiaeth, prydles neu gytundeb.
 tenancyLeaseAgreementExpire.p2 = Fel arall, dylech ddatgan dyddiad dod i ben eich tenantiaeth, prydles, neu gytundeb os na chynhelir adolygiad cyn y dyddiad dod i ben.
-tenancyLeaseAgreementExpire.p3 = Nid oes angen i chi roi gwybod i ni am unrhyw newidiadau yn y rhent sy''n rhan o''ch cytundeb presennol. Gallai''r rhain gynnwys, ond heb fod yn gyfyngedig i''r canlynol:
-tenancyLeaseAgreementExpire.item1 = newidiadau sy''n gysylltiedig â''ch trosiant
+tenancyLeaseAgreementExpire.p3 = Nid oes angen i chi roi gwybod i ni am unrhyw newidiadau yn y rhent sy’n rhan o’ch cytundeb presennol. Gallai’r rhain gynnwys, ond heb fod yn gyfyngedig i’r canlynol:
+tenancyLeaseAgreementExpire.item1 = newidiadau sy’n gysylltiedig â’ch trosiant
 tenancyLeaseAgreementExpire.item2 = amrywiadau mewn unrhyw fynegai y gall eich rhent fod yn gysylltiedig ag ef, er enghraifft y mynegai prisiau manwerthu (RPI)
 fieldName.tenancyLeaseAgreementExpire = the renewal or expiry date of the current lease
 
 # CONNECTED TO LANDLORD
 #######################
-connectedToLandlord.heading = Heblaw drwy gontract, a ydych chi''n gysylltiedig â''r landlord mewn unrhyw ffordd?
-connectedToLandlord.heading.6020 = A ydych chi''n gysylltiedig â''r landlord mewn unrhyw ffordd?
+connectedToLandlord.heading = Heblaw drwy gontract, a ydych chi’n gysylltiedig â’r landlord mewn unrhyw ffordd?
+connectedToLandlord.heading.6020 = A ydych chi’n gysylltiedig â’r landlord mewn unrhyw ffordd?
 hint.connectedToLandlord.6020 = Mae hyn yn cynnwys bod yn gysylltiedig â gwerthu tanwydd a gyflenwir gan eich landlord.
 
 # CONNECTED TO LANDLORD DETAILS
 ###############################
-connectedToLandlordDetails.heading = Disgrifiwch eich perthynas â''r landlord
-error.connectedToLandlord.missing = Dewiswch ‘ydw'' os oes gennych gysylltiad â''r landlord
-error.connectedToLandlordDetails.required = Nodwch ddisgrifiad o''ch perthynas â''r landlord
-error.connectedToLandlordDetails.maxLength = Mae''n rhaid i''r disgrifiad o''ch perthynas â''r landlord fod yn 1,000 o gymeriadau neu lai
+connectedToLandlordDetails.heading = Disgrifiwch eich perthynas â’r landlord
+error.connectedToLandlord.missing = Dewiswch ‘ydw’ os oes gennych gysylltiad â’r landlord
+error.connectedToLandlordDetails.required = Nodwch ddisgrifiad o’ch perthynas â’r landlord
+error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’ch perthynas â’r landlord fod yn 1,000 o gymeriadau neu lai
 
 # THROUGHPUT AFFECTS RENT
-doesRentVaryToThroughput.heading = A yw''r rhent yn amrywio yn ôl y trwygyrch?
+doesRentVaryToThroughput.heading = A yw’r rhent yn amrywio yn ôl y trwygyrch?
 error.doesRentVaryToThroughput.required = Select yes if the rent vary according to the throughput
 throughputAffectsRentDetails.heading = Eglurwch sut mae eich trwygyrch yn effeithio ar eich rhent
 error.throughputAffectsRentDetails.required = Describe how throughput affects your rent
 error.throughputAffectsRentDetails.maxLength = The description of how throughput affects your rent must be {0} characters or fewer
 
 # IS VAT PAYABLE FOR WHOLE PROPERTY
-isVATPayableForWholeProperty.heading = A yw''r TAW yn daladwy ar yr eiddo cyfan?
+isVATPayableForWholeProperty.heading = A yw’r TAW yn daladwy ar yr eiddo cyfan?
 error.isVATPayableForWholeProperty.required = Select yes if VAT is payable in respect of the whole property
 
 # IS RENT UNDER REVIEW
-isRentUnderReview.heading = A yw''r rhent yn cael ei adolygu ar hyn o bryd, neu a yw prydles neu rent newydd yn destun trafodaeth?
+isRentUnderReview.heading = A yw’r rhent yn cael ei adolygu ar hyn o bryd, neu a yw prydles neu rent newydd yn destun trafodaeth?
 error.isRentUnderReview.required = Select yes if the rent is currently under review, or a new lease or rent is being negotiated
 
 # CAR PARKING
-doesRentIncludeParking.heading = A yw''r rhent yn cynnwys swm ar gyfer mannau parcio neu garej?
+doesRentIncludeParking.heading = A yw’r rhent yn cynnwys swm ar gyfer mannau parcio neu garej?
 isParkingRentPaidSeparately.heading = A oes rhent ar gyfer garej neu fan parcio yn cael ei dalu ar wahân?
-includedInRentParkingSpaces.heading = Faint o leoedd sydd wedi''u cynnwys yn eich rhent?
-rentedSeparatelyParkingSpaces.heading = Faint o fannau sy''n cael eu rhentu ar wahân?
+includedInRentParkingSpaces.heading = Faint o leoedd sydd wedi’u cynnwys yn eich rhent?
+rentedSeparatelyParkingSpaces.heading = Faint o fannau sy’n cael eu rhentu ar wahân?
 carParking.openSpaces = Mannau agored
 carParking.coveredSpaces = Mannau dan do
 carParking.garages = Garejys
-carParkingAnnualRent.heading = Beth yw''r taliad blynyddol ar gyfer y garej neu''r man parcio, heb gynnwys TAW?
+carParkingAnnualRent.heading = Beth yw’r taliad blynyddol ar gyfer y garej neu’r man parcio, heb gynnwys TAW?
 label.fixedRentFrom = Pryd y penodwyd y taliad hwn?
 error.doesRentIncludeParking.required = Select yes if the rent include an amount for parking spaces or garaging
 error.isParkingRentPaidSeparately.required = Select yes if the rent for garaging or car parking paid separately
@@ -3580,22 +3580,22 @@ error.rentedSeparately.garages.negative = The number of garages rented separatel
 fieldName.carParkingFixedRentDate = the date when the annual payment was fixed
 
 # INCLUDED IN RENT 6020
-includedInRent6020.heading = A yw''r rhent sy''n daladwy yn cynnwys neu''n ymwneud ag unrhyw un o''r canlynol?
-rentPayable.hint = Dewiswch unrhyw un sy''n gymwys.
+includedInRent6020.heading = A yw’r rhent sy’n daladwy yn cynnwys neu’n ymwneud ag unrhyw un o’r canlynol?
+rentPayable.hint = Dewiswch unrhyw un sy’n gymwys.
 checkbox.rentPayable.fullyEquippedStation = Gorsaf betrol weithredol llawn offer
 checkbox.rentPayable.landOnly = I dir yn unig (ac eithrio adeiladau)
-rentPayableDetails.label = Rhowch fanylion, os ydych wedi dewis unrhyw un o''r opsiynau
+rentPayableDetails.label = Rhowch fanylion, os ydych wedi dewis unrhyw un o’r opsiynau
 rentPayableDetails.hint = Er enghraifft, hefyd yn cynnwys y safle drws nesaf.
 error.rentPayableDetails.required = Please give details of selected items included in rent payable
 error.rentPayableDetails.maxLength = Description of selected items included in rent payable must be {0} characters or fewer
 
 # WHAT YOU‘LL NEED TO COMPLETE THIS SECTION
-whatYouWillNeed.heading = What you''ll need to complete this section
+whatYouWillNeed.heading = What you’ll need to complete this section
 whatYouWillNeed.header1 = If your business has occupied the property for longer than 3 years
-whatYouWillNeed.text1 = You''ll need trading figures from the 3 most recent financial years.
+whatYouWillNeed.text1 = You’ll need trading figures from the 3 most recent financial years.
 whatYouWillNeed.header2 = If your business has occupied the property for less than 3 years
-whatYouWillNeed.text2 = You''ll be asked for figures from all completed financial years since you occupied the property.
-whatYouWillNeed.text3 = You''ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
+whatYouWillNeed.text2 = You’ll be asked for figures from all completed financial years since you occupied the property.
+whatYouWillNeed.text3 = You’ll only be asked for figures from the categories listed here. If any information we need does not apply to your property, enter the number 0.
 
 whatYouWillNeed.powerGenerated = How much power you generated
 whatYouWillNeed.grossReceipts = Gross receipts
@@ -3638,21 +3638,21 @@ whatYouWillNeed.p1 = When you built or took over the property, and your financia
 whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives.
 whatYouWillNeed.p4 = Any other income not listed in your gross receipts.
 whatYouWillNeed.p5 = Details of any costs incurred.
-whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director''s remuneration.
+whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration.
 whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
 whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees.
 whatYouWillNeed.p9 = If applicable.
 whatYouWillNeed.subheading2 = If you do not have this information to hand
-whatYouWillNeed.p10 = Select <b>Save as draft</b> and complete the declaration when you''re ready.
+whatYouWillNeed.p10 = Select <b>Save as draft</b> and complete the declaration when you’re ready.
 
 whatYouWillNeed.6010.p1 = Any income from alcoholic and soft drinks, crisps and nuts.
 whatYouWillNeed.6010.p2 = Any income from serving prepared snacks and meals.
 whatYouWillNeed.6010.p3 = Any other income such as admission charges, or the provision of camping pitches.
-whatYouWillNeed.6010.p4 = Income from letting rooms. If your business is listed as a lodge or a hotel, you''ll also need to include your average occupancy rate.
+whatYouWillNeed.6010.p4 = Income from letting rooms. If your business is listed as a lodge or a hotel, you’ll also need to include your average occupancy rate.
 
 whatYouWillNeed.6015.p1 = Any income from providing accommodation, food, drinks, and other services such as function room hire and leisure activities. Also include income from any concessions or franchises such as restuarants, or any lettings such as phone masts.
 whatYouWillNeed.6015.p2 = Expenses incurred from providing accommodation, food, drinks, and other services such as function room hire and leisure activities.
-whatYouWillNeed.6015.p3 = Including any director''s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
+whatYouWillNeed.6015.p3 = Including any director’s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
 whatYouWillNeed.6015.p4 = Including: energy and utilities; cleaning and laundry; building maintenance and repairs; repairs and renewals of fixtures and equipment; advertising and marketing; administration and sundries; entertainment; and any other variable operating expenses.
 whatYouWillNeed.6015.p5 = Including rent, business rates, insurance, loan interest and depreciation.
 whatYouWillNeed.6015.p6 = Including any contributions to head office and any other costs not listed here
@@ -3671,7 +3671,7 @@ whatYouWillNeed.6030.p1 = All your income, excluding any payments received from 
 whatYouWillNeed.6030.p2 = Also include concessions and free entries. If your property is a car park, enter 0 in this section.
 
 whatYouWillNeed.6045.p1 = When you bought or took over the property, and your financial year end.
-whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You''ll also be asked about the age of your vans and services you provide.
+whatYouWillNeed.6045.p2 = Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.
 whatYouWillNeed.6045.p3 = Including chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units.
 whatYouWillNeed.6045.p4 = Including pitches for caravans, motorhomes, tents, rally areas, or glamping pitches for pre-erected or mobile structures like yurts, tipis or shepherd huts.
 whatYouWillNeed.6045.p5 = Including shops, catering, bars and clubs, and amusements.
@@ -3692,9 +3692,9 @@ error.areYouVATRegistered.required = Select yes if you are VAT registered
 
 # NOT CONNECTED
 ###############
-checkYourAnswersNotConnected.heading = Gwiriwch eich atebion – dim cysylltiad â''r eiddo
-key.still.connected = Cysylltiad â''r eiddo?
-key.ever.connected = Ydych chi erioed wedi cael cysylltiad â''r eiddo?
+checkYourAnswersNotConnected.heading = Gwiriwch eich atebion – dim cysylltiad â’r eiddo
+key.still.connected = Cysylltiad â’r eiddo?
+key.ever.connected = Ydych chi erioed wedi cael cysylltiad â’r eiddo?
 key.contact.details = Manylion cyswllt a gwybodaeth ychwanegol
 checkYourAnswersNotConnected.subheading1 = Statws o ran cysylltiad
 checkYourAnswersNotConnected.subheading2 = Eich manylion cyswllt
@@ -3764,16 +3764,16 @@ checkYourAnswersAboutYourLeaseOrTenure.heading = Gwiriwch eich atebion – eich 
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Eich landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Manylion y landlord
-checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Yn gysylltiedig â''r landlord?
-checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails = Perthynas â''r landlord
-checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading = Newidiadau i''ch prydles
-checkYourAnswersAboutYourLeaseOrTenure.leaseOrAgreementDetails = Manylion y brydles neu''r cytundeb
+checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Yn gysylltiedig â’r landlord?
+checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails = Perthynas â’r landlord
+checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading = Newidiadau i’ch prydles
+checkYourAnswersAboutYourLeaseOrTenure.leaseOrAgreementDetails = Manylion y brydles neu’r cytundeb
 checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.yes = Dechreuodd y denantiaeth o fewn y 3 blynedd diwethaf
 checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.no = Ni ddechreuodd y denantiaeth o fewn y 3 blynedd diwethaf
-checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.yes = Mae''r rhent wedi newid o fewn y 3 blynedd diwethaf
-checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.no = Nid yw''r rhent wedi newid o fewn y 3 blynedd diwethaf
-checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.yes = Mae''r rhent yn cael ei adolygu neu ei aildrafod
-checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.no = Nid yw''r rhent yn cael ei adolygu na''i aildrafod
+checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.yes = Mae’r rhent wedi newid o fewn y 3 blynedd diwethaf
+checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.no = Nid yw’r rhent wedi newid o fewn y 3 blynedd diwethaf
+checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.yes = Mae’r rhent yn cael ei adolygu neu ei aildrafod
+checkYourAnswersAboutYourLeaseOrTenure.rentUnderReviewNegotiated.no = Nid yw’r rhent yn cael ei adolygu na’i aildrafod
 checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months = Rent review due within 12 months?
 checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate = Rent is reviewed or expires on {0}
 checkYourAnswersAboutYourLeaseOrTenure.leaseDetails.heading = Manylion y brydles
@@ -3785,28 +3785,28 @@ checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease = Manylion y br
 checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent = Rhent blynyddol presennol
 checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid = Dyddiad y talwyd y rhent resennol am y tro cyntaf
 checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration = Dyddiad cychwyn y brydles a hyd y tymor
-checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Dyddiad y daw''r brydles bresennol i ben neu y caiff ei hadolygu
-checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = Beth mae''r rhent yn ei gynnwys
-checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Taliadau wedi''u cynnwys yn y rhent
-checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Eitemau y mae''r rhent yn eu cynnwys neu''n ymwneud ag ef
+checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire = Dyddiad y daw’r brydles bresennol i ben neu y caiff ei hadolygu
+checkYourAnswersAboutYourLeaseOrTenure.whatRentIncludes.heading = Beth mae’r rhent yn ei gynnwys
+checkYourAnswersAboutYourLeaseOrTenure.includedInYourRent = Taliadau wedi’u cynnwys yn y rhent
+checkYourAnswersAboutYourLeaseOrTenure.itemsRentIncludesOrRelates = Eitemau y mae’r rhent yn eu cynnwys neu’n ymwneud ag ef
 checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLand = Rhent yn ymwneud â thir datblygedig?
-checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails = Disgrifiad o''r datblygiadau sydd wedi''u cynnwys
+checkYourAnswersAboutYourLeaseOrTenure.rentDevelopedLandDetails = Disgrifiad o’r datblygiadau sydd wedi’u cynnwys
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildings = Rhent yn cynnwys strwythurau new adeiladau?
-checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails = Disgrifiad o''r strwythurau sydd wedi''u cynnwys
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Y parti sy''n gyfrifol am atgyweiriadau y tu mewn?
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Y parti sy''n gyfrifol am atgyweiriadau y tu allan?
-checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Y parti sy''n gyfrifol am yswiriant adeiladu?
+checkYourAnswersAboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails = Disgrifiad o’r strwythurau sydd wedi’u cynnwys
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR = Y parti sy’n gyfrifol am atgyweiriadau y tu mewn?
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR = Y parti sy’n gyfrifol am atgyweiriadau y tu allan?
+checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI = Y parti sy’n gyfrifol am yswiriant adeiladu?
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices = Rhent yn cynnwys gwasanaethau masnach?
 checkYourAnswersAboutYourLeaseOrTenure.alternationImprovementsOrRepairs = Addasiadau gwelliannau neu atgyweiriadau?
 checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork = Manylion y Gwaith
 checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices = Disgrifiad o wasanaethau masnach
 checkYourAnswersAboutYourLeaseOrTenure.rentIncludeFixturesAndFittingsDetails = Rhent yn cynnwys offer?
-checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent = Swm wedi''i gynnwys yn y rhent i dalu am offer
-checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent = Swm wedi''i gynnwys yn y rhent i dalu am offer
+checkYourAnswersAboutYourLeaseOrTenure.sumIncludedInRent = Swm wedi’i gynnwys yn y rhent i dalu am offer
+checkYourAnswersAboutYourLeaseOrTenure.equipmentSumIncludedInRent = Swm wedi’i gynnwys yn y rhent i dalu am offer
 checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading = Sut y cyfrifwyd y rhent
 checkYourAnswersAboutYourLeaseOrTenure.rentBasedOnOpenMarketValue = Rhent yn seiliedig ar y gwerth ar y farchnad agored?
-checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn = Beth mae''r rhent yn seiliedig arno
-checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex = Codiadau rhent sy''n gysylltiedig â mynegeion?
+checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn = Beth mae’r rhent yn seiliedig arno
+checkYourAnswersAboutYourLeaseOrTenure.rentIncreasedAnnuallyWithIndex = Codiadau rhent sy’n gysylltiedig â mynegeion?
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnover = Rhent yn amrywio yn ôl trosiant?
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryAccordingToTurnoverDetails = Sut mae rhent yn amrywio yn ôl trosiant
 checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks = Rhent yn amrywio yn ôl yr alcohol a gyflenwir?
@@ -3816,7 +3816,7 @@ checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent = Sut y cytunw
 checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview = Rhent yn cael ei adolygu ar hyn o bryd?
 checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Adolygiadau rhent: amlder a dyddiad disgwyl
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = A ellir gostwng y rhent?
-checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Prydles flaenorol wedi''i hildio''n gynnar?
+checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Prydles flaenorol wedi’i hildio’n gynnar?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Manylion y brydles flaenorol
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048 = Details of the surrendered lease or agreement
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.amount = Former rent {0}
@@ -3824,18 +3824,18 @@ checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails.months
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements = Wedi diystyru ychwanegiadau neu welliannau?
 checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails = Disgrifiad o welliannau a ddiystyrwyd
 checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading = Gwaharddiadau, cyfyngiadau neu gymhellion
-checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium = Swm cyfalaf wedi''i dalu ar gyfer y brydles?
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium = Swm cyfalaf wedi’i dalu ar gyfer y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails = Capital sum paid details
-checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = Taliad wedi''i gael pan ganiatawyd y brydles?
+checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = Taliad wedi’i gael pan ganiatawyd y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDateInput = When was this sum paid?
-checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Taliad wedi''i gael pan ganiatawyd y brydles?
+checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Taliad wedi’i gael pan ganiatawyd y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition = Gwaith sydd ei angen i sicrhau prydles?
-checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven = Buddion wedi''u derbyn pan roddwyd y brydles?
+checkYourAnswersAboutYourLeaseOrTenure.benefitsGiven = Buddion wedi’u derbyn pan roddwyd y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.benefitsGivenDetails = Manylion y buddion
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020 = Swm cyfalaf a dalwyd gan y meddiannydd neu iddo?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid = Swm cyfalaf a dalwyd
-checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent = Ffactorau eraill sy''n effeithio ar y rhent?
-checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails = Disgrifiad o''r ffactorau sy'n effeithio ar y rhent
+checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent = Ffactorau eraill sy’n effeithio ar y rhent?
+checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails = Disgrifiad o’r ffactorau sy'n effeithio ar y rhent
 checkYourAnswersAboutYourLeaseOrTenure.typeOfTenure = Type of tenure
 checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput = Rhent yn amrywio yn ôl y trwygyrch?
 checkYourAnswersAboutYourLeaseOrTenure.howThroughputAffectsRent = Sut mae trwygyrch yn effeithio ar rent
@@ -3891,18 +3891,18 @@ checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Carafannau statig
 checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Carafanau statig ar y safle?
 checkYourAnswersAboutTheTradingHistory.6045.caravansOpenAllYear = Carafanau statig ar agor drwy gydol y flwyddyn?
 checkYourAnswersAboutTheTradingHistory.6045.site.openWeeks = Open {0} weeks
-checkYourAnswersAboutTheTradingHistory.6045.caravans.single.ownedByOperator = Carafannau unigol, o dan berchnogaeth y gweithredwr, a defnyddir i''w llogi fel fflyd
-checkYourAnswersAboutTheTradingHistory.6045.caravans.single.subletByOperator = Carafannau unigol sy''n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i''w llogi fel fflyd
-checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator = Carafannau dwy-uned, o dan berchnogaeth y gweithredwr, a defnyddir i''w llogi fel fflyd
-checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator = Carafannau dwy-uned sy''n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i''w llogi fel fflyd
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.ownedByOperator = Oedrannau''r carafanau statig unigol a ddefnyddir i''w llogi fel fflyd
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.subletByOperator = Oedrannau''r carafanau statig unigol a ddefnyddir at ddibenion preifat
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.ownedByOperator = Oedrannau''r carafanau statig ddwy-uned a ddefnyddir i''w llogi fel fflyd
-checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.subletByOperator = Oedrannau''r carafanau statig ddwy-uned a ddefnyddir at ddibenion preifat
+checkYourAnswersAboutTheTradingHistory.6045.caravans.single.ownedByOperator = Carafannau unigol, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravans.single.subletByOperator = Carafannau unigol sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.ownedByOperator = Carafannau dwy-uned, o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravans.twin.subletByOperator = Carafannau dwy-uned sy’n cael eu his-osod gan y gweithredwr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.ownedByOperator = Oedrannau’r carafanau statig unigol a ddefnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.single.subletByOperator = Oedrannau’r carafanau statig unigol a ddefnyddir at ddibenion preifat
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.ownedByOperator = Oedrannau’r carafanau statig ddwy-uned a ddefnyddir i’w llogi fel fflyd
+checkYourAnswersAboutTheTradingHistory.6045.caravansAge.twin.subletByOperator = Oedrannau’r carafanau statig ddwy-uned a ddefnyddir at ddibenion preifat
 checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.heading = Nifer yr unedau sydd ar y safle yn ôl y categori
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily = O dan berchnogaeth breifat, a defnyddir gan y perchennog a''i deulu yn unig
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator = Yn cael ei is-osod gan y gweithredwyr, a hynny ar ran y perchnogion preifat, i''w llogi fel fflyd i bobl  sy''n mynd ar eu gwyliau
-checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Yn cael ei is-osod gan berchnogion preifat i bobl sy''n mynd ar eu gwyliau, ac nad ydynt yn deulu na''n ffrindiau
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.privatelyOwnedForOwnerAndFamily = O dan berchnogaeth breifat, a defnyddir gan y perchennog a’i deulu yn unig
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByOperator = Yn cael ei is-osod gan y gweithredwyr, a hynny ar ran y perchnogion preifat, i’w llogi fel fflyd i bobl  sy’n mynd ar eu gwyliau
+checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.subletByPrivateOwners = Yn cael ei is-osod gan berchnogion preifat i bobl sy’n mynd ar eu gwyliau, ac nad ydynt yn deulu na’n ffrindiau
 checkYourAnswersAboutTheTradingHistory.6045.caravansTotalSiteCapacity.total = Cyfanswm y carafannau statig sydd ar y safle
 checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading = Yn cael ei defnyddio at ddibenion elusennol
 checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading = Yn cael ei defnyddio at ddibenion elusennol
@@ -3916,7 +3916,7 @@ checkYourAnswersAboutTheTradingHistory.food = Bwyd
 checkYourAnswersAboutTheTradingHistory.otherReceipts = Derbyniadau eraill
 checkYourAnswersAboutTheTradingHistory.other = Arall
 checkYourAnswersAboutTheTradingHistory.accommodation = Llety
-checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Cyfraddau''r feddiannaeth, ar gyfartaledd
+checkYourAnswersAboutTheTradingHistory.averageOccupancyRate = Cyfraddau’r feddiannaeth, ar gyfartaledd
 checkYourAnswersAboutTheTradingHistory.totalSalesRevenue = Cyfanswm refeniw y gwerthiannau
 checkYourAnswersAboutTheTradingHistory.totalPayrollCosts = Costau y gyflogres
 checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other = Arall
@@ -3925,18 +3925,18 @@ checkYourAnswersAboutTheTradingHistory.profitSummary = Crynodeb elw
 checkYourAnswersAboutTheTradingHistory.totalGrossProfits = Cyfanswm yr elw gros
 checkYourAnswersAboutTheTradingHistory.totalNetProfits = Cyfanswm yr elw net
 checkYourAnswersAboutTheTradingHistory.netProfitPercentage = Cyfanswm yr elw net fel canran o gyfanswm refeniw y gwerthiannau
-checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = Rwy''n cadarnhau bod y ffigyrau hyn yn gywir
+checkYourAnswersAboutTheTradingHistory.confirmProfitFigures = Rwy’n cadarnhau bod y ffigyrau hyn yn gywir
 requestReferenceNumber.checkYourAnswers.heading = Gwirio eich atebion - os nad oes gennych rif cyfeirnod
 requestReferenceNumber.checkYourAnswers.subheading1 = Manylion yr eiddo
 requestReferenceNumber.checkYourAnswers.subheading2 = Eich manylion
-checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Amgylchiadau anarferol sy''n effeithio ar y trisiant
-checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Ffactorau sy''n dylanwadu ar dderbyniadau
+checkYourAnswersAboutTheTradingHistory.unusualCircumstances = Amgylchiadau anarferol sy’n effeithio ar y trisiant
+checkYourAnswersAboutTheTradingHistory.unusualCircumstances.6030 = Ffactorau sy’n dylanwadu ar dderbyniadau
 checkYourAnswersAboutTheTradingHistory.grossReceipts = Derbyniadau gros
 checkYourAnswersAboutTheTradingHistory.grossIncome = Incwm gros
 checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers = Cyfanswm nifer yr ymwelwyr
 checkYourAnswersAboutTheTradingHistory.payPointOrZone = Trosiant Paypoint neu Payzone
 checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints = Pwyntiau gwefru cerbydau trydan
-checkYourAnswersAboutTheTradingHistory.operateEV = Ydych chi''n gweithredu unrhyw bwyntiau gwefru cerbydau trydan?
+checkYourAnswersAboutTheTradingHistory.operateEV = Ydych chi’n gweithredu unrhyw bwyntiau gwefru cerbydau trydan?
 checkYourAnswersAboutTheTradingHistory.fuelSales = Gwerthiannau tanwydd
 checkYourAnswersAboutTheTradingHistory.totalFuelSales = Cyfanswm y gwerthiannau tanwydd
 checkYourAnswersAboutTheTradingHistory.bunkeredFuel = Tanwydd byncer
@@ -3973,7 +3973,7 @@ checkYourAnswersAboutTheTradingHistory.otherExpenses = Treuliau eraill
 checkYourAnswersAboutTheTradingHistory.income.serviceProvision = Income from services
 checkYourAnswersAboutTheTradingHistory.fixedCosts.businessRatesOrCouncilTax = Business rates or Council Tax
 checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationBuildings = Dibrisiad - adeiladau
-checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents = Dibrisiad - gosodiadau, ffitiadau a''r cynnwys
+checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents = Dibrisiad - gosodiadau, ffitiadau a’r cynnwys
 checkYourAnswersAboutTheTradingHistory.administrativeCosts.subscriptionsAndFees = Tanysgrifiadau a ffioedd
 checkYourAnswersAboutTheTradingHistory.administrativeCosts.telephoneBroadbandStationeryPostage = Teleffon, cysylltiad band eang, deunyddiau ysgrifennu a phostio
 # CYA OTHER HOLIDAY ACCOMMODATION 6045/46
@@ -3985,8 +3985,8 @@ checkYourAnswersOtherHolidayAccommodation.openAllYear = Llety gwyliau arall ar a
 checkYourAnswersOtherHolidayAccommodation.grossReceipts = Derbyniadau gros
 checkYourAnswersOtherHolidayAccommodation.numberOfUnits = Nifer yr unedau
 checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading = Nifer yr unedau sydd ar y safle yn ôl y categori
-checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting = Sy''n eiddo i''r gweithredwr ac ar gael i''w gosod
-checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff = Sy''n eiddo i''r gweithredwr ar gyfer defnydd staff tymhorol
+checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting = Sy’n eiddo i’r gweithredwr ac ar gael i’w gosod
+checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff = Sy’n eiddo i’r gweithredwr ar gyfer defnydd staff tymhorol
 checkYourAnswersOtherHolidayAccommodation.privatelyOwned = Eiddo preifat
 checkYourAnswersOtherHolidayAccommodation.totalLettingUnits = Total letting units on site
 
@@ -4016,7 +4016,7 @@ confirmation.unableToRetrieveAnswers.list.1 = retrieve your answers once you lea
 confirmation.unableToRetrieveAnswers.list.2 = access your answers from the confirmation email
 confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office Agency (VOA)
 confirmation.businessRatesBill = Your business rates bill
-confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property''s rateable value if you think it''s wrong.
+confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
 confirmation.businessRatesBill.list.2 = Our <a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
 confirmation.whatNext = What happens next
 confirmation.list.1 = We have sent your declaration to the Valuation Office Agency.
@@ -4041,33 +4041,33 @@ currentRentFirstPaid.listBlock.p1 = a rent review
 currentRentFirstPaid.listBlock.p2 = a lease renewal or alteration
 currentRentFirstPaid.listBlock.p3 = the assignment of an existing lease from another party
 currentRentFirstPaid.listBlock.p4 = an initial rent-free period
-currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don''t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales performance, or fluctuations in the retail price index.
+currentRentFirstPaid.helpWithServiceCurrentRentFirstPaidDontNeedToKnow = We don’t need to know about any changes in the rent which are part of your current agreement. These could include, but are not limited to, changes linked to your sales performance, or fluctuations in the retail price index.
 
 # SAVE AS DRAFT
 ###############
 saveAsDraft.preHeader=Draft saved successfully
 saveAsDraft.preHeaderTimeout=You have been logged out, but your information has been saved.
-saveAsDraft.info=Make a note of this password because you''ll need it to retrieve your saved information
+saveAsDraft.info=Make a note of this password because you’ll need it to retrieve your saved information
 saveAsDraft.info.chooseMemorablePassword=Choose a memorable password. You will not be able to retrieve it if you forget it.
 saveAsDraft.info.willBeSaved=Your draft will be saved but will not be sent now. You can continue completing the form when you return.
 saveAsDraft.password.rules.header=Your password must:
 saveAsDraft.password.rule1=contain at least 8 characters
 saveAsDraft.password.rule2=have at least one number (0-9)
 saveAsDraft.password.rule3=have at least one letter (a-z)
-saveAsDraft.password.rule4=not contain any common words like ‘password'', for example
+saveAsDraft.password.rule4=not contain any common words like ‘password’, for example
 error.password.minLength=Password must contain at least {0} characters
 error.password.atLeastOneNumber=Password must have at least one number
 error.password.atLeastOneLetter=Password must have at least one letter
-saveAsDraft.info.p.1=Your information has been saved but not yet been sent. You''ll need to come back later to declare your business''s details.
-saveAsDraft.info.p.2=You''ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
-saveAsDraft.paragraph=We''ll remove unsent information on
+saveAsDraft.info.p.1=Your information has been saved but not yet been sent. You’ll need to come back later to declare your business’s details.
+saveAsDraft.info.p.2=You’ll still need your reference number and the postcode shown on the letter to view and change your information, as well as your password.
+saveAsDraft.paragraph=We’ll remove unsent information on
 saveAsDraft.paragraph.unsentInfo=Any unsent information will be removed on
 saveAsDraft.password=Password
 saveAsDraft.confirmPassword=Confirm password
 saveAsDraft.validPassword=Password must be at least 8 characters.
 saveAsDraft.error.passwordsDontMatch=Passwords do not match
-saveAsDraft.createPassword.header=Create a password to retrieve the information you''ve already added
-saveAsDraft.login.parameters.header=When you return to complete the form you''ll need:
+saveAsDraft.createPassword.header=Create a password to retrieve the information you’ve already added
+saveAsDraft.login.parameters.header=When you return to complete the form you’ll need:
 saveAsDraft.login.parameter1=your password
 saveAsDraft.login.parameter2=the reference number shown on the letter you received
 saveAsDraft.login.parameter3=the postcode shown on the letter you received
@@ -4078,7 +4078,7 @@ saveAsDraft.passwordReminder=Enter the password you created when you signed out 
 saveAsDraft.passwordHint=This will either be the password you created or the one given to you when you were timed out of the service.
 saveAsDraft.error.invalidPassword=The password you entered is not correct
 saveAsDraft.startAgain=Start a new declaration
-saveAsDraft.forgotPassword=If you''ve forgotten your password, you will have to start the form again.
+saveAsDraft.forgotPassword=If you’ve forgotten your password, you will have to start the form again.
 saveAsDraft.timeout.login=Log in again
 
 # Feedback
@@ -4128,15 +4128,15 @@ error.maxLength=This must be {0} characters or fewer
 error.minLength=Minimum length is {0} characters
 error.invalid_postcode=Enter a valid UK postcode
 error.invalid_currency = Please provide a number
-error.invalidCharAddress1 = Mae''n rhaid i linell 1 y cyfeiriad gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
-error.invalidCharAddress2 = Mae''n rhaid i linell 2 y cyfeiriad gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
-error.invalidCharTownCity = Mae''n rhaid i enw''r dref neu''r ddinas gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
-error.invalidCharCounty = Mae''n rhaid i enw''r sir gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
+error.invalidCharAddress1 = Mae’n rhaid i linell 1 y cyfeiriad gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
+error.invalidCharAddress2 = Mae’n rhaid i linell 2 y cyfeiriad gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
+error.invalidCharTownCity = Mae’n rhaid i enw’r dref neu’r ddinas gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
+error.invalidCharCounty = Mae’n rhaid i enw’r sir gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
 error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
 error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
 error.invalid_phone=Nodwch rif ffôn, megis 01632 960000
 error.email=Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
-error.isRelated=Dewiswch a ydych yn dal i fod yn gysylltiedig â''r eiddo neu beidio, neu a oes angen diweddaru''r cyfeiriad
+error.isRelated=Dewiswch a ydych yn dal i fod yn gysylltiedig â’r eiddo neu beidio, neu a oes angen diweddaru’r cyfeiriad
 error.date_must_be_in_past = Date must be in the past
 error.invalid_number = This must be a number
 error.date_before_1900 = Date must be on or after 1 January 1900
@@ -4150,13 +4150,13 @@ error.currentPropertyUse.required = Select the current use of the property
 error.propertyCurrentlyUsed.required = Describe the current use of the property
 error.invalid_date = Enter a valid date
 error.buildingNameNumber.required = Nodwch linell gyntaf y cyfeiriad
-error.buildingNameNumber.maxLength = Mae''n rhaid i linell 1 y cyfeiriad fod yn 50 o gymeriadau neu lai
-error.town.required = Nodwch enw''r dref neu''r ddinas
-error.town.maxLength = Mae''n rhaid i enw''r dref neu''r ddinas fod yn 50 o gymeriadau neu lai
+error.buildingNameNumber.maxLength = Mae’n rhaid i linell 1 y cyfeiriad fod yn 50 o gymeriadau neu lai
+error.town.required = Nodwch enw’r dref neu’r ddinas
+error.town.maxLength = Mae’n rhaid i enw’r dref neu’r ddinas fod yn 50 o gymeriadau neu lai
 error.line2.maxLength = Second line of address must be 50 characters or fewer
 error.line3.maxLength = Third line of address must be 50 characters or fewer
 error.postcode.required = Nodwch y cod post
-error.postcode.maxLength = Mae''n rhaid i''r cod post fod yn 8 o gymeriadau neu lai
+error.postcode.maxLength = Mae’n rhaid i’r cod post fod yn 8 o gymeriadau neu lai
 error.postcode.invalid = Nodwch god post llawn yn y DU, megis AB12 3CD
 error.day.required = The date must include a day
 error.month.required = The date must include a month
@@ -4165,17 +4165,17 @@ error.required.annualRent = Enter the annual rent excluding VAT
 error.invalid_currency.annualRent = The annual rent must be a number like 100 or 100.00 and cannot be less than 0
 error.required.annualRentExcludingVat = Nodwch swm y rhent blynyddol
 error.char.count.maxLength = This must be 2000 characters or fewer
-error.townCity.required = Nodwch enw''r dref neu''r ddinas
+error.townCity.required = Nodwch enw’r dref neu’r ddinas
 error.fullName.required = Nodwch eich enw
 error.fullNameContactDetails.required = Enter a contact name
 error.fullNameAlternative.required = Enter your name, or an alternative name
 error.fullName.mexLength = The name must be 50 characters or fewer
 error.tiedType.required = Select which type of tie you have
-error.addressLineTwo.maxLength =  Mae''n rhaid i linell 2 y cyfeiriad fod yn 50 o gymeriadau neu lai
-error.townCity.maxLength = Mae''n rhaid i enw''r dref neu''r ddinas fod yn 50 o gymeriadau neu lai
-error.county.maxLength = Mae''n rhaid i enw''r sir fod yn 50 o gymeriadau neu lai
+error.addressLineTwo.maxLength =  Mae’n rhaid i linell 2 y cyfeiriad fod yn 50 o gymeriadau neu lai
+error.townCity.maxLength = Mae’n rhaid i enw’r dref neu’r ddinas fod yn 50 o gymeriadau neu lai
+error.county.maxLength = Mae’n rhaid i enw’r sir fod yn 50 o gymeriadau neu lai
 error.weeksMapping.blank = Nodwch 0 os nad oeddech yn masnachu yn ystod y flwyddyn a ddaeth i ben yn {0}
-error.weeksMapping.invalid = Mae''n rhaid i''r cyfnod masnachu yn ystod y flwyddyn a ddaeth i ben yn {0} fod yn rhif rhwng 1 a 52
+error.weeksMapping.invalid = Mae’n rhaid i’r cyfnod masnachu yn ystod y flwyddyn a ddaeth i ben yn {0} fod yn rhif rhwng 1 a 52
 error.fullName.maxLength = Full name must be 50 characters or fewer
 error.fullNameContactDetails.maxLength = The name must be 50 characters or fewer
 error.confirmableAction.required = Select yes if you want to remove this item
@@ -4191,11 +4191,11 @@ error.includedPartsSum.graterThanAnnualRent = The combined sum {0} included to c
 error.date.required = Enter {0}
 error.date.mustInclude = {0} must include {1}
 error.date.invalid = {0} must be a valid date
-error.date.day.invalidCharacter = Mae''n rhaid i''r diwrnod fod yn rhif
-error.date.day.invalid = Mae''n rhaid i''r diwrnod fod yn rhif rhwng 1 a 31
-error.date.month.invalidCharacter = Mae''n rhaid i''r mis fod yn rhif
-error.date.month.invalid = Mae''n rhaid i''r mis fod yn rhif rhwng 1 a 12
-error.date.year.invalid = Mae''n rhaid i''r flwyddyn fod yn rhif 4 digid
+error.date.day.invalidCharacter = Mae’n rhaid i’r diwrnod fod yn rhif
+error.date.day.invalid = Mae’n rhaid i’r diwrnod fod yn rhif rhwng 1 a 31
+error.date.month.invalidCharacter = Mae’n rhaid i’r mis fod yn rhif
+error.date.month.invalid = Mae’n rhaid i’r mis fod yn rhif rhwng 1 a 12
+error.date.year.invalid = Mae’n rhaid i’r flwyddyn fod yn rhif 4 digid
 error.date.before1900 = {0} must be after December 1899
 error.date.beforeToday = {0} cannot be in the past
 error.date.mustBeInPast = {0} must be today or in the past
