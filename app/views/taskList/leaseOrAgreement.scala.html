@@ -30,7 +30,7 @@
     </h2>
     <ul class="app-task-list__items">
      @if(forType == FOR6020) {
-      @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading ",
+      @includes.taskListItem("type-of-tenure", "checkYourAnswersAboutYourLeaseOrTenure.tenure.heading",
        controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show(),
        section5Completed,
        session.aboutLeaseOrAgreementPartOne.flatMap(_.aboutTheLandlord),
