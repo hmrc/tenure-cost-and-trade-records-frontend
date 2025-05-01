@@ -20,6 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 @this(layout: Layout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton)
 
@@ -36,12 +37,18 @@
 ) {
 
     @formWithCSRF(action = routes.IsYearlyAvailableController.submit) {
+
+        <p class="govuk-body">@{messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p1")}</p>
+
+        <p class="govuk-body">@HtmlContent(messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p2")).asHtml</p>
+
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
             idPrefix = "lettingHistoryIsYearlyAvailable",
             name = "answer",
-            legendKey = "",
+            legendKey = "lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.label",
+            classes = "govuk-fieldset__legend--m"
         )
         @includes.continueSaveAsDraftButtons(govukButton)
     }
