@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
       val result = connectedToLandlordDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
+      charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
       )
@@ -60,7 +60,7 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
+      charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
       )

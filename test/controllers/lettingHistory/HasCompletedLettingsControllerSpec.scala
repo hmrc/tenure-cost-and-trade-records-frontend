@@ -21,7 +21,6 @@ import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, OccupierDetail, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
@@ -34,7 +33,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.hasCompletedLettings.heading"
         page.backLink          shouldBe routes.HasPermanentResidentsController.show.url
@@ -62,7 +61,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.backLink          shouldBe routes.ResidentListController.show.url
           page.radios("answer") shouldNot be(empty)

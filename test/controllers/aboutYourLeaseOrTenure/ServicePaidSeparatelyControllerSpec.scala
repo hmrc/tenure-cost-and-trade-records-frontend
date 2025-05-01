@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
       val result = servicePaidSeparatelyController().show(Some(0))(fakeRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      charset(result)     shouldBe Some(UTF8)
     }
 
     "render a page with an empty form" when {

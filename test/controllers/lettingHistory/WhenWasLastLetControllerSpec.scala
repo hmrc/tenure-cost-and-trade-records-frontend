@@ -21,7 +21,6 @@ import models.submissions.lettingHistory.LettingHistory._
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
@@ -37,7 +36,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url
@@ -65,7 +64,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url

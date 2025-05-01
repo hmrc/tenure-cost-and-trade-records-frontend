@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package controllers.downloadFORTypeForm
 
 import connectors.BackendConnector
 import play.api.http.Status
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -35,7 +34,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
         val content = contentAsString(result)
         status(result)            shouldBe Status.OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         content                     should include("referenceNumber.heading")
       }
     }

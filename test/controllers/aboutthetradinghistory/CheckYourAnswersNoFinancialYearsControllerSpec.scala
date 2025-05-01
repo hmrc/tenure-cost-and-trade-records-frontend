@@ -18,7 +18,6 @@ package controllers.aboutthetradinghistory
 
 import models.ForType.FOR6010
 import models.Session
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -49,7 +48,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
         val result = controller.show()(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading  shouldBe "checkYourAnswersAboutTheTradingHistory.heading"
         page.backLink shouldBe routes.FinancialYearEndController.show().url
@@ -65,7 +64,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
         )
         status(result) shouldBe BAD_REQUEST
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.errorMessage("correct")   shouldBe "error.checkYourAnswers.givenInformation.isCorrect"
         page.errorMessage("completed") shouldBe "error.checkYourAnswersRadio.required"

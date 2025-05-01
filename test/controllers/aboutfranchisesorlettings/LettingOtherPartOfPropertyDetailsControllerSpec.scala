@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package controllers.aboutfranchisesorlettings
 import connectors.{Audit, MockAddressLookup}
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress}
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.JsoupHelpers.*
@@ -35,18 +34,18 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with 
         val result = controller.show(index = None)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                      shouldBe "lettingOtherPartOfPropertyDetails.heading"
         page.input("lettingOperatorName")   should beEmpty
         page.input("lettingTypeOfBusiness") should beEmpty
-        page.backLink                       should endWith(routes.LettingOtherPartOfPropertyController.show().url)
+        page.backLink                       should endWith(routes.TypeOfIncomeController.show().url)
       }
       "reply 200 with a fresh HTML form if given an unknown index" in new ControllerFixture {
         val result = controller.show(index = Some(2))(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                      shouldBe "lettingOtherPartOfPropertyDetails.heading"
         page.input("lettingOperatorName")   should beEmpty
@@ -59,7 +58,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with 
         val result = controller.show(index = Some(0))(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.input("lettingOperatorName")   should haveValue("Operator Name")
         page.input("lettingTypeOfBusiness") should haveValue("Type of Business")

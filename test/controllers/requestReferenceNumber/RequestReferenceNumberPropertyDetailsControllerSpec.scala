@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import models.Session
 import models.submissions.requestReferenceNumber.{RequestReferenceNumberAddress, RequestReferenceNumberDetails, RequestReferenceNumberPropertyDetails}
 import navigation.RequestReferenceNumberNavigator
 import org.scalatest.RecoverMethods.recoverToExceptionIf
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -47,7 +46,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                    shouldBe "requestReferenceNumber.heading"
         page.backLink                   shouldBe controllers.routes.LoginController.show.url
@@ -70,7 +69,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                    shouldBe "requestReferenceNumber.heading"
         page.backLink                   shouldBe controllers.routes.LoginController.show.url

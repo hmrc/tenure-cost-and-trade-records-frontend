@@ -23,7 +23,6 @@ import navigation.LettingHistoryNavigator
 import play.api.http.Status.*
 import play.api.libs.json.Writes
 import play.api.http.MimeTypes.HTML
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.advertisingDetail as AdvertisingDetailView
@@ -36,7 +35,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                        shouldBe "lettingHistory.advertisingDetail.heading"
         page.backLink                       shouldBe routes.HasOnlineAdvertisingController.show.url
@@ -67,7 +66,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.input("websiteAddress") should haveValue("123.com")
 

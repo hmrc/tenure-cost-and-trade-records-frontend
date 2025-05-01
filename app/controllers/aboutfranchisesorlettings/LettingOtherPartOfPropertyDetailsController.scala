@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -169,7 +169,7 @@ class LettingOtherPartOfPropertyDetailsController @Inject() (
   private def backLink(maybeIndex: Option[Int]) =
     maybeIndex match {
       case Some(index) if index > 0 => routes.AddAnotherLettingOtherPartOfPropertyController.show(index - 1).url
-      case _                        => routes.LettingOtherPartOfPropertyController.show().url
+      case _                        => routes.TypeOfIncomeController.show().url
     }
 
   extension (confirmed: AddressLookupConfirmedAddress)

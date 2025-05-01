@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.{ForType, Session}
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -40,7 +39,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value                       shouldBe ""
@@ -57,7 +56,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()  shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value   shouldBe "Operator Name"
@@ -69,7 +68,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()  shouldBe "concessionDetails.heading"
         html.getElementById("operatorName").value   shouldBe ""
@@ -82,7 +81,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = Some(2))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value                       shouldBe ""

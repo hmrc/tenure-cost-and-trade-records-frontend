@@ -21,7 +21,6 @@ import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
@@ -34,7 +33,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest.withSession("from" -> "permanentResidentsPage"))
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.heading"
         page.backLink          shouldBe routes.HowManyNightsController.show.url
@@ -70,7 +69,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveChecked(value = "yes")

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -144,7 +144,7 @@ class CateringOperationBusinessDetailsController @Inject() (
       case FOR6015 | FOR6016 =>
         controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
       case FOR6030           =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show().url
+        controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show().url
       case _                 =>
         maybeIndex match {
           case Some(index) if index > 0 =>

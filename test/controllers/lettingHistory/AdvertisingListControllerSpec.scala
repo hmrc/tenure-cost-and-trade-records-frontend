@@ -22,7 +22,6 @@ import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.http.Status.*
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.http.MimeTypes.HTML
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -37,7 +36,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.advertisingList.heading.plural"
         // TODO page.backLink    shouldBe None
@@ -72,7 +71,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.summaryList   shouldNot be(empty)
           page.summaryList(0) shouldBe oneAdvertising.head.websiteAddress
@@ -83,7 +82,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.remove(index = 0)(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.submitAction shouldBe routes.AdvertisingListController.performRemove(0).url
         }

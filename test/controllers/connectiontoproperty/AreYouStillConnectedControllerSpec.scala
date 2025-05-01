@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
       val result = areYouStillConnectedController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
+      charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
         controllers.routes.LoginController.show.url
       )
@@ -96,7 +96,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
     val result = areYouStillConnectedController(None).show(fakeRequest)
     status(result)      shouldBe Status.OK
     contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some("utf-8")
+    charset(result)     shouldBe Some(UTF8)
   }
 
   "SUBMIT /" should {

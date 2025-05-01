@@ -21,7 +21,6 @@ import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.{Json, Writes}
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.residentDetail as ResidentDetailView
@@ -34,7 +33,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.residentDetail.heading"
         page.backLink          shouldBe routes.HasPermanentResidentsController.show.url
@@ -65,7 +64,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.input("name") should haveValue("Mr. One")
           // TODO page.textarea("address")   should haveValue("Address One")

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
     "return HTML" in {
       val result = maxOfLettingsReachedController.show(None)(fakeRequest)
       contentType(result)     shouldBe Some("text/html")
-      Helpers.charset(result) shouldBe Some("utf-8")
+      Helpers.charset(result) shouldBe Some(UTF8)
     }
 
     "return the correct back link for each src parameter" in {

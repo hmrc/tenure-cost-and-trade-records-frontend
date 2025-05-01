@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import connectors.{Audit, MockAddressLookup}
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, LettingIncomeRecord}
 import models.submissions.common.AnswerYes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
@@ -40,7 +39,7 @@ class LettingTypeDetailsControllerSpec
         val html   = contentAsJsoup(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading shouldBe "lettingOtherPartOfPropertyDetails.heading"
       }

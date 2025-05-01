@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,11 +21,12 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfIncomeForm.typeOfIncomeForm
 import models.ForType
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, TypeConcession, TypeConcession6015, TypeFranchise, TypeLetting, TypeOfIncome}
+import models.ForType.*
+import models.submissions.aboutfranchisesorlettings.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents, Result}
+import play.api.mvc.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.aboutfranchisesorlettings.typeOfIncome
@@ -156,14 +157,20 @@ class TypeOfIncomeController @Inject() (
           sourceType = TypeLetting
         )
 
-  private def toSpecificController(typeOfLetting: TypeOfIncome, index: Option[Int]): Call = {
+  private def toSpecificController(typeOfLetting: TypeOfIncome, index: Option[Int])(implicit
+    request: SessionRequest[AnyContent]
+  ): Call = {
     val targetIndex = index.getOrElse(0)
     typeOfLetting match {
-      case TypeFranchise | TypeConcession6015 =>
+      case TypeFranchise | TypeConcession6015   =>
         controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(targetIndex)
-      case TypeConcession                     =>
+      case TypeConcession if forType == FOR6030 =>
+        controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(targetIndex))
+      case TypeConcession                       =>
         controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
-      case TypeLetting                        => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
+      case TypeLetting if forType == FOR6030    =>
+        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(targetIndex))
+      case TypeLetting                          => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
     }
   }
 

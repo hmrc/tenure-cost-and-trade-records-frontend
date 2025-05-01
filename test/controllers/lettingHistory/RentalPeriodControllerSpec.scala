@@ -21,7 +21,6 @@ import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.*
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
@@ -37,7 +36,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading               shouldBe "lettingHistory.rentalPeriod.heading"
         page.backLink              shouldBe routes.OccupierDetailController.show(Some(0)).url
@@ -78,7 +77,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.backLink              shouldBe routes.OccupierDetailController.show(index = Some(0)).url
         page.input("fromDate.day")   should haveValue("10")

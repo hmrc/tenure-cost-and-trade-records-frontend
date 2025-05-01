@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import connectors.Audit
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -37,7 +36,7 @@ class ConcessionOrFranchiseFeeControllerSpec extends TestBaseSpec:
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text() shouldBe "concessionOrFranchiseFee.heading"
         html.backLink                                should endWith(routes.FranchiseOrLettingsTiedToPropertyController.show().url)
@@ -49,7 +48,7 @@ class ConcessionOrFranchiseFeeControllerSpec extends TestBaseSpec:
         val result = controller.show(fakeRequest.withFormUrlEncodedBody("from" -> "TL"))
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text() shouldBe "concessionOrFranchiseFee.heading"
         html.backLink                                should include(controllers.routes.TaskListController.show().url)

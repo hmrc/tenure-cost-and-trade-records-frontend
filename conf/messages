@@ -934,6 +934,7 @@ typeOfIncome.6010.concession.label = Separate business operate from the property
 typeOfIncome.6015.concession.label = Concession or franchise fees
 typeOfIncome.concession.hint = For example, accommodation or catering businesses.
 typeOfIncome.concession.6015.hint = For example, restaurants or car hire kiosk.
+typeOfIncome.concession.6030.hint = From any separate businesses operating from the property such as tearooms, vehicle charging points or car washes.
 typeOfIncome.letting.label = Letting other parts of the property
 typeOfIncome.letting.hint = For example, advertising billboards, telephone masts or car parking.
 error.typeOfIncome.required = Select a source of rental income

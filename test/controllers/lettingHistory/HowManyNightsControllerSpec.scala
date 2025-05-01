@@ -21,7 +21,6 @@ import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.howManyNights as HowManyNightsView
@@ -36,7 +35,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show()(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading       shouldBe "lettingHistory.intendedLettings.nights.heading"
         page.backLink      shouldBe routes.HasCompletedLettingsController.show.url
@@ -67,7 +66,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.backLink      shouldBe routes.OccupierListController.show.url
         page.input("nights") should haveValue("100")

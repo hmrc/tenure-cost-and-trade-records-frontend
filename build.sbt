@@ -13,9 +13,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(
     maintainer := "voa.service.optimisation@digital.hmrc.gov.uk",
     libraryDependencies ++= AppDependencies.appDependencies,
-    PlayKeys.playDefaultPort := defaultPort,
-    scalacOptions += "-Wconf:src=routes/.*:s",
-    scalacOptions += "-Wconf:cat=unused-imports&src=html/.*:s"
+    PlayKeys.playDefaultPort := defaultPort
   )
   .settings(
     SassKeys.cssStyle := Minified,

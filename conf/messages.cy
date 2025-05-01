@@ -901,6 +901,7 @@ typeOfIncome.6010.concession.label = Ffi y consesiwn neu’r fasnachfraint
 typeOfIncome.6015.concession.label = Ffi y consesiwn neu’r fasnachfraint
 typeOfIncome.concession.hint = Er enghraifft, busnesau llety neu arlwyo.
 typeOfIncome.concession.6015.hint = O unrhyw fusnesau ar wahân sy’n gweithredu o’r eiddo, megis bwytai neu giosgau llogi ceir.
+typeOfIncome.concession.6030.hint = From any separate businesses operating from the property such as tearooms, vehicle charging points or car washes.
 typeOfIncome.letting.label = Rhoi rhannau eraill o’r eiddo ar osod
 typeOfIncome.letting.hint = Er enghraifft byrddau posteri, maes parcio neu fastiau ffôn.
 error.typeOfIncome.required = Select a source of rental income

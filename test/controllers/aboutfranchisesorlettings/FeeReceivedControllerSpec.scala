@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import models.Session
 import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -41,7 +40,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
         val result = controller.show(0)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                                       shouldBe "feeReceived.heading"
         html.getElementById("feeReceivedPerYear.year[0].tradingPeriod").value            shouldBe "52"

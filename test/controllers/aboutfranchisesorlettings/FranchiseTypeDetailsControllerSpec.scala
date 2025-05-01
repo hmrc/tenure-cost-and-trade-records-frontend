@@ -20,7 +20,6 @@ import connectors.{Audit, MockAddressLookup}
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, BusinessAddress, Concession6015IncomeRecord, FranchiseIncomeRecord}
 import models.submissions.common.AnswerYes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
@@ -41,7 +40,7 @@ class FranchiseTypeDetailsControllerSpec
         val html   = contentAsJsoup(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
       }

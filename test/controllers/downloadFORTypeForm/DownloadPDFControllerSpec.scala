@@ -44,7 +44,7 @@ class DownloadPDFControllerSpec extends TestBaseSpec {
 
       val result = downloadPDFController().show("FOR2016")(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      charset(result)     shouldBe Some(UTF8)
     }
   }
 
