@@ -240,7 +240,7 @@
     backLinkUrl = controllers.guidance.routes.GuidanceReferenceNumberController.show.url
 ) {
 
-    <p class="govuk-body">@messages("guidance.subheading")</p>
+    @if(forType == FOR6030) {<p class="govuk-body">@messages("guidance.FOR6030.subheading")</p>} else {<p class="govuk-body">@messages("guidance.subheading")</p>}
 
     @sections.shared.contentsList(items = guidancePage.contentsItems)
 
