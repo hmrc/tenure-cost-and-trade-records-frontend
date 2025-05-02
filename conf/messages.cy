@@ -253,6 +253,7 @@ guidance.FOR6045.heading = Completing VO 6045 request for rental information: ca
 guidance.FOR6048.heading = Completing VO 6048 request for rental information: self-catering holiday homes in England and Wales
 guidance.FOR6076.heading = Completing VO 6076 request for rental information: what information you’ll need to provide
 guidance.subheading = Find out which parts of the declaration apply to your business, and the information you’ll need to find to complete your declaration.
+guidance.FOR6030.subheading = Find out which parts of the declaration apply to your business or organisation, and the information you’ll need to find to complete your declaration.
 
 guidance.sentence.whatYouWillBeAsked = What you’ll be asked
 guidance.sentence.whatYouWillNeed = What you’ll need
