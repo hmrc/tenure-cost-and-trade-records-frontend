@@ -79,12 +79,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
 
-  private def concessionOrFranchiseFeeRouting: Session => Call = answers =>
-    answers.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee.map(_.name)) match {
-      case Some("yes") => aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
-      case _           => aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
   private def cateringOperationsConditionsRouting: Session => Call = answers =>
     answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
       case Some("yes") =>
@@ -339,7 +333,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
-    ConcessionOrFranchiseFeePageId             -> concessionOrFranchiseFeeRouting,
     CateringOperationPageId                    -> cateringOperationsConditionsRouting,
     CateringOperationBusinessPageId            -> (answers =>
       aboutfranchisesorlettings.routes.FeeReceivedController.show(getCateringOperationsIndex(answers))

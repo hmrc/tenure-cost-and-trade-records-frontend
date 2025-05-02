@@ -44,31 +44,8 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         charset(result).value     shouldBe UTF8
         contentAsString(result)     should not include "checked"
       }
-      "reply 200 with the fresh form 6030 if no data in session" in new ControllerFixture(
-        forType = FOR6030,
-        aboutFranchisesOrLettings = None
-      ) {
-        val result = controller.show(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
-        contentAsString(result)     should not include "checked"
-      }
       "reply 200 with the pre-filled form 6010" in new ControllerFixture(
         forType = FOR6010,
-        aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
-      ) {
-        val result = controller.show(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
-        val html = contentAsJsoup(result)
-        html.getElementsByTag("h1").first().text()               shouldBe "lettingOtherPartOfProperty.heading"
-        html.getElementById("lettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
-        html.backLink                                            shouldBe routes.AddAnotherCateringOperationController.show(0).url
-      }
-      "reply 200 with the pre-filled form 6030" in new ControllerFixture(
-        forType = FOR6030,
         aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
       ) {
         val result = controller.show(fakeRequest)
@@ -98,20 +75,6 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         status(result) shouldBe BAD_REQUEST
         content          should include("error.lettingOtherPartOfProperty.missing")
         content          should include(s"${controllers.routes.TaskListController.show().url}#letting-other-part-of-property")
-      }
-      "reply 400 and error messages if form 6030 is submitted with invalid data" in new ControllerFixture(
-        forType = FOR6030
-      ) {
-        val result  = controller.submit(
-          fakePostRequest
-            .withFormUrlEncodedBody(
-              "lettingOtherPartOfProperty" -> "" // missing !!!
-            )
-        )
-        val content = contentAsString(result)
-        status(result) shouldBe BAD_REQUEST
-        content          should include("error.lettingOtherPartOfProperty6030.missing")
-        content          should include(routes.AddAnotherCateringOperationController.show(0).url)
       }
     }
     "reply 303 redirect to 'LettingOtherPartOfPropertyDetails' page if answer='yes' and from CYA" in new ControllerFixture(

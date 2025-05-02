@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,14 +31,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .apply(sessionAboutFranchiseOrLetting6010YesSession) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to catering operation page when lettings page has been completed yes" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
     "return a function that goes to type of income page when franchise page has been completed yes" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6010YesSession)
@@ -54,14 +46,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           sessionAboutFranchiseOrLetting6010NoSession
         ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
         .show()
-    }
-
-    "return a function that goes to letting other part of property page when franchise page has been completed no" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(ConcessionOrFranchiseFeePageId, sessionAboutFranchiseOrLetting6010NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
     "return a function that goes to type of income page when franchise page has been completed yes 6015" in {

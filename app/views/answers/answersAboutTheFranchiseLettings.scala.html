@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,13 +88,7 @@
     @if(forType == FOR6030) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading")</h2>
 
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers.optionalRow("checkYourAnswersAboutFranchiseOrLettings.separateBusiness",
-                _.cateringOrFranchiseFee.map(yesNo => messages(s"label.${yesNo.name}")),
-                navigator.routeMap(FranchiseOrLettingsTiedToPropertyId)(request.sessionData), "concessionOrFranchiseFee")
-        ))
-
-        @if(sectionAnswers.answers.flatMap(_.cateringOrFranchiseFee).contains(AnswerYes)) {
+        @if(sectionAnswers.answers.flatMap(_.franchisesOrLettingsTiedToProperty).contains(AnswerYes)) {
             @for((businessSection, idx) <- sectionAnswers.answers.flatMap(_.cateringOperationBusinessSections).getOrElse(IndexedSeq.empty).zipWithIndex) {
                 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutFranchiseOrLettings.operatorCount", idx+1)</h2>
                 @govukSummaryList(SummaryList(rows =

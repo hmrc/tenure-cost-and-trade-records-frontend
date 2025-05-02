@@ -1072,8 +1072,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionYes),
     None,
-    Some(false),
-    Some(AnswerYes)
+    Some(false)
   )
 
   val prefilledAboutFranchiseOrLettingsNo6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -1088,8 +1087,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionNo),
     None,
-    Some(false),
-    Some(AnswerNo)
+    Some(false)
   )
 
   val prefilledAboutFranchiseOrLettings: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -1104,8 +1102,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionYes),
     None,
-    Some(false),
-    Some(AnswerYes)
+    Some(false)
   )
 
   val prefilledAboutFranchiseOrLettingsIncompleteLetting: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -1288,7 +1285,6 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSectionYes),
     None,
     Some(false),
-    Some(AnswerYes),
     Some(IndexedSeq(atmLetting, telcoLetting, advert, otherLetting))
   )
 
@@ -1305,7 +1301,6 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSectionYes),
     None,
     Some(false),
-    Some(AnswerYes),
     Some(
       IndexedSeq(
         atmLetting,
@@ -1366,8 +1361,7 @@ trait FakeObjects {
     Some(AnswerYes),
     0,
     None,
-    IndexedSeq(prefilledLettingSectionYes),
-    cateringOrFranchiseFee = Some(AnswerYes)
+    IndexedSeq(prefilledLettingSectionYes)
   )
 
   val sessionAboutFranchiseOrLetting6030YesSession: Session =
