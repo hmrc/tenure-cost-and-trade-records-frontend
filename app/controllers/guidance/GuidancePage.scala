@@ -19,4 +19,8 @@ package controllers.guidance
 import play.api.mvc.Call
 import play.twirl.api.Html
 
-case class GuidancePage(contentsItems: Seq[(String, String)], startCall: Call, sections: Seq[() => Html])
+case class GuidancePage(
+  contentsItems: Seq[(String, String)],
+  startCall: Call = controllers.routes.Application.index,
+  sections: Seq[() => Html]
+)
