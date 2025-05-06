@@ -16,7 +16,20 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import models.pages.Summary
+
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -42,15 +55,32 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "licensableActivities",
-      "licensableActivities.heading",
-      classes = "govuk-fieldset__legend--l",
-      isHeading = true,
-      hint = "hint.licensableActivities"
-    )
+      <h1 class="govuk-heading-l">@messages("licensableActivities.heading")</h1>
+
+      <p class="govuk-body">@messages("hint.licensableActivities")</p>
+
+      @govukRadios(Radios(
+          fieldset = Some(Fieldset(
+              legend = Some(Legend(
+                  isPageHeading = false,
+                  classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
+              ))
+          )),
+          classes = "govuk-radios--inline",
+          name = "licensableActivities",
+          items = Seq(
+              RadioItem(
+                  content = Text(messages("label.yes.ydw")),
+                  value = Some("yes")
+              ),
+              RadioItem(
+                  content = Text(messages("label.no.nac.ydw")),
+                  value = Some("no")
+              )
+          ),
+          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
+      ).withFormField(theForm("licensableActivities")))
+
 
     @govukDetails(Details(
       summary = Text(messages("help.licensableActivities.title")),

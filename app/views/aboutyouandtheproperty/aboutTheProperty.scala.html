@@ -34,16 +34,19 @@
 
 @content = {
 @if(forType == FOR6010 || forType == FOR6011) {
+
+  <h1 class="govuk-heading-l">@messages("aboutProperty.heading")</h1>
+
+  <p class="govuk-body">@messages("hint.select.main")</p>
+
   @govukRadios(
     Radios(
       fieldset = Some(Fieldset(
         legend = Some(Legend(
-          content = Text(Messages("aboutProperty.heading")),
           classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--l",
-          isPageHeading = true
+          isPageHeading = false
         ))
       )),
-      hint = Hint(content = HtmlContent(messages("hint.select.main"))),
       items = Seq(
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.publicHouse")),
