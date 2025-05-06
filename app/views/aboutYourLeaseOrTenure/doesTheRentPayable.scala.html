@@ -55,6 +55,9 @@
 
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.submit()) {
 
+        <h1 class="govuk-heading-l">@pageHeader</h1>
+
+        <p class="govuk-body">@messages("hint.select.all")</p>
 
         @if(forType == FOR6045 || forType == FOR6046) {
 
@@ -63,12 +66,10 @@
                     name = "rentPayable[]",
                     fieldset = Fieldset(
                         legend = Legend(
-                            content = Text(messages(pageHeader)),
                             classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--l",
-                            isPageHeading = true
+                            isPageHeading = false
                         )
                     ),
-                    hint = Some(Hint(content = Text(messages("hint.select.all")))),
                     items = Seq(
                         CheckboxItem(
                             id = "otherProperty",
@@ -112,12 +113,10 @@
                         name = "rentPayable[]",
                         fieldset = Fieldset(
                             legend = Legend(
-                                content = Text(messages(pageHeader)),
                                 classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--l",
-                                isPageHeading = true
+                                isPageHeading = false
                             )
                         ),
-                        hint = Some(Hint(content = Text(messages("hint.select.all")))),
                         items = Seq(
                             CheckboxItem(
                                 id = "otherProperty",
@@ -155,12 +154,10 @@
                         name = "rentPayable[]",
                         fieldset = Fieldset(
                             legend = Legend(
-                                content = Text(messages(pageHeader)),
                                 classes = "govuk-label--l govuk-fieldset__legend govuk-fieldset__legend--l",
-                                isPageHeading = true
+                                isPageHeading = false
                             )
                         ),
-                        hint = Some(Hint(content = Text(messages("hint.select.all")))),
                         items = Seq(
                             CheckboxItem(
                                 id = "proprietor",
