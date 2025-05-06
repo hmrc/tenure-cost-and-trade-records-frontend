@@ -39,14 +39,15 @@
 
   @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit()) {
 
+      <h1 class="govuk-heading-l">@messages("furtherInformationOrRemarks.heading")</h1>
+
+      <p class="govuk-body">@messages("hint.furtherInformationOrRemarks")</p>
+
     @includes.textInputHMRCCharCount(
       hmrcCharacterCount,
       theForm,
       "furtherInformationOrRemarks",
-      labelContent = "furtherInformationOrRemarks.heading",
       classes = "govuk-label--l",
-      isPageHeading = true,
-      hint = "hint.furtherInformationOrRemarks",
         charCount = 2000
     )
 
