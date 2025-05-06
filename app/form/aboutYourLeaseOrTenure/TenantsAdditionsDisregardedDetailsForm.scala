@@ -28,7 +28,7 @@ object TenantsAdditionsDisregardedDetailsForm {
       "tenantsAdditionsDisregardedDetails" ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.tenantsAdditionsDisregardedDetails.required"),
-          maxLength(500, "error.tenantsAdditionsDisregardedDetails.maxLength")
+          maxLength(2000, "error.tenantsAdditionsDisregardedDetails.maxLength")
         )
     )(TenantsAdditionsDisregardedDetails.apply)(o => Some(o.tenantsAdditionsDisregarded))
   )

@@ -34,7 +34,7 @@ object RentIncludeTradeServicesDetailsForm {
       "describeServices"  ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.describeServices.required"),
-          maxLength(500, "error.describeServices.maxLength")
+          maxLength(2000, "error.describeServices.maxLength")
         )
     )(RentIncludeTradeServicesInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )

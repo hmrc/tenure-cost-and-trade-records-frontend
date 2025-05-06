@@ -28,12 +28,13 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF
 )
@@ -99,8 +100,16 @@
                 ).withFormField(theForm("rentPayable"))
             )
 
-            @includes.textInputCharCount(govukCharacterCount, theForm, "detailsToQuestions", "label.detailsToQuestions",
-                "govuk-!-font-weight-bold", 500, hint = "hint.detailsToQuestions")
+            @includes.textInputHMRCCharCount(
+                hmrcCharacterCount,
+                theForm,
+                "detailsToQuestions",
+                "label.detailsToQuestions",
+                classes = "govuk-!-font-weight-bold",
+                hint = "hint.detailsToQuestions",
+                isPageHeading = true,
+                charCount = 2000
+            )
 
             @includes.continueSaveAsDraftButtons(govukButton)
 
@@ -198,8 +207,17 @@
                 )
             }
 
-            @includes.textInputCharCount(govukCharacterCount, theForm, "detailsToQuestions", "label.detailsToQuestions",
-                "govuk-!-font-weight-bold", 500, hint = "hint.detailsToQuestions")
+            @includes.textInputHMRCCharCount(
+                hmrcCharacterCount,
+                theForm,
+                "detailsToQuestions",
+                "label.detailsToQuestions",
+                classes = "govuk-!-font-weight-bold",
+                hint = "hint.detailsToQuestions",
+                isPageHeading = true,
+                charCount = 2000
+            )
+
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }
