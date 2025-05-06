@@ -40,16 +40,18 @@
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.submit()
   ) {
 
+      <h1 class="govuk-heading-l">@messages("tenantsAdditionsDisregardedDetails.heading")</h1>
+
+      <p class="govuk-body">@messages("hint.tenantsAdditionsDisregardedDetails")</p>
+
       @govukCharacterCount(
           CharacterCount(
               id = "tenantsAdditionsDisregardedDetails",
               name = "tenantsAdditionsDisregardedDetails",
               maxLength = 500,
-              hint = Hint(content = Text(messages("hint.tenantsAdditionsDisregardedDetails"))),
               label = Label(
-                  content = Text(messages("tenantsAdditionsDisregardedDetails.heading")),
                   classes = "govuk-label--l",
-                  isPageHeading = true
+                  isPageHeading = false
               ),
               errorMessage = theForm.errors.asTextErrorMessageForField("tenantsAdditionsDisregardedDetails"),
           ).withFormField(theForm("tenantsAdditionsDisregardedDetails"))

@@ -17,7 +17,14 @@
 @import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -40,17 +47,30 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "receivePaymentWhenLeaseGranted",
-      "receivePaymentWhenLeaseGranted.heading",
-        messages("label.yes.do"),
-        messages("label.no.naddo"),
-      classes = "govuk-fieldset__legend--l",
-      isHeading = true,
-      hint = "hint.receivePaymentWhenLeaseGranted"
-    )
+      <h1 class="govuk-heading-l">@messages("receivePaymentWhenLeaseGranted.heading")</h1>
+
+      <p class="govuk-body">@messages("hint.receivePaymentWhenLeaseGranted")</p>
+
+      @govukRadios(Radios(
+          fieldset = Some(Fieldset(
+              legend = Some(Legend(
+                  classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
+              ))
+          )),
+          classes = "govuk-radios--inline",
+          name = "receivePaymentWhenLeaseGranted",
+          items = Seq(
+              RadioItem(
+                  content = Text(messages("label.yes.ydw")),
+                  value = Some("yes")
+              ),
+              RadioItem(
+                  content = Text(messages("label.no.nac.ydw")),
+                  value = Some("no")
+              )
+          ),
+          errorMessage = theForm.errors.asTextErrorMessageForField("receivePaymentWhenLeaseGranted")
+      ).withFormField(theForm("receivePaymentWhenLeaseGranted")))
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

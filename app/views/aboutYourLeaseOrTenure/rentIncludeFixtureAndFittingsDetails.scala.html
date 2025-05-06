@@ -47,20 +47,22 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.submit()) {
 
+  <h1 class="govuk-heading-l">@messages("rentIncludeFixturesAndFittingsDetails.heading")</h1>
+
+  <p class="govuk-body">@messages("rentIncludeFixturesAndFittingsDetails.hint")</p>
+
   @govukInput(Input(
    id = "rentIncludeFixturesAndFittingsDetails",
    name = "rentIncludeFixturesAndFittingsDetails",
    value = theForm("rentIncludeFixturesAndFittingsDetails").value,
    classes = "govuk-input--width-10 total-annual-rent",
    label = Label(
-    content = Text(messages("rentIncludeFixturesAndFittingsDetails.heading")),
     classes = "govuk-label--l",
-    isPageHeading = true
+    isPageHeading = false
    ),
    prefix = Some(PrefixOrSuffix(
     content = Text(messages("label.pound"))
    )),
-   hint = Some(Hint(content = Text(messages("rentIncludeFixturesAndFittingsDetails.hint")))),
    autocomplete = Some("off"),
   ).withFormField(theForm("rentIncludeFixturesAndFittingsDetails")))
 

@@ -51,13 +51,17 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.submit()) {
 
+
+      <h1 class="govuk-heading-l">@messages("includedInYourRent.heading")</h1>
+
+      <p class="govuk-body">@messages("hint.includedInYourRent")</p>
+
       @govukCheckboxes(
           Checkboxes(
               fieldset = Fieldset(
                   legend = Legend(
-                      content = Text(Messages("includedInYourRent.heading")),
                       classes = "govuk-label--l govuk-fieldset__legend--l",
-                      isPageHeading = true
+                      isPageHeading = false
                   )
               ),
               name = "includedInYourRent[]",
@@ -115,8 +119,7 @@
                       value = "none",
                       behaviour = ExclusiveCheckbox
                   )
-              ),
-              hint = Hint(content = HtmlContent(messages("hint.includedInYourRent")))
+              )
           ).withFormField(theForm("includedInYourRent"))
       )
     @includes.continueSaveAsDraftButtons(govukButton)
