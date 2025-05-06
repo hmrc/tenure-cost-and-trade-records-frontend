@@ -3907,6 +3907,7 @@ checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails
 checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading = Exclusions, restrictions or incentives
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium = Capital sum paid for lease?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails = Capital sum paid details
+checkYourAnswersAboutYourLeaseOrTenure.detailsOfPayment = Details of payment
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = How much was paid for lease or agreement?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDateInput = When was this sum paid?
 checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Payment received when lease was granted?
