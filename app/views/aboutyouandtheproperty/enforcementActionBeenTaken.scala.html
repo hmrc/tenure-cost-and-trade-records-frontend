@@ -16,6 +16,18 @@
 
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import models.pages.Summary
 
 @this(layout: Layout,
@@ -39,15 +51,30 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "enforcementActionBeenTaken",
-      "enforcementActionHasBeenTaken.heading",
-      classes = "govuk-fieldset__legend--l",
-      isHeading = true,
-      hint = "hint.enforcementActionHasBeenTaken"
-    )
+      <h1 class="govuk-heading-l">@messages("enforcementActionHasBeenTaken.heading")</h1>
+
+      <p class="govuk-body">@messages("hint.enforcementActionHasBeenTaken")</p>
+
+      @govukRadios(Radios(
+          fieldset = Some(Fieldset(
+              legend = Some(Legend(
+                  classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
+              ))
+          )),
+          classes = "govuk-radios--inline",
+          name = "enforcementActionBeenTaken",
+          items = Seq(
+              RadioItem(
+                  content = Text(messages("label.yes.ydw")),
+                  value = Some("yes")
+              ),
+              RadioItem(
+                  content = Text(messages("label.no.nac.ydw")),
+                  value = Some("no")
+              )
+          ),
+          errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionBeenTaken")
+      ).withFormField(theForm("enforcementActionBeenTaken")))
 
     @govukDetails(Details(
       summary = Text(messages("help.enforcementActionHasBeenTaken.title")),
