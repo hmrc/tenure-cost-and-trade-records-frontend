@@ -80,10 +80,10 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if tenantsAdditionsDisregardedDetails is greater than max length is submitted" in {
       val res = tenantsAdditionsDisregardedDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "tenantsAdditionsDisregardedDetails" -> "x" * 501
+          "tenantsAdditionsDisregardedDetails" -> "x" * 2001
         )
       )
-      status(res) shouldBe SEE_OTHER
+      status(res) shouldBe BAD_REQUEST
     }
   }
 }

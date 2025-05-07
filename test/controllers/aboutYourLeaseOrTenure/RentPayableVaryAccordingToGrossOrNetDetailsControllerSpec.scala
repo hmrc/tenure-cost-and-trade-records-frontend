@@ -88,10 +88,10 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
     "throw a BAD_REQUEST if describeFittingsTextArea is greater than max length is submitted" in {
       val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "rentPayableVaryAccordingToGrossOrNetDetails" -> "x" * 501
+          "rentPayableVaryAccordingToGrossOrNetDetails" -> "x" * 2001
         )
       )
-      status(res) shouldBe SEE_OTHER
+      status(res) shouldBe BAD_REQUEST
     }
   }
 
