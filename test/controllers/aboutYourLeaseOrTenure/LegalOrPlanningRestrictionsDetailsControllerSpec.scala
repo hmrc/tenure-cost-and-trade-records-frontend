@@ -75,7 +75,7 @@ class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec {
           "legalOrPlanningRestrictionsDetails" -> "x" * 501
         )
       )
-      status(res) shouldBe BAD_REQUEST
+      status(res) shouldBe SEE_OTHER
     }
 
     "Redirect when form data submitted" in {

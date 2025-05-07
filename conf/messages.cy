@@ -1179,7 +1179,7 @@ error.rentDevelopedLand.missing = Select yes if the rent payable relates to deve
 ######################
 rentDevelopedLandDetails.heading = Disgrifiwch y dablygiadau sydd wedi’u cynnwys yn y rhent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
-error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
+error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 2000 characters or fewer
 
 # RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
 ######################
@@ -2873,6 +2873,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 unusualCircumstances.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y ffigurau trosiant ar y dudalen flaenorol
 unusualCircumstancesReceipts.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y derbyniadau neu nifer yr ymwelwyr ar y dudalen flaenorol
 unusualCircumstances.explain = Esboniwch unrhyw ffigurau anarferol o uchel neu isel yn eich cyfrifon - gadewch hyn yn wag os nad yw’n berthnasol
+error.unusualCircumstances.maxLength = Unusual circumstances that may have affected the turnover figures on the previous page cannot be more than 2000 characters
 
 # NET PROFITS (FORM 6015)
 #########
@@ -3466,7 +3467,7 @@ error.threeYearsConstructed.required = Select yes if the site was constructed in
 #BREAKDOWN OF THE CAPITAL COSTS
 ##############################
 costsBreakdown.heading = Provide a breakdown of the capital cost of the site construction
-costsBreakdown.hint = If you're unable to provide a breakdown, please provide a total
+costsBreakdown.hint = If you''re unable to provide a breakdown, please provide a total
 error.costsBreakdown.maxLength = Description of a breakdown must be 2,000 characters or fewer
 error.costsBreakdown.required = Give details of a breakdown of the capital cost of the site construction
 

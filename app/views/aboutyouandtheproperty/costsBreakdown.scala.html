@@ -18,11 +18,12 @@
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
 )
 
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
@@ -39,16 +40,14 @@
 
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CostsBreakdownController.submit()) {
 
-        @govukCharacterCount(
-            CharacterCount(
-                id = "costsBreakdown",
-                name = "costsBreakdown",
-                maxLength = 2000,
-                label = Label(content = Text(messages("costsBreakdown.hint")),
-                classes = "govuk-!-font-weight-regular"
-                ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("costsBreakdown")
-            ).withFormField(theForm("costsBreakdown"))
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "costsBreakdown",
+            classes = "govuk-label--l",
+            hint = "costsBreakdown.hint",
+            isPageHeading = true,
+            charCount = 2000
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)

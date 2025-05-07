@@ -16,11 +16,13 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -50,17 +52,13 @@
    <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list4")</span></li>
   </ul>
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "provideDetailsOfYourLease",
-    name = "provideDetailsOfYourLease",
-    maxLength = 2000,
-    label = Label(
-     classes = "govuk-label--l",
-     isPageHeading = true
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("provideDetailsOfYourLease"),
-   ).withFormField(theForm("provideDetailsOfYourLease"))
+  @includes.textInputHMRCCharCount(
+   hmrcCharacterCount,
+   theForm,
+   "provideDetailsOfYourLease",
+   classes = "govuk-label--l",
+   isPageHeading = true,
+   charCount = 2000
   )
 
   @includes.continueSaveAsDraftButtons(govukButton)

@@ -1211,7 +1211,7 @@ error.rentDevelopedLand.missing = Select yes if the rent payable relates to deve
 ######################
 rentDevelopedLandDetails.heading = Describe the developments included in the rent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
-error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
+error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 2000 characters or fewer
 
 # RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
 ######################
@@ -2931,6 +2931,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 unusualCircumstances.heading = Describe any unusual circumstances that may have affected the turnover figures on the previous page
 unusualCircumstancesReceipts.heading = Describe any unusual circumstances that may have affected the receipts or visitor numbers on the previous page
 unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts - leave blank if not applicable.
+error.unusualCircumstances.maxLength = Unusual circumstances that may have affected the turnover figures on the previous page cannot be more than 2000 characters
 
 # NET PROFITS (FORM 6015)
 #########

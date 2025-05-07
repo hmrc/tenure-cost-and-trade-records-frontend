@@ -23,11 +23,12 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.ForType.*
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -45,19 +46,14 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "describeServicesTextArea",
-    name = "describeServicesTextArea",
-    maxLength = 500,
-    label = Label(
-     content = Text(messages("label.describeServicesTextArea")),
-     classes = "govuk-label--l",
-     isPageHeading = true
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("describeServicesTextArea"),
-    hint = if(forType == FOR6045 || forType == FOR6046) Some(Hint(content = Text(messages("rentIncludeTradeServicesDetailsTextBoxArea.hint")))) else Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
-   ).withFormField(theForm("describeServicesTextArea"))
+  @includes.textInputHMRCCharCount(
+   hmrcCharacterCount,
+   theForm,
+   "describeServicesTextArea",
+   "label.describeServicesTextArea",
+   classes = "govuk-label--l",
+   isPageHeading = true,
+   charCount = 2000
   )
 
   @includes.continueSaveAsDraftButtons(govukButton)

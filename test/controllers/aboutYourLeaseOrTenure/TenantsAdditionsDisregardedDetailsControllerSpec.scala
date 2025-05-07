@@ -83,7 +83,7 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
           "tenantsAdditionsDisregardedDetails" -> "x" * 501
         )
       )
-      status(res) shouldBe BAD_REQUEST
+      status(res) shouldBe SEE_OTHER
     }
   }
 }
