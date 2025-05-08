@@ -361,6 +361,11 @@ guidance.sections.FOR6020.tradingHistory.p4 = When:
 guidance.sections.FOR6020.tradingHistory.li10 = you first occupied the property – we only need the month and year
 guidance.sections.FOR6020.tradingHistory.li11 = your financial year ends
 
+guidance.sections.FOR6045.tradingHistory.li4 = <b>Static caravans</b><br/>Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.
+guidance.sections.FOR6045.tradingHistory.li5 = <b>Income from other holiday accommodation</b><br/>Including chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units.
+guidance.sections.FOR6045.tradingHistory.li6 = <b>Income from touring and tenting pitches</b><br/>Including pitches for caravans, motorhomes, tents, rally areas, or glamping pitches for pre-erected or mobile structures like yurts, tipis or shepherd's huts.
+guidance.sections.FOR6045.tradingHistory.li7 = <b>Trading figures from other activities</b><br/>Including shops, catering, bars and clubs, and amusements.
+
 guidance.sections.FOR6010.tradingHistory.li4 = <b>Drinks</b><br/>Any income from alcoholic and soft drinks, crisps and nuts
 guidance.sections.FOR6010.tradingHistory.li5 = <b>Food</b><br/>Any income from serving prepared snacks or meals
 guidance.sections.FOR6010.tradingHistory.li6 = <b>Other receipts</b><br/>Any other income such as admission charges, or the provision of camping pitches
