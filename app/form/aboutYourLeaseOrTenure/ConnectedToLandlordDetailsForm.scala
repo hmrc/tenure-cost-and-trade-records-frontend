@@ -27,7 +27,7 @@ object ConnectedToLandlordDetailsForm {
     mapping(
       "connectedToLandlordDetails" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.connectedToLandlordDetails.required"),
-        maxLength(1000, "error.connectedToLandlordDetails.maxLength")
+        maxLength(2000, "error.connectedToLandlordDetails.maxLength")
       )
     )(ConnectedToLandlordInformationDetails.apply)(o => Some(o.connectedToLandlordInformationDetails))
   )

@@ -27,7 +27,7 @@ object RentIncludeTradeServicesDetailsTextAreaForm {
       single(
         "describeServicesTextArea" -> default(text, "").verifying(
           nonEmpty(errorMessage = "error.describeServicesTextArea.required"),
-          maxLength(500, "error.describeServicesTextArea.maxLength")
+          maxLength(2000, "error.describeServicesTextArea.maxLength")
         )
       )
     )

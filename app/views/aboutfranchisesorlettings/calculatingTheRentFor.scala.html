@@ -22,12 +22,13 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -47,19 +48,15 @@
 
             <h1 class="govuk-heading-l">@messages("calculating.the.rent.for.heading", operatorName)</h1>
 
-        @govukCharacterCount(
-            CharacterCount(
-                id = "rentDetails",
-                name = "rentDetails",
-                maxLength = 1000,
-                label = Label(
-                    content = Text(messages("calculating.the.rent.for.explain")),
-                    classes = "govuk-label--s",
-                    isPageHeading = false
-                ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("rentDetails"),
-            ).withFormField(theForm("rentDetails"))
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "rentDetails",
+            "calculating.the.rent.for.explain",
+            classes = "govuk-label--s",
+            charCount = 2000
         )
+
         @includes.dateFields(
             form = theForm,
             field = "dateInput",

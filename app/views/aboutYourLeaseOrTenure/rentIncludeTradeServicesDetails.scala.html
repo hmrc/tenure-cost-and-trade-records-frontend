@@ -26,13 +26,14 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukInput: GovukInput,
         govukButton: GovukButton,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -51,6 +52,7 @@
 
   <p class="govuk-heading-m">@messages("rentIncludeTradeServicesDetails.title")</p>
 
+
   @govukInput(Input(
    id = "sumIncludedInRent",
    name = "sumIncludedInRent",
@@ -67,19 +69,15 @@
   ).withFormField(theForm("capitalSumPaidDetails")))
 
 <div class="govuk-!-margin-top-8">
-  @govukCharacterCount(
-   CharacterCount(
-    id = "describeServices",
-    name = "describeServices",
-    maxLength = 500,
-    label = Label(
-     content = Text(messages("label.describeServices")),
-     classes = "govuk-label--m"
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("describeServices"),
-    hint = Some(Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint2"))))
-   ).withFormField(theForm("describeServices"))
-  )
+ @includes.textInputHMRCCharCount(
+  hmrcCharacterCount,
+  theForm,
+  "describeServices",
+  "label.describeServices",
+  classes = "govuk-label--l",
+  hint = "rentIncludeTradeServicesDetails.hint2",
+  charCount = 2000
+ )
 </div>
 
   @includes.continueSaveAsDraftButtons(govukButton)

@@ -28,7 +28,7 @@ object RentPayableVaryOnQuantityOfBeersDetailsForm {
       "rentPayableVaryOnQuantityOfBeersDetails" ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.rentPayableVaryOnQuantityOfBeersDetails.required"),
-          maxLength(500, "error.rentPayableVaryOnQuantityOfBeersDetails.maxLength")
+          maxLength(2000, "error.rentPayableVaryOnQuantityOfBeersDetails.maxLength")
         )
     )(RentPayableVaryOnQuantityOfBeersInformationDetails.apply)(o => Some(o.rentPayableVaryOnQuantityOfBeersDetails))
   )

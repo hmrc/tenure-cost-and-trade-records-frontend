@@ -860,7 +860,7 @@ help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Mond
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
 error.licensableActivitiesDetails.required = You must describe the licensable activities that regularly happen before 10am or after 11:30pm
-error.licensableActivitiesDetails.maxLength = Your description of the licensable activities must be 200 characters or fewer
+error.licensableActivitiesDetails.maxLength = Your description of the licensable activities must be 2000 characters or fewer
 
 # PREMISES LICENCE CONDITIONS
 #############################
@@ -882,7 +882,7 @@ help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
 error.premisesLicenseConditionsDetails.required = You must describe the conditions restricting the use of your property
-error.premisesLicenseConditionsDetails.maxLength  = Your description of the conditions restricting the use of your property must be 200 characters or fewer
+error.premisesLicenseConditionsDetails.maxLength  = Your description of the conditions restricting the use of your property must be 2000 characters or fewer
 
 # ENFORCEMENT ACTION BEEN TAKEN
 ##############################£
@@ -903,7 +903,7 @@ help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply 
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
 error.enforcementActionHasBeenTakenDetails.required = You must describe the enforcement action taken
-error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 200 characters of fewer
+error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 2000 characters of fewer
 
 # TIED FOR GOODS
 ################
@@ -1211,7 +1211,7 @@ error.rentDevelopedLand.missing = Select yes if the rent payable relates to deve
 ######################
 rentDevelopedLandDetails.heading = Describe the developments included in the rent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
-error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
+error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 2000 characters or fewer
 
 # RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
 ######################
@@ -1234,7 +1234,7 @@ error.rentPayableVaryOnQuantityOfBeers.missing = Select yes if the rent varies a
 rentPayableVaryOnQuantityOfBeersDetails.heading = How is the rent payable affected by the drinks supplied to your property?
 hint.rentPayableVaryOnQuantityOfBeersDetails = For example, tell us if your rent changes if the quantity supplied exceeds a certain amount.
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Enter a description of how the drinks supplied to your property affect your rent
-error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of how the drinks supplied to your property affect your rent should be 500 characters or fewer
+error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of how the drinks supplied to your property affect your rent should be 2000 characters or fewer
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
@@ -1246,7 +1246,7 @@ error.rentPayableVaryAccordingToGrossOrNet.missing = Select yes if the rent vari
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Describe how your rent payable is affected by your turnover
 rentPayableVaryAccordingToGrossOrNetDetails.hint = For example, provide details of any base rate you may pay, plus any additional percentage increments when your turnover exceeds certain thresholds.
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Enter a description of how your turnover affects your rent
-error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = The description of how your turnover affects your rent should be 500 characters or fewer
+error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = The description of how your turnover affects your rent should be 2000 characters or fewer
 
 # ULTIMATELY RESPONSIBLE
 #######################
@@ -1324,7 +1324,7 @@ tradeServiceDescription.p1 = Provide a short description on any trade services y
 tradeServiceDescription.p2 = If more than one service is provided by your landlord as part of your lease or agreement, describe each one individually. You will have the opportunity to add additional services on the next page.
 tradeServiceDescription.describe = Describe the trade service provided by the landlord which is included in your rent
 tradeServiceDescription.describe.error = Enter a description of the trade services provided by the landlord
-error.tradeServiceDescription.maxLength = The description of the trade services must be 500 characters or fewer
+error.tradeServiceDescription.maxLength = The description of the trade services must be 2000 characters or fewer
 
 # TRADE SERVICES ADDED
 #####################################
@@ -1645,7 +1645,7 @@ error.tenantsAdditionsDisregarded.missing = Select yes if any additions or impro
 tenantsAdditionsDisregardedDetails.heading = Describe the disregarded additions or improvements
 hint.tenantsAdditionsDisregardedDetails = Give a brief description of the work carried out and how much it cost.
 error.tenantsAdditionsDisregardedDetails.required = Enter a description of the disregarded additions or improvements
-error.tenantsAdditionsDisregardedDetails.maxLength = Description of the disregarded additions or improvements must be 500 characters or fewer
+error.tenantsAdditionsDisregardedDetails.maxLength = Description of the disregarded additions or improvements must be 2000 characters or fewer
 
 # LEASE SURRENDERED EARLY
 #########################
@@ -1727,7 +1727,7 @@ error.legalOrPlanningRestrictions.missing = Select yes if any other factors may 
 #####################################
 legalOrPlanningRestrictionsDetails.heading = Describe the other factors that may have affected the rent payable
 error.legalOrPlanningRestrictionsDetails.required = Enter a description of the other factors that may have affected the rent payable
-error.legalOrPlanningRestrictionsDetails.maxLength = The description of the other factors that may have affected the rent payable should be 500 characters or fewer
+error.legalOrPlanningRestrictionsDetails.maxLength = The description of the other factors that may have affected the rent payable should be 2000 characters or fewer
 
 # ABOUT YOUR TRADING HISTORY
 ##############################
@@ -2931,6 +2931,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 unusualCircumstances.heading = Describe any unusual circumstances that may have affected the turnover figures on the previous page
 unusualCircumstancesReceipts.heading = Describe any unusual circumstances that may have affected the receipts or visitor numbers on the previous page
 unusualCircumstances.explain = Explain any abnormally high or low figures in your accounts - leave blank if not applicable.
+error.unusualCircumstances.maxLength = Unusual circumstances that may have affected the turnover figures on the previous page cannot be more than 2000 characters
 
 # NET PROFITS (FORM 6015)
 #########
@@ -3611,7 +3612,7 @@ hint.connectedToLandlord.6020 = This includes being tied to selling fuel supplie
 connectedToLandlordDetails.heading = Describe your relationship to the landlord
 error.connectedToLandlord.missing = Select yes if you‘re connected to the landlord
 error.connectedToLandlordDetails.required = Enter a description of your relationship to the landlord
-error.connectedToLandlordDetails.maxLength = Your description of your relationship to the landlord must be 1,000 characters or fewer
+error.connectedToLandlordDetails.maxLength = Your description of your relationship to the landlord must be 2000 characters or fewer
 
 # THROUGHPUT AFFECTS RENT
 doesRentVaryToThroughput.heading = Does the rent vary according to the throughput?

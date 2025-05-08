@@ -82,7 +82,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
     "throw a BAD_REQUEST if describeFittingsTextArea is greater than max length is submitted" in {
       val res = rentPayableVaryOnQuantityOfBeersDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "rentPayableVaryOnQuantityOfBeersDetails" -> "x" * 501
+          "rentPayableVaryOnQuantityOfBeersDetails" -> "x" * 2001
         )
       )
       status(res) shouldBe BAD_REQUEST

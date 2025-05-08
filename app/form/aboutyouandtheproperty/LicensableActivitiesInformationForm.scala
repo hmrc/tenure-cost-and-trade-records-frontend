@@ -27,7 +27,7 @@ object LicensableActivitiesInformationForm {
     mapping(
       "licensableActivitiesDetails" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.licensableActivitiesDetails.required"),
-        maxLength(200, "error.licensableActivitiesDetails.maxLength")
+        maxLength(2000, "error.licensableActivitiesDetails.maxLength")
       )
     )(LicensableActivitiesInformationDetails.apply)(o => Some(o.licensableActivitiesDetails))
   )

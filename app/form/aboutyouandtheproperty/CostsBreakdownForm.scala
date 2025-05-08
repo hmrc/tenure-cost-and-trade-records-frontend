@@ -27,7 +27,7 @@ object CostsBreakdownForm {
       single(
         "costsBreakdown" -> default(text, "").verifying(
           nonEmpty(errorMessage = "error.costsBreakdown.required"),
-          maxLength(1000, "error.costsBreakdown.maxLength")
+          maxLength(2000, "error.costsBreakdown.maxLength")
         )
       )
     )

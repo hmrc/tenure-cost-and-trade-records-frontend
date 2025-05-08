@@ -72,7 +72,7 @@ class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if intervalsOfRentReview is greater than max length is submitted" in {
       val res = legalOrPlanningRestrictionsDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "legalOrPlanningRestrictionsDetails" -> "x" * 501
+          "legalOrPlanningRestrictionsDetails" -> "x" * 2001
         )
       )
       status(res) shouldBe BAD_REQUEST
