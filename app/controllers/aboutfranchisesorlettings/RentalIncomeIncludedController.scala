@@ -115,9 +115,9 @@ class RentalIncomeIncludedController @Inject() (
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _           =>
         request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).flatMap(_.lift(idx)) match {
-          case Some(incomeRecord: Concession6015IncomeRecord) =>
+          case Some(_: Concession6015IncomeRecord) =>
             controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx).url
-          case _                                              =>
+          case _                                   =>
             controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(idx).url
         }
     }

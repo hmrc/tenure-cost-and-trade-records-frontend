@@ -141,7 +141,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
         }
     }
 
-  private def completedCommercialLettingsRouting: Session => Call = answers =>
+  private def completedCommercialLettingsRouting: Session => Call = _ =>
     controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
 
   private def partsUnavailableRouting: Session => Call = answers =>

@@ -93,7 +93,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
-        -         <- collection.deleteOne(equal("_id", sessionId)).toFuture()
+        _         <- collection.deleteOne(equal("_id", sessionId)).toFuture()
       } yield ()
     }
 
@@ -101,7 +101,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
-        -         <- collection.deleteMany(equal("_id", sessionId)).toFuture()
+        _         <- collection.deleteMany(equal("_id", sessionId)).toFuture()
       } yield ()
     }
 

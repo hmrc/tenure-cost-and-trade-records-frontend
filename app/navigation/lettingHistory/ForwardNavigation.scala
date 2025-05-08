@@ -34,7 +34,7 @@ trait ForwardNavigation:
   // need to result with SEE_OTHER location (a.k.a. "redirect after-post" pattern)
   //
   val forwardNavigationMap: NavigationMap = Map(
-    HasPermanentResidentsPageId -> { (session, navigation) =>
+    HasPermanentResidentsPageId -> { (session, _) =>
       for doesHavePermanentResidents <- hasPermanentResidents(session.data)
       yield
         if doesHavePermanentResidents

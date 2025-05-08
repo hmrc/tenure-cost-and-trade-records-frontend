@@ -187,6 +187,7 @@ class LoginController @Inject() (
           }
       }
       .recoverWith { case e: JsValidationException =>
+        logger.warn(s"Failed login: JSON Error: $e")
         Redirect(controllers.error.routes.ErrorHandlerController.showJsonError)
       }
 

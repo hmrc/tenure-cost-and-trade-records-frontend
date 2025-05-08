@@ -105,6 +105,6 @@ class RentReceivedFromController @Inject() (
       rentalIncome              <- aboutFranchisesOrLettings.rentalIncome
       incomeRecord              <- rentalIncome.lift(index)
     yield incomeRecord match
-      case r: FranchiseIncomeRecord      => routes.FranchiseTypeDetailsController.show(index).url
-      case r: Concession6015IncomeRecord => routes.FranchiseTypeDetailsController.show(index).url
+      case _: FranchiseIncomeRecord      => routes.FranchiseTypeDetailsController.show(index).url
+      case _: Concession6015IncomeRecord => routes.FranchiseTypeDetailsController.show(index).url
       case _                             => routes.CateringOperationDetailsController.show(Some(index)).url

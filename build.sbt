@@ -14,7 +14,7 @@ lazy val microservice = Project(appName, file("."))
     maintainer := "voa.service.optimisation@digital.hmrc.gov.uk",
     scalacOptions += "-Wconf:src=routes/.*:s",
     scalacOptions += "-Wconf:msg=Flag .* set repeatedly:s",
-    scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a \\`using\\` clause:s",
+    scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a \\`using\\` clause&src=views/.*:s",
     libraryDependencies ++= AppDependencies.appDependencies,
     PlayKeys.playDefaultPort := defaultPort
   )
