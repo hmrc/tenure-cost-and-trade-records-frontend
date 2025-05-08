@@ -3832,6 +3832,7 @@ checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails
 checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading = Gwaharddiadau, cyfyngiadau neu gymhellion
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium = Swm cyfalaf wedi’i dalu ar gyfer y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails = Capital sum paid details
+checkYourAnswersAboutYourLeaseOrTenure.detailsOfPayment = Details of payment
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = Taliad wedi’i gael pan ganiatawyd y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDateInput = When was this sum paid?
 checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Taliad wedi’i gael pan ganiatawyd y brydles?
