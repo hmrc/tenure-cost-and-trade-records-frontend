@@ -26,10 +26,10 @@ import java.time.LocalDate
 case class TurnoverSection6020(
   financialYearEnd: LocalDate,
   shop: Option[BigDecimal] = None,
-  carWash: Option[BigDecimal] = None,
-  jetWash: Option[BigDecimal] = None,
   lottery: Option[BigDecimal] = None,
   payPointOrZone: Option[BigDecimal] = None,
+  carWash: Option[BigDecimal] = None,
+  jetWash: Option[BigDecimal] = None,
   otherIncome: Option[BigDecimal] = None
 )
 
