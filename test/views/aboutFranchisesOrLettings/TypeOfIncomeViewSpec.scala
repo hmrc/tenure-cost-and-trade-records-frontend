@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,11 +33,11 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
   override val form: Form[TypeOfIncome] = TypeOfIncomeForm.typeOfIncomeForm
 
   def createView: () => Html = () =>
-    typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(fakeRequest, messages)
+    typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[TypeOfIncome] => Html =
     (form: Form[TypeOfIncome]) =>
-      typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(fakeRequest, messages)
+      typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
 
   "Type of income view" must {
 

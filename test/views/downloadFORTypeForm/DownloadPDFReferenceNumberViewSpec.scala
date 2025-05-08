@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.downloadFORTypeForm
 import controllers.downloadFORTypeForm.routes
 import form.ReferenceNumberForm
 import models.submissions.ReferenceNumber
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,10 +29,10 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
   override val form = ReferenceNumberForm.theForm
 
   def createView = () =>
-    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(fakeRequest, messages)
+    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ReferenceNumber]) =>
-    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(fakeRequest, messages)
+    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
 
   "Download PDF reference number view" must {
 

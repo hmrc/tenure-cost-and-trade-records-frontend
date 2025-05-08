@@ -48,7 +48,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value   shouldBe routes.OccupierDetailController.show(index = None).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         hasCompletedLettings(data).value shouldBe true
       }
     }
@@ -78,7 +78,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true
           completedLettings(data)          shouldBe twoOccupiers
         }
@@ -94,7 +94,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value                                   shouldBe routes.HowManyNightsController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value                                 shouldBe false
           completedLettings(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "completedLettings", data.getValue) shouldBe None
@@ -111,7 +111,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true
           completedLettings(data)            should have size 5
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.connectiontoproperty
 import form.connectiontoproperty.VacantPropertiesForm
 import models.pages.Summary
 import models.submissions.connectiontoproperty.{VacantProperties, VacantPropertiesDetailsNo, VacantPropertiesDetailsYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -32,10 +31,11 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
 
   val backLink: String = controllers.connectiontoproperty.routes.EditAddressController.show().url
 
-  def createView: () => Html = () => vacantPropertiesView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    vacantPropertiesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[VacantProperties] => Html = (form: Form[VacantProperties]) =>
-    vacantPropertiesView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    vacantPropertiesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Vacant properties view" must {
 

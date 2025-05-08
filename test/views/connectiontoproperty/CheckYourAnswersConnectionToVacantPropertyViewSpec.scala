@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.connectiontoproperty
 import actions.SessionRequest
 import form.connectiontoproperty.CheckYourAnswersConnectionToVacantPropertyForm
 import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToVacantProperty
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
@@ -38,11 +37,12 @@ class CheckYourAnswersConnectionToVacantPropertyViewSpec
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(stillConnectedDetailsYesToAllSession, fakeRequest)
 
-  def createView: () => Html = () => checkYourAnswersConnectionToVacantProperty(backLink)(sessionRequest, messages)
+  def createView: () => Html = () =>
+    checkYourAnswersConnectionToVacantProperty(backLink)(using sessionRequest, messages)
 
   def createViewUsingForm: Form[CheckYourAnswersConnectionToVacantProperty] => Html =
     (form: Form[CheckYourAnswersConnectionToVacantProperty]) =>
-      checkYourAnswersConnectionToVacantProperty(backLink)(sessionRequest, messages)
+      checkYourAnswersConnectionToVacantProperty(backLink)(using sessionRequest, messages)
 
   "Check Your Answers Connection To Vacant Property view" must {
 

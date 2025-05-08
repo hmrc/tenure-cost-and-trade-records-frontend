@@ -23,7 +23,6 @@ import models.submissions.common.AnswerYes
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import utils.JsoupHelpers.contentAsJsoup
 import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
@@ -87,7 +86,7 @@ class FranchiseTypeDetailsControllerSpec
 
   trait ControllerFixture extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
     val controller = new FranchiseTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -123,7 +122,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session.capture())(any, any)
+      verify(repository, once).saveOrUpdate(session.capture())(using any, any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: Concession6015IncomeRecord =>
           record.businessDetails.value.operatorName   shouldBe operatorName
@@ -141,11 +140,11 @@ trait FranchiseTypeDetailsControllerBehaviours:
       redirectLocation(result).value shouldBe routes.RentalIncomeRentController.show(0).url
 
       val id = captor[String]
-      verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+      verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
       id.getValue shouldBe "confirmedAddress"
 
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session)(any, any)
+      verify(repository, once).saveOrUpdate(session)(using any, any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: Concession6015IncomeRecord =>
           record.businessDetails.value.cateringAddress.value shouldBe BusinessAddress(

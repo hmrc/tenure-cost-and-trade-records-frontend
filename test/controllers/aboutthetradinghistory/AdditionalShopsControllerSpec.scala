@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,7 +108,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalShops[0].grossReceipts" -> "xxx")
 
-      val form = AdditionalShopsForm.additionalShopsForm(years)(messages).bind(formData)
+      val form = AdditionalShopsForm.additionalShopsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalShops[0].grossReceipts",
         messages("error.additionalShops.grossReceipts.range", 2023.toString),
@@ -120,7 +120,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalShops[1].grossReceipts" -> "")
 
-      val form = AdditionalShopsForm.additionalShopsForm(years)(messages).bind(formData)
+      val form = AdditionalShopsForm.additionalShopsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalShops[1].grossReceipts",
         messages("error.additionalShops.grossReceipts.required", 2022.toString),
@@ -132,7 +132,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalShops[2].grossReceipts" -> "-1")
 
-      val form = AdditionalShopsForm.additionalShopsForm(years)(messages).bind(formData)
+      val form = AdditionalShopsForm.additionalShopsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalShops[2].grossReceipts",
         messages("error.additionalShops.grossReceipts.negative", 2021.toString),
@@ -144,7 +144,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalShops[0].costOfPurchase" -> "xxx")
 
-      val form = AdditionalShopsForm.additionalShopsForm(years)(messages).bind(formData)
+      val form = AdditionalShopsForm.additionalShopsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalShops[0].costOfPurchase",
         messages("error.additionalShops.costOfPurchase.range", 2023.toString),
@@ -156,7 +156,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalShops[1].costOfPurchase" -> "")
 
-      val form = AdditionalShopsForm.additionalShopsForm(years)(messages).bind(formData)
+      val form = AdditionalShopsForm.additionalShopsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalShops[1].costOfPurchase",
         messages("error.additionalShops.costOfPurchase.required", 2022.toString),
@@ -168,7 +168,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalShops[2].costOfPurchase" -> "-1")
 
-      val form = AdditionalShopsForm.additionalShopsForm(years)(messages).bind(formData)
+      val form = AdditionalShopsForm.additionalShopsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalShops[2].costOfPurchase",
         messages("error.additionalShops.costOfPurchase.negative", 2021.toString),

@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.WhenWasLastLetForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.WhenWasLastLetPageId
@@ -33,7 +32,7 @@ import views.html.lettingHistory.whenWasLastLet as WhenWasLastLetView
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class WhenWasLastLetController @Inject (

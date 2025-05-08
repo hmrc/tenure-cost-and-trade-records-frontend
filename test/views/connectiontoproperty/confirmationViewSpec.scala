@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ class confirmationViewSpec extends ViewBehaviours {
   val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val form       = FeedbackFormMapper.feedbackForm
-  def createView = () => confirmation(form)(sessionRequest, messages)
+  def createView = () => confirmation(form)(using sessionRequest, messages)
 
   "confirmation view" must {
 

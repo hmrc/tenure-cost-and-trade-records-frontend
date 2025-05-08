@@ -96,7 +96,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
         prefilledRequestRefNumCYA
       ) {
         when(
-          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
+          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using
             any[HeaderCarrier]
           )
         ).thenReturn(Future.successful(HttpResponse(CREATED)))
@@ -120,7 +120,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
 
         // Mocking the submissionConnector to throw an exception
         when(
-          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
+          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using
             any[HeaderCarrier]
           )
         )
@@ -133,7 +133,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
         status(result) shouldBe INTERNAL_SERVER_ERROR
 
         // Verify that the error is logged
-        verify(mockSubmissionConnector).submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(
+        verify(mockSubmissionConnector).submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using
           any[HeaderCarrier]
         )
 

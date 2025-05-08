@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,12 +28,12 @@ class GrossReceiptsForBaseLoadViewSpec extends QuestionViewBehaviours[Seq[GrossR
   val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
   val form: Form[Seq[GrossReceiptsForBaseLoad]] =
-    GrossReceiptsForBaseLoadForm.grossReceiptsForBaseLoadForm(Seq("2026", "2025", "2024"))(messages)
+    GrossReceiptsForBaseLoadForm.grossReceiptsForBaseLoadForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => grossReceiptsForBaseLoadView(form, "")(sessionRequest, messages)
+  def createView = () => grossReceiptsForBaseLoadView(form, "")(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[GrossReceiptsForBaseLoad]]) =>
-    grossReceiptsForBaseLoadView(form, "")(sessionRequest, messages)
+    grossReceiptsForBaseLoadView(form, "")(using sessionRequest, messages)
 
   "GrossReceiptsForBaseLoad 6076 view" should {
 

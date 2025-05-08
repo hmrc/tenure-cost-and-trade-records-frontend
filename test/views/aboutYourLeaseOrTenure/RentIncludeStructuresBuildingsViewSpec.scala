@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm
 import models.submissions.common.AnswersYesNo
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,10 +29,10 @@ class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[Answ
   val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   override val form = RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
-  def createView    = () => rentIncludeStructuresBuildingsView(form, "")(sessionRequest, messages)
+  def createView    = () => rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    rentIncludeStructuresBuildingsView(form, "")(sessionRequest, messages)
+    rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
 
   "rent Include Structures BuildingsView view" must {
 

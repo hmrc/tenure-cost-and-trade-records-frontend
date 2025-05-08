@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,10 +29,10 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Incent
 
   override val form = IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 
-  def createView = () => incentivesPaymentsConditionsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IncentivesPaymentsConditionsDetails]) =>
-    incentivesPaymentsConditionsView(form, Summary("99996010001"))(fakeRequest, messages)
+    incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Incentives payment conditions view" must {
 

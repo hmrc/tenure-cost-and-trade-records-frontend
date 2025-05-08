@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ class LeaseSurrenderedEarlyController @Inject() (
           case Some(data) => leaseSurrenderedEarlyForm.fill(data)
           case _          => leaseSurrenderedEarlyForm
         },
-        calculateBackLink(request),
+        calculateBackLink(using request),
         request.sessionData.toSummary
       )
     )
@@ -63,7 +63,8 @@ class LeaseSurrenderedEarlyController @Inject() (
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LeaseSurrenderedEarly](
       leaseSurrenderedEarlyForm,
-      formWithErrors => BadRequest(view(formWithErrors, calculateBackLink(request), request.sessionData.toSummary)),
+      formWithErrors =>
+        BadRequest(view(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(leaseSurrenderedEarly = Some(data)))
         session

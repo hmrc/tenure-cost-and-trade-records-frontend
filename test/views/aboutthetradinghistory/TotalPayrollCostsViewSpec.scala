@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.TotalPayrollCostForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TotalPayrollCost
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -32,13 +31,14 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollC
 
   val messageKeyPrefix = "totalPayrollCosts"
 
-  override val form = TotalPayrollCostForm.totalPayrollCostForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
+  override val form = TotalPayrollCostForm.totalPayrollCostForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
   val fakeDates     = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
 
-  def createView = () => totalPayrollCostsView(form, 3, fakeDates, Summary("99996010001"))(sessionRequest, messages)
+  def createView = () =>
+    totalPayrollCostsView(form, 3, fakeDates, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[TotalPayrollCost]]) =>
-    totalPayrollCostsView(form, 3, fakeDates, Summary("99996010001"))(sessionRequest, messages)
+    totalPayrollCostsView(form, 3, fakeDates, Summary("99996010001"))(using sessionRequest, messages)
 
   "Total Payroll Costs view" must {
 

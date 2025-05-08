@@ -67,7 +67,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     for {
-      _ <- submitNotConnected(refNum)(hc, request)
+      _ <- submitNotConnected(refNum)(using hc, request)
     } yield Found(confirmationUrl)
   }
 
@@ -89,7 +89,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
         "failureReason"   -> failureReason
       )
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
-      errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
+      errorHandler.internalServerErrorTemplate(using request).map(InternalServerError(_))
     }
   }
 

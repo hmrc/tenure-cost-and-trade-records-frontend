@@ -18,7 +18,6 @@ package controllers.aboutfranchisesorlettings
 
 import connectors.Audit
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.{ForType, Session}
 import play.api.libs.json.Writes
 import play.api.test.Helpers.*
@@ -114,7 +113,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         // val updatedCateringOperationDetails = data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         // updatedCateringOperationDetails.operatorName shouldBe "Another Operator" // instead of "Operator Name"
         // updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
@@ -130,7 +129,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.FeeReceivedController.show(1).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         // val updatedCateringOperationDetails = data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         // updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
         // updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
@@ -144,7 +143,8 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
   trait ControllerFixture(givenForType: ForType = FOR6010):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new CateringOperationBusinessDetailsController(

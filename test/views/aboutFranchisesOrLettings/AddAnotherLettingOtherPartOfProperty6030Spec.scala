@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import actions.SessionRequest
 import form.aboutfranchisesorlettings.AddAnotherLettingOtherPartOfPropertyForm
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -41,7 +40,7 @@ class AddAnotherLettingOtherPartOfProperty6030Spec extends QuestionViewBehaviour
       messageKeyPrefix6030,
       messageKeyPrefix6015,
       messageKeyPrefix
-    )(sessionRequest, messages)
+    )(using sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     addAnotherOperationConcessionFranchise(
@@ -50,7 +49,7 @@ class AddAnotherLettingOtherPartOfProperty6030Spec extends QuestionViewBehaviour
       messageKeyPrefix6030,
       messageKeyPrefix6015,
       messageKeyPrefix
-    )(sessionRequest, messages)
+    )(using sessionRequest, messages)
 
   "Add another letting part of property view" must {
 

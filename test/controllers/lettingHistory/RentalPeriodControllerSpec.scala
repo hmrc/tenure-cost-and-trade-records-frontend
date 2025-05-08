@@ -59,7 +59,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         val result  = controller.submit(maybeIndex = Some(0))(request)
         status(result)                                           shouldBe SEE_OTHER
         redirectLocation(result).value                           shouldBe routes.OccupierListController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         completedLettings(data)                                    should have size 1
         completedLettings(data).head.rentalPeriod.value.fromDate shouldBe LocalDate.of(previousFiscalYearEnd - 1, 4, 1)
         completedLettings(data).head.rentalPeriod.value.toDate   shouldBe LocalDate.of(previousFiscalYearEnd, 3, 31)

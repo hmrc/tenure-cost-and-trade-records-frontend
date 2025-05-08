@@ -113,7 +113,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalCatering[0].grossReceipts" -> "xxx")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalCatering[0].grossReceipts",
         messages("error.additionalCatering.grossReceipts.range", 2023.toString),
@@ -125,7 +125,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalCatering[1].grossReceipts" -> "")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalCatering[1].grossReceipts",
         messages("error.additionalCatering.grossReceipts.required", 2022.toString),
@@ -137,7 +137,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalCatering[2].grossReceipts" -> "-1")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalCatering[2].grossReceipts",
         messages("error.additionalCatering.grossReceipts.negative", 2021.toString),
@@ -149,7 +149,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalCatering[0].costOfPurchase" -> "xxx")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalCatering[0].costOfPurchase",
         messages("error.additionalCatering.costOfPurchase.range", 2023.toString),
@@ -161,7 +161,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalCatering[1].costOfPurchase" -> "")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalCatering[1].costOfPurchase",
         messages("error.additionalCatering.costOfPurchase.required", 2022.toString),
@@ -173,7 +173,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalCatering[2].costOfPurchase" -> "-1")
 
-      val form = AdditionalCateringForm.additionalCateringForm(years)(messages).bind(formData)
+      val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalCatering[2].costOfPurchase",
         messages("error.additionalCatering.costOfPurchase.negative", 2021.toString),

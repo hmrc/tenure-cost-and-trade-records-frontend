@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ class BunkeredFuelQuestionController @Inject() (
             case Some(answers) => bunkeredFuelQuestionForm.fill(answers)
             case _             => bunkeredFuelQuestionForm
           },
-          calculateBackLink(request),
+          calculateBackLink(using request),
           request.sessionData.toSummary
         )
       )
@@ -70,7 +70,7 @@ class BunkeredFuelQuestionController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            calculateBackLink(request),
+            calculateBackLink(using request),
             request.sessionData.toSummary
           )
         ),

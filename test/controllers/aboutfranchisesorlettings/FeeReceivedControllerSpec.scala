@@ -66,7 +66,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AddAnotherCateringOperationController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         val feeReceivedPerYear =
           data.getValue.aboutFranchisesOrLettings.value.cateringOperationBusinessSections.value.head.feeReceived.value.feeReceivedPerYear.head
         feeReceivedPerYear.tradingPeriod                  shouldBe 24
@@ -81,7 +81,8 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
   trait ControllerFixture:
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new FeeReceivedController(

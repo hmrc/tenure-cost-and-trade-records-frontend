@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.PremisesLicenseConditionsDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -32,11 +31,11 @@ class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[Pr
     PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 
   def createView: () => Html = () =>
-    premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[PremisesLicenseConditionsDetails] => Html =
     (form: Form[PremisesLicenseConditionsDetails]) =>
-      premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+      premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Property licence conditions details view" must {
 

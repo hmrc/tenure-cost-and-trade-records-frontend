@@ -29,7 +29,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
 
   trait ControllerFixture:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any)(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any)(using any, any)).thenReturn(successful(()))
 
     val controller = new CheckYourAnswersNoFinancialYearsController(
       mcc = stubMessagesControllerComponents(),
@@ -82,7 +82,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
           .withFragment("tradingHistory")
           .toString
         val newSession = captor[Session]
-        verify(repository).saveOrUpdate(newSession.capture())(any, any)
+        verify(repository).saveOrUpdate(newSession.capture())(using any, any)
         newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory shouldBe "true"
       }
     }

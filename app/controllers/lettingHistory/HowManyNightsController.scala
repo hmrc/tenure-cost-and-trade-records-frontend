@@ -30,7 +30,7 @@ import views.html.lettingHistory.howManyNights as HowManyNightsView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class HowManyNightsController @Inject (

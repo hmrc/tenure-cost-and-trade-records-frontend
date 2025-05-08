@@ -28,16 +28,16 @@ class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc]
 
   val messageKeyPrefix = "additionalMisc"
 
-  override val form = AdditionalMiscForm.additionalMiscForm(years)(messages)
+  override val form = AdditionalMiscForm.additionalMiscForm(years)(using messages)
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   val backLink = controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show().url
 
-  def createView = () => additionalMiscView(form, backLink)(sessionRequest, messages)
+  def createView = () => additionalMiscView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[(Seq[AdditionalMisc], AdditionalMiscDetails)]) =>
-    additionalMiscView(form, backLink)(sessionRequest, messages)
+    additionalMiscView(form, backLink)(using sessionRequest, messages)
 
   "Additional misc view" must {
 

@@ -31,7 +31,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
   private def httpPutMock(responseStatus: Int): HttpClientV2 =
     val httpClientV2Mock = mock[HttpClientV2]
     when(
-      httpClientV2Mock.put(any[URL])(any[HeaderCarrier])
+      httpClientV2Mock.put(any[URL])(using any[HeaderCarrier])
     ).thenReturn(RequestBuilderStub(Right(responseStatus)))
     httpClientV2Mock
 
@@ -49,7 +49,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
         result.body     should include(""""previouslyConnected":false,""")
 
         verify(httpMock)
-          .put(any[URL])(any[HeaderCarrier])
+          .put(any[URL])(using any[HeaderCarrier])
       }
 
       "handle BadRequestException response" in {
@@ -63,7 +63,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
         exception.getMessage should include(""""previouslyConnected":false,""")
 
         verify(httpMock)
-          .put(any[URL])(any[HeaderCarrier])
+          .put(any[URL])(using any[HeaderCarrier])
       }
     }
 
@@ -81,7 +81,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
         )
 
         verify(httpMock)
-          .put(any[URL])(any[HeaderCarrier])
+          .put(any[URL])(using any[HeaderCarrier])
       }
 
     }

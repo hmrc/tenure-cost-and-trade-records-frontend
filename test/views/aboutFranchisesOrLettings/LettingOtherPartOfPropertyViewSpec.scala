@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm
 import models.ForType.*
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
@@ -37,7 +36,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     lettingOtherPartOfPropertyView(
@@ -46,7 +45,7 @@ class LettingOtherPartOfPropertyViewSpec extends QuestionViewBehaviours[AnswersY
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   "Letting other parts of property view" must {
 

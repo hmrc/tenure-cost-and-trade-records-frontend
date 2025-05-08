@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CheckYourAnswersAboutFranchiseOrLettings}
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId

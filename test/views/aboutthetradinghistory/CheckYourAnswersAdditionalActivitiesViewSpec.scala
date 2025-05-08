@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,10 +37,11 @@ class CheckYourAnswersAdditionalActivitiesViewSpec extends QuestionViewBehaviour
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  def createView: () => Html = () => checkYourAnswersAdditionalActivities(form, backLink)(sessionRequest, messages)
+  def createView: () => Html = () =>
+    checkYourAnswersAdditionalActivities(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html =
-    (form: Form[AnswersYesNo]) => checkYourAnswersAdditionalActivities(form, backLink)(sessionRequest, messages)
+    (form: Form[AnswersYesNo]) => checkYourAnswersAdditionalActivities(form, backLink)(using sessionRequest, messages)
 
   "Check Your Answers Additional Activities view" must {
 

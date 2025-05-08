@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import models.submissions.common._
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -34,10 +33,10 @@ class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours
     controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
   private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () => ultimatelyResponsibleOutsideRepairsView(form, backLink)(sessionRequest, messages)
+  def createView = () => ultimatelyResponsibleOutsideRepairsView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[UltimatelyResponsibleOutsideRepairs]) =>
-    ultimatelyResponsibleOutsideRepairsView(form, backLink)(sessionRequest, messages)
+    ultimatelyResponsibleOutsideRepairsView(form, backLink)(using sessionRequest, messages)
 
   "Ultimately responsible view" must {
 

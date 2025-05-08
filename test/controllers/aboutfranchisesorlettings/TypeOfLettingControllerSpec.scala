@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@ class TypeOfLettingControllerSpec extends TestBaseSpec {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/telecom-mast-letting?idx=0")
-    verify(mockSessionRepo).saveOrUpdate(any)(any, any)
+    verify(mockSessionRepo).saveOrUpdate(any)(using any, any)
   }
 
   "update letting and redirect to ATM when not from CYA" in {

@@ -53,7 +53,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         val result  = controller.submit(request)
         status(result)                                    shouldBe SEE_OTHER
         redirectLocation(result).value                    shouldBe routes.IsYearlyAvailableController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         intendedLettings(data).value.whenWasLastLet.value shouldBe LocalDate.of(2024, 4, 1)
       }
     }

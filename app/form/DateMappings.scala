@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,20 +32,20 @@ object DateMappings {
     allowFutureDates: Boolean = false,
     years: Option[Seq[Int]] = None
   )(implicit messages: Messages): Mapping[LocalDate] =
-    of(new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
+    of(using new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
 
   def monthYearMapping(
     fieldNameKey: String,
     allowPastDates: Boolean = false,
     allowFutureDates: Boolean = false
   )(implicit messages: Messages): Mapping[MonthsYearDuration] =
-    of(new MonthYearFormatter(fieldNameKey, allowPastDates, allowFutureDates))
+    of(using new MonthYearFormatter(fieldNameKey, allowPastDates, allowFutureDates))
 
   def dayMonthMapping(
     fieldNameKey: String,
     allow29February: Boolean = false
   )(implicit messages: Messages): Mapping[DayMonthsDuration] =
-    of(new DayMonthFormatter(fieldNameKey, allow29February))
+    of(using new DayMonthFormatter(fieldNameKey, allow29February))
 
   def betweenDates(
     startDate: LocalDate,

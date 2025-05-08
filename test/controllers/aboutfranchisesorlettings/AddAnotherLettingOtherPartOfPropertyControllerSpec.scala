@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
           controller.submit(0)(fakePostRequest.withFormUrlEncodedBody("addAnotherLettingOtherPartOfProperty" -> "yes"))
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsController.show(Some(1)).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         data.getValue.aboutFranchisesOrLettings.value
           .lettingSections(0)
           .addAnotherLettingToProperty
@@ -157,7 +157,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
       }
       "reply 303 redirect to 'AddAnotherLettingOtherPartOfProperty' page if answer='no'" in new ControllerFixture() {
         val result = controller.performRemove(0)(
@@ -178,7 +178,8 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
   ):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new AddAnotherLettingOtherPartOfPropertyController(

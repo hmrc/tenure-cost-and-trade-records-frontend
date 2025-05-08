@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package views.notconnected
 
 import form.notconnected.NotConnectedForm
 import models.submissions.notconnected.NotConnectedContactDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -29,10 +28,11 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
   override val form: Form[NotConnectedContactDetails] = NotConnectedForm.notConnectedForm
 
-  def createView: () => Html = () => checkYourAnswersNotConnectedView(notConnected6010NoSession)(fakeRequest, messages)
+  def createView: () => Html = () =>
+    checkYourAnswersNotConnectedView(notConnected6010NoSession)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[NotConnectedContactDetails] => Html = (form: Form[NotConnectedContactDetails]) =>
-    checkYourAnswersNotConnectedView(notConnected6010NoSession)(fakeRequest, messages)
+    checkYourAnswersNotConnectedView(notConnected6010NoSession)(using fakeRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 

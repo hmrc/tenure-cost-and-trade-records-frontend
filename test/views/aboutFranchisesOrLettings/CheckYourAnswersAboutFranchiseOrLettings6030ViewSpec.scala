@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm
 import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -37,10 +36,11 @@ class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec
 
   val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6030YesSession, fakeRequest)
 
-  def createView = () => cyaFranchiseOrLettingsView(form, backLink, Summary("99996030001"))(sessionRequest, messages)
+  def createView = () =>
+    cyaFranchiseOrLettingsView(form, backLink, Summary("99996030001"))(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutFranchiseOrLettings]) =>
-    cyaFranchiseOrLettingsView(form, backLink, Summary("99996030001"))(sessionRequest, messages)
+    cyaFranchiseOrLettingsView(form, backLink, Summary("99996030001"))(using sessionRequest, messages)
 
   "Check Your Answers About Franchise Or Lettings view" must {
 

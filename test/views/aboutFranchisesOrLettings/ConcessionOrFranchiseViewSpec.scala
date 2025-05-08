@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.BusinessDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
@@ -40,7 +39,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[BusinessDetai
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   def createViewUsingForm: Form[BusinessDetails] => Html = (form: Form[BusinessDetails]) =>
     concessionOrFranchiseView(
@@ -49,7 +48,7 @@ class ConcessionOrFranchiseViewSpec extends QuestionViewBehaviours[BusinessDetai
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   "Concession or franchise view" must {
 

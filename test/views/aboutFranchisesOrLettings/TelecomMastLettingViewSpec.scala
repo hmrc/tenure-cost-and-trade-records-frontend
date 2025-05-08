@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.TelecomMastLettingForm
 import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.TelecomMastLetting
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -32,10 +31,11 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
 
   override val form = TelecomMastLettingForm.telecomMastLettingForm
 
-  def createView = () => TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[TelecomMastLetting]) =>
-    TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
+    TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Telecom Mast letting view" must {
 

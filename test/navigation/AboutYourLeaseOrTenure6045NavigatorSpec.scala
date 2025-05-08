@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.common.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -31,7 +30,7 @@ import scala.concurrent.ExecutionContext
 class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
 
   val audit = mock[Audit]
-  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 

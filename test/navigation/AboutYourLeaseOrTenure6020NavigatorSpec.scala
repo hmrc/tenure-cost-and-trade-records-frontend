@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import utils.TestBaseSpec
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, PropertyUpdates, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentIncludeTradeServicesInformationDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, PropertyUpdates, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleOutsideRepairs}
 import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, OutsideRepairsLandlord}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -32,7 +32,7 @@ import scala.concurrent.ExecutionContext
 class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
   val audit = mock[Audit]
-  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 

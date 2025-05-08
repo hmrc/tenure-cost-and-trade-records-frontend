@@ -120,7 +120,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[0].leisureReceipts" -> "xxx")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[0].leisureReceipts",
         messages("error.additionalMisc.leisureReceipts.range", 2023.toString),
@@ -132,7 +132,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[1].leisureReceipts" -> "")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[1].leisureReceipts",
         messages("error.additionalMisc.leisureReceipts.required", 2022.toString),
@@ -144,7 +144,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[2].leisureReceipts" -> "-1")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[2].leisureReceipts",
         messages("error.additionalMisc.leisureReceipts.negative", 2021.toString),
@@ -156,7 +156,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[0].winterStorageReceipts" -> "xxx")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[0].winterStorageReceipts",
         messages("error.additionalMisc.winterStorageReceipts.range", 2023.toString),
@@ -168,7 +168,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[1].winterStorageReceipts" -> "")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[1].winterStorageReceipts",
         messages("error.additionalMisc.winterStorageReceipts.required", 2022.toString),
@@ -180,7 +180,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[2].winterStorageReceipts" -> "-1")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[2].winterStorageReceipts",
         messages("error.additionalMisc.winterStorageReceipts.negative", 2021.toString),
@@ -192,7 +192,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[0].otherActivitiesReceipts" -> "xxx")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[0].otherActivitiesReceipts",
         messages("error.additionalMisc.otherActivitiesReceipts.range", 2023.toString),
@@ -204,7 +204,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[1].otherActivitiesReceipts" -> "")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[1].otherActivitiesReceipts",
         messages("error.additionalMisc.otherActivitiesReceipts.required", 2022.toString),
@@ -216,7 +216,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[2].otherActivitiesReceipts" -> "-1")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[2].otherActivitiesReceipts",
         messages("error.additionalMisc.otherActivitiesReceipts.negative", 2021.toString),
@@ -227,7 +227,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[0].numberOfVans" -> "xxx")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[0].numberOfVans",
         messages("error.additionalMisc.numberOfVans.nonNumeric", 2023.toString),
@@ -239,7 +239,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[1].numberOfVans" -> "")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[1].numberOfVans",
         messages("error.additionalMisc.numberOfVans.required", 2022.toString),
@@ -251,7 +251,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[2].numberOfVans" -> "-1")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[2].numberOfVans",
         messages("error.additionalMisc.numberOfVans.negative", 2021.toString),
@@ -263,7 +263,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[0].otherServicesReceipts" -> "xxx")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[0].otherServicesReceipts",
         messages("error.additionalMisc.otherServicesReceipts.range", 2023.toString),
@@ -275,7 +275,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[1].otherServicesReceipts" -> "")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[1].otherServicesReceipts",
         messages("error.additionalMisc.otherServicesReceipts.required", 2022.toString),
@@ -287,7 +287,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[2].otherServicesReceipts" -> "-1")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[2].otherServicesReceipts",
         messages("error.additionalMisc.otherServicesReceipts.negative", 2021.toString),
@@ -299,7 +299,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[0].bottledGasReceipts" -> "xxx")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[0].bottledGasReceipts",
         messages("error.additionalMisc.bottledGasReceipts.range", 2023.toString),
@@ -311,7 +311,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[1].bottledGasReceipts" -> "")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[1].bottledGasReceipts",
         messages("error.additionalMisc.bottledGasReceipts.required", 2022.toString),
@@ -323,7 +323,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalMisc.[2].bottledGasReceipts" -> "-1")
 
-      val form = AdditionalMiscForm.additionalMiscForm(years)(messages).bind(formData)
+      val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalMisc.[2].bottledGasReceipts",
         messages("error.additionalMisc.bottledGasReceipts.negative", 2021.toString),

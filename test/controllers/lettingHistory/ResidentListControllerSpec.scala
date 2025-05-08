@@ -49,7 +49,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.performRemove(index = 0)(fakePostRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.ResidentListController.show.url
-        verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, never).saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier])
       }
       "be handling POST /list?hasMoreResidents=yes by replying redirect to the 'Resident Detail' page" in new ControllerFixture {
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
@@ -87,7 +87,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
           status(result) shouldBe BAD_REQUEST
           val page = contentAsJsoup(result)
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
-          verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, never).saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier])
         }
         "be handling confirmation POST /remove?index=0 by actually removing the resident and then replying redirect to the 'Resident List' page" in new ControllerFixture(
           oneResident
@@ -98,7 +98,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.ResidentListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           permanentResidents(data)       shouldBe empty // instead of having size 1
         }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Resident List' page" in new ControllerFixture(
@@ -110,7 +110,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.ResidentListController.show.url
-          verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, never).saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier])
         }
       }
       "and the maximum number of residents has been reached" should {

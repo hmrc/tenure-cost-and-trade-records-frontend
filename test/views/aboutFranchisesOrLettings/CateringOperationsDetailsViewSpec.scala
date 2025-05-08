@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm
 import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.BusinessDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -40,7 +39,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[BusinessD
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[BusinessDetails]) =>
     cateringOperationDetailsView(
@@ -51,7 +50,7 @@ class CateringOperationsDetailsViewSpec extends QuestionViewBehaviours[BusinessD
       controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   "Catering operation details view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.FinancialYearEndDatesForm.financialYearEndDatesForm
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -33,12 +32,12 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
 
   private val finYears = Seq(today, today.minusYears(1), today.minusYears(2)).map(_.getYear)
 
-  override val form: Form[Seq[LocalDate]] = financialYearEndDatesForm()(messages)
+  override val form: Form[Seq[LocalDate]] = financialYearEndDatesForm()(using messages)
 
-  def createView: () => Html = () => financialYearEndDatesView(form, finYears)(sessionRequest, messages)
+  def createView: () => Html = () => financialYearEndDatesView(form, finYears)(using sessionRequest, messages)
 
   def createViewUsingForm: Form[Seq[LocalDate]] => Html =
-    financialYearEndDatesView(_, finYears)(sessionRequest, messages)
+    financialYearEndDatesView(_, finYears)(using sessionRequest, messages)
 
   "financialYearEndDates view" must {
 

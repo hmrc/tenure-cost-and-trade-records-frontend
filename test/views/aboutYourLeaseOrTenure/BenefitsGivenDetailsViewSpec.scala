@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ class BenefitsGivenDetailsViewSpec extends QuestionViewBehaviours[BenefitsGivenD
 
   override val form = benefitsGivenDetailsForm
 
-  def createView = () => benefitsGivenDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => benefitsGivenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[BenefitsGivenDetails]) =>
-    benefitsGivenDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    benefitsGivenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Benefits given details view" should {
 

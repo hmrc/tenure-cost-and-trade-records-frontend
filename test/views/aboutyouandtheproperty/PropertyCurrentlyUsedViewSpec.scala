@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -31,10 +30,10 @@ class PropertyCurrentlyUsedViewSpec extends QuestionViewBehaviours[PropertyCurre
   override val form: Form[PropertyCurrentlyUsed] = propertyCurrentlyUsedForm
 
   def createView: () => Html = () =>
-    propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(fakeRequest, messages)
+    propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(using fakeRequest, messages)
 
   def createViewUsingForm: Form[PropertyCurrentlyUsed] => Html = (form: Form[PropertyCurrentlyUsed]) =>
-    propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(fakeRequest, messages)
+    propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(using fakeRequest, messages)
 
   "Property currently used view" must {
 

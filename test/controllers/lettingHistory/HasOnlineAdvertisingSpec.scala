@@ -50,7 +50,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value   shouldBe routes.AdvertisingDetailController.show().url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         hasOnlineAdvertising(data).value shouldBe true
       }
     }
@@ -78,7 +78,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           hasOnlineAdvertising(data).value shouldBe true
           onlineAdvertising(data)          shouldBe oneAdvertising
         }
@@ -94,7 +94,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value                                   shouldBe routes.CheckYourAnswersLettingHistoryController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           hasOnlineAdvertising(data).value                                 shouldBe false
           onlineAdvertising(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "onlineAdvertising", data.getValue) shouldBe None
@@ -111,7 +111,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           hasOnlineAdvertising(data).value shouldBe true
           onlineAdvertising(data)            should have size 5
         }

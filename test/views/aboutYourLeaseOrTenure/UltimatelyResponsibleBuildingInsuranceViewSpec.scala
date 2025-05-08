@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.UltimatelyResponsibleIBuildingInsuranceForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsurance
 import models.submissions.common._
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -31,10 +30,11 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec
 
   override val form = UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
 
-  def createView = () => ultimatelyResponsibleBuildingInsuranceView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    ultimatelyResponsibleBuildingInsuranceView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[UltimatelyResponsibleBuildingInsurance]) =>
-    ultimatelyResponsibleBuildingInsuranceView(form, Summary("99996010001"))(fakeRequest, messages)
+    ultimatelyResponsibleBuildingInsuranceView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Ultimately responsible view" must {
 

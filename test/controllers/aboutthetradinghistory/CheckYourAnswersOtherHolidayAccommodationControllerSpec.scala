@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
   val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockTaskListView                    = mock[taskList]
   val sessionRequest                      = SessionRequest(aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes, fakeRequest)
-  when(mockTaskListView()(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 
   def checkYourAnswersOtherHolidayAccommodationController(
     aboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045

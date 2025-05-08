@@ -122,7 +122,7 @@ object MappingSupport {
   val currency: Mapping[BigDecimal] = currencyMapping()
 
   def createYesNoType(errorMessage: String): Mapping[AnswersYesNo] =
-    Forms.of[AnswersYesNo](answersYesNoDefFormat(errorMessage))
+    Forms.of[AnswersYesNo](using answersYesNoDefFormat(errorMessage))
 
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
     .verifying(nonEmpty(errorMessage = Errors.annualRentExcludingVAT + fieldErrorPart))

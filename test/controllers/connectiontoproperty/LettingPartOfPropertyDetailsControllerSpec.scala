@@ -103,7 +103,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         redirectLocation(result).value shouldBe "/on-ramp"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
         val captured = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
@@ -126,7 +126,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         redirectLocation(result).value shouldBe "/on-ramp"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
         val captured = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
@@ -146,11 +146,11 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         redirectLocation(result).value shouldBe routes.LettingPartOfPropertyDetailsRentController.show(0).url
 
         val id = captor[String]
-        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
         id.getValue shouldBe "confirmedAddress"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any, any)
+        verify(repository, once).saveOrUpdate(session)(using any, any)
         val captured = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
@@ -184,7 +184,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
   ) extends MockAddressLookup:
     val audit      = mock[Audit]
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
 
     val controller = new LettingPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),

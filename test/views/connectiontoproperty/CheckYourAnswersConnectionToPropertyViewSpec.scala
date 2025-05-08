@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm
 import models.pages.Summary
 import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
@@ -39,11 +38,11 @@ class CheckYourAnswersConnectionToPropertyViewSpec
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
 
   def createView: () => Html = () =>
-    checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+    checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm: Form[CheckYourAnswersConnectionToProperty] => Html =
     (form: Form[CheckYourAnswersConnectionToProperty]) =>
-      checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+      checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Check Your Answers Connection To Property view" must {
 

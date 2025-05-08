@@ -48,17 +48,17 @@ class DateUtilLocalisedSpec extends TestBaseSpec:
 
   "DateUtilLocalised" should {
     "format LocalDate" in {
-      dateUtilLocalised.formatDate(testDate)                                       shouldBe dateEN
-      dateUtilLocalised.formatDate(testDate)(messagesForLocale(en))                shouldBe dateEN
-      dateUtilLocalised.formatDate(testDate)(messagesForLocale(cy))                shouldBe dateCY
-      dateUtilLocalised.formatDate(testDate)(messagesForLocale(uk))                shouldBe dateEN
-      dateUtilLocalised.formatDate(testDate)(messagesForLocale(unavailableLocale)) shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)                                             shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)(using messagesForLocale(en))                shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)(using messagesForLocale(cy))                shouldBe dateCY
+      dateUtilLocalised.formatDate(testDate)(using messagesForLocale(uk))                shouldBe dateEN
+      dateUtilLocalised.formatDate(testDate)(using messagesForLocale(unavailableLocale)) shouldBe dateEN
     }
 
     "format LocalDate using month abbreviation by .formatDayMonthAbbrYear" in {
-      dateUtilLocalised.formatDayMonthAbbrYear(testDate)                        shouldBe dateMonthAbbrEN
-      dateUtilLocalised.formatDayMonthAbbrYear(testDate)(messagesForLocale(en)) shouldBe dateMonthAbbrEN
-      dateUtilLocalised.formatDayMonthAbbrYear(testDate)(messagesForLocale(cy)) shouldBe dateMonthAbbrCY
-      dateUtilLocalised.formatDayMonthAbbrYear(testDate)(messagesForLocale(uk)) shouldBe dateMonthAbbrEN
+      dateUtilLocalised.formatDayMonthAbbrYear(testDate)                              shouldBe dateMonthAbbrEN
+      dateUtilLocalised.formatDayMonthAbbrYear(testDate)(using messagesForLocale(en)) shouldBe dateMonthAbbrEN
+      dateUtilLocalised.formatDayMonthAbbrYear(testDate)(using messagesForLocale(cy)) shouldBe dateMonthAbbrCY
+      dateUtilLocalised.formatDayMonthAbbrYear(testDate)(using messagesForLocale(uk)) shouldBe dateMonthAbbrEN
     }
   }

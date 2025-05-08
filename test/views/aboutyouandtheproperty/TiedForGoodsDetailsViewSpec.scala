@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty._
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -30,11 +29,11 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
 
   override val form: Form[TiedForGoodsInformationDetails] = TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 
-  def createView: () => Html = () => tiedForGoodsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () => tiedForGoodsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[TiedForGoodsInformationDetails] => Html =
     (form: Form[TiedForGoodsInformationDetails]) =>
-      tiedForGoodsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+      tiedForGoodsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tied for goods details view" must {
 

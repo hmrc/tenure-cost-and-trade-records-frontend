@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +32,11 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetai
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
 
-  def createView: () => Html = () => contactDetailsQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    contactDetailsQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[ContactDetailsQuestion] => Html = (form: Form[ContactDetailsQuestion]) =>
-    contactDetailsQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
+    contactDetailsQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Contact details question view" should {
 

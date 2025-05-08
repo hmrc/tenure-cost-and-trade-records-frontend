@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,9 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
 
   override val form = LoginController.loginForm
 
-  def createView = () => login(form)(fakeRequest, messages)
+  def createView = () => login(form)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(fakeRequest, messages)
+  def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
 
   "Login view" must {
 

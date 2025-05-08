@@ -50,7 +50,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         val result  = controller.submit(None)(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         onlineAdvertising(data)          should have size 1
         onlineAdvertising(data)(0)     shouldBe AdvertisingDetail(
           websiteAddress = "123.uk",
@@ -82,7 +82,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           val result  = controller.submit(None)(request)
           status(result)                                     shouldBe SEE_OTHER
           redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           onlineAdvertising(data)                              should have size 2 // instead of 1
           onlineAdvertising(data)(0)                         shouldBe oneAdvertising.head
           onlineAdvertising(data)(1).websiteAddress          shouldBe "test.pl"
@@ -98,7 +98,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           val result  = controller.submit(None)(request)
           status(result)                                     shouldBe SEE_OTHER
           redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
           onlineAdvertising(data)                              should have size 3
           onlineAdvertising(data)(0)                         shouldBe oneAdvertising.head
           onlineAdvertising(data)(1).websiteAddress          shouldBe "456.com"

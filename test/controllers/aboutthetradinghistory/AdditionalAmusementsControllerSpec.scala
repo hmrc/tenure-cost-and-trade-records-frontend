@@ -112,7 +112,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalAmusements[0].receipts" -> "xxx")
 
-      val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(messages).bind(formData)
+      val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalAmusements[0].receipts",
         messages("error.additionalAmusements.receipts.range", "2023"),
@@ -124,7 +124,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalAmusements[1].receipts" -> "")
 
-      val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(messages).bind(formData)
+      val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalAmusements[1].receipts",
         messages("error.additionalAmusements.receipts.required", "2022"),
@@ -136,7 +136,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalAmusements[2].receipts" -> "-1")
 
-      val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(messages).bind(formData)
+      val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalAmusements[2].receipts",
         messages("error.additionalAmusements.receipts.negative", "2021"),

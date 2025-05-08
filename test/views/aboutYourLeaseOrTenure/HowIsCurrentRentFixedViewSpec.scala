@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.{CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, CurrentRentFixedRenewalLeaseTenancy, CurrentRentFixedRentReview, CurrentRentFixedSaleLeaseback, HowIsCurrentRentFixed}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
@@ -32,16 +31,16 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
   val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(prefilledFull6020Session, fakeRequest)
 
-  override val form = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(messages)
+  override val form = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(using messages)
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
 
-  def createView     = () => howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView     = () => howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
   def createView6020 = () =>
-    howIsCurrentRentFixedView(form, backLink, Summary("99996020001"))(sessionRequest6020full, messages)
+    howIsCurrentRentFixedView(form, backLink, Summary("99996020001"))(using sessionRequest6020full, messages)
 
   def createViewUsingForm = (form: Form[HowIsCurrentRentFixed]) =>
-    howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "How is current rennt fixed view" must {
 

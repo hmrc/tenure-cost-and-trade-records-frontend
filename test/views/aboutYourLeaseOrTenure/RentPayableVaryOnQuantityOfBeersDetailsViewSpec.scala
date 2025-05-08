@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersInformationDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -31,10 +30,10 @@ class RentPayableVaryOnQuantityOfBeersDetailsViewSpec
   override val form = RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 
   def createView = () =>
-    rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentPayableVaryOnQuantityOfBeersInformationDetails]) =>
-    rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent payable vary on quantity of beer detail view" must {
 

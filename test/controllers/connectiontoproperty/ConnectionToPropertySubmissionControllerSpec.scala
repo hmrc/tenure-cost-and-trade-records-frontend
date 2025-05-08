@@ -52,7 +52,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
 
     "submission is successful" should {
       "redirect (HTTP 303)" in {
-        when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
+        when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
           .thenReturn(Future.successful(HttpResponse(CREATED)))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)
         status(result) shouldBe Status.SEE_OTHER
@@ -61,9 +61,9 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
 
     "submission fails" should {
       "return InternalServerError" in {
-        when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
+        when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
           .thenReturn(Future.failed(new RuntimeException("Test error")))
-        when(errorHandler.internalServerErrorTemplate(org.mockito.ArgumentMatchers.any(classOf[Request[?]])))
+        when(errorHandler.internalServerErrorTemplate(using org.mockito.ArgumentMatchers.any(classOf[Request[?]])))
           .thenReturn(Future.successful(Html("Some Error Message")))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)
         status(result) shouldBe Status.INTERNAL_SERVER_ERROR

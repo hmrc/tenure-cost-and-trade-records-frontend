@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,8 @@ package controllers.aboutthetradinghistory
 
 import actions.WithSessionRefiner
 import connectors.Audit
-import controllers.aboutthetradinghistory
-import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage
 import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage.TwinCaravansSublet
-import models.submissions.aboutthetradinghistory.{Caravans, CaravansTrading6045, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{CaravansTrading6045, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.MessagesControllerComponents
 import repositories.SessionRepo

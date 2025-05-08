@@ -17,7 +17,6 @@
 package navigation.lettingHistory
 
 import controllers.lettingHistory.routes
-import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.identifiers.*
 

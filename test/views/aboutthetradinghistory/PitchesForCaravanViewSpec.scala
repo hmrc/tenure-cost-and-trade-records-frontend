@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,12 +28,12 @@ class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[TentingPitche
   val sessionRequest   = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   val form: Form[Seq[TentingPitchesTradingData]] =
-    tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(messages)
+    tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => pitchesForCaravansView(form, "")(sessionRequest, messages)
+  def createView = () => pitchesForCaravansView(form, "")(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[TentingPitchesTradingData]]) =>
-    pitchesForCaravansView(form, "")(sessionRequest, messages)
+    pitchesForCaravansView(form, "")(using sessionRequest, messages)
 
   "pitches for caravans view" should {
 

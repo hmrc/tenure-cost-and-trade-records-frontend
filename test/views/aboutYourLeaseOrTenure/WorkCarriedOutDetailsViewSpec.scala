@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[WorkCarriedOu
 
   override val form = WorkCarriedOutDetailsForm.workCarriedOutDetailsForm
 
-  def createView = () => workCarriedOutDetailsView(form, Summary("99996020001"))(fakeRequest, messages)
+  def createView = () => workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[WorkCarriedOutDetails]) =>
-    workCarriedOutDetailsView(form, Summary("99996020001"))(fakeRequest, messages)
+    workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
 
   "Work carried out details details" must {
 

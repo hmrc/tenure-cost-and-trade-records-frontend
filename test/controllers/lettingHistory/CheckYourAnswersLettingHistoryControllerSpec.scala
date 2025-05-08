@@ -85,7 +85,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
           .show()
           .withFragment("letting-history")
           .toString
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         sectionCompleted(data).value   shouldBe true
       }
     }

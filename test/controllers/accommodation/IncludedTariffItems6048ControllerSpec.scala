@@ -39,7 +39,7 @@ class IncludedTariffItems6048ControllerSpec extends TestBaseSpec {
       ),
       mockSessionRepo,
       stubMessagesControllerComponents()
-    )(inject[ExecutionContext])
+    )(using inject[ExecutionContext])
 
   private def validFormData: Seq[(String, String)] =
     Seq(

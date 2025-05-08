@@ -58,7 +58,7 @@ trait MaxOfLettingsReachedControllerBehaviours:
       val anyHeaderCarrier          = any[HeaderCarrier]
       val anyRequest                = any[Request[AnyContent]]
       val stubSessionToCallFunction = (_: Session) => Call("GET", "url")
-      when(navigator.nextPage(anyIdentifier, anySession)(anyHeaderCarrier, anyRequest))
+      when(navigator.nextPage(anyIdentifier, anySession)(using anyHeaderCarrier, anyRequest))
         .thenReturn(stubSessionToCallFunction)
       val request                   = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
       val result                    = controller.submit(Some(src))(request)

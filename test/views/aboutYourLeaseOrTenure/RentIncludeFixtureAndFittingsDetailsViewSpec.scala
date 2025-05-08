@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingDetailsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,12 +27,13 @@ class RentIncludeFixtureAndFittingsDetailsViewSpec
 
   val messageKeyPrefix = "rentIncludeFixturesAndFittingsDetails"
 
-  override val form = RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm()(messages)
+  override val form = RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm()(using messages)
 
-  def createView = () => rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeFixturesOrFittingsInformationDetails]) =>
-    rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include fixture and fittings details view" must {
 

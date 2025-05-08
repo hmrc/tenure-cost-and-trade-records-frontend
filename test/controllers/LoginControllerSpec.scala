@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -157,7 +157,9 @@ class LoginControllerSpec extends TestBaseSpec {
     "Audit successful login" in {
 
       val audit = mock[Audit]
-      doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
+      doNothing
+        .when(audit)
+        .sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
       val loginToBackendFunction = (refNum: RefNumber, postcode: Postcode, start: StartTime) => {
         assert(refNum.equals("01234567000"))
@@ -166,7 +168,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
       val loginToBackend = mock[LoginToBackendAction]
       val time           = nowInUK
-      when(loginToBackend.apply(any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
+      when(loginToBackend.apply(using any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
 
       val loginController = new LoginController(
         inject[BackendConnector],
@@ -184,7 +186,7 @@ class LoginControllerSpec extends TestBaseSpec {
       )
 
 //      val fakeRequest = FakeRequest()
-      val response = loginController.verifyLogin("01234567000", "BN12 1AB", time)(fakeRequest)
+      val response = loginController.verifyLogin("01234567000", "BN12 1AB", time)(using fakeRequest)
 
       status(response) shouldBe SEE_OTHER
 
@@ -198,7 +200,7 @@ class LoginControllerSpec extends TestBaseSpec {
             "address"             -> prefilledAddress
           )
         )
-      )(any[HeaderCarrier], any[ExecutionContext])
+      )(using any[HeaderCarrier], any[ExecutionContext])
 
     }
 
@@ -206,7 +208,11 @@ class LoginControllerSpec extends TestBaseSpec {
       val audit = mock[Audit]
       doNothing
         .when(audit)
-        .sendExplicitAudit(any[String], any[UserData])(any[HeaderCarrier], any[ExecutionContext], any[Writes[UserData]])
+        .sendExplicitAudit(any[String], any[UserData])(using
+          any[HeaderCarrier],
+          any[ExecutionContext],
+          any[Writes[UserData]]
+        )
 
       val loginController = new LoginController(
         inject[BackendConnector],
@@ -253,7 +259,7 @@ class LoginControllerSpec extends TestBaseSpec {
             accommodationDetails = None
           )
         )
-      )(
+      )(using
         any[HeaderCarrier],
         any[ExecutionContext],
         any[Writes[UserData]]

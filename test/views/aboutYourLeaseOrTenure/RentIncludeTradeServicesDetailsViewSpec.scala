@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,12 +27,12 @@ class RentIncludeTradeServicesDetailsViewSpec
 
   val messageKeyPrefix = "rentIncludeTradeServicesDetails"
 
-  override val form = RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm()(messages)
+  override val form = RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm()(using messages)
 
-  def createView = () => rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeTradeServicesInformationDetails]) =>
-    rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include trade services details" must {
 

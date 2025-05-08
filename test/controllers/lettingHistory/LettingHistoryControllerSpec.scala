@@ -109,7 +109,8 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   trait MockRepositoryFixture:
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
   trait SessionCapturingFixture:
     given argumentCaptorToSession: Conversion[ArgumentCaptor[Session], Session] with

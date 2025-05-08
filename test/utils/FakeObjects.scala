@@ -32,7 +32,7 @@ import models.submissions.ReferenceNumber
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
-import models.{AnnualRent, ForType, Session, SubmissionDraft}
+import models.{AnnualRent, Session, SubmissionDraft}
 
 import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}

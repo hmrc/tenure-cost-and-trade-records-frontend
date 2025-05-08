@@ -105,7 +105,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         val updatedCateringOperationDetails =
           data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
@@ -150,7 +150,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
         val updatedCateringOperationDetails =
           data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
@@ -168,7 +168,8 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
   ):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new CateringOperationDetailsController(

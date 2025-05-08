@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,10 +56,11 @@ class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
-  def createView = () => incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(sessionRequest, messages)
+  def createView = () =>
+    incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(sessionRequest, messages)
+    incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(using sessionRequest, messages)
 
   "income and expenditure summary view" should {
 

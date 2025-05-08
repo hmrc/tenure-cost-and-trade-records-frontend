@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.IntervalsOfRentReviewForm
 import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -27,14 +26,14 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
 
   val messageKeyPrefix = "intervalsOfRentReview"
 
-  override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(messages)
+  override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(using messages)
 
   val sessionRequest = SessionRequest(stillConnectedDetails6011YesSession, fakeRequest)
 
-  def createView = () => intervalsOfRentReviewView(form)(sessionRequest, messages)
+  def createView = () => intervalsOfRentReviewView(form)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[IntervalsOfRentReview]) =>
-    intervalsOfRentReviewView(form)(sessionRequest, messages)
+    intervalsOfRentReviewView(form)(using sessionRequest, messages)
 
   "Intervals of rent reviews view" must {
 

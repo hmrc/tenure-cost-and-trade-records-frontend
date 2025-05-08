@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,7 +149,7 @@ class LoginController @Inject() (
 
     logger.debug(s"Signing in with: reference number : $cleanedRefNumber, postcode: $cleanPostcode")
 
-    loginToBackend(hc, ec)(cleanedRefNumber, cleanPostcode, startTime)
+    loginToBackend(using hc, ec)(cleanedRefNumber, cleanPostcode, startTime)
       .flatMap { case NoExistingDocument(token, forNum, address, isWelsh) =>
         auditLogin(referenceNumber, false, address, forNum)
         ForType.find(forNum) match {

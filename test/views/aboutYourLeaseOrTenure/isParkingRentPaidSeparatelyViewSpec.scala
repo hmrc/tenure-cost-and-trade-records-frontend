@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -33,10 +32,10 @@ class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[Answers
   val backLink: String = controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url
 
   def createView: () => Html = () =>
-    isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "isParkingRentPaidSeparately view" must {
 

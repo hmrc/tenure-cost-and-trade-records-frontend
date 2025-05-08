@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutyouandtheproperty.AboutThePropertyForm
 import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty._
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -34,16 +33,16 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
   override val form: Form[PropertyDetails] = AboutThePropertyForm.aboutThePropertyForm
 
   def createView: () => Html = () =>
-    aboutThePropertyView(form, FOR6010, Summary("99996010001"), backLink)(fakeRequest, messages)
+    aboutThePropertyView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
-    aboutThePropertyView(form, FOR6010, Summary("99996010001"), backLink)(fakeRequest, messages)
+    aboutThePropertyView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   def createView6015: () => Html = () =>
-    aboutThePropertyView(form, FOR6015, Summary("99996010001"), backLink)(fakeRequest, messages)
+    aboutThePropertyView(form, FOR6015, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   def createViewUsingForm6015: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
-    aboutThePropertyView(form, FOR6015, Summary("99996010001"), backLink)(fakeRequest, messages)
+    aboutThePropertyView(form, FOR6015, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "About the property view" must {
 

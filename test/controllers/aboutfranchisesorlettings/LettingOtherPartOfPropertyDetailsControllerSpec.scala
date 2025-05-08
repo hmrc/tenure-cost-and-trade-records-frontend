@@ -21,7 +21,6 @@ import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress}
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import utils.JsoupHelpers.*
 import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
@@ -90,7 +89,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with 
         redirectLocation(result).value shouldBe "/on-ramp"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
         val captured = session.getValue
 
         captured.aboutFranchisesOrLettings.value.lettingSections.size shouldBe 2
@@ -112,7 +111,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with 
         redirectLocation(result).value shouldBe "/on-ramp"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
         val captured = session.getValue
 
         captured.aboutFranchisesOrLettings.value.lettingSections.size shouldBe 1
@@ -131,7 +130,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with 
         redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any, any)
+        verify(repository, once).saveOrUpdate(session)(using any, any)
         val captured = session.getValue
 
         captured.aboutFranchisesOrLettings.value.lettingSections.size shouldBe 1
@@ -154,7 +153,7 @@ class LettingOtherPartOfPropertyDetailsControllerSpec extends TestBaseSpec with 
   ) extends MockAddressLookup:
     val audit      = mock[Audit]
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
 
     val controller =
       new LettingOtherPartOfPropertyDetailsController(
