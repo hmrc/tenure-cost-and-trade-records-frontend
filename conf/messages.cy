@@ -387,6 +387,8 @@ guidance.sections.FOR6010.aboutFranchiseOrLettings.li3 = correspondence details 
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li4 = how much rent you receive
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li5 = whether any rates, property insurance and inside or outside repairs are included in the rent
 
+guidance.sections.FOR6045.aboutFranchiseOrLettings.li2 = letting other parts of the property, such as advertising billboards, car parking or phone masts
+
 guidance.sections.FOR6015.tradingHistory.li4 = <b>Turnover</b><br/>Any income from providing accommodation, food, drinks, and other services such as function room hire and leisure activities. Also include any income from any concession or franchise such as restaurants, or any lettings such as phone masts.
 guidance.sections.FOR6015.tradingHistory.li5 = <b>Cost of Sales</b><br/>Expenses incurred from providing accommodation, food, drinks, and other services such as function room hire and leisure activities.
 guidance.sections.FOR6015.tradingHistory.li6 = <b>Payroll costs</b><br/>Including any director’s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
