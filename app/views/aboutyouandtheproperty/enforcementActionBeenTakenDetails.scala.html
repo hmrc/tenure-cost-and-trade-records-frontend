@@ -18,11 +18,12 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
-  govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
   govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
@@ -41,19 +42,16 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.submit()) {
 
-    @govukCharacterCount(
-      CharacterCount(
-        id = "enforcementActionHasBeenTakenDetails",
-        name = "enforcementActionHasBeenTakenDetails",
-        maxLength = 200,
-        label = Label(
-          content = Text(messages("enforcementActionHasBeenTakenDetails.heading")),
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          theForm,
+          "enforcementActionHasBeenTakenDetails",
+          "enforcementActionHasBeenTakenDetails.heading",
           classes = "govuk-label--l",
-          isPageHeading = true
-        ),
-        errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionHasBeenTakenDetails"),
-      ).withFormField(theForm("enforcementActionHasBeenTakenDetails"))
-    )
+          isPageHeading = true,
+          charCount = 2000
+      )
+
 
     @govukDetails(Details(
       summary = Text(messages("help.enforcementActionHasBeenTakenDetails.title")),

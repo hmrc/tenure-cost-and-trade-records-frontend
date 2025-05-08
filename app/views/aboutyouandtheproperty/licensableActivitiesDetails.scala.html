@@ -19,10 +19,12 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.pages.Summary
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+
 
 @this(layout: Layout,
   govukButton: GovukButton,
-  govukCharacterCount: GovukCharacterCount,
+  hmrcCharacterCount: HmrcCharacterCount,
   govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
@@ -41,19 +43,15 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.submit()) {
 
-    @govukCharacterCount(
-      CharacterCount(
-        id = "licensableActivitiesDetails",
-        name = "licensableActivitiesDetails",
-        maxLength = 200,
-        label = Label(
-          content = Text(messages("licensableActivitiesDetails.heading")),
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          theForm,
+          "licensableActivitiesDetails",
+          "licensableActivitiesDetails.heading",
           classes = "govuk-label--l",
-          isPageHeading = true
-        ),
-        errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivitiesDetails"),
-      ).withFormField(theForm("licensableActivitiesDetails"))
-    )
+          isPageHeading = true,
+          charCount = 2000
+      )
 
     @govukDetails(Details(
       summary = Text(messages("help.licensableActivitiesDetails.title")),

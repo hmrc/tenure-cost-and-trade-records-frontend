@@ -361,6 +361,11 @@ guidance.sections.FOR6020.tradingHistory.p4 = When:
 guidance.sections.FOR6020.tradingHistory.li10 = you first occupied the property – we only need the month and year
 guidance.sections.FOR6020.tradingHistory.li11 = your financial year ends
 
+guidance.sections.FOR6045.tradingHistory.li4 = <b>Static caravans</b><br/>Declare any income from fleet hire of vans owned by the operator or those sublet on behalf of private owners. You’ll also be asked about the age of your vans and services you provide.
+guidance.sections.FOR6045.tradingHistory.li5 = <b>Income from other holiday accommodation</b><br/>Including chalets, log cabins, lodges, bungalows, flats, houses or similar holiday letting units.
+guidance.sections.FOR6045.tradingHistory.li6 = <b>Income from touring and tenting pitches</b><br/>Including pitches for caravans, motorhomes, tents, rally areas, or glamping pitches for pre-erected or mobile structures like yurts, tipis or shepherd's huts.
+guidance.sections.FOR6045.tradingHistory.li7 = <b>Trading figures from other activities</b><br/>Including shops, catering, bars and clubs, and amusements.
+
 guidance.sections.FOR6010.tradingHistory.li4 = <b>Drinks</b><br/>Any income from alcoholic and soft drinks, crisps and nuts
 guidance.sections.FOR6010.tradingHistory.li5 = <b>Food</b><br/>Any income from serving prepared snacks or meals
 guidance.sections.FOR6010.tradingHistory.li6 = <b>Other receipts</b><br/>Any other income such as admission charges, or the provision of camping pitches
@@ -386,6 +391,8 @@ guidance.sections.FOR6010.aboutFranchiseOrLettings.p1 = If you say you do not re
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li3 = correspondence details of any tenants
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li4 = how much rent you receive
 guidance.sections.FOR6010.aboutFranchiseOrLettings.li5 = whether any rates, property insurance and inside or outside repairs are included in the rent
+
+guidance.sections.FOR6045.aboutFranchiseOrLettings.li2 = letting other parts of the property, such as advertising billboards, car parking or phone masts
 
 guidance.sections.FOR6015.tradingHistory.li4 = <b>Turnover</b><br/>Any income from providing accommodation, food, drinks, and other services such as function room hire and leisure activities. Also include any income from any concession or franchise such as restaurants, or any lettings such as phone masts.
 guidance.sections.FOR6015.tradingHistory.li5 = <b>Cost of Sales</b><br/>Expenses incurred from providing accommodation, food, drinks, and other services such as function room hire and leisure activities.
@@ -827,7 +834,7 @@ help.licensableActivitiesDetails.list.p1 = We start serving alcohol at 9am, Mond
 help.licensableActivitiesDetails.list.p2 = We have a DJ playing until 1am on Fridays and Saturdays
 help.licensableActivitiesDetails.list.p3 = Our hot-breakfast service starts at 4.45am every day
 error.licensableActivitiesDetails.required = You must describe the licensable activities that regularly happen before 10am or after 11:30pm
-error.licensableActivitiesDetails.maxLength = Your description of the licensable activities must be 200 characters or fewer
+error.licensableActivitiesDetails.maxLength = Your description of the licensable activities must be 2000 characters or fewer
 
 # PREMISES LICENCE CONDITIONS
 #############################
@@ -849,7 +856,7 @@ help.premisesLicenseConditionsDetails.list.p1 = No drinks allowed on the terrace
 help.premisesLicenseConditionsDetails.list.p2 = Only 200 people allowed in the function room at any time
 help.premisesLicenseConditionsDetails.list.p3 = No entry or re-entry allowed after 11:30pm on Fridays and Saturdays
 error.premisesLicenseConditionsDetails.required = You must describe the conditions restricting the use of your property
-error.premisesLicenseConditionsDetails.maxLength  = Your description of the conditions restricting the use of your property must be 200 characters or fewer
+error.premisesLicenseConditionsDetails.maxLength  = Your description of the conditions restricting the use of your property must be 2000 characters or fewer
 
 # ENFORCEMENT ACTION BEEN TAKEN
 ##############################£
@@ -870,7 +877,7 @@ help.enforcementActionHasBeenTakenDetails.list.p1 = Every retail sale or supply 
 help.enforcementActionHasBeenTakenDetails.list.p2 = All customer exits must display signs asking customers to leave quietly and have consideration for residents
 help.enforcementActionHasBeenTakenDetails.list.p3 = We are required to keep an incident book
 error.enforcementActionHasBeenTakenDetails.required = You must describe the enforcement action taken
-error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 200 characters of fewer
+error.enforcementActionHasBeenTakenDetails.maxLength  = Your description of the enforcement action taken must be 2000 characters of fewer
 
 # TIED FOR GOODS
 ################
@@ -1180,7 +1187,7 @@ error.rentDevelopedLand.missing = Select yes if the rent payable relates to deve
 ######################
 rentDevelopedLandDetails.heading = Disgrifiwch y dablygiadau sydd wedi’u cynnwys yn y rhent
 error.rentDevelopedLandDetails.required = Enter a description of the developments included in the rent
-error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 1000 characters or fewer
+error.rentDevelopedLandDetails.maxLength = The description of the developments included in the rent should be 2000 characters or fewer
 
 # RENT INCLUDES STRUCTURES BUILDINGS (FORM 6045/46)
 ######################
@@ -1203,7 +1210,7 @@ error.rentPayableVaryOnQuantityOfBeers.missing = Select yes if the rent varies a
 rentPayableVaryOnQuantityOfBeersDetails.heading = Sut mae’r diodydd a gyflenwir i’r eiddo yn effeithio ar y rhent sy’n daladwy?
 hint.rentPayableVaryOnQuantityOfBeersDetails = Er enghraifft, dywedwch wrthym os bydd eich rhent yn newid os yw’r faint a gyflenwir yn fwy na swm penodol.
 error.rentPayableVaryOnQuantityOfBeersDetails.required = Enter a description of how the drinks supplied to your property affect your rent
-error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of how the drinks supplied to your property affect your rent should be 500 characters or fewer
+error.rentPayableVaryOnQuantityOfBeersDetails.maxLength  = The description of how the drinks supplied to your property affect your rent should be 2000 characters or fewer
 
 # RENT PAYABLE VARY ACCORDING TO GROSS OR NET
 ############################################
@@ -1215,7 +1222,7 @@ error.rentPayableVaryAccordingToGrossOrNet.missing = Dewiswch ‘ydy’ os yw’
 rentPayableVaryAccordingToGrossOrNetDetails.heading = Disgrifiwch sut mae’ch trosiant yn effeithio ar y rhent sy’n daladwy
 rentPayableVaryAccordingToGrossOrNetDetails.hint = Er enghraifft, rhowch fanylion unrhyw gyfradd sylfaenol y gallech ei thalu, ynghyd ag unrhyw gynyddrannau canrannol ychwanegol pan fydd eich trosiant yn fwy na throthwyon penodol.
 error.rentPayableVaryAccordingToGrossOrNetDetails.required = Nodwch ddisgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent
-error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = Mae’n rhaid i’r disgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent fod yn 500 o gymeriadau neu lai
+error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength  = Mae’n rhaid i’r disgrifiad o sut mae’ch trosiant yn effeithio ar eich rhent fod yn 2000 o gymeriadau neu lai
 
 # ULTIMATELY RESPONSIBLE
 #######################
@@ -1362,7 +1369,7 @@ error.describeServicesTextArea.required = Please provide details of the services
 error.required.sumIncludedInRent = Please provide a value
 error.invalid_currency.sumIncludedInRent= Please provide a number
 error.describeServices.required = Enter a description of the trade service which you pay for separately
-error.describeServices.maxLength = The description of the trade services must be 500 characters or fewer
+error.describeServices.maxLength = The description of the trade services must be 2000 characters or fewer
 error.rentIncludeTradeServicesDetails.title = Sum included to cover trade services
 
 # RENT INCLUDE FIXTURES AND FITTINGS
@@ -1622,7 +1629,7 @@ error.tenantsAdditionsDisregarded.missing = Dewiswch ‘do’ os cafodd unrhyw y
 tenantsAdditionsDisregardedDetails.heading = Disgrifiwch yr ychwanegiadau neu'r gwelliannau a ddiystyrwyd
 hint.tenantsAdditionsDisregardedDetails = Rhowch ddisgrifiad byr o'r gwaith a wnaed a faint oedd y gost.
 error.tenantsAdditionsDisregardedDetails.required = Nodwch ddisgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru
-error.tenantsAdditionsDisregardedDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 500 o gymeriadau neu lai
+error.tenantsAdditionsDisregardedDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ychwanegiadau neu welliannau a gafodd eu diystyru fod yn 2000 o gymeriadau neu lai
 
 # LEASE SURRENDERED EARLY
 #########################
@@ -1675,7 +1682,7 @@ error.legalOrPlanningRestrictions.missing = Dewiswch ‘do’ os oes unrhyw ffac
 #####################################
 legalOrPlanningRestrictionsDetails.heading = Disgrifiwch y ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
 error.legalOrPlanningRestrictionsDetails.required = Nodwch ddisgrifiad o’r ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
-error.legalOrPlanningRestrictionsDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy fod yn 500 o gymeriadau neu lai
+error.legalOrPlanningRestrictionsDetails.maxLength = Mae’n rhaid i’r disgrifiad o’r ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy fod yn 2000 o gymeriadau neu lai
 
 # ABOUT YOUR TRADING HISTORY
 ##############################
@@ -2874,6 +2881,7 @@ error.incomeExpenditureSummary.required = Select if these figures are correct
 unusualCircumstances.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y ffigurau trosiant ar y dudalen flaenorol
 unusualCircumstancesReceipts.heading = Disgrifiwch unrhyw amgylchiadau anarferol a allai fod wedi effeithio ar y derbyniadau neu nifer yr ymwelwyr ar y dudalen flaenorol
 unusualCircumstances.explain = Esboniwch unrhyw ffigurau anarferol o uchel neu isel yn eich cyfrifon - gadewch hyn yn wag os nad yw’n berthnasol
+error.unusualCircumstances.maxLength = Unusual circumstances that may have affected the turnover figures on the previous page cannot be more than 2000 characters
 
 # NET PROFITS (FORM 6015)
 #########
@@ -3467,7 +3475,7 @@ error.threeYearsConstructed.required = Select yes if the site was constructed in
 #BREAKDOWN OF THE CAPITAL COSTS
 ##############################
 costsBreakdown.heading = Provide a breakdown of the capital cost of the site construction
-costsBreakdown.hint = If you're unable to provide a breakdown, please provide a total
+costsBreakdown.hint = If you''re unable to provide a breakdown, please provide a total
 error.costsBreakdown.maxLength = Description of a breakdown must be 2,000 characters or fewer
 error.costsBreakdown.required = Give details of a breakdown of the capital cost of the site construction
 
@@ -3536,7 +3544,7 @@ hint.connectedToLandlord.6020 = Mae hyn yn cynnwys bod yn gysylltiedig â gwerth
 connectedToLandlordDetails.heading = Disgrifiwch eich perthynas â’r landlord
 error.connectedToLandlord.missing = Dewiswch ‘ydw’ os oes gennych gysylltiad â’r landlord
 error.connectedToLandlordDetails.required = Nodwch ddisgrifiad o’ch perthynas â’r landlord
-error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’ch perthynas â’r landlord fod yn 1,000 o gymeriadau neu lai
+error.connectedToLandlordDetails.maxLength = Mae’n rhaid i’r disgrifiad o’ch perthynas â’r landlord fod yn 2000 o gymeriadau neu lai
 
 # THROUGHPUT AFFECTS RENT
 doesRentVaryToThroughput.heading = A yw’r rhent yn amrywio yn ôl y trwygyrch?
@@ -3832,6 +3840,7 @@ checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails
 checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading = Gwaharddiadau, cyfyngiadau neu gymhellion
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium = Swm cyfalaf wedi’i dalu ar gyfer y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDetails = Capital sum paid details
+checkYourAnswersAboutYourLeaseOrTenure.detailsOfPayment = Details of payment
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumPaid = Taliad wedi’i gael pan ganiatawyd y brydles?
 checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremiumDateInput = When was this sum paid?
 checkYourAnswersAboutYourLeaseOrTenure.receivePaymentWhenLeaseGranted = Taliad wedi’i gael pan ganiatawyd y brydles?

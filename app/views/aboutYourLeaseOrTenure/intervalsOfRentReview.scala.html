@@ -19,11 +19,13 @@
 @import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -49,19 +51,15 @@
 
     <p class="govuk-body">@messages("intervalsOfRentReview.p3")</p>
 
-    @govukCharacterCount(
-      CharacterCount(
-          id = "intervalsOfRentReview",
-          name = "intervalsOfRentReview",
-          maxLength = 2000,
-          hint = Some(Hint(content = Text(messages("hint.intervalsOfRentReview")))),
-          label = Label(
-              content = Text(messages("intervalsOfRentReview.label")),
-              classes = "govuk-label--m"
-          ),
-          errorMessage = form.errors.asTextErrorMessageForField("intervalsOfRentReview"),
-      ).withFormField(form("intervalsOfRentReview"))
-    )
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          form,
+          "intervalsOfRentReview",
+          "intervalsOfRentReview.label",
+          classes = "govuk-label--m",
+        hint = "hint.intervalsOfRentReview",
+          charCount = 2000
+      )
 
     @includes.dateFields(
         form = form,

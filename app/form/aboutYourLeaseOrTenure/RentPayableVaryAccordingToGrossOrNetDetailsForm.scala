@@ -28,7 +28,7 @@ object RentPayableVaryAccordingToGrossOrNetDetailsForm {
       "rentPayableVaryAccordingToGrossOrNetDetails" ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.rentPayableVaryAccordingToGrossOrNetDetails.required"),
-          maxLength(500, "error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength")
+          maxLength(2000, "error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength")
         )
     )(RentPayableVaryAccordingToGrossOrNetInformationDetails.apply)(o => Some(o.rentPayableVaryAccordingToGrossOrNet))
   )

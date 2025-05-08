@@ -17,19 +17,23 @@
 @import actions.SessionRequest
 @import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 @import models.pages.Summary
-@import views.html.answers.answersAboutYourLeaseOrTenure
+@import views.html.answers.{answersAboutYourLeaseOrTenure, answersAboutYourLease6020, answersAboutYourLease6030}
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.ForType.{FOR6020, FOR6030}
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        answersSectionAboutYourLeaseOrTenure: answersAboutYourLeaseOrTenure,
+        answersSection: answersAboutYourLeaseOrTenure,
+        answersSection6020: answersAboutYourLease6020,
+        answersSection6030: answersAboutYourLease6030,
         formWithCSRF: FormWithCSRF
 )
 
-
 @(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
+@forType = @{request.sessionData.forType}
 
     @layout(
         pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
@@ -41,7 +45,14 @@
         theForm = theForm
     ) {
 
-        @answersSectionAboutYourLeaseOrTenure()
+
+    @forType match {
+
+        case FOR6020 => {@answersSection6020()}
+        case FOR6030 => {@answersSection6030()}
+        case _       => {@answersSection()}
+
+        }
 
         @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
 

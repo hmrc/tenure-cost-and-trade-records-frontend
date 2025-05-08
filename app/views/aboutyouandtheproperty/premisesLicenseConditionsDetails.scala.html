@@ -18,11 +18,12 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
-  govukCharacterCount: GovukCharacterCount,
+  hmrcCharacterCount: HmrcCharacterCount,
   govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
@@ -41,19 +42,15 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.submit()) {
 
-    @govukCharacterCount(
-      CharacterCount(
-        id = "premisesLicenseConditionsDetails",
-        name = "premisesLicenseConditionsDetails",
-        maxLength = 200,
-        label = Label(
-          content = Text(messages("premisesLicenseConditionsDetails.heading")),
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          theForm,
+          "premisesLicenseConditionsDetails",
+          "premisesLicenseConditionsDetails.heading",
           classes = "govuk-label--l",
-          isPageHeading = true
-        ),
-        errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseConditionsDetails"),
-      ).withFormField(theForm("premisesLicenseConditionsDetails"))
-    )
+          isPageHeading = true,
+          charCount = 2000
+      )
 
     @govukDetails(Details(
       summary = Text(messages("help.premisesLicenseConditionsDetails.title")),

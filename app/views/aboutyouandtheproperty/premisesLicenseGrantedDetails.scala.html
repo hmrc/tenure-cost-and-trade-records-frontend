@@ -17,11 +17,12 @@
 @import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
-  govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
   govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
@@ -40,19 +41,15 @@
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.submit()) {
 
-    @govukCharacterCount(
-      CharacterCount(
-        id = "premisesLicenseGrantedInformation",
-        name = "premisesLicenseGrantedInformation",
-        maxLength = 2000,
-        label = Label(
-          content = Text(messages("premisesLicenseGrantedInformation.heading")),
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          theForm,
+          "premisesLicenseGrantedInformation",
+          "premisesLicenseGrantedInformation.heading",
           classes = "govuk-label--l",
-          isPageHeading = true
-        ),
-        errorMessage = theForm.errors.asTextErrorMessageForField("premisesLicenseGrantedInformation"),
-      ).withFormField(theForm("premisesLicenseGrantedInformation"))
-    )
+          isPageHeading = true,
+          charCount = 2000
+      )
 
     @govukDetails(Details(
       summary = Text(messages("help.premisesLicenseGrantedInformation.title")),

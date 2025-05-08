@@ -17,11 +17,12 @@
 @import models.submissions.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -30,7 +31,7 @@
 @layout(
   pageHeading = messages("tenantsAdditionsDisregardedDetails.heading"),
   showSection = true,
-    showH1 = false,
+  showH1 = false,
     summary = Some(summary),
   sectionName = messages("label.section.aboutYourLeaseOrTenure"),
   backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url,
@@ -44,17 +45,12 @@
 
       <p class="govuk-body">@messages("hint.tenantsAdditionsDisregardedDetails")</p>
 
-      @govukCharacterCount(
-          CharacterCount(
-              id = "tenantsAdditionsDisregardedDetails",
-              name = "tenantsAdditionsDisregardedDetails",
-              maxLength = 500,
-              label = Label(
-                  classes = "govuk-label--l",
-                  isPageHeading = false
-              ),
-              errorMessage = theForm.errors.asTextErrorMessageForField("tenantsAdditionsDisregardedDetails"),
-          ).withFormField(theForm("tenantsAdditionsDisregardedDetails"))
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          theForm,
+          "tenantsAdditionsDisregardedDetails",
+          classes = "govuk-label--l",
+          charCount = 2000
       )
 
     @includes.continueSaveAsDraftButtons(govukButton)

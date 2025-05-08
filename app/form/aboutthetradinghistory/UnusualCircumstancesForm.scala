@@ -19,12 +19,15 @@ package form.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
+import play.api.data.validation.Constraints.maxLength
 
 object UnusualCircumstancesForm {
 
   val unusualCircumstancesForm = Form(
     mapping(
-      "unusualCircumstances" -> default(text, "")
+      "unusualCircumstances" -> default(text, "").verifying(
+        maxLength(2000, "error.unusualCircumstances.maxLength")
+      )
     )(UnusualCircumstances.apply)(o => Some(o.unusualCircumstances))
   )
 }

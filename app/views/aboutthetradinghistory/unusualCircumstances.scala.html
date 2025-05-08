@@ -23,11 +23,12 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
 )
 
 
@@ -36,6 +37,7 @@
 @heading = @{if(forType.equals(FOR6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") }}
 
 @layout(
+    theForm = theForm,
     pageHeading = heading,
   showSection = true,
     summary = Some(summary),
@@ -46,16 +48,14 @@
     <p class="govuk-body">@messages("unusualCircumstances.explain")</p>
 
   @formWithCSRF(action = controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.submit()) {
-      @govukCharacterCount(
-          CharacterCount(
-              id = "unusualCircumstances",
-              name = "unusualCircumstances",
-              maxLength = 2000,
-              label = Label(
-                  classes = "govuk-label--l",
-                  isPageHeading = true
-              ),
-          ).withFormField(theForm("unusualCircumstances"))
+
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          theForm,
+          "unusualCircumstances",
+          classes = "govuk-label--l",
+          isPageHeading = true,
+          charCount = 2000
       )
 
       @includes.continueSaveAsDraftButtons(govukButton)

@@ -16,11 +16,12 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -38,18 +39,14 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.submit()) {
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "rentDevelopedLandDetails",
-    name = "rentDevelopedLandDetails",
-    maxLength = 1000,
-    label = Label(
-     content = Text(messages("rentDevelopedLandDetails.heading")),
-     classes = "govuk-label--l",
-     isPageHeading = true
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("rentDevelopedLandDetails"),
-   ).withFormField(theForm("rentDevelopedLandDetails"))
+  @includes.textInputHMRCCharCount(
+   hmrcCharacterCount,
+   theForm,
+   "rentDevelopedLandDetails",
+   "rentDevelopedLandDetails.heading",
+   classes = "govuk-label--l",
+   isPageHeading = true,
+   charCount = 2000
   )
 
   @includes.continueSaveAsDraftButtons(govukButton)

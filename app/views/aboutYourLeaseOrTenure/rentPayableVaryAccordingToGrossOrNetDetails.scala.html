@@ -19,10 +19,11 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @this(layout: Layout,
         govukButton: GovukButton,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -40,15 +41,17 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()) {
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "rentPayableVaryAccordingToGrossOrNetDetails",
-    name = "rentPayableVaryAccordingToGrossOrNetDetails",
-    maxLength = 500,
-    hint = Hint(content = Text(messages("rentPayableVaryAccordingToGrossOrNetDetails.hint"))),
-    errorMessage = theForm.errors.asTextErrorMessageForField("rentPayableVaryAccordingToGrossOrNetDetails"),
-   ).withFormField(theForm("rentPayableVaryAccordingToGrossOrNetDetails"))
+  @includes.textInputHMRCCharCount(
+   hmrcCharacterCount,
+   theForm,
+   "rentPayableVaryAccordingToGrossOrNetDetails",
+   classes = "govuk-label--l",
+   isPageHeading = true,
+    hint = "rentPayableVaryAccordingToGrossOrNetDetails.hint",
+   charCount = 2000
   )
+
+
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
