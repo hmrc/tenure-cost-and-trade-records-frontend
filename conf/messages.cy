@@ -4026,6 +4026,7 @@ confirmation.heading = Declaration sent successfully
 confirmation.emailConfirm = We have sent you a confirmation email
 confirmation.saveCopyOfAnswers = This is your only chance to save a copy of your answers (print or PDF download)
 confirmation.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point.
+confirmation.youWillNotBeAble = You will not be able to:
 confirmation.unableToRetrieveAnswers.list.1 = retrieve your answers once you leave this page
 confirmation.unableToRetrieveAnswers.list.2 = access your answers from the confirmation email
 confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office Agency (VOA)
@@ -4033,8 +4034,8 @@ confirmation.businessRatesBill = Your business rates bill
 confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
 confirmation.businessRatesBill.list.2 = Our <a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
 confirmation.whatNext = What happens next
-confirmation.list.1 = We have sent your declaration to the Valuation Office Agency.
-confirmation.list.2 = They may need to contact you for further information.
+confirmation.list.1 = We have sent your declaration to the VOA. They may need to contact you to check some of the details.
+confirmation.list.2 = The VOA use the information provide to set rateable values for businesses in England and Wales. Your local council uses these rateable values to calculate your business rates bill.
 print.link.cantPrintLater=This is your only chance to
 print.link= save a copy of your answers
 print.printOrPdf = (print or PDF download)
@@ -4118,6 +4119,13 @@ feedback.rating.required=Select how satisfied you are with this service
 feedback.comments.maxLength=Comments must be 2000 characters or fewer
 confirmation.feedback.subheading=How did you feel about this service?
 confirmation.feedback.title=Feedback
+
+feedback.backToLogin = Start a new declaration
+feedback.thankyou.related = Related content
+feedback.link1 = Business rates
+feedback.link2 = Find a business rates valuation
+feedback.link3 = Business rates relief
+feedback.link4 = Contact your council about business rates bill
 
 # Errors
 ########
