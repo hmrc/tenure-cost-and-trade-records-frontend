@@ -32,10 +32,10 @@ object TurnoverForm6020 {
   private def columnMapping(year: String)(implicit messages: Messages): Mapping[TurnoverSection6020] = mapping(
     "financial-year-end" -> ignored(LocalDate.EPOCH),
     "shop"               -> turnoverSalesMappingWithYear("turnover.6020.shop", year),
-    "lottery"            -> turnoverSalesMappingWithYear("turnover.6020.lottery", year),
-    "payPointOrZone"     -> turnoverSalesMappingWithYear("turnover.6020.payPointOrZone", year),
     "carWash"            -> turnoverSalesMappingWithYear("turnover.6020.carWash", year),
     "jetWash"            -> turnoverSalesMappingWithYear("turnover.6020.jetWash", year),
+    "lottery"            -> turnoverSalesMappingWithYear("turnover.6020.lottery", year),
+    "payPointOrZone"     -> turnoverSalesMappingWithYear("turnover.6020.payPointOrZone", year),
     "otherIncome"        -> turnoverSalesMappingWithYear("turnover.6020.otherIncome", year)
   )(TurnoverSection6020.apply)(o => Some(Tuple.fromProductTyped(o)))
 
