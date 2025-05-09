@@ -62,6 +62,13 @@
 
     @includes.printConfirmation()
 
+    <p class="govuk-body">@messages("confirmation.youWillNotBeAble")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("confirmation.unableToRetrieveAnswers.list.1")</li>
+        <li>@messages("confirmation.unableToRetrieveAnswers.list.2")</li>
+        <li>@messages("confirmation.unableToRetrieveAnswers.list.3")</li>
+    </ul>
+
 
     <div class="govuk-!-display-none-print">
         <p class="govuk-body">@messages("confirmation.unableToRetrieveAnswers")</p>

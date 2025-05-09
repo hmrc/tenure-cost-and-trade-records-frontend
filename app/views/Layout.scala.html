@@ -65,74 +65,74 @@
 )(contentBlock: Html)(implicit request: Request[?], messages: Messages)
 
 @headerBlock ={
-  @hmrcStandardHeader(
-      serviceName = Some(messages("site.service_name")),
-      serviceUrl= Some(routes.Application.index.url)
-  )
+@hmrcStandardHeader(
+    serviceName = Some(messages("site.service_name")),
+    serviceUrl= Some(routes.Application.index.url)
+)
 }
 @beforeBLock = {
-    @if(showFeedback) {
-        @govukPhaseBanner(
-            PhaseBanner(
-                classes = "no-print",
-                tag = Option(Tag(Text(messages("phase.beta")))),
-                content = HtmlContent(messages("phase.text", s"${routes.FeedbackController.feedback.url}"))
-            )
-            )
-    }
-
-    @if(showAccountInfo && summary.isDefined){
-        @views.html.includes.account_info_header(summary.get)
-    }
-
-    @hmrcLanguageSelectHelper()
-
-    @backLinkUrl.map{ url =>
-        <div>@govukBackLink(
-            BackLink(
-                href = url
-            )
+@if(showFeedback) {
+    @govukPhaseBanner(
+        PhaseBanner(
+            classes = "no-print",
+            tag = Option(Tag(Text(messages("phase.beta")))),
+            content = HtmlContent(messages("phase.text", s"${routes.FeedbackController.feedback.url}"))
         )
-        </div>
-    }
+    )
+}
 
-    @beforeContentBlock
+@if(showAccountInfo && summary.isDefined){
+    @views.html.includes.account_info_header(summary.get)
+}
+
+@hmrcLanguageSelectHelper()
+
+@backLinkUrl.map{ url =>
+    <div>@govukBackLink(
+        BackLink(
+            href = url
+        )
+    )
+    </div>
+}
+
+@beforeContentBlock
 }
 
 @contentWithHeading = {
-    @if(theForm!=null){
-        @includes.summaryErrors(theForm = theForm, govukErrorSummary = govukErrorSummary)
-    }
+@if(theForm!=null){
+    @includes.summaryErrors(theForm = theForm, govukErrorSummary = govukErrorSummary)
+}
 
-    @if(showBanner && configuration.get[Boolean]("bannerNotice.enabled")) {
-        @govukNotificationBanner(NotificationBanner(
-            content = HtmlContent("<p class='govuk-notification-banner__heading'>" + configuration.get[String]("bannerNotice." + messages.lang.code + ".body") + "</p>"),
-            title = Text(configuration.get[String]("bannerNotice." + messages.lang.code + ".title"))
-        ))
-    }
+@if(showBanner && configuration.get[Boolean]("bannerNotice.enabled")) {
+    @govukNotificationBanner(NotificationBanner(
+        content = HtmlContent("<p class='govuk-notification-banner__heading'>" + configuration.get[String]("bannerNotice." + messages.lang.code + ".body") + "</p>"),
+        title = Text(configuration.get[String]("bannerNotice." + messages.lang.code + ".title"))
+    ))
+}
 
-    @if(showSection){
-        <span class="govuk-caption-m">@sectionName</span>
-    }
+@if(showSection){
+    <span class="govuk-caption-m">@sectionName</span>
+}
 
-    @if(showH1){
-        <h1 class="govuk-heading-l">@pageHeading</h1>
-    }
+@if(showH1){
+    <h1 class="govuk-heading-l">@pageHeading</h1>
+}
 
-    @contentBlock
+@contentBlock
 
 }
 
 @title = @{
-  if(theForm != null) {
-    if(theForm.hasErrors) {
-      messages("error.title") + " " + pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+    if(theForm != null) {
+        if(theForm.hasErrors) {
+            messages("error.title") + " " + pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+        } else {
+            pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+        }
     } else {
-      pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+        pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
     }
-  } else {
-    pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
-  }
 }
 
 @customFooter = @{

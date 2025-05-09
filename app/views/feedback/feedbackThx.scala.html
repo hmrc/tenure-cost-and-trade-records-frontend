@@ -14,17 +14,52 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+
+
+@this(layout: Layout,
+        govukButton: GovukButton
+)
+
 
 @()(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("feedback.thankyou.h1"),
-    showFeedback = false
+    showH1 = false,
+    showFeedback = false,
+    fullWidth = true
 ) {
-    <p class="govuk-body">
-        <a class="govuk-link"
-        href="@routes.LoginController.show.url">@messages("feedback.thankyou.link")</a>
-    </p>
+    <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-l">@messages("feedback.thankyou.h1")</h1>
+                <p class="govuk-body">@messages("feedback.thankyou.p1")</p>
+                <br>
+                <br>
+                <br>
+                @govukButton(
+                    Button(
+                        content = Text(messages("feedback.backToLogin")),
+                        href = Some(routes.LoginController.show.url)
+                    )
+                )
+
+            </div>
+            <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+            <div class="govuk-grid-column-one-third">
+                <h2 class="govuk-heading-m">@messages("feedback.thankyou.related")</h2>
+                <p class="govuk-body"><a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link">@{messages("feedback.link1")}</a></p>
+                <p class="govuk-body"><a href="https://www.gov.uk/find-business-rates" class="govuk-link">@{messages("feedback.link2")}</a></p>
+                <p class="govuk-body"><a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link">@{messages("feedback.link3")}</a></p>
+                <p class="govuk-body"><a href="https://www.gov.uk/contact-your-local-council-about-business-rates" class="govuk-link">@{messages("feedback.link4")}</a></p>
+
+            </div>
+        </div>
+    </div>
 }
+
+
 
