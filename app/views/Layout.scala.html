@@ -65,11 +65,11 @@
 )(contentBlock: Html)(implicit request: Request[?], messages: Messages)
 
 @headerBlock ={
-  @hmrcStandardHeader(
-      serviceName = Some(messages("site.service_name")),
-      serviceUrl= Some(routes.Application.index.url)
-  )
-}
+    @hmrcStandardHeader(
+        serviceName = Some(messages("site.service_name")),
+        serviceUrl= Some(routes.Application.index.url)
+    )
+    }
 @beforeBLock = {
     @if(showFeedback) {
         @govukPhaseBanner(
@@ -78,7 +78,7 @@
                 tag = Option(Tag(Text(messages("phase.beta")))),
                 content = HtmlContent(messages("phase.text", s"${routes.FeedbackController.feedback.url}"))
             )
-            )
+        )
     }
 
     @if(showAccountInfo && summary.isDefined){
@@ -97,7 +97,7 @@
     }
 
     @beforeContentBlock
-}
+    }
 
 @contentWithHeading = {
     @if(theForm!=null){
@@ -124,15 +124,15 @@
 }
 
 @title = @{
-  if(theForm != null) {
-    if(theForm.hasErrors) {
-      messages("error.title") + " " + pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+    if(theForm != null) {
+        if(theForm.hasErrors) {
+            messages("error.title") + " " + pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+        } else {
+            pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+        }
     } else {
-      pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+        pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
     }
-  } else {
-    pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
-  }
 }
 
 @customFooter = @{
