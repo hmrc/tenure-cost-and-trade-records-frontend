@@ -4120,6 +4120,13 @@ feedback.comments.maxLength=Comments must be 2000 characters or fewer
 confirmation.feedback.subheading=How did you feel about this service?
 confirmation.feedback.title=Feedback
 
+feedback.backToLogin = Start a new declaration
+feedback.thankyou.related = Related content
+feedback.link1 = Business rates
+feedback.link2 = Find a business rates valuation
+feedback.link3 = Business rates relief
+feedback.link4 = Contact your council about business rates bill
+
 # Errors
 ########
 error.required = Please provide a value
