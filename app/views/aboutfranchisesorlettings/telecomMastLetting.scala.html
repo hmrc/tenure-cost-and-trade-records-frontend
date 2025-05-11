@@ -46,16 +46,6 @@
 
             @includes.textInput(govukInput, theForm, "siteOfMast", "govuk-input--width-20", "siteOfMast", labelClasses = "govuk-!-font-weight-bold")
 
-            <p class="govuk-body">
-                <b>@messages("label.correspondenceAddress")</b>
-            </p>
-
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.buildingNameNumber", "govuk-input--width-20", "buildingNameNumber", formGroupClasses = "address-field-one address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.street1", "govuk-input--width-20", "street1", optional = true, formGroupClasses = "address-field-two address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.town", "govuk-input--width-20", "town", formGroupClasses = "address-field-three address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.county", "govuk-input--width-20", "county", optional = true, formGroupClasses = "address-field-four address-fields")
-            @includes.textInput(govukInput, theForm, "correspondenceAddress.postcode", "govuk-input--width-10", "postcode", formGroupClasses = "address-field-postcode")
-
             @includes.continueSaveAsDraftButtons(govukButton)
 
     }

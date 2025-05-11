@@ -1073,6 +1073,9 @@ error.correspondenceAddress.required = Enter correspondence address
 #TELECOM MAST LETTING 6020
 ##############################
 label.telecomMastLetting.heading = Provide the telecom mast’s details
+telecomMastLetting.address.lookupPageHeading = What is the mast’s property address?
+telecomMastLetting.address.selectPageHeading = Choose the mast’s property address
+telecomMastLetting.address.confirmPageHeading = Check the mast’s property address
 label.operatingCompanyName = Operating company’s name
 label.siteOfMast = Where on the site is the mast situated?
 error.operatingCompanyName.required = Enter operating company’s name
