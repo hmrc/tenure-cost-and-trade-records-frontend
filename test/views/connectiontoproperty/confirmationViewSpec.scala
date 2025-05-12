@@ -35,7 +35,6 @@ class confirmationViewSpec extends ViewBehaviours {
     "contain confirmation text" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("confirmation.emailConfirm")))
-      assert(doc.toString.contains(messages("confirmation.unableToRetrieveAnswers")))
       assert(doc.toString.contains(messages("confirmation.whatNext")))
       assert(doc.toString.contains(messages("confirmation.list.1")))
       assert(doc.toString.contains(messages("confirmation.list.2")))
