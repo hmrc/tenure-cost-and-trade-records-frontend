@@ -19,15 +19,19 @@
 @import models.ForType.*
 @import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 @import models.pages.Summary
-@import views.html.answers.answersAboutYourTradingHistory
+@import views.html.answers.{answersAboutYourTradingHistory,answersTradingHistory6048, answersTradingHistory6045, answersTradingHistory6076, answersTradingHistory6020, answersTradingHistory6015}
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory,
+        answers6015: answersTradingHistory6015,
+        answers6020: answersTradingHistory6020,
+        answers6048: answersTradingHistory6048,
+        answers6045: answersTradingHistory6045,
+        answers6076: answersTradingHistory6076,
         formWithCSRF: FormWithCSRF
 )
-
 
 @(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
@@ -52,7 +56,16 @@
     theForm = theForm
 ) {
 
-    @answersSectionAboutYourTradingHistory()
+
+  @forType match {
+    case FOR6015           => {@answers6015()}
+    case FOR6020           => {@answers6020()}
+    case FOR6045 | FOR6046 => {@answers6045()}
+    case FOR6048           => {@answers6048()}
+    case FOR6076           => {@answers6076()}
+    case _                 => {@answersSectionAboutYourTradingHistory()}
+  }
+
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.submit()) {
 

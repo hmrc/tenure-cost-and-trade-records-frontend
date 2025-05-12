@@ -1,0 +1,92 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory._
+@import util.DateUtilLocalised
+@import util.NumberUtil._
+@import util.CyaTradingHistorySupport
+
+@this(
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised,
+        cyaSupport: CyaTradingHistorySupport
+)
+
+@()(implicit request: SessionRequest[_], messages: Messages)
+
+@answer6048(valueLabelKey: String, getAnswer: TurnoverSection6048 => String, additionalParagraph: Option[String] = None) = @{
+    cyaSupport.answer(
+        valueLabelKey,
+        cyaSupport.sectionAnswers1.answers.flatMap(_.turnoverSections6048).getOrElse(Seq.empty).map(getAnswer),
+        additionalParagraph
+    )
+}
+@answer = {cyaSupport.pageAnswers()}
+
+<h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
+
+@cyaSupport.accountingInformation
+
+@cyaSupport.pageAnswers("turnover.6048.income.heading", controllers.aboutthetradinghistory.routes.Income6048Controller.show,
+    answer6048("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
+    answer6048("turnover.6048.income.letting", _.income.flatMap(_.letting)),
+    answer6048("checkYourAnswersAboutTheTradingHistory.income.serviceProvision", _.income.flatMap(_.serviceProvision)),
+    answer6048("turnover.6048.income.other", _.income.flatMap(_.other)),
+    answer6048("turnover.6048.income.total", _.income.flatMap(_.total))
+)
+
+@cyaSupport.pageAnswers("turnover.6048.fixedCosts.heading",
+    controllers.aboutthetradinghistory.routes.FixedCosts6048Controller.show,
+    answer6048("turnover.6048.fixedCosts.insurance", _.fixedCosts.flatMap(_.insurance)),
+    answer6048("checkYourAnswersAboutTheTradingHistory.fixedCosts.businessRatesOrCouncilTax", _.fixedCosts.flatMap(_.businessRatesOrCouncilTax)),
+    answer6048("turnover.6048.fixedCosts.rent", _.fixedCosts.flatMap(_.rent)),
+    answer6048("turnover.6048.fixedCosts.total", _.fixedCosts.flatMap(_.total))
+)
+
+@cyaSupport.pageAnswers("turnover.6048.accountingCosts.heading",
+    controllers.aboutthetradinghistory.routes.AccountingCosts6048Controller.show,
+    answer6048("turnover.6048.accountingCosts.wagesAndNationalInsurance", _.accountingCosts.flatMap(_.wagesAndNationalInsurance)),
+    answer6048("checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationBuildings", _.accountingCosts.flatMap(_.depreciationBuildings)),
+    answer6048("checkYourAnswersAboutTheTradingHistory.accountingCosts.depreciationContents", _.accountingCosts.flatMap(_.depreciationContents)),
+    answer6048("turnover.6048.accountingCosts.bookkeepingOrAccountancy", _.accountingCosts.flatMap(_.bookkeepingOrAccountancy)),
+    answer6048("turnover.6048.accountingCosts.bankCharges", _.accountingCosts.flatMap(_.bankCharges)),
+    answer6048("turnover.6048.accountingCosts.total", _.accountingCosts.flatMap(_.total))
+)
+
+@cyaSupport.pageAnswers("turnover.6048.administrativeCosts.heading",
+    controllers.aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show,
+    answer6048("checkYourAnswersAboutTheTradingHistory.administrativeCosts.subscriptionsAndFees", _.administrativeCosts.flatMap(_.subscriptionsAndFees)),
+    answer6048("checkYourAnswersAboutTheTradingHistory.administrativeCosts.telephoneBroadbandStationeryPostage", _.administrativeCosts.flatMap(_.telephoneBroadbandStationeryPostage)),
+    answer6048("turnover.6048.administrativeCosts.bookingAgency", _.administrativeCosts.flatMap(_.bookingAgency)),
+    answer6048("turnover.6048.administrativeCosts.advertising", _.administrativeCosts.flatMap(_.advertising)),
+    answer6048("turnover.6048.administrativeCosts.printing", _.administrativeCosts.flatMap(_.printing)),
+    answer6048("turnover.6048.administrativeCosts.total", _.administrativeCosts.flatMap(_.total))
+)
+
+@cyaSupport.pageAnswers("turnover.6048.operationalCosts.heading",
+    controllers.aboutthetradinghistory.routes.OperationalCosts6048Controller.show,
+    answer6048("turnover.6048.operationalCosts.energyBills", _.operationalCosts.flatMap(_.energyBills)),
+    answer6048("turnover.6048.operationalCosts.laundryCleaning", _.operationalCosts.flatMap(_.laundryCleaning)),
+    answer6048("turnover.6048.operationalCosts.repairsRenewalsMaintenance", _.operationalCosts.flatMap(_.repairsRenewalsMaintenance)),
+    answer6048("turnover.6048.operationalCosts.tvLicences", _.operationalCosts.flatMap(_.tvLicences)),
+    answer6048("turnover.6048.operationalCosts.travellingAndMotorExpenses", _.operationalCosts.flatMap(_.travellingAndMotorExpenses)),
+    answer6048("turnover.6048.operationalCosts.other",
+        _.operationalCosts.flatMap(_.other),
+        cyaSupport.sectionAnswers1.answers.flatMap(_.otherOperationalExpensesDetails)),
+    answer6048("turnover.6048.operationalCosts.total", _.operationalCosts.flatMap(_.total))
+)
