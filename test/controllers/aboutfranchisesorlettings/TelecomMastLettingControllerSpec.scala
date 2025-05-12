@@ -33,20 +33,34 @@ class TelecomMastLettingControllerSpec
     with TelecomMastLettingControllerBehaviours
     with JsoupHelpers:
 
+  trait ControllerFixture extends MockAddressLookup:
+    val repository = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    val controller = new TelecomMastLettingController(
+      stubMessagesControllerComponents(),
+      mock[Audit],
+      aboutFranchisesOrLettingsNavigator,
+      telecomMastLettingView,
+      preEnrichedActionRefiner(
+        forType = FOR6020,
+        aboutFranchisesOrLettings = Some(
+          prefilledAboutFranchiseOrLettingsWith6020LettingsAll
+        )
+      ),
+      addressLookupConnector,
+      repository
+    )
+
   "the TelecomMastLetting controller" when {
     "handling GET requests"            should {
       "reply 200 with a fresh HTML form" in new ControllerFixture {
-        val result = controller.show(index = Some(0))(fakeRequest)
+        val result = controller.show(index = Some(5))(fakeRequest)
         val html   = contentAsJsoup(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading shouldBe "label.telecomMastLetting.heading"
-      }
-      "reply 200 with a fresh HTML form if given unknown index" in new ControllerFixture {
-        val result = controller.show(index = Some(2))(fakeRequest)
-        val page   = contentAsJsoup(result)
+        page.heading                     shouldBe "label.telecomMastLetting.heading"
         page.input("operatingCompanyName") should beEmpty
         page.input("siteOfMast")           should beEmpty
       }
@@ -78,49 +92,6 @@ class TelecomMastLettingControllerSpec
       behave like retrievingConfirmedAddressFromAddressLookupService(index = 1)
     }
   }
-
-//
-//  "redirect to the next page upon successful submission" in new ControllerFixture {
-//    val validData      = Map(
-//      "operatingCompanyName" -> "Test Company",
-//      "siteOfMast"           -> "Roof"
-//    )
-//    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq*)
-//    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
-//    val result         = controller.submit(Some(1))(sessionRequest)
-//    status(result)           shouldBe SEE_OTHER
-//    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=1")
-//  }
-//
-//  "redirect to the next page upon successful submission added" in new ControllerFixture {
-//    val validData      = Map(
-//      "operatingCompanyName" -> "Test Company",
-//      "siteOfMast"           -> "Roof"
-//    )
-//    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq*)
-//    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
-//    val result         = controller.submit(Some(4))(sessionRequest)
-//    status(result)           shouldBe SEE_OTHER
-//    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=4")
-//  }
-
-  trait ControllerFixture extends MockAddressLookup:
-    val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
-    val controller = new TelecomMastLettingController(
-      stubMessagesControllerComponents(),
-      mock[Audit],
-      aboutFranchisesOrLettingsNavigator,
-      telecomMastLettingView,
-      preEnrichedActionRefiner(
-        forType = FOR6020,
-        aboutFranchisesOrLettings = Some(
-          prefilledAboutFranchiseOrLettingsWith6020LettingsAll
-        )
-      ),
-      addressLookupConnector,
-      repository
-    )
 
 trait TelecomMastLettingControllerBehaviours:
   this: TelecomMastLettingControllerSpec =>

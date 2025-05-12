@@ -1065,6 +1065,9 @@ error.typeOfLetting.required = Please select the type of letting
 #LETTINGS ATM 6020
 ##############################
 label.atmLetting.heading = Rhowch fanylion gweithredwr yr ATM
+atmLetting.address.lookupPageHeading = What is the mast’s property address?
+atmLetting.address.selectPageHeading = Choose the mast’s property address
+atmLetting.address.confirmPageHeading = Check the mast’s property address
 label.bankOrCompany = Enw’r banc neu’r cwmni sy’n gweithredu’r peiriant
 error.bankOrCompany.required = Enter name of bank or company operating the machine
 error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer

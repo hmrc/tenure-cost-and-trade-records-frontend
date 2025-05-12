@@ -18,18 +18,21 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import controllers.FORDataCaptureController
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingPartOfProperty}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import controllers.{AddressLookupSupport, FORDataCaptureController}
+import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingAddress, LettingPartOfProperty}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.atmLetting
-import form.aboutfranchisesorlettings.ATMLettingForm.atmLettingForm
+import form.aboutfranchisesorlettings.ATMLettingForm.theForm
+import models.Session
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future.successful
 
 class AtmLettingController @Inject() (
   mcc: MessagesControllerComponents,
@@ -37,34 +40,34 @@ class AtmLettingController @Inject() (
   navigator: AboutFranchisesOrLettingsNavigator,
   atmLettingView: atmLetting,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  addressLookupConnector: AddressLookupConnector,
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with AddressLookupSupport(addressLookupConnector)
     with I18nSupport
-    with Logging {
+    with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[ATMLetting] = for {
-      requestedIndex   <- index
-      existingLetting  <-
-        request.sessionData.aboutFranchisesOrLettings.flatMap(
-          _.lettings
-        )
-      requestedLetting <- existingLetting.lift(requestedIndex)
-      atmLetting       <- requestedLetting match {
-                            case atm: ATMLetting => Some(atm)
-                            case _               => None
-                          }
-    } yield atmLetting
-
     audit.sendChangeLink("AtmLetting")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
+        lettings                  <- aboutFranchisesOrLettings.lettings
+        requestedIndex            <- index
+        requestedLetting          <- lettings.lift(requestedIndex)
+        letting                   <- requestedLetting match {
+                                       case letting: ATMLetting => Some(letting)
+                                       case _                   => None
+                                     }
+      yield theForm.fill(letting)
+
     Ok(
       atmLettingView(
-        existingDetails.fold(atmLettingForm)(
-          atmLettingForm.fill
-        ),
+        filledForm.getOrElse(freshForm),
         index,
-        getBackLink(index),
+        backLink(index),
         request.sessionData.toSummary
       )
     )
@@ -72,31 +75,37 @@ class AtmLettingController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ATMLetting](
-      atmLettingForm,
+      theForm,
       formWithErrors =>
-        BadRequest(
-          atmLettingView(
-            formWithErrors,
-            index,
-            getBackLink(index),
-            request.sessionData.toSummary
+        successful(
+          BadRequest(
+            atmLettingView(
+              formWithErrors,
+              index,
+              backLink(index),
+              request.sessionData.toSummary
+            )
           )
         ),
-      data => {
-        val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
-          val updatedLettings = updateOrAddATMLetting(about.lettings, data, index)
-          about.copy(lettings = updatedLettings)
+      formData => {
+        var updatedIndex: Int = -1
+        val updatedSession    = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
+          val (updatedLettings, idx) = updateOrAddATMLetting(about.lettings, formData, index)
+          updatedIndex = idx
+          about.copy(lettings = Some(updatedLettings))
         }(request)
 
-        session.saveOrUpdate(updatedSession).map { _ =>
-          if (navigator.from == "CYA") {
-            Redirect(
-              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-            )
-          } else {
-            Redirect(controllers.aboutfranchisesorlettings.routes.RentDetailsController.show(index.getOrElse(0)))
-          }
-        }
+        for
+          _              <- repository.saveOrUpdate(updatedSession)
+          redirectResult <- redirectToAddressLookupFrontend(
+                              config = AddressLookupConfig(
+                                lookupPageHeadingKey = "atmLetting.address.lookupPageHeading",
+                                selectPageHeadingKey = "atmLetting.address.selectPageHeading",
+                                confirmPageLabelKey = "atmLetting.address.confirmPageHeading",
+                                offRampCall = routes.AtmLettingController.addressLookupCallback(updatedIndex, "")
+                              )
+                            )
+        yield redirectResult
       }
     )
   }
@@ -105,36 +114,83 @@ class AtmLettingController @Inject() (
     lettingsOpt: Option[IndexedSeq[LettingPartOfProperty]],
     atmLetting: ATMLetting,
     index: Option[Int]
-  ): Option[IndexedSeq[LettingPartOfProperty]] =
-    lettingsOpt match {
+  ): (IndexedSeq[LettingPartOfProperty], Int) = {
+    var updatedIndex: Int = -1
+    val updatedLetting    = lettingsOpt match {
       case Some(lettings) =>
         index match {
           case Some(idx) if idx < lettings.length =>
+            updatedIndex = idx
             lettings(idx) match {
               case existingATM: ATMLetting =>
-                Some(
-                  lettings.updated(
-                    idx,
-                    existingATM.copy(
-                      bankOrCompany = atmLetting.bankOrCompany,
-                      correspondenceAddress = atmLetting.correspondenceAddress
-                    )
+                lettings.updated(
+                  idx,
+                  existingATM.copy(
+                    bankOrCompany = atmLetting.bankOrCompany,
+                    correspondenceAddress = atmLetting.correspondenceAddress
                   )
                 )
               case _                       =>
-                Some(lettings.updated(idx, atmLetting))
+                lettings.updated(idx, atmLetting)
             }
           case _                                  =>
-            Some(lettings :+ atmLetting)
+            updatedIndex = lettings.length
+            lettings :+ atmLetting
         }
       case None           =>
-        Some(IndexedSeq(atmLetting))
+        updatedIndex = 0
+        IndexedSeq(atmLetting)
     }
+    (updatedLetting, updatedIndex)
+  }
 
-  private def getBackLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
-    if (navigator.from == "CYA") {
-      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else {
-      controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(idx).url
-    }
-}
+  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress <- getConfirmedAddress(id)
+      lettingAddress   <- confirmedAddress.asLettingAddress
+      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+      _                <- repository.saveOrUpdate(newSession)
+    yield
+      if navigator.from == "CYA"
+      then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+      else Redirect(routes.RentDetailsController.show(idx))
+  }
+
+  private def backLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+    if navigator.from == "CYA"
+    then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    else routes.TypeOfLettingController.show(idx).url
+
+  extension (confirmed: AddressLookupConfirmedAddress)
+    def asLettingAddress = LettingAddress(
+      confirmed.buildingNameNumber,
+      confirmed.street1,
+      confirmed.town,
+      confirmed.county,
+      confirmed.postcode
+    )
+
+  private def newSessionWithLettingAddress(idx: Int, lettingAddress: LettingAddress)(using session: Session) =
+    assert(session.aboutFranchisesOrLettings.isDefined)
+    assert(session.aboutFranchisesOrLettings.get.lettings.isDefined)
+    session.copy(
+      aboutFranchisesOrLettings = session.aboutFranchisesOrLettings.map { a =>
+        a.copy(
+          lettings = a.lettings.map { ls =>
+            ls.lift(idx)
+              .map {
+                case l: ATMLetting =>
+                  ls.updated(
+                    idx,
+                    l.copy(
+                      correspondenceAddress = Some(lettingAddress)
+                    )
+                  )
+                case _             => ls
+              }
+              .getOrElse(ls)
+          }
+        )
+      }
+    )

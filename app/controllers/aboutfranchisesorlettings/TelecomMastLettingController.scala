@@ -43,7 +43,7 @@ class TelecomMastLettingController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with AddressLookupSupport(addressLookupConnector)
     with I18nSupport
@@ -58,11 +58,11 @@ class TelecomMastLettingController @Inject() (
         lettings                  <- aboutFranchisesOrLettings.lettings
         requestedIndex            <- index
         requestedLetting          <- lettings.lift(requestedIndex)
-        telecomMastLetting        <- requestedLetting match {
-                                       case telco: TelecomMastLetting => Some(telco)
-                                       case _                         => None
+        letting                   <- requestedLetting match {
+                                       case letting: TelecomMastLetting => Some(letting)
+                                       case _                           => None
                                      }
-      yield theForm.fill(telecomMastLetting)
+      yield theForm.fill(letting)
 
     Ok(
       theView(
@@ -187,10 +187,10 @@ class TelecomMastLettingController @Inject() (
           lettings = a.lettings.map { ls =>
             ls.lift(idx)
               .map {
-                case t: TelecomMastLetting =>
+                case l: TelecomMastLetting =>
                   ls.updated(
                     idx,
-                    t.copy(
+                    l.copy(
                       correspondenceAddress = Some(lettingAddress)
                     )
                   )

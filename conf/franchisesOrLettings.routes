@@ -86,6 +86,7 @@ POST         /type-of-letting                                       controllers.
 
 GET          /atm-letting                                           controllers.aboutfranchisesorlettings.AtmLettingController.show(idx: Option[Int] ?= None)
 POST         /atm-letting                                           controllers.aboutfranchisesorlettings.AtmLettingController.submit(idx: Option[Int])
+GET          /atm-letting-callback                                  controllers.aboutfranchisesorlettings.AtmLettingController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET          /telecom-mast-letting                                  controllers.aboutfranchisesorlettings.TelecomMastLettingController.show(idx: Option[Int] ?= None)
 POST         /telecom-mast-letting                                  controllers.aboutfranchisesorlettings.TelecomMastLettingController.submit(idx: Option[Int])
