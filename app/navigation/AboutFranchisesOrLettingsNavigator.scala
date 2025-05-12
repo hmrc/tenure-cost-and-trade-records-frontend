@@ -335,10 +335,10 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
     CateringOperationPageId                    -> cateringOperationsConditionsRouting,
     CateringOperationBusinessPageId            -> (answers =>
-      aboutfranchisesorlettings.routes.FeeReceivedController.show(getCateringOperationsIndex(answers))
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))
     ),
     FeeReceivedPageId                          -> (answers =>
-      aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
+      controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),
     FranchiseTypeDetailsId                     -> franchiseTypeDetailsRouting,
     ConcessionTypeDetailsId                    -> (answers =>
