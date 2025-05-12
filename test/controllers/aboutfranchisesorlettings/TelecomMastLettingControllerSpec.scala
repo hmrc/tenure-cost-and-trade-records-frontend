@@ -28,10 +28,7 @@ import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
 
-class TelecomMastLettingControllerSpec
-    extends TestBaseSpec
-    with TelecomMastLettingControllerBehaviours
-    with JsoupHelpers:
+class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
@@ -49,7 +46,8 @@ class TelecomMastLettingControllerSpec
               if havingNoLettings
               then None
               else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
-          )),
+          )
+        )
       ),
       addressLookupConnector,
       repository
@@ -90,7 +88,9 @@ class TelecomMastLettingControllerSpec
         page.error("operatingCompanyName") shouldBe "error.operatingCompanyName.required"
         page.error("siteOfMast")           shouldBe "error.siteOfMast.required"
       }
-      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
+        true
+      ) {
         val operatingCompanyName = "New Bread and Butter Ltd"
         val siteOfMast           = "Terrace"
         val result               = controller.submit(index = Some(0))(
@@ -111,11 +111,11 @@ class TelecomMastLettingControllerSpec
       }
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
         val operatingCompanyName = "Turned into Bread and Butter Ltd"
-        val siteOfMast = "Terrace"
-        val result = controller.submit(index = Some(1))(
+        val siteOfMast           = "Terrace"
+        val result               = controller.submit(index = Some(1))(
           fakePostRequest.withFormUrlEncodedBody(
             "operatingCompanyName" -> operatingCompanyName,
-            "siteOfMast" -> siteOfMast
+            "siteOfMast"           -> siteOfMast
           )
         )
         status(result) shouldBe SEE_OTHER
@@ -125,59 +125,32 @@ class TelecomMastLettingControllerSpec
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
           case record: TelecomMastLetting =>
             record.operatingCompanyName.value shouldBe operatingCompanyName
-            record.siteOfMast.value shouldBe siteOfMast
+            record.siteOfMast.value           shouldBe siteOfMast
         }
       }
     }
     "retrieving the confirmed address" should {
-      behave like retrievingConfirmedAddressFromAddressLookupService(index = 1)
+      "save record and reply 303 redirect to the next page" in new ControllerFixture {
+        val result = controller.addressLookupCallback(idx = 1, "confirmedAddress")(fakeRequest)
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.RentDetailsController.show(idx = 1).url
+
+        val id = captor[String]
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        id.getValue shouldBe "confirmedAddress"
+
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session)(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
+          case record: TelecomMastLetting =>
+            record.correspondenceAddress.value shouldBe LettingAddress(
+              buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+              street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+              town = addressLookupConfirmedAddress.address.lines.get.last,
+              county = None,
+              postcode = addressLookupConfirmedAddress.address.postcode.get
+            )
+        }
+      }
     }
   }
-
-trait TelecomMastLettingControllerBehaviours:
-  this: TelecomMastLettingControllerSpec =>
-
-  def savingLettingRecordAndRedirectingToAddressLookupService(index: Int) =
-    s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
-      val operatingCompanyName = "Bread and Butter Ltd"
-      val siteOfMast           = "Terrace"
-      val result               = controller.submit(index = Some(index))(
-        fakePostRequest.withFormUrlEncodedBody(
-          "operatingCompanyName" -> operatingCompanyName,
-          "siteOfMast"           -> siteOfMast
-        )
-      )
-      status(result) shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe "/on-ramp"
-      val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session.capture())(any, any)
-      inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(index)) {
-        case record: TelecomMastLetting =>
-          record.operatingCompanyName.value shouldBe operatingCompanyName
-          record.siteOfMast.value           shouldBe siteOfMast
-      }
-    }
-
-  def retrievingConfirmedAddressFromAddressLookupService(index: Int) =
-    s"save record at index=$index and reply 303 redirect to the next page" in new ControllerFixture {
-      val result = controller.addressLookupCallback(index, "confirmedAddress")(fakeRequest)
-      status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.RentDetailsController.show(index).url
-
-      val id = captor[String]
-      verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
-      id.getValue shouldBe "confirmedAddress"
-
-      val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session)(any, any)
-      inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(index)) {
-        case record: TelecomMastLetting =>
-          record.correspondenceAddress.value shouldBe LettingAddress(
-            buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
-            street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
-            town = addressLookupConfirmedAddress.address.lines.get.last,
-            county = None,
-            postcode = addressLookupConfirmedAddress.address.postcode.get
-          )
-      }
-    }

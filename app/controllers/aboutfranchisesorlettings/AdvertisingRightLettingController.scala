@@ -150,11 +150,9 @@ class AdvertisingRightLettingController @Inject() (
   }
 
   private def backLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
-    if (navigator.from == "CYA") {
-      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else {
-      controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(idx).url
-    }
+    if navigator.from == "CYA"
+    then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    else routes.TypeOfLettingController.show(idx).url
 
   def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData

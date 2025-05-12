@@ -28,9 +28,7 @@ import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
 
-class AdvertisingRightLettingControllerSpec 
-  extends TestBaseSpec
-  with JsoupHelpers:
+class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
@@ -48,53 +46,56 @@ class AdvertisingRightLettingControllerSpec
               if havingNoLettings
               then None
               else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
-        )),
+          )
+        )
       ),
       addressLookupConnector,
       repository
     )
 
   "the AdvertisingRightLetting controller" when {
-    "handling GET requests"            should {
+    "handling GET requests"  should {
       "reply 200 with a fresh HTML form" in new ControllerFixture {
         val result = controller.show(index = Some(4))(fakeRequest)
-        val html = contentAsJsoup(result)
-        status(result) shouldBe OK
+        val html   = contentAsJsoup(result)
+        status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF_8.charset
         val page = contentAsJsoup(result)
-        page.heading shouldBe "label.advertisingRightLetting.heading"
-        page.input("descriptionOfSpace") should beEmpty
+        page.heading                       shouldBe "label.advertisingRightLetting.heading"
+        page.input("descriptionOfSpace")     should beEmpty
         page.input("advertisingCompanyName") should beEmpty
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
         val result = controller.show(index = Some(2))(fakeRequest)
-        val page = contentAsJsoup(result)
-        page.input("descriptionOfSpace") should haveValue("Billboard")
+        val page   = contentAsJsoup(result)
+        page.input("descriptionOfSpace")     should haveValue("Billboard")
         page.input("advertisingCompanyName") should haveValue("JCDx")
       }
       "render back link to CYA if come from CYA" in new ControllerFixture {
         val result = controller.show(Some(0))(fakeRequestFromCYA)
-        val page = contentAsJsoup(result)
+        val page   = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
     "handling POST requests" should {
       "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
         val result = controller.submit(index = Some(0))(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty *)
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(result) shouldBe BAD_REQUEST
         val page = contentAsJsoup(result)
-        page.error("descriptionOfSpace") shouldBe "error.descriptionOfSpace.required"
+        page.error("descriptionOfSpace")     shouldBe "error.descriptionOfSpace.required"
         page.error("advertisingCompanyName") shouldBe "error.advertisingCompanyName.required"
       }
-      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
-        val descriptionOfSpace = "New Ballet Hall"
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
+        true
+      ) {
+        val descriptionOfSpace     = "New Ballet Hall"
         val advertisingCompanyName = "Dancing Company"
-        val result = controller.submit(index = Some(0))(
+        val result                 = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
-            "descriptionOfSpace" -> descriptionOfSpace,
+            "descriptionOfSpace"     -> descriptionOfSpace,
             "advertisingCompanyName" -> advertisingCompanyName
           )
         )
@@ -104,16 +105,16 @@ class AdvertisingRightLettingControllerSpec
         verify(repository, once).saveOrUpdate(session.capture())(any, any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {
           case record: AdvertisingRightLetting =>
-            record.descriptionOfSpace.value shouldBe descriptionOfSpace
+            record.descriptionOfSpace.value     shouldBe descriptionOfSpace
             record.advertisingCompanyName.value shouldBe advertisingCompanyName
         }
       }
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
-        val descriptionOfSpace = "Turned into Ballet Hall"
+        val descriptionOfSpace     = "Turned into Ballet Hall"
         val advertisingCompanyName = "Dancing Company"
-        val result = controller.submit(index = Some(2))(
+        val result                 = controller.submit(index = Some(2))(
           fakePostRequest.withFormUrlEncodedBody(
-            "descriptionOfSpace" -> descriptionOfSpace,
+            "descriptionOfSpace"     -> descriptionOfSpace,
             "advertisingCompanyName" -> advertisingCompanyName
           )
         )
@@ -123,13 +124,13 @@ class AdvertisingRightLettingControllerSpec
         verify(repository, once).saveOrUpdate(session.capture())(any, any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(2)) {
           case record: AdvertisingRightLetting =>
-            record.descriptionOfSpace.value shouldBe descriptionOfSpace
+            record.descriptionOfSpace.value     shouldBe descriptionOfSpace
             record.advertisingCompanyName.value shouldBe advertisingCompanyName
         }
       }
       "save record and reply 303 redirect to the next page" in new ControllerFixture {
         val result = controller.addressLookupCallback(idx = 2, "confirmedAddress")(fakeRequest)
-        status(result) shouldBe SEE_OTHER
+        status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentDetailsController.show(2).url
 
         val id = captor[String]

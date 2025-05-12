@@ -1136,6 +1136,9 @@ error.advertisingCompanyName.maxLength = Advertising company’s name must be 50
 ##############################
 label.otherLetting.heading = Provide details of the other letting type
 label.lettingType = Letting type
+otherLetting.address.lookupPageHeading = What is the other letting property address?
+otherLetting.address.selectPageHeading = Choose the other letting property address
+otherLetting.address.confirmPageHeading = Check the other letting property address
 hint.lettingType = For example, garage workshop or charging point.
 error.lettingType.required = Enter letting type
 error.lettingType.maxLength = Letting type must be 50 characters or fewer

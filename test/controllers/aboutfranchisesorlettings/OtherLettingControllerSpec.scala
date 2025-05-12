@@ -16,90 +16,203 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.SessionRequest
-import connectors.Audit
+import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import utils.TestBaseSpec
-import play.api.test.Helpers._
+import models.Session
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, OtherLetting}
+import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
+import play.api.test.Helpers.{status, *}
+import repositories.SessionRepo
+import utils.{JsoupHelpers, TestBaseSpec}
 
-class OtherLettingControllerSpec extends TestBaseSpec {
+import scala.concurrent.Future.successful
 
-  val mockAudit: Audit = mock[Audit]
-  def otherLettingController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
+class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
+
+  trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
+    val repository = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    val controller = new OtherLettingController(
+      stubMessagesControllerComponents(),
+      mock[Audit],
+      aboutFranchisesOrLettingsNavigator,
+      otherLettingView,
+      preEnrichedActionRefiner(
+        forType = FOR6020,
+        aboutFranchisesOrLettings = Some(
+          prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
+            lettings =
+              if havingNoLettings
+              then None
+              else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
+          )
+        )
+      ),
+      addressLookupConnector,
+      repository
     )
-  ) = new OtherLettingController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutFranchisesOrLettingsNavigator,
-    otherLettingView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-    mockSessionRepo
-  )
 
-  "GET /"    should {
-    "return 200" in {
-      val result = otherLettingController().show(Some(0))(fakeRequest)
-      status(result) shouldBe OK
+  "the OtherLetting controller" when {
+    "handling GET requests"            should {
+      "reply 200 with a fresh HTML form" in new ControllerFixture {
+        val result = controller.show(index = Some(5))(fakeRequest)
+        val html   = contentAsJsoup(result)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.heading            shouldBe "label.otherLetting.heading"
+        page.input("lettingType") should beEmpty
+        page.input("tenantName")  should beEmpty
+      }
+      "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
+        val result = controller.show(index = Some(3))(fakeRequest)
+        val page   = contentAsJsoup(result)
+        page.input("lettingType") should haveValue("Charging point")
+        page.input("tenantName")  should haveValue("Tesla")
+      }
+      "render back link to CYA if come from CYA" in new ControllerFixture {
+        val result = controller.show(Some(3))(fakeRequestFromCYA)
+        val page   = contentAsJsoup(result)
+        page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      }
     }
+    "handling POST requests"           should {
+      "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
+        val result = controller.submit(index = Some(0))(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page = contentAsJsoup(result)
+        page.error("lettingType") shouldBe "error.lettingType.required"
+        page.error("tenantName")  shouldBe "error.tenantName.required"
+      }
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
+        true
+      ) {
+        val lettingType = "New garage"
+        val tenantName  = "Henry VIII"
+        val result      = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "lettingType" -> lettingType,
+            "tenantName"  -> tenantName
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: OtherLetting =>
+          record.lettingType.value shouldBe lettingType
+          record.tenantName.value  shouldBe tenantName
+        }
+      }
+      "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
+        val lettingType = "Turned into New garage"
+        val tenantName  = "Charles I"
+        val result      = controller.submit(index = Some(3))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "lettingType" -> lettingType,
+            "tenantName"  -> tenantName
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(3)) { case record: OtherLetting =>
+          record.lettingType.value shouldBe lettingType
+          record.tenantName.value  shouldBe tenantName
+        }
+      }
+    }
+    "retrieving the confirmed address" should {
+      "save record and reply 303 redirect to the next page" in new ControllerFixture {
+        val result = controller.addressLookupCallback(idx = 3, "confirmedAddress")(fakeRequest)
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.RentDetailsController.show(idx = 3).url
 
-    "return HTML" in {
-      val result = otherLettingController().show(Some(0))(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+        val id = captor[String]
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        id.getValue shouldBe "confirmedAddress"
+
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session)(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(3)) { case record: OtherLetting =>
+          record.correspondenceAddress.value shouldBe LettingAddress(
+            buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+            street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+            town = addressLookupConfirmedAddress.address.lines.get.last,
+            county = None,
+            postcode = addressLookupConfirmedAddress.address.postcode.get
+          )
+        }
+      }
     }
   }
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST on empty form submission" in {
 
-      val res = otherLettingController().submit(Some(0))(
-        FakeRequest().withFormUrlEncodedBody()
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-    "throw a BAD_REQUEST on empty form submission from CYA" in {
-
-      val res = otherLettingController().submit(Some(0))(
-        FakeRequest().withFormUrlEncodedBody("from" -> "CYA")
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
-
-  "handle valid form submissions by updating session data and redirecting correctly" in {
-    val validFormData  = Map(
-      "lettingType"                              -> "Charging Point",
-      "tenantName"                               -> "Tesla",
-      "correspondenceAddress.buildingNameNumber" -> "123",
-      "correspondenceAddress.street1"            -> "Main St",
-      "correspondenceAddress.town"               -> "Townsville",
-      "correspondenceAddress.county"             -> "Countyshire",
-      "correspondenceAddress.postcode"           -> "DD1 1DD"
-    )
-    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
-    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
-    val result         = otherLettingController().submit(Some(3))(sessionRequest)
-    status(result)           shouldBe SEE_OTHER
-    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=3")
-  }
-
-  "handle valid form submissions by adding new to session data and redirecting correctly" in {
-    val validFormData  = Map(
-      "lettingType"                              -> "Charging Point",
-      "tenantName"                               -> "Tesla",
-      "correspondenceAddress.buildingNameNumber" -> "123",
-      "correspondenceAddress.street1"            -> "Main St",
-      "correspondenceAddress.town"               -> "Townsville",
-      "correspondenceAddress.county"             -> "Countyshire",
-      "correspondenceAddress.postcode"           -> "DD1 1DD"
-    )
-    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
-    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
-    val result         = otherLettingController().submit(Some(4))(sessionRequest)
-    status(result)           shouldBe SEE_OTHER
-    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=4")
-  }
-}
+//
+//  "GET /"    should {
+//    "return 200" in new ControllerFixture {
+//      val result = controller.show(Some(0))(fakeRequest)
+//      status(result) shouldBe OK
+//    }
+//
+//    "return HTML" in new ControllerFixture {
+//      val result = controller.show(Some(0))(fakeRequest)
+//      contentType(result) shouldBe Some("text/html")
+//      charset(result)     shouldBe Some("utf-8")
+//    }
+//  }
+//  "SUBMIT /" should {
+//    "throw a BAD_REQUEST on empty form submission" in new ControllerFixture {
+//
+//      val res = controller.submit(Some(0))(
+//        FakeRequest().withFormUrlEncodedBody()
+//      )
+//      status(res) shouldBe BAD_REQUEST
+//    }
+//    "throw a BAD_REQUEST on empty form submission from CYA" in new ControllerFixture {
+//
+//      val res = controller.submit(Some(0))(
+//        FakeRequest().withFormUrlEncodedBody("from" -> "CYA")
+//      )
+//      status(res) shouldBe BAD_REQUEST
+//    }
+//  }
+//
+//  "handle valid form submissions by updating session data and redirecting correctly" in new ControllerFixture {
+//    val validFormData  = Map(
+//      "lettingType"                              -> "Charging Point",
+//      "tenantName"                               -> "Tesla",
+//      "correspondenceAddress.buildingNameNumber" -> "123",
+//      "correspondenceAddress.street1"            -> "Main St",
+//      "correspondenceAddress.town"               -> "Townsville",
+//      "correspondenceAddress.county"             -> "Countyshire",
+//      "correspondenceAddress.postcode"           -> "DD1 1DD"
+//    )
+//    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
+//    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
+//    val result         = controller.submit(Some(3))(sessionRequest)
+//    status(result)           shouldBe SEE_OTHER
+//    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=3")
+//  }
+//
+//  "handle valid form submissions by adding new to session data and redirecting correctly" in new ControllerFixture {
+//    val validFormData  = Map(
+//      "lettingType"                              -> "Charging Point",
+//      "tenantName"                               -> "Tesla",
+//      "correspondenceAddress.buildingNameNumber" -> "123",
+//      "correspondenceAddress.street1"            -> "Main St",
+//      "correspondenceAddress.town"               -> "Townsville",
+//      "correspondenceAddress.county"             -> "Countyshire",
+//      "correspondenceAddress.postcode"           -> "DD1 1DD"
+//    )
+//    val request        = FakeRequest(POST, "/other-letting-submit").withFormUrlEncodedBody(validFormData.toSeq*)
+//    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
+//    val result         = controller.submit(Some(4))(sessionRequest)
+//    status(result)           shouldBe SEE_OTHER
+//    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=4")
+//  }
+//

@@ -46,7 +46,8 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
               if havingNoLettings
               then None
               else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
-          )),
+          )
+        )
       ),
       addressLookupConnector,
       repository
@@ -84,7 +85,9 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         val page = contentAsJsoup(result)
         page.error("bankOrCompany") shouldBe "error.bankOrCompany.required"
       }
-      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
+        true
+      ) {
         val bankOrCompany = "New Amazing Bank"
         val result        = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
@@ -101,7 +104,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       }
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
         val bankOrCompany = "Turned into Amazing Bank"
-        val result = controller.submit(index = Some(0))(
+        val result        = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "bankOrCompany" -> bankOrCompany
           )
