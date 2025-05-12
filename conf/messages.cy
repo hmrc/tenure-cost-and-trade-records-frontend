@@ -4117,7 +4117,7 @@ feedback.bottomCopy=Do not include any personal or financial information, for ex
 
 feedback.rating.required=Select how satisfied you are with this service
 feedback.comments.maxLength=Comments must be 2000 characters or fewer
-confirmation.feedback.subheading=How did you feel about this service?
+confirmation.feedback.subheading=Overall, how did you feel about this service?
 confirmation.feedback.title=Feedback
 
 feedback.backToLogin = Start a new declaration
