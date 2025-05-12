@@ -94,9 +94,11 @@ GET          /telecom-mast-letting-callback                         controllers.
 
 GET          /advertising-right-letting                             controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.show(idx: Option[Int] ?= None)
 POST         /advertising-right-letting                             controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.submit(idx: Option[Int])
+GET          /advertising-right-letting-callback                    controllers.aboutfranchisesorlettings.AdvertisingRightLettingController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET          /other-letting                                         controllers.aboutfranchisesorlettings.OtherLettingController.show(idx: Option[Int] ?= None)
 POST         /other-letting                                         controllers.aboutfranchisesorlettings.OtherLettingController.submit(idx: Option[Int])
+GET          /other-letting-callback                                controllers.aboutfranchisesorlettings.OtherLettingController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET          /rent-details                                          controllers.aboutfranchisesorlettings.RentDetailsController.show(idx: Int)
 POST         /rent-details                                          controllers.aboutfranchisesorlettings.RentDetailsController.submit(idx: Int)

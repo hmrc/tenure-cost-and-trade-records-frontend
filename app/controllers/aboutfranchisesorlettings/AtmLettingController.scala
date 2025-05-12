@@ -92,7 +92,10 @@ class AtmLettingController @Inject() (
         val updatedSession    = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
           val (updatedLettings, idx) = updateOrAddATMLetting(about.lettings, formData, index)
           updatedIndex = idx
-          about.copy(lettings = Some(updatedLettings))
+          about.copy(
+            lettingCurrentIndex = updatedIndex,
+            lettings = Some(updatedLettings)
+          )
         }(request)
 
         for

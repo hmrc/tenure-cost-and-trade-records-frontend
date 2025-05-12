@@ -1089,6 +1089,9 @@ error.siteOfMast.maxLength = The site where the mast situated must be 500 charac
 #LETTINGS ADVERTISING RIGHT 6020
 ##############################
 label.advertisingRightLetting.heading = Provide the advertising right’s details
+advertisingRightLetting.address.lookupPageHeading = What is the advertising right’s address?
+advertisingRightLetting.address.selectPageHeading = Choose the advertising right’s address
+advertisingRightLetting.address.confirmPageHeading = Check the advertising right’s address
 label.descriptionOfSpace = Describe the advertising space
 hint.descriptionOfSpace = For example, billboard or hoarding
 label.advertisingCompanyName = Advertising company’s name

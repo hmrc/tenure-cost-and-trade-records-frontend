@@ -16,92 +16,138 @@
 
 package controllers.aboutfranchisesorlettings
 
-import connectors.Audit
+import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import utils.TestBaseSpec
-import play.api.test.Helpers._
+import models.Session
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, AdvertisingRightLetting, LettingAddress}
+import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
+import play.api.test.Helpers.{status, *}
+import repositories.SessionRepo
+import utils.{JsoupHelpers, TestBaseSpec}
 
-class AdvertisingRightLettingControllerSpec extends TestBaseSpec {
+import scala.concurrent.Future.successful
 
-  val mockAudit: Audit = mock[Audit]
-  def advertisingRightLettingController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
+class AdvertisingRightLettingControllerSpec 
+  extends TestBaseSpec
+  with JsoupHelpers:
+
+  trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
+    val repository = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    val controller = new AdvertisingRightLettingController(
+      stubMessagesControllerComponents(),
+      mock[Audit],
+      aboutFranchisesOrLettingsNavigator,
+      advertisingRightView,
+      preEnrichedActionRefiner(
+        forType = FOR6020,
+        aboutFranchisesOrLettings = Some(
+          prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
+            lettings =
+              if havingNoLettings
+              then None
+              else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
+        )),
+      ),
+      addressLookupConnector,
+      repository
     )
-  ) = new AdvertisingRightLettingController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutFranchisesOrLettingsNavigator,
-    advertisingRightView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-    mockSessionRepo
-  )
 
-  "GET /"    should {
-    "return 200" in {
-      val result = advertisingRightLettingController().show(Some(0))(fakeRequest)
-      status(result) shouldBe OK
+  "the AdvertisingRightLetting controller" when {
+    "handling GET requests"            should {
+      "reply 200 with a fresh HTML form" in new ControllerFixture {
+        val result = controller.show(index = Some(4))(fakeRequest)
+        val html = contentAsJsoup(result)
+        status(result) shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.heading shouldBe "label.advertisingRightLetting.heading"
+        page.input("descriptionOfSpace") should beEmpty
+        page.input("advertisingCompanyName") should beEmpty
+      }
+      "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
+        val result = controller.show(index = Some(2))(fakeRequest)
+        val page = contentAsJsoup(result)
+        page.input("descriptionOfSpace") should haveValue("Billboard")
+        page.input("advertisingCompanyName") should haveValue("JCDx")
+      }
+      "render back link to CYA if come from CYA" in new ControllerFixture {
+        val result = controller.show(Some(0))(fakeRequestFromCYA)
+        val page = contentAsJsoup(result)
+        page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      }
     }
+    "handling POST requests" should {
+      "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
+        val result = controller.submit(index = Some(0))(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty *)
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page = contentAsJsoup(result)
+        page.error("descriptionOfSpace") shouldBe "error.descriptionOfSpace.required"
+        page.error("advertisingCompanyName") shouldBe "error.advertisingCompanyName.required"
+      }
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
+        val descriptionOfSpace = "New Ballet Hall"
+        val advertisingCompanyName = "Dancing Company"
+        val result = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "descriptionOfSpace" -> descriptionOfSpace,
+            "advertisingCompanyName" -> advertisingCompanyName
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {
+          case record: AdvertisingRightLetting =>
+            record.descriptionOfSpace.value shouldBe descriptionOfSpace
+            record.advertisingCompanyName.value shouldBe advertisingCompanyName
+        }
+      }
+      "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
+        val descriptionOfSpace = "Turned into Ballet Hall"
+        val advertisingCompanyName = "Dancing Company"
+        val result = controller.submit(index = Some(2))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "descriptionOfSpace" -> descriptionOfSpace,
+            "advertisingCompanyName" -> advertisingCompanyName
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(2)) {
+          case record: AdvertisingRightLetting =>
+            record.descriptionOfSpace.value shouldBe descriptionOfSpace
+            record.advertisingCompanyName.value shouldBe advertisingCompanyName
+        }
+      }
+      "save record and reply 303 redirect to the next page" in new ControllerFixture {
+        val result = controller.addressLookupCallback(idx = 2, "confirmedAddress")(fakeRequest)
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.RentDetailsController.show(2).url
 
-    "return HTML" in {
-      val result = advertisingRightLettingController().show(Some(0))(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+        val id = captor[String]
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        id.getValue shouldBe "confirmedAddress"
+
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session)(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(2)) {
+          case record: AdvertisingRightLetting =>
+            record.correspondenceAddress.value shouldBe LettingAddress(
+              buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+              street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+              town = addressLookupConfirmedAddress.address.lines.get.last,
+              county = None,
+              postcode = addressLookupConfirmedAddress.address.postcode.get
+            )
+        }
+      }
     }
   }
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST on empty form submission" in {
-
-      val res = advertisingRightLettingController().submit(Some(0))(
-        FakeRequest().withFormUrlEncodedBody()
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-
-    "throw a BAD_REQUEST on empty form submission from CYA" in {
-
-      val res = advertisingRightLettingController().submit(Some(0))(
-        FakeRequest().withFormUrlEncodedBody("from" -> "CYA")
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
-
-  "handle valid form submissions by updating session data and redirecting correctly" in {
-    val validFormData = Map(
-      "descriptionOfSpace"                       -> "Billboard",
-      "advertisingCompanyName"                   -> "JCDx",
-      "correspondenceAddress.buildingNameNumber" -> "123",
-      "correspondenceAddress.street1"            -> "Main St",
-      "correspondenceAddress.town"               -> "Townsville",
-      "correspondenceAddress.county"             -> "Countyshire",
-      "correspondenceAddress.postcode"           -> "DD11 DD"
-    )
-    val request       = FakeRequest(POST, "/advertising-right-letting").withFormUrlEncodedBody(validFormData.toSeq*)
-    val controller    = advertisingRightLettingController()
-
-    val result = controller.submit(Some(2))(request)
-    status(result)           shouldBe SEE_OTHER
-    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=2")
-  }
-
-  "handle valid form submissions by adding new advert to session data and redirecting correctly" in {
-    val validFormData = Map(
-      "descriptionOfSpace"                       -> "Billboard",
-      "advertisingCompanyName"                   -> "JCDx",
-      "correspondenceAddress.buildingNameNumber" -> "123",
-      "correspondenceAddress.street1"            -> "Main St",
-      "correspondenceAddress.town"               -> "Townsville",
-      "correspondenceAddress.county"             -> "Countyshire",
-      "correspondenceAddress.postcode"           -> "DD11 DD"
-    )
-    val request       = FakeRequest(POST, "/advertising-right-letting").withFormUrlEncodedBody(validFormData.toSeq*)
-    val controller    = advertisingRightLettingController()
-
-    val result = controller.submit(Some(4))(request)
-    status(result)           shouldBe SEE_OTHER
-    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=4")
-  }
-}

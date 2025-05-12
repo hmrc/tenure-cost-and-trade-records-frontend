@@ -20,7 +20,6 @@ import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingAddress}
-import utils.TestBaseSpec
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, *}
@@ -31,7 +30,7 @@ import scala.concurrent.Future.successful
 
 class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
-  trait ControllerFixture extends MockAddressLookup:
+  trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
     val controller = new AtmLettingController(
@@ -42,8 +41,12 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       preEnrichedActionRefiner(
         forType = FOR6020,
         aboutFranchisesOrLettings = Some(
-          prefilledAboutFranchiseOrLettingsWith6020LettingsAll
-        )
+          prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
+            lettings =
+              if havingNoLettings
+              then None
+              else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
+          )),
       ),
       addressLookupConnector,
       repository
@@ -81,9 +84,24 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         val page = contentAsJsoup(result)
         page.error("bankOrCompany") shouldBe "error.bankOrCompany.required"
       }
-      s"save record and reply 303 and redirect to address lookup page" in new ControllerFixture {
-        val bankOrCompany = "Amazing Bank"
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
+        val bankOrCompany = "New Amazing Bank"
         val result        = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "bankOrCompany" -> bankOrCompany
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: ATMLetting =>
+          record.bankOrCompany.value shouldBe bankOrCompany
+        }
+      }
+      "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
+        val bankOrCompany = "Turned into Amazing Bank"
+        val result = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "bankOrCompany" -> bankOrCompany
           )

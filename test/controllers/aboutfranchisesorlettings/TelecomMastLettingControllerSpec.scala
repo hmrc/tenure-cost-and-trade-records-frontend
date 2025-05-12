@@ -33,7 +33,7 @@ class TelecomMastLettingControllerSpec
     with TelecomMastLettingControllerBehaviours
     with JsoupHelpers:
 
-  trait ControllerFixture extends MockAddressLookup:
+  trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
     val controller = new TelecomMastLettingController(
@@ -44,8 +44,12 @@ class TelecomMastLettingControllerSpec
       preEnrichedActionRefiner(
         forType = FOR6020,
         aboutFranchisesOrLettings = Some(
-          prefilledAboutFranchiseOrLettingsWith6020LettingsAll
-        )
+          prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
+            lettings =
+              if havingNoLettings
+              then None
+              else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
+          )),
       ),
       addressLookupConnector,
       repository
@@ -86,7 +90,44 @@ class TelecomMastLettingControllerSpec
         page.error("operatingCompanyName") shouldBe "error.operatingCompanyName.required"
         page.error("siteOfMast")           shouldBe "error.siteOfMast.required"
       }
-      behave like savingLettingRecordAndRedirectingToAddressLookupService(index = 1)
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
+        val operatingCompanyName = "New Bread and Butter Ltd"
+        val siteOfMast           = "Terrace"
+        val result               = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatingCompanyName" -> operatingCompanyName,
+            "siteOfMast"           -> siteOfMast
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {
+          case record: TelecomMastLetting =>
+            record.operatingCompanyName.value shouldBe operatingCompanyName
+            record.siteOfMast.value           shouldBe siteOfMast
+        }
+      }
+      "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
+        val operatingCompanyName = "Turned into Bread and Butter Ltd"
+        val siteOfMast = "Terrace"
+        val result = controller.submit(index = Some(1))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatingCompanyName" -> operatingCompanyName,
+            "siteOfMast" -> siteOfMast
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
+          case record: TelecomMastLetting =>
+            record.operatingCompanyName.value shouldBe operatingCompanyName
+            record.siteOfMast.value shouldBe siteOfMast
+        }
+      }
     }
     "retrieving the confirmed address" should {
       behave like retrievingConfirmedAddressFromAddressLookupService(index = 1)
@@ -100,7 +141,7 @@ trait TelecomMastLettingControllerBehaviours:
     s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
       val operatingCompanyName = "Bread and Butter Ltd"
       val siteOfMast           = "Terrace"
-      val result               = controller.submit(Some(index))(
+      val result               = controller.submit(index = Some(index))(
         fakePostRequest.withFormUrlEncodedBody(
           "operatingCompanyName" -> operatingCompanyName,
           "siteOfMast"           -> siteOfMast

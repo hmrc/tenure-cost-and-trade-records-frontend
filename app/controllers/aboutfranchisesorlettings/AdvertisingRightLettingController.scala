@@ -18,54 +18,56 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.AdvertisingRightLettingForm.advertisingRightLettingForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import controllers.{AddressLookupSupport, FORDataCaptureController}
+import form.aboutfranchisesorlettings.AdvertisingRightLettingForm.theForm
+import models.Session
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, AdvertisingRightLetting, LettingAddress, LettingPartOfProperty}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.advertisingRightLetting
+import views.html.aboutfranchisesorlettings.advertisingRightLetting as AdvertisingRightLettingView
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future.successful
 
 class AdvertisingRightLettingController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,
-  advertisingRightLettingView: advertisingRightLetting,
+  theView: AdvertisingRightLettingView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  addressLookupConnector: AddressLookupConnector,
+  @Named("session") repository: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with AddressLookupSupport(addressLookupConnector)
     with I18nSupport
-    with Logging {
+    with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[AdvertisingRightLetting] = for {
-      requestedIndex  <- index
-      existingLetting <-
-        request.sessionData.aboutFranchisesOrLettings.flatMap(
-          _.lettings
-        )
-
-      requestedLetting   <- existingLetting.lift(requestedIndex)
-      advertRightLetting <- requestedLetting match {
-                              case adRightLetting: AdvertisingRightLetting => Some(adRightLetting)
-                              case _                                       => None
-                            }
-    } yield advertRightLetting
-
     audit.sendChangeLink("AdvertisingRightLetting")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
+        lettings                  <- aboutFranchisesOrLettings.lettings
+        requestedIndex            <- index
+        requestedLetting          <- lettings.lift(requestedIndex)
+        letting                   <- requestedLetting match {
+                                       case letting: AdvertisingRightLetting => Some(letting)
+                                       case _                                => None
+                                     }
+      yield theForm.fill(letting)
+
     Ok(
-      advertisingRightLettingView(
-        existingDetails.fold(advertisingRightLettingForm)(
-          advertisingRightLettingForm.fill
-        ),
+      theView(
+        filledForm.getOrElse(freshForm),
         index,
-        getBackLink(index),
+        backLink(index),
         request.sessionData.toSummary
       )
     )
@@ -73,30 +75,41 @@ class AdvertisingRightLettingController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AdvertisingRightLetting](
-      advertisingRightLettingForm,
+      theForm,
       formWithErrors =>
-        BadRequest(
-          advertisingRightLettingView(
-            formWithErrors,
-            index,
-            getBackLink(index),
-            request.sessionData.toSummary
+        successful(
+          BadRequest(
+            theView(
+              formWithErrors,
+              index,
+              backLink(index),
+              request.sessionData.toSummary
+            )
           )
         ),
-      data => {
-        val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
-          val updatedLettings = updateOrAddAdvertisingRightLetting(about.lettings, data, index)
-          about.copy(lettings = updatedLettings)
+      formData => {
+        var updatedIndex: Int = -1
+        val updatedSession    = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
+          val (updatedLettings, idx) = updateOrAddAdvertisingRightLetting(about.lettings, formData, index)
+          updatedIndex = idx
+          about.copy(
+            lettingCurrentIndex = updatedIndex,
+            lettings = Some(updatedLettings)
+          )
         }(request)
-        session.saveOrUpdate(updatedSession).map { _ =>
-          if (navigator.from == "CYA") {
-            Redirect(
-              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-            )
-          } else {
-            Redirect(controllers.aboutfranchisesorlettings.routes.RentDetailsController.show(index.getOrElse(0)))
-          }
-        }
+
+        for
+          _              <- repository.saveOrUpdate(updatedSession)
+          redirectResult <- redirectToAddressLookupFrontend(
+                              config = AddressLookupConfig(
+                                lookupPageHeadingKey = "advertisingRightLetting.address.lookupPageHeading",
+                                selectPageHeadingKey = "advertisingRightLetting.address.selectPageHeading",
+                                confirmPageLabelKey = "advertisingRightLetting.address.confirmPageHeading",
+                                offRampCall =
+                                  routes.AdvertisingRightLettingController.addressLookupCallback(updatedIndex, "")
+                              )
+                            )
+        yield redirectResult
       }
     )
   }
@@ -105,37 +118,86 @@ class AdvertisingRightLettingController @Inject() (
     lettingsOpt: Option[IndexedSeq[LettingPartOfProperty]],
     advertisingRightLetting: AdvertisingRightLetting,
     index: Option[Int]
-  ): Option[IndexedSeq[LettingPartOfProperty]] =
-    lettingsOpt match {
+  ): (IndexedSeq[LettingPartOfProperty], Int) = {
+    var updatedIndex: Int = -1
+    val updatedLetting    = lettingsOpt match {
       case Some(lettings) =>
         index match {
           case Some(idx) if idx < lettings.length =>
+            updatedIndex = idx
             lettings(idx) match {
               case existingOther: AdvertisingRightLetting =>
-                Some(
-                  lettings.updated(
-                    idx,
-                    existingOther.copy(
-                      advertisingCompanyName = advertisingRightLetting.advertisingCompanyName,
-                      descriptionOfSpace = advertisingRightLetting.descriptionOfSpace,
-                      correspondenceAddress = advertisingRightLetting.correspondenceAddress
-                    )
+                lettings.updated(
+                  idx,
+                  existingOther.copy(
+                    advertisingCompanyName = advertisingRightLetting.advertisingCompanyName,
+                    descriptionOfSpace = advertisingRightLetting.descriptionOfSpace,
+                    correspondenceAddress = advertisingRightLetting.correspondenceAddress
                   )
                 )
               case _                                      =>
-                Some(lettings.updated(idx, advertisingRightLetting))
+                lettings.updated(idx, advertisingRightLetting)
             }
           case _                                  =>
-            Some(lettings :+ advertisingRightLetting)
+            updatedIndex = lettings.length
+            lettings :+ advertisingRightLetting
         }
       case None           =>
-        Some(IndexedSeq(advertisingRightLetting))
+        updatedIndex = 0
+        IndexedSeq(advertisingRightLetting)
     }
+    (updatedLetting, updatedIndex)
+  }
 
-  private def getBackLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+  private def backLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {
       controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(idx).url
     }
-}
+
+  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress <- getConfirmedAddress(id)
+      lettingAddress   <- confirmedAddress.asLettingAddress
+      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+      _                <- repository.saveOrUpdate(newSession)
+    yield
+      if navigator.from == "CYA"
+      then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+      else Redirect(routes.RentDetailsController.show(idx))
+  }
+
+  extension (confirmed: AddressLookupConfirmedAddress)
+    def asLettingAddress = LettingAddress(
+      confirmed.buildingNameNumber,
+      confirmed.street1,
+      confirmed.town,
+      confirmed.county,
+      confirmed.postcode
+    )
+
+  private def newSessionWithLettingAddress(idx: Int, lettingAddress: LettingAddress)(using session: Session) =
+    assert(session.aboutFranchisesOrLettings.isDefined)
+    assert(session.aboutFranchisesOrLettings.get.lettings.isDefined)
+    session.copy(
+      aboutFranchisesOrLettings = session.aboutFranchisesOrLettings.map { a =>
+        a.copy(
+          lettings = a.lettings.map { ls =>
+            ls.lift(idx)
+              .map {
+                case l: AdvertisingRightLetting =>
+                  ls.updated(
+                    idx,
+                    l.copy(
+                      correspondenceAddress = Some(lettingAddress)
+                    )
+                  )
+                case _                          => ls
+              }
+              .getOrElse(ls)
+          }
+        )
+      }
+    )
