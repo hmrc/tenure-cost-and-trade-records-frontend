@@ -168,8 +168,6 @@ class TypeOfIncomeController @Inject() (
         controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(targetIndex))
       case TypeConcession                       =>
         controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
-      case TypeLetting if forType == FOR6030    =>
-        controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(targetIndex))
       case TypeLetting                          => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
     }
   }

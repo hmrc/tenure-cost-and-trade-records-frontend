@@ -34,9 +34,9 @@
 
 @sectionName = @{
     forType match {
-        case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
-        case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
-        case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+        case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
+        case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
+        case _                 => messages("label.section.aboutTheFranchiseLettings")
     }
 }
 @hintMsg = @{
