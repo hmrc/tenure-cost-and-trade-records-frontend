@@ -16,93 +16,141 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.SessionRequest
-import connectors.Audit
+import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import utils.TestBaseSpec
-import play.api.test.Helpers._
+import models.Session
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, TelecomMastLetting}
+import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
+import play.api.test.Helpers.{status, *}
+import repositories.SessionRepo
+import utils.{JsoupHelpers, TestBaseSpec}
 
-class TelecomMastLettingControllerSpec extends TestBaseSpec {
+import scala.concurrent.Future.successful
 
-  val mockAudit: Audit = mock[Audit]
-  def telecomMastLettingController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
+class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
+
+  trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
+    val repository = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    val controller = new TelecomMastLettingController(
+      stubMessagesControllerComponents(),
+      mock[Audit],
+      aboutFranchisesOrLettingsNavigator,
+      telecomMastLettingView,
+      preEnrichedActionRefiner(
+        forType = FOR6020,
+        aboutFranchisesOrLettings = Some(
+          prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
+            lettings =
+              if havingNoLettings
+              then None
+              else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
+          )
+        )
+      ),
+      addressLookupConnector,
+      repository
     )
-  ) = new TelecomMastLettingController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutFranchisesOrLettingsNavigator,
-    telecomMastLettingView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-    mockSessionRepo
-  )
 
-  "GET /" should {
-    "return 200" in {
-      val result = telecomMastLettingController().show(Some(0))(fakeRequest)
-      status(result) shouldBe OK
+  "the TelecomMastLetting controller" when {
+    "handling GET requests"            should {
+      "reply 200 with a fresh HTML form" in new ControllerFixture {
+        val result = controller.show(index = Some(5))(fakeRequest)
+        val html   = contentAsJsoup(result)
+        status(result)            shouldBe OK
+        contentType(result).value shouldBe HTML
+        charset(result).value     shouldBe UTF_8.charset
+        val page = contentAsJsoup(result)
+        page.heading                     shouldBe "label.telecomMastLetting.heading"
+        page.input("operatingCompanyName") should beEmpty
+        page.input("siteOfMast")           should beEmpty
+      }
+      "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
+        val result = controller.show(index = Some(1))(fakeRequest)
+        val page   = contentAsJsoup(result)
+        page.input("operatingCompanyName") should haveValue("Vodafone")
+        page.input("siteOfMast")           should haveValue("roof")
+      }
+      "render back link to CYA if come from CYA" in new ControllerFixture {
+        val result = controller.show(Some(0))(fakeRequestFromCYA)
+        val page   = contentAsJsoup(result)
+        page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      }
     }
+    "handling POST requests"           should {
+      "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
+        val result = controller.submit(index = Some(0))(
+          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+        )
+        status(result) shouldBe BAD_REQUEST
+        val page = contentAsJsoup(result)
+        page.error("operatingCompanyName") shouldBe "error.operatingCompanyName.required"
+        page.error("siteOfMast")           shouldBe "error.siteOfMast.required"
+      }
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
+        true
+      ) {
+        val operatingCompanyName = "New Bread and Butter Ltd"
+        val siteOfMast           = "Terrace"
+        val result               = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatingCompanyName" -> operatingCompanyName,
+            "siteOfMast"           -> siteOfMast
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {
+          case record: TelecomMastLetting =>
+            record.operatingCompanyName.value shouldBe operatingCompanyName
+            record.siteOfMast.value           shouldBe siteOfMast
+        }
+      }
+      "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
+        val operatingCompanyName = "Turned into Bread and Butter Ltd"
+        val siteOfMast           = "Terrace"
+        val result               = controller.submit(index = Some(1))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatingCompanyName" -> operatingCompanyName,
+            "siteOfMast"           -> siteOfMast
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe "/on-ramp"
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
+          case record: TelecomMastLetting =>
+            record.operatingCompanyName.value shouldBe operatingCompanyName
+            record.siteOfMast.value           shouldBe siteOfMast
+        }
+      }
+    }
+    "retrieving the confirmed address" should {
+      "save record and reply 303 redirect to the next page" in new ControllerFixture {
+        val result = controller.addressLookupCallback(idx = 1, "confirmedAddress")(fakeRequest)
+        status(result)                 shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.RentDetailsController.show(idx = 1).url
 
-    "return HTML" in {
-      val result = telecomMastLettingController().show(Some(0))(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+        val id = captor[String]
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        id.getValue shouldBe "confirmedAddress"
+
+        val session = captor[Session]
+        verify(repository, once).saveOrUpdate(session)(any, any)
+        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
+          case record: TelecomMastLetting =>
+            record.correspondenceAddress.value shouldBe LettingAddress(
+              buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+              street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+              town = addressLookupConfirmedAddress.address.lines.get.last,
+              county = None,
+              postcode = addressLookupConfirmedAddress.address.postcode.get
+            )
+        }
+      }
     }
   }
-
-  "render back link to CYA if come from CYA" in {
-    val result  = telecomMastLettingController().show(Some(0))(fakeRequestFromCYA)
-    val content = contentAsString(result)
-    content should include("/check-your-answers-about-franchise-or-lettings")
-  }
-
-  "SUBMIT /" should {
-    "throw a BAD_REQUEST on empty form submission" in {
-      val res = telecomMastLettingController().submit(Some(0))(
-        FakeRequest().withFormUrlEncodedBody()
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-    "throw a BAD_REQUEST on empty form submission from CYA" in {
-      val res = telecomMastLettingController().submit(Some(0))(
-        FakeRequest().withFormUrlEncodedBody("from" -> "CYA")
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-  }
-
-  "redirect to the next page upon successful submission" in {
-    val validData      = Map(
-      "operatingCompanyName"                     -> "Test Company",
-      "siteOfMast"                               -> "Roof",
-      "correspondenceAddress.buildingNameNumber" -> "123",
-      "correspondenceAddress.street1"            -> "Main Street",
-      "correspondenceAddress.town"               -> "Townville",
-      "correspondenceAddress.postcode"           -> "AB12 3CD"
-    )
-    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq*)
-    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
-    val result         = telecomMastLettingController().submit(Some(1))(sessionRequest)
-    status(result)           shouldBe SEE_OTHER
-    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=1")
-  }
-
-  "redirect to the next page upon successful submission added" in {
-    val validData      = Map(
-      "operatingCompanyName"                     -> "Test Company",
-      "siteOfMast"                               -> "Roof",
-      "correspondenceAddress.buildingNameNumber" -> "123",
-      "correspondenceAddress.street1"            -> "Main Street",
-      "correspondenceAddress.town"               -> "Townville",
-      "correspondenceAddress.postcode"           -> "AB12 3CD"
-    )
-    val request        = FakeRequest(POST, "/submit-path").withFormUrlEncodedBody(validData.toSeq*)
-    val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)
-    val result         = telecomMastLettingController().submit(Some(4))(sessionRequest)
-    status(result)           shouldBe SEE_OTHER
-    redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rent-details?idx=4")
-  }
-}

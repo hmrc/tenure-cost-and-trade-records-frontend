@@ -1097,6 +1097,9 @@ error.typeOfLetting.required = Please select the type of letting
 #LETTINGS ATM 6020
 ##############################
 label.atmLetting.heading = Provide the ATM operator’s details
+atmLetting.address.lookupPageHeading = What is the mast’s property address?
+atmLetting.address.selectPageHeading = Choose the mast’s property address
+atmLetting.address.confirmPageHeading = Check the mast’s property address
 label.bankOrCompany = Name of bank or company operating the machine
 error.bankOrCompany.required = Enter name of bank or company operating the machine
 error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer
@@ -1105,6 +1108,9 @@ error.correspondenceAddress.required = Enter correspondence address
 #TELECOM MAST LETTING 6020
 ##############################
 label.telecomMastLetting.heading = Provide the telecom mast’s details
+telecomMastLetting.address.lookupPageHeading = What is the mast’s property address?
+telecomMastLetting.address.selectPageHeading = Choose the mast’s property address
+telecomMastLetting.address.confirmPageHeading = Check the mast’s property address
 label.operatingCompanyName = Operating company’s name
 label.siteOfMast = Where on the site is the mast situated?
 error.operatingCompanyName.required = Enter operating company’s name
@@ -1115,6 +1121,9 @@ error.siteOfMast.maxLength = The site where the mast situated must be 500 charac
 #LETTINGS ADVERTISING RIGHT 6020
 ##############################
 label.advertisingRightLetting.heading = Provide the advertising right’s details
+advertisingRightLetting.address.lookupPageHeading = What is the advertising right’s address?
+advertisingRightLetting.address.selectPageHeading = Choose the advertising right’s address
+advertisingRightLetting.address.confirmPageHeading = Check the advertising right’s address
 label.descriptionOfSpace = Describe the advertising space
 hint.descriptionOfSpace = For example, billboard or hoarding
 label.advertisingCompanyName = Advertising company’s name
@@ -1127,6 +1136,9 @@ error.advertisingCompanyName.maxLength = Advertising company’s name must be 50
 ##############################
 label.otherLetting.heading = Provide details of the other letting type
 label.lettingType = Letting type
+otherLetting.address.lookupPageHeading = What is the other letting property address?
+otherLetting.address.selectPageHeading = Choose the other letting property address
+otherLetting.address.confirmPageHeading = Check the other letting property address
 hint.lettingType = For example, garage workshop or charging point.
 error.lettingType.required = Enter letting type
 error.lettingType.maxLength = Letting type must be 50 characters or fewer

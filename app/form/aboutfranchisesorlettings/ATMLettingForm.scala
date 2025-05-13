@@ -16,24 +16,21 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.lettingPartOfPropertyAddressMapping
 import models.submissions.aboutfranchisesorlettings.ATMLetting
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ATMLettingForm {
 
-  val atmLettingForm = Form(
+  val theForm = Form(
     mapping(
-      "bankOrCompany"         -> default(text, "").verifying(
+      "bankOrCompany" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.bankOrCompany.required"),
         maxLength(500, "error.bankOrCompany.maxLength")
-      ),
-      "correspondenceAddress" -> optional(lettingPartOfPropertyAddressMapping)
-        .verifying("error.correspondenceAddress.required", _.isDefined)
-    )((bankOrCompany, correspondenceAddress) => ATMLetting(Some(bankOrCompany), correspondenceAddress, None))(
-      atmLetting => Some((atmLetting.bankOrCompany.getOrElse(""), atmLetting.correspondenceAddress))
+      )
+    )(bankOrCompany => ATMLetting(Some(bankOrCompany), None, None))(atmLetting =>
+      Some(atmLetting.bankOrCompany.getOrElse(""))
     )
   )
 }

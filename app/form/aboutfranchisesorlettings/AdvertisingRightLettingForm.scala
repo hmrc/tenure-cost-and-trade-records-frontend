@@ -16,15 +16,14 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.lettingPartOfPropertyAddressMapping
 import models.submissions.aboutfranchisesorlettings.AdvertisingRightLetting
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AdvertisingRightLettingForm {
 
-  val advertisingRightLettingForm = Form(
+  val theForm = Form(
     mapping(
       "descriptionOfSpace"     -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.descriptionOfSpace.required"),
@@ -33,17 +32,14 @@ object AdvertisingRightLettingForm {
       "advertisingCompanyName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.advertisingCompanyName.required"),
         maxLength(500, "error.advertisingCompanyName.maxLength")
-      ),
-      "correspondenceAddress"  -> optional(lettingPartOfPropertyAddressMapping)
-        .verifying("error.correspondenceAddress.required", _.isDefined)
-    )((descriptionOfSpace, advertisingCompanyName, correspondenceAddress) =>
-      AdvertisingRightLetting(Some(descriptionOfSpace), Some(advertisingCompanyName), correspondenceAddress, None)
+      )
+    )((descriptionOfSpace, advertisingCompanyName) =>
+      AdvertisingRightLetting(Some(descriptionOfSpace), Some(advertisingCompanyName), None, None)
     )(advertisingRightLetting =>
       Some(
         (
           advertisingRightLetting.descriptionOfSpace.getOrElse(""),
-          advertisingRightLetting.advertisingCompanyName.getOrElse(""),
-          advertisingRightLetting.correspondenceAddress
+          advertisingRightLetting.advertisingCompanyName.getOrElse("")
         )
       )
     )

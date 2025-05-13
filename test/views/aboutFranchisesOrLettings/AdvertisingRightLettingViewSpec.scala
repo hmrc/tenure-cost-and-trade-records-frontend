@@ -30,7 +30,7 @@ class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[Advertising
   val messageKeyPrefix = "label.advertisingRightLetting"
   val backLink         = controllers.routes.TaskListController.show().url
 
-  override val form = AdvertisingRightLettingForm.advertisingRightLettingForm
+  override val form = AdvertisingRightLettingForm.theForm
 
   def createView = () =>
     advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
