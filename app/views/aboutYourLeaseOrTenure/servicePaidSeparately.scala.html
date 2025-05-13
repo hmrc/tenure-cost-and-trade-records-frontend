@@ -16,14 +16,15 @@
 
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import models.pages.Summary
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
 @this(layout: Layout,
     govukButton: GovukButton,
     formWithCSRF: FormWithCSRF,
-    govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
 )
 
 
@@ -40,14 +41,13 @@
 ) {
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.submit(index)) {
 
-        @govukCharacterCount(
-            CharacterCount(
-                id = "description",
-                name = "description",
-                maxLength = 500,
-                hint = Hint(content = Text(messages("servicePaidSeparately.describe.hint"))),
-                errorMessage = theForm.errors.asTextErrorMessageForField("description"),
-            ).withFormField(theForm("description"))
+
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "description",
+            charCount = 2000,
+            hint = "servicePaidSeparately.describe.hint"
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)

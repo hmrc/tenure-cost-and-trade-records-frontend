@@ -1812,6 +1812,7 @@ label.lettingHistory.residentDetail.name.label = Resident’s name
 lettingHistory.residentDetail.name.required = Enter the name of the permanent resident
 lettingHistory.residentDetail.address.label = Resident’s address
 lettingHistory.residentDetail.address.required = Enter the address of the permanent resident
+lettingHistory.residentDetail.address.maxLength = The address of the permanent resident cannot be more than 2000 characters
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
 lettingHistory.residentDetail.duplicate = You have already entered a resident for that part of your property
 
@@ -3306,7 +3307,7 @@ error.additionalMisc.leisureReceipts.required = Enter 0 if you did not have any 
 error.additionalMisc.leisureReceipts.range    = Receipts from other leisure facilities in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalMisc.leisureReceipts.negative = Receipts from other leisure facilities in the year ending {0} cannot be a negative number
 
-error.additionalMisc.leisureReceipts.details.maxLength = The description of the receipts from other leisure facilities should be 1000 characters or fewer
+error.additionalMisc.leisureReceipts.details.maxLength = The description of the receipts from other leisure facilities should be 2000 characters or fewer
 error.additionalMisc.leisureReceipts.details.required = Describe the receipts from other leisure facilities
 
 error.additionalMisc.winterStorageReceipts.required = Enter 0 if you did not have any receipts from the winter storage of caravans in the year ending {0}
@@ -3321,7 +3322,7 @@ error.additionalMisc.otherActivitiesReceipts.required = Enter 0 if you did not h
 error.additionalMisc.otherActivitiesReceipts.range    = Receipts from the other activities in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalMisc.otherActivitiesReceipts.negative = Receipts from the other activities in the year ending {0} cannot be a negative number
 
-error.additionalMisc.otherActivitiesReceipts.details.maxLength = The description of the other activities not covered previously should be 1000 characters or fewer
+error.additionalMisc.otherActivitiesReceipts.details.maxLength = The description of the other activities not covered previously should be 2000 characters or fewer
 error.additionalMisc.otherActivitiesReceipts.details.required = Describe the other activities not covered previously
 
 error.additionalMisc.otherServicesReceipts.required = Enter 0 if you did not have any receipts from from sale of other services in the year ending {0}
@@ -3483,7 +3484,7 @@ error.costsBreakdown.required = Give details of a breakdown of the capital cost 
 
 plantAndTechnology.heading = Describe the plant and the type of technology
 plantAndTechnology.hint = For example, wind farm - if your property includes more than one technology type, please give details
-error.plantAndTechnology.maxLength = Description must be 1,000 characters or fewer
+error.plantAndTechnology.maxLength = Description must be 2,000 characters or fewer
 error.plantAndTechnology.required = Give details of the plant and the type of technology
 
 #GENERATOR CAPACITY

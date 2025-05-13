@@ -27,7 +27,7 @@ object PlantAndTechnologyForm {
       single(
         "plantAndTechnology" -> default(text, "").verifying(
           nonEmpty(errorMessage = "error.plantAndTechnology.required"),
-          maxLength(1000, "error.plantAndTechnology.maxLength")
+          maxLength(2000, "error.plantAndTechnology.maxLength")
         )
       )
     )
