@@ -20,11 +20,9 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.cateringOperationBusinessDetails6030Form
-import form.aboutfranchisesorlettings.CateringOperationBusinessDetailsForm.cateringOperationBusinessDetailsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{ConcessionBusinessDetails, ConcessionIncomeRecord}
 import models.ForType
-import models.ForType.*
 import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationBusinessPageId
@@ -65,19 +63,11 @@ class CateringOperationBusinessDetailsController @Inject() (
     audit.sendChangeLink("ConcessionBusinessDetails")
     Ok(
       cateringOperationDetailsView(
-        if (forType == FOR6030) {
-          existingDetails.fold(cateringOperationBusinessDetails6030Form)(
-            cateringOperationBusinessDetails6030Form.fill
-          )
-        } else {
-          existingDetails.fold(cateringOperationBusinessDetailsForm)(
-            cateringOperationBusinessDetailsForm.fill
-          )
-        },
+        existingDetails.fold(cateringOperationBusinessDetails6030Form)(cateringOperationBusinessDetails6030Form.fill),
         index,
         "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
-        getBackLink(request.sessionData, index),
+        getBackLink(index),
         request.sessionData.toSummary,
         forType
       )
@@ -86,11 +76,7 @@ class CateringOperationBusinessDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ConcessionBusinessDetails](
-      if (forType == FOR6030) {
-        cateringOperationBusinessDetails6030Form
-      } else {
-        cateringOperationBusinessDetailsForm
-      },
+      cateringOperationBusinessDetails6030Form,
       formWithErrors =>
         BadRequest(
           cateringOperationDetailsView(
@@ -98,7 +84,7 @@ class CateringOperationBusinessDetailsController @Inject() (
             index,
             "concessionDetails",
             "cateringOperationOrLettingAccommodationDetails",
-            getBackLink(request.sessionData, index),
+            getBackLink(index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
@@ -123,19 +109,7 @@ class CateringOperationBusinessDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session, maybeIndex: Option[Int]): String =
-    answers.forType match {
-      case FOR6015 | FOR6016 =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
-      case FOR6030           =>
-        controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show().url
-      case _                 =>
-        maybeIndex match {
-          case Some(index) if index > 0 =>
-            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
-          case _                        =>
-            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
-        }
-    }
+  private def getBackLink(index: Option[Int]): String =
+    controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(index).url
 
 }

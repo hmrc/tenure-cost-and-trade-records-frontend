@@ -97,14 +97,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
-    "return a function that goes to concession or franchise page when franchise page has been completed yes 6030" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6030YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6030YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(0))
-    }
-
     "return a function that continue with incomplete section when catering detail page has been incomplete in 6030" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail)
@@ -239,7 +231,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(FeeReceivedPageId, sessionAboutFranchiseOrLetting6030YesSession)
         .apply(
           sessionAboutFranchiseOrLetting6030YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
+        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(1)
     }
 
     "return a function that goes to task list page from cya" in {
