@@ -47,8 +47,8 @@
 
     @formWithCSRF(action = controllers.accommodation.routes.HighSeasonTariff6048Controller.submit) {
 
-        @includes.dateFields(form, "fromDate", govukDateInput, showDays = true)
-        @includes.dateFields(form, "toDate", govukDateInput, showDays = true)
+        @includes.dateFields(form, "fromDate", govukDateInput, hideYear = true)
+        @includes.dateFields(form, "toDate", govukDateInput, hideYear = true)
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

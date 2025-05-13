@@ -18,37 +18,47 @@ package form.accommodation
 
 import actions.SessionRequest
 import controllers.lettingHistory.RentalPeriodSupport
-import form.DateMappings.{betweenDates, requiredDateMapping}
+import form.DateMappings.{betweenDates, dayMonthMapping, requiredDateMapping}
+import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.accommodation.HighSeasonTariff
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.i18n.Messages
 import play.api.mvc.AnyContent
+import util.AccountingInformationUtil.previousFinancialYear6048
 import util.DateUtilLocalised
+
+import java.time.{LocalDate, Year}
+import java.time.Month.{APRIL, MARCH}
 
 /**
   * @author Yuriy Tumakha
   */
 object HighSeasonTariff6048Form extends RentalPeriodSupport:
 
+  private def previousFinancialYearStart6048: LocalDate = LocalDate.of(previousFinancialYear6048 - 1, APRIL, 1)
+
+  private def previousFinancialYearEnd6048: LocalDate = LocalDate.of(previousFinancialYear6048, MARCH, 31)
+
+  
+  private def toLocalDate(dm: DayMonthsDuration): LocalDate = {
+    previousFinancialYearStart6048
+  }
+
+  private def fromLocalDate(date: LocalDate): LocalDate =
+    previousFinancialYearEnd6048
+
   def highSeasonTariff6048Form(using
     request: SessionRequest[AnyContent],
     messages: Messages,
     dateUtil: DateUtilLocalised
   ): Form[HighSeasonTariff] =
-    val finYearStart = effectiveRentalPeriod.fromDate
-    val finYearEnd   = effectiveRentalPeriod.toDate
-
+    
     Form {
       mapping(
-        "fromDate" -> requiredDateMapping("accommodation.highSeasonTariff.fromDate", allowPastDates = true)
-          .verifying(
-            betweenDates(finYearStart, finYearEnd, "error.accommodation.highSeasonTariff.fromDate.range")
-          ),
-        "toDate"   -> requiredDateMapping("accommodation.highSeasonTariff.toDate", allowPastDates = true)
-          .verifying(
-            betweenDates(finYearStart, finYearEnd, "error.accommodation.highSeasonTariff.toDate.range")
-          )
+        "fromDate" -> dayMonthMapping("fromDate").transform[LocalDate](toLocalDate, fromLocalDate),
+        "toDate"   -> dayMonthMapping("toDate").transform[LocalDate](toLocalDate, fromLocalDate)
+
       )(HighSeasonTariff.apply)(o => Some(Tuple.fromProductTyped(o)))
         .verifying(
           "error.accommodation.highSeasonTariff.fromDate.mustBeBefore.toDate",
