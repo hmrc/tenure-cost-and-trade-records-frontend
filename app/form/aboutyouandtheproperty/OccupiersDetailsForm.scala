@@ -31,7 +31,7 @@ object OccupiersDetailsForm {
       ),
       "occupiersDetailsAddress" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.aboutYou.occupiersDetails.address.required"),
-        maxLength(1000, "error.aboutYou.occupiersDetails.address.maxLength")
+        maxLength(2000, "error.aboutYou.occupiersDetails.address.maxLength")
       )
     )(OccupiersDetails.apply)(occupiersDetails => Option((occupiersDetails.name, occupiersDetails.address)))
   )

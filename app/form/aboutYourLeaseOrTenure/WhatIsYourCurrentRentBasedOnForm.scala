@@ -29,7 +29,7 @@ object WhatIsYourCurrentRentBasedOnForm {
       "currentRentBasedOn"    -> whatIsYourRentBasedOnType,
       "whatIsYourRentBasedOn" -> optional(
         text.verifying(
-          maxLength(500, "error.currentRentBasedOn.maxLength")
+          maxLength(2000, "error.currentRentBasedOn.maxLength")
         )
       )
     )(WhatIsYourCurrentRentBasedOnDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
