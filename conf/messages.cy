@@ -137,7 +137,7 @@ start.subheading2 = What you’ll be asked
 start.item3 = whether your business owns the property, or occupies it under a lease or agreement
 start.item4 = details of your trading history
 start.item5 = if any parts of the property are let out to businesses or individuals
-start.item6 = if any concessions o franchises operate from the property as separate businesses
+start.item6 = if any concessions or franchises operate from the property as separate businesses
 start.link1 = Visit our guidance page
 start.desc1 = to see how to complete your declaration. It also lists the information your must provide.
 start.desc2 = If you no longer occupy, or have never occupied the property you must still use this service to notify us.
@@ -2901,7 +2901,7 @@ netProfit.heading = This is a holding page for the net profits page
 #################
 
 common6020.inset = Mae pob maes ar y dudalen hon yn orfodol. Os nad yw hyn yn berthnasol, nodwch y rhif 0.
-common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
+common6020.creditCards.notInclude = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
 
 #TOTAL FUEL SOLD (FORM 6020)
 ############################
