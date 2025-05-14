@@ -2956,7 +2956,7 @@ netProfit.heading = This is a holding page for the net profits page
 #################
 
 common6020.inset = All fields on this page are mandatory. If this is not applicable, enter the number 0.
-common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
+common6020.creditCards.notInclude = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
 
 #TOTAL FUEL SOLD (FORM 6020)
 ############################
@@ -3024,7 +3024,7 @@ error.addAnotherLowMarginFuelCardsDetails.required = Select yes if you would lik
 ##########################
 customerCreditAcc.heading = Customer credit accounts
 customerCreditAcc.declare = You must declare how much fuel you sell through customer credit accounts. These are agreements where customers do not pay for their fuel at the point of sale. Instead, they pay for their total fuel use at set intervals, normally monthly.
-customerCreditAcc.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
+customerCreditAcc.notInclude = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
 customerCreditAcc.percentage = What percentage of your total sales comes from customer credit accounts?
 customerCreditAcc.label = Percentage of fuel sales on customer credit accounts
 error.customerCreditAcc.required = Enter 0 if none of your total sales comes from customer credit account in the year ending {0}
@@ -3032,7 +3032,7 @@ error.customerCreditAcc.range = The percentage of your total sales comes from cu
 
 # PERCENTAGE FROM LOW MARGIN FUEL CARDS (FROM 6020)
 ###################################################
-percentageFromFuelCards.heading = What percentage of the total fuel sales comes from the low-margin fuel cards?
+percentageFromFuelCards.heading = What percentage of the total fuel sales comes from low-margin fuel cards?
 percentageFromFuelCards.bunkered = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
 percentageFromFuelCards.label = Percentage of fuel sales on low-margin fuel cards
 error.percentageFromFuelCards.required = Enter 0 if none of your total fuel sales comes from low-margin credit cards in the year ending {0}

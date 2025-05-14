@@ -2901,7 +2901,7 @@ netProfit.heading = This is a holding page for the net profits page
 #################
 
 common6020.inset = Mae pob maes ar y dudalen hon yn orfodol. Os nad yw hyn yn berthnasol, nodwch y rhif 0.
-common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
+common6020.creditCards.notInclude = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
 
 #TOTAL FUEL SOLD (FORM 6020)
 ############################
