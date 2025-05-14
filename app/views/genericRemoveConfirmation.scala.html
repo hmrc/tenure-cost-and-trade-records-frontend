@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
@@ -25,8 +26,11 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], name: String, sectionLabel: String, summary: Summary, idx: Int, confirmAction: Call, cancelAction: Call, forType: Option[ForType] = None)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], name: String, sectionLabel: String, summary: Summary, idx: Int, confirmAction: Call, cancelAction: Call)(implicit request: SessionRequest[AnyContent], messages: Messages)
 
+@forType = @{
+    request.sessionData.forType
+}
 
 @sectionName = @{
     forType match {

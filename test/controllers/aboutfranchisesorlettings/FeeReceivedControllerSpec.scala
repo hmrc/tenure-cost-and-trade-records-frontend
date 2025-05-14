@@ -19,7 +19,6 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import models.Session
 import models.submissions.aboutfranchisesorlettings.ConcessionIncomeRecord
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -67,7 +66,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentalIncomeListController.show(1).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         val feeReceivedPerYear =
           data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
             .asInstanceOf[ConcessionIncomeRecord]
@@ -87,7 +86,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
   trait ControllerFixture:
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
     val controller =

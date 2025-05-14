@@ -20,7 +20,6 @@ import connectors.Audit
 import models.ForType.*
 import models.{ForType, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -113,7 +112,7 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
     val repository       = mock[SessionRepo]
     val data             = captor[Session]
     val mockAudit: Audit = mock[Audit]
-    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
     val controller =

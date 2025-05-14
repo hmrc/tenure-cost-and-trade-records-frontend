@@ -109,7 +109,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Wombles Inc"
       }
       "reply 303 redirect to the address lookup page if updating the trading name" in new ControllerFixture(
@@ -134,7 +134,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Round Wombles Limited"
       }
     }
@@ -162,7 +162,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(using any, any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.address.value shouldBe RequestReferenceNumberAddress(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
@@ -179,7 +179,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
   ) extends MockAddressLookup:
 
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller = new RequestReferenceNumberPropertyDetailsController(
       mcc = stubMessagesControllerComponents(),

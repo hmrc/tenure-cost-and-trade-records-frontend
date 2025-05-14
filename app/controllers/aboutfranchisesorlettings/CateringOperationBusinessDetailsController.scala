@@ -23,7 +23,6 @@ import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.c
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{ConcessionBusinessDetails, ConcessionIncomeRecord}
 import models.ForType
-import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationBusinessPageId
 import play.api.i18n.I18nSupport
@@ -53,11 +52,12 @@ class CateringOperationBusinessDetailsController @Inject() (
     val existingDetails: Option[ConcessionBusinessDetails] = for {
       requestedIndex            <- index
       allRecords                <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-      existingRecord            <- allRecords.lift(requestedIndex)
-      concessionBusinessDetails <- existingRecord match {
-                                     case concession: ConcessionIncomeRecord => concession.businessDetails
-                                     case _                                  => None
-                                   }
+      concessionBusinessDetails <- allRecords
+                                     .lift(requestedIndex)
+                                     .collect[Option[ConcessionBusinessDetails]] {
+                                       case concession: ConcessionIncomeRecord => concession.businessDetails
+                                     }
+                                     .flatten
     } yield concessionBusinessDetails
 
     audit.sendChangeLink("ConcessionBusinessDetails")

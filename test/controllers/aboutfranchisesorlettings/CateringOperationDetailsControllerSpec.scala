@@ -20,7 +20,6 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.{ForType, Session}
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -105,7 +104,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         val updatedCateringOperationDetails =
           data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
@@ -127,7 +126,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         // )
         // status(result) shouldBe SEE_OTHER
         // redirectLocation(result).value shouldBe "/path/to/anywhere"
-        // verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        // verify(repository, once).saveOrUpdate(data.capture())(any[HeaderCarrier])
         // val updatedCateringOperationDetails =
         //   data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         // updatedCateringOperationDetails.operatorName shouldBe "Another Operator" // instead of "Operator Name"
@@ -150,7 +149,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         val updatedCateringOperationDetails =
           data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
@@ -168,7 +167,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
   ):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
     val controller =

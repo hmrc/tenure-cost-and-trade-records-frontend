@@ -19,7 +19,6 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -102,7 +101,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
           controller.submit(0)(fakePostRequest.withFormUrlEncodedBody("addAnotherLettingOtherPartOfProperty" -> "yes"))
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsController.show(Some(1)).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         data.getValue.aboutFranchisesOrLettings.value
           .lettingSections(0)
           .addAnotherLettingToProperty
@@ -157,7 +156,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
       }
       "reply 303 redirect to 'AddAnotherLettingOtherPartOfProperty' page if answer='no'" in new ControllerFixture() {
         val result = controller.performRemove(0)(
@@ -178,7 +177,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
   ):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
     val controller =

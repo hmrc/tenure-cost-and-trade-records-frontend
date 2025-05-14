@@ -16,11 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswerLettingHistoryView
@@ -85,7 +83,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
           .show()
           .withFragment("letting-history")
           .toString
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         sectionCompleted(data).value   shouldBe true
       }
     }

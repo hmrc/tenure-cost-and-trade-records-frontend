@@ -34,7 +34,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller =
       new ContactDetailsQuestionController(
@@ -129,7 +129,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value.contactDetailsQuestion shouldBe AnswerYes
       }
     }
@@ -144,7 +144,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(using any, any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         session.getValue.aboutYouAndTheProperty.value.altContactInformation.value.alternativeContactAddress shouldBe AlternativeAddress(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),

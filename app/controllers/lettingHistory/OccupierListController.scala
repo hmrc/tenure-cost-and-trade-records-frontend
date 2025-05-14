@@ -28,7 +28,6 @@ import navigation.LettingHistoryNavigator
 import navigation.identifiers.{OccupierListPageId, OccupierRemovePageId}
 import play.api.data.Form
 import play.api.i18n.I18nSupport
-import play.api.libs.json.Writes
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -108,7 +107,7 @@ class OccupierListController @Inject() (
 
   private def eventuallySaveOrUpdateSessionWith(
     hadMoreOccupier: Boolean
-  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
+  )(using session: Session, hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
     if !hadMoreOccupier && completedLettings(session).isEmpty
     then {
       val newSession = withHasCompletedLettings(false)

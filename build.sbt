@@ -15,6 +15,7 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions += "-Wconf:src=routes/.*:s",
     scalacOptions += "-Wconf:msg=Flag .* set repeatedly:s",
     scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a \\`using\\` clause&src=views/.*:s",
+    javaOptions += "-XX:+EnableDynamicAgentLoading",
     libraryDependencies ++= AppDependencies.appDependencies,
     PlayKeys.playDefaultPort := defaultPort
   )

@@ -16,11 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{AdvertisingDetail, IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasOnlineAdvertising as HasOnlineAdvertisingView
@@ -50,7 +48,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value   shouldBe routes.AdvertisingDetailController.show().url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         hasOnlineAdvertising(data).value shouldBe true
       }
     }
@@ -78,7 +76,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasOnlineAdvertising(data).value shouldBe true
           onlineAdvertising(data)          shouldBe oneAdvertising
         }
@@ -94,7 +92,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value                                   shouldBe routes.CheckYourAnswersLettingHistoryController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasOnlineAdvertising(data).value                                 shouldBe false
           onlineAdvertising(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "onlineAdvertising", data.getValue) shouldBe None
@@ -111,7 +109,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasOnlineAdvertising(data).value shouldBe true
           onlineAdvertising(data)            should have size 5
         }

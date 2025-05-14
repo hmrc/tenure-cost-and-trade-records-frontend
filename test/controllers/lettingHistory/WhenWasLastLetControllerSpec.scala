@@ -16,11 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory._
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
@@ -53,7 +51,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         val result  = controller.submit(request)
         status(result)                                    shouldBe SEE_OTHER
         redirectLocation(result).value                    shouldBe routes.IsYearlyAvailableController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         intendedLettings(data).value.whenWasLastLet.value shouldBe LocalDate.of(2024, 4, 1)
       }
     }

@@ -34,7 +34,6 @@ trait FranchiseAndLettingSupport {
         case letting: LettingIncomeRecord           => letting.operatorDetails.fold("")(_.operatorName)
         case concession: Concession6015IncomeRecord => concession.businessDetails.fold("")(_.operatorName)
         case concession: ConcessionIncomeRecord     => concession.businessDetails.fold("")(_.operatorName)
-        case _                                      => ""
       }
       .getOrElse("")
 }

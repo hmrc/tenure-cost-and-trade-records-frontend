@@ -45,8 +45,6 @@
 
 @sectionAnswers4 = @{SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartFour)}
 
-@forType = @{request.sessionData.forType}
-
 @addedTradeServiceMsgKey = @{if (request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length <= 1) {"checkYourAnswersAboutYourLeaseOrTenure.addedTradingService"} else {"checkYourAnswersAboutYourLeaseOrTenure.addedTradingServicePlural"}}
 @addedPaidServiceMsgKey =  @{if (request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid).getOrElse(IndexedSeq.empty).length <= 1) {"checkYourAnswersAboutYourLeaseOrTenure.addedPaidService"} else {"checkYourAnswersAboutYourLeaseOrTenure.addedPaidServicePlural"}}
 

@@ -25,7 +25,6 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
-import play.api.libs.json.Writes
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
@@ -126,7 +125,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         "yearEndChanged"      -> "true"
       )
       val request       = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
@@ -145,7 +144,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       )
       val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession, request)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
@@ -166,7 +165,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       )
       val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, request)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
@@ -188,7 +187,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6045, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result =
@@ -208,7 +207,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6048, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result =
@@ -228,7 +227,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6076, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result =

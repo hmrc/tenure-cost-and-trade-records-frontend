@@ -90,7 +90,7 @@ class TypeOfLettingControllerSpec extends TestBaseSpec {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/telecom-mast-letting?idx=0")
-    verify(mockSessionRepo).saveOrUpdate(any)(using any, any)
+    verify(mockSessionRepo).saveOrUpdate(any)(using any)
   }
 
   "update letting and redirect to ATM when not from CYA" in {

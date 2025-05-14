@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,9 +113,8 @@ class FeeReceivedController @Inject() (
       request.sessionData.aboutFranchisesOrLettings
         .filter(_.rentalIncome.nonEmpty)
         .flatMap(_.rentalIncome.flatMap(_.lift(idx)))
-        .flatMap[ConcessionIncomeRecord] {
-          case concession: ConcessionIncomeRecord => Some(concession)
-          case _                                  => None
+        .collect[ConcessionIncomeRecord] { case concession: ConcessionIncomeRecord =>
+          concession
         }
         .fold(Future.successful(Redirect(backLink(idx))))(action)
     } else {

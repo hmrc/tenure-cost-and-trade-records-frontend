@@ -16,11 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
@@ -56,7 +54,7 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
         val result  = controller.submit(request)
         status(result)                                            shouldBe SEE_OTHER
         redirectLocation(result).value                            shouldBe routes.HasOnlineAdvertisingController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         intendedLettings(data).value.tradingSeason.value.fromDate shouldBe LocalDate.of(
           Year.now.getValue,
           4,

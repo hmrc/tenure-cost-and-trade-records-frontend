@@ -18,7 +18,6 @@ package controllers.lettingHistory
 
 import models.Session
 import models.submissions.lettingHistory.SessionWrapper
-import play.api.libs.json.Writes
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -27,7 +26,7 @@ import scala.concurrent.{ExecutionContext, Future}
 extension (repository: SessionRepo)
   def saveOrUpdateSession(
     session: SessionWrapper
-  )(using ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
+  )(using hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
     repository.saveOrUpdate(session.data).map(_ => session)
 
 extension (sessionData: Session)

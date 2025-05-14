@@ -16,11 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.howManyNights as HowManyNightsView
@@ -51,7 +49,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         val result  = controller.submit(request)
         status(result)                            shouldBe SEE_OTHER
         redirectLocation(result).value            shouldBe routes.IsYearlyAvailableController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         intendedLettings(data).value.nights.value shouldBe 140
         intendedLettings(data).value.hasStopped   shouldBe None
       }
@@ -82,7 +80,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         val result  = controller.submit(request)
         status(result)                                shouldBe SEE_OTHER
         redirectLocation(result).value                shouldBe routes.HasStoppedLettingController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         intendedLettings(data).value.nights.value     shouldBe 251
         intendedLettings(data).value.hasStopped.value shouldBe false
       }

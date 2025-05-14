@@ -28,7 +28,6 @@ import navigation.LettingHistoryNavigator
 import navigation.identifiers.{ResidentListPageId, ResidentRemovePageId}
 import play.api.data.Form
 import play.api.i18n.I18nSupport
-import play.api.libs.json.Writes
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -107,7 +106,7 @@ class ResidentListController @Inject() (
 
   private def eventuallySaveOrUpdateSessionWith(
     hasMoreResidents: Boolean
-  )(using session: Session, ws: Writes[Session], hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
+  )(using session: Session, hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
     if !hasMoreResidents && permanentResidents(session).isEmpty
     then {
       val newSession = withHasPermanentResidents(false)

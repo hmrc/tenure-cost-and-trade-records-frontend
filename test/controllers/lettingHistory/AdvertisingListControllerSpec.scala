@@ -21,7 +21,6 @@ import models.submissions.lettingHistory.LettingHistory.onlineAdvertising
 import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
 import play.api.http.Status.*
-import play.api.libs.json.Writes
 import play.api.http.MimeTypes.HTML
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
@@ -51,7 +50,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.performRemove(index = 0)(fakePostRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
-        verify(repository, never).saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
       }
       "be handling POST /list?hasMoreAdvertisingDetails=yes by replying redirect to the 'Advertising Online Detail' page" in new ControllerFixture {
         val result = controller.submit(
@@ -93,7 +92,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           status(result) shouldBe BAD_REQUEST
           val page = contentAsJsoup(result)
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
-          verify(repository, never).saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
         "be handling confirmation POST /remove?index=0 by actually removing the advertising detailsand then replying redirect to the 'Advertising List' page" in new ControllerFixture(
           oneAdvertising
@@ -103,7 +102,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           onlineAdvertising(data)        shouldBe empty
         }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Advertising List' page" in new ControllerFixture(
@@ -114,7 +113,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
-          verify(repository, never).saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
       }
       "and the maximum number of web addresses has been reached" should {

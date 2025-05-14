@@ -16,11 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
@@ -58,7 +56,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value                shouldBe routes.WhenWasLastLetController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         intendedLettings(data).value.hasStopped.value shouldBe true
       }
     }
@@ -86,7 +84,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value                shouldBe routes.IsYearlyAvailableController.show.url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         intendedLettings(data).value.hasStopped.value shouldBe false
       }
     }

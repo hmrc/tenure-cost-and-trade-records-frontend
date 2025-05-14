@@ -19,7 +19,6 @@ package controllers.lettingHistory
 import models.Session
 import models.submissions.lettingHistory.{Address, AdvertisingDetail, LocalPeriod, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
-import play.api.libs.json.Writes
 import play.api.mvc.AnyContent
 import play.api.mvc.request.RequestTarget
 import play.api.test.FakeRequest
@@ -109,7 +108,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   trait MockRepositoryFixture:
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(using any[Writes[Session]], any[HeaderCarrier]))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
   trait SessionCapturingFixture:

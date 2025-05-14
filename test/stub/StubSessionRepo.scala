@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package stub
 
 import models.Session
-import play.api.libs.json.{JsValue, Json, Reads, Writes}
+import play.api.libs.json.{JsValue, Json}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -26,24 +26,22 @@ import scala.concurrent.Future
 /**
   * @author Yuriy Tumakha
   */
-case class StubSessionRepo() extends SessionRepo {
+case class StubSessionRepo() extends SessionRepo:
 
   private var session: Option[JsValue] = None
 
-  override def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
+  override def start(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
     saveOrUpdate(data)
 
-  override def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
+  override def saveOrUpdate(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
     Future.successful {
       session = Some(Json.toJson(data))
     }
 
-  override def get(implicit rds: Reads[Session], hc: HeaderCarrier): Future[Option[Session]] =
+  override def get(implicit hc: HeaderCarrier): Future[Option[Session]] =
     Future.successful(session.map(_.as[Session]))
 
   override def remove()(implicit hc: HeaderCarrier): Future[Unit] =
     Future.successful {
       session = None
     }
-
-}

@@ -16,11 +16,10 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.{Address, LettingHistory, LocalPeriod, OccupierDetail}
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.{Json, Writes}
+import play.api.libs.json.Json
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.occupierDetail as OccupierDetailView
@@ -55,7 +54,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         val result  = controller.submit()(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentalPeriodController.show(index = Some(0)).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         completedLettings(data)          should have size 1
         completedLettings(data)(0)     shouldBe OccupierDetail(
           name = "Mr. Unknown",
@@ -100,7 +99,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           val result  = controller.submit()(request)
           status(result)                     shouldBe SEE_OTHER
           redirectLocation(result).value     shouldBe routes.RentalPeriodController.show(index = Some(1)).url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           completedLettings(data)              should have size 2 // instead of 1
           completedLettings(data)(0)         shouldBe oneOccupier.head
           completedLettings(data)(1).name    shouldBe "Mr. Unknown"
@@ -128,7 +127,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           val result  = controller.submit(maybeIndex = Some(1))(request)
           status(result)                          shouldBe SEE_OTHER
           redirectLocation(result).value          shouldBe routes.RentalPeriodController.show(index = Some(1)).url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           completedLettings(data)                   should have size 2 // the same as it was before sending the post request
           completedLettings(data)(0)              shouldBe oneOccupier.head
           completedLettings(data)(1).name         shouldBe "Mr. Two"

@@ -103,7 +103,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         redirectLocation(result).value shouldBe "/on-ramp"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         val captured = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
@@ -126,7 +126,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         redirectLocation(result).value shouldBe "/on-ramp"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(using any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         val captured = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
@@ -150,7 +150,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         id.getValue shouldBe "confirmedAddress"
 
         val session  = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(using any, any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         val captured = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
@@ -184,7 +184,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
   ) extends MockAddressLookup:
     val audit      = mock[Audit]
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller = new LettingPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),

@@ -76,7 +76,7 @@ class LettingTypeDetailsControllerSpec
 
   trait ControllerFixture extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
     val controller = new LettingTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -112,7 +112,7 @@ trait LettingTypeDetailsControllerBehaviours:
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session.capture())(using any, any)
+      verify(repository, once).saveOrUpdate(session.capture())(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: LettingIncomeRecord =>
           record.operatorDetails.value.operatorName   shouldBe operatorName
@@ -131,7 +131,7 @@ trait LettingTypeDetailsControllerBehaviours:
       id.getValue shouldBe "confirmedAddress"
 
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session)(using any, any)
+      verify(repository, once).saveOrUpdate(session)(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: LettingIncomeRecord =>
           record.operatorDetails.value.lettingAddress.value shouldBe LettingAddress(

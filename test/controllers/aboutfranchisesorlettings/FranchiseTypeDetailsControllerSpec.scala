@@ -86,7 +86,7 @@ class FranchiseTypeDetailsControllerSpec
 
   trait ControllerFixture extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
     val controller = new FranchiseTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -122,7 +122,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session.capture())(using any, any)
+      verify(repository, once).saveOrUpdate(session.capture())(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: Concession6015IncomeRecord =>
           record.businessDetails.value.operatorName   shouldBe operatorName
@@ -144,7 +144,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
       id.getValue shouldBe "confirmedAddress"
 
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session)(using any, any)
+      verify(repository, once).saveOrUpdate(session)(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: Concession6015IncomeRecord =>
           record.businessDetails.value.cateringAddress.value shouldBe BusinessAddress(
