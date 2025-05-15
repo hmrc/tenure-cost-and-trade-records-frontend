@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, OtherLetting}
+import models.submissions.aboutfranchisesorlettings.{LettingAddress, OtherLetting}
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, *}
@@ -33,7 +33,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
     val controller = new OtherLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -103,7 +103,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: OtherLetting =>
           record.lettingType.value shouldBe lettingType
           record.tenantName.value  shouldBe tenantName
@@ -121,7 +121,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(3)) { case record: OtherLetting =>
           record.lettingType.value shouldBe lettingType
           record.tenantName.value  shouldBe tenantName
@@ -139,7 +139,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(3)) { case record: OtherLetting =>
           record.correspondenceAddress.value shouldBe LettingAddress(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,

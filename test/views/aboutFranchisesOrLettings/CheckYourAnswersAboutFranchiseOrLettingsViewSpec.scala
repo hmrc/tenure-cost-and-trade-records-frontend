@@ -21,7 +21,6 @@ import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsFo
 import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-import models.pages.Summary
 
 class CheckYourAnswersAboutFranchiseOrLettingsViewSpec
     extends QuestionViewBehaviours[CheckYourAnswersAboutFranchiseOrLettings] {

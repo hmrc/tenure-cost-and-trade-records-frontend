@@ -18,7 +18,6 @@ package views.aboutFranchisesOrLettings
 
 import actions.SessionRequest
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm
-import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

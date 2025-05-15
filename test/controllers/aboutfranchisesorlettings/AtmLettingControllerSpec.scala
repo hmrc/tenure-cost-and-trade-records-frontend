@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingAddress}
+import models.submissions.aboutfranchisesorlettings.{ATMLetting, LettingAddress}
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, *}
@@ -33,7 +33,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
     val controller = new AtmLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -98,7 +98,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: ATMLetting =>
           record.bankOrCompany.value shouldBe bankOrCompany
         }
@@ -113,7 +113,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: ATMLetting =>
           record.bankOrCompany.value shouldBe bankOrCompany
         }
@@ -130,7 +130,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: ATMLetting =>
           record.correspondenceAddress.value shouldBe LettingAddress(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,

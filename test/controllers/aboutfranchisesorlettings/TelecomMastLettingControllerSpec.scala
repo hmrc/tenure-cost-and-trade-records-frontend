@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, TelecomMastLetting}
+import models.submissions.aboutfranchisesorlettings.{LettingAddress, TelecomMastLetting}
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, *}
@@ -33,7 +33,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
     val controller = new TelecomMastLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -103,7 +103,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {
           case record: TelecomMastLetting =>
             record.operatingCompanyName.value shouldBe operatingCompanyName
@@ -122,7 +122,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
           case record: TelecomMastLetting =>
             record.operatingCompanyName.value shouldBe operatingCompanyName
@@ -141,7 +141,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
           case record: TelecomMastLetting =>
             record.correspondenceAddress.value shouldBe LettingAddress(
