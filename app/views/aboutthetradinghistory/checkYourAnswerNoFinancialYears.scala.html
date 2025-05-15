@@ -21,7 +21,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichFormErrors
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import util.DateUtilLocalised
-@import play.twirl.api.HtmlFormat
 
 @this(layout: Layout, govukSummaryList: GovukSummaryList, govukWarningText: GovukWarningText, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
@@ -70,7 +69,7 @@
                 valueText = occupationAndAccountingInformation.currentFinancialYearEnd.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse(""),
                 changeCall = routes.FinancialYearEndController.show()
             ))
-        ).flatten: _*
+        ).flatten*
     )
 
     @govukWarningText(WarningText(

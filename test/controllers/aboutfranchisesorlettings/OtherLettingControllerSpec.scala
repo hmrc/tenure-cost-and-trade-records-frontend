@@ -24,6 +24,7 @@ import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, *}
 import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
@@ -32,7 +33,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(any)).thenReturn(successful(()))
     val controller = new OtherLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -102,7 +103,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: OtherLetting =>
           record.lettingType.value shouldBe lettingType
           record.tenantName.value  shouldBe tenantName
@@ -120,7 +121,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(3)) { case record: OtherLetting =>
           record.lettingType.value shouldBe lettingType
           record.tenantName.value  shouldBe tenantName
@@ -134,11 +135,11 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         redirectLocation(result).value shouldBe routes.RentDetailsController.show(idx = 3).url
 
         val id = captor[String]
-        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(using any[HeaderCarrier])
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any, any)
+        verify(repository, once).saveOrUpdate(session)(any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(3)) { case record: OtherLetting =>
           record.correspondenceAddress.value shouldBe LettingAddress(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,

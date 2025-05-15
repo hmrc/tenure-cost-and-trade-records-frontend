@@ -15,21 +15,17 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory._
-@import util.DateUtilLocalised
 @import util.NumberUtil._
 @import util.CyaTradingHistorySupport
 @import models.submissions.aboutyouandtheproperty.BaseLoad
 
 
 @this(
-        govukSummaryList: GovukSummaryList,
-        dateUtil: DateUtilLocalised,
         cyaSupport: CyaTradingHistorySupport
 )
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@()(implicit request: SessionRequest[?], messages: Messages)
 
 @intermittentAnswer = @{
  request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name.contains("intermittent")))

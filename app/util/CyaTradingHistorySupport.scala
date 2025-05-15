@@ -37,18 +37,18 @@ class CyaTradingHistorySupport @Inject() (
 ) {
 
   def sectionAnswers(implicit
-    request: SessionRequest[_],
+    request: SessionRequest[?],
     messages: Messages
   ): SectionAnswersRowBuilder[AboutTheTradingHistory] =
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
 
   def sectionAnswers1(implicit
-    request: SessionRequest[_],
+    request: SessionRequest[?],
     messages: Messages
   ): SectionAnswersRowBuilder[AboutTheTradingHistoryPartOne] =
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
 
-  def forType(implicit request: SessionRequest[_]): ForType = request.sessionData.forType
+  def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def table(valuesGrid: Seq[Seq[String]]): Html = Html(
     valuesGrid.map { values =>
@@ -93,8 +93,8 @@ class CyaTradingHistorySupport @Inject() (
       classes = classes
     )
 
-  def yearEndChanged(implicit request: SessionRequest[_], messages: Messages): Boolean =
-    sectionAnswers(request, messages).answers
+  def yearEndChanged(implicit request: SessionRequest[?], messages: Messages): Boolean =
+    sectionAnswers.answers
       .flatMap(_.occupationAndAccountingInformation)
       .flatMap(_.financialYearEndHasChanged)
       .contains(true)
@@ -109,8 +109,8 @@ class CyaTradingHistorySupport @Inject() (
 
   def financialYearEndDates(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[_]): Seq[LocalDate] =
-    forType(request) match {
+  )(implicit request: SessionRequest[?]): Seq[LocalDate] =
+    forType match {
       case FOR6020           => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
       case FOR6030           => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
       case FOR6045 | FOR6046 => request.sessionData.financialYearEndDates6045.map(_._1)
@@ -139,7 +139,7 @@ class CyaTradingHistorySupport @Inject() (
     pageHeadingKey: String,
     editPage: Call
   )(implicit
-    request: SessionRequest[_],
+    request: SessionRequest[?],
     messages: Messages
   ): SummaryListRow =
     SummaryListRow(
@@ -173,7 +173,7 @@ class CyaTradingHistorySupport @Inject() (
     editPage: Call,
     answerRows: SummaryListRow*
   )(implicit
-    request: SessionRequest[_],
+    request: SessionRequest[?],
     messages: Messages
   ): Html = {
     val rows = financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
@@ -245,7 +245,7 @@ class CyaTradingHistorySupport @Inject() (
     ).body
 
   def accountingInformation(implicit
-    request: SessionRequest[_],
+    request: SessionRequest[?],
     messages: Messages
   ): Html =
     Html(
@@ -298,7 +298,7 @@ class CyaTradingHistorySupport @Inject() (
     )
 
   def occupationDetails(implicit
-    request: SessionRequest[_],
+    request: SessionRequest[?],
     messages: Messages
   ): Html =
     govukSummaryList(
