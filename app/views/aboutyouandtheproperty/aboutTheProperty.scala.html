@@ -130,8 +130,7 @@
         ),
         RadioItem(
           content = Text(messages("propertyCurrentlyUsed.other")),
-          value = Some("other"),
-          conditionalHtml = Some(conditionalHTML(messages("hint.other.use.propertyCurrentlyUsedOther")))
+          value = Some("other")
         )
       ),
       formGroup = FormGroup(
@@ -139,21 +138,19 @@
       )
     ).withFormField(theForm("propertyCurrentlyUsed"))
   )
-}
-}
 
-@conditionalHTML(hintText: String) = {
-@govukInput(
-  Input(
-    id = "propertyCurrentlyUsedOther",
-    name = "propertyCurrentlyUsedOther",
-    classes = "govuk-input--width-20",
-    value = theForm("propertyCurrentlyUsedOther").value,
-    label = Label(
-      content = Text(messages(hintText))
+  @govukInput(
+    Input(
+      id = "propertyCurrentlyUsedOther",
+      name = "propertyCurrentlyUsedOther",
+      classes = "govuk-input--width-30",
+      value = theForm("propertyCurrentlyUsedOther").value,
+      label = Label(
+        content = Text(messages("hint.other.use.propertyCurrentlyUsedOther"))
+      )
     )
   )
-)
+}
 }
 
 @layout(
