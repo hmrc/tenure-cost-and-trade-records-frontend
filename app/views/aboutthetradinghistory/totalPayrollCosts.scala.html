@@ -41,6 +41,11 @@
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.total")</span></p>
 }
 
+@directorsRenumeration = {
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.directorsRemuneration")</span> @messages("totalPayrollCosts.directorsRemuneration.add")</p>
+}
+
+
 @totalContent(idx: Int) = {
     <span
     data-total-prefix="totalPayrollCosts[@idx]."
@@ -109,7 +114,7 @@
                     ),
                     Seq(
                         TableRow(
-                            content = Text(messages("totalPayrollCosts.directorsRemuneration"))
+                            content = HtmlContent(directorsRenumeration)
                     ),
                     TableRow(
                         content = HtmlContent(

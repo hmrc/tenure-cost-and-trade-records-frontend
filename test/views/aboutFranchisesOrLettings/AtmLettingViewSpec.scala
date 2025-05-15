@@ -29,7 +29,7 @@ class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting] {
   val messageKeyPrefix = "label.atmLetting"
   val backLink         = controllers.routes.TaskListController.show().url
 
-  override val form = ATMLettingForm.atmLettingForm
+  override val form = ATMLettingForm.theForm
 
   def createView = () => AtmLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 

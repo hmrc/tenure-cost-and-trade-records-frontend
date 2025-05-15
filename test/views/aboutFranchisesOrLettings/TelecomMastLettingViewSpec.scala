@@ -29,7 +29,7 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
   val messageKeyPrefix = "label.telecomMastLetting"
   val backLink         = controllers.routes.TaskListController.show().url
 
-  override val form = TelecomMastLettingForm.telecomMastLettingForm
+  override val form = TelecomMastLettingForm.theForm
 
   def createView = () =>
     TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)

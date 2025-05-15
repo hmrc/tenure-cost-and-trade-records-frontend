@@ -1,0 +1,156 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory._
+@import util.DateUtilLocalised
+@import util.NumberUtil._
+@import util.CyaTradingHistorySupport
+@import models.submissions.aboutyouandtheproperty.BaseLoad
+
+
+@this(
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised,
+        cyaSupport: CyaTradingHistorySupport
+)
+
+@()(implicit request: SessionRequest[_], messages: Messages)
+
+@intermittentAnswer = @{
+ request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name.contains("intermittent")))
+}
+
+@answers =@{cyaSupport.sectionAnswers1.answers}
+
+@answer6076(valueLabelKey: String, getAnswer: TurnoverSection6076 => String, additionalParagraph: Option[String] = None) = @{
+ cyaSupport.answer(valueLabelKey,
+  answers.flatMap(_.turnoverSections6076).getOrElse(Seq.empty).map(getAnswer),
+  additionalParagraph)
+}
+
+<h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
+
+@cyaSupport.occupationDetails
+
+@cyaSupport.pageAnswers("taskList.6076.powerGenerated",
+ controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
+ answer6076("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
+ answer6076("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated)
+)
+
+@cyaSupport.pageAnswers("taskList.6076.grossReceipts",
+ controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
+ answer6076("grossReceipts.electricitySales", _.grossReceiptsExcludingVAT.flatMap(_.electricitySales)),
+ answer6076("grossReceipts.feedInTariff", _.grossReceiptsExcludingVAT.flatMap(_.feedInTariff)),
+ answer6076("checkYourAnswersAboutTheTradingHistory.rocBuyout", _.grossReceiptsExcludingVAT.flatMap(_.rocBuyout)),
+ answer6076("grossReceipts.rocRecycle", _.grossReceiptsExcludingVAT.flatMap(_.rocRecycle)),
+ answer6076("grossReceipts.contractForDifference", _.grossReceiptsExcludingVAT.flatMap(_.contractForDifference)),
+ answer6076("grossReceipts.capacityMarket", _.grossReceiptsExcludingVAT.flatMap(_.capacityMarket)),
+ answer6076("grossReceipts.balancingServices", _.grossReceiptsExcludingVAT.flatMap(_.balancingServices)),
+ answer6076("grossReceipts.embeddedBenefits", _.grossReceiptsExcludingVAT.flatMap(_.embeddedBenefits)),
+ answer6076("grossReceipts.total", _.grossReceiptsExcludingVAT.map(_.total))
+)
+
+@if(request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant).exists(_.renewablesPlant == BaseLoad)) {
+ @cyaSupport.pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
+  controllers.aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
+  answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.bioMass", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMass)),
+  answer6076("grossReceiptsForBaseLoad.byProductSales", _.grossReceiptsForBaseLoad.flatMap(_.byProductSales)),
+  answer6076("grossReceiptsForBaseLoad.hotWaterHeatOrSteamSales", _.grossReceiptsForBaseLoad.flatMap(_.hotWaterHeatOrSteamSales)),
+  answer6076("grossReceiptsForBaseLoad.gateIncomeFromWaste", _.grossReceiptsForBaseLoad.flatMap(_.gateIncomeFromWaste)),
+  answer6076("grossReceiptsForBaseLoad.total", _.grossReceiptsForBaseLoad.map(_.total))
+ )
+}
+
+@cyaSupport.pageAnswers("turnover.6076.otherIncome",
+ controllers.aboutthetradinghistory.routes.OtherIncomeController.show(),
+ answer6076("turnover.6076.otherIncome", _.otherIncome, answers.flatMap(_.otherIncomeDetails))
+)
+
+@if(intermittentAnswer) {
+
+ @cyaSupport.pageAnswers("costOfSales6076.heading",
+  controllers.aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show(),
+  answer6076("costOfSales6076.importedPower", _.costOfSales6076IntermittentSum.flatMap(_.importedPower)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.TNuoS", _.costOfSales6076IntermittentSum.flatMap(_.TNuoS)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.BSuoS", _.costOfSales6076IntermittentSum.flatMap(_.BSuoS)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.extraCost",
+   _.costOfSales6076IntermittentSum.flatMap(_.other),
+   answers.flatMap(_.otherSalesDetails)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.totalCosts", _.costOfSales6076IntermittentSum.map(_.total))
+ )} else {
+ @cyaSupport.pageAnswers("costOfSales6076.heading",
+  controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
+  answer6076("costOfSales6076.fuelOrFeedstock", _.costOfSales6076Sum.flatMap(_.fuelOrFeedstock)),
+  answer6076("costOfSales6076.importedPower", _.costOfSales6076Sum.flatMap(_.importedPower)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.TNuoS", _.costOfSales6076Sum.flatMap(_.TNuoS)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.BSuoS", _.costOfSales6076Sum.flatMap(_.BSuoS)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.extraCost",
+   _.costOfSales6076Sum.flatMap(_.other),
+   answers.flatMap(_.otherSalesDetails)),
+  answer6076("checkYourAnswersAboutTheTradingHistory.totalCosts", _.costOfSales6076Sum.map(_.total))
+ )
+}
+
+@cyaSupport.pageAnswers("staffCosts.heading",
+ controllers.aboutthetradinghistory.routes.StaffCostsController.show(),
+ answer6076("staffCosts.wages", _.staffCosts.flatMap(_.wagesAndSalaries)),
+ answer6076("staffCosts.NI", _.staffCosts.flatMap(_.nationalInsurance)),
+ answer6076("staffCosts.pension", _.staffCosts.flatMap(_.pensionContributions)),
+ answer6076("staffCosts.remunerations", _.staffCosts.flatMap(_.remunerations)),
+ answer6076("staffCosts.total", _.staffCosts.map(_.total))
+)
+
+@cyaSupport.pageAnswers("premisesCosts.heading",
+ controllers.aboutthetradinghistory.routes.PremisesCostsController.show(),
+ answer6076("premisesCosts.energyAndUtilities", _.premisesCosts.flatMap(_.energyAndUtilities)),
+ answer6076("premisesCosts.buildingRepairAndMaintenance", _.premisesCosts.flatMap(_.buildingRepairAndMaintenance)),
+ answer6076("premisesCosts.repairsAndRenewalsOfFixtures", _.premisesCosts.flatMap(_.repairsAndRenewalsOfFixtures)),
+ answer6076("checkYourAnswersAboutTheTradingHistory.rent", _.premisesCosts.flatMap(_.rent)),
+ answer6076("premisesCosts.businessRates", _.premisesCosts.flatMap(_.businessRates)),
+ answer6076("premisesCosts.buildingInsurance", _.premisesCosts.flatMap(_.buildingInsurance)),
+ answer6076("premisesCosts.total", _.premisesCosts.map(_.total))
+)
+
+@cyaSupport.pageAnswers("taskList.6076.operationalExpenses",
+ controllers.aboutthetradinghistory.routes.OperationalExpensesController.show(),
+ answer6076("checkYourAnswersAboutTheTradingHistory.advertising", _.operationalExpenses.flatMap(_.advertising)),
+ answer6076("turnover.6076.expenses.administration", _.operationalExpenses.flatMap(_.administration)),
+ answer6076("turnover.6076.expenses.insurance", _.operationalExpenses.flatMap(_.insurance)),
+ answer6076("turnover.6076.expenses.legalFees", _.operationalExpenses.flatMap(_.legalFees)),
+ answer6076("turnover.6076.expenses.interest", _.operationalExpenses.flatMap(_.interest)),
+ answer6076("checkYourAnswersAboutTheTradingHistory.otherExpenses",
+  _.operationalExpenses.flatMap(_.other),
+  answers.flatMap(_.otherOperationalExpensesDetails)),
+ answer6076("turnover.6076.expenses.total", _.operationalExpenses.map(_.total))
+)
+
+@cyaSupport.pageAnswers("turnover.6076.headOfficeExpenses.heading",
+ controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
+ answer6076("turnover.6076.headOfficeExpenses.heading", _.headOfficeExpenses, answers.flatMap(_.furtherInformationOrRemarks))
+)
+
+@cyaSupport.pageAnswers("incomeExpenditureSummary6076.heading",
+ controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
+ answer6076("incomeExpenditureSummary6076.profitOrLoss", _.incomeAndExpenditureSummary.map(_.netProfitOrLoss)),
+ cyaSupport.answer("incomeExpenditureSummary6076.label", Seq.empty,
+  if (answers.flatMap(_.incomeExpenditureConfirmation6076).contains("confirmed")) { messages("label.yes.iawn") } else {
+   messages("label.no.na")
+  })
+)

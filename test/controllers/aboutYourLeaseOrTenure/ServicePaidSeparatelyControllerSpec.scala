@@ -87,7 +87,7 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
       "throw a BAD_REQUEST if description is greater than max length is submitted" in {
         val res = servicePaidSeparatelyController().submit(Some(0))(
           FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "description" -> "x" * 501
+            "description" -> "x" * 2001
           )
         )
         status(res) shouldBe BAD_REQUEST

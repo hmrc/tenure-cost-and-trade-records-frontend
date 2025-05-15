@@ -128,7 +128,7 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
       }
 
       "error if occupiers address exceeds max length" in {
-        val invalidFormData = baseFormData.updated(errorKey.address, "B" * 1001)
+        val invalidFormData = baseFormData.updated(errorKey.address, "B" * 2001)
         val form            = occupiersDetailsForm.bind(invalidFormData)
         mustContainError(errorKey.address, "error.aboutYou.occupiersDetails.address.maxLength", form)
       }

@@ -80,7 +80,7 @@ object ATMLetting {
 case class TelecomMastLetting(
   operatingCompanyName: Option[String],
   siteOfMast: Option[String],
-  correspondenceAddress: Option[LettingAddress],
+  correspondenceAddress: Option[LettingAddress] = None,
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
 ) extends LettingPartOfProperty {

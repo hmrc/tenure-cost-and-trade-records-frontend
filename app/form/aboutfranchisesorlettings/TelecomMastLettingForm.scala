@@ -16,36 +16,31 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport.lettingPartOfPropertyAddressMapping
 import models.submissions.aboutfranchisesorlettings.TelecomMastLetting
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object TelecomMastLettingForm {
+object TelecomMastLettingForm:
 
-  val telecomMastLettingForm = Form(
+  val theForm = Form[TelecomMastLetting](
     mapping(
-      "operatingCompanyName"  -> default(text, "").verifying(
+      "operatingCompanyName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatingCompanyName.required"),
         maxLength(500, "error.operatingCompanyName.maxLength")
       ),
-      "siteOfMast"            -> default(text, "").verifying(
+      "siteOfMast"           -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.siteOfMast.required"),
         maxLength(500, "error.siteOfMast.maxLength")
-      ),
-      "correspondenceAddress" -> optional(lettingPartOfPropertyAddressMapping)
-        .verifying("error.correspondenceAddress.required", _.isDefined)
-    )((operatingCompanyName, siteOfMast, correspondenceAddress) =>
-      TelecomMastLetting(Some(operatingCompanyName), Some(siteOfMast), correspondenceAddress, None)
+      )
+    )((operatingCompanyName, siteOfMast) =>
+      TelecomMastLetting(Some(operatingCompanyName), Some(siteOfMast), None, None)
     )(telecomMastLetting =>
       Some(
         (
           telecomMastLetting.operatingCompanyName.getOrElse(""),
-          telecomMastLetting.siteOfMast.getOrElse(""),
-          telecomMastLetting.correspondenceAddress
+          telecomMastLetting.siteOfMast.getOrElse("")
         )
       )
     )
   )
-}

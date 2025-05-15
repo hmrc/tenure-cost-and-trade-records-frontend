@@ -137,7 +137,7 @@ start.subheading2 = What you’ll be asked
 start.item3 = whether your business owns the property, or occupies it under a lease or agreement
 start.item4 = details of your trading history
 start.item5 = if any parts of the property are let out to businesses or individuals
-start.item6 = if any concessions o franchises operate from the property as separate businesses
+start.item6 = if any concessions or franchises operate from the property as separate businesses
 start.link1 = Visit our guidance page
 start.desc1 = to see how to complete your declaration. It also lists the information your must provide.
 start.desc2 = If you no longer occupy, or have never occupied the property you must still use this service to notify us.
@@ -711,6 +711,7 @@ removeConnection.subheading = Dim ond os bydd angen i ni gysylltu â chi cyn dil
 label.removeConnectionAdditionalInfo = Gwybodaeth ychwanegol
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = Er enghraifft, y dyddiad y gwnaethoch feddiannu’r eiddo ddiwethaf.
 error.fullName.required = Enter your name
+error.removeConnectionAdditionalInfo.maxLength = Additional information must be 2000 characters or fewer
 
 # ABOUT YOU AND PROPERTY SECTION
 ################################
@@ -1066,6 +1067,9 @@ error.typeOfLetting.required = Please select the type of letting
 #LETTINGS ATM 6020
 ##############################
 label.atmLetting.heading = Rhowch fanylion gweithredwr yr ATM
+atmLetting.address.lookupPageHeading = What is the mast’s property address?
+atmLetting.address.selectPageHeading = Choose the mast’s property address
+atmLetting.address.confirmPageHeading = Check the mast’s property address
 label.bankOrCompany = Enw’r banc neu’r cwmni sy’n gweithredu’r peiriant
 error.bankOrCompany.required = Enter name of bank or company operating the machine
 error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer
@@ -1074,6 +1078,9 @@ error.correspondenceAddress.required = Enter correspondence address
 #TELECOM MAST LETTING 6020
 ##############################
 label.telecomMastLetting.heading = Provide the telecom mast’s details
+telecomMastLetting.address.lookupPageHeading = What is the mast’s property address?
+telecomMastLetting.address.selectPageHeading = Choose the mast’s property address
+telecomMastLetting.address.confirmPageHeading = Check the mast’s property address
 label.operatingCompanyName = Operating company’s name
 label.siteOfMast = Where on the site is the mast situated?
 error.operatingCompanyName.required = Enter operating company’s name
@@ -1084,6 +1091,9 @@ error.siteOfMast.maxLength = The site where the mast situated must be 500 charac
 #LETTINGS ADVERTISING RIGHT 6020
 ##############################
 label.advertisingRightLetting.heading = Provide the advertising right’s details
+advertisingRightLetting.address.lookupPageHeading = What is the advertising right’s address?
+advertisingRightLetting.address.selectPageHeading = Choose the advertising right’s address
+advertisingRightLetting.address.confirmPageHeading = Check the advertising right’s address
 label.descriptionOfSpace = Describe the advertising space
 hint.descriptionOfSpace = For example, billboard or hoarding
 label.advertisingCompanyName = Advertising company’s name
@@ -1096,6 +1106,9 @@ error.advertisingCompanyName.maxLength = Advertising company’s name must be 50
 ##############################
 label.otherLetting.heading = Provide details of the other letting type
 label.lettingType = Letting type
+otherLetting.address.lookupPageHeading = What is the other letting property address?
+otherLetting.address.selectPageHeading = Choose the other letting property address
+otherLetting.address.confirmPageHeading = Check the other letting property address
 hint.lettingType = For example, garage workshop or charging point.
 error.lettingType.required = Enter letting type
 error.lettingType.maxLength = Letting type must be 50 characters or fewer
@@ -1236,7 +1249,7 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Both
 label.sharedResponsibilities = Give details of any shared responsibilities
-hint.sharedResponsibilities = For example, ‘business insurance costs are shared equally’, or ‘landlord covers 75% for outside repairs, tenant pays 25%’.
+hint.sharedResponsibilities = Er enghraifft, “rhennir costau’n gyfartal” neu “landlord 75%, tenant 25%”.
 error.sharedResponsibilities.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilities = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.outsideRepairs.required = Dewiswch pwy sy’n gyfrifol am atgyweirio y tu allan
@@ -1253,7 +1266,6 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Yddau
 label.sharedResponsibilitiesIR = Rhowch fanylion unrhyw gyfrifoldebau a rennir
-hint.sharedResponsibilitiesIR = Er enghraifft, “rhennir costau’n gyfartal” neu “landlord 75%, tenant 25%”.
 error.sharedResponsibilitiesIR.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilitiesIR = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilitiesIR.required = Enter a description of the shared responsibilities
@@ -1267,7 +1279,6 @@ label.landlord = Landlord
 label.tenant = Tenant
 label.both = Yddau
 label.sharedResponsibilitiesOR = Rhowch fanylion unrhyw gyfrifoldebau a rennir
-hint.sharedResponsibilitiesOR = Er enghraifft, “rhennir costau’n gyfartal” neu “landlord 75%, tenant 25%”.
 error.sharedResponsibilitiesOR.maxLength = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilitiesOR = Mae’n rhaid i’r disgrifiad o unrhyw gyfrifoldebau ar y cyd fod yn 500 o gymeriadau neu lai
 error.sharedResponsibilitiesOR.required = Enter a description of the shared responsibilities
@@ -1813,6 +1824,7 @@ label.lettingHistory.residentDetail.name.label = Resident’s name
 lettingHistory.residentDetail.name.required = Enter the name of the permanent resident
 lettingHistory.residentDetail.address.label = Resident’s address
 lettingHistory.residentDetail.address.required = Enter the address of the permanent resident
+lettingHistory.residentDetail.address.maxLength = The address of the permanent resident cannot be more than 2000 characters
 lettingHistory.residentDetail.address.hint = Enter any separately named or numbered address, or describe the part of the property they occupy.
 lettingHistory.residentDetail.duplicate = You have already entered a resident for that part of your property
 
@@ -2672,7 +2684,9 @@ costOfSales.financialYearEnd = Diwedd y flwyddyn ariannol
 costOfSales.excludingVAT = (heb gynnwys TAW)
 costOfSales.accommodation = Llety
 costOfSales.food = Bwyd
+costOfSales.food.hint = Excluding drinks
 costOfSales.drinks = Diodydd
+costOfSales.drinks.hint = Including alcoholic and soft drinks, crisps, nuts.
 costOfSales.otherSales = Arall
 costOfSales.otherSales.hint = Gan gynnwys llogi ystafelloedd digwyddiadau, ystafelloedd cynadledda a theleffonau.
 costOfSales.total = Cyfanswm cost y gwerthiannau
@@ -2891,7 +2905,7 @@ netProfit.heading = This is a holding page for the net profits page
 #################
 
 common6020.inset = Mae pob maes ar y dudalen hon yn orfodol. Os nad yw hyn yn berthnasol, nodwch y rhif 0.
-common6020.creditCards.notInclude = This not include bunkered fuel, or fuel sales paid by debit or credit cards.
+common6020.creditCards.notInclude = This does not include bunkered fuel, or fuel sales paid by debit or credit cards.
 
 #TOTAL FUEL SOLD (FORM 6020)
 ############################
@@ -3307,7 +3321,7 @@ error.additionalMisc.leisureReceipts.required = Enter 0 if you did not have any 
 error.additionalMisc.leisureReceipts.range    = Receipts from other leisure facilities in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalMisc.leisureReceipts.negative = Receipts from other leisure facilities in the year ending {0} cannot be a negative number
 
-error.additionalMisc.leisureReceipts.details.maxLength = The description of the receipts from other leisure facilities should be 1000 characters or fewer
+error.additionalMisc.leisureReceipts.details.maxLength = The description of the receipts from other leisure facilities should be 2000 characters or fewer
 error.additionalMisc.leisureReceipts.details.required = Describe the receipts from other leisure facilities
 
 error.additionalMisc.winterStorageReceipts.required = Enter 0 if you did not have any receipts from the winter storage of caravans in the year ending {0}
@@ -3322,7 +3336,7 @@ error.additionalMisc.otherActivitiesReceipts.required = Enter 0 if you did not h
 error.additionalMisc.otherActivitiesReceipts.range    = Receipts from the other activities in the year ending {0} must be a number, for example 100 or 100.00
 error.additionalMisc.otherActivitiesReceipts.negative = Receipts from the other activities in the year ending {0} cannot be a negative number
 
-error.additionalMisc.otherActivitiesReceipts.details.maxLength = The description of the other activities not covered previously should be 1000 characters or fewer
+error.additionalMisc.otherActivitiesReceipts.details.maxLength = The description of the other activities not covered previously should be 2000 characters or fewer
 error.additionalMisc.otherActivitiesReceipts.details.required = Describe the other activities not covered previously
 
 error.additionalMisc.otherServicesReceipts.required = Enter 0 if you did not have any receipts from from sale of other services in the year ending {0}
@@ -3484,7 +3498,7 @@ error.costsBreakdown.required = Give details of a breakdown of the capital cost 
 
 plantAndTechnology.heading = Describe the plant and the type of technology
 plantAndTechnology.hint = For example, wind farm - if your property includes more than one technology type, please give details
-error.plantAndTechnology.maxLength = Description must be 1,000 characters or fewer
+error.plantAndTechnology.maxLength = Description must be 2,000 characters or fewer
 error.plantAndTechnology.required = Give details of the plant and the type of technology
 
 #GENERATOR CAPACITY
@@ -4121,7 +4135,7 @@ feedback.bottomCopy=Do not include any personal or financial information, for ex
 
 feedback.rating.required=Select how satisfied you are with this service
 feedback.comments.maxLength=Comments must be 2000 characters or fewer
-confirmation.feedback.subheading=How did you feel about this service?
+confirmation.feedback.subheading=Overall, how did you feel about this service?
 confirmation.feedback.title=Feedback
 
 feedback.backToLogin = Start a new declaration

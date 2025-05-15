@@ -56,9 +56,8 @@ class FranchiseTypeDetailsControllerSpec
         page.input("typeOfBusiness") should haveValue(concession6015IncomeRecord.businessDetails.get.typeOfBusiness)
       }
       "render back link to CYA if request comes from CYA" in new ControllerFixture {
-        val result  = controller.show(0)(fakeRequestFromCYA)
-        val content = contentAsString(result)
-        val page    = contentAsJsoup(result)
+        val result = controller.show(0)(fakeRequestFromCYA)
+        val page   = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
       "render a correct back link to type of income page if no query parameters in the url " in new ControllerFixture {
@@ -70,10 +69,13 @@ class FranchiseTypeDetailsControllerSpec
     }
     "handling POST requests"           should {
       "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
-        val res = controller.submit(0)(
+        val result = controller.submit(0)(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
-        status(res) shouldBe BAD_REQUEST
+        status(result) shouldBe BAD_REQUEST
+        val page = contentAsJsoup(result)
+        page.error("operatorName")   shouldBe "error.operatorName.required"
+        page.error("typeOfBusiness") shouldBe "error.typeOfBusiness.required"
       }
       behave like savingIncomeRecordAndRedirectingToAddressLookupService(0)
       behave like savingIncomeRecordAndRedirectingToAddressLookupService(1)

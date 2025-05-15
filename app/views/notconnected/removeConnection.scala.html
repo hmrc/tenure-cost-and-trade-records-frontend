@@ -20,12 +20,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
   govukInput: GovukInput,
-  govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
   formWithCSRF: FormWithCSRF
 )
 
@@ -69,18 +70,15 @@
       "email",
     )
       
-    @govukCharacterCount(
-      CharacterCount(
-        id = "removeConnectionAdditionalInfo",
-        name = "removeConnectionAdditionalInfo",
-        maxLength = 2000,
-        label = Label(
-          content = Text(s"${messages("label.removeConnectionAdditionalInfo")} ${messages("hintText.optional")}"),
-        ),
-        hint = Some(Hint(content = Text(messages("hint.removeConnectionDetails.removeConnectionAdditionalInfo")))),
-        errorMessage = theForm.errors.asTextErrorMessageForField("removeConnectionAdditionalInfo"),
-      ).withFormField(theForm("removeConnectionAdditionalInfo"))
-    )
+
+      @includes.textInputHMRCCharCount(
+          hmrcCharacterCount,
+          theForm,
+          "removeConnectionAdditionalInfo",
+          "label.removeConnectionAdditionalInfo",
+          hint = "hint.removeConnectionDetails.removeConnectionAdditionalInfo",
+          charCount = 2000
+      )
 
       @includes.continueSaveAsDraftButtons(govukButton)
 

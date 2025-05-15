@@ -109,7 +109,7 @@
     hmrcCharacterCount(
         CharacterCount(
             rows = 3,
-            maxLength = 1000,
+            maxLength = 2000,
             errorMessage = form.errors.asTextErrorMessageForField(formField),
             label = Label(content = Text(messages("additionalMisc.giveDetailsLeisure")))
         ).withFormField(form(formField))
@@ -148,7 +148,7 @@
         hmrcCharacterCount(
             CharacterCount(
                 rows = 3,
-                maxLength = 1000,
+                maxLength = 2000,
                 errorMessage = form.errors.asTextErrorMessageForField(formField),
                 label = Label(content = Text(messages("additionalMisc.giveDetailsOther")))
             ).withFormField(form(formField))

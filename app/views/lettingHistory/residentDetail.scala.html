@@ -17,9 +17,14 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.ResidentDetail
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput, GovukCharacterCount}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukCharacterCount: GovukCharacterCount, govukButton: GovukButton)
+@this(layout: Layout,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        hmrcCharacterCount: HmrcCharacterCount,
+        govukButton: GovukButton)
 
 @(theForm: Form[ResidentDetail], backLink: Option[String], maybeIndex: Option[Int])(implicit request: SessionRequest[?], messages: Messages)
 
@@ -44,14 +49,14 @@
             labelClasses = "govuk-!-font-weight-bold",
         )
 
-        @includes.textInputCharCount(
-            govukCharacterCount,
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
             theForm,
-            name = "address",
-            labelContent = "lettingHistory.residentDetail.address.label",
-            /*label*/classes = "govuk-!-font-weight-bold",
+            "address",
+            "lettingHistory.residentDetail.address.label",
+            classes = "govuk-!-font-weight-bold",
             hint = "lettingHistory.residentDetail.address.hint",
-            charCount = 1000
+            charCount = 2000
         )
 
         @includes.continueSaveAsDraftButtons(govukButton)

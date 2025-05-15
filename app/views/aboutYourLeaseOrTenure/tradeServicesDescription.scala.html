@@ -18,13 +18,13 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import models.submissions.aboutYourLeaseOrTenure.TradeServicesDetails
 @import models.pages.Summary
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @this(layout: Layout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
 )
 
 @(theForm: Form[TradeServicesDetails], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[?], messages: Messages)
@@ -43,19 +43,13 @@
         <p class="govuk-body">@messages("tradeServiceDescription.p1")</p>
         <p class="govuk-body ">@messages("tradeServiceDescription.p2")</p>
 
-        @govukCharacterCount(
-            CharacterCount(
-                id = "description",
-                name = "description",
-                maxLength = 500,
-                rows = 4,
-                label = Label(
-                    content = Text(messages("tradeServiceDescription.describe")),
-                    classes = "govuk-label--m gov govuk-!-margin-bottom-6",
-                    isPageHeading = false
-                ),
-                errorMessage = theForm.errors.asTextErrorMessageForField("description"),
-            ).withFormField(theForm("description"))
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "description",
+            "tradeServiceDescription.describe",
+            classes = "govuk-label--m gov govuk-!-margin-bottom-6",
+            charCount = 2000
         )
 
 

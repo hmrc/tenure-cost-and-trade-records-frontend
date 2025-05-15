@@ -21,6 +21,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichFormErrors
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import util.DateUtilLocalised
+@import play.twirl.api.HtmlFormat
 
 @this(layout: Layout, govukSummaryList: GovukSummaryList, govukWarningText: GovukWarningText, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
@@ -36,6 +37,8 @@
     aboutTheTradingHistory.occupationAndAccountingInformation.get
 }
 
+@vatRegistered = @{request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.areYouVATRegistered)}
+
 @layout(
   pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
   showSection = true,
@@ -46,19 +49,28 @@
 ) {
 
     <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
-
     @summaryList(
-        summaryListRow(
-            keyText = messages("checkYourAnswersAboutTheTradingHistory.occupationDate"),
-            valueText = dateUtil.formatYearMonth(occupationAndAccountingInformation.firstOccupy.toYearMonth),
-            changeCall = routes.WhenDidYouFirstOccupyController.show(),
-            noBorder = true
-        ),
-        summaryListRow(
-            keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-            valueText = occupationAndAccountingInformation.currentFinancialYearEnd.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse(""),
-            changeCall = routes.FinancialYearEndController.show()
-        )
+        Seq(
+            vatRegistered.map { vatRegistered =>
+                summaryListRow(
+                    keyText    = messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"),
+                    valueText  = vatRegistered.name.capitalize,
+                    changeCall = controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
+                    noBorder = true
+                )
+            },
+            Some(summaryListRow(
+                keyText = messages("checkYourAnswersAboutTheTradingHistory.occupationDate"),
+                valueText = dateUtil.formatYearMonth(occupationAndAccountingInformation.firstOccupy.toYearMonth),
+                changeCall = routes.WhenDidYouFirstOccupyController.show(),
+                noBorder = true
+            )),
+            Some(summaryListRow(
+                keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+                valueText = occupationAndAccountingInformation.currentFinancialYearEnd.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse(""),
+                changeCall = routes.FinancialYearEndController.show()
+            ))
+        ).flatten: _*
     )
 
     @govukWarningText(WarningText(

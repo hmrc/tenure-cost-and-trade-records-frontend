@@ -30,7 +30,7 @@ object ServicePaidSeparatelyForm {
           text
             .verifying(
               nonEmpty(errorMessage = "servicePaidSeparately.describe.error"),
-              maxLength(500, "error.tradeServiceDescription.maxLength")
+              maxLength(2000, "error.tradeServiceDescription.maxLength")
             )
       )(ServicePaidSeparately.apply)(o => Some(o.description))
     )

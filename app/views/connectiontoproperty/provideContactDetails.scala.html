@@ -44,7 +44,7 @@
     @includes.textInput(govukInput, theForm, "yourContactDetails.fullName", "govuk-!-width-two-thirds", "fullName")
     @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.email", "govuk-!-width-two-thirds", "email")
     @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.phone", "govuk-!-width-two-thirds", "phone")
-    @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "yourContactDetails.provideContactDetailsAdditionalInformation", "provideContactDetailsAdditionalInformation.heading","", false, "provideContactDetailsAdditionalInformation.hint", charCount = 1000)
+    @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "yourContactDetails.provideContactDetailsAdditionalInformation", "provideContactDetailsAdditionalInformation.heading","", false, "provideContactDetailsAdditionalInformation.hint", charCount = 2000)
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

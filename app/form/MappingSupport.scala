@@ -200,7 +200,7 @@ object MappingSupport {
     ),
     "contactDetails"                             -> contactDetailsMapping,
     "provideContactDetailsAdditionalInformation" -> optional(
-      default(text, "").verifying(maxLength(1000, "error.char.count.maxLength"))
+      default(text, "").verifying(maxLength(2000, "error.char.count.maxLength"))
     )
   )(YourContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
 

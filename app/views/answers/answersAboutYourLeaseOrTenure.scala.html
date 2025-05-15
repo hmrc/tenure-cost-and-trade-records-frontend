@@ -181,16 +181,16 @@
     ))
     }
 
-    @hasLeaseDetails.filter(_ => for6076).map { _ =>
+    @sectionAnswers.answers.map(_.propertyUseLeasebackAgreement.isDefined).filter(_ => for6076).map { _ =>
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourLease.heading")</h2>
 
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leasebackArrangement",
             _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
-            controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
-                sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease",
-                    _.provideDetailsOfYourLease.map(v => v),
-                    controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(), "provideDetailsOfYourLease")
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
+        sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.provideDetailsOfYourLease",
+            _.provideDetailsOfYourLease.map(v => v),
+            controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show(), "provideDetailsOfYourLease")
     ))
     }
 

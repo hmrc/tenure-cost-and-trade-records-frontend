@@ -24,26 +24,21 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object OtherLettingForm {
 
-  val otherLettingForm = Form(
+  val theForm = Form(
     mapping(
-      "lettingType"           -> default(text, "").verifying(
+      "lettingType" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.lettingType.required"),
         maxLength(50, "error.lettingType.maxLength")
       ),
-      "tenantName"            -> default(text, "").verifying(
+      "tenantName"  -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tenantName.required"),
         maxLength(50, "error.otherLetting.tenantName.maxLength")
-      ),
-      "correspondenceAddress" -> optional(lettingPartOfPropertyAddressMapping)
-        .verifying("error.correspondenceAddress.required", _.isDefined)
-    )((lettingType, tenantName, correspondenceAddress) =>
-      OtherLetting(Some(lettingType), Some(tenantName), correspondenceAddress, None)
-    )(otherLetting =>
+      )
+    )((lettingType, tenantName) => OtherLetting(Some(lettingType), Some(tenantName), None, None))(otherLetting =>
       Some(
         (
           otherLetting.lettingType.getOrElse(""),
-          otherLetting.tenantName.getOrElse(""),
-          otherLetting.correspondenceAddress
+          otherLetting.tenantName.getOrElse("")
         )
       )
     )
