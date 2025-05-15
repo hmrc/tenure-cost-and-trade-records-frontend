@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,53 +30,56 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutFranchiseOrLettings], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[CheckYourAnswersAboutFranchiseOrLettings], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@label         = @{
-    request.sessionData.forType match {
-        case  FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
-        case  FOR6020            => messages("label.section.aboutTheLettings")
-        case  FOR6045 | FOR6046  => messages("label.section.aboutTheConcessionsFranchisesLettings")
-        case _                   => messages("label.section.aboutTheFranchiseLettings")
-    }
+@forType = @{
+    request.sessionData.forType
 }
 
+@sectionName = @{
+    forType match {
+        case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
+        case FOR6020 => messages("label.section.aboutTheLettings")
+        case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
+        case _ => messages("label.section.aboutTheFranchiseLettings")
+    }
+}
 
 @pageHeading = @{
-    request.sessionData.forType match {
-        case  FOR6015 | FOR6016  => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
-        case  FOR6020            => messages("checkYourAnswersLettings.heading")
-        case  FOR6045 | FOR6046  => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
-        case _                   => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
-  }
+    forType match {
+        case FOR6015 | FOR6016 => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
+        case FOR6020 => messages("checkYourAnswersLettings.heading")
+        case FOR6045 | FOR6046 => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
+        case _ => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
+    }
 }
 
-    @layout(
-        pageHeading = pageHeading,
-        backLinkUrl = backLink,
-        showSection = true,
-        fullWidth = true,
-        summary = Some(summary),
-        sectionName = label,
-        theForm = theForm
-    ) {
-        @{
-            request.sessionData.forType match {
-                case FOR6010 | FOR6011 | FOR6015| FOR6016 | FOR6045 | FOR6046 =>  answers()
-                case FOR6020                                                  =>  answersLetting()
-                case _                                                        =>  answersSectionAboutTheFranchiseLettings()
-            }
+@layout(
+    pageHeading = pageHeading,
+    backLinkUrl = backLink,
+    showSection = true,
+    fullWidth = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = sectionName,
+    theForm = theForm
+) {
+    @{
+        forType match {
+            case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 | FOR6045 | FOR6046 => answers()
+            case FOR6020 => answersLetting()
+            case _ => answersSectionAboutTheFranchiseLettings()
         }
-        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
-
-            @includes.checkYourAnswersRadioButtons(
-                govukRadios,
-                theForm,
-                "checkYourAnswersAboutFranchiseOrLettings"
-            )
-
-            @includes.continueSaveAsDraftButtons(govukButton)
-
-        }
-
     }
+
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.submit()) {
+
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersAboutFranchiseOrLettings"
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
+
+}

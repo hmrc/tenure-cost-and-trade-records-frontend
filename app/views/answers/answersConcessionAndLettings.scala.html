@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 @import util.DateUtilLocalised
 @import util.SectionAnswersRowBuilder
 @import models.submissions.aboutfranchisesorlettings._
+@import models.ForType.*
 @import util.NumberUtil._
 
 @this(
@@ -30,6 +31,10 @@
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
+@forType = @{
+    request.sessionData.forType
+}
+
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutFranchisesOrLettings)
 }
@@ -37,7 +42,7 @@
 @numberOfIncomeRecords = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length}
 
 @addRentalIncomeMessage(itemsCount: Int) = @{
-    if (request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length <= 1) {
+    if (request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length == 1) {
         messages("cya.rentalIncomeList.heading", itemsCount)
     } else {
         messages("cya.rentalIncomeList.plural.heading", itemsCount)
@@ -153,7 +158,8 @@
                 .mkString("""<p class="govuk-body">""", "", "</p>") +
                 concession.businessDetails.flatMap(_.howBusinessPropertyIsUsed).getOrElse("")
                 .mkString("""<p class="govuk-body">""", "", "</p>"),
-        controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index),
+                if (forType == FOR6030) controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(index)
+                else controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index),
         "operatorName",
         ("valueAsHtml", _ => None))
 ))
@@ -175,7 +181,8 @@
                         Actions(items =
                             Seq(
                                 ActionItem(
-                                    href = s"${controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(index).url}&from=CYA",
+                                    href = s"${if (forType == FOR6030) controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(index).url
+                                    else controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(index).url}&from=CYA",
                                     content = Text(messages("label.change")),
                                     visuallyHiddenText = Some(messages("checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading")),
                                     attributes = Map(
@@ -194,7 +201,11 @@
                 ),
                 SummaryListRow(
                     key = Key(Text(messages("feeReceived.concessionOrFranchiseFee"))),
-                    value = Value(HtmlContent(tableRow(feesSection.feeReceived.fold(Seq.empty[String])(_.feeReceivedPerYear.map(_.concessionOrFranchiseFee.getOrElse(zeroBigDecimal).asMoney))).body))
+                    value = Value(HtmlContent(tableRow(feesSection.feeReceived.fold(Seq.empty[String])(_.feeReceivedPerYear.map(_.concessionOrFranchiseFee.getOrElse(zeroBigDecimal).asMoney))).body)),
+                    classes = "no-border-bottom"
+                ),
+                SummaryListRow(
+                    value = Value(Text(feesSection.feeReceived.flatMap(_.feeCalculationDetails).getOrElse("")))
                 )
             )
         ))

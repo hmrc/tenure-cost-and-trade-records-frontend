@@ -55,8 +55,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               checkYourAnswersAboutFranchiseOrLettingsForm.fill(checkYourAnswersAboutFranchiseOrLettings)
             case _                                              => checkYourAnswersAboutFranchiseOrLettingsForm
           },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
+          getBackLink(request.sessionData)
         )
       )
     )
@@ -69,8 +68,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
         BadRequest(
           checkYourAnswersAboutFranchiseOrLettingsView(
             formWithErrors,
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
+            getBackLink(request.sessionData)
           )
         ),
       data => {
@@ -88,6 +86,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
       }
     )
   }
+
   private def getBackLink(
     answers: Session
   ): String =
@@ -101,4 +100,5 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               .show(answers.aboutFranchisesOrLettings.fold(0)(_.rentalIncomeIndex))
               .url
           case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+
 }
