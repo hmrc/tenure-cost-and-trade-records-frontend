@@ -1,0 +1,363 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory._
+@import util.DateUtilLocalised
+@import util.NumberUtil._
+@import util.CyaTradingHistorySupport
+
+
+
+@this(
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised,
+        cyaSupport: CyaTradingHistorySupport
+)
+
+@()(implicit request: SessionRequest[_], messages: Messages)
+
+@otherCostsTotalValuesRow(otherCosts: Option[OtherCosts]) = @{
+    cyaSupport.table(
+        otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
+            otherCost.total.asMoney
+        ))
+    ).body
+}
+
+@otherCostsKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("otherCosts.contributionToHeadOffice"),
+        messages("otherCosts.otherCosts")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+@otherCostsValuesTable(otherCosts: Option[OtherCosts]) = @{
+    cyaSupport.table(
+        otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
+            dateUtil.formatDayMonthAbbrYear(otherCost.financialYearEnd),
+            otherCost.contributionsToHeadOffice.getOrElse(zeroBigDecimal).asMoney,
+            otherCost.otherCosts.getOrElse(zeroBigDecimal).asMoney
+        ))
+    ).body + optionalParagraph(otherCosts.flatMap(_.otherCostDetails)).body
+}
+
+@optionalParagraph(textOpt: Option[String]) = {
+@textOpt.filterNot(_.trim.isEmpty).map { text =>
+    <p class="govuk-body">@text</p>
+}
+}
+
+@payrollCostsKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("totalPayrollCosts.managersAndStaff"),
+        messages("totalPayrollCosts.directorsRemuneration"),
+        messages("totalPayrollCosts.total")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+@payrollCostsValuesTable(totalPayrollCosts: Seq[TotalPayrollCost]) = @{
+    cyaSupport.table(
+        totalPayrollCosts.map(payroll => Seq(
+            dateUtil.formatDayMonthAbbrYear(payroll.financialYearEnd),
+            payroll.managersAndStaff.getOrElse(zeroBigDecimal).asMoney,
+            payroll.directorsRemuneration.getOrElse(zeroBigDecimal).asMoney,
+            payroll.total.asMoney
+        ))
+    ).body
+}
+
+@variableOperatingExpensesValuesTable(voeSections: Option[VariableOperatingExpensesSections]) = @{
+    cyaSupport.table(
+        voeSections.fold(Seq.empty[Seq[String]])(
+            _.variableOperatingExpenses.map { voe =>
+                Seq(
+                    dateUtil.formatDayMonthAbbrYear(voe.financialYearEnd),
+                    voe.energyAndUtilities.getOrElse(zeroBigDecimal).asMoney,
+                    voe.cleaningAndLaundry.getOrElse(zeroBigDecimal).asMoney,
+                    voe.buildingMaintenanceAndRepairs.getOrElse(zeroBigDecimal).asMoney,
+                    voe.fixturesFittingsAndEquipment.getOrElse(zeroBigDecimal).asMoney + "<br/> &nbsp;",
+                    voe.advertisingAndPromotions.getOrElse(zeroBigDecimal).asMoney + "<br/> &nbsp;",
+                    voe.administrationAndSundries.getOrElse(zeroBigDecimal).asMoney,
+                    voe.entertainment.getOrElse(zeroBigDecimal).asMoney,
+                    voe.other.getOrElse(zeroBigDecimal).asMoney
+                )
+            }
+        )
+    ).body + optionalParagraph(voeSections.flatMap(_.otherExpensesDetails)).body
+}
+
+@variableOperatingExpensesTotalValuesRow(voeSections: Option[VariableOperatingExpensesSections]) = @{
+    cyaSupport.table(
+        voeSections.fold(Seq.empty[Seq[String]])(
+            _.variableOperatingExpenses.map { voe =>
+                Seq(
+                    voe.total.asMoney
+                )
+            }
+        )
+    ).body
+}
+
+@variableOperatingExpensesKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("variableOperatingExpenses.energyAndUtilities"),
+        messages("variableOperatingExpenses.cleaningAndLaundry"),
+        messages("variableOperatingExpenses.buildingMaintenanceAndRepairs"),
+        messages("variableOperatingExpenses.fixturesFittingsAndEquipment"),
+        messages("variableOperatingExpenses.advertisingAndPromotions"),
+        messages("variableOperatingExpenses.administrationAndSundries"),
+        messages("variableOperatingExpenses.entertainment"),
+        messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+@fixedOperatingExpensesValuesTable(fixedOperatingExpenses: Seq[FixedOperatingExpenses]) = @{
+    cyaSupport.table(
+        fixedOperatingExpenses.map(foe => Seq(
+            dateUtil.formatDayMonthAbbrYear(foe.financialYearEnd),
+            foe.rent.getOrElse(zeroBigDecimal).asMoney,
+            foe.businessRates.getOrElse(zeroBigDecimal).asMoney,
+            foe.insurance.getOrElse(zeroBigDecimal).asMoney,
+            foe.loanInterest.getOrElse(zeroBigDecimal).asMoney,
+            foe.depreciation.getOrElse(zeroBigDecimal).asMoney,
+            foe.total.asMoney
+        ))
+    ).body
+}
+
+@fixedOperatingExpensesKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("fixedOperatingExpenses.rent"),
+        messages("fixedOperatingExpenses.businessRates"),
+        messages("fixedOperatingExpenses.insurance"),
+        messages("fixedOperatingExpenses.loanInterest"),
+        messages("fixedOperatingExpenses.depreciation"),
+        messages("fixedOperatingExpenses.total")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+
+@profitSummaryValuesTable(trading: AboutTheTradingHistory) = @{
+    cyaSupport.table(
+        (trading.incomeExpenditureSummaryData zip trading.turnoverSections.map(_.financialYearEnd)).zipWithIndex.map {
+            case ((summary, finYearEnd), idx) => Seq(
+                dateUtil.formatDayMonthAbbrYear(finYearEnd),
+                summary.totalGrossProfits.asMoney,
+                summary.totalNetProfit.asMoney,
+                summary.profitMargin.withScale(2) + "% <br/> <br/> ",
+                Option.when(idx == 0)(
+                    trading.incomeExpenditureSummary.filter(_.incomeExpenditureSummary == "confirmed").fold("No")(_ => "Yes")
+                ).getOrElse(" ")
+            )
+        }
+    ).body
+}
+
+@profitSummaryKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalGrossProfits"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalNetProfits"),
+        messages("checkYourAnswersAboutTheTradingHistory.netProfitPercentage"),
+        messages("checkYourAnswersAboutTheTradingHistory.confirmProfitFigures")
+    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+}
+@cyaSupport.accountingInformation
+
+<h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+                    SummaryListRow(
+                        key = Key(HtmlContent(cyaSupport.turnoverKeys60156016)),
+                        value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => cyaSupport.turnoverValuesTable60156016(t.turnoverSections)))),
+                        actions = cyaSupport.actions
+                )
+            )
+
+))
+
+<h2 class="govuk-heading-m">@messages("costOfSales.heading")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            key = Key(HtmlContent(cyaSupport.costOfSalesKeys)),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => cyaSupport.costOfSalesValuesTable(t.costOfSales)))),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"${controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url}?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages("costOfSales.heading")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages("costOfSales.heading")}"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+))
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            key = Key(HtmlContent(payrollCostsKeys)),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => payrollCostsValuesTable(t.totalPayrollCostSections)))),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"${controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show().url}?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")}"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+))
+
+<h2 class="govuk-heading-m">@messages("variableOperatingExpenses.heading")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            key = Key(HtmlContent(variableOperatingExpensesKeys)),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => variableOperatingExpensesValuesTable(t.variableOperatingExpenses)))),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"${controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show().url}?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages("variableOperatingExpenses.heading")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages("variableOperatingExpenses.heading")}"
+                            )
+                        )
+                    )
+                )
+            ),
+            classes = "no-border-bottom"
+        ),
+        SummaryListRow(
+            key = Key(Text(messages("variableOperatingExpenses.total"))),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => variableOperatingExpensesTotalValuesRow(t.variableOperatingExpenses))))
+        )
+    )
+))
+
+<h2 class="govuk-heading-m">@messages("fixedOperatingExpenses.heading")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            key = Key(HtmlContent(fixedOperatingExpensesKeys)),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => fixedOperatingExpensesValuesTable(t.fixedOperatingExpensesSections)))),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"${controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url}?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages("fixedOperatingExpenses.heading")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages("fixedOperatingExpenses.heading")}"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+))
+
+<h2 class="govuk-heading-m">@messages("otherCosts.heading")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            key = Key(HtmlContent(otherCostsKeys)),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => otherCostsValuesTable(t.otherCosts)))),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"${controllers.aboutthetradinghistory.routes.OtherCostsController.show().url}?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages("otherCosts.heading")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages("otherCosts.heading")}"
+                            )
+                        )
+                    )
+                )
+            ),
+            classes = "no-border-bottom"
+        ),
+        SummaryListRow(
+            key = Key(Text(messages("otherCosts.total"))),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => otherCostsTotalValuesRow(t.otherCosts))))
+        )
+    )
+))
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.profitSummary")</h2>
+
+@govukSummaryList(SummaryList(rows =
+    Seq(
+        SummaryListRow(
+            key = Key(HtmlContent(profitSummaryKeys)),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => profitSummaryValuesTable(t)))),
+            actions = Some(
+                Actions(items =
+                    Seq(
+                        ActionItem(
+                            href = s"${controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url}?from=CYA",
+                            content = Text(messages("label.change")),
+                            visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.profitSummary")),
+                            attributes = Map(
+                                "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.profitSummary")}"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+))
+
+@govukSummaryList(SummaryList(rows =
+    cyaSupport.sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.unusualCircumstances",
+        _.unusualCircumstances.map(_.unusualCircumstances),
+        controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
+))
+
