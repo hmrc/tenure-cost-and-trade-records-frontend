@@ -738,6 +738,7 @@ removeConnection.subheading = We’ll only use these details if we need to conta
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the date you last occupied the property.
 error.fullName.required = Enter your name
+error.removeConnectionAdditionalInfo.maxLength = Additional information must be 2000 characters or fewer
 
 # ABOUT YOU AND PROPERTY SECTION
 ################################

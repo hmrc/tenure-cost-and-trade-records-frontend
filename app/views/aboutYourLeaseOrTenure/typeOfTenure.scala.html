@@ -21,12 +21,22 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
+
+
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+
+
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukCheckboxes: GovukCheckboxes,
-        govukCharacterCount: GovukCharacterCount,
+        hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF
 )
 
@@ -84,23 +94,13 @@
     ).withFormField(theForm("typeOfTenure"))
    )
 
-   @govukCharacterCount(
-   CharacterCount(
-   id ="typeOfTenureDetails",
-   name = "typeOfTenureDetails",
-   rows = 5,
-   maxLength = 2000,
-    errorMessage = {
-     if (theForm.errors.exists(_.message == "error.typeOfTenureDetails.required")) {
-      ErrorMessage(content = Text(messages("error.typeOfTenureDetails.required")))
-     } else {
-      theForm.errors.asTextErrorMessageForField("typeOfTenureDetails")
-     }
-    },
-   label = Label(
-   content = Text(messages("label.typeOfTenureDetails")),
-   classes = "govuk-!-font-weight-bold")
-   ).withFormField(theForm("typeOfTenureDetails"))
+   @includes.textInputHMRCCharCountTypeOfTenure(
+    hmrcCharacterCount,
+    theForm,
+    "typeOfTenureDetails",
+    "label.typeOfTenureDetails",
+    classes = "govuk-!-font-weight-bold",
+    charCount = 2000
    )
 
   @includes.continueSaveAsDraftButtons(govukButton)

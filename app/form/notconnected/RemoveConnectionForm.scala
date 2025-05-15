@@ -20,7 +20,7 @@ import form.MappingSupport.contactDetailsMapping
 import models.submissions.notconnected.RemoveConnectionsDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RemoveConnectionForm {
   val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(
@@ -30,6 +30,7 @@ object RemoveConnectionForm {
       ),
       "removeConnectionDetails"        -> contactDetailsMapping,
       "removeConnectionAdditionalInfo" -> optional(text)
+        .verifying("error.removeConnectionAdditionalInfo.maxLength", it => it.forall(_.length <= 2000))
     )(RemoveConnectionsDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

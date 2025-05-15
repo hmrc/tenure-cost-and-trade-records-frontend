@@ -711,6 +711,7 @@ removeConnection.subheading = Dim ond os bydd angen i ni gysylltu â chi cyn dil
 label.removeConnectionAdditionalInfo = Gwybodaeth ychwanegol
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = Er enghraifft, y dyddiad y gwnaethoch feddiannu’r eiddo ddiwethaf.
 error.fullName.required = Enter your name
+error.removeConnectionAdditionalInfo.maxLength = Additional information must be 2000 characters or fewer
 
 # ABOUT YOU AND PROPERTY SECTION
 ################################
