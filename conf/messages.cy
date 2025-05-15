@@ -785,14 +785,15 @@ error.tradingActivity.maxLength = Your description of the trading activity must 
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
-premisesLicenseGranted.heading = Is there a current premises licence in place for the property?
+premisesLicenseGranted.heading = Does the property have a current premises licence?
 help.premisesLicenseGranted.title = Help with your premises licence
 help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
 error.premisesLicenseGranted.missing = Select yes if a premises licence has been granted
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
 ##############################################
-premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any unusual conditions restricting the use of all or part of the property
+premisesLicenseGrantedInformation.heading = Give details of your premises licence
+premisesLicenseGrantedInformation.hint = Include any unusual conditions restricting the use of all or part of the property.
 help.premisesLicenseGrantedInformation.title = Help with your description
 help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
 help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
