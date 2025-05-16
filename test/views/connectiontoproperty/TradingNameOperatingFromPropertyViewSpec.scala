@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm
 import models.pages.Summary
 import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -37,11 +36,11 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[Tr
     TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 
   def createView: () => Html = () =>
-    tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+    tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm: Form[TradingNameOperatingFromProperty] => Html =
     (form: Form[TradingNameOperatingFromProperty]) =>
-      tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+      tradingNameOperatingFromProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Trading name operating from property view" must {
 

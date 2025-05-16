@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package form.Form6010
 import play.api.data.validation.Constraint
 import play.api.data.{FormError, Mapping}
 import uk.gov.voa.play.form.Condition
-import uk.gov.voa.play.form.ConditionalMappings._
 
 object ConditionalMapping {
 

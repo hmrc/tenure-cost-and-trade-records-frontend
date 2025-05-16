@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.connectiontoproperty
 import form.connectiontoproperty.ConnectionToThePropertyForm
 import models.pages.Summary
 import models.submissions.connectiontoproperty.{ConnectionToProperty, ConnectionToThePropertyOccupierAgent, ConnectionToThePropertyOccupierTrustee, ConnectionToThePropertyOwnerAgent, ConnectionToThePropertyOwnerTrustee}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -31,10 +30,11 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
 
   val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
 
-  def createView = () => connectionToThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    connectionToThePropertyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ConnectionToProperty]) =>
-    connectionToThePropertyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    connectionToThePropertyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Connection to property view" must {
 

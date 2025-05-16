@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.LicensableActivitiesForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -30,10 +29,10 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
 
   override val form: Form[AnswersYesNo] = LicensableActivitiesForm.licensableActivitiesForm
 
-  def createView: () => Html = () => licensableActivitiesView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () => licensableActivitiesView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    licensableActivitiesView(form, Summary("99996010001"))(fakeRequest, messages)
+    licensableActivitiesView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Property licence activities view" must {
 

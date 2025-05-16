@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -33,12 +32,14 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
 
-  def createView = () => rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
-  def create6030View = () => rentIncludeTradeServicesView(form, FOR6030, Summary("99996030001"))(fakeRequest, messages)
+  def create6030View = () =>
+    rentIncludeTradeServicesView(form, FOR6030, Summary("99996030001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentIncludeTradeServicesDetails]) =>
-    rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
+    rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include trade services view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,11 @@ class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSe
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
 
-  def createView = () => servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ServicePaidSeparately]) =>
-    servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(fakeRequest, messages)
+    servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Service paid separately view" should {
 

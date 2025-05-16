@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyU
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -33,10 +32,10 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Pro
   override val form = propertyUseLeasebackArrangementForm
 
   def createView = () =>
-    propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(fakeRequest, messages)
+    propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PropertyUseLeasebackArrangement]) =>
-    propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(fakeRequest, messages)
+    propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
   "property use leaseback arrangement view" must {
 

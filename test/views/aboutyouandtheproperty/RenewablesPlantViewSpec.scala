@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,10 +31,12 @@ class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlant] {
 
   override val form: Form[RenewablesPlant] = RenewablesPlantForm.renewablesPlantForm
 
-  def createView: () => Html = () => renewablesPlantView(form, backLink, Summary("99996076001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    renewablesPlantView(form, backLink, Summary("99996076001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[RenewablesPlant] => Html =
-    (form: Form[RenewablesPlant]) => renewablesPlantView(form, backLink, Summary("99996076001"))(fakeRequest, messages)
+    (form: Form[RenewablesPlant]) =>
+      renewablesPlantView(form, backLink, Summary("99996076001"))(using fakeRequest, messages)
 
   "Renewables plant view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,7 +116,7 @@ class SaveAsDraftController @Inject() (
 
               Redirect(draft.exitPath)
             case None                                                                                     =>
-              errorHandler.notFoundTemplate(request).map(NotFound(_))
+              errorHandler.notFoundTemplate(using request).map(NotFound(_))
             case _                                                                                        =>
               val formWithLoginError = saveAsDraftLoginForm.withError("password", "saveAsDraft.error.invalidPassword")
               BadRequest(saveAsDraftLoginView(formWithLoginError, request.sessionData.toSummary))

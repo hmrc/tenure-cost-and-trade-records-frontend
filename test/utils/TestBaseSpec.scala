@@ -48,6 +48,7 @@ import repository.RepositoryUtils
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import java.nio.charset.StandardCharsets
 import java.time.{Clock, Instant, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -86,9 +87,11 @@ trait TestBaseSpec
 
   def messagesApi: MessagesApi = inject[MessagesApi]
 
+  val UTF8: String = StandardCharsets.UTF_8.name.toLowerCase
+
   val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
-  val fakeGetRequest = fakeRequest
+  val fakeGetRequest: FakeRequest[AnyContentAsEmpty.type] = fakeRequest
 
   val fakePostRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("POST", "/")
 

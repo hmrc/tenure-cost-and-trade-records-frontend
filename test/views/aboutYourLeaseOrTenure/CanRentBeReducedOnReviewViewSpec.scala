@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm
 import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -32,10 +31,10 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeR
 
   override val form = CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
-  def createView = () => canRentBeReducedOnReviewView(form, backLink)(sessionRequest, messages)
+  def createView = () => canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CanRentBeReducedOnReviewDetails]) =>
-    canRentBeReducedOnReviewView(form, backLink)(sessionRequest, messages)
+    canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
 
   "Can rent be reduced on review view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
 import models.submissions.common._
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,10 +29,11 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
 
   override val form = UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 
-  def createView = () => ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
-    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(fakeRequest, messages)
+    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Ultimately responsible view" must {
 

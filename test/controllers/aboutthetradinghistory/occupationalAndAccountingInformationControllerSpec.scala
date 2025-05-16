@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
 
   val mockAboutYouNavigator: AboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockWhenDidYouFirstOccupyView                          = mock[WhenDidYouFirstOccupyView]
-  when(mockWhenDidYouFirstOccupyView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockWhenDidYouFirstOccupyView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
   val aboutYourTradingHistoryController = new WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),

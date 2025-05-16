@@ -20,8 +20,6 @@ import models.Session
 import models.submissions.lettingHistory.{LettingHistory, OccupierDetail}
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
@@ -35,7 +33,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.occupierList.heading.plural"
         // TODO page.backLink    shouldBe None
@@ -50,7 +48,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.performRemove(index = 0)(fakePostRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
-        verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
       }
       "be handling POST /list?hadMoreOccupiers=yes by replying redirect to the 'Occupiers Detail' page" in new ControllerFixture {
         val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
@@ -66,7 +64,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.summaryList shouldNot be(empty)
           page.summaryList(0) should include(oneOccupier.head.name)
@@ -77,7 +75,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.remove(index = 0)(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.submitAction shouldBe routes.OccupierListController.performRemove(0).url
         }
@@ -88,7 +86,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           status(result) shouldBe BAD_REQUEST
           val page = contentAsJsoup(result)
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
-          verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
         "be handling confirmation POST /remove?index=0 by actually removing the occupier and then replying redirect to the 'Occupier List' page" in new ControllerFixture(
           oneOccupier
@@ -99,7 +97,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.OccupierListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           completedLettings(data)        shouldBe empty // instead of having size 1
         }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Occupier List' page" in new ControllerFixture(
@@ -111,7 +109,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.OccupierListController.show.url
-          verify(repository, never).saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
       }
       "and the maximum number of residents has been reached" should {

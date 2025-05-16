@@ -41,7 +41,7 @@ class HighSeasonTariff6048ControllerSpec extends TestBaseSpec {
       ),
       mockSessionRepo,
       stubMessagesControllerComponents()
-    )(inject[ExecutionContext], inject[DateUtilLocalised])
+    )(using inject[ExecutionContext], inject[DateUtilLocalised])
 
   private def validFormData: Seq[(String, String)] =
     Seq(

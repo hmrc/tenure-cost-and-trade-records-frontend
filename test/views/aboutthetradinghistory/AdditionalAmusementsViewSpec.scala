@@ -28,16 +28,16 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Additional
 
   val messageKeyPrefix = "additionalAmusements"
 
-  override val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(messages)
+  override val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages)
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   val backLink = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
 
-  def createView = () => additionalAmusementsView(form, backLink)(sessionRequest, messages)
+  def createView = () => additionalAmusementsView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[AdditionalAmusements]]) =>
-    additionalAmusementsView(form, backLink)(sessionRequest, messages)
+    additionalAmusementsView(form, backLink)(using sessionRequest, messages)
 
   "Additional amusements 6045 view" must {
 

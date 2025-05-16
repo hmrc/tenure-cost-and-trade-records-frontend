@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import controllers.FORDataCaptureController
 import controllers.aboutthetradinghistory.routes
 import form.aboutfranchisesorlettings.FeeReceivedForm.feeReceivedForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSection, FeeReceived, FeeReceivedPerYear}
+import models.submissions.aboutfranchisesorlettings.{ConcessionIncomeRecord, FeeReceived, FeeReceivedPerYear}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.FeeReceivedPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc._
+import play.api.mvc.*
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.feeReceived
 
@@ -47,17 +47,17 @@ class FeeReceivedController @Inject() (
     with I18nSupport {
 
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck(idx) { currentSection =>
+    runWithSessionCheck(idx) { concessionIncomeRecord =>
       val years = financialYearEndDates.map(_.getYear.toString)
       audit.sendChangeLink("FeeReceived")
 
       Ok(
         feeReceivedView(
-          currentSection.feeReceived
+          concessionIncomeRecord.feeReceived
             .filter(_.feeReceivedPerYear.size == years.size)
             .fold(feeReceivedForm(years).fill(initialFeeReceived))(feeReceivedForm(years).fill),
           idx,
-          currentSection.cateringOperationBusinessDetails.operatorName,
+          concessionIncomeRecord.businessDetails.fold("Operator")(_.operatorName),
           backLink(idx).url
         )
       )
@@ -65,7 +65,7 @@ class FeeReceivedController @Inject() (
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    runWithSessionCheck(idx) { currentSection =>
+    runWithSessionCheck(idx) { concessionIncomeRecord =>
       val yearEndDates = financialYearEndDates
       val years        = yearEndDates.map(_.getYear.toString)
 
@@ -76,7 +76,7 @@ class FeeReceivedController @Inject() (
             feeReceivedView(
               formWithErrors,
               idx,
-              currentSection.cateringOperationBusinessDetails.operatorName,
+              concessionIncomeRecord.businessDetails.fold("Operator")(_.operatorName),
               backLink(idx).url
             )
           ),
@@ -89,12 +89,13 @@ class FeeReceivedController @Inject() (
             val updatedFeeReceived = data.copy(feeReceivedPerYear = feeReceivedSeq)
 
             val updatedSections = request.sessionData.aboutFranchisesOrLettings
-              .map(_.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty))
-              .map(_.updated(idx, currentSection.copy(feeReceived = Some(updatedFeeReceived))))
+              .map(_.rentalIncome.getOrElse(IndexedSeq.empty))
+              .map(_.updated(idx, concessionIncomeRecord.copy(feeReceived = Some(updatedFeeReceived))))
               .get
 
             val updatedData =
-              updateAboutFranchisesOrLettings(_.copy(cateringOperationBusinessSections = Some(updatedSections)))
+              updateAboutFranchisesOrLettings(_.copy(rentalIncome = Some(updatedSections)))
+
             session.saveOrUpdate(updatedData).map { _ =>
               Redirect(navigator.nextPage(FeeReceivedPageId, updatedData).apply(updatedData))
             }
@@ -106,12 +107,15 @@ class FeeReceivedController @Inject() (
   }
 
   private def runWithSessionCheck(idx: Int)(
-    action: CateringOperationBusinessSection => Future[Result]
+    action: ConcessionIncomeRecord => Future[Result]
   )(implicit request: SessionRequest[AnyContent]): Future[Result] =
     if (request.sessionData.aboutTheTradingHistory.map(_.turnoverSections6030).exists(_.nonEmpty)) {
       request.sessionData.aboutFranchisesOrLettings
-        .filter(_.cateringOperationBusinessSections.nonEmpty)
-        .flatMap(_.cateringOperationBusinessSections.flatMap(_.lift(idx)))
+        .filter(_.rentalIncome.nonEmpty)
+        .flatMap(_.rentalIncome.flatMap(_.lift(idx)))
+        .collect[ConcessionIncomeRecord] { case concession: ConcessionIncomeRecord =>
+          concession
+        }
         .fold(Future.successful(Redirect(backLink(idx))))(action)
     } else {
       Redirect(routes.WhenDidYouFirstOccupyController.show())

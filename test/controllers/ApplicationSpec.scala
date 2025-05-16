@@ -33,7 +33,7 @@ class ApplicationSpec extends TestBaseSpec {
     "return HTML" in {
       val result = controller.index(fakeRequest)
       contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      charset(result)     shouldBe Some(UTF8)
     }
   }
 }

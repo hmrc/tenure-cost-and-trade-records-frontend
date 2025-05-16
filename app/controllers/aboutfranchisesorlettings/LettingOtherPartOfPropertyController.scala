@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.LettingOtherPartOfProperties6030Form.lettingOtherPartOfProperties6030Form
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertiesForm.lettingOtherPartOfPropertiesForm
 import models.ForType
 import models.ForType.*
@@ -57,18 +56,10 @@ class LettingOtherPartOfPropertyController @Inject() (
     Future.successful(
       Ok(
         cateringOperationOrLettingAccommodationView(
-          if (forType == FOR6030) {
-            request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
-              case Some(lettingOtherPartOfProperty) =>
-                lettingOtherPartOfProperties6030Form.fill(lettingOtherPartOfProperty)
-              case _                                => lettingOtherPartOfProperties6030Form
-            }
-          } else {
-            request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
-              case Some(lettingOtherPartOfProperty) =>
-                lettingOtherPartOfPropertiesForm.fill(lettingOtherPartOfProperty)
-              case _                                => lettingOtherPartOfPropertiesForm
-            }
+          request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty) match {
+            case Some(lettingOtherPartOfProperty) =>
+              lettingOtherPartOfPropertiesForm.fill(lettingOtherPartOfProperty)
+            case _                                => lettingOtherPartOfPropertiesForm
           },
           "lettingOtherPartOfProperty",
           getBackLink(request.sessionData, navigator.from),
@@ -81,11 +72,7 @@ class LettingOtherPartOfPropertyController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      if (forType == FOR6030) {
-        lettingOtherPartOfProperties6030Form
-      } else {
-        lettingOtherPartOfPropertiesForm
-      },
+      lettingOtherPartOfPropertiesForm,
       formWithErrors =>
         BadRequest(
           cateringOperationOrLettingAccommodationView(

@@ -5,17 +5,19 @@ val defaultPort = 9526
 val appName     = "tenure-cost-and-trade-records-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "3.6.4"
+ThisBuild / scalaVersion := "3.7.0"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     maintainer := "voa.service.optimisation@digital.hmrc.gov.uk",
-    libraryDependencies ++= AppDependencies.appDependencies,
-    PlayKeys.playDefaultPort := defaultPort,
     scalacOptions += "-Wconf:src=routes/.*:s",
-    scalacOptions += "-Wconf:cat=unused-imports&src=html/.*:s"
+    scalacOptions += "-Wconf:msg=Flag .* set repeatedly:s",
+    scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a \\`using\\` clause&src=views/.*:s",
+    javaOptions += "-XX:+EnableDynamicAgentLoading",
+    libraryDependencies ++= AppDependencies.appDependencies,
+    PlayKeys.playDefaultPort := defaultPort
   )
   .settings(
     SassKeys.cssStyle := Minified,

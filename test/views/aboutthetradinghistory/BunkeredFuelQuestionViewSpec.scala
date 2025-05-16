@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[BunkeredFuelQu
 
   val backLink = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
 
-  def createView = () => bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(fakeRequest, messages)
+  def createView = () => bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[BunkeredFuelQuestion]) =>
-    bunkeredFuelQuestionView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    bunkeredFuelQuestionView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Bunkered fuel question view" should {
 

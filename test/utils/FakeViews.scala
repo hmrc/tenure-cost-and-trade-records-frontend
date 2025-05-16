@@ -53,7 +53,7 @@ trait FakeViews { this: Injecting =>
   lazy val requestReferenceNumberConfirmationView     = inject[requestReferenceNumberConfirmation]
 
   // generic confirmation page
-  lazy val genericRemoveConfirmationView = inject[genericRemoveConfirmation]
+  lazy val genericRemoveConfirmationView: genericRemoveConfirmation = inject[genericRemoveConfirmation]
 
   // Connection to the property
   lazy val areYouThirdPartyView: areYouThirdParty                                                 = inject[areYouThirdParty]

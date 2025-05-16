@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import connectors.Audit
 import models.Session
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
+import models.submissions.aboutfranchisesorlettings.ConcessionIncomeRecord
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -41,7 +40,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
         val result = controller.show(0)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                                       shouldBe "feeReceived.heading"
         html.getElementById("feeReceivedPerYear.year[0].tradingPeriod").value            shouldBe "52"
@@ -66,10 +65,15 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.AddAnotherCateringOperationController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        redirectLocation(result).value shouldBe routes.RentalIncomeListController.show(1).url
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         val feeReceivedPerYear =
-          data.getValue.aboutFranchisesOrLettings.value.cateringOperationBusinessSections.value.head.feeReceived.value.feeReceivedPerYear.head
+          data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
+            .asInstanceOf[ConcessionIncomeRecord]
+            .feeReceived
+            .value
+            .feeReceivedPerYear
+            .head
         feeReceivedPerYear.tradingPeriod                  shouldBe 24
         feeReceivedPerYear.concessionOrFranchiseFee.value shouldBe 500
         reset(repository)
@@ -82,7 +86,8 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
   trait ControllerFixture:
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new FeeReceivedController(
@@ -91,7 +96,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
         aboutFranchisesOrLettingsNavigator,
         feeReceivedView,
         preEnrichedActionRefiner(
-          aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
+          aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6030)
         ),
         repository
       )

@@ -70,7 +70,7 @@ class FormSubmissionController @Inject() (
         "failureReason"   -> failureReason
       )
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
-      errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
+      errorHandler.internalServerErrorTemplate(using request).map(InternalServerError(_))
     }
   }
 

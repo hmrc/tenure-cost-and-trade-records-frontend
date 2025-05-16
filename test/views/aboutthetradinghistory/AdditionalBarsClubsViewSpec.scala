@@ -28,16 +28,16 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
 
   val messageKeyPrefix = "additionalBarsClubs"
 
-  override val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages)
+  override val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages)
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   val backLink = controllers.aboutthetradinghistory.routes.AdditionalCateringController.show().url
 
-  def createView = () => additionalBarsClubsView(form, backLink)(sessionRequest, messages)
+  def createView = () => additionalBarsClubsView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[AdditionalBarsClubs]]) =>
-    additionalBarsClubsView(form, backLink)(sessionRequest, messages)
+    additionalBarsClubsView(form, backLink)(using sessionRequest, messages)
 
   "Additional bars and clubs 6045 view" must {
 

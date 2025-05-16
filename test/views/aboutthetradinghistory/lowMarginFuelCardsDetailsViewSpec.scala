@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,10 +36,10 @@ class lowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMargin
       None,
       controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url,
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LowMarginFuelCardDetail]) =>
-    lowMarginFuelCardsDetailsView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
+    lowMarginFuelCardsDetailsView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Catering bunker fuel cards details view" should {
     behave like normalPage(createView, messageKeyPrefix)

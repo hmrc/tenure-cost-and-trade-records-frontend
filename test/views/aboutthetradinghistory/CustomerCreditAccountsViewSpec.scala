@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,16 +30,17 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
   val messageKeyPrefix = "customerCreditAcc"
 
   override val form =
-    CustomerCreditAccountsForm.customerCreditAccountsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
+    CustomerCreditAccountsForm.customerCreditAccountsForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
 
   val backLink = controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
     .show(0)
     .url
 
-  def createView = () => customerCreditAccountsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+  def createView = () =>
+    customerCreditAccountsView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[CustomerCreditAccounts]]) =>
-    customerCreditAccountsView(form, "", Summary("99996020001"))(sessionRequest, messages)
+    customerCreditAccountsView(form, "", Summary("99996020001"))(using sessionRequest, messages)
 
   "Customer credit accounts view" should {
 
@@ -73,7 +74,7 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
 
     "CustomerCreditAccountsForm" should {
       "reject empty values" in {
-        val form         = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022", "2021"))(messages)
+        val form         = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022", "2021"))(using messages)
         val formData     = Map(
           "customerCreditAccounts-0" -> "",
           "customerCreditAccounts-1" -> "100"
@@ -88,7 +89,7 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
       }
 
       "reject non-numeric values" in {
-        val form     = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022"))(messages)
+        val form     = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022"))(using messages)
         val formData = Map(
           "customerCreditAccounts-0" -> "abc"
         )
@@ -102,7 +103,7 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
         )
       }
       "reject  values bigger than 100" in {
-        val form     = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022"))(messages)
+        val form     = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022"))(using messages)
         val formData = Map(
           "customerCreditAccounts-0" -> "101"
         )

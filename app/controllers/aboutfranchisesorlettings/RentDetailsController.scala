@@ -133,11 +133,11 @@ class RentDetailsController @Inject() (
 
   private def getUrlByType(existingDetails: Option[LettingPartOfProperty], idx: Option[Int]) =
     existingDetails match {
-      case Some(atm: ATMLetting)                      => routes.AtmLettingController.show(idx).url
-      case Some(telecomMast: TelecomMastLetting)      => routes.TelecomMastLettingController.show(idx).url
-      case Some(advertRight: AdvertisingRightLetting) => routes.AdvertisingRightLettingController.show(idx).url
-      case Some(otherLetting: OtherLetting)           => routes.OtherLettingController.show(idx).url
-      case _                                          => routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+      case Some(_: ATMLetting)              => routes.AtmLettingController.show(idx).url
+      case Some(_: TelecomMastLetting)      => routes.TelecomMastLettingController.show(idx).url
+      case Some(_: AdvertisingRightLetting) => routes.AdvertisingRightLettingController.show(idx).url
+      case Some(_: OtherLetting)            => routes.OtherLettingController.show(idx).url
+      case _                                => routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     }
 
 }

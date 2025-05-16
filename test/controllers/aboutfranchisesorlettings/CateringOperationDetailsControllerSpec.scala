@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.{ForType, Session}
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -40,7 +38,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                      shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value                       shouldBe ""
@@ -58,7 +56,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()  shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
         html.getElementById("operatorName").value   shouldBe "Operator Name"
@@ -69,7 +67,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = Some(2))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.backLink should endWith("/concession-or-franchise")
       }
@@ -79,7 +77,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         val result = controller.show(index = Some(2))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.backLink should endWith("/add-another-catering-operation?idx=1") // the given index is decremented by 1
       }
@@ -106,7 +104,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         val updatedCateringOperationDetails =
           data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
@@ -128,7 +126,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         // )
         // status(result) shouldBe SEE_OTHER
         // redirectLocation(result).value shouldBe "/path/to/anywhere"
-        // verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        // verify(repository, once).saveOrUpdate(data.capture())(any[HeaderCarrier])
         // val updatedCateringOperationDetails =
         //   data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         // updatedCateringOperationDetails.operatorName shouldBe "Another Operator" // instead of "Operator Name"
@@ -151,7 +149,7 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         val updatedCateringOperationDetails =
           data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
@@ -169,7 +167,8 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
   ):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new CateringOperationDetailsController(

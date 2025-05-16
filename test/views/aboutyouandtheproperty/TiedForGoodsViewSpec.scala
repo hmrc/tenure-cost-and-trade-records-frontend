@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.TiedForGoodsForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -32,10 +31,11 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
 
-  def createView: () => Html = () => tiedForGoodsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    tiedForGoodsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    tiedForGoodsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    tiedForGoodsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tied for goods view" must {
 

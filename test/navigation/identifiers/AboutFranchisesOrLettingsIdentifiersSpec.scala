@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,9 +97,6 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for add another lettings operations page" in
       assert(AddAnotherLettingAccommodationPageId.toString.equals("addAnotherLettingAccommodationPage"))
-
-    "Identifier for concession or franchise fee page" in
-      assert(ConcessionOrFranchiseFeePageId.toString.equals("concessionOrFranchiseFeePage"))
 
     "Identifier for franchise type details page" in
       assert(FranchiseTypeDetailsId.toString.equals("franchiseTypeDetailsPage"))

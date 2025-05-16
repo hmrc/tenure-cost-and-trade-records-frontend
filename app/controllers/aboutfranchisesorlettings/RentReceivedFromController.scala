@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentReceivedFromForm.rentReceivedFromForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, FranchiseIncomeRecord, IncomeRecord, RentReceivedFrom}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, FranchiseIncomeRecord, RentReceivedFrom}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentReceivedFromPageId
 import play.api.i18n.I18nSupport
@@ -89,7 +89,7 @@ class RentReceivedFromController @Inject() (
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
           } else aboutFranchisesOrLettings
-        }(request)
+        }(using request)
 
         repository.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentReceivedFromPageId, updatedSession).apply(updatedSession))
@@ -105,6 +105,6 @@ class RentReceivedFromController @Inject() (
       rentalIncome              <- aboutFranchisesOrLettings.rentalIncome
       incomeRecord              <- rentalIncome.lift(index)
     yield incomeRecord match
-      case r: FranchiseIncomeRecord      => routes.FranchiseTypeDetailsController.show(index).url
-      case r: Concession6015IncomeRecord => routes.FranchiseTypeDetailsController.show(index).url
+      case _: FranchiseIncomeRecord      => routes.FranchiseTypeDetailsController.show(index).url
+      case _: Concession6015IncomeRecord => routes.FranchiseTypeDetailsController.show(index).url
       case _                             => routes.CateringOperationDetailsController.show(Some(index)).url

@@ -29,7 +29,7 @@
         cyaSupport: CyaTradingHistorySupport
 )
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@()(implicit request: SessionRequest[?], messages: Messages)
 
 @otherCostsTotalValuesRow(otherCosts: Option[OtherCosts]) = @{
     cyaSupport.table(

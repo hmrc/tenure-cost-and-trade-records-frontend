@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.connectiontoproperty
 import form.connectiontoproperty.TradingNameOwnThePropertyForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -33,10 +32,10 @@ class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYe
   val backLink: String = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
 
   def createView: () => Html = () =>
-    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(fakeRequest, messages)
+    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(fakeRequest, messages)
+    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(using fakeRequest, messages)
 
   "Trading name own the property view" must {
 

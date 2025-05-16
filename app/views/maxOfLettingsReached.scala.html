@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,16 +29,17 @@
 
 @(form: Form[?], backLink: String, source: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
+@forType = @{request.sessionData.forType}
 
 @sectionName = @{
  source match {
   case "connection"   => messages("label.section.connectionToTheProperty")
   case "lettings"     => messages("label.section.aboutTheLettings")
   case "rentalIncome" =>
-    request.sessionData.forType match {
-     case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
-     case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
-     case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+   forType match {
+     case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
+     case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
+     case _                 => messages("label.section.aboutTheFranchiseLettings")
     }
   case _              => messages("label.section.aboutTheFranchiseConcessions")
  }
@@ -46,12 +47,16 @@
 
 @sectionHeading = @{
  source match {
-  case "rentalIncome"      =>  messages("maxOf5Lettings.rentalIncome.heading")
+  case "rentalIncome"      =>
+   forType match {
+    case FOR6030 => messages("maxOf5Lettings.concessionOrFranchise.heading")
+    case _ => messages("maxOf5Lettings.rentalIncome.heading")
+   }
   case "franchiseCatering" =>
    forType match {
-    case FOR6010 | FOR6011 => messages(s"maxOf5Lettings.businessOrFranchise.heading")
-    case FOR6015 | FOR6016 => messages(s"maxOf5Lettings.businessOrConcession.heading")
-    case FOR6030 => messages(s"maxOf5Lettings.concessionOrFranchise.heading")
+    case FOR6010 | FOR6011 => messages("maxOf5Lettings.businessOrFranchise.heading")
+    case FOR6015 | FOR6016 => messages("maxOf5Lettings.businessOrConcession.heading")
+    case FOR6030 => messages("maxOf5Lettings.concessionOrFranchise.heading")
     case _ => messages("maxOf5Lettings.heading")
    }
   case _ => messages("maxOf5Lettings.heading")
@@ -60,6 +65,7 @@
 
 @confirm = @{
  source match {
+  case "rentalIncome" if forType == FOR6030 => messages("maxOf5Lettings.rentalIncome.6030.confirm")
   case "rentalIncome" => messages("maxOf5Lettings.rentalIncome.confirm", sectionContent)
   case _ => messages("maxOf5Lettings.confirm")
 
@@ -68,6 +74,7 @@
 
 @linkMsg = @{
  source match {
+  case "rentalIncome" if forType == FOR6030 => messages("maxOf5Lettings.rentalIncome.6030.link")
   case "rentalIncome" => messages("maxOf5Lettings.rentalIncome.link")
   case _ => messages("maxOf5Lettings.link")
 
@@ -88,16 +95,19 @@
  }
 }
 
+@paragraphContact = @{
+ forType match {
+  case FOR6030 => messages("maxOf5Lettings.contact.6030")
+  case _       => messages("maxOf5Lettings.contact", sectionContent)
+ }
+}
+
 @link = @{
   source match {
    case "typeOfIncome" => controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(4).url
    case _              => backLink
   }
 }
-
-
-
-@forType = @{request.sessionData.forType}
 
 
 @layout(
@@ -110,7 +120,7 @@
 ) {
 
 
-   <p class="govuk-body govuk-!-width-three-quarters">@messages("maxOf5Lettings.contact", sectionContent)</p>
+   <p class="govuk-body govuk-!-width-three-quarters">@paragraphContact</p>
 
  @formWithCSRF(action = routes.MaxOfLettingsReachedController.submit(source)) {
   @govukCheckboxes(

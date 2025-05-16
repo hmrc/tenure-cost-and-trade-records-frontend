@@ -63,17 +63,17 @@
    }
    @if(forType == FOR6030) {
     @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-     controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show(),
+     controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0),
      section4Completed,
-     session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee),
+     session.aboutFranchisesOrLettings.flatMap(_.rentalIncome),
      session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
     )
 
     @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
+     controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0),
      section4Completed,
-     session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-     session.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee).isEmpty
+     session.aboutFranchisesOrLettings.flatMap(_.rentalIncome),
+     session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
     )
    } else {
     @if(forType != FOR6020) {

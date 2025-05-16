@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.VariableOperatingExpensesForm
 import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -32,12 +31,13 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
   val messageKeyPrefix = "variableOperatingExpenses"
   val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  override val form = VariableOperatingExpensesForm.variableOperatingExpensesForm(Seq("2026", "2025", "2024"))(messages)
+  override val form =
+    VariableOperatingExpensesForm.variableOperatingExpensesForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => variableOperatingExpensesView(form)(sessionRequest, messages)
+  def createView = () => variableOperatingExpensesView(form)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[VariableOperatingExpensesSections]) =>
-    variableOperatingExpensesView(form)(sessionRequest, messages)
+    variableOperatingExpensesView(form)(using sessionRequest, messages)
 
   "Variable Operating Expenses view" must {
 

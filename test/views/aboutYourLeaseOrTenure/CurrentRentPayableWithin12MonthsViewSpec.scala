@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.{CurrentRentPayableWithin12Months, CurrentRentWithin12MonthsNo, CurrentRentWithin12MonthsYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -27,12 +26,12 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
 
   val messageKeyPrefix = "currentRentPayableWithin12Months"
 
-  override val form = CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm(messages)
+  override val form = CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm(using messages)
 
-  def createView = () => currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CurrentRentPayableWithin12Months]) =>
-    currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(fakeRequest, messages)
+    currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Lease or agreement years view" must {
 

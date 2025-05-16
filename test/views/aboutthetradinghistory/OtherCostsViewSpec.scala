@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.OtherCostsForm
 import models.submissions.aboutthetradinghistory.OtherCosts
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,9 +29,9 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
   override val form  = OtherCostsForm.form
   val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  def createView = () => otherCostsView(form)(sessionRequest, messages)
+  def createView = () => otherCostsView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[OtherCosts]) => otherCostsView(form)(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[OtherCosts]) => otherCostsView(form)(using sessionRequest, messages)
 
   "Other Costs view" must {
 

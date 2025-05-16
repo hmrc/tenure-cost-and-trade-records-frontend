@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import form.MappingSupport.contactDetailsMapping
 import models.submissions.notconnected.RemoveConnectionsDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.Constraints.nonEmpty
 
 object RemoveConnectionForm {
   val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(

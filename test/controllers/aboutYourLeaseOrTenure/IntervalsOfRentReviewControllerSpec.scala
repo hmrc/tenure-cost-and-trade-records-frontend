@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -116,7 +116,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
 
     "error if intervalsOfRentReview is greater than max length" in {
       val formData = baseData + ("intervalsOfRentReview" -> test2001character)
-      val form     = intervalsOfRentReviewForm(messages).bind(formData)
+      val form     = intervalsOfRentReviewForm(using messages).bind(formData)
       mustContainError("intervalsOfRentReview", "error.intervalsOfRent.maxLength", form)
     }
   }

@@ -111,7 +111,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
       val form =
         CommercialLettingAvailabilityWelshForm
-          .commercialLettingAvailabilityWelshForm(years)(sessionRequest, messages)
+          .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
           .bind(formData)
       mustContainError(
         "lettingAvailability-0",
@@ -126,7 +126,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
       val form =
         CommercialLettingAvailabilityWelshForm
-          .commercialLettingAvailabilityWelshForm(years)(sessionRequest, messages)
+          .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
           .bind(formData)
       mustContainError(
         "lettingAvailability-1",
@@ -141,7 +141,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
       val form =
         CommercialLettingAvailabilityWelshForm
-          .commercialLettingAvailabilityWelshForm(years)(sessionRequest, messages)
+          .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
           .bind(formData)
       mustContainError(
         "lettingAvailability-2",

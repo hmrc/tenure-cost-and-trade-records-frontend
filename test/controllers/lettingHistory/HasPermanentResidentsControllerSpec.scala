@@ -16,12 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView
@@ -34,7 +31,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.permanentResidents.heading"
         page.backLink          shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
@@ -49,7 +46,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value    shouldBe routes.ResidentDetailController.show().url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         hasPermanentResidents(data).value shouldBe true
       }
     }
@@ -61,7 +58,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.radios("answer") shouldNot be(empty)
           page.radios("answer")    should haveChecked("yes")
@@ -77,7 +74,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value    shouldBe routes.ResidentListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasPermanentResidents(data).value shouldBe true
           permanentResidents(data)          shouldBe oneResident
         }
@@ -93,7 +90,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value                                    shouldBe routes.HasCompletedLettingsController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasPermanentResidents(data).value                                 shouldBe false
           permanentResidents(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "permanentResidents", data.getValue) shouldBe None
@@ -110,7 +107,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value    shouldBe routes.ResidentListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasPermanentResidents(data).value shouldBe true
           permanentResidents(data)            should have size 5
         }

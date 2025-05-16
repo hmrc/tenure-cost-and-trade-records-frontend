@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.DoesTheRentPayableForm
 import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,20 +29,20 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
 
   override val form = DoesTheRentPayableForm.doesTheRentPayableForm
 
-  def createView = () => doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createView6045 = () => doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(fakeRequest, messages)
+  def createView6045 = () => doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using fakeRequest, messages)
 
   def createViewUsingForm6045 = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using fakeRequest, messages)
 
-  def createView6048 = () => doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(fakeRequest, messages)
+  def createView6048 = () => doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
 
   def createViewUsingForm6048 = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
 
   "Rent payable view" must {
 

@@ -113,9 +113,6 @@ GET          /concession-or-franchise                               controllers.
 POST         /concession-or-franchise                               controllers.aboutfranchisesorlettings.ConcessionOrFranchiseController.submit()
 
 #Form 6030 routing
-GET          /concession-or-franchise-fee                           controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.show()
-POST         /concession-or-franchise-fee                           controllers.aboutfranchisesorlettings.ConcessionOrFranchiseFeeController.submit()
-
 GET          /fee-received                                          controllers.aboutfranchisesorlettings.FeeReceivedController.show(idx: Int)
 POST         /fee-received                                          controllers.aboutfranchisesorlettings.FeeReceivedController.submit(idx: Int)
 

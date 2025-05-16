@@ -15,19 +15,15 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory._
-@import util.DateUtilLocalised
 @import util.NumberUtil._
 @import util.CyaTradingHistorySupport
 
 @this(
-        govukSummaryList: GovukSummaryList,
-        dateUtil: DateUtilLocalised,
         cyaSupport: CyaTradingHistorySupport
 )
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@()(implicit request: SessionRequest[?], messages: Messages)
 
 @answer6048(valueLabelKey: String, getAnswer: TurnoverSection6048 => String, additionalParagraph: Option[String] = None) = @{
     cyaSupport.answer(
@@ -36,7 +32,6 @@
         additionalParagraph
     )
 }
-@answer = {cyaSupport.pageAnswers()}
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 

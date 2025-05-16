@@ -32,7 +32,7 @@ import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsV
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class HasPermanentResidentsController @Inject() (

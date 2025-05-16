@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import views.behaviours.ViewBehaviours
 
 class ErrorSpec extends ViewBehaviours {
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
-  def createView     = () => errorView(409)(sessionRequest, messages)
+  def createView     = () => errorView(409)(using sessionRequest, messages)
 
   "errorView" must {
     "contain text " in {

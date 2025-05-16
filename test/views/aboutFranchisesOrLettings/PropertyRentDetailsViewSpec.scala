@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.IncomeRecordRentForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.PropertyRentDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
@@ -29,7 +28,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec extends QuestionViewBehaviou
   val messageKeyPrefix = "lettingOtherPartOfPropertyRentDetails"
 
   val backLink      = controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show().url
-  override val form = IncomeRecordRentForm.incomeRecordRentForm(messages)
+  override val form = IncomeRecordRentForm.incomeRecordRentForm(using messages)
 
   def createView = () =>
     lettingOtherPartOfPropertyRentDetailsView(
@@ -40,7 +39,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec extends QuestionViewBehaviou
       backLink,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PropertyRentDetails]) =>
     lettingOtherPartOfPropertyRentDetailsView(
@@ -51,7 +50,7 @@ class LettingOtherPartOfPropertyRentDetailsViewSpec extends QuestionViewBehaviou
       backLink,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   "Catering operation rent details view" must {
 

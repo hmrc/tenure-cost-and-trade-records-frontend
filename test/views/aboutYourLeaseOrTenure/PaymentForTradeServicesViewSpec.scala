@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,10 +29,11 @@ class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[PaymentForT
   override val form = PaymentForTradeServicesForm.paymentForTradeServicesForm
 
   val backLink   = controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
-  def createView = () => paymentForTradeServicesView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    paymentForTradeServicesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PaymentForTradeServices]) =>
-    paymentForTradeServicesView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    paymentForTradeServicesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Payment for trade services view" should {
 

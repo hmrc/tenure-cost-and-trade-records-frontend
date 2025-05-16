@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm
 import models.pages.Summary
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -31,10 +30,10 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String] {
 
   override val form = AboutTheLandlordForm.theForm
 
-  def createView = () => aboutYourLandordView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
+  def createView = () => aboutYourLandordView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    aboutYourLandordView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
+    aboutYourLandordView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "About the landlord view" must {
 

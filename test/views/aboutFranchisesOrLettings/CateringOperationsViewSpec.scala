@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.CateringOperationForm
 import models.ForType.*
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.pages.Summary
@@ -38,7 +37,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     cateringOperationView(
@@ -47,7 +46,7 @@ class CateringOperationsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url,
       Summary("99996010001"),
       FOR6010
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
 

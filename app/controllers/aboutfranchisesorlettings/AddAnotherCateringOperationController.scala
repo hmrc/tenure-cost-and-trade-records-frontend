@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,9 +122,9 @@ class AddAnotherCateringOperationController @Inject() (
               if (formData == AnswerNo && navigator.from == "CYA") {
                 controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
               } else if (formData == AnswerYes) {
-                controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
+                controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
               } else {
-                controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
+                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
               }
             )
           } else {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.AboutYouForm
 import models.submissions.aboutyouandtheproperty.CustomerDetails
-import org.scalatest.matchers.must.Matchers._
 import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -29,10 +28,10 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
 
   override val form = AboutYouForm.aboutYouForm
 
-  def createView = () => aboutYouView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => aboutYouView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CustomerDetails]) =>
-    aboutYouView(form, Summary("99996010001"))(fakeRequest, messages)
+    aboutYouView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "About you view" must {
 

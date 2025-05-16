@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package views.requestReferenceNumber
 
 import form.requestReferenceNumber.RequestReferenceNumberPropertyDetailsForm
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -27,10 +26,10 @@ class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviou
 
   override val form: Form[String] = RequestReferenceNumberPropertyDetailsForm.theForm
 
-  def createView = () => requestReferenceNumberPropertyDetailsView(form)(fakeRequest, messages)
+  def createView = () => requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    requestReferenceNumberPropertyDetailsView(form)(fakeRequest, messages)
+    requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
 
   "No reference number view" must {
 

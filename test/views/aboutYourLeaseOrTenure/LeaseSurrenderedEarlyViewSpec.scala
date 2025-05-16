@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,10 +31,10 @@ class LeaseSurrenderedEarlyViewSpec extends QuestionViewBehaviours[LeaseSurrende
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
-  def createView = () => leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[LeaseSurrenderedEarly]) =>
-    leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Lease surrendered early view" should {
 

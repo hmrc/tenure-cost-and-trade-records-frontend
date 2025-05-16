@@ -30,7 +30,7 @@
         cyaSupport: CyaTradingHistorySupport
 )
 
-@()(implicit request: SessionRequest[_], messages: Messages)
+@()(implicit request: SessionRequest[?], messages: Messages)
 
 @answers = @{cyaSupport.sectionAnswers.answers}
 

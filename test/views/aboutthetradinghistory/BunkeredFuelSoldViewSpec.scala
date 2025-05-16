@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,11 @@ class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSo
 
   val messageKeyPrefix = "bunkeredFuelSold"
 
-  override val form = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq(2023, 2022, 2021).map(_.toString))(messages)
-  def createView    = () => bunkeredFuelSoldView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+  override val form = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq(2023, 2022, 2021).map(_.toString))(using messages)
+  def createView    = () => bunkeredFuelSoldView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[BunkeredFuelSold]]) =>
-    bunkeredFuelSoldView(form, backLink, Summary("99996020001"))(sessionRequest, messages)
+    bunkeredFuelSoldView(form, backLink, Summary("99996020001"))(using sessionRequest, messages)
 
   "Bunkered Fuel Costs view" should {
 
@@ -70,7 +70,7 @@ class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSo
     "BunkeredFuelSoldForm" should {
 
       "reject empty values" in {
-        val form         = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq("2022", "2021"))(messages)
+        val form         = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq("2022", "2021"))(using messages)
         val formData     = Map(
           "bunkeredFuelSold-0" -> "",
           "bunkeredFuelSold-1" -> "100.50"
@@ -85,7 +85,7 @@ class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSo
       }
 
       "reject non-numeric values" in {
-        val form     = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq("2022"))(messages)
+        val form     = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq("2022"))(using messages)
         val formData = Map(
           "bunkeredFuelSold-0" -> "abc"
         )

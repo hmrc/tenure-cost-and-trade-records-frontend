@@ -107,7 +107,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
       val form =
         CompletedCommercialLettingsWelshForm
-          .completedCommercialLettingsWelshForm(years)(sessionRequest, messages)
+          .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
           .bind(formData)
       mustContainError(
         "completedLettings-0",
@@ -122,7 +122,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
       val form =
         CompletedCommercialLettingsWelshForm
-          .completedCommercialLettingsWelshForm(years)(sessionRequest, messages)
+          .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
           .bind(formData)
       mustContainError(
         "completedLettings-1",
@@ -137,7 +137,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
       val form =
         CompletedCommercialLettingsWelshForm
-          .completedCommercialLettingsWelshForm(years)(sessionRequest, messages)
+          .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
           .bind(formData)
       mustContainError(
         "completedLettings-2",

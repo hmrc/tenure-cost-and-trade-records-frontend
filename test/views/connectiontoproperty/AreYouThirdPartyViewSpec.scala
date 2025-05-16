@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.connectiontoproperty
 import actions.SessionRequest
 import form.connectiontoproperty.AreYouThirdPartyForm
 import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -36,37 +35,37 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   val backLink = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
 
   def createView = () =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(using
       sessionRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary)(using
       sessionRequest,
       messages
     )
 
   def createView6076 = () =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary)(
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary)(using
       sessionRequest6076,
       messages
     )
 
   def createViewUsingForm6076 = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary)(
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary)(using
       sessionRequest6076,
       messages
     )
 
   def createView6048 = () =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary)(
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary)(using
       sessionRequest6048,
       messages
     )
 
   def createViewUsingForm6048 = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary)(
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary)(using
       sessionRequest6048,
       messages
     )

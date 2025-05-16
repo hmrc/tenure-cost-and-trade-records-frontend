@@ -70,7 +70,7 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
     implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
     httpClientV2
-      .put(url)(headerCarrier)
+      .put(url)(using headerCarrier)
       .withBody(Json.toJson(submission))
       .execute[HttpResponse]
       .flatMap { response =>

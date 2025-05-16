@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[CapitalSumDes
 
   val sessionRequest = SessionRequest(stillConnectedDetails6020YesSession, fakeRequest)
 
-  def createView = () => capitalSumDescriptionView(form)(sessionRequest, messages)
+  def createView = () => capitalSumDescriptionView(form)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[CapitalSumDescription]) =>
-    capitalSumDescriptionView(form)(sessionRequest, messages)
+    capitalSumDescriptionView(form)(using sessionRequest, messages)
 
   "Capital sum description view" should {
 

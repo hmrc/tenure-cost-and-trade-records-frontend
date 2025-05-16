@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentDevelopedLandDetailsForm
 import models.pages.Summary
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,10 +27,10 @@ class RentDevelopedLandDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   override val form = RentDevelopedLandDetailsForm.rentDevelopedLandDetailsForm
 
-  def createView = () => rentDevelopedLandDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => rentDevelopedLandDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    rentDevelopedLandDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentDevelopedLandDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "rented Equipment Details view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,15 +29,15 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[PayACap
 
   val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
 
-  override val form = PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm(messages)
+  override val form = PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm(using messages)
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
 
   def createView = () =>
-    payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(sessionRequest, messages)
+    payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[PayACapitalSumAmountDetails]) =>
-    payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(sessionRequest, messages)
+    payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
   "capital sum or premium view" must {
 

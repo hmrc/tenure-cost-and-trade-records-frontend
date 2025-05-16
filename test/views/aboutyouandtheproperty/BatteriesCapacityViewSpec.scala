@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String] {
 
   override val form: Form[String] = BatteriesCapacityForm.batteriesCapacityForm
 
-  def createView: () => Html = () => batteriesCapacityView(form, Summary("99996076001"))(fakeRequest, messages)
+  def createView: () => Html = () => batteriesCapacityView(form, Summary("99996076001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    batteriesCapacityView(form, Summary("99996076001"))(fakeRequest, messages)
+    batteriesCapacityView(form, Summary("99996076001"))(using fakeRequest, messages)
 
   "Batteries capacity view" should {
 

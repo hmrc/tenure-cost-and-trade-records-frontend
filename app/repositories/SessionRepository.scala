@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,9 +51,10 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
     )
     with SessionRepo {
 
-  def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit]        =
+  def start(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
     saveOrUpdate(data)
-  def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit] =
+
+  def saveOrUpdate(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
@@ -71,7 +72,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
       )
     }
 
-  def get(implicit rds: Reads[Session], hc: HeaderCarrier) =
+  def get(implicit hc: HeaderCarrier) =
     Mdc.preservingMdc {
       for {
         sessionId   <- getSessionId
@@ -93,7 +94,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
-        -         <- collection.deleteOne(equal("_id", sessionId)).toFuture()
+        _         <- collection.deleteOne(equal("_id", sessionId)).toFuture()
       } yield ()
     }
 
@@ -101,7 +102,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
     Mdc.preservingMdc {
       for {
         sessionId <- getSessionId
-        -         <- collection.deleteMany(equal("_id", sessionId)).toFuture()
+        _         <- collection.deleteMany(equal("_id", sessionId)).toFuture()
       } yield ()
     }
 
@@ -145,11 +146,12 @@ object SensitiveSessionData {
 
 trait SessionRepo {
 
-  def start(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit]
+  def start(data: Session)(implicit hc: HeaderCarrier): Future[Unit]
 
-  def saveOrUpdate(data: Session)(implicit wts: Writes[Session], hc: HeaderCarrier): Future[Unit]
+  def saveOrUpdate(data: Session)(implicit hc: HeaderCarrier): Future[Unit]
 
-  def get(implicit rds: Reads[Session], hc: HeaderCarrier): Future[Option[Session]]
+  def get(implicit hc: HeaderCarrier): Future[Option[Session]]
 
   def remove()(implicit hc: HeaderCarrier): Future[Unit]
+
 }

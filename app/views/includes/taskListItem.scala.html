@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *@
+
+@import navigation.UrlHelpers.urlPlusParamPrefix
 
 @(taskId: String, taskNameKey: String, taskPage: Call, sectionCompletedRadioValue: Option[String], pageAnswer: Option[?], cannotStartYet: Boolean = false)(implicit messages: Messages)
 
@@ -43,7 +45,7 @@
         @if(cannotStartYet && pageAnswer.isEmpty) {
             @messages(taskNameKey)
         } else {
-            <a href="@taskPage.url?from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
+            <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
         }
     </span>
     <strong class="govuk-tag @itemTagClass app-task-list__tag" id="@taskId">@statusText</strong>

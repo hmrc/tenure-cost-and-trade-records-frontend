@@ -26,7 +26,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 import utils.FakeObjects
-import utils.FormBindingTestAssertions.shouldBe
 
 class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
@@ -160,7 +159,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/franchise-type-details?idx=0")
-    verify(mockSessionRepo).saveOrUpdate(any)(any, any)
+    verify(mockSessionRepo).saveOrUpdate(any)(using any)
   }
 
   "update income and redirect to franchise details if type selected is Franchise type" in {
@@ -172,7 +171,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/franchise-type-details?idx=0")
-    verify(mockSessionRepo, times(2)).saveOrUpdate(any)(any, any)
+    verify(mockSessionRepo, times(2)).saveOrUpdate(any)(using any)
   }
 
   "update income and redirect to concession details if type selected is concession type" in {
@@ -184,7 +183,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/concession-type-details?idx=0")
-    verify(mockSessionRepo, times(3)).saveOrUpdate(any)(any, any)
+    verify(mockSessionRepo, times(3)).saveOrUpdate(any)(using any)
   }
 
   "update income and redirect to letting details if type selected is letting type" in {

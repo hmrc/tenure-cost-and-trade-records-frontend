@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.WebsiteForPropertyForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -33,10 +32,10 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
   override val form: Form[WebsiteForPropertyDetails] = WebsiteForPropertyForm.websiteForPropertyForm
 
   def createView: () => Html = () =>
-    websiteForPropertyView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
+    websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html = (form: Form[WebsiteForPropertyDetails]) =>
-    websiteForPropertyView(form, Summary("99996010001"), backLink)(fakeRequest, messages)
+    websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "Property website view" must {
 

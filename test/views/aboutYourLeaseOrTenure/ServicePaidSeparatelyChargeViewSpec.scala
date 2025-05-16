@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ class ServicePaidSeparatelyChargeViewSpec extends QuestionViewBehaviours[Service
 
   override val form = ServicePaidSeparatelyChargeForm.servicePaidSeparatelyChargeForm
 
-  def createView = () => servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ServicePaidSeparatelyCharge]) =>
-    servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(fakeRequest, messages)
+    servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(using fakeRequest, messages)
 
   "Service paid separately charge view" should {
 

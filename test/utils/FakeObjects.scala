@@ -32,7 +32,7 @@ import models.submissions.ReferenceNumber
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission, aboutfranchisesorlettings}
-import models.{AnnualRent, ForType, Session, SubmissionDraft}
+import models.{AnnualRent, Session, SubmissionDraft}
 
 import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
@@ -1072,8 +1072,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionYes),
     None,
-    Some(false),
-    Some(AnswerYes)
+    Some(false)
   )
 
   val prefilledAboutFranchiseOrLettingsNo6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -1088,8 +1087,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionNo),
     None,
-    Some(false),
-    Some(AnswerNo)
+    Some(false)
   )
 
   val prefilledAboutFranchiseOrLettings: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -1104,8 +1102,7 @@ trait FakeObjects {
     None,
     IndexedSeq(prefilledLettingSectionYes),
     None,
-    Some(false),
-    Some(AnswerYes)
+    Some(false)
   )
 
   val prefilledAboutFranchiseOrLettingsIncompleteLetting: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
@@ -1141,7 +1138,7 @@ trait FakeObjects {
         howBusinessPropertyIsUsed = "Leased"
       )
     ),
-    feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 2023))))
+    feeReceived = Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 52, Some(1000)))))
   )
 
   val concession6015IncomeRecord: Concession6015IncomeRecord = Concession6015IncomeRecord(
@@ -1288,7 +1285,6 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSectionYes),
     None,
     Some(false),
-    Some(AnswerYes),
     Some(IndexedSeq(atmLetting, telcoLetting, advert, otherLetting))
   )
 
@@ -1305,7 +1301,6 @@ trait FakeObjects {
     IndexedSeq(prefilledLettingSectionYes),
     None,
     Some(false),
-    Some(AnswerYes),
     Some(
       IndexedSeq(
         atmLetting,
@@ -1358,16 +1353,10 @@ trait FakeObjects {
 
   val prefilledAboutFranchiseOrLettings6030: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledLettingSectionYes),
-    cateringOrFranchiseFee = Some(AnswerYes)
+    rentalIncome = Some(
+      IndexedSeq(concessionIncomeRecord, lettingIncomeRecord)
+    ),
+    rentalIncomeIndex = 1
   )
 
   val sessionAboutFranchiseOrLetting6030YesSession: Session =

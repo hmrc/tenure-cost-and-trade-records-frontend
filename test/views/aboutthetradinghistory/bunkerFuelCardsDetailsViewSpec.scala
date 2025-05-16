@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCa
       None,
       controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url,
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
   "Catering bunker fuel cards details view" must {
     behave like normalPage(createView, messageKeyPrefix)
   }

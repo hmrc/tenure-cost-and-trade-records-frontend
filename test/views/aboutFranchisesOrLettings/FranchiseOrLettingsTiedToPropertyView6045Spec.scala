@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +32,10 @@ class FranchiseOrLettingsTiedToPropertyView6045Spec extends QuestionViewBehaviou
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
   def createView: () => Html = () =>
-    franchiseOrLettingsTiedToPropertyView(form, FOR6045, backLink, Summary("99996045001"))(fakeRequest, messages)
+    franchiseOrLettingsTiedToPropertyView(form, FOR6045, backLink, Summary("99996045001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    franchiseOrLettingsTiedToPropertyView(form, FOR6045, backLink, Summary("99996045001"))(fakeRequest, messages)
+    franchiseOrLettingsTiedToPropertyView(form, FOR6045, backLink, Summary("99996045001"))(using fakeRequest, messages)
 
   "Franchise or lettings tied to property view" must {
 

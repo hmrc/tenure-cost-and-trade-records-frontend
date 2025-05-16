@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ import connectors.Audit
 import models.ForType.*
 import models.{ForType, Session}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -42,17 +40,7 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
-        contentAsString(result)     should not include "checked"
-      }
-      "reply 200 with the fresh form 6030 if no data in session" in new ControllerFixture(
-        forType = FOR6030,
-        aboutFranchisesOrLettings = None
-      ) {
-        val result = controller.show(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         contentAsString(result)     should not include "checked"
       }
       "reply 200 with the pre-filled form 6010" in new ControllerFixture(
@@ -62,20 +50,7 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
-        val html = contentAsJsoup(result)
-        html.getElementsByTag("h1").first().text()               shouldBe "lettingOtherPartOfProperty.heading"
-        html.getElementById("lettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
-        html.backLink                                            shouldBe routes.AddAnotherCateringOperationController.show(0).url
-      }
-      "reply 200 with the pre-filled form 6030" in new ControllerFixture(
-        forType = FOR6030,
-        aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings)
-      ) {
-        val result = controller.show(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()               shouldBe "lettingOtherPartOfProperty.heading"
         html.getElementById("lettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
@@ -99,20 +74,6 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         status(result) shouldBe BAD_REQUEST
         content          should include("error.lettingOtherPartOfProperty.missing")
         content          should include(s"${controllers.routes.TaskListController.show().url}#letting-other-part-of-property")
-      }
-      "reply 400 and error messages if form 6030 is submitted with invalid data" in new ControllerFixture(
-        forType = FOR6030
-      ) {
-        val result  = controller.submit(
-          fakePostRequest
-            .withFormUrlEncodedBody(
-              "lettingOtherPartOfProperty" -> "" // missing !!!
-            )
-        )
-        val content = contentAsString(result)
-        status(result) shouldBe BAD_REQUEST
-        content          should include("error.lettingOtherPartOfProperty6030.missing")
-        content          should include(routes.AddAnotherCateringOperationController.show(0).url)
       }
     }
     "reply 303 redirect to 'LettingOtherPartOfPropertyDetails' page if answer='yes' and from CYA" in new ControllerFixture(
@@ -151,7 +112,8 @@ class LettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
     val repository       = mock[SessionRepo]
     val data             = captor[Session]
     val mockAudit: Audit = mock[Audit]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new LettingOtherPartOfPropertyController(

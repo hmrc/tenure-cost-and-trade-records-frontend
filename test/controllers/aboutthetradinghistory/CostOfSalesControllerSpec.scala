@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
   val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
   val mockCostOfSalesView      = mock[costOfSales]
-  when(mockCostOfSalesView.apply(any, any)(any, any)).thenReturn(HtmlFormat.empty)
+  when(mockCostOfSalesView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
   val costOfSalesController = new CostOfSalesController(
     stubMessagesControllerComponents(),
@@ -44,7 +44,7 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
     mockCostOfSalesView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutYourTradingHistory6015YesSession.aboutTheTradingHistory),
     mockSessionRepo
-  )(inject[ExecutionContext])
+  )(using inject[ExecutionContext])
 
   "GET /" should {
     "return 200" in {

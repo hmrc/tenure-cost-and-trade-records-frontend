@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -32,10 +31,11 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
 
-  def createView = () => tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[TenantAdditionsDisregardedDetails]) =>
-    tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tenants additions disregarded view" must {
 

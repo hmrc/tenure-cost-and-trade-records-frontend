@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.TurnoverForm6030
 import models.submissions.aboutthetradinghistory.TurnoverSection6030
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -32,15 +31,16 @@ class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection603
   override val form = TurnoverForm6030.turnoverForm6030(
     3,
     Seq(LocalDate.of(2021, 12, 31), LocalDate.of(2022, 12, 31), LocalDate.of(2023, 12, 31))
-  )(messages)
+  )(using messages)
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
 
   val sessionRequest6030 = SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
 
-  def createView = () => turnover6030View(form)(sessionRequest, messages)
+  def createView = () => turnover6030View(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[TurnoverSection6030]]) => turnover6030View(form)(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[TurnoverSection6030]]) =>
+    turnover6030View(form)(using sessionRequest, messages)
 
   "Turnover 6030 view" must {
 

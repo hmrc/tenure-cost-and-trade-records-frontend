@@ -16,12 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, OccupierDetail, ResidentDetail}
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
@@ -34,7 +31,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.hasCompletedLettings.heading"
         page.backLink          shouldBe routes.HasPermanentResidentsController.show.url
@@ -49,7 +46,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value   shouldBe routes.OccupierDetailController.show(index = None).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         hasCompletedLettings(data).value shouldBe true
       }
     }
@@ -62,7 +59,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.backLink          shouldBe routes.ResidentListController.show.url
           page.radios("answer") shouldNot be(empty)
@@ -79,7 +76,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true
           completedLettings(data)          shouldBe twoOccupiers
         }
@@ -95,7 +92,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value                                   shouldBe routes.HowManyNightsController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasCompletedLettings(data).value                                 shouldBe false
           completedLettings(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "completedLettings", data.getValue) shouldBe None
@@ -112,7 +109,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           )
           status(result) shouldBe SEE_OTHER
           redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           hasCompletedLettings(data).value shouldBe true
           completedLettings(data)            should have size 5
         }

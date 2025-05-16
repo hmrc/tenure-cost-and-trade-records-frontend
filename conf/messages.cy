@@ -912,6 +912,7 @@ typeOfIncome.6010.concession.label = Ffi y consesiwn neu’r fasnachfraint
 typeOfIncome.6015.concession.label = Ffi y consesiwn neu’r fasnachfraint
 typeOfIncome.concession.hint = Er enghraifft, busnesau llety neu arlwyo.
 typeOfIncome.concession.6015.hint = O unrhyw fusnesau ar wahân sy’n gweithredu o’r eiddo, megis bwytai neu giosgau llogi ceir.
+typeOfIncome.concession.6030.hint = From any separate businesses operating from the property such as tearooms, vehicle charging points or car washes.
 typeOfIncome.letting.label = Rhoi rhannau eraill o’r eiddo ar osod
 typeOfIncome.letting.hint = Er enghraifft byrddau posteri, maes parcio neu fastiau ffôn.
 error.typeOfIncome.required = Select a source of rental income
@@ -3736,15 +3737,18 @@ maxOf5Lettings.businessOrFranchise.heading = You have added the maximum of 5 sep
 maxOf5Lettings.businessOrFranchise.content = businesses or franchises
 maxOf5Lettings.businessOrConcession.heading = You have added the maximum of 5 separate businesses or concessions
 maxOf5Lettings.businessOrConcession.content = businesses or concessions
-maxOf5Lettings.concessionOrFranchise.heading = You have added the maximum of 5 separate concessions or franchises
+maxOf5Lettings.concessionOrFranchise.heading = Sorry, this service can only record up to 5 sources of rental income
 maxOf5Lettings.concessionOrFranchise.content = concessions or franchises
 maxOf5Lettings.rentalIncome.heading = You have added the maximum of 5 sources of rental income
 maxOf5Lettings.rentalIncome.content = sources of rental income
 maxOf5Lettings.contact = If you have 6 or more {0}, the VOA will contact you to collect their information.
+maxOf5Lettings.contact.6030 = This service has some storage restrictions during testing and development. If you have 6 or more sources of rental income at the property, the VOA will contact you for the details you were unable to declare.
 maxOf5Lettings.rentalIncome.confirm = I confirm that I understand the VOA will contact me regarding the remaining {0}
+maxOf5Lettings.rentalIncome.6030.confirm = I understand that the VOA will contact me for the details of the undeclared sources of rental income.
 maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining businesses.
 maxOf5Lettings.link = Check or update the 5 added businesses
 maxOf5Lettings.rentalIncome.link = Check or update the 5 added sources of rental income
+maxOf5Lettings.rentalIncome.6030.link = Check or update the sources of rental income
 maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
 
 # About franchise or lettings CYA

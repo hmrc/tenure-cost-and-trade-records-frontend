@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import form.aboutthetradinghistory.IncomeExpenditureSummaryForm
 import models.pages.{IncomeExpenditureEntry, Summary}
 import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,10 +29,10 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpe
   override val form = IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 
   def createView = () =>
-    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(fakeRequest, messages)
+    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IncomeExpenditureSummary]) =>
-    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(fakeRequest, messages)
+    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
 
   "income and expenditure summary view" must {
 

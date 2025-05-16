@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.CostOfSalesForm
 import models.submissions.aboutthetradinghistory.CostOfSales
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -30,11 +29,11 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
   val messageKeyPrefix = "costOfSales"
   val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  override val form = CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
+  override val form = CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
 
-  def createView = () => costOfSalesView(form)(sessionRequest, messages)
+  def createView = () => costOfSalesView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[CostOfSales]]) => costOfSalesView(form)(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[CostOfSales]]) => costOfSalesView(form)(using sessionRequest, messages)
 
   "costOfSales view" must {
 
@@ -49,7 +48,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     }
 
     "Section heading is visible" in {
-      val form1    = CostOfSalesForm.costOfSalesForm(Seq("2025"))(messages)
+      val form1    = CostOfSalesForm.costOfSalesForm(Seq("2025"))(using messages)
       val doc      = asDocument(createViewUsingForm(form1))
       val captions = doc.getElementsByClass("govuk-caption-m").eachText()
       assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
@@ -68,7 +67,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     }
 
     "contain continue button with the value Continue" in {
-      val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(messages)
+      val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(using messages)
       val doc         = asDocument(createViewUsingForm(form2))
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))

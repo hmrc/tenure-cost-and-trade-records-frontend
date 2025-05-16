@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@
 
 @concessionLabel = @{
   forType match {
-      case FOR6011 | FOR6010 => messages("typeOfIncome.6010.concession.label")
+      case FOR6010 | FOR6011 => messages("typeOfIncome.6010.concession.label")
       case FOR6015 | FOR6016 => messages("typeOfIncome.6015.concession.label")
       case _                 => messages("typeOfIncome.concession.label")
   }
@@ -52,12 +52,13 @@
 @concessionHint= @{
     forType match {
         case FOR6015 | FOR6016 => messages("typeOfIncome.concession.6015.hint")
+        case FOR6030 => messages("typeOfIncome.concession.6030.hint")
         case _ => messages("typeOfIncome.concession.hint")
     }
 }
 @concessionOrfranchise = @{
     forType match {
-        case FOR6011 | FOR6010  => TypeFranchise.name
+        case FOR6010 | FOR6011  => TypeFranchise.name
         case FOR6015 | FOR6016  => TypeConcession6015.name
         case _                  => TypeConcession.name
     }
