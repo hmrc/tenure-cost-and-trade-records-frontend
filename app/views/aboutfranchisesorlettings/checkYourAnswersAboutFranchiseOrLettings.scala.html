@@ -18,12 +18,11 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.ForType.*
 @import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
-@import views.html.answers.{answersAboutTheFranchiseLettings, answersLettings, answersConcessionAndLettings}
+@import views.html.answers.{answersLettings, answersConcessionAndLettings}
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        answersSectionAboutTheFranchiseLettings: answersAboutTheFranchiseLettings,
         answersLetting: answersLettings,
         answers: answersConcessionAndLettings,
         formWithCSRF: FormWithCSRF
@@ -64,9 +63,8 @@
 ) {
     @{
         forType match {
-            case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 | FOR6045 | FOR6046 => answers()
             case FOR6020 => answersLetting()
-            case _ => answersSectionAboutTheFranchiseLettings()
+            case _       => answers()
         }
     }
 
