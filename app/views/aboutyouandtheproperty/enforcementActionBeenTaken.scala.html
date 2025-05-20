@@ -43,8 +43,6 @@
 
       <h1 class="govuk-heading-l">@messages("enforcementActionHasBeenTaken.heading")</h1>
 
-      <p class="govuk-body">@messages("hint.enforcementActionHasBeenTaken")</p>
-
       @govukRadios(Radios(
           fieldset = Some(Fieldset(
               legend = Some(Legend(
@@ -63,7 +61,8 @@
                   value = Some("no")
               )
           ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionBeenTaken")
+          errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionBeenTaken"),
+          hint = Some(Hint(content = Text(messages("hint.enforcementActionHasBeenTaken"))))
       ).withFormField(theForm("enforcementActionBeenTaken")))
 
     @govukDetails(Details(

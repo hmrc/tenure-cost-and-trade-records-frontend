@@ -47,8 +47,6 @@
 
       <h1 class="govuk-heading-l">@messages("licensableActivities.heading")</h1>
 
-      <p class="govuk-body">@messages("hint.licensableActivities")</p>
-
       @govukRadios(Radios(
           fieldset = Some(Fieldset(
               legend = Some(Legend(
@@ -68,7 +66,8 @@
                   value = Some("no")
               )
           ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
+          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities"),
+          hint = Some(Hint(content = Text(messages("hint.licensableActivities"))))
       ).withFormField(theForm("licensableActivities")))
 
 
