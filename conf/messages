@@ -834,7 +834,7 @@ help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed af
 # LICENSABLE ACTIVITIES
 #######################
 licensableActivities.heading = Do licensable activities regularly occur before 10am or after 11.30pm on any day of the week?
-hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment.
+hint.licensableActivities= Licensable activities could include selling alcohol, selling food and refreshments, or providing live entertainment.
 help.licensableActivities.title = Help with licensable activities
 help.licensableActivities.heading = Licensable activities
 help.licensableActivities.p1 = The Licensing Act, 2003 defines licensable activities as:
@@ -3997,7 +3997,7 @@ checkYourAnswersAboutTheProperty.websiteAddress = Website address
 checkYourAnswersAboutTheProperty.license.heading = Your licence
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence?
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Details of premises licence
-checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10:00 or after 23:30?
+checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10am or after 11:30pm?
 checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Description of licensable activities
 checkYourAnswersAboutTheProperty.premisesLicenseConditions = Restrictions on property use?
 checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Description of restrictions
