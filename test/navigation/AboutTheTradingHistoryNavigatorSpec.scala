@@ -19,7 +19,8 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkeredFuelQuestion, OtherHolidayAccommodation, TouringAndTentingPitches}
+import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, BunkeredFuelQuestion, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OccupationalAndAccountingInformation, OtherHolidayAccommodation, TouringAndTentingPitches, TurnoverSection, TurnoverSection6020, TurnoverSection6030}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, BaseLoad, Intermittent, RenewablesPlant}
 import models.submissions.common.{AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
@@ -28,7 +29,9 @@ import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{TestBaseSpec, toOpt}
+import views.html.aboutthetradinghistory.lowMarginFuelCardsDetails
 
+import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
 class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
@@ -289,6 +292,111 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           sessionAboutYou6020
         ) shouldBe controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0)
     }
+    "return edit page with last index when non-empty list exists for bunkered fuel cards" in {
+      val cards   = IndexedSeq(
+        BunkerFuelCardsDetails(
+          BunkerFuelCardDetails("test1", 123.45),
+          Some(AnswerYes)
+        ),
+        BunkerFuelCardsDetails(
+          BunkerFuelCardDetails("test2", 456.78),
+          Some(AnswerYes)
+        )
+      )
+      val session = sessionAboutYou6020.copy(
+        aboutTheTradingHistory = Some(AboutTheTradingHistory(bunkerFuelCardsDetails = Some(cards)))
+      )
+
+      navigator
+        .nextPage(BunkerFuelCardsDetailsId, session)
+        .apply(
+          session
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
+          .show(1)
+    }
+
+    "return index 0 when only one card exists for bunkered fuel cards" in {
+      val singleCard = IndexedSeq(
+        BunkerFuelCardsDetails(BunkerFuelCardDetails("test1", 123.45), Some(AnswerYes))
+      )
+      val session    = sessionAboutYou6020.copy(
+        aboutTheTradingHistory = Some(AboutTheTradingHistory(bunkerFuelCardsDetails = Some(singleCard)))
+      )
+
+      navigator
+        .nextPage(BunkerFuelCardsDetailsId, session)
+        .apply(
+          session
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)
+    }
+
+    "return index 0 when list is empty  for bunkered fuel cards" in {
+      val session = sessionAboutYou6020.copy(
+        aboutTheTradingHistory = Some(AboutTheTradingHistory(bunkerFuelCardsDetails = Some(IndexedSeq.empty)))
+      )
+
+      navigator
+        .nextPage(BunkerFuelCardsDetailsId, session)
+        .apply(
+          session
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)
+    }
+
+    "return edit page with last index when non-empty list exists  for low margin fuel cards " in {
+      val cards   = IndexedSeq(
+        LowMarginFuelCardsDetails(
+          LowMarginFuelCardDetail("test1", 123.45),
+          Some(AnswerYes)
+        ),
+        LowMarginFuelCardsDetails(
+          LowMarginFuelCardDetail("test2", 456.78),
+          Some(AnswerYes)
+        )
+      )
+      val session = sessionAboutYou6020.copy(
+        aboutTheTradingHistory = Some(AboutTheTradingHistory(lowMarginFuelCardsDetails = Some(cards)))
+      )
+
+      navigator
+        .nextPage(LowMarginFuelCardsDetailsId, session)
+        .apply(
+          session
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(1)
+    }
+
+    "return index 0 when only one card exists for low margin fuel cards" in {
+      val singleCard = IndexedSeq(
+        LowMarginFuelCardsDetails(LowMarginFuelCardDetail("test1", 123.45), Some(AnswerYes))
+      )
+      val session    = sessionAboutYou6020.copy(
+        aboutTheTradingHistory = Some(AboutTheTradingHistory(lowMarginFuelCardsDetails = Some(singleCard)))
+      )
+
+      navigator
+        .nextPage(LowMarginFuelCardsDetailsId, session)
+        .apply(
+          session
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0)
+    }
+
+    "return index 0 when list is empty for low margin fuel cards" in {
+      val session = sessionAboutYou6020.copy(
+        aboutTheTradingHistory = Some(AboutTheTradingHistory(lowMarginFuelCardsDetails = Some(IndexedSeq.empty)))
+      )
+
+      navigator
+        .nextPage(LowMarginFuelCardsDetailsId, session)
+        .apply(
+          session
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0)
+    }
+
     "return a function that goes the unusual circumstances page when income expenditure has been completed" in {
       navigator
         .nextPage(IncomeExpenditureSummaryId, sessionAboutYou)
@@ -687,7 +795,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show()
     }
 
-    "return a function that goes to twin unit caravans owned by operator page when single caravans age page completed123" in {
+    "return a function that goes to CYA, when income expenditure finished" in {
       navigator
         .nextPage(IncomeExpenditureSummary6076Id, sessionAboutYou6076)
         .apply(
@@ -713,9 +821,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to CYA Other Holiday page when total site capacity page completed" in {
       navigator
-        .nextPage(TotalSiteCapacityId, sessionAboutYou6048)
+        .nextPage(TotalSiteCapacityId, sessionAboutYou6045)
         .apply(
-          sessionAboutYou6048
+          sessionAboutYou6045
         ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show()
     }
 
@@ -726,6 +834,53 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .show()
         .withFragment("tradingHistory")
     }
+    "financialYearEndRouting is called" should {
 
+      "redirect to CheckYourAnswersAccountingInfoController for FOR6010 when financialYearEndHasChanged is false" in {
+        val session = sessionAboutYou6010.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory))
+        navigator
+          .nextPage(FinancialYearEndPageId, session)
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
+      }
+
+      "redirect to TotalFuelSoldController for FOR6020" in {
+        val session = sessionAboutYou6020.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020))
+        navigator
+          .nextPage(FinancialYearEndPageId, session)
+          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show()
+      }
+
+      "redirect to Turnover6030Controller for FOR6030" in {
+        val session = sessionAboutYou6030.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030))
+        navigator
+          .nextPage(FinancialYearEndPageId, session)
+          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+      }
+
+      "redirect to CheckYourAnswersAccountingInfoController for FOR6045" in {
+        val session = sessionAboutYou6045.copy(
+          aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
+          aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
+        )
+        navigator
+          .nextPage(FinancialYearEndPageId, session)
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
+      }
+
+      "redirect to ElectricityGeneratedController for FOR6076" in {
+        val session = sessionAboutYou6076.copy(
+          aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
+          aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
+        )
+        navigator
+          .nextPage(FinancialYearEndPageId, session)
+          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+      }
+
+    }
   }
 }
