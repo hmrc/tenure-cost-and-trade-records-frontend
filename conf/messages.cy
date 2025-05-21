@@ -908,11 +908,11 @@ error.tiedForGoodsDetails.required = Select which type of tie you have
 typeOfIncome.heading = Dewiswch ffynhonnell incwm rhent
 typeOfIncome.p = Bydd gennych yr opsiwn i ychwanegu mwy nag un ffynhonnell incwm rhent os oes angen.
 typeOfIncome.concession.label = Ffi y consesiwn neu’r fasnachfraint
-typeOfIncome.6010.concession.label = Ffi y consesiwn neu’r fasnachfraint
+typeOfIncome.6010.concession.label = Busnesau ar wahân sy’n gweithredu o’r eiddo
 typeOfIncome.6015.concession.label = Ffi y consesiwn neu’r fasnachfraint
 typeOfIncome.concession.hint = Er enghraifft, busnesau llety neu arlwyo.
 typeOfIncome.concession.6015.hint = O unrhyw fusnesau ar wahân sy’n gweithredu o’r eiddo, megis bwytai neu giosgau llogi ceir.
-typeOfIncome.concession.6030.hint = From any separate businesses operating from the property such as tearooms, vehicle charging points or car washes.
+typeOfIncome.concession.6030.hint = O unrhyw fusnesau ar wahân sy’n gweithredu o’r eiddo, megis ystafelloedd te nwyntiau gwefru ceir neu gyfleusterau parcio.Fse
 typeOfIncome.letting.label = Rhoi rhannau eraill o’r eiddo ar osod
 typeOfIncome.letting.hint = Er enghraifft byrddau posteri, maes parcio neu fastiau ffôn.
 error.typeOfIncome.required = Select a source of rental income
@@ -1078,7 +1078,7 @@ error.correspondenceAddress.required = Enter correspondence address
 
 #TELECOM MAST LETTING 6020
 ##############################
-label.telecomMastLetting.heading = Provide the telecom mast’s details
+label.telecomMastLetting.heading = Rhowch fanylion y mast telathrebu
 telecomMastLetting.address.lookupPageHeading = What is the mast’s property address?
 telecomMastLetting.address.selectPageHeading = Choose the mast’s property address
 telecomMastLetting.address.confirmPageHeading = Check the mast’s property address
@@ -1105,12 +1105,12 @@ error.advertisingCompanyName.maxLength = Advertising company’s name must be 50
 
 #LETTINGS OTHER LETTING 6020
 ##############################
-label.otherLetting.heading = Provide details of the other letting type
-label.lettingType = Letting type
+label.otherLetting.heading = Rhowch fanylion y math arall o osodiad
+label.lettingType = Math y gosodiad
 otherLetting.address.lookupPageHeading = What is the other letting property address?
 otherLetting.address.selectPageHeading = Choose the other letting property address
 otherLetting.address.confirmPageHeading = Check the other letting property address
-hint.lettingType = For example, garage workshop or charging point.
+hint.lettingType = Er enghraifft, gweithdy garej neu man gwefru
 error.lettingType.required = Enter letting type
 error.lettingType.maxLength = Letting type must be 50 characters or fewer
 
@@ -1514,12 +1514,12 @@ cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busne
 concessionDetails.heading = Rhowch fanylion y consesiwn
 lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
 lettingOtherPartOfPropertyDetails.heading = Rhowch fanylion y tenant
-cateringOperationOrLettingAccommodationDetails.heading = Provide the business’s details
-concessionDetails.heading = Provide the concession’s details
+cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busnes
+concessionDetails.heading = Rhowch fanylion y consesiwn
 concessionDetails.address.lookupPageHeading = What is the concession’s property address?
 concessionDetails.address.selectPageHeading = Choose the concession’s property address
 concessionDetails.address.confirmPageHeading = Check the concession’s property address
-lettingDetails.heading = Provide the tenant or operator’s details
+lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
 lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
 lettingDetails.address.selectPageHeading = Choose the tenant or operator address
 lettingDetails.address.confirmPageHeading = Check the tenant or operator address
