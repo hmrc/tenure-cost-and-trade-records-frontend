@@ -86,6 +86,19 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           onlineAdvertising(data)(1).websiteAddress          shouldBe "test.pl"
           onlineAdvertising(data)(1).propertyReferenceNumber shouldBe "1234ref"
         }
+        "be handling POST duplicate entry by replying 400" in new ControllerFixture(
+          oneAdvertising
+        ) {
+          // Post a duplicate and expect a 400 bad request
+          val request = fakePostRequest.withFormUrlEncodedBody(
+            "websiteAddress"          -> "123.com",
+            "propertyReferenceNumber" -> "aaa123"
+          )
+          val result  = controller.submit(None)(request)
+          status(result) shouldBe BAD_REQUEST
+          val page = contentAsJsoup(result)
+          page.error("duplicate") shouldBe "lettingHistory.advertisingDetail.duplicate"
+        }
         "be handling POST /detail?overwrite by replying 303 redirect to 'Advertising Online List' page" in new ControllerFixture(
           twoAdvertising
         ) {

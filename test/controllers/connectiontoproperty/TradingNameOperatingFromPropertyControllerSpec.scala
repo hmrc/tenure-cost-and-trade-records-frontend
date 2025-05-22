@@ -25,7 +25,7 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+import utils.{TestBaseSpec, toOpt}
 
 import scala.language.reflectiveCalls
 
@@ -48,90 +48,6 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def tradingNameOperatingFromProperty6076Controller(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def tradingNameOperatingFromProperty6076ChangeAddressController(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesEditCYA)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def tradingNameOperatingFromProperty6076NoController(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesNoCYA)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = FOR6076, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def tradingNameOperatingFromProperty6048Controller(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def tradingNameOperatingFromProperty6048ChangeAddressController(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesEditCYA)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def tradingNameOperatingFromProperty6048NoController(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesNoCYA)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(forType = FOR6048, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
-  def tradingNameOperatingFromPropertyControllerNoTradingName(
-    stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) =
-    new TradingNameOperatingFromPropertyController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      connectedToPropertyNavigator,
-      tradingNameOperatingFromProperty,
-      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
-    )
-
   "GET /" should {
     "return 200 when trading name present in session" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
@@ -143,35 +59,34 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 when trading name present in session change address" in {
-      val result = tradingNameOperatingFromProperty6076ChangeAddressController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 when trading name present in session for 6048" in {
+      val result = tradingNameOperatingFromPropertyController(forType = FOR6048).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+      )
     }
 
-    "return HTML change address" in {
-      val result = tradingNameOperatingFromProperty6076ChangeAddressController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some(UTF8)
-    }
-
-    "return 200 when trading name present in session no" in {
-      val result = tradingNameOperatingFromProperty6076NoController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML no" in {
-      val result = tradingNameOperatingFromProperty6076NoController().show(fakeRequest)
-      contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some(UTF8)
-    }
-
-    "return 200 when trading name present in session 6076" in {
-      val result = tradingNameOperatingFromProperty6076Controller().show(fakeRequest)
-      status(result) shouldBe Status.OK
+    "return 200 when none in session for 6048" in {
+      val result = tradingNameOperatingFromPropertyController(
+        forType = FOR6048,
+        stillConnectedDetails = None
+      ).show(fakeRequest)
+      status(result)        shouldBe Status.OK
+      contentType(result)   shouldBe Some("text/html")
+      charset(result)       shouldBe Some("utf-8")
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+      )
     }
 
     "return 200 and HTML with trading name present in session for 6076" in {
-      val controller = tradingNameOperatingFromPropertyController(forType = FOR6076)
+      val controller = tradingNameOperatingFromPropertyController(
+        forType = FOR6076,
+        stillConnectedDetails = toOpt(prefilledStillConnectedDetailsYesToAll)
+      )
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -195,11 +110,6 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return 200 when trading name present in session 6048" in {
-      val result = tradingNameOperatingFromProperty6048Controller().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
     "return 200 when trading name present is not session" in {
       val controller = tradingNameOperatingFromPropertyController(
         forType = FOR6076,
@@ -213,7 +123,6 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
         controllers.routes.TaskListController.show().url
       )
     }
-
   }
 
   "calculateBackLink" should {
@@ -229,46 +138,11 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       )
     }
 
-    "return back link to AreYouStillConnectedController for 6076 and addressConnectionType is 'Yes'" in {
-      val prefilledDetails: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
-        addressConnectionType = Some(AddressConnectionTypeYes)
-      )
-
-      val result =
-        tradingNameOperatingFromProperty6076Controller(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
-      contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-      )
-    }
-
-    "return back link to EditAddressController for 6076 and addressConnectionType is 'YesChangeAddress'" in {
-      val prefilledDetails: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
-        addressConnectionType = Some(AddressConnectionTypeYesChangeAddress)
-      )
-
-      val result =
-        tradingNameOperatingFromProperty6076Controller(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
-      contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.EditAddressController.show().url
-      )
-    }
-
     "return back link to TaskListController for 6076 and addressConnectionType is unknown" in {
-      val prefilledDetails: StillConnectedDetails = prefilledStillConnectedDetailsYesToAll.copy(
-        addressConnectionType = None
-      )
-
       val result =
-        tradingNameOperatingFromProperty6076Controller(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+        tradingNameOperatingFromPropertyController(forType = FOR6076, stillConnectedDetails = None).show(fakeRequest)
       contentAsString(result) should include(
         controllers.routes.TaskListController.show().url
-      )
-    }
-
-    "return back link to VacantPropertiesController when forType is not 6076" in {
-      val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
-      contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
       )
     }
   }
@@ -282,7 +156,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
     }
 
     "throw a BAD_REQUEST if an empty form is submitted 6048" in {
-      val res = tradingNameOperatingFromProperty6048Controller().submit(
+      val res = tradingNameOperatingFromPropertyController(forType = FOR6048).submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
@@ -290,6 +164,15 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
 
     "Redirect when form data submitted without CYA param" in {
       val res = tradingNameOperatingFromPropertyController().submit(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "tradingNameFromProperty" -> "Trading name"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted without CYA param for 6048" in {
+      val res = tradingNameOperatingFromPropertyController(forType = FOR6048).submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "tradingNameFromProperty" -> "Trading name"
         )

@@ -41,16 +41,6 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def removeConnectionControllerEmpty(
-    removeConnectionDetails: Option[RemoveConnectionDetails] = None
-  ) = new RemoveConnectionController(
-    stubMessagesControllerComponents(),
-    removeConnectionNavigator,
-    removeConnectionView,
-    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-    mockSessionRepo
-  )
-
   "Remove connection controller" should {
     "return 200" in {
       val result = removeConnectionController().show(fakeRequest)
@@ -64,7 +54,8 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
     }
 
     "return 200 for empty session" in {
-      val result = removeConnectionControllerEmpty().show(fakeRequest)
+      val controller = removeConnectionController(removeConnectionDetails = None)
+      val result     = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
@@ -74,6 +65,17 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
       "throw a BAD_REQUEST if an empty form is submitted" in {
         val res = removeConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
+      }
+
+      "Redirect when form data connectedToLandlord submitted" in {
+        val res = removeConnectionController().submit(
+          FakeRequest(POST, "/").withFormUrlEncodedBody(
+            "removeConnectionFullName"      -> "Mr John Smith",
+            "removeConnectionDetails.phone" -> "01234567890",
+            "removeConnectionDetails.email" -> "blah.blah@test.com"
+          )
+        )
+        status(res) shouldBe SEE_OTHER
       }
     }
   }
