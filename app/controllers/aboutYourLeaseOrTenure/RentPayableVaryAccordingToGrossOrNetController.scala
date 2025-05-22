@@ -94,10 +94,10 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    val openMarketNo = answers.aboutLeaseOrAgreementPartOne.flatMap(
+    val openMarket = answers.aboutLeaseOrAgreementPartOne.flatMap(
       _.rentOpenMarketValueDetails.flatMap(_.rentOpenMarketValues.name)
     )
-    openMarketNo match {
+    openMarket match {
       case Some("no") =>
         answers.forType match {
           case FOR6010 | FOR6015 | FOR6016 | FOR6030 | FOR6076 =>
