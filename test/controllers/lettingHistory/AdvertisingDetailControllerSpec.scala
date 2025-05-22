@@ -91,10 +91,10 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         ) {
           // Post a duplicate and expect a 400 bad request
           val request = fakePostRequest.withFormUrlEncodedBody(
-            "websiteAddress" -> "123.com",
+            "websiteAddress"          -> "123.com",
             "propertyReferenceNumber" -> "aaa123"
           )
-          val result = controller.submit(None)(request)
+          val result  = controller.submit(None)(request)
           status(result) shouldBe BAD_REQUEST
           val page = contentAsJsoup(result)
           page.error("duplicate") shouldBe "lettingHistory.advertisingDetail.duplicate"

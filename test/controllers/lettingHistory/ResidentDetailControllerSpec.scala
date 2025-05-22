@@ -56,7 +56,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
       }
     }
     "the user session is stale" when {
-      "regardless of the given number residents"             should {
+      "regardless of the given number residents" should {
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled with name and address values" in new ControllerFixture(
           oneResident
         ) {
@@ -108,12 +108,12 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         ) {
           // Post a duplicate and expect a 400 bad request
           val request = fakePostRequest.withFormUrlEncodedBody(
-            "name" -> "Mr. One",
+            "name"    -> "Mr. One",
             "address" -> "Address One"
           )
-          val result = controller.submit()(request)
+          val result  = controller.submit()(request)
           status(result) shouldBe BAD_REQUEST
-          val page   = contentAsJsoup(result)
+          val page = contentAsJsoup(result)
           page.error("duplicate") shouldBe "lettingHistory.residentDetail.duplicate"
         }
 

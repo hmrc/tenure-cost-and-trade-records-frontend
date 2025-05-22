@@ -55,7 +55,7 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
 
     "return 200 for empty session" in {
       val controller = removeConnectionController(removeConnectionDetails = None)
-      val result = controller.show(fakeRequest)
+      val result     = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
@@ -70,7 +70,7 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
       "Redirect when form data connectedToLandlord submitted" in {
         val res = removeConnectionController().submit(
           FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "removeConnectionFullName" -> "Mr John Smith",
+            "removeConnectionFullName"      -> "Mr John Smith",
             "removeConnectionDetails.phone" -> "01234567890",
             "removeConnectionDetails.email" -> "blah.blah@test.com"
           )
