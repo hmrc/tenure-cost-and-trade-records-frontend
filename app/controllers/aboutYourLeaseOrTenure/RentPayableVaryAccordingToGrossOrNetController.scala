@@ -32,6 +32,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryAccordingToGrossOrNet
 import controllers.toOpt
+import models.submissions.common.AnswerYes
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -93,17 +94,17 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    val otherChoice = answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.whatIsYourCurrentRentBasedOnDetails.flatMap(_.currentRentBasedOn.name)
+    val openMarketNo = answers.aboutLeaseOrAgreementPartOne.flatMap(
+      _.rentOpenMarketValueDetails.flatMap(_.rentOpenMarketValues.name)
     )
-    otherChoice match {
-      case Some("other") =>
+    openMarketNo match {
+      case Some("no") =>
         answers.forType match {
           case FOR6010 | FOR6015 | FOR6016 | FOR6030 | FOR6076 =>
             controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
           case _                                               => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
         }
-      case _             =>
+      case _          =>
         logger.warn(
           s"Back link for rent payable vary according to gross or net page reached with unknown enforcement taken value"
         )
