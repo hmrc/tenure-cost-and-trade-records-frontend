@@ -272,7 +272,6 @@
                             controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(idx), "costOfPaidService")
             ))
         }
-      <div class="govuk-!-width-one-half"></div>
         @govukSummaryList(SummaryList(rows =
             List(
                 SummaryListRow(
@@ -399,11 +398,11 @@
                 "capitalSumOrPremium"
             ) ++
             sectionAnswers2.conditionRow(
-                _.payACapitalSumInformationDetails.isDefined,
+                _.payACapitalSumDetails.map(_.capitalSumOrPremium.name).contains("yes"),
                 "checkYourAnswersAboutYourLeaseOrTenure.detailsOfPayment",
                 _.payACapitalSumInformationDetails.map(r =>
                     Seq(
-                        r.capitalSumPaidDetails.map(_.asMoney).getOrElse(""),
+                        r.capitalSumPaidDetails.fold("")(_.asMoney),
                         r.capitalSumPaidDetailsDateInput.map(date => dateUtil.formatDayMonthAbbrYear(date)).getOrElse("")
                     ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                 controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show(), "",
