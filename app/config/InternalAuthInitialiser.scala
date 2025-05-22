@@ -71,7 +71,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
     logger.info("Initialising auth token")
 
     httpClientV2
-      .post(tokenURL)(emptyHeaderCarrier)
+      .post(tokenURL)(using emptyHeaderCarrier)
       .withBody(
         Json.obj(
           "token"       -> internalAuthToken,
@@ -98,7 +98,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
 
   private def authTokenIsValid(): Future[Boolean] =
     httpClientV2
-      .get(tokenURL)(emptyHeaderCarrier)
+      .get(tokenURL)(using emptyHeaderCarrier)
       .setHeader(authorisation -> internalAuthToken)
       .execute[HttpResponse]
       .map(_.status == OK)

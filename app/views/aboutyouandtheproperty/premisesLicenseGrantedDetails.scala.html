@@ -16,7 +16,6 @@
 
 @import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
 
@@ -48,7 +47,8 @@
           "premisesLicenseGrantedInformation.heading",
           classes = "govuk-label--l",
           isPageHeading = true,
-          charCount = 2000
+          charCount = 2000,
+          hint = "premisesLicenseGrantedInformation.hint"
       )
 
     @govukDetails(Details(

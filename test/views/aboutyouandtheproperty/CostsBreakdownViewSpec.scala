@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,10 @@ class CostsBreakdownViewSpec extends QuestionViewBehaviours[String] {
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
 
-  def createView: () => Html = () => costsBreakdownView(form, Summary("99996076001"))(fakeRequest, messages)
+  def createView: () => Html = () => costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    costsBreakdownView(form, Summary("99996076001"))(fakeRequest, messages)
+    costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
 
   "costs breakdown view" should {
 

@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,8 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswersYesNo
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import models.pages.Summary
 
 
@@ -57,8 +47,6 @@
 
       <h1 class="govuk-heading-l">@messages("licensableActivities.heading")</h1>
 
-      <p class="govuk-body">@messages("hint.licensableActivities")</p>
-
       @govukRadios(Radios(
           fieldset = Some(Fieldset(
               legend = Some(Legend(
@@ -78,7 +66,8 @@
                   value = Some("no")
               )
           ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
+          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities"),
+          hint = Some(Hint(content = Text(messages("hint.licensableActivities"))))
       ).withFormField(theForm("licensableActivities")))
 
 

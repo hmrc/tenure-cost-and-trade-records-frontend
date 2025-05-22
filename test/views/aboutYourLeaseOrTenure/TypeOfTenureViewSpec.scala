@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.TypeOfTenureForm.typeOfTenureForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.TypeOfTenure
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -30,10 +29,10 @@ class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure] {
 
   override val form: Form[TypeOfTenure] = typeOfTenureForm
 
-  def createView: () => Html = () => typeOfTenureView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () => typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[TypeOfTenure] => Html = (form: Form[TypeOfTenure]) =>
-    typeOfTenureView(form, Summary("99996010001"))(fakeRequest, messages)
+    typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Type of Tenure view" must {
 

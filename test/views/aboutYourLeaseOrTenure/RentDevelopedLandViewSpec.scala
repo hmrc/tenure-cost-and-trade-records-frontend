@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentDevelopedLandForm
 import models.pages.Summary
 import models.submissions.common.AnswersYesNo
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,10 +27,10 @@ class RentDevelopedLandViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   val messageKeyPrefix = "rentDevelopedLand"
 
   override val form = RentDevelopedLandForm.rentDevelopedLandForm
-  def createView    = () => rentDevelopedLandView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView    = () => rentDevelopedLandView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    rentDevelopedLandView(form, Summary("99996010001"))(fakeRequest, messages)
+    rentDevelopedLandView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Connected to landlord view" must {
 

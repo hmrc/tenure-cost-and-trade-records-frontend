@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -34,10 +33,10 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
 
   def createView = () =>
-    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[RentPayableVaryAccordingToGrossOrNetDetails]) =>
-    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent payable vary on gross or net turnover view" must {
 

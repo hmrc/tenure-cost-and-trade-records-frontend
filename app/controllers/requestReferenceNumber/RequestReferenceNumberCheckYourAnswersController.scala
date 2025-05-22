@@ -74,7 +74,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    submitRequestReferenceNumber()(hc, request)
+    submitRequestReferenceNumber()(using hc, request)
   }
 
   def submitRequestReferenceNumber()(implicit hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
@@ -98,7 +98,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
         "failureReason"   -> failureReason
       )
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
-      errorHandler.internalServerErrorTemplate(request).map(InternalServerError(_))
+      errorHandler.internalServerErrorTemplate(using request).map(InternalServerError(_))
     }
   }
 

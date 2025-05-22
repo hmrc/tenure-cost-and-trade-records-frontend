@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.FixedOperatingExpensesForm
 import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -45,12 +44,12 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOpe
   val messageKeyPrefix       = "fixedOperatingExpenses"
   private val sessionRequest = SessionRequest(baseFilled6015Session, fakeRequest)
 
-  override val form = FixedOperatingExpensesForm.fixedOperatingExpensesForm(Seq("2026", "2025", "2024"))(messages)
+  override val form = FixedOperatingExpensesForm.fixedOperatingExpensesForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => fixedOperatingExpensesView(form)(sessionRequest, messages)
+  def createView = () => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
   def createViewUsingForm: Form[Seq[FixedOperatingExpenses]] => Html =
-    (form: Form[Seq[FixedOperatingExpenses]]) => fixedOperatingExpensesView(form)(sessionRequest, messages)
+    (form: Form[Seq[FixedOperatingExpenses]]) => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
   "Fixed Operating Expenses view" must {
 

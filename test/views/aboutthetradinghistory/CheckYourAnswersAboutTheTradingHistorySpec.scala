@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
@@ -52,34 +51,40 @@ class CheckYourAnswersAboutTheTradingHistorySpec
     SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
 
   def createView: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(using sessionRequest, messages)
 
   def createView6016: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996016001"))(sessionRequestFor6016, messages)
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996016001"))(using
+      sessionRequestFor6016,
+      messages
+    )
 
   def createView6020: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink6020, Summary("99996020001"))(
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink6020, Summary("99996020001"))(using
       sessionRequestFor6020,
       messages
     )
   def createView6030: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996030001"))(sessionRequestFor6030, messages)
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996030001"))(using
+      sessionRequestFor6030,
+      messages
+    )
 
   def createView6045: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996045001"))(
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996045001"))(using
       SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest),
       messages
     )
 
   def createView6076: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996076001"))(
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996076001"))(using
       SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest),
       messages
     )
 
   def createViewUsingForm: Form[CheckYourAnswersAboutTheTradingHistory] => Html =
     (form: Form[CheckYourAnswersAboutTheTradingHistory]) =>
-      checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(sessionRequest, messages)
+      checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(using sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.OccupationalInformationForm
 import models.submissions.Form6010.MonthsYearDuration
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -33,12 +32,12 @@ class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDur
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   override val form: Form[MonthsYearDuration] =
-    OccupationalInformationForm.occupationalInformationForm(messages)
+    OccupationalInformationForm.occupationalInformationForm(using messages)
 
-  def createView: () => Html = () => whenDidYouFistOccupyView(form, backLink)(sessionRequest, messages)
+  def createView: () => Html = () => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm: Form[MonthsYearDuration] => Html =
-    (form: Form[MonthsYearDuration]) => whenDidYouFistOccupyView(form, backLink)(sessionRequest, messages)
+    (form: Form[MonthsYearDuration]) => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
 
   "About the trading history view" must {
 

@@ -17,7 +17,6 @@
 package controllers.guidance
 
 import connectors.BackendConnector
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -33,7 +32,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                shouldBe "referenceNumber.heading"
         page.backLink               shouldBe controllers.routes.Application.index.url
@@ -50,7 +49,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         )
         status(result) shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                        shouldBe "referenceNumber.heading"
         page.backLink                       shouldBe controllers.routes.Application.index.url

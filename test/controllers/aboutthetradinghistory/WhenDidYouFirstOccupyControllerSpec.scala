@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -159,21 +159,21 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
   "About your trading history form" should {
     "error if first occupy month and year are missing " in {
       val formData = baseFormData - errorKey.occupyMonth - errorKey.occupyYear
-      val form     = occupationalInformationForm(messages).bind(formData)
+      val form     = occupationalInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.occupyMonth, "error.date.required", form)
     }
 
     "error if first occupy month is missing " in {
       val formData = baseFormData - errorKey.occupyMonth
-      val form     = occupationalInformationForm(messages).bind(formData)
+      val form     = occupationalInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.occupyMonth, "error.date.mustInclude", form)
     }
 
     "error if first occupy year is missing" in {
       val formData = baseFormData - errorKey.occupyYear
-      val form     = occupationalInformationForm(messages).bind(formData)
+      val form     = occupationalInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.occupyYear, "error.date.mustInclude", form)
     }

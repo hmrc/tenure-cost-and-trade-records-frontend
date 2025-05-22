@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -27,12 +26,12 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
 
   val messageKeyPrefix = "currentLeaseOrAgreementBegin"
 
-  override val form = CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm(messages)
+  override val form = CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm(using messages)
 
-  def createView = () => currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CurrentLeaseOrAgreementBegin]) =>
-    currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(fakeRequest, messages)
+    currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Current rent first paid view" must {
 

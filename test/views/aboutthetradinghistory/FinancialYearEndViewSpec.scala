@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.submissions.Form6010.DayMonthsDuration
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -30,12 +29,12 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(messages)
+  override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages)
 
-  def createView: () => Html = () => financialYearEndView(form)(sessionRequest, messages)
+  def createView: () => Html = () => financialYearEndView(form)(using sessionRequest, messages)
 
   def createViewUsingForm: Form[(DayMonthsDuration, Boolean)] => Html =
-    (form: Form[(DayMonthsDuration, Boolean)]) => financialYearEndView(form)(sessionRequest, messages)
+    (form: Form[(DayMonthsDuration, Boolean)]) => financialYearEndView(form)(using sessionRequest, messages)
 
   "financialYearEnd view" must {
 

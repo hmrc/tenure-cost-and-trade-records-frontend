@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.accommodation.AccommodationLettingHistory6048Form.accommodationLettingHistory6048Form
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
-import models.submissions.accommodation.{AccommodationDetails, AccommodationLettingHistory, AccommodationUnit, AvailableRooms}
+import models.submissions.accommodation.{AccommodationDetails, AccommodationLettingHistory, AccommodationUnit}
 import navigation.AccommodationNavigator
 import navigation.identifiers.AccommodationLettingHistoryPageId
 import play.api.Logging

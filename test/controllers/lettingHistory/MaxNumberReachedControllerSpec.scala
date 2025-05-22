@@ -18,7 +18,6 @@ package controllers.lettingHistory
 
 import models.submissions.lettingHistory.LettingHistory
 import navigation.LettingHistoryNavigator
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers._
 import views.html.lettingHistory.maxNumberReached as MaxNumberReachedView
 
@@ -32,7 +31,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
 
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.heading              shouldBe "lettingHistory.maxNumberReached.permanentResidents.heading"
           page.backLink             shouldBe routes.ResidentListController.show.url
@@ -44,7 +43,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(kind = "completedLettings")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.heading              shouldBe "lettingHistory.maxNumberReached.completedLettings.heading"
           page.backLink             shouldBe routes.OccupierListController.show.url
@@ -56,7 +55,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(kind = "onlineAdvertising")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.heading              shouldBe "lettingHistory.maxNumberReached.onlineAdvertising.heading"
           page.backLink             shouldBe routes.AdvertisingListController.show.url
@@ -72,7 +71,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(kind = "permanentResidents")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.backLink             shouldBe routes.ResidentListController.show.url
           page.checkbox("understood") should beChecked
@@ -85,7 +84,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(kind = "completedLettings")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.backLink             shouldBe routes.OccupierListController.show.url
           page.checkbox("understood") should beChecked
@@ -98,7 +97,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
           val result = controller.show(kind = "onlineAdvertising")(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF_8.charset
+          charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
           page.backLink             shouldBe routes.AdvertisingListController.show.url
           page.checkbox("understood") should beChecked
@@ -110,7 +109,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
         val result = controller.show(kind = "unknown")(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.backLink             shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
         page.checkbox("understood") should notBeChecked

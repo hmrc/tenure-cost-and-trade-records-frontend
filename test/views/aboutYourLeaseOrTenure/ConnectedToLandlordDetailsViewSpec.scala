@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
@@ -34,10 +33,10 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[Connecte
   val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(prefilledFull6020Session, fakeRequest)
 
-  def createView = () => connectedToLandlordDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => connectedToLandlordDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[ConnectedToLandlordInformationDetails]) =>
-    connectedToLandlordDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    connectedToLandlordDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Connected to landlord details view" must {
 

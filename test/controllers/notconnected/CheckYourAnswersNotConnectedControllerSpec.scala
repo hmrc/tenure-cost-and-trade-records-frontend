@@ -51,7 +51,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
       val result = checkYourAdditionalInformationController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
-      charset(result)       shouldBe Some("utf-8")
+      charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
         controllers.notconnected.routes.RemoveConnectionController.show().url
       )
@@ -59,7 +59,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
     "handle submit form with all sections" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
-      when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(any[HeaderCarrier]))
+      when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.successful(HttpResponse(CREATED)))
       val result = checkYourAdditionalInformationController().submit(fakeRequest)
       status(result) shouldBe FOUND

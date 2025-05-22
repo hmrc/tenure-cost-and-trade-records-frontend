@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.connectiontoproperty
 import form.connectiontoproperty.AreYouStillConnectedForm
 import models.pages.Summary
 import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -29,10 +28,10 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
   override val form = AreYouStillConnectedForm.areYouStillConnectedForm
 
-  def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "")(fakeRequest, messages)
+  def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "")(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AddressConnectionType]) =>
-    areYouStillConnectedView(form, Summary("99996010001"), "")(fakeRequest, messages)
+    areYouStillConnectedView(form, Summary("99996010001"), "")(using fakeRequest, messages)
 
   "Are you still connected view" must {
 

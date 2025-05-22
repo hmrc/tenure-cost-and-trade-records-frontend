@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 
 package actions
 
-import models.Session
-import play.api.libs.json.Reads
 import play.api.mvc.Results.TemporaryRedirect
 import play.api.mvc.{ActionRefiner, Request, Result}
 import repositories.SessionRepo
@@ -36,7 +34,7 @@ case class WithSessionRefiner @Inject() (
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
   override protected def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
-    sessionRepository.get(implicitly[Reads[Session]], hc(request)).map {
+    sessionRepository.get(using hc(using request)).map {
       case Some(s) => Right(actions.SessionRequest(sessionData = s, request = request))
       case None    => Left(TemporaryRedirect(controllers.routes.LoginController.show.url))
     }

@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
 @Singleton

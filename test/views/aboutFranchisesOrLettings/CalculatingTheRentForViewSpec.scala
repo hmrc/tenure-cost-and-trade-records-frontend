@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTheRent] {
 
   override val form =
-    CalculatingTheRentForm.calculatingTheRentForm(messages)
+    CalculatingTheRentForm.calculatingTheRentForm(using messages)
 
   def createView = () =>
     calculatingTheRentView(
@@ -33,7 +33,7 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
       0,
       "separate business",
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[CalculatingTheRent]) =>
     calculatingTheRentView(
@@ -41,7 +41,7 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
       0,
       "separate business",
       Summary("99996010001")
-    )(fakeRequest, messages)
+    )(using fakeRequest, messages)
 
   "Catering operation rent details view" should {
 

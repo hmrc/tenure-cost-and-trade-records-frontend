@@ -24,7 +24,7 @@ import scala.concurrent.Future.successful
 trait MockAddressLookup extends MockitoExtendedSugar:
 
   val addressLookupConnector = mock[AddressLookupConnector]
-  when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any)).thenReturn(successful(Some("/on-ramp")))
+  when(addressLookupConnector.initJourney(any[AddressLookupConfig])(using any)).thenReturn(successful(Some("/on-ramp")))
 
   val addressLookupConfirmedAddress = AddressLookupConfirmedAddress(
     address = AddressLookupAddress(
@@ -35,4 +35,5 @@ trait MockAddressLookup extends MockitoExtendedSugar:
     auditRef = "auditRef",
     id = Some("id")
   )
-  when(addressLookupConnector.getConfirmedAddress(anyString)(any)).thenReturn(successful(addressLookupConfirmedAddress))
+  when(addressLookupConnector.getConfirmedAddress(anyString)(using any))
+    .thenReturn(successful(addressLookupConfirmedAddress))

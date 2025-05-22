@@ -36,8 +36,6 @@
 @import models.ForType.*
 @import models.submissions.aboutfranchisesorlettings.FranchiseIncomeRecord
 
-@import models.pages.Summary
-
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
@@ -53,9 +51,9 @@
 
 @sectionName = @{
     forType match {
-        case FOR6010 | FOR6011  => messages("label.section.aboutTheFranchiseLettings")
-        case FOR6015 | FOR6016  => messages("label.section.aboutTheFranchiseConcessions")
-        case _                  => messages("label.section.aboutTheConcessionsFranchisesLettings")
+        case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
+        case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
+        case _                 => messages("label.section.aboutTheFranchiseLettings")
     }
 }
 
@@ -81,7 +79,9 @@
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession: ConcessionIncomeRecord =>
                 (concession.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
-                 controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url)
+                        if (forType == FOR6030) controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(index).url
+                        else controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url
+                )
             case letting: LettingIncomeRecord =>
                 (letting.operatorDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", d.lettingAddress.map(_.multiLine).getOrElse(""))),
                  controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)

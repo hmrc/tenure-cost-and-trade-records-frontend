@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.IncomeRecordRentForm.incomeRecordRentForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, PropertyRentDetails, TypeLetting}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, LettingIncomeRecord, PropertyRentDetails, TypeLetting}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentalIncomeRentId
 import play.api.Logging
@@ -99,7 +99,7 @@ class RentalIncomeRentController @Inject() (
           } else {
             aboutFranchisesOrLettings
           }
-        }(request)
+        }(using request)
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentalIncomeRentId, updatedSession).apply(updatedSession))

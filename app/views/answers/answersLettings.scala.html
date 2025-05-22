@@ -45,13 +45,13 @@
 
     @getLettingType(letting: LettingPartOfProperty) = @{
         letting match {
-            case atm: ATMLetting =>
+            case _: ATMLetting =>
                 messages("lettings.typeOfLetting.automatedTellerMachine")
-            case telecom: TelecomMastLetting =>
+            case _: TelecomMastLetting =>
                 messages("lettings.typeOfLetting.telecomMast")
-            case advert: AdvertisingRightLetting =>
+            case _: AdvertisingRightLetting =>
                 messages("lettings.typeOfLetting.advertisingRight")
-            case other: OtherLetting =>
+            case _: OtherLetting =>
                 messages("lettings.typeOfLetting.other.label")
         }
     }

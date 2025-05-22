@@ -18,14 +18,13 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import controllers.{FORDataCaptureController, aboutthetradinghistory}
-import form.aboutthetradinghistory.CaravansTradingForm
+import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansTradingForm.caravansTradingForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.Caravans.CaravanLettingType.OwnedByOperator
 import models.submissions.aboutthetradinghistory.Caravans.CaravansTradingPage.*
 import models.submissions.aboutthetradinghistory.Caravans.{CaravanLettingType, CaravanUnitType, CaravansTradingPage}
-import models.submissions.aboutthetradinghistory.{Caravans, CaravansTrading6045, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{CaravansTrading6045, TurnoverSection6045}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.Identifier
 import play.api.i18n.{I18nSupport, Messages}

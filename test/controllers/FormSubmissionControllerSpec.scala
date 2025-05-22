@@ -54,7 +54,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
   "FormSubmissionController" should {
     "handle submit form with all sections" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
-      when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
+      when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.successful(HttpResponse(CREATED)))
       val result = formSubmissionController.submit(fakeRequest)
       status(result)           shouldBe SEE_OTHER
@@ -76,16 +76,19 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
     "handle errors in submit form" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
       val exception = new RuntimeException("Test exception")
-      when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(any[HeaderCarrier]))
+      when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.failed(exception))
-      when(errorHandler.internalServerErrorTemplate(any[Request[?]]))
+      when(errorHandler.internalServerErrorTemplate(using any[Request[?]]))
         .thenReturn(Future.successful(play.twirl.api.HtmlFormat.empty))
 
       val result: Future[Result] = formSubmissionController.submit(fakeRequest)
 
       status(result) shouldBe INTERNAL_SERVER_ERROR
-      verify(audit, times(2)).sendExplicitAudit(anyString, any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
-      verify(errorHandler, times(1)).internalServerErrorTemplate(any[Request[?]])
+      verify(audit, times(2)).sendExplicitAudit(anyString, any[JsObject])(using
+        any[HeaderCarrier],
+        any[ExecutionContext]
+      )
+      verify(errorHandler, times(1)).internalServerErrorTemplate(using any[Request[?]])
     }
   }
 

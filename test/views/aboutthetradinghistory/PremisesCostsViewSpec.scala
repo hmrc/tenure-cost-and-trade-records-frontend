@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,11 +28,12 @@ class PremisesCostsViewSpec extends QuestionViewBehaviours[Seq[PremisesCosts]] {
   val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
   val form: Form[Seq[PremisesCosts]] =
-    PremisesCostsForm.premisesCostsForm(Seq("2026", "2025", "2024"))(messages)
+    PremisesCostsForm.premisesCostsForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => premisesCostsView(form, "")(sessionRequest, messages)
+  def createView = () => premisesCostsView(form, "")(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[PremisesCosts]]) => premisesCostsView(form, "")(sessionRequest, messages)
+  def createViewUsingForm = (form: Form[Seq[PremisesCosts]]) =>
+    premisesCostsView(form, "")(using sessionRequest, messages)
 
   "PremisesCosts 6076 view" should {
 

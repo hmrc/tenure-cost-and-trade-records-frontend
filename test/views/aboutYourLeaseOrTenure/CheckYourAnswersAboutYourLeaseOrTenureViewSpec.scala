@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
@@ -43,18 +42,21 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
     SessionRequest(prefilledFull6020Session, fakeRequest)
 
   def createView = () =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createView6011 = () =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(sessionRequest6011, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(using sessionRequest6011, messages)
 
   def createView6020 = () =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(sessionRequest6020full, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(using
+      sessionRequest6020full,
+      messages
+    )
 
   def createView6030      = () =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996030001"))(sessionRequest6030, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996030001"))(using sessionRequest6030, messages)
   def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourLeaseOrTenure]) =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {
 

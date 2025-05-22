@@ -23,7 +23,7 @@ import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, IncomeRecord, LettingAddress, LettingIncomeRecord, OperatorDetails}
+import models.submissions.aboutfranchisesorlettings.{IncomeRecord, LettingAddress, LettingIncomeRecord, OperatorDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
 import play.api.Logging
@@ -123,7 +123,7 @@ class LettingTypeDetailsController @Inject() (
       } else {
         aboutFranchisesOrLettings
       }
-    }(request)
+    }(using request)
     (updatedSession, updatedIndex)
 
   def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>

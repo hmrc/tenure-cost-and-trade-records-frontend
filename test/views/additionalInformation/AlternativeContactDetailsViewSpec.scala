@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.additionalInformation
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -30,10 +29,11 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
 
   override val form: Form[AlternativeContactDetails] = AlternativeContactDetailsForm.alternativeContactDetailsForm
 
-  def createView: () => Html = () => alternativeContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () =>
+    alternativeContactDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AlternativeContactDetails] => Html = (form: Form[AlternativeContactDetails]) =>
-    alternativeContactDetailsView(form, Summary("99996010001"))(fakeRequest, messages)
+    alternativeContactDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Alternative Contact Details view" must {
 

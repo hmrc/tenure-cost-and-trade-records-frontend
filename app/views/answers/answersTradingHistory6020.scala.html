@@ -1,0 +1,265 @@
+@*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.submissions.aboutthetradinghistory._
+@import util.DateUtilLocalised
+@import util.NumberUtil._
+@import util.CyaTradingHistorySupport
+@import models.submissions.common.AnswerYes
+
+
+
+@this(
+        govukSummaryList: GovukSummaryList,
+        dateUtil: DateUtilLocalised,
+        cyaSupport: CyaTradingHistorySupport
+)
+
+@()(implicit request: SessionRequest[?], messages: Messages)
+
+@answers = @{cyaSupport.sectionAnswers.answers}
+
+@answer6020(valueLabelKey: String, getAnswer: TurnoverSection6020 => String) = @{
+    cyaSupport.answer(valueLabelKey, answers.flatMap(_.turnoverSections6020).getOrElse(Seq.empty).map(getAnswer))}
+
+@financialYearRow6020(url: Call, heading: String, financialYears: Seq[String]) = @{
+    SummaryListRow(
+        key = Key(Text(messages("turnover.financialYearEnd"))),
+        value = Value(HtmlContent(
+            cyaSupport.tableRow(financialYears).body
+        )),
+        actions = Option(Actions(items =
+            Seq(
+                ActionItem(
+                    href = s"$url?from=CYA",
+                    content = Text(messages("label.change")),
+                    visuallyHiddenText = Option(heading),
+                    attributes = Map(
+                        "aria-label" -> s"${messages("label.change")} $heading"
+                    )
+                )
+            )
+        )),
+        classes = "no-border-bottom"
+    )
+}
+
+@bunkeredCardSize = @{
+    request.sessionData.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails).map(_.size).getOrElse(0)
+}
+@lowMarginCardSize = @{
+    request.sessionData.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).map(_.size).getOrElse(0)
+}
+
+@cardLoopAddMessage(message: String, size: Int) = @{
+    messages(message, size, if(size == 1) messages("checkYourAnswersAboutTheTradingHistory.card") else messages("checkYourAnswersAboutTheTradingHistory.cards"))
+}
+
+<h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
+
+@cyaSupport.occupationDetails
+
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.fuelSales")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            financialYearRow6020(
+                controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
+                messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
+                answers.flatMap(_.totalFuelSold)
+                .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.totalFuelSales"))),
+                value = Value(HtmlContent(
+                    cyaSupport.tableRow(answers.flatMap(_.totalFuelSold)
+                    .fold(Seq.empty[String])(_.map(_.fuelPerLiter.getOrElse(zeroBigDecimal).toString() + " " + messages("label.litres"))))
+                    .body
+                ))
+
+            )
+        )
+    ))
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuel")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+    cyaSupport.sectionAnswers.row(
+            "checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question",
+            _.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion).map(answerYesNo => answerYesNo.name.capitalize),
+            controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
+            "bunkeredFuelQuestion"
+        )
+    )
+    )
+    @if(request.sessionData.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).flatMap(_.bunkeredFuelQuestion).contains(AnswerYes)) {
+
+        @govukSummaryList(SummaryList(rows =
+            Seq(
+                financialYearRow6020(
+                    controllers.aboutthetradinghistory.routes.BunkeredFuelSoldController.show(),
+                    messages("checkYourAnswersAboutTheTradingHistory.fuelSales"),
+                    answers.flatMap(_.bunkeredFuelSold)
+                    .fold(Seq.empty[String])(_.map(t => dateUtil.formatDayMonthAbbrYear(t.financialYearEnd)))
+                ),
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuel.subheading"))),
+                    value = Value(HtmlContent(
+                        cyaSupport.tableRow(answers.flatMap(_.bunkeredFuelSold)
+                        .fold(Seq.empty[String])(_.map(_.fuelPerLiter.getOrElse(zeroBigDecimal).toString() + " " + messages("label.litres"))))
+                        .body
+                    ))
+
+                )
+            )
+        ))
+
+        @for((card, idx) <- answers.flatMap(_.bunkerFuelCardsDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard", idx + 1)</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                cyaSupport.sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardDetails",
+                    _ => card.bunkerFuelCardDetails.name + s"<p class=\"govuk-body\">${card.bunkerFuelCardDetails.handlingFee + " " + messages("bunkerFuelCardDetails.handlingFee.unit")}</p>",
+                    controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1),
+                    "",
+                    ("valueAsHtml", _ => None))
+            ))
+        }
+
+        @govukSummaryList(SummaryList(rows =
+            List(
+                SummaryListRow(
+                    key = Key(Text
+                            (cardLoopAddMessage("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAdded", bunkeredCardSize)), classes = "govuk-heading-m govuk-!-width-one-half"),
+                    actions = Option(Actions(
+                        items =
+                            List(
+                                ActionItem(
+                                    s"${controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(bunkeredCardSize - 1).url}&from=CYA",
+                                    Text(messages("checkYourAnswersAboutTheTradingHistory.bunkeredFuelCard.cardAddRemove")))),
+                        classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
+                )
+            )
+        ))
+    }
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.customerCreditAcc")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+        Seq(
+            financialYearRow6020(
+                controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
+                messages("checkYourAnswersAboutTheTradingHistory.customerCreditAcc"),
+                answers.flatMap(_.customerCreditAccounts)
+                .fold(Seq.empty[String])(_.map(cca => dateUtil.formatDayMonthAbbrYear(cca.financialYearEnd)))
+            ),
+            SummaryListRow(
+                key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.customerCreditAcc.subheading"))),
+                value = Value(HtmlContent(
+                    cyaSupport.tableRow(answers.flatMap(_.customerCreditAccounts)
+                    .fold(Seq.empty[String])(_.map(_.percentage.getOrElse(zeroBigDecimal).toString() + messages("label.percent"))))
+                    .body
+                ))
+
+            )
+        )
+    ))
+
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+    cyaSupport.sectionAnswers.row(
+            "acceptLowMarginFuelCard.heading",
+            _.doYouAcceptLowMarginFuelCard.map(_.name.capitalize),
+            controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show(),
+            "acceptLowMarginFuelCard"
+        )
+    ))
+
+    @if(answers.flatMap(_.doYouAcceptLowMarginFuelCard).contains(AnswerYes)) {
+        @govukSummaryList(SummaryList(rows =
+            Seq(
+                financialYearRow6020(
+                    controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
+                    messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards"),
+                    answers.flatMap(_.percentageFromFuelCards)
+                    .fold(Seq.empty[String])(_.map(card => dateUtil.formatDayMonthAbbrYear(card.financialYearEnd)))
+                ),
+                SummaryListRow(
+                    key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.lowMarginCards.subheading"))),
+                    value = Value(HtmlContent(
+                        cyaSupport.tableRow(cyaSupport.sectionAnswers.answers.flatMap(_.percentageFromFuelCards)
+                        .fold(Seq.empty[String])(_.map(_.percentage.getOrElse(zeroBigDecimal).toString() + messages("label.percent"))))
+                        .body
+                    ))
+
+                )
+            )
+        ))
+
+        @for((card, idx) <- cyaSupport.sectionAnswers.answers.flatMap(_.lowMarginFuelCardsDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
+
+            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.lowMarginCard", idx + 1)</h2>
+
+            @govukSummaryList(SummaryList(rows =
+                cyaSupport.sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.lowMarginCard.details",
+                    _ => card.lowMarginFuelCardDetail.name + s"<p class=\"govuk-body\">${card.lowMarginFuelCardDetail.handlingFee + " " + messages("bunkerFuelCardDetails.handlingFee.unit")}</p>",
+                    controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1),
+                    "",
+                    ("valueAsHtml", _ => None))
+            ))
+        }
+
+        @govukSummaryList(SummaryList(rows =
+            List(
+                SummaryListRow(
+                    key = Key(Text
+                            (cardLoopAddMessage("checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAdded", lowMarginCardSize)), classes = "govuk-heading-m govuk-!-width-one-half"),
+                    actions = Option(Actions(
+                        items =
+                            List(
+                                ActionItem(
+                                    s"${controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(lowMarginCardSize - 1).url}&from=CYA",
+                                    Text(messages("checkYourAnswersAboutTheTradingHistory.lowMarginCard.cardAddRemove")))),
+                        classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
+                )
+            )
+        ))
+    }
+
+    @cyaSupport.pageAnswers("turnover.6020.heading",
+        controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+        answer6020("turnover.6020.shop", _.shop),
+        answer6020("turnover.6020.carWash", _.carWash),
+        answer6020("turnover.6020.jetWash", _.jetWash),
+        answer6020("turnover.6020.lottery", _.lottery),
+        answer6020("checkYourAnswersAboutTheTradingHistory.payPointOrZone", _.payPointOrZone),
+        answer6020("turnover.6020.otherIncome", _.otherIncome)
+    )
+
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.electricVehicleChargingPoints")</h2>
+
+    @govukSummaryList(SummaryList(rows =
+    cyaSupport.sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.operateEV",
+            _.electricVehicleChargingPoints.map(_.electricVehicleChargingPoint).map(hasEVPoint =>
+                """<p class="govuk-body">""" + messages(if(hasEVPoint.name.contains("yes")) {"label.yes.ydw"} else {"label.no.nac.ydw"}) + "</p>"
+                        + cyaSupport.sectionAnswers.answers.filter(_ => hasEVPoint.name == "yes").flatMap(
+                    _.electricVehicleChargingPoints.flatMap(_.spacesOrBays)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
+            controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(), "electricVehicleChargingPoints", ("valueAsHtml", _ => None))
+    ))

@@ -4,7 +4,7 @@ import sbt.*
 object AppDependencies {
 
   val bootstrapVersion              = "9.11.0"
-  val playFrontendVersion           = "12.0.0"
+  val playFrontendVersion           = "12.1.0"
   val playConditionalMappingVersion = "3.3.0"
   val mongoVersion                  = "2.6.0"
   val cryptoJsonVersion             = "8.2.0"
@@ -15,7 +15,7 @@ object AppDependencies {
   val scalaTestPlusScalaCheckVersion = "3.2.19.0"
   val scalaTestPlusMockitoVersion    = "3.2.19.0"
   val flexMarkVersion                = "0.64.8"
-  val jsoupVersion                   = "1.19.1"
+  val jsoupVersion                   = "1.20.1"
 
   private val compile = Seq(
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30"            % bootstrapVersion,

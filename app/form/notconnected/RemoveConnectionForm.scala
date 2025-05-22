@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ object RemoveConnectionForm {
       ),
       "removeConnectionDetails"        -> contactDetailsMapping,
       "removeConnectionAdditionalInfo" -> optional(text)
+        .verifying("error.removeConnectionAdditionalInfo.maxLength", it => it.forall(_.length <= 2000))
     )(RemoveConnectionsDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
 }

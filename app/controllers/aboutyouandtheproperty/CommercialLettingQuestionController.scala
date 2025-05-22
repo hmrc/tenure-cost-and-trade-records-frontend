@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,7 @@ import models.Session
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OccupationalAndAccountingInformation}
-import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
+import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
 import models.submissions.common.AnswerYes
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CommercialLettingQuestionId

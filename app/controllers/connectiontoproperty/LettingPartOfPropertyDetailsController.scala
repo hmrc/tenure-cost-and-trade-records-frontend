@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -136,7 +136,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
       newSession           <- successful(sessionWithCorrespondenceAddress(idx, correspondenceAddress))
       _                    <- repository.saveOrUpdate(newSession)
     yield {
-      val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(request) == "CYA")
+      val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(using request) == "CYA")
       val nextPage      =
         redirectToCYA.getOrElse(navigator.nextPage(LettingPartOfPropertyDetailsPageId, newSession).apply(newSession))
       Redirect(nextPage)

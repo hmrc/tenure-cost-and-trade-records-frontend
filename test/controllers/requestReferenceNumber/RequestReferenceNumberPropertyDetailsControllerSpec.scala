@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import models.Session
 import models.submissions.requestReferenceNumber.{RequestReferenceNumberAddress, RequestReferenceNumberDetails, RequestReferenceNumberPropertyDetails}
 import navigation.RequestReferenceNumberNavigator
 import org.scalatest.RecoverMethods.recoverToExceptionIf
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -47,7 +46,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                    shouldBe "requestReferenceNumber.heading"
         page.backLink                   shouldBe controllers.routes.LoginController.show.url
@@ -70,7 +69,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                    shouldBe "requestReferenceNumber.heading"
         page.backLink                   shouldBe controllers.routes.LoginController.show.url
@@ -89,7 +88,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         page.error("businessTradingName") shouldBe "error.requestReferenceNumber.businessTradingName.required"
       }
       "throw exception if the address lookup service did not provide the /on-ramp location" in new ControllerFixture {
-        when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any))
+        when(addressLookupConnector.initJourney(any[AddressLookupConfig])(using any))
           .thenReturn(successful(None))
         recoverToExceptionIf[Exception] {
           controller.submit(
@@ -110,7 +109,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Wombles Inc"
       }
       "reply 303 redirect to the address lookup page if updating the trading name" in new ControllerFixture(
@@ -135,7 +134,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Round Wombles Limited"
       }
     }
@@ -159,11 +158,11 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         redirectLocation(result).value shouldBe routes.RequestReferenceNumberContactDetailsController.show().url
 
         val id = captor[String]
-        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any, any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.address.value shouldBe RequestReferenceNumberAddress(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
@@ -180,7 +179,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
   ) extends MockAddressLookup:
 
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller = new RequestReferenceNumberPropertyDetailsController(
       mcc = stubMessagesControllerComponents(),

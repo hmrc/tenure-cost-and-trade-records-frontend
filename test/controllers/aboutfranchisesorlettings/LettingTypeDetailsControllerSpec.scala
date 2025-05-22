@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import connectors.{Audit, MockAddressLookup}
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, LettingIncomeRecord}
 import models.submissions.common.AnswerYes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
@@ -40,7 +39,7 @@ class LettingTypeDetailsControllerSpec
         val html   = contentAsJsoup(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading shouldBe "lettingOtherPartOfPropertyDetails.heading"
       }
@@ -77,7 +76,7 @@ class LettingTypeDetailsControllerSpec
 
   trait ControllerFixture extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
     val controller = new LettingTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],
@@ -113,7 +112,7 @@ trait LettingTypeDetailsControllerBehaviours:
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session.capture())(any, any)
+      verify(repository, once).saveOrUpdate(session.capture())(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: LettingIncomeRecord =>
           record.operatorDetails.value.operatorName   shouldBe operatorName
@@ -128,11 +127,11 @@ trait LettingTypeDetailsControllerBehaviours:
       redirectLocation(result).value shouldBe routes.RentalIncomeRentController.show(0).url
 
       val id = captor[String]
-      verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+      verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
       id.getValue shouldBe "confirmedAddress"
 
       val session = captor[Session]
-      verify(repository, once).saveOrUpdate(session)(any, any)
+      verify(repository, once).saveOrUpdate(session)(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: LettingIncomeRecord =>
           record.operatorDetails.value.lettingAddress.value shouldBe LettingAddress(

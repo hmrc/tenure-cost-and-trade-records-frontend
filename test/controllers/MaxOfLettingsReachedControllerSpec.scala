@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ trait MaxOfLettingsReachedControllerBehaviours:
       val anyHeaderCarrier          = any[HeaderCarrier]
       val anyRequest                = any[Request[AnyContent]]
       val stubSessionToCallFunction = (_: Session) => Call("GET", "url")
-      when(navigator.nextPage(anyIdentifier, anySession)(anyHeaderCarrier, anyRequest))
+      when(navigator.nextPage(anyIdentifier, anySession)(using anyHeaderCarrier, anyRequest))
         .thenReturn(stubSessionToCallFunction)
       val request                   = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
       val result                    = controller.submit(Some(src))(request)
@@ -114,7 +114,7 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
     "return HTML" in {
       val result = maxOfLettingsReachedController.show(None)(fakeRequest)
       contentType(result)     shouldBe Some("text/html")
-      Helpers.charset(result) shouldBe Some("utf-8")
+      Helpers.charset(result) shouldBe Some(UTF8)
     }
 
     "return the correct back link for each src parameter" in {

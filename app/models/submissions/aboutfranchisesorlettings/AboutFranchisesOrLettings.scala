@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ case class AboutFranchisesOrLettings(
   lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
   checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
   fromCYA: Option[Boolean] = None,
-  cateringOrFranchiseFee: Option[AnswersYesNo] = None, // added for 6030 journey - Feb 2024
   lettings: Option[IndexedSeq[LettingPartOfProperty]] = None, // 6020 lettings
   rentalIncome: Option[IndexedSeq[IncomeRecord]] = None,
   rentalIncomeIndex: Int = 0,
@@ -57,7 +56,6 @@ object AboutFranchisesOrLettings {
       (__ \ "lettingSections").read[IndexedSeq[LettingSection]] and
       (__ \ "checkYourAnswersAboutFranchiseOrLettings").readNullable[CheckYourAnswersAboutFranchiseOrLettings] and
       (__ \ "fromCYA").readNullable[Boolean] and
-      (__ \ "cateringOrFranchiseFee").readNullable[AnswersYesNo] and
       (__ \ "lettings").readNullable[IndexedSeq[LettingPartOfProperty]] and
       (__ \ "rentalIncome").readNullable[IndexedSeq[IncomeRecord]] and
       (__ \ "rentalIncomeIndex").read[Int] and

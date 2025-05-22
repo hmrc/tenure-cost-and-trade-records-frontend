@@ -59,7 +59,7 @@ class DefaultBackendConnector @Inject() (
     implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
     httpClientV2
-      .post(authenticateURL)(headerCarrier)
+      .post(authenticateURL)(using headerCarrier)
       .withBody(Json.toJson(credentials))
       .execute[HttpResponse]
       .flatMap { response =>
@@ -74,7 +74,7 @@ class DefaultBackendConnector @Inject() (
     implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
     httpClientV2
-      .get(getFORTypeURL(referenceNumber))(headerCarrier)
+      .get(getFORTypeURL(referenceNumber))(using headerCarrier)
       .execute[HttpResponse]
       .map(res => (res.json \ "FORType").as[String])
 
@@ -86,7 +86,7 @@ class DefaultBackendConnector @Inject() (
     implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
     httpClientV2
-      .put(saveAsDraftURL(referenceNumber))(headerCarrier)
+      .put(saveAsDraftURL(referenceNumber))(using headerCarrier)
       .withBody(Json.toJson(submissionDraft))
       .execute[HttpResponse]
       .flatMap { response =>
@@ -101,7 +101,7 @@ class DefaultBackendConnector @Inject() (
     implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
     httpClientV2
-      .get(saveAsDraftURL(referenceNumber))(headerCarrier)
+      .get(saveAsDraftURL(referenceNumber))(using headerCarrier)
       .execute[HttpResponse]
       .flatMap { response =>
         response.status match {
@@ -115,7 +115,7 @@ class DefaultBackendConnector @Inject() (
     implicit val headerCarrier: HeaderCarrier = hc.copy(authorization = internalAuthToken)
 
     httpClientV2
-      .delete(saveAsDraftURL(referenceNumber))(headerCarrier)
+      .delete(saveAsDraftURL(referenceNumber))(using headerCarrier)
       .execute[HttpResponse]
       .flatMap { response =>
         response.status match {

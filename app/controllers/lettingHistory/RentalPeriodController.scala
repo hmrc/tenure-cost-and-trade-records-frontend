@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.RentalPeriodForm.theForm
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{LettingHistory, LocalPeriod, OccupierDetail}
+import models.submissions.lettingHistory.{LocalPeriod, OccupierDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.RentalPeriodPageId
 import play.api.data.Form
@@ -78,7 +78,7 @@ class RentalPeriodController @Inject (
               thePartiallyAppliedView,
               theForm
                 .fill(rental)
-                .withError("duplicate", request.messages()("lettingHistory.occupierDetail.duplicate"))
+                .withError("duplicate", "lettingHistory.occupierDetail.duplicate")
             )
           else
             for

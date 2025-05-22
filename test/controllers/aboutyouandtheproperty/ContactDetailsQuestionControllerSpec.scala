@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,9 @@ package controllers.aboutyouandtheproperty
 
 import connectors.{Audit, MockAddressLookup}
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, AlternativeContactDetails, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, ContactDetailsQuestion}
 import models.submissions.common.AnswerYes
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
 import repositories.SessionRepo
@@ -35,7 +34,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) extends MockAddressLookup:
     val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(any, any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller =
       new ContactDetailsQuestionController(
@@ -54,7 +53,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                        shouldBe "contactDetailsQuestion.heading"
         page.backLink                       shouldBe routes.AboutYouController.show().url
@@ -67,7 +66,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading                        shouldBe "contactDetailsQuestion.heading"
         page.backLink                       shouldBe routes.AboutYouController.show().url
@@ -130,7 +129,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(any, any)
+        verify(repository, once).saveOrUpdate(session.capture())(using any)
         session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value.contactDetailsQuestion shouldBe AnswerYes
       }
     }
@@ -141,11 +140,11 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         redirectLocation(result).value shouldBe routes.AlternativeContactDetailsController.show().url
 
         val id = captor[String]
-        verify(addressLookupConnector, once).getConfirmedAddress(id)(any)
+        verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
         id.getValue shouldBe "confirmedAddress"
 
         val session = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(any, any)
+        verify(repository, once).saveOrUpdate(session)(using any)
         session.getValue.aboutYouAndTheProperty.value.altContactInformation.value.alternativeContactAddress shouldBe AlternativeAddress(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),

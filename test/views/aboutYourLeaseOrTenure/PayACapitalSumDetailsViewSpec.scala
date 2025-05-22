@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.PayACapitalSumDetailsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumInformationDetails
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -27,14 +26,14 @@ class PayACapitalSumDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSu
 
   val messageKeyPrefix = "capitalSumPaidDetails"
 
-  override val form = PayACapitalSumDetailsForm.payACapitalSumDetailsForm(messages)
+  override val form = PayACapitalSumDetailsForm.payACapitalSumDetailsForm(using messages)
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
-  def createView = () => payACapitalSumDetailsView(form, backLink, Summary("99996030001"))(fakeRequest, messages)
+  def createView = () => payACapitalSumDetailsView(form, backLink, Summary("99996030001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[PayACapitalSumInformationDetails]) =>
-    payACapitalSumDetailsView(form, backLink, Summary("99996030001"))(fakeRequest, messages)
+    payACapitalSumDetailsView(form, backLink, Summary("99996030001"))(using fakeRequest, messages)
 
   "capital sum or premium view" must {
 

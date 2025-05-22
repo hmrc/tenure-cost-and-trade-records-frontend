@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 import models.ForType.*
@@ -32,13 +31,13 @@ class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List
   override val form = incomeRecordIncludedForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(using
       fakeRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[List[String]]) =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(using
       fakeRequest,
       messages
     )

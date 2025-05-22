@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.accommodation.HighSeasonTariff6048Form.highSeasonTariff6048Form
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
-import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms, HighSeasonTariff}
+import models.submissions.accommodation.{AccommodationUnit, HighSeasonTariff}
 import navigation.AccommodationNavigator
 import navigation.identifiers.HighSeasonTariffPageId
 import play.api.Logging

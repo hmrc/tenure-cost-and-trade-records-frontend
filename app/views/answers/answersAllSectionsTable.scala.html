@@ -18,15 +18,18 @@
 @import models.ForType.*
 @import models.submissions.common.AnswerYes
 
+
 @this(
         answersSectionConnectionToTheProperty: answersConnectionToTheProperty,
         answersSectionAboutTheProperty: answersAboutTheProperty,
         answersSectionAccommodationDetails: answersAccommodationDetails6048,
         answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory,
-        answersSectionAboutTheFranchiseLettings: answersAboutTheFranchiseLettings,
+        answersSectionAboutTheFranchiseLettings: answersConcessionAndLettings,
+        answersLettings: answersLettings,
         answersSectionAboutYourLeaseOrTenure: answersAboutYourLeaseOrTenure,
         answersSectionAdditionalInformation: answersAdditionalInformation
 )
+
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
@@ -53,7 +56,10 @@
 @answersSectionAboutYourTradingHistory()
 
 <span class="govuk-caption-m">@messages("label.section.aboutTheFranchiseLettings")</span>
-@answersSectionAboutTheFranchiseLettings()
+    @forType match {
+    case FOR6020 => {@answersLettings()}
+    case _       => {@answersSectionAboutTheFranchiseLettings()}
+    }
 
 @if(isLeaseHolder) {
     <span class="govuk-caption-m">@messages("label.section.aboutYourLeaseOrTenure")</span>

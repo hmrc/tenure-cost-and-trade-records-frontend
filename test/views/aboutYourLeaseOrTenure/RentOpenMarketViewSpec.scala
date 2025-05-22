@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
 import models.submissions.common.{AnswerNo, AnswerYes}
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
@@ -37,12 +36,12 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
-  def createView     = () => rentOpenMarketValueView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView     = () => rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
   def createView6020 = () =>
-    rentOpenMarketValueView(form, backLink, Summary("99996020001"))(sessionRequest6020full, messages)
+    rentOpenMarketValueView(form, backLink, Summary("99996020001"))(using sessionRequest6020full, messages)
 
   def createViewUsingForm = (form: Form[RentOpenMarketValueDetails]) =>
-    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent open market view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
-import play.api.libs.json.Writes
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
@@ -76,42 +75,42 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   "Financial year end form" should {
     "error if financial year end day and month are missing " in new ControllerFixture {
       val formData = baseFormData - errorKey.financialYearDay - errorKey.financialYearMonth
-      val form     = accountingInformationForm(messages).bind(formData)
+      val form     = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.required", form)
     }
 
     "error if financial year day is missing " in new ControllerFixture {
       val formData = baseFormData - errorKey.financialYearDay
-      val form     = accountingInformationForm(messages).bind(formData)
+      val form     = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.mustInclude", form)
     }
 
     "error if financial year month is missing" in new ControllerFixture {
       val formData = baseFormData - errorKey.financialYearMonth
-      val form     = accountingInformationForm(messages).bind(formData)
+      val form     = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearMonth, "error.date.mustInclude", form)
     }
 
     "error if financial year date is incorrect" in new ControllerFixture {
       val formData = baseFormData.updated("financialYear.day", "31").updated("financialYear.month", "2")
-      val form     = accountingInformationForm(messages).bind(formData)
+      val form     = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.invalid", form)
     }
 
     "error if financial year day is incorrect" in new ControllerFixture {
       val formData = baseFormData.updated("financialYear.day", "32")
-      val form     = accountingInformationForm(messages).bind(formData)
+      val form     = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.day.invalid", form)
     }
 
     "error if financial year month is incorrect" in new ControllerFixture {
       val formData = baseFormData.updated("financialYear.month", "13")
-      val form     = accountingInformationForm(messages).bind(formData)
+      val form     = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearMonth, "error.date.month.invalid", form)
     }
@@ -126,7 +125,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
         "yearEndChanged"      -> "true"
       )
       val request       = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
@@ -145,7 +144,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       )
       val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession, request)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
@@ -166,7 +165,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       )
       val request        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, request)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
@@ -188,7 +187,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6045, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result =
@@ -208,7 +207,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6048, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result =
@@ -228,7 +227,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
       val request        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest = SessionRequest(session6076, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier]))
+      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result =

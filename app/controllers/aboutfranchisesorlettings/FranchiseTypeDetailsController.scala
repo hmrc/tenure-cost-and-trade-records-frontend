@@ -129,7 +129,7 @@ class FranchiseTypeDetailsController @Inject() (
       } else {
         aboutFranchisesOrLettings
       }
-    }(request)
+    }(using request)
     (updatedSession, updatedIndex)
   }
 

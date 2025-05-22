@@ -115,7 +115,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalBarsClubs[0].grossBar" -> "xxx")
 
-      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalBarsClubs[0].grossBar",
         messages("error.additionalBarsClubs.grossBar.range", 2023.toString),
@@ -127,7 +127,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalBarsClubs[1].grossBar" -> "")
 
-      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalBarsClubs[1].grossBar",
         messages("error.additionalBarsClubs.grossBar.required", 2022.toString),
@@ -139,7 +139,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalBarsClubs[2].grossBar" -> "-1")
 
-      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalBarsClubs[2].grossBar",
         messages("error.additionalBarsClubs.grossBar.negative", 2021.toString),
@@ -151,7 +151,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalBarsClubs[0].costBar" -> "xxx")
 
-      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalBarsClubs[0].costBar",
         messages("error.additionalBarsClubs.costBar.range", 2023.toString),
@@ -163,7 +163,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalBarsClubs[1].costBar" -> "")
 
-      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalBarsClubs[1].costBar",
         messages("error.additionalBarsClubs.costBar.required", 2022.toString),
@@ -175,7 +175,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
 
       val formData = Map("additionalBarsClubs[2].costBar" -> "-1")
 
-      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(messages).bind(formData)
+      val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
       mustContainError(
         "additionalBarsClubs[2].costBar",
         messages("error.additionalBarsClubs.costBar.negative", 2021.toString),

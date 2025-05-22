@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,6 @@
 
 @for6015 = @{forType == FOR6015 || forType == FOR6016}
 
-@for6030 = @{forType == FOR6030}
-
 @label =@{
   if(for6015) messages("label.section.aboutTheFranchiseConcessions")  else {
    messages("label.section.aboutTheFranchiseLettings")
@@ -46,14 +44,13 @@
  }
 
 @heading = @{
-  if(for6015) messages("lettingsIncome.heading")
-  else if(for6030 && cateringOrLetting.equals("concessionOrFranchiseFee")) messages("concessionOrFranchiseFee.heading") else {
+  if(for6015) messages("lettingsIncome.heading") else {
    messages(s"${cateringOrLetting}.heading")
   }
  }
 @hint = @{
- if(for6015 || (for6030 && cateringOrLetting.equals("concessionOrFranchiseFee")) ) None  else {
-  Some(Hint(content = Text(messages(s"hint.${cateringOrLetting}"))))
+ if(for6015) None else {
+  Some(Hint(content = Text(messages(s"hint.$cateringOrLetting"))))
  }
 }
 @legend =@{
@@ -63,12 +60,6 @@
     isPageHeading = false,
     classes = "govuk-!-font-weight-bold"
    ))
-  } else if(for6030 && cateringOrLetting.equals("concessionOrFranchiseFee")){
-      Option(Legend(
-          content = Text(messages("concessionOrFranchiseFee.label")),
-          isPageHeading = false,
-          classes = "govuk-fieldset__legend--m"
-      ))
   } else {
    Option(Legend(
      content = Text(messages(s"${cateringOrLetting}.heading")),
@@ -80,7 +71,7 @@
 
 @layout(
  pageHeading = heading,
- showH1 = if(for6015 || (for6030 && cateringOrLetting.equals("concessionOrFranchiseFee")) ) true else false,
+ showH1 = if(for6015) true else false,
  showSection = true,
  summary = Some(summary),
  sectionName = label,
@@ -95,19 +86,12 @@
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.submit()
    else if(cateringOrLetting.equals("concessionOrFranchise"))
      controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.submit()
-   else if(cateringOrLetting.equals("concessionOrFranchiseFee"))
-     controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.submit()
     else controllers.routes.TaskListController.show()}
  ) {
 
   @if(for6015) {
    <p class="govuk-body">@messages("lettingsIncome.p1")</p>
   }
-
-  @if(for6030 && cateringOrLetting.equals("concessionOrFranchiseFee")) {
-   <p class="govuk-body">@messages("concessionOrFranchiseFee.p1")</p>
-  }
-
 
   @govukRadios(
    Radios(

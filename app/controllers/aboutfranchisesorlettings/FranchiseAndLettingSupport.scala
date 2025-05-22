@@ -17,7 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
-import models.submissions.aboutfranchisesorlettings.{Concession6015IncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.{Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
 
 trait FranchiseAndLettingSupport {
 
@@ -33,7 +33,7 @@ trait FranchiseAndLettingSupport {
         case franchise: FranchiseIncomeRecord       => franchise.businessDetails.fold("")(_.operatorName)
         case letting: LettingIncomeRecord           => letting.operatorDetails.fold("")(_.operatorName)
         case concession: Concession6015IncomeRecord => concession.businessDetails.fold("")(_.operatorName)
-        case _                                      => ""
+        case concession: ConcessionIncomeRecord     => concession.businessDetails.fold("")(_.operatorName)
       }
       .getOrElse("")
 }

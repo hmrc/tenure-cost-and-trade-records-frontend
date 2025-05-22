@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import views.html.aboutfranchisesorlettings.rentalIncomeList as RentalIncomeList
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 
 @Singleton
@@ -96,7 +96,7 @@ class RentalIncomeListController @Inject() (
               )
               repository.saveOrUpdate(updatesSession).map { _ =>
                 if formData == AnswerYes
-                then Redirect(routes.TypeOfIncomeController.show(Some(index + 1)))
+                then Redirect(routes.TypeOfIncomeController.show(Some(entries.size)))
                 else Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
               }
             case Some(entries) if entries.isEmpty            =>
@@ -134,8 +134,7 @@ class RentalIncomeListController @Inject() (
               request.sessionData.toSummary,
               idx,
               controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
-              controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx),
-              Some(request.sessionData.forType)
+              controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
             )
           )
         )
@@ -158,8 +157,7 @@ class RentalIncomeListController @Inject() (
                   request.sessionData.toSummary,
                   idx,
                   controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
-                  controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx),
-                  Some(request.sessionData.forType)
+                  controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
                 )
               )
             )

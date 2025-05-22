@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ class TotalFuelSoldController @Inject() (
           view(
             totalFuelSoldForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.totalFuelSold.getOrElse(Seq.empty)),
-            calculateBackLink(request),
+            calculateBackLink(using request),
             request.sessionData.toSummary
           )
         )
@@ -72,7 +72,7 @@ class TotalFuelSoldController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
-                calculateBackLink(request),
+                calculateBackLink(using request),
                 request.sessionData.toSummary
               )
             ),

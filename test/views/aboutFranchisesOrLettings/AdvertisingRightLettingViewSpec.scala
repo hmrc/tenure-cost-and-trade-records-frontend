@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.AdvertisingRightLettingForm
 import models.pages.Summary
 import models.submissions.aboutfranchisesorlettings.AdvertisingRightLetting
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -33,10 +32,10 @@ class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[Advertising
   override val form = AdvertisingRightLettingForm.theForm
 
   def createView = () =>
-    advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
+    advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AdvertisingRightLetting]) =>
-    advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(fakeRequest, messages)
+    advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Advertising right letting view" must {
 

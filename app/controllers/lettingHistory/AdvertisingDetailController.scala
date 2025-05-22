@@ -76,7 +76,7 @@ class AdvertisingDetailController @Inject() (
             theView,
             theForm
               .fill(advertising)
-              .withError("duplicate", request.messages()("lettingHistory.advertisingDetail.duplicate")),
+              .withError("duplicate", "lettingHistory.advertisingDetail.duplicate"),
             maybeIndex
           )
         else

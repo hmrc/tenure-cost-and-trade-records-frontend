@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,24 +67,16 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
       case Some(AnswerYes) =>
         answers.forType match {
-          case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6045 | FOR6046 =>
+          case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 | FOR6045 | FOR6046 =>
             controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
-          case FOR6030                                                   =>
-            controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show()
-          case FOR6020                                                   =>
+          case FOR6020                                                             =>
             val idx: Int = answers.aboutFranchisesOrLettings.fold(0)(_.lettings.fold(0)(_.size))
             controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Option(idx))
-          case _                                                         =>
+          case _                                                                   =>
             controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
         }
       case _               =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-    }
-
-  private def concessionOrFranchiseFeeRouting: Session => Call = answers =>
-    answers.aboutFranchisesOrLettings.flatMap(_.cateringOrFranchiseFee.map(_.name)) match {
-      case Some("yes") => aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show()
-      case _           => aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
   private def cateringOperationsConditionsRouting: Session => Call = answers =>
@@ -341,13 +333,12 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
-    ConcessionOrFranchiseFeePageId             -> concessionOrFranchiseFeeRouting,
     CateringOperationPageId                    -> cateringOperationsConditionsRouting,
     CateringOperationBusinessPageId            -> (answers =>
-      aboutfranchisesorlettings.routes.FeeReceivedController.show(getCateringOperationsIndex(answers))
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))
     ),
     FeeReceivedPageId                          -> (answers =>
-      aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(getCateringOperationsIndex(answers))
+      controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),
     FranchiseTypeDetailsId                     -> franchiseTypeDetailsRouting,
     ConcessionTypeDetailsId                    -> (answers =>

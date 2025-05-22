@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,11 @@ class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
 
   val messageKeyPrefix = "totalFuelSold"
 
-  override val form = TotalFuelSoldForm.totalFuelSoldForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
-  def createView    = () => totalFuelSoldView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+  override val form = TotalFuelSoldForm.totalFuelSoldForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
+  def createView    = () => totalFuelSoldView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[TotalFuelSold]]) =>
-    totalFuelSoldView(form, backLink, Summary("99996020001"))(sessionRequest, messages)
+    totalFuelSoldView(form, backLink, Summary("99996020001"))(using sessionRequest, messages)
 
   "Total Fuel Costs view" should {
 
@@ -69,7 +69,7 @@ class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
 
     "TotalFuelSoldForm" should {
       "reject empty values" in {
-        val form         = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022", "2021"))(messages)
+        val form         = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022", "2021"))(using messages)
         val formData     = Map(
           "totalFuelSold-0" -> "",
           "totalFuelSold-1" -> "100.50"
@@ -84,7 +84,7 @@ class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
       }
 
       "reject non-numeric values" in {
-        val form     = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022"))(messages)
+        val form     = TotalFuelSoldForm.totalFuelSoldForm(Seq("2022"))(using messages)
         val formData = Map(
           "totalFuelSold-0" -> "abc"
         )

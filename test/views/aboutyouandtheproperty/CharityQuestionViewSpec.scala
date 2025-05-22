@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,10 +31,10 @@ class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
 
-  def createView: () => Html = () => charityQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView: () => Html = () => charityQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    charityQuestionView(form, Summary("99996010001"))(fakeRequest, messages)
+    charityQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Charity question view" should {
 

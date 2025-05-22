@@ -16,12 +16,9 @@
 
 package controllers.lettingHistory
 
-import models.Session
 import models.submissions.lettingHistory.LettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswerLettingHistoryView
@@ -39,7 +36,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
       ) {
         val result = controller.show(fakeGetRequest)
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.checkYourAnswers.heading"
         page.backLink          shouldBe routes.HasOnlineAdvertisingController.show.url
@@ -69,7 +66,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveChecked("yes")
@@ -86,7 +83,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
           .show()
           .withFragment("letting-history")
           .toString
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         sectionCompleted(data).value   shouldBe true
       }
     }

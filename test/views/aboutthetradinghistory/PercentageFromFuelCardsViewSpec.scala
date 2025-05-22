@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,11 +32,12 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
   val backLink = controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
 
   override val form =
-    PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(messages)
-  def createView    = () => percentageFromFuelCardsView(form, backLink, Summary("99996010001"))(sessionRequest, messages)
+    PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
+  def createView    = () =>
+    percentageFromFuelCardsView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[PercentageFromFuelCards]]) =>
-    percentageFromFuelCardsView(form, backLink, Summary("99996020001"))(sessionRequest, messages)
+    percentageFromFuelCardsView(form, backLink, Summary("99996020001"))(using sessionRequest, messages)
 
   "Percentage from fuel cards view" should {
 
@@ -70,7 +71,7 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
 
     "Percentage from fuel form" should {
       "reject empty values" in {
-        val form         = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022", "2021"))(messages)
+        val form         = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022", "2021"))(using messages)
         val formData     = Map(
           "percentageFromFuelCards-0" -> "",
           "percentageFromFuelCards-1" -> "100"
@@ -85,7 +86,7 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
       }
 
       "reject non-numeric values" in {
-        val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(messages)
+        val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(using messages)
         val formData = Map(
           "percentageFromFuelCards-0" -> "abc"
         )
@@ -100,7 +101,7 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
       }
 
       "reject  values greater than 100 " in {
-        val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(messages)
+        val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(using messages)
         val formData = Map(
           "percentageFromFuelCards-0" -> "111"
         )

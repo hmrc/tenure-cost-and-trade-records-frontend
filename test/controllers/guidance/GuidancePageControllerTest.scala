@@ -16,7 +16,6 @@
 
 package controllers.guidance
 
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.guidance.guidancePage as GuidancePageView
@@ -28,7 +27,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6010")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6010.heading"
     }
@@ -36,7 +35,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6011")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6011.heading"
     }
@@ -44,7 +43,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6015")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6015.heading"
     }
@@ -52,7 +51,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6016")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6016.heading"
     }
@@ -60,7 +59,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6020")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6020.heading"
     }
@@ -68,7 +67,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6030")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6030.heading"
     }
@@ -76,7 +75,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6045")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6045.heading"
     }
@@ -84,7 +83,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6048")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6048.heading"
     }
@@ -92,7 +91,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
       val result = controller.show("FOR6076")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF_8.charset
+      charset(result).value     shouldBe UTF8
       val page = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6076.heading"
     }

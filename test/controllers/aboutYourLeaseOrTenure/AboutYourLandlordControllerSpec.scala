@@ -28,7 +28,6 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 
-import scala.concurrent.Future
 import scala.concurrent.Future.successful
 import scala.language.reflectiveCalls
 
@@ -108,7 +107,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       status(res) shouldBe BAD_REQUEST
     }
     "redirect to the next page if a valid form is submitted" in {
-      when(addressLookupConnector.initJourney(any[AddressLookupConfig])(any))
+      when(addressLookupConnector.initJourney(any[AddressLookupConfig])(using any))
         .thenReturn(successful(Some("/on-ramp")))
       val res = aboutYourLandlordController().submit(
         FakeRequest("POST", "/").withFormUrlEncodedBody(baseFormData.toSeq*)

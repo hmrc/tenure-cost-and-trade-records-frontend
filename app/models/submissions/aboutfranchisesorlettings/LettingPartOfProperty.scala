@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,17 +39,17 @@ object LettingPartOfProperty {
 
   implicit val lettingWrites: Writes[LettingPartOfProperty] = Writes {
     case atmLetting: ATMLetting                           =>
-      Json.obj("type" -> "ATMLetting") ++ Json.toJson(atmLetting)(ATMLetting.format).as[JsObject]
+      Json.obj("type" -> "ATMLetting") ++ Json.toJson(atmLetting)(using ATMLetting.format).as[JsObject]
     case telecomMastLetting: TelecomMastLetting           =>
       Json.obj("type" -> "TelecomMastLetting") ++ Json
-        .toJson(telecomMastLetting)(TelecomMastLetting.format)
+        .toJson(telecomMastLetting)(using TelecomMastLetting.format)
         .as[JsObject]
     case advertisingRightLetting: AdvertisingRightLetting =>
       Json.obj("type" -> "AdvertisingRightLetting") ++ Json
-        .toJson(advertisingRightLetting)(AdvertisingRightLetting.format)
+        .toJson(advertisingRightLetting)(using AdvertisingRightLetting.format)
         .as[JsObject]
     case otherLetting: OtherLetting                       =>
-      Json.obj("type" -> "OtherLetting") ++ Json.toJson(otherLetting)(OtherLetting.format).as[JsObject]
+      Json.obj("type" -> "OtherLetting") ++ Json.toJson(otherLetting)(using OtherLetting.format).as[JsObject]
   }
 
   implicit val lettingFormat: Format[LettingPartOfProperty] = Format(lettingReads, lettingWrites)

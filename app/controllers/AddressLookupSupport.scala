@@ -19,7 +19,6 @@ package controllers
 import actions.SessionRequest
 import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
 import play.api.mvc.{AnyContent, Result}
-import play.api.mvc.Results.SeeOther
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 

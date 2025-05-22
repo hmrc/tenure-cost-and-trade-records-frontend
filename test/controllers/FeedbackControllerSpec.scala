@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,14 +54,14 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
       val result = feedbackController().feedback(fakeRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      charset(result)     shouldBe Some(UTF8)
     }
 
     "return HTML and 200 status for thank you page" in {
       val result = feedbackController().feedbackThx(fakeRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
-      charset(result)     shouldBe Some("utf-8")
+      charset(result)     shouldBe Some(UTF8)
     }
   }
 

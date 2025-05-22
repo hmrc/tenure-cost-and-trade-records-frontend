@@ -112,7 +112,7 @@ class AddressLookupConnector @Inject() (
         |    },
         |    "cy": {
         |      "appLevelLabels": {
-        |        "navTitle":  "${messages("site.service_name")(Lang("CY"))}"
+        |        "navTitle":  "${messages("site.service_name")(using Lang("CY"))}"
         |      },
         |      "lookupPageLabels": {
         |        "title": "${messages(config.lookupPageHeadingKey)}",

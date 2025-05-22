@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentedEquipmentDetailsForm
 import models.pages.Summary
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -32,10 +31,11 @@ class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String] {
   val backLink: String = controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url
 
   def createView: () => Html = () =>
-    rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html =
-    (form: Form[String]) => rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+    (form: Form[String]) =>
+      rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "rentedEquipmentDetails view" must {
 

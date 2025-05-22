@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import scala.concurrent.Future
 
 trait RepositoryUtils { this: MockitoExtendedSugar =>
   val mockSessionRepo: SessionRepo = mock[SessionRepo]
-  when(mockSessionRepo.start(any[Session])(any, any)).thenReturn(Future.successful(()))
-  when(mockSessionRepo.saveOrUpdate(any[Session])(any, any)).thenReturn(Future.successful(()))
-  when(mockSessionRepo.remove()(any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.start(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.saveOrUpdate(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.remove()(using any)).thenReturn(Future.successful(()))
 }

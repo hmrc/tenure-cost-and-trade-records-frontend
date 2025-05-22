@@ -17,7 +17,6 @@
 @import actions.SessionRequest
 @import models.ForType.*
 @import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
@@ -66,6 +65,7 @@
         field = "nextReview",
         govukDate = govukDateInput,
         showDays = true,
+        customClass = "govuk-fieldset__legend--m",
         helpText = messages("label.nextReview.help")
     )
 

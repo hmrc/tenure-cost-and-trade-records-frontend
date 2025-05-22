@@ -390,7 +390,7 @@ guidance.sections.FOR6076.tradingHistory.li4 = <b>How much power you generated</
 guidance.sections.FOR6076.tradingHistory.li5 = <b>Gross receipts</b><br/>Including all sales, tariffs, benefits and incentives
 guidance.sections.FOR6076.tradingHistory.li6 = <b>Other income</b><br/>Any other income not listed in your gross receipts
 guidance.sections.FOR6076.tradingHistory.li7 = <b>Cost of sales</b><br/>Details of any costs occurred
-guidance.sections.FOR6076.tradingHistory.li8 = <b>Staff costs</b><br/>Wages, National Insurance, pension contributions and director’s remuneration
+guidance.sections.FOR6076.tradingHistory.li8 = <b>Staff costs</b><br/>Wages, National Insurance, pension contributions and directors’ remuneration
 guidance.sections.FOR6076.tradingHistory.li9 = <b>Premises costs</b><br/>Including utilities, repairs, rates and insurance
 guidance.sections.FOR6076.tradingHistory.li10 = <b>Operational and administrative expenses</b><br/>Including marketing expenses, office sundries and legal fees
 guidance.sections.FOR6076.tradingHistory.li11 = <b>Head office expenses</b><br/>If applicable
@@ -406,7 +406,7 @@ guidance.sections.FOR6045.aboutFranchiseOrLettings.li2 = letting other parts of 
 
 guidance.sections.FOR6015.tradingHistory.li4 = <b>Turnover</b><br/>Any income from providing accommodation, food, drinks, and other services such as function room hire and leisure activities. Also include any income from any concession or franchise such as restaurants, or any lettings such as phone masts.
 guidance.sections.FOR6015.tradingHistory.li5 = <b>Cost of Sales</b><br/>Expenses incurred from providing accommodation, food, drinks, and other services such as function room hire and leisure activities.
-guidance.sections.FOR6015.tradingHistory.li6 = <b>Payroll costs</b><br/>Including any director’s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
+guidance.sections.FOR6015.tradingHistory.li6 = <b>Payroll costs</b><br/>Including any directors’ remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
 guidance.sections.FOR6015.tradingHistory.li7 = <b>Variable operating expenses</b><br/>Including: energy and utilities; cleaning and laundry; building maintenance and repairs; repairs and renewals of fixtures and equipment; advertising and marketing; administration and sundries; entertainment; and any other variable operating expenses.
 guidance.sections.FOR6015.tradingHistory.li8 = <b>Fixed operating expenses</b><br/>Including rent, business rates, insurance, loan interest, and depreciation.
 guidance.sections.FOR6015.tradingHistory.li9 = <b>Other costs</b><br/>Including any contributions to head office and any other costs not listed here.
@@ -738,6 +738,7 @@ removeConnection.subheading = We’ll only use these details if we need to conta
 label.removeConnectionAdditionalInfo = Additional information
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = For example, the date you last occupied the property.
 error.fullName.required = Enter your name
+error.removeConnectionAdditionalInfo.maxLength = Additional information must be 2000 characters or fewer
 
 # ABOUT YOU AND PROPERTY SECTION
 ################################
@@ -812,14 +813,15 @@ error.tradingActivity.maxLength = Your description of the trading activity must 
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
-premisesLicenseGranted.heading = Is there a current premises licence in place for the property?
+premisesLicenseGranted.heading = Does the property have a current premises licence?
 help.premisesLicenseGranted.title = Help with your premises licence
 help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
 error.premisesLicenseGranted.missing = Select yes if a premises licence has been granted
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
 ##############################################
-premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any unusual conditions restricting the use of all or part of the property
+premisesLicenseGrantedInformation.heading = Give details of your premises licence
+premisesLicenseGrantedInformation.hint = Include any unusual conditions restricting the use of all or part of the property.
 help.premisesLicenseGrantedInformation.title = Help with your description
 help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
 help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
@@ -832,7 +834,7 @@ help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed af
 # LICENSABLE ACTIVITIES
 #######################
 licensableActivities.heading = Do licensable activities regularly occur before 10am or after 11.30pm on any day of the week?
-hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment.
+hint.licensableActivities= Licensable activities could include selling alcohol, selling food and refreshments, or providing live entertainment.
 help.licensableActivities.title = Help with licensable activities
 help.licensableActivities.heading = Licensable activities
 help.licensableActivities.p1 = The Licensing Act, 2003 defines licensable activities as:
@@ -938,6 +940,7 @@ typeOfIncome.6010.concession.label = Separate business operate from the property
 typeOfIncome.6015.concession.label = Concession or franchise fees
 typeOfIncome.concession.hint = For example, accommodation or catering businesses.
 typeOfIncome.concession.6015.hint = For example, restaurants or car hire kiosk.
+typeOfIncome.concession.6030.hint = From any separate businesses operating from the property such as tearooms, vehicle charging points or car washes.
 typeOfIncome.letting.label = Letting other parts of the property
 typeOfIncome.letting.hint = For example, advertising billboards, telephone masts or car parking.
 error.typeOfIncome.required = Select a source of rental income
@@ -1800,7 +1803,7 @@ fieldName.currentRentFirstPaid = the date when the current rent was first paid
 # CURRENT LEASE OR AGREEMENT BEGIN
 ##################################
 currentLeaseOrAgreementBegin.heading = Lease length and start date
-currentLeaseOrAgreementBegin.subheading = When did the current lease or agreement begin?
+currentLeaseOrAgreementBegin.subheading = When did the current lease begin?
 label.currentLeaseOrAgreementBegin = If the current lease was originally assigned to another party, tell us when it was started by them.
 label.grantedFor = How long was it granted for?
 hint.currentLeaseOrAgreementBegin = For example, 18 months, 1.5 years, or 1 year and 6 months.
@@ -2735,7 +2738,9 @@ costOfSales.financialYearEnd = Financial year end
 costOfSales.excludingVAT = (excluding VAT)
 costOfSales.accommodation = Accommodation
 costOfSales.food = Food
+costOfSales.food.hint = Excluding drinks
 costOfSales.drinks = Drinks
+costOfSales.drinks.hint = Including alcoholic and soft drinks, crisps, nuts.
 costOfSales.otherSales = Other
 costOfSales.otherSales.hint = Including hire of function rooms, conference rooms and telephones.
 costOfSales.total = Total cost of sales
@@ -2782,7 +2787,7 @@ staffCosts.wages = Wages and salaries
 staffCosts.wages.hint = Excluding National Insurance and pension contributions
 staffCosts.NI = National Insurance
 staffCosts.pension = Pension contributions
-staffCosts.remunerations = Director’s remuneration
+staffCosts.remunerations = Directors’ remuneration
 staffCosts.total = Total staff costs
 error.staffCosts.wages.required = Enter 0 if you did not have any wages or salaries in the year ending {0}
 error.staffCosts.wages.range = Wages and salaries in the year ending {0} must be a number, for example 100 or 100.00
@@ -2794,8 +2799,8 @@ error.staffCosts.pension.required = Enter 0 if you did not have any pension cont
 error.staffCosts.pension.range = Pension contributions in the year ending {0} must be a number, for example 100 or 100.00
 error.staffCosts.pension.negative = Pension contributions in the year ending {0} cannot be a negative number
 error.staffCosts.remunerations.required = Enter 0 if you did not have any director’s remunerations in the year ending {0}
-error.staffCosts.remunerations.range = Director’s remunerations in the year ending {0} must be a number, for example 100 or 100.00
-error.staffCosts.remunerations.negative = Director’s remunerations in the year ending {0} cannot be a negative number
+error.staffCosts.remunerations.range = Directors’ remunerations in the year ending {0} must be a number, for example 100 or 100.00
+error.staffCosts.remunerations.negative = Directors’ remunerations in the year ending {0} cannot be a negative number
 
 
 #INCOME EXPENDITURE SUMMARY 6076
@@ -2827,15 +2832,15 @@ totalPayrollCosts.p1 = Provide details of your wages, salaries, National Insuran
 totalPayrollCosts.p2 = All fields on this page are mandatory. If none of the categories are applicable, enter the number 0.
 totalPayrollCosts.financialYearEnd = Financial year end
 totalPayrollCosts.managersAndStaff = Managers and staff
-totalPayrollCosts.directorsRemuneration = Director's remuneration
+totalPayrollCosts.directorsRemuneration = Directors’ remuneration
 totalPayrollCosts.directorsRemuneration.add = (if applicable)
 totalPayrollCosts.total = Total payroll costs
 error.managers-and-staff.required = Enter 0 if you did not have any payroll costs for managers and staff in the year ending {0}
 error.managers-and-staff.range = The payroll costs for managers and staff in the year ending {0} must be a number, for example 100 or 100.00
 error.managers-and-staff.negative = The payroll costs for managers and staff in the year ending {0} cannot be a negative number
-error.directors-remuneration.required= Enter 0 if you did not have directors remuneration in the year ending {0}
-error.directors-remuneration.range = The directors remuneration in the year ending {0} must be a number, for example 100 or 100.00
-error.directors-remuneration.negative = The directors remuneration in the year ending {0} cannot be a negative number
+error.directors-remuneration.required= Enter 0 if you did not have directors’ remuneration in the year ending {0}
+error.directors-remuneration.range = The directors’ remuneration in the year ending {0} must be a number, for example 100 or 100.00
+error.directors-remuneration.negative = The directors’ remuneration in the year ending {0} cannot be a negative number
 
 
 # VARIABLE OPERATING EXPENSES (FORM 6015)
@@ -3735,7 +3740,7 @@ whatYouWillNeed.p1 = When you built or took over the property, and your financia
 whatYouWillNeed.p3 = Including all sales, tariffs, benefits and incentives.
 whatYouWillNeed.p4 = Any other income not listed in your gross receipts.
 whatYouWillNeed.p5 = Details of any costs incurred.
-whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and director’s remuneration.
+whatYouWillNeed.p6 = Wages, National Insurance, pension contributions and directors’ remuneration.
 whatYouWillNeed.p7 = Including utilities, repairs, rates and insurance.
 whatYouWillNeed.p8 = Including any marketing expenses, office sundries and legal fees.
 whatYouWillNeed.p9 = If applicable.
@@ -3749,7 +3754,7 @@ whatYouWillNeed.6010.p4 = Income from letting rooms. If your business is listed 
 
 whatYouWillNeed.6015.p1 = Any income from providing accommodation, food, drinks, and other services such as function room hire and leisure activities. Also include income from any concessions or franchises such as restuarants, or any lettings such as phone masts.
 whatYouWillNeed.6015.p2 = Expenses incurred from providing accommodation, food, drinks, and other services such as function room hire and leisure activities.
-whatYouWillNeed.6015.p3 = Including any director’s remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
+whatYouWillNeed.6015.p3 = Including any directors’ remuneration and the wages, salaries, National Insurance and pension contributions of any managers and staff.
 whatYouWillNeed.6015.p4 = Including: energy and utilities; cleaning and laundry; building maintenance and repairs; repairs and renewals of fixtures and equipment; advertising and marketing; administration and sundries; entertainment; and any other variable operating expenses.
 whatYouWillNeed.6015.p5 = Including rent, business rates, insurance, loan interest and depreciation.
 whatYouWillNeed.6015.p6 = Including any contributions to head office and any other costs not listed here
@@ -3805,15 +3810,18 @@ maxOf5Lettings.businessOrFranchise.heading = You have added the maximum of 5 sep
 maxOf5Lettings.businessOrFranchise.content = businesses or franchises
 maxOf5Lettings.businessOrConcession.heading = You have added the maximum of 5 separate businesses or concessions
 maxOf5Lettings.businessOrConcession.content = businesses or concessions
-maxOf5Lettings.concessionOrFranchise.heading = You have added the maximum of 5 separate concessions or franchises
+maxOf5Lettings.concessionOrFranchise.heading = Sorry, this service can only record up to 5 sources of rental income
 maxOf5Lettings.concessionOrFranchise.content = concessions or franchises
 maxOf5Lettings.rentalIncome.heading = You have added the maximum of 5 sources of rental income
 maxOf5Lettings.rentalIncome.content = sources of rental income
 maxOf5Lettings.contact = If you have 6 or more {0}, the VOA will contact you to collect their information.
+maxOf5Lettings.contact.6030 = This service has some storage restrictions during testing and development. If you have 6 or more sources of rental income at the property, the VOA will contact you for the details you were unable to declare.
 maxOf5Lettings.rentalIncome.confirm = I confirm that I understand the VOA will contact me regarding the remaining {0}
+maxOf5Lettings.rentalIncome.6030.confirm = I understand that the VOA will contact me for the details of the undeclared sources of rental income.
 maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining businesses.
 maxOf5Lettings.link = Check or update the 5 added businesses
 maxOf5Lettings.rentalIncome.link = Check or update the 5 added sources of rental income
+maxOf5Lettings.rentalIncome.6030.link = Check or update the sources of rental income
 maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
 
 # About franchise or lettings CYA
@@ -3989,7 +3997,7 @@ checkYourAnswersAboutTheProperty.websiteAddress = Website address
 checkYourAnswersAboutTheProperty.license.heading = Your licence
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence?
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Details of premises licence
-checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10:00 or after 23:30?
+checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10am or after 11:30pm?
 checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Description of licensable activities
 checkYourAnswersAboutTheProperty.premisesLicenseConditions = Restrictions on property use?
 checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Description of restrictions

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,11 @@ class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[WorkCarried
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
 
-  def createView = () => workCarriedOutConditionView(form, backLink, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () =>
+    workCarriedOutConditionView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[WorkCarriedOutCondition]) =>
-    workCarriedOutConditionView(form, backLink, Summary("99996020001"))(fakeRequest, messages)
+    workCarriedOutConditionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
 
   "work carried out condition view" should {
 

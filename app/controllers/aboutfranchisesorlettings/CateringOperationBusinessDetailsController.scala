@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,9 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.cateringOperationBusinessDetails6030Form
-import form.aboutfranchisesorlettings.CateringOperationBusinessDetailsForm.cateringOperationBusinessDetailsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, CateringOperationBusinessSection, ConcessionBusinessDetails}
+import models.submissions.aboutfranchisesorlettings.{ConcessionBusinessDetails, ConcessionIncomeRecord}
 import models.ForType
-import models.ForType.*
-import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationBusinessPageId
 import play.api.i18n.I18nSupport
@@ -53,31 +50,24 @@ class CateringOperationBusinessDetailsController @Inject() (
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[ConcessionBusinessDetails] = for {
-      requestedIndex                <- index
-      existingAccommodationSections <-
-        request.sessionData.aboutFranchisesOrLettings.map(
-          _.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty)
-        )
-      // lift turns exception-throwing access by index into an option-returning safe operation
-      requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
-    } yield requestedAccommodationSection.cateringOperationBusinessDetails
+      requestedIndex            <- index
+      allRecords                <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
+      concessionBusinessDetails <- allRecords
+                                     .lift(requestedIndex)
+                                     .collect[Option[ConcessionBusinessDetails]] {
+                                       case concession: ConcessionIncomeRecord => concession.businessDetails
+                                     }
+                                     .flatten
+    } yield concessionBusinessDetails
 
     audit.sendChangeLink("ConcessionBusinessDetails")
     Ok(
       cateringOperationDetailsView(
-        if (forType == FOR6030) {
-          existingDetails.fold(cateringOperationBusinessDetails6030Form)(
-            cateringOperationBusinessDetails6030Form.fill
-          )
-        } else {
-          existingDetails.fold(cateringOperationBusinessDetailsForm)(
-            cateringOperationBusinessDetailsForm.fill
-          )
-        },
+        existingDetails.fold(cateringOperationBusinessDetails6030Form)(cateringOperationBusinessDetails6030Form.fill),
         index,
         "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
-        getBackLink(request.sessionData, index),
+        getBackLink(index),
         request.sessionData.toSummary,
         forType
       )
@@ -86,11 +76,7 @@ class CateringOperationBusinessDetailsController @Inject() (
 
   def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ConcessionBusinessDetails](
-      if (forType == FOR6030) {
-        cateringOperationBusinessDetails6030Form
-      } else {
-        cateringOperationBusinessDetailsForm
-      },
+      cateringOperationBusinessDetails6030Form,
       formWithErrors =>
         BadRequest(
           cateringOperationDetailsView(
@@ -98,40 +84,24 @@ class CateringOperationBusinessDetailsController @Inject() (
             index,
             "concessionDetails",
             "cateringOperationOrLettingAccommodationDetails",
-            getBackLink(request.sessionData, index),
+            getBackLink(index),
             request.sessionData.toSummary,
             request.sessionData.forType
           )
         ),
       data => {
-        val ifFranchisesOrLettingsEmpty      = AboutFranchisesOrLettings(cateringOperationBusinessSections =
-          Some(IndexedSeq(CateringOperationBusinessSection(cateringOperationBusinessDetails = data)))
-        )
-        val updatedAboutFranchisesOrLettings =
-          request.sessionData.aboutFranchisesOrLettings.fold(ifFranchisesOrLettingsEmpty) { franchiseOrLettings =>
-            val existingSections = franchiseOrLettings.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty)
-            val requestedSection = index.flatMap(existingSections.lift)
-
-            val updatedSections: (Int, IndexedSeq[CateringOperationBusinessSection]) =
-              requestedSection.fold {
-                val defaultSection   = CateringOperationBusinessSection(data)
-                val appendedSections = existingSections.appended(defaultSection)
-                appendedSections.indexOf(defaultSection) -> appendedSections
-              } { sectionToUpdate =>
-                val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-                indexToUpdate -> existingSections.updated(
-                  indexToUpdate,
-                  sectionToUpdate.copy(cateringOperationBusinessDetails = data)
-                )
-              }
-            franchiseOrLettings
-              .copy(
-                cateringOperationCurrentIndex = updatedSections._1,
-                cateringOperationBusinessSections = Some(updatedSections._2)
-              )
+        val idx         = index.getOrElse(0)
+        val updatedData = updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
+          if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
+            val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
+              records.updated(idx, records(idx).asInstanceOf[ConcessionIncomeRecord].copy(businessDetails = Some(data)))
+            }
+            aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
+          } else {
+            aboutFranchisesOrLettings
           }
+        }
 
-        val updatedData = updateAboutFranchisesOrLettings(_ => updatedAboutFranchisesOrLettings)
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CateringOperationBusinessPageId, updatedData).apply(updatedData))
         }
@@ -139,19 +109,7 @@ class CateringOperationBusinessDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session, maybeIndex: Option[Int]): String =
-    answers.forType match {
-      case FOR6015 | FOR6016 =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url
-      case FOR6030           =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionOrFranchiseFeeController.show().url
-      case _                 =>
-        maybeIndex match {
-          case Some(index) if index > 0 =>
-            controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(index - 1).url
-          case _                        =>
-            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show().url
-        }
-    }
+  private def getBackLink(index: Option[Int]): String =
+    controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(index).url
 
 }

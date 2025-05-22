@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import views.behaviours.QuestionViewBehaviours
 class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] {
 
   override val form =
-    RentReceivedFromForm.rentReceivedFromForm(messages)
+    RentReceivedFromForm.rentReceivedFromForm(using messages)
 
   val fakeSessionRequest = SessionRequest[AnyContent](
     sessionData = Session(
@@ -52,7 +52,7 @@ class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] 
       0,
       "separate business",
       Some("/backLinkUrl")
-    )(fakeSessionRequest, messages)
+    )(using fakeSessionRequest, messages)
 
   def createViewUsingForm = (form: Form[RentReceivedFrom]) =>
     rentReceivedFromView(
@@ -60,7 +60,7 @@ class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] 
       0,
       "separate business",
       Some("/backLinkUrl")
-    )(fakeSessionRequest, messages)
+    )(using fakeSessionRequest, messages)
 
   "Catering operation rent details view" should {
 

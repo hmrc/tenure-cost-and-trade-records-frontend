@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
-import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
+import models.submissions.lettingHistory.ResidentDetail
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.ResidentDetailPageId
 import play.api.data.Form
@@ -32,7 +32,7 @@ import views.html.lettingHistory.residentDetail as ResidentDetailView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.Future.successful
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ResidentDetailController @Inject() (
@@ -78,7 +78,7 @@ class ResidentDetailController @Inject() (
               theView,
               theForm
                 .fill(resident)
-                .withError("duplicate", request.messages()("lettingHistory.residentDetail.duplicate")),
+                .withError("duplicate", "lettingHistory.residentDetail.duplicate"),
               maybeIndex
             )
           else

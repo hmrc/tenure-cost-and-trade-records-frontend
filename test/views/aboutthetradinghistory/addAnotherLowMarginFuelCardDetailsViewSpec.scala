@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ class addAnotherLowMarginFuelCardDetailsViewSpec extends QuestionViewBehaviours[
     addAnotherLowMarginFuelCardsDetailsView(
       form,
       0
-    )(sessionRequest, messages)
+    )(using sessionRequest, messages)
 
   "Catering add another bunker fuel cards details view" must {
     behave like normalPageWithZeroDetails(createView, messageKeyPrefix, "zeroDetails", "0")

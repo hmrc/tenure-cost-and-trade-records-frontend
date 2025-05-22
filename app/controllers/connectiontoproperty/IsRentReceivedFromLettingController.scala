@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ class IsRentReceivedFromLettingController @Inject() (
             case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
             case _                       => isRentReceivedFromLettingForm
           },
-          getBackLink(),
+          getBackLink,
           request.sessionData.toSummary
         )
       )
@@ -72,7 +72,7 @@ class IsRentReceivedFromLettingController @Inject() (
         BadRequest(
           isRentReceivedFromLettingView(
             formWithErrors,
-            getBackLink(),
+            getBackLink,
             request.sessionData.toSummary
           )
         ),

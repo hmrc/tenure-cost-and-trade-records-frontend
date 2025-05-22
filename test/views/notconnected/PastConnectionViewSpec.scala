@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.notconnected.PastConnectionForm
 import models.pages.Summary
 import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.notconnected.PastConnectionType
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -34,10 +33,10 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] 
   override val form: Form[PastConnectionType] = PastConnectionForm.pastConnectionForm
 
   def createView: () => Html = () =>
-    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(fakeRequest, messages)
+    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[PastConnectionType] => Html = (form: Form[PastConnectionType]) =>
-    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(fakeRequest, messages)
+    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
   "Past connection view" must {
 

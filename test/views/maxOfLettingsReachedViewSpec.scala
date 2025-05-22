@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,14 +36,14 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
   val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
 
-  val form       = MaxOfLettingsForm.maxOfLettingsForm(messages)
+  val form       = MaxOfLettingsForm.maxOfLettingsForm(using messages)
   def createView = () =>
     maxOfLettingsReachedView(
       form,
       "backLink",
       "connection",
       Summary("10000001")
-    )(sessionRequest, messages)
+    )(using sessionRequest, messages)
 
   def prepareViewFranchise(sessionRequest: SessionRequest[?]): () => Html = { () =>
     maxOfLettingsReachedView(
@@ -51,7 +51,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
       "backLink",
       "franchiseCatering",
       Summary("10000001")
-    )(sessionRequest, messages)
+    )(using sessionRequest, messages)
   }
 
   def createViewUsingForm = (form: Form[Boolean]) =>
@@ -60,7 +60,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
       "backLink",
       "connection",
       Summary("99996010001")
-    )(sessionRequest, messages)
+    )(using sessionRequest, messages)
 
   "max of Lettings reached view" must {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
-import org.scalatest.matchers.must.Matchers._
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -29,12 +28,12 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[Tenancy
 
   val messageKeyPrefix = "tenancyLeaseAgreementExpire"
 
-  override val form = TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm(messages)
+  override val form = TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm(using messages)
 
-  def createView = () => tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(fakeRequest, messages)
+  def createView = () => tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[TenancyLeaseAgreementExpire]) =>
-    tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(fakeRequest, messages)
+    tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tenancy lease agreement expire view" must {
 

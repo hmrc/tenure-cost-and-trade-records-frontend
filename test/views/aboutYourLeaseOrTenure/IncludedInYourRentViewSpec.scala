@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import form.aboutYourLeaseOrTenure.IncludedInYourRentForm
 import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.*
-import org.scalatest.matchers.must.Matchers.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -33,13 +32,13 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
 
   override val form: Form[IncludedInYourRentDetails] = IncludedInYourRentForm.includedInYourRentForm(forType)
 
-  def createView = () => includedInYourRentView(form, Summary("99996010001"), forType)(fakeRequest, messages)
+  def createView = () => includedInYourRentView(form, Summary("99996010001"), forType)(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[IncludedInYourRentDetails]) =>
-    includedInYourRentView(form, Summary("99996010001"), forType)(fakeRequest, messages)
+    includedInYourRentView(form, Summary("99996010001"), forType)(using fakeRequest, messages)
 
   def createViewUsingForm6045 = (form: Form[IncludedInYourRentDetails]) =>
-    includedInYourRentView(form, Summary("99996045001"), forType6045)(fakeRequest, messages)
+    includedInYourRentView(form, Summary("99996045001"), forType6045)(using fakeRequest, messages)
 
   "Included in rent view" must {
 

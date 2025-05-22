@@ -36,7 +36,7 @@ class AccessibilityUtilSpec extends TestBaseSpec {
 
       when(messages(messageKey)).thenReturn("Test message")
       when(messages("turnover.forYearEnding.aria")).thenReturn("for year ending")
-      when(mockDateUtilLocalised.formatDayMonthAbbrYear(financialYearEnd)(messages)).thenReturn(formattedDate)
+      when(mockDateUtilLocalised.formatDayMonthAbbrYear(financialYearEnd)(using messages)).thenReturn(formattedDate)
 
       accessibilityUtil.ariaBuilder(messageKey, financialYearEnd) shouldBe expectedMessage
     }

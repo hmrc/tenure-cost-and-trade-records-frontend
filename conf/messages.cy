@@ -711,6 +711,7 @@ removeConnection.subheading = Dim ond os bydd angen i ni gysylltu â chi cyn dil
 label.removeConnectionAdditionalInfo = Gwybodaeth ychwanegol
 hint.removeConnectionDetails.removeConnectionAdditionalInfo = Er enghraifft, y dyddiad y gwnaethoch feddiannu’r eiddo ddiwethaf.
 error.fullName.required = Enter your name
+error.removeConnectionAdditionalInfo.maxLength = Additional information must be 2000 characters or fewer
 
 # ABOUT YOU AND PROPERTY SECTION
 ################################
@@ -784,14 +785,15 @@ error.tradingActivity.maxLength = Your description of the trading activity must 
 
 # PREMISES LICENSE GRANTED (6015,6016)
 ######################################
-premisesLicenseGranted.heading = Is there a current premises licence in place for the property?
+premisesLicenseGranted.heading = Does the property have a current premises licence?
 help.premisesLicenseGranted.title = Help with your premises licence
 help.premisesLicenseGranted.text = We’re interested to know if you’re permitted to serve alcohol under the terms of a premises licence, a personal licence, or a club premises certificate.
 error.premisesLicenseGranted.missing = Select yes if a premises licence has been granted
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
 ##############################################
-premisesLicenseGrantedInformation.heading = Give details of your premises licence, including any unusual conditions restricting the use of all or part of the property
+premisesLicenseGrantedInformation.heading = Give details of your premises licence
+premisesLicenseGrantedInformation.hint = Include any unusual conditions restricting the use of all or part of the property.
 help.premisesLicenseGrantedInformation.title = Help with your description
 help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
 help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
@@ -804,7 +806,7 @@ help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed af
 # LICENSABLE ACTIVITIES
 #######################
 licensableActivities.heading = Do licensable activities regularly occur before 10am or after 11.30pm on any day of the week?
-hint.licensableActivities= Licensable activities could include, selling alcohol, selling food and refreshments, or providing live entertainment.
+hint.licensableActivities= Licensable activities could include selling alcohol, selling food and refreshments, or providing live entertainment.
 help.licensableActivities.title = Help with licensable activities
 help.licensableActivities.heading = Licensable activities
 help.licensableActivities.p1 = The Licensing Act, 2003 defines licensable activities as:
@@ -910,6 +912,7 @@ typeOfIncome.6010.concession.label = Ffi y consesiwn neu’r fasnachfraint
 typeOfIncome.6015.concession.label = Ffi y consesiwn neu’r fasnachfraint
 typeOfIncome.concession.hint = Er enghraifft, busnesau llety neu arlwyo.
 typeOfIncome.concession.6015.hint = O unrhyw fusnesau ar wahân sy’n gweithredu o’r eiddo, megis bwytai neu giosgau llogi ceir.
+typeOfIncome.concession.6030.hint = From any separate businesses operating from the property such as tearooms, vehicle charging points or car washes.
 typeOfIncome.letting.label = Rhoi rhannau eraill o’r eiddo ar osod
 typeOfIncome.letting.hint = Er enghraifft byrddau posteri, maes parcio neu fastiau ffôn.
 error.typeOfIncome.required = Select a source of rental income
@@ -2682,7 +2685,9 @@ costOfSales.financialYearEnd = Diwedd y flwyddyn ariannol
 costOfSales.excludingVAT = (heb gynnwys TAW)
 costOfSales.accommodation = Llety
 costOfSales.food = Bwyd
+costOfSales.food.hint = Excluding drinks
 costOfSales.drinks = Diodydd
+costOfSales.drinks.hint = Including alcoholic and soft drinks, crisps, nuts.
 costOfSales.otherSales = Arall
 costOfSales.otherSales.hint = Gan gynnwys llogi ystafelloedd digwyddiadau, ystafelloedd cynadledda a theleffonau.
 costOfSales.total = Cyfanswm cost y gwerthiannau
@@ -3732,15 +3737,18 @@ maxOf5Lettings.businessOrFranchise.heading = You have added the maximum of 5 sep
 maxOf5Lettings.businessOrFranchise.content = businesses or franchises
 maxOf5Lettings.businessOrConcession.heading = You have added the maximum of 5 separate businesses or concessions
 maxOf5Lettings.businessOrConcession.content = businesses or concessions
-maxOf5Lettings.concessionOrFranchise.heading = You have added the maximum of 5 separate concessions or franchises
+maxOf5Lettings.concessionOrFranchise.heading = Sorry, this service can only record up to 5 sources of rental income
 maxOf5Lettings.concessionOrFranchise.content = concessions or franchises
 maxOf5Lettings.rentalIncome.heading = You have added the maximum of 5 sources of rental income
 maxOf5Lettings.rentalIncome.content = sources of rental income
 maxOf5Lettings.contact = If you have 6 or more {0}, the VOA will contact you to collect their information.
+maxOf5Lettings.contact.6030 = This service has some storage restrictions during testing and development. If you have 6 or more sources of rental income at the property, the VOA will contact you for the details you were unable to declare.
 maxOf5Lettings.rentalIncome.confirm = I confirm that I understand the VOA will contact me regarding the remaining {0}
+maxOf5Lettings.rentalIncome.6030.confirm = I understand that the VOA will contact me for the details of the undeclared sources of rental income.
 maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining businesses.
 maxOf5Lettings.link = Check or update the 5 added businesses
 maxOf5Lettings.rentalIncome.link = Check or update the 5 added sources of rental income
+maxOf5Lettings.rentalIncome.6030.link = Check or update the sources of rental income
 maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
 
 # About franchise or lettings CYA
@@ -3888,7 +3896,7 @@ checkYourAnswersAboutTheProperty.plantDescription = Plant description and techno
 checkYourAnswersAboutTheProperty.generator = Peak capacity of generator
 checkYourAnswersAboutTheProperty.battery = Battery capacity
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails = Details of premises licence
-checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10:00 or after 23:30?
+checkYourAnswersAboutTheProperty.licensableActivities = Licensable activities before 10am or after 11:30pm?
 checkYourAnswersAboutTheProperty.licensableActivitiesDetails = Description of licensable activities
 checkYourAnswersAboutTheProperty.premisesLicenseConditions = Restrictions on property use?
 checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails = Description of restrictions

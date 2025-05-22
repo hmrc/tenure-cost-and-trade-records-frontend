@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.libs.json.Writes
-import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -37,14 +35,14 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val result = controller.show(9)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         contentAsString(result)     should not include "checked"
       }
       "reply 200 with the pre-filled form if given index exists" in new ControllerFixture {
         val result = controller.show(0)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                         shouldBe "addAnotherLettingOtherPartOfProperty.heading"
         html.getElementById("addAnotherLettingOtherPartOfProperty").toString should include("""value="yes" checked>""")
@@ -53,7 +51,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val result = controller.show(1)(fakeRequestFromCYA)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                           shouldBe "addAnotherLettingOtherPartOfProperty.heading"
         html.getElementById("addAnotherLettingOtherPartOfProperty-2").toString should include("""value="no" checked>""")
@@ -103,7 +101,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
           controller.submit(0)(fakePostRequest.withFormUrlEncodedBody("addAnotherLettingOtherPartOfProperty" -> "yes"))
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.LettingOtherPartOfPropertyDetailsController.show(Some(1)).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         data.getValue.aboutFranchisesOrLettings.value
           .lettingSections(0)
           .addAnotherLettingToProperty
@@ -121,7 +119,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         val result = controller.remove(0)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        charset(result).value     shouldBe UTF8
         val content = contentAsString(result)
         content should include("""genericRemoveConfirmation.heading""")
         content should include(
@@ -158,7 +156,7 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AddAnotherLettingOtherPartOfPropertyController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(any[Writes[Session]], any[HeaderCarrier])
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
       }
       "reply 303 redirect to 'AddAnotherLettingOtherPartOfProperty' page if answer='no'" in new ControllerFixture() {
         val result = controller.performRemove(0)(
@@ -179,7 +177,8 @@ class AddAnotherLettingOtherPartOfPropertyControllerSpec extends TestBaseSpec {
   ):
     val repository = mock[SessionRepo]
     val data       = captor[Session]
-    when(repository.saveOrUpdate(any[Session])(any[Writes[Session]], any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      .thenReturn(successful(()))
 
     val controller =
       new AddAnotherLettingOtherPartOfPropertyController(
