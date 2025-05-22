@@ -1334,7 +1334,7 @@ error.paymentForTradeServices.missing = Select yes if a separate payment is made
 
 # SERVICE PAID SEPARATELY
 ############################
-servicePaidSeparately.heading = Describe the service which is paid for separately
+servicePaidSeparately.heading = Describe the service you pay for separately
 servicePaidSeparately.VAT = What is the annual charge for separately paid services, excluding VAT?
 servicePaidSeparately.describe = Describe the type of service
 servicePaidSeparately.describe.hint = For example, lighting, heating, cleaning of shared parts - you will have the opportunity to add additional services if required.
@@ -1461,7 +1461,7 @@ error.payACapitalSum.missing = Dewiswch ‘do’ os gwnaethoch dalu swm cyfalaf 
 capitalSumPaidDetails.heading = Provide details of the capital sum paid
 capitalSumPaidDetails6048.heading = What was the capital sum or premium paid for the lease or agreement?
 capitalSumPaidDetails.p1 = You do not have to provide details if the rent has been reviewed since the payment was made.
-label.capitalSumPaidDetails = How much did you pay for your lease or agreement?
+label.capitalSumPaidDetails = How much was the capital sum paid?
 label.capitalSumPaidDetailsDateInput = When was this sum paid?
 error.capitalSumPaidDetails.missing = Select yes if you paid a capital sum or premium for your lease
 error.required.annualRentExcludingVat.capitalSumPaidDetails = Please provide details of how much of the capital sum was paid
