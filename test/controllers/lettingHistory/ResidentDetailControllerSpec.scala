@@ -104,6 +104,21 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           permanentResidents(data)(1).name    shouldBe "Mr. Two"
           permanentResidents(data)(1).address shouldBe "22, Different Street"
         }
+
+        "be handling POST duplicate entry by replying 400" in new ControllerFixture(
+          oneResident
+        ) {
+          // Post a duplicate and expect a 400 bad request
+          val request = fakePostRequest.withFormUrlEncodedBody(
+            "name" -> "Mr. One",
+            "address" -> "Address One"
+          )
+          val result = controller.submit()(request)
+          status(result) shouldBe BAD_REQUEST
+          val page   = contentAsJsoup(result)
+          page.error("duplicate") shouldBe "lettingHistory.residentDetail.duplicate"
+        }
+
       }
       "and the maximum number of residents has been reached" should {
         "be handling GET /detail by replying 303 redirect to the 'Residents List' page" in new ControllerFixture(

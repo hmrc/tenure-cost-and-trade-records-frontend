@@ -107,10 +107,19 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "Redirect when form data yes submitted without CYA param" in {
       val res = areYouStillConnectedController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "isRelated" -> "yes"
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data no submitted without CYA param" in {
+      val res = areYouStillConnectedController().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "isRelated" -> "no"
         )
       )
       status(res) shouldBe SEE_OTHER
