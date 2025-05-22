@@ -100,14 +100,26 @@
             Radios(
                 name = "franchiseOrLettingsTiedToProperty",
                 idPrefix = Option("franchiseOrLettingsTiedToProperty"),
-                items = Seq(
-                    "yes" -> messages("label.yes.oes"),
-                    "no" -> messages("label.no.nac.oes")
-                ).map( radioItem => RadioItem (
-                    content = Text(radioItem._2),
-                    checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
-                    value=Option(radioItem._1)
-                )),
+                items =
+                    if(forType == FOR6046 || forType == FOR6045) {
+                        Seq(
+                            "yes" -> messages("label.yes.ydw"),
+                            "no" -> messages("label.no.nac.ydw")
+                        ).map(radioItem => RadioItem(
+                            content = Text(radioItem._2),
+                            checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
+                            value = Option(radioItem._1)
+                        ))
+                    } else {
+                        Seq(
+                            "yes" -> messages("label.yes.oes"),
+                            "no" -> messages("label.no.nac.oes")
+                        ).map(radioItem => RadioItem(
+                            content = Text(radioItem._2),
+                            checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
+                            value = Option(radioItem._1)
+                        ))
+                    },
                 classes = "govuk-radios--inline",
                 errorMessage =  theForm.errors.asTextErrorMessageForField("franchiseOrLettingsTiedToProperty"),
                 fieldset = Option(
