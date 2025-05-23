@@ -1082,8 +1082,8 @@ label.telecomMastLetting.heading = Rhowch fanylion y mast telathrebu
 telecomMastLetting.address.lookupPageHeading = What is the mast’s property address?
 telecomMastLetting.address.selectPageHeading = Choose the mast’s property address
 telecomMastLetting.address.confirmPageHeading = Check the mast’s property address
-label.operatingCompanyName = Operating company’s name
-label.siteOfMast = Where on the site is the mast situated?
+label.operatingCompanyName = Enw'r cwmni gweithredu
+label.siteOfMast = Ble ar y safle y mae’r mast wedi’i leoli?
 error.operatingCompanyName.required = Enter operating company’s name
 error.siteOfMast.required = Enter where on the site is the mast situated
 error.operatingCompanyName.maxLength = Operating company’s name must be 500 characters or fewer
@@ -1091,13 +1091,13 @@ error.siteOfMast.maxLength = The site where the mast situated must be 500 charac
 
 #LETTINGS ADVERTISING RIGHT 6020
 ##############################
-label.advertisingRightLetting.heading = Provide the advertising right’s details
+label.advertisingRightLetting.heading = Rhowch fanylion yr hawl i hysbysebu
 advertisingRightLetting.address.lookupPageHeading = What is the advertising right’s address?
 advertisingRightLetting.address.selectPageHeading = Choose the advertising right’s address
 advertisingRightLetting.address.confirmPageHeading = Check the advertising right’s address
-label.descriptionOfSpace = Describe the advertising space
-hint.descriptionOfSpace = For example, billboard or hoarding
-label.advertisingCompanyName = Advertising company’s name
+label.descriptionOfSpace = Disgrifiwch y lle ar gyfer hysbysebu
+hint.descriptionOfSpace = Er enghraifft, bwrdd poster neu hysbysfwrdd
+label.advertisingCompanyName = Enw’r cwmni hysbysebu
 error.descriptionOfSpace.required = Enter description of the advertising space
 error.advertisingCompanyName.required = Enter advertising company’s name
 error.descriptionOfSpace.maxLength = Description of the advertising space must be 500 characters or fewer
@@ -1603,7 +1603,7 @@ error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithO
 addAnotherConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate concessions or franchises
 addAnotherConcessionOrFranchise.heading = You have added {0} separate concession or franchise
 addAnotherConcessionOrFranchise.heading.plural = You have added {0} separate concessions or franchise
-label.addAnotherConcessionOrFranchise = Do you need to add another separate concession or franchise?
+label.addAnotherConcessionOrFranchise = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your separate business or franchises
 label.addAnotherLettingConcessionOrFranchise = A oes angen i chi ychwanegu gosodiad arall?
 addAnotherLettingConcessionOrFranchise.zeroBusinessOrFranchises.heading = You have removed all your lettings
