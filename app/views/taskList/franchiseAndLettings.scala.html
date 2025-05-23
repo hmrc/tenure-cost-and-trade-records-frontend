@@ -61,36 +61,7 @@
      }
     )
    }
-   @if(forType == FOR6030) {
-    @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-     controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0),
-     section4Completed,
-     session.aboutFranchisesOrLettings.flatMap(_.rentalIncome),
-     session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-    )
-
-    @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-     controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0),
-     section4Completed,
-     session.aboutFranchisesOrLettings.flatMap(_.rentalIncome),
-     session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-    )
-   } else {
-    @if(forType != FOR6020) {
-     @includes.taskListItem("catering-operation-or-letting-accommodation", "taskList.separateBusinesses",
-      controllers.aboutfranchisesorlettings.routes.CateringOperationController.show(),
-      section4Completed,
-      session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise),
-      session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty).isEmpty
-     )
-
-     @includes.taskListItem("letting-other-part-of-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-      controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show(),
-      section4Completed,
-      session.aboutFranchisesOrLettings.flatMap(_.lettingOtherPartOfProperty),
-      session.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise).isEmpty
-     )
-    } else {
+   @if(forType == FOR6020) {
      @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
       section4Completed,
@@ -99,7 +70,6 @@
      )
     }
    }
-  }
   </ul>
  </li>
 }
