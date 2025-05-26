@@ -42,15 +42,15 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
 
     (jsValue \ "hasCompletedLettings").as[Boolean] shouldBe true
     val encryptedOccupierDetails = (jsValue \ "completedLettings").head.as[SensitiveOccupierDetail]
-    encryptedOccupierDetails.name                    should not be clearLettingHistory.completedLettings.head.name
-    encryptedOccupierDetails.address.line1           should not be clearLettingHistory.completedLettings.head.address.line1
-    encryptedOccupierDetails.address.line2.value     should not be clearLettingHistory.completedLettings.head.address.line2.value
-    encryptedOccupierDetails.address.town            should not be clearLettingHistory.completedLettings.head.address.town
-    encryptedOccupierDetails.address.county.value    should not be clearLettingHistory.completedLettings.head.address.county.value
-    encryptedOccupierDetails.address.postcode        should not be clearLettingHistory.completedLettings.head.address.postcode
-    encryptedOccupierDetails.rental.isDefined      shouldBe true
-    encryptedOccupierDetails.rental.value.fromDate shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.fromDate
-    encryptedOccupierDetails.rental.value.toDate   shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.toDate
+    encryptedOccupierDetails.name                       should not be clearLettingHistory.completedLettings.head.name
+    encryptedOccupierDetails.address.value.line1        should not be clearLettingHistory.completedLettings.head.address.value.buildingNameNumber
+    encryptedOccupierDetails.address.value.line2.value  should not be clearLettingHistory.completedLettings.head.address.value.street1.value
+    encryptedOccupierDetails.address.value.town         should not be clearLettingHistory.completedLettings.head.address.value.town
+    encryptedOccupierDetails.address.value.county.value should not be clearLettingHistory.completedLettings.head.address.value.county.value
+    encryptedOccupierDetails.address.value.postcode     should not be clearLettingHistory.completedLettings.head.address.value.postcode
+    encryptedOccupierDetails.rental.isDefined         shouldBe true
+    encryptedOccupierDetails.rental.value.fromDate    shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.fromDate
+    encryptedOccupierDetails.rental.value.toDate      shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.toDate
   }
 
   it should "deserialize from encrypted JSON" in {
@@ -72,12 +72,14 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
     completedLettings = List(
       OccupierDetail(
         name = "Miss Nobody",
-        address = Address(
-          line1 = "21, Somewhere Place",
-          line2 = Some("Basement"),
-          town = "NeverTown",
-          county = Some("Birds' Island"),
-          postcode = "BN124AX"
+        address = Some(
+          OccupierAddress(
+            buildingNameNumber = "21, Somewhere Place",
+            street1 = Some("Basement"),
+            town = "NeverTown",
+            county = Some("Birds' Island"),
+            postcode = "BN124AX"
+          )
         ),
         rentalPeriod = Some(
           LocalPeriod(

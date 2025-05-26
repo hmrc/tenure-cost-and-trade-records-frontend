@@ -25,9 +25,9 @@ case class SensitiveAddress(
   town: SensitiveString,
   county: Option[SensitiveString],
   postcode: SensitiveString
-) extends Sensitive[Address]:
+) extends Sensitive[OccupierAddress]:
 
-  override def decryptedValue: Address = Address(
+  override def decryptedValue: OccupierAddress = OccupierAddress(
     line1.decryptedValue,
     line2.map(_.decryptedValue),
     town.decryptedValue,
@@ -43,10 +43,10 @@ object SensitiveAddress:
   implicit def format(using crypto: MongoCrypto): Format[SensitiveAddress] = Json.format
 
   // encryption method
-  def apply(address: Address): SensitiveAddress =
+  def apply(address: OccupierAddress): SensitiveAddress =
     SensitiveAddress(
-      SensitiveString(address.line1),
-      address.line2.map(SensitiveString(_)),
+      SensitiveString(address.buildingNameNumber),
+      address.street1.map(SensitiveString(_)),
       SensitiveString(address.town),
       address.county.map(SensitiveString(_)),
       SensitiveString(address.postcode)

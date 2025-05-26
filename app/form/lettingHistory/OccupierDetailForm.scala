@@ -22,23 +22,16 @@ import form.CountyMapping.validateCounty as county
 import form.PostcodeMapping.postcode
 import form.TownMapping.validateTown as town
 import form.lettingHistory.FieldMappings.nonEmptyText
-import models.submissions.lettingHistory.{Address, OccupierDetail}
+import models.submissions.lettingHistory.{OccupierAddress, OccupierDetail}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
 object OccupierDetailForm:
   val theForm = Form(
     mapping(
-      "name"    -> nonEmptyText(errorMessage = "lettingHistory.occupierDetail.name.required"),
-      "address" -> mapping(
-        "line1"    -> line1,
-        "line2"    -> optional(line2),
-        "town"     -> town,
-        "county"   -> optional(county),
-        "postcode" -> postcode(requiredError = "error.postcodeAlternativeContact.required")
-      )(Address.apply)(Address.unapply)
-    )((name, address) => OccupierDetail.apply(name, address, rentalPeriod = None)) { obj =>
-      val Some(name, address, _) = OccupierDetail.unapply(obj): @unchecked
-      Some((name, address))
+      "name" -> nonEmptyText(errorMessage = "lettingHistory.occupierDetail.name.required")
+    )(name => OccupierDetail.apply(name, address = None, rentalPeriod = None)) { obj =>
+      val Some(name, _, _) = OccupierDetail.unapply(obj): @unchecked
+      Some(name)
     }
   )

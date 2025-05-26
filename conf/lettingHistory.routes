@@ -16,6 +16,7 @@ POST        /letting-history-has-completed-lettings             controllers.lett
 
 GET         /letting-history-occupier-detail                    controllers.lettingHistory.OccupierDetailController.show(index: Option[Int] ?= None)
 POST        /letting-history-occupier-detail                    controllers.lettingHistory.OccupierDetailController.submit(index: Option[Int] ?= None)
+GET         /letting-history-occupier-detail-callback           controllers.lettingHistory.OccupierDetailController.addressLookupCallback(idx: Int, id: String ?= "")
 
 GET         /letting-history-rental-period                      controllers.lettingHistory.RentalPeriodController.show(index: Option[Int] ?= None)
 POST        /letting-history-rental-period                      controllers.lettingHistory.RentalPeriodController.submit(index: Option[Int] ?= None)

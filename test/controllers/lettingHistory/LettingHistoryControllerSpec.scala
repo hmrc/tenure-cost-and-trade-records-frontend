@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{Address, AdvertisingDetail, LocalPeriod, OccupierDetail, ResidentDetail}
+import models.submissions.lettingHistory.{AdvertisingDetail, LocalPeriod, OccupierAddress, OccupierDetail, ResidentDetail}
 import org.mockito.ArgumentCaptor
 import play.api.mvc.AnyContent
 import play.api.mvc.request.RequestTarget
@@ -34,7 +34,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   val residentDetails = ResidentDetail(name = "Mr. One", address = "Address One")
   val occupierDetails = OccupierDetail(
     name = "Mr. One",
-    address = Address("Address One", None, "Neverland", None, "BN124AX"),
+    address = None,
     rentalPeriod = None
   )
 
@@ -55,7 +55,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   val oneOccupier = List(
     OccupierDetail(
       name = "Mr. One",
-      address = Address("Address One", None, "Neverland", None, "BN124AX"),
+      address = Some(OccupierAddress("Address One", None, "Neverland", None, "BN124AX")),
       rentalPeriod = None
     )
   )
@@ -63,7 +63,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   val twoOccupiers = oneOccupier ++ List(
     OccupierDetail(
       name = "Mr. Two",
-      address = Address("Address Two", None, "Neverland", None, "BN124AX"),
+      address = None,
       rentalPeriod = Some(
         LocalPeriod(
           fromDate = LocalDate.of(2023, 4, 2),
@@ -76,17 +76,17 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   val fiveOccupiers = twoOccupiers ++ List(
     OccupierDetail(
       name = "Miss. Three",
-      address = Address("Address Three", None, "Neverland", None, "BN124AX"),
+      address = None,
       rentalPeriod = None
     ),
     OccupierDetail(
       name = "Mr. Four",
-      address = Address("Address Four", None, "Neverland", None, "BN124AX"),
+      address = None,
       rentalPeriod = None
     ),
     OccupierDetail(
       name = "Mrs. Five",
-      address = Address("Address Five", None, "Neverland", None, "BN124AX"),
+      address = Some(OccupierAddress("Address Five", None, "Neverland", None, "BN124AX")),
       rentalPeriod = None
     )
   )

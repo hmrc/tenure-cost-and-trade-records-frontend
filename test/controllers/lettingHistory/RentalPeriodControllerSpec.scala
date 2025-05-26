@@ -130,12 +130,14 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
             completedLettings = List(
               OccupierDetail(
                 name = "Somebody",
-                address = Address(
-                  line1 = "22, Somewhere Street",
-                  line2 = None,
-                  town = "Neverland",
-                  county = None,
-                  postcode = "BN124AX"
+                address = Some(
+                  OccupierAddress(
+                    buildingNameNumber = "22, Somewhere Street",
+                    street1 = None,
+                    town = "Neverland",
+                    county = None,
+                    postcode = "BN124AX"
+                  )
                 ),
                 rentalPeriod = period
               )

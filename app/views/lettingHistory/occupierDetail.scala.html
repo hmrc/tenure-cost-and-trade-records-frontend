@@ -52,55 +52,6 @@
             labelClasses = "govuk-!-font-weight-bold",
         )
 
-        @includes.fieldset(
-            govukFieldset,
-            legendContent = messages("lettingHistory.occupierDetail.address.legend"),
-            classes = "govuk-fieldset__legend--s"
-        ) {
-            @includes.hint(
-                govukHint,
-                hintContent = messages("lettingHistory.occupierDetail.address.hint"),
-                classes = "govuk-!-width-two-thirds govuk-!-margin-bottom-4"
-            )
-            @includes.textInput(
-                govukInput,
-                theForm,
-                id = "address.line1",
-                classes = "govuk-!-width-two-thirds",
-                labelContent = "buildingNameNumber",
-            )
-            @includes.textInput(
-                govukInput,
-                theForm,
-                id = "address.line2",
-                classes = "govuk-!-width-two-thirds",
-                labelContent = "street1",
-                optional = true
-            )
-            @includes.textInput(
-                govukInput,
-                theForm,
-                id = "address.town",
-                classes = "govuk-!-width-one-half",
-                labelContent = "town"
-            )
-            @includes.textInput(
-                govukInput,
-                theForm,
-                id = "address.county",
-                classes = "govuk-!-width-one-half",
-                labelContent = "county",
-                optional = true
-            )
-            @includes.textInput(
-                govukInput,
-                theForm,
-                id = "address.postcode",
-                classes = "govuk-!-width-one-quarter",
-                labelContent = "postcode"
-            )
-        }
-
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 }

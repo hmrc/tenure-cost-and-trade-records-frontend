@@ -44,11 +44,7 @@
 @nameAndAddressOf(occupier: OccupierDetail) = {
     <div>@occupier.name</div>
     <div class="govuk-!-font-size-14">
-    @occupier.address.line1<br>
-    @if(occupier.address.line2.isDefined){@occupier.address.line2<br>}
-    @occupier.address.town<br>
-    @if(occupier.address.county.isDefined){@occupier.address.county<br>}
-    @occupier.address.postcode<br>
+    @occupier.address.map(_.singleLine)
     </div>
 }
 
@@ -77,7 +73,6 @@
         rows = completedLettings.zipWithIndex.map { (occupier, index) =>
             SummaryListRow(
                 key = Key(
-                    //content = Text(occupier.name),
                     content = HtmlContent(nameAndAddressOf(occupier)),
                     classes = "govuk-!-font-weight-regular"
                 ),

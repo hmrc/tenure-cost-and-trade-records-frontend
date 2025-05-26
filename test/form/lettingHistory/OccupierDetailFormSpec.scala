@@ -17,18 +17,13 @@
 package form.lettingHistory
 
 import form.lettingHistory.OccupierDetailForm.theForm
-import models.submissions.lettingHistory.{Address, OccupierDetail}
+import models.submissions.lettingHistory.{OccupierAddress, OccupierDetail}
 
 class OccupierDetailFormSpec extends FormSpec:
 
   it should "bind good data as expected" in {
     val data  = Map(
-      "name"             -> "name",
-      "address.line1"    -> "89, Fantasy Street",
-      // "address.line2" -> "Basement",
-      "address.town"     -> "Birds Island",
-      // "address.county" -> "Neverland",
-      "address.postcode" -> "BN124AX"
+      "name" -> "name"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
@@ -38,23 +33,21 @@ class OccupierDetailFormSpec extends FormSpec:
   it should "unbind good data as expected" in {
     val occupierDetail = OccupierDetail(
       name = "name",
-      address = Address(
-        line1 = "89, Fantasy Street",
-        line2 = None,
-        town = "Birds Island",
-        county = Some("Neverland"),
-        postcode = "BN124AX"
+      address = Some(
+        OccupierAddress(
+          buildingNameNumber = "89, Fantasy Street",
+          street1 = None,
+          town = "Birds Island",
+          county = Some("Neverland"),
+          postcode = "BN124AX"
+        )
       ),
       rentalPeriod = None
     )
     val filled         = theForm.fill(occupierDetail)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
-      "name"             -> "name",
-      "address.line1"    -> "89, Fantasy Street",
-      "address.town"     -> "Birds Island",
-      "address.county"   -> "Neverland",
-      "address.postcode" -> "BN124AX"
+      "name" -> "name"
     )
   }
 
@@ -62,18 +55,10 @@ class OccupierDetailFormSpec extends FormSpec:
     // When the form gets submitted even though "untouched"
     val bound = theForm.bind(
       Map(
-        "name"             -> "",
-        "address.line1"    -> "",
-        "address.line2"    -> "",
-        "address.town"     -> "",
-        "address.county"   -> "",
-        "address.postcode" -> ""
+        "name" -> ""
       )
     )
     bound.hasErrors mustBe true
-    bound.errors must have size 4
+    bound.errors must have size 1
     bound.error("name").value.message mustBe "lettingHistory.occupierDetail.name.required"
-    bound.error("address.line1").value.message mustBe "error.buildingNameNumber.required"
-    bound.error("address.town").value.message mustBe "error.townCity.required"
-    bound.error("address.postcode").value.message mustBe "error.postcodeAlternativeContact.required"
   }

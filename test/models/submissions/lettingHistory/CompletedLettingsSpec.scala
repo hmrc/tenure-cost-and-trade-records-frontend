@@ -190,25 +190,21 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
 
   val johnBrown = OccupierDetail(
     name = "John Brown",
-    address = Address(
-      line1 = "21, Somewhere Place",
-      line2 = Some("Basement"),
-      town = "NeverTown",
-      county = Some("Birds' Island"),
-      postcode = "BN124AX"
+    address = Some(
+      OccupierAddress(
+        buildingNameNumber = "21, Somewhere Place",
+        street1 = Some("Basement"),
+        town = "NeverTown",
+        county = Some("Birds' Island"),
+        postcode = "BN124AX"
+      )
     ),
     rentalPeriod = None
   )
 
   val aliceWhite = OccupierDetail(
     name = "Alice White",
-    address = Address(
-      line1 = "Flat 2, Westmead House",
-      line2 = Some("99, Narrow Street"),
-      town = "WhoKnowsWhere",
-      county = Some("Dark Side of the Moon"),
-      postcode = "BN124AX"
-    ),
+    address = None,
     rentalPeriod = None
   )
 
