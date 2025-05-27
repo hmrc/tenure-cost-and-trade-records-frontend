@@ -45,9 +45,9 @@ import util.NumberUtil.zeroBigDecimal
 import scala.util.Try
 import scala.util.matching.Regex
 
-object MappingSupport {
+object MappingSupport:
 
-  implicit class EnrichedSeq[A](seq: Seq[A]) {
+  extension [A](seq: Seq[A])
     def toTuple2: Option[(A, A)] = seq match {
       case Seq(a, b) => Some((a, b))
       case _         => None
@@ -57,7 +57,6 @@ object MappingSupport {
       case Seq(a, b, c) => Some((a, b, c))
       case _            => None
     }
-  }
 
   val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val typeOfLettingMapping: Mapping[TypeOfLetting]                              = Forms.of[TypeOfLetting]
@@ -368,5 +367,3 @@ object MappingSupport {
       case _            => throw new IllegalArgumentException("Financial years sequence is empty")
     }
   }
-
-}

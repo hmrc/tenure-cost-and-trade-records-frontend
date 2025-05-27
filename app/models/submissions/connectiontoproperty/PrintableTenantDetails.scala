@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,11 +38,10 @@ trait PrintableTenantDetails {
     ).flatten
 }
 
-object PrintableTenantDetails {
-  implicit class PrintableTenantDetailsHelper(printableTenantDetails: PrintableTenantDetails) extends Aliases {
+object PrintableTenantDetails extends Aliases:
+
+  extension (printableTenantDetails: PrintableTenantDetails)
     def escapedHtml: String =
       printableTenantDetails.tenantDetails
         .map(Text(_).asHtml)
         .mkString("""<p class="govuk-body">""", "<br/> ", "</p>")
-  }
-}
