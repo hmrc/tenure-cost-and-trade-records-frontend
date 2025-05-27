@@ -18,10 +18,10 @@
 @import models.submissions.lettingHistory.OccupierDetail
 @import models.submissions.lettingHistory.LocalPeriod
 @import controllers.lettingHistory.routes
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukFieldset, GovukHint, GovukButton, GovukInput}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import util.DateUtilLocalised
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukFieldset: GovukFieldset, govukHint: GovukHint, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+@this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
 @(theForm: Form[OccupierDetail], fiscalPeriod: LocalPeriod, backLink: Option[String], maybeIndex: Option[Int])(implicit request: SessionRequest[?], messages: Messages)
 

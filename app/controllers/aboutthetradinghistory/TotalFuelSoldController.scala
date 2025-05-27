@@ -62,7 +62,7 @@ class TotalFuelSoldController @Inject() (
 
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
@@ -96,14 +96,7 @@ class TotalFuelSoldController @Inject() (
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#fuel-sales"
-      case _     =>
-        request.sessionData.aboutTheTradingHistory.flatMap(
-          _.occupationAndAccountingInformation.flatMap(_.financialYearEndHasChanged)
-        ) match {
-          case Some(true)  => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show().url
-          case Some(false) => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
-          case _           => controllers.routes.TaskListController.show().url
-        }
+      case _     => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
     }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =

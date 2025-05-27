@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
 
       val content = contentAsString(result)
-      content should include("/financial-year-end")
+      content should include("/warning-check-accounting-info")
       content should not include "/check-your-answers-about-the-trading-history"
 
     }
@@ -60,7 +60,7 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec {
       val result  = electricityGeneratedController.show(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
-      content should not include "/financial-year-end"
+      content should not include "/warning-check-accounting-info"
     }
   }
 

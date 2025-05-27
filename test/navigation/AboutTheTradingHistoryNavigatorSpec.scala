@@ -845,18 +845,22 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
-      "redirect to TotalFuelSoldController for FOR6020" in {
+      "redirect to /warning-check-accounting-info for FOR6020" in {
         val session = sessionAboutYou6020.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020))
         navigator
           .nextPage(FinancialYearEndPageId, session)
-          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show()
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
-      "redirect to Turnover6030Controller for FOR6030" in {
+      "redirect to /warning-check-accounting-info for FOR6030" in {
         val session = sessionAboutYou6030.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030))
         navigator
           .nextPage(FinancialYearEndPageId, session)
-          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
       "redirect to CheckYourAnswersAccountingInfoController for FOR6045" in {
@@ -871,14 +875,16 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
-      "redirect to ElectricityGeneratedController for FOR6076" in {
+      "redirect to /warning-check-accounting-info for FOR6076" in {
         val session = sessionAboutYou6076.copy(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
           aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
         )
         navigator
           .nextPage(FinancialYearEndPageId, session)
-          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
     }

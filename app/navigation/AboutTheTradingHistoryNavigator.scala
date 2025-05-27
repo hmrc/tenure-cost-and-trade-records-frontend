@@ -95,14 +95,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
             case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
               routes.FinancialYearEndDatesSummaryController.show()
           }
-        case _          =>
-          s.forType match {
-            case FOR6020                                                             => routes.TotalFuelSoldController.show()
-            case FOR6030                                                             => routes.Turnover6030Controller.show()
-            case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6045 | FOR6046 | FOR6048 =>
-              controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
-            case FOR6076                                                             => routes.ElectricityGeneratedController.show()
-          }
+        case _          => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
   }
 
@@ -113,13 +106,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def financialYearEndDatesRouting: Session => Call =
-    _.forType match {
-      case FOR6020                                                             => routes.TotalFuelSoldController.show()
-      case FOR6030                                                             => routes.Turnover6030Controller.show()
-      case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6045 | FOR6046 | FOR6048 =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
-      case FOR6076                                                             => routes.ElectricityGeneratedController.show()
-    }
+    _ => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
 
   def checkYourAnswersAccountInfoRouting: Session => Call =
     _.forType match {
