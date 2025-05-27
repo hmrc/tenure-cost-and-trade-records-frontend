@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.time.LocalDate
 import scala.util.Try
 
 /**
-  * Handles binding 3 date fields to {@link java.time.LocalDate LocalDate} and unbinding from LocalDate to 3 date fields.
+  * Handles binding 3 date fields to [[java.time.LocalDate LocalDate]] and unbinding from LocalDate to 3 date fields.
   *
   * @author Yuriy Tumakha
   */
@@ -35,7 +35,7 @@ class LocalDateFormatter(
   allowPastDates: Boolean,
   allowFutureDates: Boolean,
   years: Option[Seq[Int]] = None
-)(implicit messages: Messages)
+)(using messages: Messages)
     extends Formatter[LocalDate] {
 
   require(

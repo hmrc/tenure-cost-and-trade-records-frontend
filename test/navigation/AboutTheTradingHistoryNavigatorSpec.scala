@@ -19,8 +19,7 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, BunkeredFuelQuestion, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OccupationalAndAccountingInformation, OtherHolidayAccommodation, TouringAndTentingPitches, TurnoverSection, TurnoverSection6020, TurnoverSection6030}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, BunkeredFuelQuestion, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OtherHolidayAccommodation, TouringAndTentingPitches}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, BaseLoad, Intermittent, RenewablesPlant}
 import models.submissions.common.{AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
@@ -29,9 +28,7 @@ import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{TestBaseSpec, toOpt}
-import views.html.aboutthetradinghistory.lowMarginFuelCardsDetails
 
-import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
 class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {

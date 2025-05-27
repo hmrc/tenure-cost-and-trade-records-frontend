@@ -211,12 +211,12 @@ object MappingSupport:
     "postcode"           -> postcode
   )(CorrespondenceAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def mandatoryBooleanWithError(message: String) =
+  def mandatoryBooleanWithError(message: String): Mapping[Boolean] =
     optional(boolean)
       .verifying(message, _.isDefined)
       .transform((s: Option[Boolean]) => s.get, (v: Boolean) => Some(v))
 
-  val mandatoryBoolean = optional(boolean)
+  val mandatoryBoolean: Mapping[Boolean] = optional(boolean)
     .verifying(Errors.booleanMissing, _.isDefined)
     .transform((s: Option[Boolean]) => s.get, (v: Boolean) => Some(v))
 
@@ -229,7 +229,7 @@ object MappingSupport:
     minValue: T,
     maxValue: T,
     errorMessage: String = "error.range"
-  )(implicit ordering: scala.math.Ordering[T]): Constraint[T] =
+  )(using ordering: scala.math.Ordering[T]): Constraint[T] =
     Constraint[T]("constraint.between", minValue, maxValue) { v =>
       if ordering.compare(v, minValue) < 0 || ordering.compare(v, maxValue) > 0 then
         Invalid(ValidationError(errorMessage, minValue, maxValue))
@@ -277,7 +277,7 @@ object MappingSupport:
   def weeksInYearMapping: Mapping[Int] =
     weeksMapping("error.weeksInYearMapping.blank", "error.weeksInYearMapping.invalid")
 
-  def tradingPeriodWeeks(year: String)(implicit messages: Messages): Mapping[Int] =
+  def tradingPeriodWeeks(year: String)(using messages: Messages): Mapping[Int] =
     weeksMapping(messages("error.weeksMapping.blank", year), messages("error.weeksMapping.invalid", year), 0)
 
   def weeksMapping(blankErrorMessage: String, invalidErrorMessage: String, minWeeks: Int = 1): Mapping[Int] =
@@ -289,7 +289,7 @@ object MappingSupport:
       )
       .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
-  def nonNegativeNumberWithYear(field: String, year: String, maxValue: Int = 1000000)(implicit
+  def nonNegativeNumberWithYear(field: String, year: String, maxValue: Int = 1000000)(using
     messages: Messages
   ): Mapping[Option[Int]] =
     optional(
@@ -300,7 +300,7 @@ object MappingSupport:
         .verifying(messages(s"error.$field.maxValue", year, maxValue), _ <= maxValue)
     ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
-  def rallyAreasMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
+  def rallyAreasMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = optional(
     text
       .verifying(messages(s"error.rallyAreas.areaInHectares.range", year), s => Try(BigDecimal(s)).isSuccess)
       .transform[BigDecimal](
@@ -312,18 +312,17 @@ object MappingSupport:
 
   private val salesMax = BigDecimal(1000000000000L)
 
-  def turnoverSalesMappingWithYear(field: String, year: String)(implicit
-    messages: Messages
-  ): Mapping[Option[BigDecimal]] = optional(
-    text
-      .verifying(messages(s"error.$field.range", year), s => Try(BigDecimal(s)).isSuccess)
-      .transform[BigDecimal](
-        s => BigDecimal(s),
-        _.toString
-      )
-      .verifying(messages(s"error.$field.negative", year), _ >= 0)
-      .verifying(messages(s"error.$field.range", year), _ <= salesMax)
-  ).verifying(messages(s"error.$field.required", year), _.isDefined)
+  def turnoverSalesMappingWithYear(field: String, year: String)(using messages: Messages): Mapping[Option[BigDecimal]] =
+    optional(
+      text
+        .verifying(messages(s"error.$field.range", year), s => Try(BigDecimal(s)).isSuccess)
+        .transform[BigDecimal](
+          s => BigDecimal(s),
+          _.toString
+        )
+        .verifying(messages(s"error.$field.negative", year), _ >= 0)
+        .verifying(messages(s"error.$field.range", year), _ <= salesMax)
+    ).verifying(messages(s"error.$field.required", year), _.isDefined)
 
   def moneyMappingOptional(field: String): Mapping[Option[BigDecimal]] =
     optional(

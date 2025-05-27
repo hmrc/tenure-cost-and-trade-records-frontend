@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import com.ibm.icu.text.SimpleDateFormat
 import com.ibm.icu.util.{TimeZone, ULocale}
 import play.api.i18n.Messages
 import uk.gov.hmrc.play.language.LanguageUtils
-import util.DateUtil.{defaultTimeZoneId, localDateHelpers}
+import util.DateUtil.*
 
 import java.time.{LocalDate, MonthDay, YearMonth}
 import javax.inject.{Inject, Singleton}
