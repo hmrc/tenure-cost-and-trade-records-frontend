@@ -172,6 +172,13 @@ trait FakeObjects {
     Some(AnswerYes)
   )
 
+  val testlettingPartOfPropertyDetails: LettingPartOfPropertyDetails = LettingPartOfPropertyDetails(
+    testTenantDetails,
+    testLettingDetails,
+    List("Other"),
+    addAnotherLettingToProperty = None
+  )
+
   val testTenantDetails: TenantDetails =
     TenantDetails(
       "name",
