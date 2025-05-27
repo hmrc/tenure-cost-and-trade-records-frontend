@@ -104,7 +104,7 @@
     controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
     section3Completed,
     session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated),
-    session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+    session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.isEmpty)
    )
    @includes.taskListItem("gross-receipts", "taskList.6076.grossReceipts",
     controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
