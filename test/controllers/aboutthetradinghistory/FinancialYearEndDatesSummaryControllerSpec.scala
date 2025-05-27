@@ -277,7 +277,9 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
           )
 
         status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url)
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+        )
       }
 
       "redirect to CYA for 6076 " in {
