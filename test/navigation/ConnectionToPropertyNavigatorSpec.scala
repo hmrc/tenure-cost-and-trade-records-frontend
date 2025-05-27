@@ -22,6 +22,7 @@ import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
 import controllers.connectiontoproperty.routes
+import models.submissions.common.{AnswerNo, AnswerYes}
 import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, LettingPartOfPropertyRentDetails, TenantDetails}
 
 import scala.concurrent.ExecutionContext
@@ -283,6 +284,82 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(EditAddressPageId, stillConnectedDetails6076YesSession)
       .apply(stillConnectedDetails6076YesSession) shouldBe routes.TradingNameOperatingFromPropertyController
       .show()
+  }
+
+  "redirect to LettingPartOfPropertyDetails when details are incomplete" in {
+    val incompleteDetails = IndexedSeq(
+      testlettingPartOfPropertyDetails.copy(tenantDetails = null)
+    )
+    val session           = stillConnectedDetailsYesToAllSession.copy(
+      stillConnectedDetails = Some(
+        prefilledStillConnectedDetailsYesToAll.copy(
+          lettingPartOfPropertyDetails = incompleteDetails,
+          isAnyRentReceived = Some(AnswerYes)
+        )
+      )
+    )
+
+    navigator
+      .nextPage(LettingIncomePageId, session)
+      .apply(session) shouldBe routes.LettingPartOfPropertyDetailsController.show(Some(0))
+  }
+
+  "redirect to ProvideContactDetails when no letting details" in {
+    val session = stillConnectedDetailsYesToAllSession.copy(
+      stillConnectedDetails = Some(
+        prefilledStillConnectedDetailsYesToAll.copy(
+          lettingPartOfPropertyDetails = IndexedSeq.empty,
+          lettingPartOfPropertyDetailsIndex = 0
+        )
+      )
+    )
+
+    navigator
+      .nextPage(AddAnotherLettingPartOfPropertyPageId, session)
+      .apply(session) shouldBe routes.ProvideContactDetailsController.show()
+  }
+
+  "redirect to ProvideContactDetails when section is complete and addAnother is No" in {
+    val completeDetails = IndexedSeq(
+      testlettingPartOfPropertyDetails.copy(
+        tenantDetails = testTenantDetails,
+        lettingPartOfPropertyRentDetails = testLettingDetails,
+        itemsIncludedInRent = List("test"),
+        addAnotherLettingToProperty = Some(AnswerNo)
+      )
+    )
+
+    val session = stillConnectedDetailsYesToAllSession.copy(
+      stillConnectedDetails = Some(
+        prefilledStillConnectedDetailsYesToAll.copy(
+          lettingPartOfPropertyDetails = completeDetails,
+          lettingPartOfPropertyDetailsIndex = 0,
+          isAnyRentReceived = Some(AnswerYes)
+        )
+      )
+    )
+
+    navigator
+      .nextPage(AddAnotherLettingPartOfPropertyPageId, session)
+      .apply(session) shouldBe routes.ProvideContactDetailsController.show()
+  }
+
+  "redirect to LettingPartOfPropertyDetails page when section is complete and addAnother is Yes" in {
+    val completeDetails = IndexedSeq(
+      testlettingPartOfPropertyDetails.copy(addAnotherLettingToProperty = Some(AnswerYes))
+    )
+    val session         = stillConnectedDetailsYesToAllSession.copy(
+      stillConnectedDetails = Some(
+        prefilledStillConnectedDetailsYesToAll.copy(
+          lettingPartOfPropertyDetails = completeDetails,
+          lettingPartOfPropertyDetailsIndex = 0
+        )
+      )
+    )
+
+    navigator
+      .nextPage(AddAnotherLettingPartOfPropertyPageId, session)
+      .apply(session) shouldBe routes.LettingPartOfPropertyDetailsController.show(Some(0))
   }
 
 }
