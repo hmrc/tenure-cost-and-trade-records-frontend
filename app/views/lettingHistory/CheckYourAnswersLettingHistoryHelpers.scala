@@ -59,11 +59,7 @@ object CheckYourAnswersLettingHistoryHelpers:
             key = messages("lettingHistory.checkYourAnswers.completedLettings.cardKey1"),
             value = List(
               Some(occupier.name),
-              Some(occupier.address.line1),
-              occupier.address.line2,
-              Some(occupier.address.town),
-              occupier.address.county,
-              Some(occupier.address.postcode)
+              occupier.address.map(_.multiLine)
             ).filter(_.isDefined).map(_.get).mkString("<br>"),
             changeAction = routes.OccupierDetailController.show(Some(index)).withFromCheckYourAnswer(fragment)
           )

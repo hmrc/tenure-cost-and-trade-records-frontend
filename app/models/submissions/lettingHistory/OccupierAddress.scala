@@ -16,21 +16,24 @@
 
 package models.submissions.lettingHistory
 
+import models.submissions.PrintableAddress
 import play.api.libs.json.{Format, Json}
 
-case class Address(
-  line1: String,
-  line2: Option[String],
+case class OccupierAddress(
+  buildingNameNumber: String,
+  street1: Option[String],
   town: String,
   county: Option[String],
   postcode: String
-):
+) extends PrintableAddress:
+
   override def equals(that: Any): Boolean = that match {
-    case Address(line1, line2, town, county, postcode) =>
-      this.line1.equalsIgnoreCase(line1) && this.line2.equalsIgnoreCase(line2) && this.town.equalsIgnoreCase(
-        town
-      ) && this.county.equalsIgnoreCase(county) && this.postcode.equalsIgnoreCase(postcode)
-    case _                                             => false
+    case OccupierAddress(line1, line2, town, county, postcode) =>
+      this.buildingNameNumber.equalsIgnoreCase(line1) && this.street1.equalsIgnoreCase(line2) && this.town
+        .equalsIgnoreCase(
+          town
+        ) && this.county.equalsIgnoreCase(county) && this.postcode.equalsIgnoreCase(postcode)
+    case _                                                     => false
   }
 
   extension (opt: Option[String])
@@ -40,7 +43,7 @@ case class Address(
       case _                  => false
     }
 
-object Address:
-  def unapply(obj: Address): Option[(String, Option[String], String, Option[String], String)] =
-    Some(obj.line1, obj.line2, obj.town, obj.county, obj.postcode)
-  given Format[Address]                                                                       = Json.format
+object OccupierAddress:
+  def unapply(obj: OccupierAddress): Option[(String, Option[String], String, Option[String], String)] =
+    Some(obj.buildingNameNumber, obj.street1, obj.town, obj.county, obj.postcode)
+  given Format[OccupierAddress]                                                                       = Json.format

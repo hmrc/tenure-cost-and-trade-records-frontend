@@ -111,6 +111,31 @@ trait CompletedLettings:
                 }
               )
 
+  def byUpdatingOccupierAddress(index: Int, newAddress: OccupierAddress)(using session: Session): SessionWrapper =
+    session.lettingHistory match
+      case Some(lettingHistory) =>
+        lettingHistory.completedLettings.lift(index) match
+          case Some(existingOccupier) =>
+            existingOccupier.address match
+              case Some(oldAddress) if newAddress == oldAddress =>
+                unchangedSession
+              case _                                            =>
+                val patchedOccupier          = existingOccupier.copy(address = Some(newAddress))
+                val patchedCompletedLettings = lettingHistory.completedLettings.patch(index, List(patchedOccupier), 1)
+                changeSession {
+                  lettingHistory.copy(completedLettings = patchedCompletedLettings)
+                }
+          case None                   =>
+            unchangedSession
+
+      case None =>
+        changeSession {
+          LettingHistory(
+            hasCompletedLettings = None,
+            completedLettings = Nil
+          )
+        }
+
   def byUpdatingOccupierRentalPeriod(index: Int, newRentalPeriod: LocalPeriod)(using session: Session): SessionWrapper =
     session.lettingHistory match
       case Some(lettingHistory) =>

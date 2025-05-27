@@ -80,7 +80,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       }
     }
     "handling POST requests"           should {
-      "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
+      "reply 400 BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
         val result = controller.submit(index = Some(0))(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
@@ -102,6 +102,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
+
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {

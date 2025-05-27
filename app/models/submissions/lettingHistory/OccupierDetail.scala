@@ -20,7 +20,7 @@ import play.api.libs.json.{Format, Json}
 
 case class OccupierDetail(
   name: String,
-  address: Address,
+  address: Option[OccupierAddress],
   rentalPeriod: Option[LocalPeriod]
 ):
   override def equals(that: Any): Boolean = that match {
@@ -34,6 +34,6 @@ case class OccupierDetail(
   }
 
 object OccupierDetail:
-  def unapply(obj: OccupierDetail): Option[(String, Address, Option[LocalPeriod])] =
+  def unapply(obj: OccupierDetail): Option[(String, Option[OccupierAddress], Option[LocalPeriod])] =
     Some(obj.name, obj.address, obj.rentalPeriod)
-  given Format[OccupierDetail]                                                     = Json.format
+  given Format[OccupierDetail]                                                                     = Json.format
