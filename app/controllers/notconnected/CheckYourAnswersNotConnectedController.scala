@@ -63,14 +63,14 @@ class CheckYourAnswersNotConnectedController @Inject() (
     val auditType      = "NotConnectedSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     val session        = request.sessionData
-    val hc             = implicitly[HeaderCarrier]
+    val sessionId      = implicitly[HeaderCarrier].sessionId.getOrElse("")
 
     submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
       Found(confirmationUrl)
     } recoverWith { case e: Exception =>
-      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")}"
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - $sessionId"
       logger.error(failureReason, e)
       val outcome       = Json.obj(
         "isSuccessful"    -> false,
