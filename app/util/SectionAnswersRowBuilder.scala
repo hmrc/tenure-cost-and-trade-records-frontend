@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actio
   *
   * @author Yuriy Tumakha
   */
-case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Messages) {
+case class SectionAnswersRowBuilder[T](answers: Option[T])(using messages: Messages) {
 
   /**
-    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} with action to edit answer value.
+    * Render [[uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow]] with action to edit answer value.
     */
   def row(
     messageKey: String,
@@ -75,7 +75,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     )
 
   /**
-    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} without actions.
+    * Render [[uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow]] without actions.
     */
   def rowWithoutActions(
     messageKey: String,
@@ -89,7 +89,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     )
 
   /**
-    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} if `condition` returns true.
+    * Render [[uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow]] if `condition` returns true.
     */
   def conditionRow(
     condition: T => Boolean,
@@ -103,7 +103,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(implicit messages: Me
     else Seq.empty[SummaryListRow]
 
   /**
-    * Render {@link uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow} if answer value is defined.
+    * Render [[uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow]] if answer value is defined.
     */
   def optionalRow(
     messageKey: String,
