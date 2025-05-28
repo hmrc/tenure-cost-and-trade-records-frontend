@@ -34,12 +34,12 @@ object CaravansTradingForm {
     years: Seq[String],
     unitType: CaravanUnitType,
     lettingType: CaravanLettingType
-  )(implicit messages: Messages): Form[Seq[CaravansTrading6045]] =
+  )(using messages: Messages): Form[Seq[CaravansTrading6045]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year, s"caravans.$unitType.$lettingType"))
     }
 
-  private def columnMapping(year: String, combinedKey: String)(implicit
+  private def columnMapping(year: String, combinedKey: String)(using
     messages: Messages
   ): Mapping[CaravansTrading6045] =
     mapping(

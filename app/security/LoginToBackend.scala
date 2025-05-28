@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +19,19 @@ package security
 import models.FORLoginResponse
 import models.submissions.common.Address
 
-import java.time.ZonedDateTime
 import scala.concurrent.{ExecutionContext, Future}
 
 object LoginToBackend {
   type RefNumber         = String
   type Postcode          = String
-  type StartTime         = ZonedDateTime
   type SessionID         = String
   type AuthToken         = String
-  type LoginToBackend    = (RefNumber, Postcode, StartTime) => Future[LoginResult]
+  type LoginToBackend    = (RefNumber, Postcode) => Future[LoginResult]
   type VerifyCredentials = (RefNumber, Postcode) => Future[FORLoginResponse]
 
   def apply(
     v: VerifyCredentials
-  )(rn: RefNumber, pc: Postcode, st: StartTime)(implicit ec: ExecutionContext): Future[LoginResult] =
+  )(rn: RefNumber, pc: Postcode)(implicit ec: ExecutionContext): Future[LoginResult] =
     for {
       lr <- v(rn, pc)
     } yield ned(

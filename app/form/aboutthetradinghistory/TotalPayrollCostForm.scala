@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,13 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 
 object TotalPayrollCostForm {
-  private def totalPayrollCostMapping(year: String)(implicit messages: Messages): Mapping[TotalPayrollCost] = mapping(
+  private def totalPayrollCostMapping(year: String)(using messages: Messages): Mapping[TotalPayrollCost] = mapping(
     "financial-year-end"     -> ignored(LocalDate.EPOCH),
     "managers-and-staff"     -> turnoverSalesMappingWithYear("managers-and-staff", year),
     "directors-remuneration" -> turnoverSalesMappingWithYear("directors-remuneration", year)
   )(TotalPayrollCost.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def totalPayrollCostForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalPayrollCost]] =
+  def totalPayrollCostForm(years: Seq[String])(using messages: Messages): Form[Seq[TotalPayrollCost]] =
     Form {
       mappingPerYear(years, (year, idx) => s"totalPayrollCosts[$idx]" -> totalPayrollCostMapping(year))
     }

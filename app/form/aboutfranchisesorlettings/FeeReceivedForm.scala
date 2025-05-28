@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.time.LocalDate
   */
 object FeeReceivedForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[FeeReceivedPerYear] = mapping(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[FeeReceivedPerYear] = mapping(
     "financialYearEnd"         -> ignored(LocalDate.EPOCH),
     "tradingPeriod"            -> tradingPeriodWeeks(year),
     "concessionOrFranchiseFee" -> turnoverSalesMappingWithYear("feeReceived.concessionOrFranchiseFee", year)
@@ -37,12 +37,12 @@ object FeeReceivedForm {
 
   private def feeReceivedPerYearSeq(
     years: Seq[String]
-  )(implicit messages: Messages): Mapping[Seq[FeeReceivedPerYear]] =
+  )(using messages: Messages): Mapping[Seq[FeeReceivedPerYear]] =
     mappingPerYear(years, (year, idx) => s"year[$idx]" -> columnMapping(year))
 
   def feeReceivedForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[FeeReceived] =
+  )(using messages: Messages): Form[FeeReceived] =
     Form {
       mapping(
         "feeReceivedPerYear"    -> feeReceivedPerYearSeq(years),

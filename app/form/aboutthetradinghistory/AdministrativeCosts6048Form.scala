@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import play.api.i18n.Messages
   */
 object AdministrativeCosts6048Form {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdministrativeCosts6048] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[AdministrativeCosts6048] =
     mapping(
       "subscriptionsAndFees"                -> turnoverSalesMappingWithYear(
         "turnover.6048.administrativeCosts.subscriptionsAndFees",
@@ -44,7 +44,7 @@ object AdministrativeCosts6048Form {
 
   def administrativeCosts6048Form(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[AdministrativeCosts6048]] =
+  )(using messages: Messages): Form[Seq[AdministrativeCosts6048]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

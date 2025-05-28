@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object AdditionalAmusementsForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdditionalAmusements] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[AdditionalAmusements] =
     single(
       "receipts" -> turnoverSalesMappingWithYear("additionalAmusements.receipts", year)
         .transform(AdditionalAmusements.apply, _.receipts)
@@ -32,7 +32,7 @@ object AdditionalAmusementsForm {
 
   def additionalAmusementsForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[AdditionalAmusements]] =
+  )(using messages: Messages): Form[Seq[AdditionalAmusements]] =
     Form {
       mappingPerYear(years, (year, idx) => s"additionalAmusements[$idx]" -> columnMapping(year))
     }

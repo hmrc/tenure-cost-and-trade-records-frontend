@@ -95,13 +95,13 @@ class OccupierDetailController @Inject (
           given Session                      = request.sessionData
           val (updatedIndex, updatedSession) = byAddingOrUpdatingOccupier(formData, maybeIndex)
           for
-            savedSession   <- repository.saveOrUpdateSession(updatedSession)
+            _              <- repository.saveOrUpdateSession(updatedSession)
             redirectResult <- redirectToAddressLookupFrontend(
                                 config = AddressLookupConfig(
                                   lookupPageHeadingKey = "lettingHistory.occupierDetail.address.lookupPageHeading",
                                   selectPageHeadingKey = "lettingHistory.occupierDetail.address.selectPageHeading",
                                   confirmPageLabelKey = "lettingHistory.occupierDetail.address.confirmPageHeading",
-                                  offRampCall = routes.OccupierDetailController.addressLookupCallback(updatedIndex, "")
+                                  offRampCall = routes.OccupierDetailController.addressLookupCallback(updatedIndex)
                                 )
                               )
           yield redirectResult

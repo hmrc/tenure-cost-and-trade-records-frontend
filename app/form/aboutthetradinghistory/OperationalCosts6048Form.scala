@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import play.api.i18n.Messages
   */
 object OperationalCosts6048Form {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[OperationalCosts6048] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[OperationalCosts6048] =
     mapping(
       "energyBills"                -> turnoverSalesMappingWithYear("turnover.6048.operationalCosts.energyBills", year),
       "laundryCleaning"            -> turnoverSalesMappingWithYear("turnover.6048.operationalCosts.laundryCleaning", year),
@@ -45,14 +45,14 @@ object OperationalCosts6048Form {
       "other"                      -> turnoverSalesMappingWithYear("turnover.6048.operationalCosts.other", year)
     )(OperationalCosts6048.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  private def operationalCostsSeq(years: Seq[String])(implicit
+  private def operationalCostsSeq(years: Seq[String])(using
     messages: Messages
   ): Mapping[Seq[OperationalCosts6048]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
   def operationalCosts6048Form(
     years: Seq[String]
-  )(implicit messages: Messages): Form[(Seq[OperationalCosts6048], String)] =
+  )(using messages: Messages): Form[(Seq[OperationalCosts6048], String)] =
     Form {
       tuple(
         "operationalCostsSeq"  -> operationalCostsSeq(years),

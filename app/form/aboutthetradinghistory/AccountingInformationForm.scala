@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object AccountingInformationForm {
 
-  def accountingInformationForm(implicit messages: Messages): Form[(DayMonthsDuration, Boolean)] = Form(
+  def accountingInformationForm(using messages: Messages): Form[(DayMonthsDuration, Boolean)] = Form(
     tuple(
       "financialYear"  -> dayMonthMapping("financialYear", allow29February = false),
       "yearEndChanged" -> optional(text)

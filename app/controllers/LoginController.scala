@@ -50,11 +50,12 @@ case class LoginDetails(referenceNumber: String, postcode: String, startTime: Zo
   /**
     * Returns only referenceNumber digits without slash or any other special char to use in endpoint path.
     */
-  def referenceNumberCleaned = referenceNumber.replaceAll("[^0-9]", "")
+  def referenceNumberCleaned: String = referenceNumber.replaceAll("[^0-9]", "")
 }
 
 object LoginController {
-  val loginForm = Form(
+
+  val loginForm: Form[LoginDetails] = Form(
     mapping(
       // format of reference number should be 7 or 8 digits then / then 3 digits
       "referenceNumber" -> text.verifying(
@@ -131,7 +132,7 @@ class LoginController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
-        loginData => verifyLogin(loginData.referenceNumberCleaned, loginData.postcode, loginData.startTime)
+        loginData => verifyLogin(loginData.referenceNumberCleaned, loginData.postcode)
       )
   }
 
@@ -139,9 +140,9 @@ class LoginController @Inject() (
     Future.successful(Ok(test()))
   }
 
-  def verifyLogin(referenceNumber: String, postcode: String, startTime: ZonedDateTime)(implicit
+  def verifyLogin(referenceNumber: String, postcode: String)(implicit
     r: MessagesRequest[AnyContent]
-  ) = {
+  ): Future[Result] = {
 
     val cleanedRefNumber = referenceNumber.replaceAll("[^0-9]", "")
     var cleanPostcode    = postcode.replaceAll("[^\\w\\d]", "")
@@ -149,7 +150,7 @@ class LoginController @Inject() (
 
     logger.debug(s"Signing in with: reference number : $cleanedRefNumber, postcode: $cleanPostcode")
 
-    loginToBackend(using hc, ec)(cleanedRefNumber, cleanPostcode, startTime)
+    loginToBackend(using hc, ec)(cleanedRefNumber, cleanPostcode)
       .flatMap { case NoExistingDocument(token, forNum, address, isWelsh) =>
         auditLogin(referenceNumber, false, address, forNum)
         ForType.find(forNum) match {

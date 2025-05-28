@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,14 +28,14 @@ import play.api.i18n.Messages
   */
 object OtherIncomeForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = single(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = single(
     "otherIncome" -> turnoverSalesMappingWithYear("turnover.6076.otherIncome", year)
   )
 
-  private def otherIncomeSeq(years: Seq[String])(implicit messages: Messages): Mapping[Seq[Option[BigDecimal]]] =
+  private def otherIncomeSeq(years: Seq[String])(using messages: Messages): Mapping[Seq[Option[BigDecimal]]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
-  def otherIncomeForm(years: Seq[String])(implicit messages: Messages): Form[(Seq[Option[BigDecimal]], String)] =
+  def otherIncomeForm(years: Seq[String])(using messages: Messages): Form[(Seq[Option[BigDecimal]], String)] =
     Form {
       tuple(
         "otherIncomeSeq"     -> otherIncomeSeq(years),

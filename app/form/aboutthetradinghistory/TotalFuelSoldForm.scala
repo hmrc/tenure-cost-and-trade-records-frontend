@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@ import scala.util.Try
 
 object TotalFuelSoldForm {
 
-  def totalFuelSoldForm(years: Seq[String])(implicit messages: Messages): Form[Seq[TotalFuelSold]] =
+  def totalFuelSoldForm(years: Seq[String])(using messages: Messages): Form[Seq[TotalFuelSold]] =
     Form {
       mappingPerYear(years, (year, idx) => "" -> totalFuelSoldMapping(year, idx))
     }
 
-  private def totalFuelSoldMapping(year: String, idx: Int)(implicit messages: Messages): Mapping[TotalFuelSold] =
+  private def totalFuelSoldMapping(year: String, idx: Int)(using messages: Messages): Mapping[TotalFuelSold] =
     mapping(
       "financial-year-end"  -> ignored(LocalDate.EPOCH),
       s"totalFuelSold-$idx" -> optional(

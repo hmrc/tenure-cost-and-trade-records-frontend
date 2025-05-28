@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import play.api.i18n.Messages
 
 object CostOfSales6076Form {
 
-  private def sumMapping(year: String)(implicit messages: Messages): Mapping[CostOfSales6076Sum] =
+  private def sumMapping(year: String)(using messages: Messages): Mapping[CostOfSales6076Sum] =
     mapping(
       "fuelOrFeedstock" -> turnoverSalesMappingWithYear("costOfSales6076.fuelOrFeedstock", year),
       "importedPower"   -> turnoverSalesMappingWithYear("costOfSales6076.importedPower", year),
@@ -35,10 +35,10 @@ object CostOfSales6076Form {
       "otherSales"      -> turnoverSalesMappingWithYear("costOfSales6076.otherSales", year)
     )(CostOfSales6076Sum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def costOfSales6076Mapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =
+  def costOfSales6076Mapping(years: Seq[String])(using messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
 
-  def costOfSales6076Form(years: Seq[String])(implicit messages: Messages): Form[(Seq[CostOfSales6076Sum], String)] =
+  def costOfSales6076Form(years: Seq[String])(using messages: Messages): Form[(Seq[CostOfSales6076Sum], String)] =
     Form {
       tuple(
         "costOfSales6076"   -> costOfSales6076Mapping(years),

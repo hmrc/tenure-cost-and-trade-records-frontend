@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object AdditionalShopsForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdditionalShops] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[AdditionalShops] =
     mapping(
       "weeks"          -> tradingPeriodWeeks(year),
       "grossReceipts"  -> turnoverSalesMappingWithYear("additionalShops.grossReceipts", year),
@@ -33,7 +33,7 @@ object AdditionalShopsForm {
 
   def additionalShopsForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[AdditionalShops]] =
+  )(using messages: Messages): Form[Seq[AdditionalShops]] =
     Form {
       mappingPerYear(years, (year, idx) => s"additionalShops[$idx]" -> columnMapping(year))
     }

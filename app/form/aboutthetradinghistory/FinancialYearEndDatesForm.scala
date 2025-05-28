@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.time.LocalDate
 
 object FinancialYearEndDatesForm {
 
-  private def dateMapping(years: Option[Seq[Int]])(implicit messages: Messages): Mapping[LocalDate] =
+  private def dateMapping(years: Option[Seq[Int]])(using messages: Messages): Mapping[LocalDate] =
     single(
       "date" -> requiredDateMapping(
         "financialYearEnd",
@@ -35,7 +35,7 @@ object FinancialYearEndDatesForm {
       )
     )
 
-  def financialYearEndDatesForm(years: Option[Seq[Int]] = None)(implicit messages: Messages): Form[Seq[LocalDate]] =
+  def financialYearEndDatesForm(years: Option[Seq[Int]] = None)(using messages: Messages): Form[Seq[LocalDate]] =
     Form(
       single(
         "financialYearEnd" -> seq(dateMapping(years))

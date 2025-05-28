@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,14 @@ object PremisesCostsForm {
 
   def premisesCostsForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[PremisesCosts]] =
+  )(using messages: Messages): Form[Seq[PremisesCosts]] =
     Form {
       single(
         "premisesCosts" -> mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
       )
     }
 
-  private def sumMapping(year: String)(implicit messages: Messages): Mapping[PremisesCosts] =
+  private def sumMapping(year: String)(using messages: Messages): Mapping[PremisesCosts] =
     mapping(
       "energyAndUtilities"           -> turnoverSalesMappingWithYear(
         "premisesCosts.energyAndUtilities",

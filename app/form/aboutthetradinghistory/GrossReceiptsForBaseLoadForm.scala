@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object GrossReceiptsForBaseLoadForm {
 
-  private def sumMapping(year: String)(implicit messages: Messages): Mapping[GrossReceiptsForBaseLoad] =
+  private def sumMapping(year: String)(using messages: Messages): Mapping[GrossReceiptsForBaseLoad] =
     mapping(
       "renewableHeatIncentiveBioMethane" -> turnoverSalesMappingWithYear(
         "grossReceiptsForBaseLoad.renewableHeatIncentiveBioMethane",
@@ -44,7 +44,7 @@ object GrossReceiptsForBaseLoadForm {
 
   def grossReceiptsForBaseLoadForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[GrossReceiptsForBaseLoad]] =
+  )(using messages: Messages): Form[Seq[GrossReceiptsForBaseLoad]] =
     Form {
       single(
         "grossReceiptsForBaseLoad" -> mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))

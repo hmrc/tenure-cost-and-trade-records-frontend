@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object CurrentRentFirstPaidForm {
 
-  def currentRentFirstPaidForm(implicit messages: Messages): Form[CurrentRentFirstPaid] = Form(
+  def currentRentFirstPaidForm(using messages: Messages): Form[CurrentRentFirstPaid] = Form(
     mapping(
       "currentRentFirstPaid" -> requiredDateMapping("currentRentFirstPaid", allowPastDates = true)
     )(CurrentRentFirstPaid.apply)(o => Some(o.currentRentFirstPaid))

@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object RallyAreasTradingDataForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[RallyAreasTradingData] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[RallyAreasTradingData] =
     mapping(
       "grossReceipts"   -> turnoverSalesMappingWithYear("tentingPitches.grossReceipts", year),
       "areasInHectares" -> rallyAreasMapping(year)
@@ -32,7 +32,7 @@ object RallyAreasTradingDataForm {
 
   def rallyAreasTradingDataForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[RallyAreasTradingData]] =
+  )(using messages: Messages): Form[Seq[RallyAreasTradingData]] =
     Form {
       mappingPerYear(years, (year, idx) => s"rallyAreas[$idx]" -> columnMapping(year))
     }

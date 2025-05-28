@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ import form.MappingSupport.currencyMapping
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumAmountDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
-import play.api.i18n.Messages
 
 object PayACapitalSumAmountDetailsForm {
-  def payACapitalSumAmountDetailsForm(implicit messages: Messages): Form[PayACapitalSumAmountDetails] =
+
+  def payACapitalSumAmountDetailsForm: Form[PayACapitalSumAmountDetails] =
     Form(
       mapping(
         "capitalSumPaidDetails" -> currencyMapping(".capitalSumPaidDetails")

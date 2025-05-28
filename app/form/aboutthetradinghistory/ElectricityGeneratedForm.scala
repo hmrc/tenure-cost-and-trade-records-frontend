@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import scala.util.Try
   */
 object ElectricityGeneratedForm {
 
-  private def weeksMapping(year: String, minWeeks: Int = 0)(implicit messages: Messages): Mapping[Option[Int]] =
+  private def weeksMapping(year: String, minWeeks: Int = 0)(using messages: Messages): Mapping[Option[Int]] =
     text
       .transform[Option[Int]](
         str => {
@@ -46,13 +46,13 @@ object ElectricityGeneratedForm {
         optInt => optInt.forall(weeks => (minWeeks to 52).contains(weeks))
       )
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[(Option[Int], String)] = tuple(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[(Option[Int], String)] = tuple(
     "weeks"                -> weeksMapping(year),
     "electricityGenerated" -> default(text, "")
       .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
   )
 
-  def electricityGeneratedForm(years: Seq[String])(implicit messages: Messages): Form[Seq[(Option[Int], String)]] =
+  def electricityGeneratedForm(years: Seq[String])(using messages: Messages): Form[Seq[(Option[Int], String)]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

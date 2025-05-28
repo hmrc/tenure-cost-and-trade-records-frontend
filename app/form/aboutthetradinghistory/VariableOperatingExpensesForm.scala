@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import java.time.LocalDate
 
 object VariableOperatingExpensesForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[VariableOperatingExpenses] = mapping(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[VariableOperatingExpenses] = mapping(
     "financial-year-end"               -> ignored(LocalDate.EPOCH),
     "energy-and-utilities"             -> turnoverSalesMappingWithYear("variableExpenses.energyAndUtilities", year),
     "cleaning-and-laundry"             -> turnoverSalesMappingWithYear("variableExpenses.cleaningAndLaundry", year),
@@ -47,7 +47,7 @@ object VariableOperatingExpensesForm {
 
   private def variableOperatingExpensesSeq(
     years: Seq[String]
-  )(implicit messages: Messages): Mapping[Seq[VariableOperatingExpenses]] =
+  )(using messages: Messages): Mapping[Seq[VariableOperatingExpenses]] =
     mappingPerYear(years, (year, idx) => s"year[$idx]" -> columnMapping(year))
 
   private def otherExpensesDetailsRequired: Constraint[VariableOperatingExpensesSections] =
@@ -59,7 +59,7 @@ object VariableOperatingExpensesForm {
 
   def variableOperatingExpensesForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[VariableOperatingExpensesSections] =
+  )(using messages: Messages): Form[VariableOperatingExpensesSections] =
     Form {
       mapping(
         "variableOperatingExpenses" -> variableOperatingExpensesSeq(years),

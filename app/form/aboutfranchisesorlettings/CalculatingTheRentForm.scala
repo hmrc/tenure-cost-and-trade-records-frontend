@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object CalculatingTheRentForm {
 
-  def calculatingTheRentForm(implicit messages: Messages): Form[CalculatingTheRent] =
+  def calculatingTheRentForm(using messages: Messages): Form[CalculatingTheRent] =
     Form(
       mapping(
         "rentDetails" -> text

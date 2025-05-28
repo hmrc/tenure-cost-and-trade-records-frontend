@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object TentingPitchesDataForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[TentingPitchesData] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[TentingPitchesData] =
     mapping(
       "grossReceipts"   -> turnoverSalesMappingWithYear("tentingPitches.grossReceipts", year),
       "numberOfPitches" -> nonNegativeNumberWithYear("tentingPitches.numberOfPitches", year)
@@ -32,7 +32,7 @@ object TentingPitchesDataForm {
 
   def tentingPitchesDataForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[TentingPitchesData]] =
+  )(using messages: Messages): Form[Seq[TentingPitchesData]] =
     Form {
       mappingPerYear(years, (year, idx) => s"tentingPitches[$idx]" -> columnMapping(year))
     }

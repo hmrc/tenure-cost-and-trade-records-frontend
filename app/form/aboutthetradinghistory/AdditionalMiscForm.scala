@@ -26,7 +26,7 @@ import play.api.i18n.Messages
 
 object AdditionalMiscForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[AdditionalMisc] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[AdditionalMisc] =
     mapping(
       "leisureReceipts"         -> turnoverSalesMappingWithYear("additionalMisc.leisureReceipts", year),
       "winterStorageReceipts"   -> turnoverSalesMappingWithYear("additionalMisc.winterStorageReceipts", year),
@@ -36,12 +36,12 @@ object AdditionalMiscForm {
       "bottledGasReceipts"      -> turnoverSalesMappingWithYear("additionalMisc.bottledGasReceipts", year)
     )(AdditionalMisc.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  private def additionalMiscMapping(years: Seq[String])(implicit messages: Messages): Mapping[Seq[AdditionalMisc]] =
+  private def additionalMiscMapping(years: Seq[String])(using messages: Messages): Mapping[Seq[AdditionalMisc]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> columnMapping(year))
 
   def additionalMiscForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
+  )(using messages: Messages): Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
     Form {
       tuple(
         "additionalMisc" -> additionalMiscMapping(years),

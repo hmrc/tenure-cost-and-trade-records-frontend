@@ -125,7 +125,7 @@ object CheckYourAnswersLettingHistoryHelpers:
           changeAction = routes.IsYearlyAvailableController.show.withFromCheckYourAnswer(fragment)
         )
 
-      if isYearlyAvailable == Some(false)
+      if isYearlyAvailable.contains(false)
       then
         data ++= Seq(
           SummaryEntry(
@@ -155,7 +155,7 @@ object CheckYourAnswersLettingHistoryHelpers:
       case false => messages("label.no")
     }
 
-  def mapInt2String(int: Option[Int])(using messages: Messages): Option[String] =
+  def mapInt2String(int: Option[Int]): Option[String] =
     int
       .map(i => i.toString)
       .orElse(Some(""))
@@ -166,7 +166,7 @@ object CheckYourAnswersLettingHistoryHelpers:
       .orElse(Some(""))
 
   extension (call: Call)
-    def withFromCheckYourAnswer(fragment: String) =
+    def withFromCheckYourAnswer(fragment: String): Call =
       // Append the "from" query string parameter with a "single" value
       // Notice that the ";" semicolon character is just a "trick" intended to propagate the fragment
       call.copy(

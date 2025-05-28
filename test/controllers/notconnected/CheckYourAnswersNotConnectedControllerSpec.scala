@@ -70,7 +70,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
       when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.failed(new Exception("Failed submission")))
       val result = checkYourAdditionalInformationController().submit(fakeRequest)
-      status(result) shouldBe FOUND
+      status(result) shouldBe INTERNAL_SERVER_ERROR
     }
 
     "show submission confirmation" in {
