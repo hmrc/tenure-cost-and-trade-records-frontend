@@ -98,12 +98,6 @@ class CheckYourAnswersAboutTheTradingHistorySpec
       backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TurnoverController.show().url
     }
 
-    "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
-    }
-
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()

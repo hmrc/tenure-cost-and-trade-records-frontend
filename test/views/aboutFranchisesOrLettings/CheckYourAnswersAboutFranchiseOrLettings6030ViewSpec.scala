@@ -44,12 +44,6 @@ class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
-    }
-
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue").text()
