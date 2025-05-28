@@ -17,7 +17,7 @@
 package util
 
 import org.scalatestplus.play.PlaySpec
-import util.DateUtil.localDateHelpers
+import util.DateUtil.*
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZoneId, ZonedDateTime}

@@ -31,20 +31,20 @@ object DateMappings {
     allowPastDates: Boolean = false,
     allowFutureDates: Boolean = false,
     years: Option[Seq[Int]] = None
-  )(implicit messages: Messages): Mapping[LocalDate] =
+  )(using messages: Messages): Mapping[LocalDate] =
     of(using new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
 
   def monthYearMapping(
     fieldNameKey: String,
     allowPastDates: Boolean = false,
     allowFutureDates: Boolean = false
-  )(implicit messages: Messages): Mapping[MonthsYearDuration] =
+  )(using messages: Messages): Mapping[MonthsYearDuration] =
     of(using new MonthYearFormatter(fieldNameKey, allowPastDates, allowFutureDates))
 
   def dayMonthMapping(
     fieldNameKey: String,
     allow29February: Boolean = false
-  )(implicit messages: Messages): Mapping[DayMonthsDuration] =
+  )(using messages: Messages): Mapping[DayMonthsDuration] =
     of(using new DayMonthFormatter(fieldNameKey, allow29February))
 
   def betweenDates(

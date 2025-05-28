@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import scala.math.BigDecimal.RoundingMode.HALF_UP
 /**
   * @author Yuriy Tumakha
   */
-object NumberUtil {
+object NumberUtil:
 
   val zeroBigDecimal: BigDecimal = BigDecimal(0)
 
@@ -60,17 +60,14 @@ object NumberUtil {
   implicit def functionStringOptToFunctionString[T](function: T => Option[String]): T => String =
     function andThen stringOptToString
 
-  implicit class stringHelpers(str: String) {
+  extension (str: String)
     def removeTrailingZeros: String =
       str.replace(".00", "")
 
     def escapedHtml: String =
       Text(str).asHtml.body
 
-  }
-
-  implicit class bigDecimalHelpers(bigDecimal: BigDecimal) {
-
+  extension (bigDecimal: BigDecimal)
     def asMoney: String =
       asMoneyFull.removeTrailingZeros
 
@@ -84,7 +81,3 @@ object NumberUtil {
 
     def withScaleFull(scale: Int): String =
       bigDecimal.setScale(scale, HALF_UP).toString
-
-  }
-
-}

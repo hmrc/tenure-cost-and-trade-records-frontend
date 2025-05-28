@@ -19,8 +19,7 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, BunkeredFuelQuestion, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OccupationalAndAccountingInformation, OtherHolidayAccommodation, TouringAndTentingPitches, TurnoverSection, TurnoverSection6020, TurnoverSection6030}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, BunkeredFuelQuestion, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OtherHolidayAccommodation, TouringAndTentingPitches}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, BaseLoad, Intermittent, RenewablesPlant}
 import models.submissions.common.{AnswerNo, AnswerYes, ContactDetails}
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
@@ -29,9 +28,7 @@ import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{TestBaseSpec, toOpt}
-import views.html.aboutthetradinghistory.lowMarginFuelCardsDetails
 
-import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
 class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
@@ -414,13 +411,17 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the total fuel sold page if the form is 6020 when financial end year has been completed" in {
       navigator
         .nextPage(FinancialYearEndDatesPageId, sessionAboutYou6020)
-        .apply(sessionAboutYou6020) shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show()
+        .apply(
+          sessionAboutYou6020
+        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
     }
 
     "return a function that goes the correct turnover page if the form is 6030 when financial end year has been completed" in {
       navigator
         .nextPage(FinancialYearEndDatesPageId, sessionAboutYou6030)
-        .apply(sessionAboutYou6030) shouldBe controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+        .apply(
+          sessionAboutYou6030
+        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
     }
 
     "return a function that goes the CYA page when turnover page has been completed form 6010" in {
@@ -845,18 +846,22 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
-      "redirect to TotalFuelSoldController for FOR6020" in {
+      "redirect to /warning-check-accounting-info for FOR6020" in {
         val session = sessionAboutYou6020.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020))
         navigator
           .nextPage(FinancialYearEndPageId, session)
-          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show()
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
-      "redirect to Turnover6030Controller for FOR6030" in {
+      "redirect to /warning-check-accounting-info for FOR6030" in {
         val session = sessionAboutYou6030.copy(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030))
         navigator
           .nextPage(FinancialYearEndPageId, session)
-          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
       "redirect to CheckYourAnswersAccountingInfoController for FOR6045" in {
@@ -871,14 +876,16 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
           ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
-      "redirect to ElectricityGeneratedController for FOR6076" in {
+      "redirect to /warning-check-accounting-info for FOR6076" in {
         val session = sessionAboutYou6076.copy(
           aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
           aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
         )
         navigator
           .nextPage(FinancialYearEndPageId, session)
-          .apply(session) shouldBe controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show()
+          .apply(
+            session
+          ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
       }
 
     }

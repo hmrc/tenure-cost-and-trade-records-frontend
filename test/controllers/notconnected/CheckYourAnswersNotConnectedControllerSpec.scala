@@ -67,7 +67,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
     "handle failed submit form with all sections" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
-      when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(any[HeaderCarrier]))
+      when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.failed(new Exception("Failed submission")))
       val result = checkYourAdditionalInformationController().submit(fakeRequest)
       status(result) shouldBe FOUND

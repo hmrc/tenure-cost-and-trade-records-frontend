@@ -16,22 +16,17 @@
 
 package form.lettingHistory
 
-import form.AddressLine2Mapping.validateAddressLineTwo as line2
-import form.BuildingNameNumberMapping.validateBuildingNameNumber as line1
-import form.CountyMapping.validateCounty as county
-import form.PostcodeMapping.postcode
-import form.TownMapping.validateTown as town
 import form.lettingHistory.FieldMappings.nonEmptyText
-import models.submissions.lettingHistory.{OccupierAddress, OccupierDetail}
+import models.submissions.lettingHistory.OccupierDetail
 import play.api.data.Form
-import play.api.data.Forms.{mapping, optional}
+import play.api.data.Forms.mapping
 
 object OccupierDetailForm:
-  val theForm = Form(
+
+  val theForm: Form[OccupierDetail] = Form(
     mapping(
       "name" -> nonEmptyText(errorMessage = "lettingHistory.occupierDetail.name.required")
-    )(name => OccupierDetail.apply(name, address = None, rentalPeriod = None)) { obj =>
-      val Some(name, _, _) = OccupierDetail.unapply(obj): @unchecked
-      Some(name)
+    )(name => OccupierDetail(name, address = None, rentalPeriod = None)) { obj =>
+      OccupierDetail.unapply(obj).map(_._1)
     }
   )

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import navigation.identifiers.ElectricityGeneratedId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
-import util.AccountingInformationUtil.backLinkToFinancialYearEndDates
 import views.html.aboutthetradinghistory.electricityGenerated6076
 
 import javax.inject.{Inject, Named, Singleton}
@@ -108,6 +107,11 @@ class ElectricityGeneratedController @Inject() (
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
-    backLinkToFinancialYearEndDates(navigator)
+    navigator.from match {
+      case "CYA" =>
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "TL"  => controllers.routes.TaskListController.show().url + "#electricity-generated"
+      case _     => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+    }
 
 }

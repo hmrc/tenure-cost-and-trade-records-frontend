@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,16 +23,14 @@ import java.util.Locale
 /**
   * @author Yuriy Tumakha
   */
-object DateUtil {
+object DateUtil:
 
-  implicit class localDateHelpers(localDate: LocalDate) {
+  extension (localDate: LocalDate)
     def shortDate: String =
       localDate.format(shortDateFormatter)
 
     def toEpochMilli: Long =
       localDate.atStartOfDay(ukTimezone).toInstant.toEpochMilli
-
-  }
 
   val defaultTimeZoneId          = "Europe/London"
   private val ukTimezone: ZoneId = ZoneId.of(defaultTimeZoneId)
@@ -52,5 +50,3 @@ object DateUtil {
 
   def exampleDayMonth(minusYears: Int): String =
     nowInUK.minusYears(minusYears).format(dayMonthExampleFormatter)
-
-}

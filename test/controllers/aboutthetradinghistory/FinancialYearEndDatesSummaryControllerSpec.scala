@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,7 +128,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         val result          = financialYearEndDatesSummaryController(forType = FOR6020).submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
         )
       }
 
@@ -163,7 +163,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         val result          = financialYearEndDatesSummaryController(forType = FOR6030).submit()(sessionRequest)
         status(result)           shouldBe SEE_OTHER
         redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.Turnover6030Controller.show().url
+          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
         )
       }
 
@@ -277,7 +277,9 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
           )
 
         status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.ElectricityGeneratedController.show().url)
+        redirectLocation(result) shouldBe Some(
+          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+        )
       }
 
       "redirect to CYA for 6076 " in {
