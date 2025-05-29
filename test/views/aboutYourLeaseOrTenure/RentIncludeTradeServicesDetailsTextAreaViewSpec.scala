@@ -29,11 +29,10 @@ class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehavi
   override val form =
     RentIncludeTradeServicesDetailsTextAreaForm.rentIncludeTradeServicesDetailsTextAreaForm
 
-  def createView = () =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, FOR6010, Summary("99996076001"))(using fakeRequest, messages)
+  def createView = () => rentIncludeTradeServicesDetailsTextAreaView(form)(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    rentIncludeTradeServicesDetailsTextAreaView(form, FOR6010, Summary("99996076001"))(using fakeRequest, messages)
+    rentIncludeTradeServicesDetailsTextAreaView(form)(using fakeRequest, messages)
 
   "Rent include trade services details" must {
 
