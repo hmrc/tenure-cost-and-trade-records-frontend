@@ -16,6 +16,7 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm
 import models.ForType.*
 import models.pages.Summary
@@ -29,10 +30,12 @@ class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehavi
   override val form =
     RentIncludeTradeServicesDetailsTextAreaForm.rentIncludeTradeServicesDetailsTextAreaForm
 
-  def createView = () => rentIncludeTradeServicesDetailsTextAreaView(form)(using fakeRequest, messages)
+  val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+
+  def createView = () => rentIncludeTradeServicesDetailsTextAreaView(form)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    rentIncludeTradeServicesDetailsTextAreaView(form)(using fakeRequest, messages)
+    rentIncludeTradeServicesDetailsTextAreaView(form)(using sessionRequest, messages)
 
   "Rent include trade services details" must {
 
