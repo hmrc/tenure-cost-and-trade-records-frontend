@@ -43,9 +43,6 @@
 
 @nameAndAddressOf(occupier: OccupierDetail) = {
     <div>@occupier.name</div>
-    <div class="govuk-!-font-size-14">
-    @occupier.address.map(_.singleLine)
-    </div>
 }
 
 @rentalPeriodOf(occupier: OccupierDetail) = @{
@@ -58,7 +55,6 @@
     }
     .getOrElse("")
 }
-
 @layout(
     theForm = theForm,
     summary = Some(request.sessionData.toSummary),
@@ -78,7 +74,6 @@
                 ),
                 value = Value(
                     content = Text(rentalPeriodOf(occupier)),
-                    classes = "govuk-!-font-size-14"
                 ),
                 actions = Some(Actions(
                     items = Seq(
@@ -90,9 +85,9 @@
                             href = s"${routes.OccupierListController.remove(index).url}",
                             content = Text("Remove")
                         )
-                    ),
-                    classes = "govuk-!-font-size-14"
-                ))
+                    )
+                    ,
+                    classes = "govuk-!-width-one-third"))
             )
         }
     ))

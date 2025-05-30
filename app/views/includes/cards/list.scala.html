@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
 @(govukSummaryList: GovukSummaryList, cardsType: String, cardsData: Seq[CardData])(implicit request: SessionRequest[AnyContent], messages: Messages)
-
 @cardsData.map { data =>
     @govukSummaryList(
         SummaryList(
@@ -37,7 +36,7 @@
                             )
                         )
                     ),
-                    classes = "govuk-!-font-size-14"
+                    classes = "govuk-!-font-weight-regular"
                 )),
                 classes = "govuk-!-margin-bottom-1"
             )),
@@ -59,8 +58,7 @@
                                     "aria-label" -> (messages("label.change") + s" ${entry.key}")
                                 )
                             )
-                        ),
-                        classes = "govuk-!-font-size-14"
+                        )
                     ))
                 )
             }
