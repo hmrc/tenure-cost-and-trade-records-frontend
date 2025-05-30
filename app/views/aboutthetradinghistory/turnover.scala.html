@@ -354,11 +354,20 @@
 
     @if(forType == FOR6010 || forType == FOR6011) {
         <p class="govuk-body">@messages("turnover.p1")</p>
+        <p class="govuk-body">@messages("turnover.details.p1")</p>
+        <p class="govuk-body">@messages("turnover.details.p2")</p>
     }
 
     @if(forType == FOR6015 || forType == FOR6016) {
         <p class="govuk-body">@messages("turnover.6015.p1")</p>
         <p class="govuk-body">@messages("turnover.6015.p2")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h1")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p1")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h3")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p4")</p>
+        <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h4")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p5")</p>
+        <p class="govuk-body">@messages("turnover.details.6015.p6")</p>
         @* TODO - Reinstate paragraph when cut and paste functionality developed *@
         @* <p class="govuk-body">@messages("turnover.6015.p3")</p>*@
     }
@@ -368,11 +377,6 @@
         @govukInsetText(InsetText(
             content = Text(messages("turnover.inset"))
         ))
-        @govukDetails(Details(
-            summary = Text(messages("turnover.details")),
-            content = HtmlContent(detailsContent)
-        ))
-
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
