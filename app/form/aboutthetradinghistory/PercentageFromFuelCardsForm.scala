@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ object PercentageFromFuelCardsForm {
 
   def percentageFromFuelCardsForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[PercentageFromFuelCards]] =
+  )(using messages: Messages): Form[Seq[PercentageFromFuelCards]] =
     Form {
       mappingPerYear(years, (year, idx) => "" -> percentageFromFuelCardsMapping(year, idx))
     }
 
-  private def percentageFromFuelCardsMapping(year: String, idx: Int)(implicit
+  private def percentageFromFuelCardsMapping(year: String, idx: Int)(using
     messages: Messages
   ): Mapping[PercentageFromFuelCards] =
     mapping(

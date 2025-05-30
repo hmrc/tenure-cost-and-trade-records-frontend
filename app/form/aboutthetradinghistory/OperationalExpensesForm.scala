@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import play.api.i18n.Messages
   */
 object OperationalExpensesForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[OperationalExpenses] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[OperationalExpenses] =
     mapping(
       "advertising"    -> turnoverSalesMappingWithYear("turnover.6076.expenses.advertising", year),
       "administration" -> turnoverSalesMappingWithYear("turnover.6076.expenses.administration", year),
@@ -39,14 +39,14 @@ object OperationalExpensesForm {
       "other"          -> turnoverSalesMappingWithYear("turnover.6076.expenses.other", year)
     )(OperationalExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  private def operationalExpensesSeq(years: Seq[String])(implicit
+  private def operationalExpensesSeq(years: Seq[String])(using
     messages: Messages
   ): Mapping[Seq[OperationalExpenses]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
   def operationalExpensesForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[(Seq[OperationalExpenses], String)] =
+  )(using messages: Messages): Form[(Seq[OperationalExpenses], String)] =
     Form {
       tuple(
         "operationalExpensesSeq" -> operationalExpensesSeq(years),

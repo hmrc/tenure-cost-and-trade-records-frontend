@@ -84,7 +84,7 @@ object AccountingInformationUtil {
     }
   }
 
-  def maxNightsInFinYear6048(year: Int)(implicit request: SessionRequest[AnyContent]): Int =
+  def maxNightsInFinYear6048(year: Int)(using request: SessionRequest[AnyContent]): Int =
     val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
       .flatMap(_.commercialLetDate)
       .fold(LocalDate.EPOCH)(_.toYearMonth.atDay(1))
@@ -93,7 +93,7 @@ object AccountingInformationUtil {
       ChronoUnit.DAYS.between(commercialLetFirstAvailableDate, LocalDate.of(year, MARCH, 31)).toInt + 1
     if daysSinceStart > 0 && daysSinceStart < 365 then daysSinceStart else 365
 
-  def maxWeeksInFinYear6048(year: Int)(implicit request: SessionRequest[AnyContent]): Int =
+  def maxWeeksInFinYear6048(year: Int)(using request: SessionRequest[AnyContent]): Int =
     val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
       .flatMap(_.commercialLetDate)
       .fold(LocalDate.EPOCH)(_.toYearMonth.atDay(1))
@@ -102,21 +102,21 @@ object AccountingInformationUtil {
       ChronoUnit.WEEKS.between(commercialLetFirstAvailableDate, LocalDate.of(year, MARCH, 31)).toInt + 1
     if weeksSinceStart > 0 && weeksSinceStart < 52 then weeksSinceStart else 52
 
-  def previousFinancialYears(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+  def previousFinancialYears(using request: SessionRequest[AnyContent]): Seq[Int] =
     request.sessionData.aboutTheTradingHistory
       .fold(Seq.empty[Int])(_.turnoverSections.map(_.financialYearEnd.getYear))
 
-  def previousFinancialYears6045(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+  def previousFinancialYears6045(using request: SessionRequest[AnyContent]): Seq[Int] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .fold(Seq.empty[Int])(_.map(_.financialYearEnd.getYear))
 
-  def previousFinancialYears6048(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+  def previousFinancialYears6048(using request: SessionRequest[AnyContent]): Seq[Int] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6048)
       .fold(Seq.empty[Int])(_.map(_.financialYearEnd.getYear))
 
-  def previousFinancialYears6076(implicit request: SessionRequest[AnyContent]): Seq[Int] =
+  def previousFinancialYears6076(using request: SessionRequest[AnyContent]): Seq[Int] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .fold(Seq.empty[Int])(_.map(_.financialYearEnd.getYear))
@@ -129,7 +129,7 @@ object AccountingInformationUtil {
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
@@ -169,7 +169,7 @@ object AccountingInformationUtil {
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
@@ -209,7 +209,7 @@ object AccountingInformationUtil {
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
@@ -254,7 +254,7 @@ object AccountingInformationUtil {
 
   def backLinkToFinancialYearEndDates(
     navigator: AboutTheTradingHistoryNavigator
-  )(implicit request: SessionRequest[AnyContent]): String =
+  )(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         navigator.cyaPage

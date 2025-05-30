@@ -16,25 +16,25 @@
 
 package form.lettingHistory
 
-import actions.SessionRequest
 import form.DateMappings.requiredDateMapping
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.data.Forms.text
+import play.api.data.Mapping
 import play.api.data.validation.Constraints.nonEmpty
 import play.api.i18n.Messages
-import play.api.mvc.AnyContent
 import util.DateUtilLocalised
+
+import java.time.LocalDate
 
 object FieldMappings:
 
-  def nonEmptyText(errorMessage: String) =
+  def nonEmptyText(errorMessage: String): Mapping[String] =
     text.verifying(nonEmpty(errorMessage = errorMessage))
 
   def constrainedLocalDate(prefix: String, field: String, period: LocalPeriod)(using
-    request: SessionRequest[AnyContent],
     messages: Messages,
     dateUtil: DateUtilLocalised
-  ) =
+  ): Mapping[LocalDate] =
     val mapping = requiredDateMapping(fieldNameKey = s"$field", allowPastDates = true)
     if field == "fromDate" then
       mapping.verifying(

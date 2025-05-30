@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import java.time.LocalDate
   */
 object TurnoverForm6020 {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[TurnoverSection6020] = mapping(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[TurnoverSection6020] = mapping(
     "financial-year-end" -> ignored(LocalDate.EPOCH),
     "shop"               -> turnoverSalesMappingWithYear("turnover.6020.shop", year),
     "carWash"            -> turnoverSalesMappingWithYear("turnover.6020.carWash", year),
@@ -39,7 +39,7 @@ object TurnoverForm6020 {
     "otherIncome"        -> turnoverSalesMappingWithYear("turnover.6020.otherIncome", year)
   )(TurnoverSection6020.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def turnoverForm6020(years: Seq[String])(implicit messages: Messages): Form[Seq[TurnoverSection6020]] =
+  def turnoverForm6020(years: Seq[String])(using messages: Messages): Form[Seq[TurnoverSection6020]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

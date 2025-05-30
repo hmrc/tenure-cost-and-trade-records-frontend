@@ -47,7 +47,7 @@ object LettingHistoryTaskListHelper:
       case "intended-lettings" =>
         (
           for
-            nights            <- intendedLettingsNights(data)
+            _                 <- intendedLettingsNights(data)
             isYearlyAvailable <- intendedLettingsIsYearlyAvailable(data)
           yield
             if isYearlyAvailable

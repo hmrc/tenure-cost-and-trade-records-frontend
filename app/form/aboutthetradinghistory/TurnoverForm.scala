@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +27,11 @@ import scala.util.Try
 
 object TurnoverForm {
 
-  def turnoverForm(expectedNumberOfFinancialYears: Int, financialYearEndDates: Seq[LocalDate])(implicit
+  def turnoverForm(expectedNumberOfFinancialYears: Int, financialYearEndDates: Seq[LocalDate])(using
     messages: Messages
   ): Form[Seq[TurnoverSection]] = {
 
-    def averageOccupancyRateMapping(year: String)(implicit messages: Messages): Mapping[Option[BigDecimal]] = optional(
+    def averageOccupancyRateMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = optional(
       text
         .transform[BigDecimal](
           s => Try(BigDecimal(s)).getOrElse(BigDecimal(-1)),
@@ -43,7 +43,7 @@ object TurnoverForm {
         )
     ).verifying(messages("error.turnover.averageOccupancyRate.required", year), _.isDefined)
 
-    def columnMapping(year: String)(implicit messages: Messages): Mapping[TurnoverSection] = mapping(
+    def columnMapping(year: String)(using messages: Messages): Mapping[TurnoverSection] = mapping(
       "financial-year-end"     -> ignored(LocalDate.EPOCH),
       "weeks"                  -> tradingPeriodWeeks(year),
       "alcoholic-drinks"       -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),

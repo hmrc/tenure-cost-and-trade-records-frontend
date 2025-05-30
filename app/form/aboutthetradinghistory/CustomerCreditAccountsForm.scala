@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@ import scala.util.Try
 
 object CustomerCreditAccountsForm {
 
-  def customerCreditAccountsForm(years: Seq[String])(implicit messages: Messages): Form[Seq[CustomerCreditAccounts]] =
+  def customerCreditAccountsForm(years: Seq[String])(using messages: Messages): Form[Seq[CustomerCreditAccounts]] =
     Form {
       mappingPerYear(years, (year, idx) => "" -> customerCreditAccountsMapping(year, idx))
     }
 
-  private def customerCreditAccountsMapping(year: String, idx: Int)(implicit
+  private def customerCreditAccountsMapping(year: String, idx: Int)(using
     messages: Messages
   ): Mapping[CustomerCreditAccounts] =
     mapping(

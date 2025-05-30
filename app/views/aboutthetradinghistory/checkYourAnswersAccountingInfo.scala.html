@@ -67,15 +67,8 @@
     ).body
 }
 
-@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
-    forType match {
-        case FOR6020 => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
-        case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-        case FOR6045 | FOR6046 => request.sessionData.financialYearEndDates6045.map(_._1)
-        case FOR6048 => request.sessionData.financialYearEndDates6048.map(_._1)
-        case FOR6076 => request.sessionData.financialYearEndDates6076.map(_._1)
-        case _ => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-    }
+@financialYearEndDates(implicit request: SessionRequest[?]) = @{
+    request.sessionData.financialYearEndDates.map(_._1)
 }
 
 @yearEndChanged = @{
@@ -132,7 +125,7 @@
         (if(yearEndChanged) Seq(
             summaryListRow(
                 keyText = messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"),
-                valueContent = HtmlContent(sectionAnswers.answers.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t)))),
+                valueContent = HtmlContent(financialYearEndDatesTable(financialYearEndDates)),
                 changeCall = {
                     forType match {
                         case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>

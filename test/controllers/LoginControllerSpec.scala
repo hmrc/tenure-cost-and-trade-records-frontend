@@ -24,7 +24,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
 import play.api.mvc.Result
 import play.api.test.Helpers._
-import security.LoginToBackend.{Postcode, RefNumber, StartTime}
+import security.LoginToBackend.{Postcode, RefNumber}
 import security.NoExistingDocument
 import stub.StubSessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -37,7 +37,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class LoginControllerSpec extends TestBaseSpec {
 
-  val loginToBackend = mock[LoginToBackendAction]
+  private val loginToBackend = mock[LoginToBackendAction]
 
   "LoginDetails" should {
     "reference number cleaned" in {
@@ -161,13 +161,12 @@ class LoginControllerSpec extends TestBaseSpec {
         .when(audit)
         .sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-      val loginToBackendFunction = (refNum: RefNumber, postcode: Postcode, start: StartTime) => {
+      val loginToBackendFunction = (refNum: RefNumber, postcode: Postcode) => {
         assert(refNum.equals("01234567000"))
         Future.successful(NoExistingDocument("token", "forNum", prefilledAddress, isWelsh = false))
       }
 
       val loginToBackend = mock[LoginToBackendAction]
-      val time           = nowInUK
       when(loginToBackend.apply(using any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
 
       val loginController = new LoginController(
@@ -186,7 +185,7 @@ class LoginControllerSpec extends TestBaseSpec {
       )
 
 //      val fakeRequest = FakeRequest()
-      val response = loginController.verifyLogin("01234567000", "BN12 1AB", time)(using fakeRequest)
+      val response = loginController.verifyLogin("01234567000", "BN12 1AB")(using fakeRequest)
 
       status(response) shouldBe SEE_OTHER
 

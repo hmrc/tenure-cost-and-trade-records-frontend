@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.time.LocalDate
 
 object FixedOperatingExpensesForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[FixedOperatingExpenses] = mapping(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[FixedOperatingExpenses] = mapping(
     "financial-year-end" -> ignored(LocalDate.EPOCH),
     "rent"               -> turnoverSalesMappingWithYear("fixedExpenses.rent", year),
     "business-rates"     -> turnoverSalesMappingWithYear("fixedExpenses.businessRates", year),
@@ -35,7 +35,7 @@ object FixedOperatingExpensesForm {
     "depreciation"       -> turnoverSalesMappingWithYear("fixedExpenses.depreciation", year)
   )(FixedOperatingExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def fixedOperatingExpensesForm(years: Seq[String])(implicit messages: Messages): Form[Seq[FixedOperatingExpenses]] =
+  def fixedOperatingExpensesForm(years: Seq[String])(using messages: Messages): Form[Seq[FixedOperatingExpenses]] =
     Form {
       mappingPerYear(years, (year, idx) => s"fixedOperatingExpenses[$idx]" -> columnMapping(year))
     }

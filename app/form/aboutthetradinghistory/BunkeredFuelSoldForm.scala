@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@ import scala.util.Try
 
 object BunkeredFuelSoldForm {
 
-  def bunkeredFuelSoldForm(years: Seq[String])(implicit messages: Messages): Form[Seq[BunkeredFuelSold]] =
+  def bunkeredFuelSoldForm(years: Seq[String])(using messages: Messages): Form[Seq[BunkeredFuelSold]] =
     Form {
       mappingPerYear(years, (year, idx) => "" -> bunkeredFuelSoldMapping(year, idx))
     }
 
-  private def bunkeredFuelSoldMapping(year: String, idx: Int)(implicit messages: Messages): Mapping[BunkeredFuelSold] =
+  private def bunkeredFuelSoldMapping(year: String, idx: Int)(using messages: Messages): Mapping[BunkeredFuelSold] =
     mapping(
       "financial-year-end"     -> ignored(LocalDate.EPOCH),
       s"bunkeredFuelSold-$idx" -> optional(

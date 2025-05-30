@@ -65,27 +65,27 @@ class DateUtilLocalised @Inject() (langUtil: LanguageUtils) {
   /**
     * Date format "d MMMM y".
     */
-  def formatDate(date: LocalDate)(implicit messages: Messages): String =
+  def formatDate(date: LocalDate)(using messages: Messages): String =
     langUtil.Dates.formatDate(date)
 
   /**
     * Date format "MMMM yyyy".
     */
-  def formatYearMonth(yearMonth: YearMonth)(implicit messages: Messages): String =
+  def formatYearMonth(yearMonth: YearMonth)(using messages: Messages): String =
     monthYearFormat(messages.lang.code)
       .format(yearMonth.atDay(1).toEpochMilli)
 
   /**
     * Date format "d MMMM".
     */
-  def formatMonthDay(monthDay: MonthDay)(implicit messages: Messages): String =
+  def formatMonthDay(monthDay: MonthDay)(using messages: Messages): String =
     dayMonthFormat(messages.lang.code)
       .format(monthDay.atYear(2023).toEpochMilli)
 
   /**
     * Date format "d MMM yyyy".
     */
-  def formatDayMonthAbbrYear(date: LocalDate)(implicit messages: Messages): String =
+  def formatDayMonthAbbrYear(date: LocalDate)(using messages: Messages): String =
     dayMonthAbbrYearFormat(messages.lang.code)
       .format(date.toEpochMilli)
 

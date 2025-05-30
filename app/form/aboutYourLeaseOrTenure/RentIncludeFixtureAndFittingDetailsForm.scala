@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,17 +27,16 @@ object RentIncludeFixtureAndFittingDetailsForm {
   def rentIncludeFixtureAndFittingsDetailsForm(
     annualRent: Option[BigDecimal] = None,
     otherIncludedPartsSum: BigDecimal = 0
-  )(implicit
-    messages: Messages
-  ): Form[RentIncludeFixturesOrFittingsInformationDetails] = Form(
-    mapping(
-      "rentIncludeFixturesAndFittingsDetails" ->
-        partOfAnnualRent(
-          messages("error.rentIncludeFixturesAndFittingsDetails.title"),
-          annualRent,
-          otherIncludedPartsSum
-        )
-    )(RentIncludeFixturesOrFittingsInformationDetails.apply)(o => Some(o.sumIncludedInRent))
-  )
+  )(using messages: Messages): Form[RentIncludeFixturesOrFittingsInformationDetails] =
+    Form(
+      mapping(
+        "rentIncludeFixturesAndFittingsDetails" ->
+          partOfAnnualRent(
+            messages("error.rentIncludeFixturesAndFittingsDetails.title"),
+            annualRent,
+            otherIncludedPartsSum
+          )
+      )(RentIncludeFixturesOrFittingsInformationDetails.apply)(o => Some(o.sumIncludedInRent))
+    )
 
 }

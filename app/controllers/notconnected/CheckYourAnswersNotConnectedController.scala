@@ -16,7 +16,7 @@
 
 package controllers.notconnected
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.NotConnectedSubmission
@@ -25,10 +25,9 @@ import models.Session
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.notconnected.checkYourAnswersNotConnected
 import views.html.confirmation
 
@@ -61,27 +60,17 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit(request.sessionData.referenceNumber)
-  }
-
-  private def submit[T](refNum: String)(implicit request: SessionRequest[T]): Future[Result] = {
-    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    for {
-      _ <- submitNotConnected(refNum)(using hc, request)
-    } yield Found(confirmationUrl)
-  }
-
-  def submitNotConnected(refNum: String)(implicit hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
     val auditType      = "NotConnectedSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     val session        = request.sessionData
+    val sessionId      = implicitly[HeaderCarrier].sessionId.getOrElse("")
 
     submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
-      Redirect(confirmationUrl)
+      Found(confirmationUrl)
     } recoverWith { case e: Exception =>
-      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")}"
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - $sessionId"
       logger.error(failureReason, e)
       val outcome       = Json.obj(
         "isSuccessful"    -> false,

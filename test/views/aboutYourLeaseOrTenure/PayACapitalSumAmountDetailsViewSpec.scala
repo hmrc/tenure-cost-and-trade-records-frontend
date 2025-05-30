@@ -29,7 +29,7 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[PayACap
 
   val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
 
-  override val form = PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm(using messages)
+  override val form = PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm
 
   val backLink = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
 

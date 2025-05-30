@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 object GrossReceiptsSubLetUnitsForm {
 
-  private def columnMapping(year: String)(implicit messages: Messages): Mapping[GrossReceiptsSubLetUnits] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[GrossReceiptsSubLetUnits] =
     mapping(
       "grossReceipts" -> turnoverSalesMappingWithYear("turnover.6045.subLetUnits.grossReceipts", year),
       "numberOfUnits" -> nonNegativeNumberWithYear("subLetUnits.numberOfUnits", year)
@@ -32,7 +32,7 @@ object GrossReceiptsSubLetUnitsForm {
 
   def grossReceiptsSubLetUnitsForm(
     years: Seq[String]
-  )(implicit messages: Messages): Form[Seq[GrossReceiptsSubLetUnits]] =
+  )(using messages: Messages): Form[Seq[GrossReceiptsSubLetUnits]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,9 @@ package security
 import models.ForType.*
 import models.FORLoginResponse
 import models.submissions.common.Address
-import security.LoginToBackend.{Postcode, RefNumber, StartTime}
+import security.LoginToBackend.{Postcode, RefNumber}
 import utils.UnitTest
 
-import java.time.{ZoneOffset, ZonedDateTime}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -34,10 +33,10 @@ class LoginToBackendSpec extends UnitTest {
   "Login to HOD with valid credentials" when {
 
     "there is no previously stored document" should {
-      val l: (RefNumber, Postcode, StartTime) => Future[LoginResult] = LoginToBackend(
+      val l: (RefNumber, Postcode) => Future[LoginResult] = LoginToBackend(
         respondWith(refNum, postcode)(loginResponse)
       )
-      val r                                                          = await(l(refNum, postcode, now))
+      val r                                               = await(l(refNum, postcode))
 
       "indicate there is no saved document" in
         assert(
@@ -52,14 +51,13 @@ class LoginToBackendSpec extends UnitTest {
   }
 
   object TestData {
-    val refNum        = s"1111111899"
-    val password      = "aljsljdf"
-    val postcode      = "CV24 5RR"
-    val testAddress   = Address("123", None, "test", None, postcode)
-    val forType       = FOR6010.toString
-    val auth          = "YouAreLoggedInNow"
-    val loginResponse = FORLoginResponse(auth, forType, testAddress, isWelsh = false)
-    val now           = ZonedDateTime.of(2015, 3, 2, 13, 20, 0, 0, ZoneOffset.UTC)
+    val refNum                          = "1111111899"
+    val password                        = "aljsljdf"
+    val postcode                        = "CV24 5RR"
+    val testAddress: Address            = Address("123", None, "test", None, postcode)
+    val forType: String                 = FOR6010.toString
+    val auth                            = "YouAreLoggedInNow"
+    val loginResponse: FORLoginResponse = FORLoginResponse(auth, forType, testAddress, isWelsh = false)
   }
 }
 
