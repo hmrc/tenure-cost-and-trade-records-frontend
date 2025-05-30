@@ -1776,7 +1776,7 @@ error.financialYearEndDates.incorrect = Select if these financial year end dates
 
 # FINANCIAL YEARS CYA
 ##############################
-checkYourAnswers.occupationAndAccountingInfo.heading = Check your answers - occupation and accounting information
+checkYourAnswers.occupationAndAccountingInfo.heading = Check your answers – occupation and accounting information
 checkYourAnswers.occupationAndAccountingInfo.p1 = You must check this date before you complete the rest of this section.
 checkYourAnswers.occupationAndAccountingInfo.warning = If you change your financial year end at any point after this page, you will have to enter all your trading history information again.
 checkYourAnswers.noFinancialYears.warning = It appears you first occupied the property within your current financial year. If this is not the case, check your occupation date and financial year end.
@@ -4020,7 +4020,7 @@ checkYourAnswersAboutTheProperty.occupiersCount = You have added {0} occupiers
 checkYourAnswersAboutTheProperty.occupiersAdd = Add or remove an occupier
 checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
 
-checkYourAnswersAboutTheTradingHistory.heading = Check your answers - trading history
+checkYourAnswersAboutTheTradingHistory.heading = Check your answers – trading history
 checkYourAnswersAboutTheTradingHistory.6045.caravans.heading = Check your answers - static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravans.section = Static caravans
 checkYourAnswersAboutTheTradingHistory.6045.caravansOnSite = Static caravans on site?

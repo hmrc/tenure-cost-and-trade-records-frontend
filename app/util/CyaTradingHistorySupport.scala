@@ -261,15 +261,20 @@ class CyaTradingHistorySupport @Inject() (
             )
             .map(_.copy(classes = "no-border-bottom"))
             ++
-              sectionAnswers
-                .row(
-                  messageKey = "checkYourAnswersAboutTheTradingHistory.occupationDate",
-                  getAnswerValue =
-                    _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
-                  editPage = controllers.aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show,
-                  editField = ""
-                )
-                .map(_.copy(classes = "no-border-bottom")) ++
+              (if (forType != FOR6048) {
+                 sectionAnswers
+                   .row(
+                     messageKey = "checkYourAnswersAboutTheTradingHistory.occupationDate",
+                     getAnswerValue = _.occupationAndAccountingInformation
+                       .map(_.firstOccupy.toYearMonth)
+                       .map(dateUtil.formatYearMonth),
+                     editPage = controllers.aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show,
+                     editField = ""
+                   )
+                   .map(_.copy(classes = "no-border-bottom"))
+               } else {
+                 None
+               }) ++
               answerOpt(
                 valueLabelKey = "checkYourAnswersAboutTheTradingHistory.financialYearEnd",
                 valueOpt = sectionAnswers.answers
