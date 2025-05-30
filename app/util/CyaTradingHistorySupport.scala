@@ -248,96 +248,59 @@ class CyaTradingHistorySupport @Inject() (
     request: SessionRequest[?],
     messages: Messages
   ): Html =
-    if (forType == FOR6048) {
-      Html(
-        govukSummaryList(
-          SummaryList(rows =
-            sectionAnswers1
-              .conditionRow(
-                _.areYouVATRegistered.map(_.name).isDefined,
-                "checkYourAnswersAboutTheTradingHistory.areYouVATRegistered",
-                _.areYouVATRegistered.flatMap(_.name.capitalize),
-                controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
-                "areYouVatRegistered"
-              )
-              .map(_.copy(classes = "no-border-bottom"))
-              ++
-                answerOpt(
-                  valueLabelKey = "checkYourAnswersAboutTheTradingHistory.financialYearEnd",
-                  valueOpt = sectionAnswers.answers
-                    .flatMap(_.occupationAndAccountingInformation)
-                    .flatMap(_.currentFinancialYearEnd.map(_.toMonthDay))
-                    .map(dateUtil.formatMonthDay),
-                  classes = if (!yearEndChanged) "" else "no-border-bottom"
-                ) ++
-                (if (yearEndChanged)
-                   Seq(
-                     SummaryListRow(
-                       key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"))),
-                       value = Value(
-                         HtmlContent(
-                           financialYearEndDatesTable(
-                             financialYearEndDates = financialYearEndDates(sectionAnswers.answers.get),
-                             dateUtil = dateUtil
-                           ).body
-                         )
+    Html(
+      govukSummaryList(
+        SummaryList(rows =
+          sectionAnswers1
+            .conditionRow(
+              _.areYouVATRegistered.map(_.name).isDefined,
+              "checkYourAnswersAboutTheTradingHistory.areYouVATRegistered",
+              _.areYouVATRegistered.flatMap(_.name.capitalize),
+              controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
+              "areYouVatRegistered"
+            )
+            .map(_.copy(classes = "no-border-bottom"))
+            ++
+              (if (forType != FOR6048) {
+                 sectionAnswers
+                   .row(
+                     messageKey = "checkYourAnswersAboutTheTradingHistory.occupationDate",
+                     getAnswerValue = _.occupationAndAccountingInformation
+                       .map(_.firstOccupy.toYearMonth)
+                       .map(dateUtil.formatYearMonth),
+                     editPage = controllers.aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show,
+                     editField = ""
+                   )
+                   .map(_.copy(classes = "no-border-bottom"))
+               } else {
+                 None
+               }) ++
+              answerOpt(
+                valueLabelKey = "checkYourAnswersAboutTheTradingHistory.financialYearEnd",
+                valueOpt = sectionAnswers.answers
+                  .flatMap(_.occupationAndAccountingInformation)
+                  .flatMap(_.currentFinancialYearEnd.map(_.toMonthDay))
+                  .map(dateUtil.formatMonthDay),
+                classes = if (!yearEndChanged) "" else "no-border-bottom"
+              ) ++
+              (if (yearEndChanged)
+                 Seq(
+                   SummaryListRow(
+                     key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"))),
+                     value = Value(
+                       HtmlContent(
+                         financialYearEndDatesTable(
+                           financialYearEndDates = financialYearEndDates(sectionAnswers.answers.get),
+                           dateUtil = dateUtil
+                         ).body
                        )
                      )
                    )
-                 else Seq.empty)
-          )
-        ).body
-      )
-    } else {
-      Html(
-        govukSummaryList(
-          SummaryList(rows =
-            sectionAnswers1
-              .conditionRow(
-                _.areYouVATRegistered.map(_.name).isDefined,
-                "checkYourAnswersAboutTheTradingHistory.areYouVATRegistered",
-                _.areYouVATRegistered.flatMap(_.name.capitalize),
-                controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
-                "areYouVatRegistered"
-              )
-              .map(_.copy(classes = "no-border-bottom"))
-              ++
-                sectionAnswers
-                  .row(
-                    messageKey = "checkYourAnswersAboutTheTradingHistory.occupationDate",
-                    getAnswerValue =
-                      _.occupationAndAccountingInformation.map(_.firstOccupy.toYearMonth).map(dateUtil.formatYearMonth),
-                    editPage = controllers.aboutthetradinghistory.routes.ChangeOccupationAndAccountingController.show,
-                    editField = ""
-                  )
-                  .map(_.copy(classes = "no-border-bottom")) ++
-                answerOpt(
-                  valueLabelKey = "checkYourAnswersAboutTheTradingHistory.financialYearEnd",
-                  valueOpt = sectionAnswers.answers
-                    .flatMap(_.occupationAndAccountingInformation)
-                    .flatMap(_.currentFinancialYearEnd.map(_.toMonthDay))
-                    .map(dateUtil.formatMonthDay),
-                  classes = if (!yearEndChanged) "" else "no-border-bottom"
-                ) ++
-                (if (yearEndChanged)
-                   Seq(
-                     SummaryListRow(
-                       key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"))),
-                       value = Value(
-                         HtmlContent(
-                           financialYearEndDatesTable(
-                             financialYearEndDates = financialYearEndDates(sectionAnswers.answers.get),
-                             dateUtil = dateUtil
-                           ).body
-                         )
-                       )
-                     )
-                   )
-                 else Seq.empty)
-          )
-        ).body
-      )
-    }
+                 )
+               else Seq.empty)
+        )
+      ).body
+    )
 
   def occupationDetails(implicit
     request: SessionRequest[?],
