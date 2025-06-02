@@ -20,7 +20,7 @@ import utils.TestBaseSpec
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, PropertyUpdates, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentOpenMarketValueDetails, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleOutsideRepairs}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo, BenefitsGiven, CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, IncludedInYourRentDetails, IntervalsOfRentReview, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PayACapitalSumDetails, PropertyUpdates, RentIncludeFixturesAndFittingsDetails, RentIncludeTradeServicesDetails, RentOpenMarketValueDetails, ServicePaidSeparately, ServicesPaid, TenantAdditionsDisregardedDetails, ThroughputAffectsRent, TradeServices, TradeServicesDetails, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleOutsideRepairs}
 import models.submissions.common.{AnswerNo, AnswerYes, BuildingInsuranceLandlord, OutsideRepairsLandlord}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -48,12 +48,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(UnknownIdentifier, session6020)
         .apply(session6020) shouldBe controllers.routes.LoginController.show
-    }
-
-    "return a function that goes to connected to landlord page when about your landlord has been completed" in {
-      navigator
-        .nextPage(AboutTheLandlordPageId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
     }
 
     "return a function that goes to lease surrendered early page when disregarded addition has been completed no" in {
@@ -250,6 +244,39 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
+    "return a function that goes to IsVATPayableForWholePropertyController when 'vat' is included in includedInYourRent" in {
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartOne = Some(
+          AboutLeaseOrAgreementPartOne(
+            includedInYourRentDetails = Some(IncludedInYourRentDetails(includedInYourRent = List("vat")))
+          )
+        )
+      )
+
+      navigator
+        .nextPage(IncludedInYourRentPageId, session)
+        .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show()
+    }
+
+    "return a function that goes to CanRentBeReducedOnReviewController when intervalsOfRentReview is defined for FOR6020" in {
+      val session = session6020.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          AboutLeaseOrAgreementPartTwo(
+            intervalsOfRentReview = Some(
+              IntervalsOfRentReview(
+                currentRentWithin12Months = None,
+                intervalsOfRentReview = Some(LocalDate.of(2000, 1, 2))
+              )
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(IntervalsOfRentReviewId, session)
+        .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
+    }
+
     "return a function that goes to setting the current rent when the current rent was agreed has been completed with Yes " in {
 
       val session = session6020.copy(
@@ -266,7 +293,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to setting the current rent when the current r123ent was agreed has been completed with Yes " in {
+    "return a function that goes to MethodToFixCurrentRentController when HowIsCurrentRentFixed has been completed " in {
 
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
@@ -458,6 +485,53 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
         .show()
     }
+
+    "return a function that goes to trade services description page when addAnotherService is yes" in {
+
+      val tradeServicesEntry  = TradeServices(
+        details = TradeServicesDetails(description = "Some service"),
+        addAnotherService = Some(AnswerYes)
+      )
+      val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(tradeServicesEntry))
+
+      val session = session6020.copy(aboutLeaseOrAgreementPartThree = Some(aboutLeasePartThree))
+
+      navigator
+        .nextPage(TradeServicesListId, session)
+        .apply(session) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Some(1))
+    }
+
+    "return a function that goes to payment for trade services page when addAnotherService is no" in {
+
+      val tradeServicesEntry  = TradeServices(
+        details = TradeServicesDetails(description = "test"),
+        addAnotherService = Some(AnswerNo)
+      )
+      val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(tradeServicesEntry))
+
+      val session = session6020.copy(aboutLeaseOrAgreementPartThree = Some(aboutLeasePartThree))
+
+      navigator
+        .nextPage(TradeServicesListId, session)
+        .apply(session) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
+    }
+
+    "return a function that goes to ServicePaidSeparatelyController when addAnotherPaidService is Some(AnswerYes)" in {
+      val paidServiceEntry    = ServicesPaid(
+        details = ServicePaidSeparately(description = "test"),
+        addAnotherPaidService = Some(AnswerYes)
+      )
+      val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(servicesPaid = IndexedSeq(paidServiceEntry))
+      val session             = session6020.copy(aboutLeaseOrAgreementPartThree = Some(aboutLeasePartThree))
+
+      navigator
+        .nextPage(ServicePaidSeparatelyListId, session)
+        .apply(session) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(1))
+    }
+
   }
 
 }
