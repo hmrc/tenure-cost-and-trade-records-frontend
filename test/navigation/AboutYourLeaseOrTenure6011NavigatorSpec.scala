@@ -50,12 +50,6 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         .apply(session6011) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to connected to landlord page when about your landlord has been completed" in {
-      navigator
-        .nextPage(AboutTheLandlordPageId, session6011)
-        .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-    }
-
     "return a function that goes to current annual rent page when about your landlord has been completed" in {
       navigator
         .nextPage(ConnectedToLandlordDetailsPageId, session6011)
