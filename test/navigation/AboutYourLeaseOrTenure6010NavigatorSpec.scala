@@ -36,7 +36,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010              = Session(
+  val session6010 = Session(
     "99996010004",
     FOR6010,
     prefilledAddress,
@@ -45,30 +45,18 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6010Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
-  val session6010No            = Session(
-    "99996010004",
-    FOR6010,
-    prefilledAddress,
-    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-    isWelsh = false,
+
+  val session6010No: Session = session6010.copy(
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
-  val session6010NoLeaseback   = Session(
-    "99996010004",
-    FOR6010,
-    prefilledAddress,
-    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-    isWelsh = false,
+
+  val session6010NoLeaseback: Session = session6010.copy(
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
-  val session6010PayNavigation = Session(
-    "99996010004",
-    FOR6010,
-    prefilledAddress,
-    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-    isWelsh = false,
+
+  val session6010PayNavigation: Session = session6010.copy(
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPayPartTwo)
   )
@@ -105,11 +93,12 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to payable within 12 months page when lease or agreement details with no has been completed" in {
-      navigator
-        .nextPage(LeaseOrAgreementDetailsPageId, session6010No)
-        .apply(
-          session6010No
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
+      val session =
+        navigator
+          .nextPage(LeaseOrAgreementDetailsPageId, session6010No)
+          .apply(
+            session6010No
+          ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
     }
 
     "return a function that goes to task list page when current rent payable within 12 months has been completed" in {
@@ -151,10 +140,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
       val session = session6010.copy(
         aboutLeaseOrAgreementPartTwo = Some(
-          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleOutsideRepairs =
-              Some(UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, Some("test")))
-            )
+          AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleOutsideRepairs =
+            Some(UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, Some("test")))
           )
         )
       )
@@ -170,13 +157,13 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
       val session = session6010.copy(
         aboutLeaseOrAgreementPartTwo = Some(
-          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleInsideRepairs =
+          AboutLeaseOrAgreementPartTwo(
+            ultimatelyResponsibleInsideRepairs =
               Some(UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, Some("test")))
-            )
           )
         )
       )
+
       navigator
         .nextPage(UltimatelyResponsibleInsideRepairsPageId, session)
         .apply(
@@ -189,10 +176,9 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
       val session = session6010.copy(
         aboutLeaseOrAgreementPartTwo = Some(
-          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleBuildingInsurance =
+          AboutLeaseOrAgreementPartTwo(
+            ultimatelyResponsibleBuildingInsurance =
               Some(UltimatelyResponsibleBuildingInsurance(BuildingInsuranceLandlord, Some("test")))
-            )
           )
         )
       )
@@ -218,10 +204,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
       val session = session6010.copy(
         aboutLeaseOrAgreementPartTwo = Some(
-          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
-              Some(HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1)))
-            )
+          AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
+            Some(HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1)))
           )
         )
       )
@@ -237,10 +221,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
       val session = session6010.copy(
         aboutLeaseOrAgreementPartTwo = Some(
-          session6010.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
-              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentsAgreement))
-            )
+          AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
+            Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentsAgreement))
           )
         )
       )
@@ -450,7 +432,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
     }
 
-    "return a function that goes to property use leaseback arrangement no when provide details of your lease has been completed" in {
+    "return a function that goes to CurrentAnnualRent when PropertyUseLeasebackAgreement has been completed" in {
       navigator
         .nextPage(PropertyUseLeasebackAgreementId, session6010NoLeaseback)
         .apply(
@@ -501,18 +483,19 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to does rent include fixture and fittings  when is parking rent paid separately has been completed123" in {
+    "return a function that goes to PayACapitalSum  when IsGivenRentFree has been completed" in {
       navigator
         .nextPage(IsGivenRentFreePeriodId, session6010No)
         .apply(session6010No) shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController
         .show()
     }
 
-    "return a function that goes to lease surrendered early page when disregarded addition details has been completed123123 " in {
+    "return a function that goes to TenantsAdditionsDisregarded page when IncentivesPaymentsCondition has been completed " in {
       navigator
         .nextPage(IncentivesPaymentsConditionsId, session6010)
         .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController
         .show()
+
     }
 
   }
