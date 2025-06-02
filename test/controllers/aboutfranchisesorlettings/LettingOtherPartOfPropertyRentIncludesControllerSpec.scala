@@ -32,7 +32,7 @@ class LettingOtherPartOfPropertyRentIncludesControllerSpec extends TestBaseSpec 
   val mockAudit: Audit = mock[Audit]
 
   val mockLettingOtherPartOfPropertyCheckboxesDetails = mock[cateringOperationOrLettingAccommodationRentIncludes]
-  when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any, any, any, any, any, any, any)(using any, any))
+  when(mockLettingOtherPartOfPropertyCheckboxesDetails.apply(any, any, any, any, any)(using any, any))
     .thenReturn(HtmlFormat.empty)
 
   val lettingOtherPartOfPropertyDetailsCheckboxesController = new LettingOtherPartOfPropertyRentIncludesController(

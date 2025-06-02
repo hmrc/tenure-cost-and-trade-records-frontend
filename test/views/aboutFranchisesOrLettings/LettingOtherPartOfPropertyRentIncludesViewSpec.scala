@@ -16,6 +16,7 @@
 
 package views.aboutFranchisesOrLettings
 
+import actions.SessionRequest
 import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
@@ -26,20 +27,22 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
 
   val messageKeyPrefix = "lettingOtherPartOfPropertyCheckboxesDetails"
 
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+
   val backLink      =
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
   // No form for checkboxes TODO Add form
   override val form = incomeRecordIncludedForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(using
-      fakeRequest,
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink)(using
+      sessionRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[List[String]]) =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(using
-      fakeRequest,
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink)(using
+      sessionRequest,
       messages
     )
 

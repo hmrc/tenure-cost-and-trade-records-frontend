@@ -55,7 +55,7 @@ abstract class CaravansTrading6045Controller(
   val withSessionRefiner: WithSessionRefiner
   val session: SessionRepo
 
-  implicit val ec: ExecutionContext = mcc.executionContext
+  given ExecutionContext = mcc.executionContext
 
   def getSavedAnswer: TurnoverSection6045 => Option[CaravansTrading6045]
 
@@ -66,7 +66,7 @@ abstract class CaravansTrading6045Controller(
   private val messageKeyPrefix = s"turnover.6045.caravans.$unitType.$lettingType"
   private val showHelpText     = Option.when(lettingType == OwnedByOperator)(unitType)
 
-  private def form(years: Seq[String])(implicit messages: Messages) = caravansTradingForm(years, unitType, lettingType)
+  private def form(years: Seq[String])(using messages: Messages) = caravansTradingForm(years, unitType, lettingType)
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink(pageId.toString)
@@ -112,7 +112,7 @@ abstract class CaravansTrading6045Controller(
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(using request: SessionRequest[AnyContent]): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .filter(_.nonEmpty)
@@ -129,7 +129,7 @@ abstract class CaravansTrading6045Controller(
       case TwinCaravansSublet            => routes.TwinUnitCaravansSubletController.submit()
     }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     (navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
