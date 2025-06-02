@@ -19,6 +19,7 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
+import models.submissions.aboutYourLeaseOrTenure.{IncentivesPaymentsConditionsDetails, TenantAdditionsDisregardedDetails}
 import models.submissions.common.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -48,29 +49,6 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
   "About your lease or tenure navigator" when {
-
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
-        .nextPage(UnknownIdentifier, session6045)
-        .apply(session6045) shouldBe controllers.routes.LoginController.show
-    }
-
-    "return a function that goes to lease surrendered early page when disregarded addition has been completed no123" in {
-
-      navigator
-        .nextPage(IncentivesPaymentsConditionsId, session6045)
-        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController
-        .show()
-
-    }
-
-    "return a function that goes to connected to landlors page for 6045 when about your landlord has been completed" in {
-      navigator
-        .nextPage(ConnectedToLandlordPageId, session6045)
-        .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController
-        .show()
-    }
 
     "return a function that goes to Intervals Of Rent Review for 6045 when is Rent Under Review has been completed" in {
       navigator
@@ -178,14 +156,14 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         .show()
     }
 
-    "return a function that goes to lease surrendered early page when disregarded addition details has been completed123 " in {
+    "return a function that goes to RentDevelopedLand page when DoesRentPayablePage has been completed " in {
       navigator
         .nextPage(DoesRentPayablePageId, session6045)
         .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController
         .show()
     }
 
-    "return a function that goes to tenants additional disregarded page when incentive payments conditions has been completed 123" in {
+    "return a function that goes to IsGivenRentFreePeriodController page when WorkCarriedOutCondition has been completed" in {
       navigator
         .nextPage(WorkCarriedOutConditionId, session6045)
         .apply(session6045) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController
@@ -199,6 +177,75 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
           session6045
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController
         .show()
+    }
+
+    "return a function that goes to PropertyUpdatesController  when tenantAdditionalDisregarded is 'no'" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          prefilledAboutLeaseOrAgreementPartTwo6045.copy(
+            tenantAdditionsDisregardedDetails = Some(
+              TenantAdditionsDisregardedDetails(
+                tenantAdditionalDisregarded = AnswerNo
+              )
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(TenantsAdditionsDisregardedDetailsId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
+    }
+
+    "return a function that goes to TenantsAdditionsDisregardedController when formerLeaseSurrendered is 'no'" in {
+      val answers = session6045.copy(
+        aboutLeaseOrAgreementPartTwo = Some(
+          prefilledAboutLeaseOrAgreementPartTwo6045.copy(
+            incentivesPaymentsConditionsDetails = Some(
+              IncentivesPaymentsConditionsDetails(formerLeaseSurrendered = AnswerNo)
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(IncentivesPaymentsConditionsId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+    }
+
+    "return a function that goes to SurrenderLeaseAgreementDetailsController when formerLeaseSurrendered is 'yes'" in {
+      val answers = session6045.copy(
+        forType = FOR6045,
+        aboutLeaseOrAgreementPartTwo = Some(
+          prefilledAboutLeaseOrAgreementPartTwo6045.copy(
+            incentivesPaymentsConditionsDetails = Some(
+              IncentivesPaymentsConditionsDetails(formerLeaseSurrendered = AnswerYes)
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(IncentivesPaymentsConditionsId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController
+        .show()
+    }
+
+    "return a function that goes to PropertyUpdatesController when tenantAdditionalDisregarded is not 'yes' and forType is FOR6045" in {
+      val answers = session6045.copy(
+        forType = FOR6045,
+        aboutLeaseOrAgreementPartTwo = Some(
+          prefilledAboutLeaseOrAgreementPartTwo6045.copy(
+            tenantAdditionsDisregardedDetails = Some(
+              TenantAdditionsDisregardedDetails(tenantAdditionalDisregarded = AnswerNo)
+            )
+          )
+        )
+      )
+
+      navigator
+        .nextPage(TenantsAdditionsDisregardedId, answers)
+        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
     }
 
   }

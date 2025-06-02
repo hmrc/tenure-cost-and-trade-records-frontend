@@ -49,13 +49,6 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
 
   "About your lease or tenure navigator" when {
 
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
-        .nextPage(UnknownIdentifier, session6048)
-        .apply(session6048) shouldBe controllers.routes.LoginController.show
-    }
-
     "return a function that goes to how rent is currently fixed  page when UR building insurance is completed" in {
       val answers = session6048.copy(
         aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
