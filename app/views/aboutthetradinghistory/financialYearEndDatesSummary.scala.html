@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import actions.SessionRequest
 @import models.ForType.*
-@import models.pages.Summary
 @import util.SectionAnswersRowBuilder
 @import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import util.DateUtilLocalised
@@ -34,7 +33,7 @@
 )
 
 
-@(theForm: Form[?], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[?], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
@@ -58,8 +57,7 @@
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = Some(backLink),
-    theForm = theForm,
-    showH1  = true
+    theForm = theForm
 ) {
 
     <p class="govuk-body"> @messages("financialYearEndDatesSummary.p1") </p>
@@ -67,7 +65,7 @@
       @govukSummaryList(SummaryList(rows =
           sectionAnswers.nonCYArow(financialYearEnd,
               _ => None,
-              controllers.aboutthetradinghistory.routes.EditFinancialYearEndDateController.show((index)), "operatorName",
+              controllers.aboutthetradinghistory.routes.EditFinancialYearEndDateController.show(index), "operatorName",
               ("valueAsHtml", _ => None))
       ))
   }

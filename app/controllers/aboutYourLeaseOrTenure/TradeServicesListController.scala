@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ class TradeServicesListController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
@@ -108,7 +108,7 @@ class TradeServicesListController @Inject() (
     )
   }
 
-  def remove(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutLeaseOrAgreementPartThree
       .flatMap(_.tradeServices.lift(index))
       .map { services =>
@@ -118,9 +118,6 @@ class TradeServicesListController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               service,
-              "label.section.aboutYourLeaseOrTenure",
-              request.sessionData.toSummary,
-              index,
               controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
               controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
             )
@@ -130,7 +127,7 @@ class TradeServicesListController @Inject() (
       .getOrElse(Redirect(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0)))
   }
 
-  def performRemove(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -143,9 +140,6 @@ class TradeServicesListController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   description,
-                  "label.section.connectionToTheProperty",
-                  request.sessionData.toSummary,
-                  index,
                   controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
                   controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
                 )

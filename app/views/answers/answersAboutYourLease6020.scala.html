@@ -37,8 +37,6 @@
 
 @sectionAnswers3 = @{SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartThree)}
 
-@sectionAnswers4 = @{SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartFour)}
-
 @addedTradeServiceMsgKey = @{
     if (request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length <= 1) {
         "checkYourAnswersAboutYourLeaseOrTenure.addedTradingService"

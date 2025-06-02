@@ -14,13 +14,12 @@
  * limitations under the License.
  *@
 
-@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@(govukSummaryList: GovukSummaryList, messageKey: String, valueAsInt: Int, addActionMessage: String, addActionCall: Call)(implicit request: SessionRequest[?], messages: Messages)
+@(govukSummaryList: GovukSummaryList, messageKey: String, valueAsInt: Int, addActionMessage: String, addActionCall: Call)(implicit messages: Messages)
 
 @pluralizedMessageKey = @{
-    s"""${messageKey}${if(valueAsInt > 1) "Plural" else "Singular"}"""
+    s"""$messageKey${if(valueAsInt > 1) "Plural" else "Singular"}"""
 }
 
 @govukSummaryList(

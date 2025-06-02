@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@
     ))
     }
 
-    @answer(valueLabelKey: String, values: Seq[String], additionalParagraph: Option[String] = None) = @{
+    @answer(valueLabelKey: String, values: Seq[String]) = @{
         SummaryListRow(
             key = Key(Text(messages(valueLabelKey))),
             value = Value(HtmlContent(
@@ -80,7 +80,7 @@
             classes = "no-border-bottom",
         )
     }
-    @singleAnswer(valueLabelKey: String, values: String, additionalParagraph: Option[String] = None, givenActions: Option[Actions] = None, canAction:Boolean = false) = @{
+    @singleAnswer(valueLabelKey: String, values: String, givenActions: Option[Actions], canAction: Boolean) = @{
         SummaryListRow(
             key = Key(Text(messages(valueLabelKey))),
             value = Value(HtmlContent(
@@ -90,16 +90,15 @@
             actions = if (canAction) givenActions else None
         )
     }
-    @answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String, additionalParagraph: Option[String] = None) = @{
-        answer(valueLabelKey,
-            sectionAnswers1.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer),
-            additionalParagraph)
+    @answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String) = @{
+        answer(valueLabelKey, sectionAnswers1.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer))
     }
 
-    @answerTotalSiteCapacity(valueLabelKey: String, getAnswer: TotalSiteCapacity => String, additionalParagraph: Option[String] = None, action: Option[Actions] = None, canAction:Boolean = false) = @{
+    @answerTotalSiteCapacity(valueLabelKey: String, getAnswer: TotalSiteCapacity => String, action: Option[Actions] = None, canAction: Boolean = false) = @{
         singleAnswer(valueLabelKey,
             sectionOtherHolidayAccommodation.answers.flatMap(s => s.totalSiteCapacity).map(getAnswer),
-            additionalParagraph,action,canAction)
+            action, canAction
+        )
     }
 
     @financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
@@ -107,7 +106,7 @@
             key = Key(Text(messages("turnover.financialYearEnd"))),
             value = Value(HtmlContent(
                 tableRow(
-                    sectionAnswers.answers.map(financialYearEndDates).fold(Seq(""))(_.map(dateUtil.formatDayMonthAbbrYear))
+                    financialYearEndDates.map(dateUtil.formatDayMonthAbbrYear)
                 ).body
             )),
             actions = Some(
@@ -128,11 +127,8 @@
         )
     }
 
-    @financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
+    @financialYearEndDates(implicit request: SessionRequest[?]) = @{
             request.sessionData.financialYearEndDates6076.map(_._1)
-    }
-    @sectionAnswers = @{
-        SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
     }
     @sectionAnswers1 = @{
         SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
@@ -169,7 +165,10 @@
         answer6045("checkYourAnswersOtherHolidayAccommodation.numberOfUnits", _.grossReceiptsSubLetUnits.flatMap(_.numberOfUnits))
     )
     @pageAnswersTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading",
-        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting", t => s"${t.availableForLetting}",None,action("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading", controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show()),true),
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForLetting", t => s"${t.availableForLetting}",
+            action("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading", controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show()),
+            canAction = true
+        ),
         answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff",t=>  s"${t.occupiedBySeasonalStuff}"),
         answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.privatelyOwned", t=>  s"${t.privatelyOwned}"),
         answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalLettingUnits", t=>  s"${t.total}")

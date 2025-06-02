@@ -35,10 +35,6 @@
 
 @(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@tradingHistory = @{
-    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
-}
-
 @tradingHistoryOne = @{
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
 }
@@ -62,7 +58,7 @@
     )
 }
 
-@financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(implicit request: SessionRequest[?]) = @{
+@financialYearEndDates(implicit request: SessionRequest[?]) = @{
     request.sessionData.financialYearEndDates6045.map(_._1)
 }
 
@@ -71,7 +67,7 @@
         key = Key(Text(messages("turnover.financialYearEnd"))),
         value = Value(HtmlContent(
             tableRow(
-                tradingHistory.answers.map(financialYearEndDates).fold(Seq(""))(_.map(dateUtil.formatDayMonthAbbrYear))
+                financialYearEndDates.map(dateUtil.formatDayMonthAbbrYear)
             ).body
         )),
         actions = Some(

@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import template.HiddenBy
 @import uk.gov.hmrc.govukfrontend.views.Aliases._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
@@ -31,8 +30,7 @@
     customClass: Option[String] = None,
     showDays : Boolean = false,
         hideYear: Boolean= false,
-    showFieldSet: Boolean = true,
-    hiddenBy: Option[HiddenBy] = None)(implicit messages: Messages)
+    showFieldSet: Boolean = true)(implicit messages: Messages)
 
     @labelText = @{ labelArg0.fold(messages(label.getOrElse("label." + field + labelSuffix.getOrElse(""))))(arg0 => messages(label.get, arg0))}
     @dayfield  = @{field + ".day"}

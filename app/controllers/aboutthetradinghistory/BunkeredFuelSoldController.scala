@@ -54,15 +54,14 @@ class BunkeredFuelSoldController @Inject() (
           view(
             bunkeredFuelSoldForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.bunkeredFuelSold.getOrElse(Seq.empty)),
-            calculateBackLink(using request),
-            request.sessionData.toSummary
+            calculateBackLink(using request)
           )
         )
       }
 
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
@@ -72,8 +71,7 @@ class BunkeredFuelSoldController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
-                calculateBackLink(using request),
-                request.sessionData.toSummary
+                calculateBackLink(using request)
               )
             ),
           success => {

@@ -129,9 +129,6 @@ class ResidentListController @Inject() (
     theConfirmationView(
       theForm,
       name = residentialDetail.name,
-      sectionLabel = "label.section.lettingHistory",
-      summary = request.sessionData.toSummary,
-      idx = index,
       confirmAction = routes.ResidentListController.performRemove(index),
       cancelAction = routes.ResidentListController.show
     )

@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], name: String, sectionLabel: String, summary: Summary, idx: Int, confirmAction: Call, cancelAction: Call)(implicit request: SessionRequest[AnyContent], messages: Messages)
+@(theForm: Form[AnswersYesNo], name: String, confirmAction: Call, cancelAction: Call)(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 @forType = @{
     request.sessionData.forType
@@ -44,7 +44,7 @@
     pageHeading = messages("genericRemoveConfirmation.heading",name),
     showSection = true,
     showH1 = false,
-    summary = Some(summary),
+    summary = Some(request.sessionData.toSummary),
     sectionName = sectionName,
     backLinkUrl = cancelAction.url,
     theForm = theForm

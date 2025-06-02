@@ -118,9 +118,6 @@ class AdvertisingListController @Inject() (
     theConfirmationView(
       theForm,
       name = advertising.websiteAddress,
-      sectionLabel = "label.section.lettingHistory",
-      summary = request.sessionData.toSummary,
-      idx = index,
       confirmAction = routes.AdvertisingListController.performRemove(index),
       cancelAction = routes.AdvertisingListController.show
     )

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ class AddOrRemoveLettingController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val lettingsData          = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings)
     val numberOfLettings: Int =
       request.sessionData.aboutFranchisesOrLettings.map(_.lettings.getOrElse(IndexedSeq.empty).size).getOrElse(0)
@@ -139,7 +139,7 @@ class AddOrRemoveLettingController @Inject() (
       case other: OtherLetting             => other.copy(addAnotherLetting = newAnswer)
     }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getOperatorName(idx)
       .map { operatorName =>
         Future.successful(
@@ -147,9 +147,6 @@ class AddOrRemoveLettingController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               operatorName,
-              "label.section.aboutTheLettings",
-              request.sessionData.toSummary,
-              idx,
               controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.performRemove(idx),
               controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx)
             )
@@ -159,7 +156,7 @@ class AddOrRemoveLettingController @Inject() (
       .getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(0)))
   }
 
-  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -170,9 +167,6 @@ class AddOrRemoveLettingController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   operatorName,
-                  "label.section.aboutTheLettings",
-                  request.sessionData.toSummary,
-                  idx,
                   controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.performRemove(idx),
                   controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx)
                 )

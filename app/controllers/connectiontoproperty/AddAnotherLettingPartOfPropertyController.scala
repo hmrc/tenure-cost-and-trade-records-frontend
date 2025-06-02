@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (request.sessionData.stillConnectedDetails.exists(_.lettingPartOfPropertyDetailsIndex >= 4)) {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("connection")).url
@@ -123,7 +123,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
     }
   }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.stillConnectedDetails
       .flatMap(_.lettingPartOfPropertyDetails.lift(idx))
       .map { lettingSections =>
@@ -133,9 +133,6 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               name,
-              "label.section.connectionToTheProperty",
-              request.sessionData.toSummary,
-              idx,
               routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
               routes.AddAnotherLettingPartOfPropertyController.show(idx)
             )
@@ -145,7 +142,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       .getOrElse(Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0)))
   }
 
-  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -158,9 +155,6 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   name,
-                  "label.section.connectionToTheProperty",
-                  request.sessionData.toSummary,
-                  idx,
                   routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
                   routes.AddAnotherLettingPartOfPropertyController.show(idx)
                 )

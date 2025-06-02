@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
@@ -25,7 +26,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import models.pages.Summary
 @import models.ForType.*
 
 
@@ -36,8 +36,11 @@
 )
 
 
-@(form: Form[?], index: Int, operatorName: String, backLink: String, summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
+@(form: Form[?], index: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
+@forType = @{
+    request.sessionData.forType
+}
 
 @sectionName = @{
     forType match {

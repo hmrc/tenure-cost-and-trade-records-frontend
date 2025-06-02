@@ -62,9 +62,7 @@ class RentalIncomeIncludedController @Inject() (
         ),
         index,
         getOperatorName(index),
-        calculateBackLink(index),
-        request.sessionData.toSummary,
-        request.sessionData.forType
+        calculateBackLink(index)
       )
     )
   }
@@ -78,9 +76,7 @@ class RentalIncomeIncludedController @Inject() (
             formWithErrors,
             idx,
             getOperatorName(idx),
-            calculateBackLink(idx),
-            request.sessionData.toSummary,
-            request.sessionData.forType
+            calculateBackLink(idx)
           )
         ),
       data => {

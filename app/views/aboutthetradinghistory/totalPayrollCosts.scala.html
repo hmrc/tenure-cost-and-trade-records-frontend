@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 
 @import models.submissions.aboutthetradinghistory.TotalPayrollCost
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.pages.Summary
-@import java.time.LocalDate
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil._
@@ -35,7 +33,7 @@
 )
 
 
-@(form: Form[Seq[TotalPayrollCost]], numOfColumns: Int, financialYears: Seq[LocalDate], summary: Summary, fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[TotalPayrollCost]], fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 @totalHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.total")</span></p>
@@ -57,7 +55,7 @@
 @layout(
   pageHeading = messages("totalPayrollCosts.heading"),
   showSection = true,
-    summary = Some(summary),
+  summary = Some(request.sessionData.toSummary),
   sectionName = messages("label.section.aboutYourTradingHistory"),
   backLinkUrl = fromLocation match {
       case "TL" => s"${controllers.routes.TaskListController.show().url}#turnover"
