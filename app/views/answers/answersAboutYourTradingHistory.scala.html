@@ -96,11 +96,7 @@
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
-    @forType match {
-
-  case FOR6030 => {@cyaSupport.occupationDetails}
-  case _       => {@cyaSupport.accountingInformation}
-}
+@cyaSupport.accountingInformation
 
 <h2 class="govuk-heading-m">@messages("turnover.heading")</h2>
 
