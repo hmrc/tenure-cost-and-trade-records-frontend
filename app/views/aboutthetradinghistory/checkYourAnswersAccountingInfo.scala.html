@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import actions.SessionRequest
 @import models.ForType.*
-@import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 @import util.SectionAnswersRowBuilder
 @import util.DateUtilLocalised
 
@@ -87,8 +86,7 @@
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = Some(backLink),
     theForm = theForm,
-    fullWidth = true,
-    showH1 = true
+    fullWidth = true
 ) {
 
     <p class="govuk-body">@messages("checkYourAnswers.occupationAndAccountingInfo.p1")</p>
