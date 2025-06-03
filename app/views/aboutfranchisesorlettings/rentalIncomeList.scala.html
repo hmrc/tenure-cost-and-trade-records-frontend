@@ -72,10 +72,10 @@
     records.zipWithIndex.map { case (record, index) =>
         record match {
             case franchise: FranchiseIncomeRecord =>
-                (franchise.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", d.cateringAddress.map(_.multiLine).getOrElse(""))),
+                (franchise.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession6015: Concession6015IncomeRecord =>
-                (concession6015.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", d.cateringAddress.map(_.multiLine).getOrElse(""))),
+                (concession6015.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
                  controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession: ConcessionIncomeRecord =>
                 (concession.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
@@ -83,7 +83,7 @@
                         else controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url
                 )
             case letting: LettingIncomeRecord =>
-                (letting.operatorDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", d.lettingAddress.map(_.multiLine).getOrElse(""))),
+                (letting.operatorDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
                  controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
         }
     }
