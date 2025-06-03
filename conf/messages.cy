@@ -1714,7 +1714,7 @@ fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
-financialYearEndDates.heading = Update your financial year ending {0}
+financialYearEndDates.heading = Update your financial year ending {0} {1} {2}
 financialYearEndDates.hint = For example, 27 9 2017.
 
 # FINANCIAL YEAR-END DATES SUMMARY

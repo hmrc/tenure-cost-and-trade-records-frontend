@@ -106,7 +106,7 @@ label.toDate = To date
 
 # COMMON HINTS
 ##############
-hint.select.all = Select all that apply.
+hint.select.all = Select all that apply
 hint.date.example = For example, 27 9 2017.
 hint.month.year.example = For example, 9 2017.
 hint.day.month.example = For example, 04 05.
@@ -936,7 +936,7 @@ error.tiedForGoodsDetails.required = Select which type of tie you have
 typeOfIncome.heading = Select a source of rental income
 typeOfIncome.p = You will have the option to add multiple sources of rental income if required.
 typeOfIncome.concession.label = Concession or franchise
-typeOfIncome.6010.concession.label = Separate businesses operate from the property
+typeOfIncome.6010.concession.label = Separate businesses operating from the property
 typeOfIncome.6015.concession.label = Concession or franchise fees
 typeOfIncome.concession.hint = For example, accommodation or catering businesses.
 typeOfIncome.concession.6015.hint = For example, restaurants or car hire kiosk.
@@ -972,7 +972,7 @@ lettingDetails.heading = Provide the tenant or operator’s details
 ####################
 rentalIncomeList.heading = You have added 1 source of rental income
 rentalIncomeList.plural.heading = You have added {0} sources of rental income
-label.rentalIncomeList.letting = Do you need to add another letting?
+label.rentalIncomeList.letting = Do you need to add another source of rental income?
 label.rentalIncomeList.concession = Do you need to add another source of rental income?
 label.rentalIncomeList.income = Do you need to add another source of rental income?
 rentalIncomeList.zeroLetting.heading = You have removed all your sources of rental income
@@ -1048,7 +1048,7 @@ label.includedInYourRent.nondomesticRates = Non-domestic rates
 label.includedInYourRent.waterCharges = Water charges
 label.includedInYourRent.noneOfThese = No, none of these are included in the rent
 label.includedInYourRent.none = None
-hint.includedInYourRent = Select all that apply.
+hint.includedInYourRent = Select all that apply
 error.vat.missing = You must choose one
 error.nondomesticRates.missing = You must choose one
 error.waterCharges.missing = You must choose one
@@ -1388,7 +1388,7 @@ error.servicePaidSeparatelyList.required = Select yes if you would like to add a
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
-rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover the services, excluding VAT?
+rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover these services, excluding VAT?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
 rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
 rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
@@ -1682,7 +1682,7 @@ surrenderedLeaseAgreementMonths.months = months
 # RENT INCLUDE TRADE SERVICES DETAILS
 ####################################
 rentIncludeTradeServicesDetails.heading = Trade services provided by the landlord
-rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover the services, excluding VAT?
+rentIncludeTradeServicesDetails.title = What sum is included in the rent to cover these services, excluding VAT?
 rentIncludeTradeServicesDetails.label = What sum is included in the rent to cover these services?
 rentIncludeTradeServicesDetails.hint = Leave blank if the sum is not specifically itemised.
 rentIncludeTradeServicesDetails.hint2 = For example, maintenance of fires, annual gas checks and cellar services.
@@ -1764,7 +1764,7 @@ fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
-financialYearEndDates.heading = Update your financial year ending {0}
+financialYearEndDates.heading = Update your financial year ending {0} {1} {2}
 financialYearEndDates.hint = For example, 27 9 2017.
 
 # FINANCIAL YEAR-END DATES SUMMARY
@@ -2165,7 +2165,7 @@ error.costOfSales.maxColumns = Number of columns must be between 1 and 3
 ##########
 turnover.heading = Turnover
 turnover.6015.heading = Total turnover
-turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if were are not trading continuously, state the relevant number of weeks.
+turnover.p1 = Provide us with details of your turnover. If the accounts do not relate to a whole year, or if you were are not trading continuously, state the relevant number of weeks.
 turnover.6015.p1 = You must provide details of your total turnover. Include all forms of income from accommodation, food and drink sales, and income from franchises such as coffee kiosks. You must also include income from any leisure activities, and any rental income form concessions or lettings.
 turnover.6015.p2 = If the accounts do no relate to a whole year, or if you were not trading continuously, state the relevant number of weeks.
 turnover.6015.p3 = If your accounts are held in a spreadsheet that mirrors this form, you can copy and paste them into this page. Copy the relevant figures in your spreadsheet and paste them into the first corresponding field on this page.
