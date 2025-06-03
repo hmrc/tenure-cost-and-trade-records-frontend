@@ -63,7 +63,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     val auditType      = "NotConnectedSubmission"
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
     val session        = request.sessionData
-    val sessionId      = implicitly[HeaderCarrier].sessionId.getOrElse("")
+    val sessionId      = summon[HeaderCarrier].sessionId.getOrElse("")
 
     submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)

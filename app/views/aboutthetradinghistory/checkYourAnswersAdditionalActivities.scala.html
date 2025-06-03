@@ -18,10 +18,12 @@
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswersYesNo
-@import util.NumberUtil._
+@import util.NumberUtil.given
 @import util.DateUtilLocalised
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswerYes
+
+@import scala.language.implicitConversions
 
 @this(layout: Layout,
         govukButton: GovukButton,

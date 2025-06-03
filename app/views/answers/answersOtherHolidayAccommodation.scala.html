@@ -21,7 +21,9 @@
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
 @import models.submissions.aboutthetradinghistory.TotalSiteCapacity
 @import util.DateUtilLocalised
-@import util.NumberUtil._
+@import util.NumberUtil.given
+
+@import scala.language.implicitConversions
 
 @this(govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
 

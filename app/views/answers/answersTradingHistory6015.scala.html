@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory._
 @import util.DateUtilLocalised
-@import util.NumberUtil._
+@import util.NumberUtil.*
 @import util.CyaTradingHistorySupport
 
 
@@ -360,4 +360,3 @@
         _.unusualCircumstances.map(_.unusualCircumstances),
         controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.show(), "unusualCircumstances")
 ))
-

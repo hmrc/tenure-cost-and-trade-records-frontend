@@ -30,10 +30,10 @@ sealed trait LettingPartOfProperty {
 object LettingPartOfProperty {
 
   implicit val lettingReads: Reads[LettingPartOfProperty] = (__ \ "type").read[String].flatMap {
-    case "ATMLetting"              => implicitly[Reads[ATMLetting]].map(identity)
-    case "TelecomMastLetting"      => implicitly[Reads[TelecomMastLetting]].map(identity)
-    case "AdvertisingRightLetting" => implicitly[Reads[AdvertisingRightLetting]].map(identity)
-    case "OtherLetting"            => implicitly[Reads[OtherLetting]].map(identity)
+    case "ATMLetting"              => summon[Reads[ATMLetting]].map(identity)
+    case "TelecomMastLetting"      => summon[Reads[TelecomMastLetting]].map(identity)
+    case "AdvertisingRightLetting" => summon[Reads[AdvertisingRightLetting]].map(identity)
+    case "OtherLetting"            => summon[Reads[OtherLetting]].map(identity)
     case other                     => Reads(_ => JsError(s"Unknown type: $other"))
   }
 

@@ -21,7 +21,7 @@
 @import util.SectionAnswersRowBuilder
 @import models.submissions.aboutfranchisesorlettings._
 @import models.ForType.*
-@import util.NumberUtil._
+@import util.NumberUtil.*
 
 @this(
         govukSummaryList: GovukSummaryList,
@@ -63,7 +63,7 @@
             index,
             classOf[FranchiseIncomeRecord]
         ))
-        <h2/>
+        </h2>
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row(
                 "checkYourAnswersAboutFranchiseOrLettings.businessOperatorName",
@@ -104,7 +104,7 @@
             index,
             classOf[Concession6015IncomeRecord]
         ))
-        <h2/>
+        </h2>
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row(
                 "checkYourAnswersAboutFranchiseOrLettings.businessOperatorName",
@@ -220,7 +220,7 @@
             index,
             classOf[LettingIncomeRecord]
         ))
-        <h2/>
+        </h2>
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
         _ => Option(

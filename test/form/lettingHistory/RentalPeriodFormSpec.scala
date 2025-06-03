@@ -128,7 +128,7 @@ class RentalPeriodFormSpec extends FormSpec:
     )
 
     val commercialLetFirstAvailable =
-      implicitly[DateUtilLocalised].formatDate(LocalDate.of(previousFiscalYearEnd, 2, 1))
+      summon[DateUtilLocalised].formatDate(LocalDate.of(previousFiscalYearEnd, 2, 1))
 
     val bound = theForm.bind(
       Map(

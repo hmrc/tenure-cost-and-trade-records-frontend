@@ -30,38 +30,23 @@ object NumberUtil:
 
   val zeroBigDecimal: BigDecimal = BigDecimal(0)
 
-  implicit def bigDecimalToString(bigDecimal: BigDecimal): String =
-    bigDecimal.asMoney
+  given Conversion[Int, String] = _.toString
 
-  implicit def bigDecimalOptToString(bigDecimalOpt: Option[BigDecimal]): String =
-    bigDecimalOpt.getOrElse(zeroBigDecimal).asMoney
+  given bigDecimalToString: Conversion[BigDecimal, String] = _.asMoney
 
-  implicit def intToString(number: Int): String =
-    number.toString
+  given bigDecimalOptToString: Conversion[Option[BigDecimal], String] = _.getOrElse(zeroBigDecimal).asMoney
+  given intOptToString: Conversion[Option[Int], String]               = _.getOrElse(0)
+  given stringOptToString: Conversion[Option[String], String]         = _.getOrElse("")
 
-  implicit def intOptToString(numberOpt: Option[Int]): String =
-    numberOpt.getOrElse(0)
+  given seqBigDecimalToSeqString: Conversion[Seq[BigDecimal], Seq[String]]            = _.map(bigDecimalToString)
+  given seqBigDecimalOptToSeqString: Conversion[Seq[Option[BigDecimal]], Seq[String]] = _.map(bigDecimalOptToString)
 
-  implicit def stringOptToString(stringOpt: Option[String]): String =
-    stringOpt.getOrElse("")
-
-  implicit def seqBigDecimalToSeqString(values: Seq[BigDecimal]): Seq[String] =
-    values.map(bigDecimalToString)
-
-  implicit def seqBigDecimalOptToSeqString(values: Seq[Option[BigDecimal]]): Seq[String] =
-    values.map(bigDecimalOptToString)
-
-  implicit def functionBigDecimalToFunctionString[T](function: T => BigDecimal): T => String =
-    function andThen bigDecimalToString
-
-  implicit def functionBigDecimalOptToFunctionString[T](function: T => Option[BigDecimal]): T => String =
-    function andThen bigDecimalOptToString
-
-  implicit def functionStringOptToFunctionString[T](function: T => Option[String]): T => String =
-    function andThen stringOptToString
+  given functionStringOptToFunctionString[T]: Conversion[T => Option[String], T => String] = _ andThen stringOptToString
+  given functionBigDecimalToFunctionString[T]: Conversion[T => BigDecimal, T => String]    = _ andThen bigDecimalToString
+  given funcBigDecOptToFuncString[T]: Conversion[T => Option[BigDecimal], T => String]     = _ andThen bigDecimalOptToString
 
   extension (str: String)
-    def removeTrailingZeros: String =
+    private def removedTrailingZeros: String =
       str.replace(".00", "")
 
     def escapedHtml: String =
@@ -69,7 +54,7 @@ object NumberUtil:
 
   extension (bigDecimal: BigDecimal)
     def asMoney: String =
-      asMoneyFull.removeTrailingZeros
+      asMoneyFull.removedTrailingZeros
 
     def asMoneyFull: String =
       NumberFormat
@@ -77,7 +62,7 @@ object NumberUtil:
         .format(bigDecimal)
 
     def withScale(scale: Int): String =
-      withScaleFull(scale).removeTrailingZeros
+      withScaleFull(scale).removedTrailingZeros
 
     def withScaleFull(scale: Int): String =
       bigDecimal.setScale(scale, HALF_UP).toString

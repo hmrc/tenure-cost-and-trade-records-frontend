@@ -17,11 +17,13 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import util.NumberUtil._
+@import util.NumberUtil.{*, given}
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswerYes
 @import navigation.AboutYourLeaseOrTenureNavigator
 @import navigation.identifiers.TradeServicesDescriptionId
+
+@import scala.language.implicitConversions
 
 @this(
         govukSummaryList: GovukSummaryList,

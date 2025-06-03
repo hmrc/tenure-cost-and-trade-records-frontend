@@ -16,10 +16,11 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory._
-@import util.NumberUtil._
+@import util.NumberUtil.given
 @import util.CyaTradingHistorySupport
 @import models.submissions.aboutyouandtheproperty.BaseLoad
 
+@import scala.language.implicitConversions
 
 @this(
         cyaSupport: CyaTradingHistorySupport

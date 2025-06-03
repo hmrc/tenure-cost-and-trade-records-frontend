@@ -23,21 +23,21 @@ import form.BuildingNameNumberMapping.validateBuildingNameNumber
 import form.CountyMapping.validateCounty
 import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
-import models.submissions.*
-import form.Formats.*
+import form.Formats.{answersYesNoDefFormat, given}
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
+import models.AnnualRent
+import models.submissions.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutyouandtheproperty.*
-import models.submissions.common.{Address, AnswersYesNo, BuildingInsurance, CYAYesNo, ContactDetails, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, CorrespondenceAddress, EditAddress, VacantPropertiesDetails, YourContactDetails}
+import models.submissions.common.*
+import models.submissions.connectiontoproperty.*
 import models.submissions.notconnected.PastConnectionType
-import models.AnnualRent
-import play.api.data.Forms.{boolean, default, mapping, optional, seq, text}
-import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import play.api.data.Forms.*
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.{Forms, Mapping}
 import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal

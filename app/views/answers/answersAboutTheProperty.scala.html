@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
-@import util.NumberUtil._
+@import util.NumberUtil.*
 @import models.ForType.*
 @import models.submissions.common.AnswerYes
 
@@ -112,11 +112,11 @@
 ))
 
 @forType match {
-    case FOR6020           => {@answers6020}
-    case FOR6030           => {@answers6030()}
-    case FOR6045 | FOR6046 => {@answers6045}
-    case FOR6048           => {@answers6048()}
-    case FOR6076 =>           {@answers6076()}
+    case FOR6020           => @answers6020
+    case FOR6030           => @answers6030()
+    case FOR6045 | FOR6046 => @answers6045
+    case FOR6048           => @answers6048()
+    case FOR6076 =>           @answers6076()
     case _ =>                 {
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
